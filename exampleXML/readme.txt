@@ -1,0 +1,2 @@
+Dit is een voorbeeldxml zoals deze geëxporteerd wordt door de ontwikkelversie van de nieuwe meetnettenapplicatie.
+Het schema zal nog gewijzigd worden zodat ook metingen tov TAW mee geëxporteerd zullen worden. 

@@ -47,7 +47,7 @@ The workflow is provided for command line usage and using the [Github for Deskto
     $ cd pydov
     ```
 
-    If you’re using the GitHub for Desktop application, navigate over to the bottom on the right hand side bar and click `Clone in Desktop`. Once you've clicked this, it’ll ask you if you want to launch our desktop application to clone the repository, and where you want to save it. Pick a location on your computer that you feel comfortable with creating files and folders.
+    If you’re using the GitHub for Desktop application, navigate over to the bottom on the right hand side bar and click `Clone in Desktop`. Once you've clicked this, it’ll ask you if you want to launch our desktop application to clone the repository, and where you want to save it. Pick a location on your computer that you feel comfortable with creating files and folders.
 
     ![clonerepo](https://guides.github.com/activities/forking/clone-in-desktop.png)
 

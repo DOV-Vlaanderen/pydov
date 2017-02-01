@@ -43,7 +43,7 @@ The workflow is provided for command line usage and using the [Github for Deskto
     Clone your fork of the pydov repo from your GitHub account to your local disk:
 
     ```bash
-    $ git clone git@github.com:YourLogin/pydov.git
+    $ git clone https://github.com/DOV-Vlaanderen/pydov.git
     $ cd pydov
     ```
 

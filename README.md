@@ -1,2 +1,3 @@
 # dov-pydownloader
-A python package to extract data from the DOV web application
+
+A python package to retrieve data from Databank Ondergrond Vlaanderen (DOV)

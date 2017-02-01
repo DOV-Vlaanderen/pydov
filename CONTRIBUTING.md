@@ -24,10 +24,10 @@ The central elements of the package are:
 
 ## Contribution is not only code implementation!
 
-For people who not feel so comfortable to provide code, you should not be
-restrained from contributing. Code is not the only way to contribute. For instance, documentation is also a very important part and often doesn’t get as much attention as it deserves. If you find a typo in the documentation, or have made improvements, do not hesitate to update the documentation and submit a GitHub pull request (see further on how to do this). If you develop a good introduction tutorial or example case, these are typically the most popular sections for new user!
+For people who don't feel so comfortable to provide code, you should not be
+restrained from contributing. Code is not the only way to contribute. For instance, documentation is also a very important part and often doesn’t get as much attention as it deserves. If you find a typo in the documentation, or have made improvements, do not hesitate to update the documentation and submit a GitHub pull request (see further on how to do this). If you develop a good introduction tutorial or example case, these are typically the most popular sections for a new user!
 
-It also helps us if you spread the word: reference the project from your blog and articles, link to it from your website or integrate the package in a bachelor/masters course.
+It also helps us if you spread the word: refer to the project from your blog and in articles, link to it from your website or integrate the package in a bachelor/masters course.
 
 We aspire to treat everybody equally, and value their contributions. Decisions are made based on technical merit and consensus. We abide by the principles of openness, respect, and consideration of others of the Python Software Foundation: https://www.python.org/psf/codeofconduct/
 

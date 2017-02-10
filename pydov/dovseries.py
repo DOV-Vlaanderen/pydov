@@ -4,6 +4,10 @@ import xmltodict
 import pandas as pd
 
 
+class DOVVariableError(Exception):
+    pass
+
+
 class DovTimeSeries(object):
 
     def __init__(self, xml_doc):
@@ -80,4 +84,29 @@ class DovTimeSeries(object):
         doc_df["datum"] = pd.to_datetime(doc_df["datum"])
         doc_df["waarde"] = pd.to_numeric(doc_df["waarde"])
         return doc_df
+
+    @property
+    def variables(self):
+        """return list of variables currently stored"""
+        return self.observaties["parameter"].unique()
+
+    def get_parameter_series(self, variable):
+        """select specific parameter"""
+        if variable not in self.observaties["parameter"].unique():
+            raise DOVVariableError("Variable name {} not represented in "
+                                   "observations".format(variable))
+
+        vardata = self.observaties[self.observaties["parameter"] == variable]
+        return vardata.pivot_table(
+                            index="datum",
+                            columns=["filternummer"],
+                            values="waarde")
+
+    @property
+    def peilmetingen_timeseries(self):
+        return self.peilmetingen.reset_index().pivot_table(
+                            index="datum",
+                            columns=["grondwaterlocatie", "filternummer"],
+                            values="diepte")
+
 

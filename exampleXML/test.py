@@ -9,7 +9,7 @@ def get_peilmetingen(xml_doc):
             yield (filter['grondwaterlocatie'], 
                    filter['filter']['identificatie'], 
                    meting['datum'],
-                   meting['diepte'])
+                   meting['peil_mtaw'])
 
 
 def get_peilmetingen_df(xml_doc):

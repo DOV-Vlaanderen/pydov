@@ -8,7 +8,7 @@ class DOVVariableError(Exception):
     pass
 
 
-class DovTimeSeries(object):
+class DovGroundwater(object):
 
     def __init__(self, xml_doc):
         with open(xml_doc) as fd:

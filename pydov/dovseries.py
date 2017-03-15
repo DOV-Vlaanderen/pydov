@@ -35,7 +35,7 @@ class DovGroundwater(object):
                 yield (filterm['grondwaterlocatie'],
                        filterm['filter']['identificatie'],
                        meting['datum'],
-                       meting['diepte'],
+                       meting['peil_mtaw'],
                        meting['methode'],
                        meting['betrouwbaarheid'])
 

@@ -68,6 +68,13 @@ class DovBoringen(object):
         except:
             self.maxfeatures = maxfeatures
 
+        # define variables
+        self.interpretations = ['gecodeerde_lithologie', 'geotechnische_codering', 'hydrogeologische_stratigrafie',
+                                'informele_hydrostratigrafie', 'informele_stratigrafie', 'lithologische_beschrijving', ]
+        self.property_names = ['diepte_tot_m', 'dikte_quartair', 'formele_stratigrafie', 'gecodeerde_lithologie',
+                               'geotechnische_codering', 'hydrogeologische_stratigrafie', 'informele_hydrostratigrafie',
+                               'informele_stratigrafie', 'lithologische_beschrijving', ]
+
 
 
 if __name__ == '__main__':

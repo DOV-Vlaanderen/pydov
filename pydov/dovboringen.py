@@ -75,6 +75,59 @@ class DovBoringen(object):
                                'geotechnische_codering', 'hydrogeologische_stratigrafie', 'informele_hydrostratigrafie',
                                'informele_stratigrafie', 'lithologische_beschrijving', ]
 
+    def get_boringen(self, query_string='', bbox=None, add_props=[]):
+        """Query the wfs_boring for a all boreholes within a selected bounding box or given constraints.
+
+        A dataframe containing the selected variables is returned. The following variables are always included:
+        'boornummer', 'fiche', 'X_ml72', 'Y_ml72', 'Z_mTAW', 'methode', 'diepte_tot_m', 'dikte_quartair',
+        'formele_stratigrafie', 'gecodeerde_lithologie', 'geotechnische_codering', 'hydrogeologische_stratigrafie',
+        'informele_hydrostratigrafie', 'informele_stratigrafie', 'lithologische_beschrijving'
+         Additional variables from the xml can be selected by providing the PropertyName in the list of add_props.
+        The following variables are remapped to a more readable name in the resulting dataframe:
+        {fiche: url_data, X_ml72: x, Y_ml72: y, Z_mTAW: z_mv}.
+
+        Parameters:
+        -----------
+        query_string: str
+            A string containing the query that will be used as constrained in the WFS call
+        bbox: tuple of floats
+            The X, Y coordinates of the bounding box as (xmin, ymin, xmax, ymax)
+        add_props: list of strings
+            A list with the PropertyNames of attributes in the queried layer that need to be selected in addition
+            to the default ones
+
+        Return:
+        -------
+        boringen_df: dataframe
+            A dataframe with the selected attributes of the selected borehole locations
+
+        """
+        # extract data with user-defined column names
+        user_defined = ['boornummer', 'url_data', 'x', 'y', 'z_mv', 'methode']
+        dov_defined = ['boornummer', 'fiche', 'X_mL72', 'Y_mL72', 'Z_mTAW', 'methode']
+        # get list with queried properties (different for version 1.1.0 and 2.0.0):
+        variables1 = dov_defined + self.property_names + add_props
+        variables2 = ['dov-pub:' + x for x in variables1]
+        propertynames = variables1 if self.version == '1.1.0' else variables2
+        # query the wfs layer for the given constraints in the bounding box
+        filterxml = self.compose_query(query_string, bbox, self.wfs_filters)
+        response = self.wfs_boring.getfeature(typename=self.layer,
+                                              propertyname=propertynames,  # gives service exception for version 1.1.0
+                                              maxfeatures=self.maxfeatures,
+                                              # filter=filterxml,           # took ages to query, bbox is faster
+                                              bbox=bbox,
+                                              # outputFormat=self.outputformat,  # xml is only option and possible error
+                                              # srsname=self.srsname  # does not work for version 2.0.0
+                                              )
+        if self.version == '1.1.0':
+            boringen_df = pd.DataFrame(self.parse_wfs(response, self.layer, self.version),
+                                       columns=variables1
+                                       ).rename(columns=dict(zip(dov_defined, user_defined)))
+        elif self.version == '2.0.0':
+            boringen_df = pd.DataFrame(self.parse_wfs(response, self.layer, self.version),
+                                       columns=variables2
+                                       ).rename(columns=dict(zip(['dov-pub:'+x for x in dov_defined], user_defined)))
+        return boringen_df
 
 
 if __name__ == '__main__':

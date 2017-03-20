@@ -129,6 +129,35 @@ class DovBoringen(object):
                                        ).rename(columns=dict(zip(['dov-pub:'+x for x in dov_defined], user_defined)))
         return boringen_df
 
+    @staticmethod
+    def parse_wfs(response, layer, version):
+        """A generator to parse the response from a wfs, depending on the server version
+
+        Parameters:
+        -----------
+        response: StringIO
+            The response from a wfs.getfeature() query (OWSlib)
+        layer: str
+            The wfs layer that is queried
+        version: str
+            The version of the WFS server: only '1.1.0' and '
+
+        """
+        if version == "1.1.0":
+            # convert layer preposition to null
+            layer = 'null:' + layer.split(':')[1]
+            # convert the response to a dictionary
+            doc = xmltodict.parse(response)
+            # yield the layers of the dict
+            for a in doc['wfs:FeatureCollection']['gml:featureMembers']:
+                yield (a[layer])
+        elif version == "2.0.0":
+            # convert the response to a dictionary
+            doc = xmltodict.parse(response.read())
+            # yield the layers of the dict
+            for a in doc['wfs:FeatureCollection']['wfs:member']:
+                yield (a[layer])
+
 
 if __name__ == '__main__':
     dov = DovBoringen(maxfeatures=10)

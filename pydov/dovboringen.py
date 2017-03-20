@@ -25,6 +25,13 @@ class DOVVariableError(Exception):
 
 
 class DovBoringen(object):
+    """
+    Examples
+    --------
+    >>>dov = DovBoringen()
+    >>>extracted_locations = dov.get_boringen(query_string="diepte_tot_m > 10" , bbox=(160000, 200000, 178100, 215100))
+
+    """
 
     def __init__(self, url='https://www.dov.vlaanderen.be/geoserver/wfs', version='2.0.0', layer='dov-pub:Boringen',
                  maxfeatures=10000, timeout=30, outputformat='xml', epsg='31370'):

@@ -15,7 +15,6 @@ __status__ = "Development"
 from owslib.wfs import WebFeatureService
 from owslib import fes
 import xmltodict
-import urllib2
 import requests
 import pandas as pd
 

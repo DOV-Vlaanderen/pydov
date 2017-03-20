@@ -158,6 +158,61 @@ class DovBoringen(object):
             for a in doc['wfs:FeatureCollection']['wfs:member']:
                 yield (a[layer])
 
+    @staticmethod
+    def compose_query(query_string, bbox, wfs_filters):
+        """Compose a wfs filter query from a string
+
+        The query string should be composed as: "property_name operator literal". The property names and operators are
+         initialized with the DovBoringen class.
+         Multiple filters can be added by comma separation e.g.:
+         "property_name1 operator1 literal1, property_name2 operator2 literal2"
+         The PropertyIsBetween operator requires a lower and upper boundary, it is given by a tuple in the string, e.g.:
+         "diepte_tot_m << (20,100)"
+
+        Parameters:
+        -----------
+        query_string: str
+            A string containing the query that will be used as constrained in the WFS call. See also: get_boringen()
+        bbox: tuple of floats, or empty tuple
+            The X, Y coordinates of the bounding box as (xmin, ymin, xmax, ymax)
+        wfs_filters: dict
+            A dictionary mapping the operator in the query string to the comparison operator of the wfs call
+
+        Returns:
+        --------
+        filterxml: str
+            A string of the xml constraint for a wfs call using owslib
+
+        """
+        filters = []
+        # extract criteria
+        if query_string:
+            query_raw = [x.strip(' ,') for x in query_string.split(' ')]
+            if len(query_raw) % 3 != 0:
+                raise ValueError('The query string is not correct. '
+                                 'It should be composed of "property operator literal"')
+            idx = 1
+            for fltr in query_raw[1::3]:
+                if fltr != '<<':
+                    filters.append(wfs_filters[fltr](propertyname=query_raw[idx-1],
+                                                     literal=query_raw[idx+1]))
+                else:
+                    lb, ub = [x.strip(['(', ')']) for x in query_raw[idx+1].split(',')]
+                    filters.append(wfs_filters[fltr](propertyname=query_raw[idx - 1],
+                                                     lowerboundary=lb, upperboundary=ub))
+                    idx += 3
+        if bbox:
+            filters.append(fes.BBox(bbox))
+        if len(filters) == 1:
+            filter = fes.FilterRequest().setConstraint(filters[0])
+        elif len(filters) > 1:
+            # only logical AND is evaluated (constraint = [[a, b]])
+            filter = fes.FilterRequest().setConstraintList([filters])
+        else:
+            return ''
+
+        filterxml = fes.etree.tostring(filter, encoding="utf-8", method='xml')
+        return filterxml
 
 if __name__ == '__main__':
     dov = DovBoringen(maxfeatures=10)

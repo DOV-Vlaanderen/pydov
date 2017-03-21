@@ -3,9 +3,9 @@ This module handles the selection of borehole data from the DOV webservice.
 
 It's development was made possible by the financing of Vlaio (Flanders, Belgium) and AGT n.v (www.agt.be).
 """
-__author__ = ['Pieter Jan Haest', "Johan Van De Wauw"]
+__author__ = ['Pieter Jan Haest']
 __copyright__ = 'Copyright 2017, DOV-Vlaanderen'
-__credits__ = ["Stijn Van Hoey"]
+__credits__ = ["Stijn Van Hoey", "Johan Van de Wauw"]
 __license__ = "MIT"
 __version__ = '0.1'
 __maintainer__ = "Pieter Jan Haest"
@@ -248,6 +248,57 @@ class DovBoringen(object):
 
         filterxml = fes.etree.tostring(filter, encoding="utf-8", method='xml')
         return filterxml
+
+    @staticmethod
+    def extract_boringen_urls(urls, interpretation, *args):
+        """Generator to extract the individual measurements from the XML export
+        """
+        for url in urls:
+            r = requests.get(url + '.xml')
+            xml_data = xmltodict.parse(r.text)
+            for interval in xml_data['ns2:dov-schema']['interpretaties'][interpretation]['laag']:
+                if interpretation == 'hydrogeologischeinterpretatie':
+                    yield (xml_data['ns2:dov-schema']['boring']['identificatie'],
+                           xml_data['ns2:dov-schema']['boring']['xy']['x'],
+                           xml_data['ns2:dov-schema']['boring']['xy']['y'],
+                           xml_data['ns2:dov-schema']['boring']['oorspronkelijk_maaiveld']['waarde'],
+                           xml_data['ns2:dov-schema']['boring']['details']['boormethode']['methode'],
+                           xml_data['ns2:dov-schema']['interpretaties'][interpretation]['betrouwbaarheid'],
+                           xml_data['ns2:dov-schema']['interpretaties'][interpretation]['opdracht'],
+                           interval['van'],
+                           interval['tot'],
+                           interval['aquifer'],
+                           interval['regime']
+                           )
+                elif interpretation == 'gecodeerdelithologie':
+                    yield (xml_data['ns2:dov-schema']['boring']['identificatie'],
+                           xml_data['ns2:dov-schema']['boring']['xy']['x'],
+                           xml_data['ns2:dov-schema']['boring']['xy']['y'],
+                           xml_data['ns2:dov-schema']['boring']['oorspronkelijk_maaiveld']['waarde'],
+                           xml_data['ns2:dov-schema']['boring']['details']['boormethode']['methode'],
+                           xml_data['ns2:dov-schema']['interpretaties'][interpretation]['betrouwbaarheid'],
+                           xml_data['ns2:dov-schema']['interpretaties'][interpretation]['opdracht'],
+                           interval['van'],
+                           interval['tot'],
+                           interval['hoofdnaam']['grondsoort'],
+                           interval['bijmenging']['grondsoort'],
+                           interval['bijmenging']['hoeveelheid'],
+                           interval['bijmenging']['plaatselijk']
+                           )
+                elif interpretation == 'geotechnischecodering':
+                    yield (xml_data['ns2:dov-schema']['boring']['identificatie'],
+                           xml_data['ns2:dov-schema']['boring']['xy']['x'],
+                           xml_data['ns2:dov-schema']['boring']['xy']['y'],
+                           xml_data['ns2:dov-schema']['boring']['oorspronkelijk_maaiveld']['waarde'],
+                           xml_data['ns2:dov-schema']['boring']['details']['boormethode']['methode'],
+                           xml_data['ns2:dov-schema']['interpretaties'][interpretation]['betrouwbaarheid'],
+                           xml_data['ns2:dov-schema']['interpretaties'][interpretation]['opdracht'],
+                           interval['van'],
+                           interval['tot'],
+                           interval['hoofdnaam']['grondsoort'],
+                           interval['bijmenging']['grondsoort']
+                           )
+
 
     def extract_boringen_file(self, file, interpretation):
         """Extract the interpretation from the XML file obtained from dov.vlaanderen.be for 'boringen'

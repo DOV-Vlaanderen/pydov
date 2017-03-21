@@ -241,6 +241,107 @@ class DovBoringen(object):
         filterxml = fes.etree.tostring(filter, encoding="utf-8", method='xml')
         return filterxml
 
+    def extract_boringen_file(self, file, interpretation):
+        """Extract the interpretation from the XML file obtained from dov.vlaanderen.be for 'boringen'
+
+        Currently only ['hydrogeologischeinterpretatie', 'geotechnischecodering', 'gecodeerdelithologie'] are supported.
+        Mind that the extraction of elements is hardcoded and not governed by the self.df_cols_dict. This could be an
+        improvement of the code if anyone knows how to construct the xml tree structure from lists.
+        In addition, multiple layers are supported for the 'boringen' and 'interpretation' by joining the data where
+        'laag_van' >= 'boring_van' and 'laag_tot' <= 'boring_tot' for each boring.
+
+        Parameters:
+        -----------
+        file: str
+            The path where the xml file is located
+        interpretation: str
+            The interpretation that should be extracted from the XML file
+
+        Returns:
+        --------
+        result: pd.DataFrame
+            A dataframe with the attributes of the boringen and the interpretation defined by self.df_cols_dict
+
+        """
+        with open(file) as fd:
+            xml_data = xmltodict.parse(fd.read())
+            tmp = []
+            for loc in xml_data['ns2:dov-schema']['boring']:
+                # sometimes multiple methods during one drilling in xml
+                if isinstance(loc['details']['boormethode'], list):
+                    for met in loc['details']['boormethode']:
+                        tmp.append([loc['identificatie'],
+                                    float(loc['xy']['x']),
+                                    float(loc['xy']['y']),
+                                    float(loc['oorspronkelijk_maaiveld']['waarde']),
+                                    float(met['van']),
+                                    float(met['tot']),
+                                    met['methode']])
+                else:
+                    tmp.append([loc['identificatie'],
+                                float(loc['xy']['x']),
+                                float(loc['xy']['y']),
+                                float(loc['oorspronkelijk_maaiveld']['waarde']),
+                                float(loc['details']['boormethode']['van']),
+                                float(loc['details']['boormethode']['tot']),
+                                loc['details']['boormethode']['methode']])
+            df_boring = pd.DataFrame(tmp, columns=self.df_cols_dict['boringen'])
+
+            # check if interpretation present
+            if not interpretation in xml_data['ns2:dov-schema']['interpretaties']:
+                print 'No '+ interpretation + ' is present in the given XML file'
+                return None
+
+            # else parse the xml
+            tmp =[]
+            for boring in xml_data['ns2:dov-schema']['interpretaties'][interpretation]:
+                if interpretation == 'hydrogeologischeinterpretatie':
+                    for laag in boring['laag']:
+                        tmp.append([boring['boring'],
+                                   boring['betrouwbaarheid'],
+                                   boring['opdracht'],
+                                   float(laag['van']),
+                                   float(laag['tot']),
+                                   laag['aquifer'],
+                                   laag['regime'] if 'regime' in laag.keys() else None])
+                    df_interpr = pd.DataFrame(tmp, columns=self.df_cols_dict[interpretation])
+                    result = pd.DataFrame(columns=self.df_cols_dict['boringen']+self.df_cols_dict[interpretation][1:])
+                elif interpretation == 'gecodeerdelithologie':
+                    for laag in boring['laag']:
+                        tmp.append([boring['boring'],
+                                    boring['betrouwbaarheid'],
+                                    boring['opdracht'],
+                                    float(laag['van']),
+                                    float(laag['tot']),
+                                    laag['hoofdnaam']['grondsoort'],
+                                    laag['bijmenging']['grondsoort'],
+                                    laag['bijmenging']['hoeveelheid'],
+                                    laag['bijmenging']['plaatselijk']])
+                        df_interpr = pd.DataFrame(tmp, columns=self.df_cols_dict[interpretation])
+                        result = pd.DataFrame(
+                            columns=self.df_cols_dict['boringen'] + self.df_cols_dict[interpretation][1:])
+                elif interpretation == 'geotechnischecodering':
+                    for laag in boring['laag']:
+                        tmp.append([boring['boring'],
+                                    boring['betrouwbaarheid'],
+                                    boring['opdracht'],
+                                    float(laag['van']),
+                                    float(laag['tot']),
+                                    laag['hoofdnaam']['grondsoort'],
+                                    laag['bijmenging']['grondsoort']])
+                        df_interpr = pd.DataFrame(tmp, columns=self.df_cols_dict[interpretation])
+                        result = pd.DataFrame(
+                            columns=self.df_cols_dict['boringen'] + self.df_cols_dict[interpretation][1:])
+        # group boringen and interpretation
+        boringen = df_boring.groupby('boringid')
+        for boring in boringen:
+            for level in boring[1]['boring_van'].unique():
+                idx_interpr = np.where((df_interpr['boringid'] == boring[0]) &
+                                       (df_interpr['laag_van'] >= boring[1]['boring_van'].values[0]) &
+                                       (df_interpr['laag_tot'] <= boring[1]['boring_tot'].values[0]))
+            result = result.append(pd.merge(boring[1], df_interpr.ix[idx_interpr]))
+
+        return result
 
     def get_boringen_data(self, boringen, interpretation):
         """Retreive the data from the boringen of an on-line xml query or downloaded xml file

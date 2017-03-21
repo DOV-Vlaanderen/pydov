@@ -242,6 +242,33 @@ class DovBoringen(object):
         return filterxml
 
 
+    def get_boringen_data(self, boringen, interpretation):
+        """Retreive the data from the boringen of an on-line xml query or downloaded xml file
+
+        Parameters:
+        -----------
+        boringen: pd.DataFrame or str
+            The pointer to the xml datasource: on-line as a pd.DataFrame from self.get_boringen(), or from an XML
+            file downloaded from dov.vlaanderen.be (for boringen)
+        interpretation: str
+            The interpretation one would like to extract from the XML file
+
+        Returns:
+        --------
+        result: pd.DataFrame
+            A dataframe with the attributes of the boringen and the interpretation defined by self.df_cols_dict
+        """
+        if isinstance(boringen, pd.DataFrame):
+            data_boringen = pd.DataFrame(list(self.extract_boringen_urls(
+                                             boringen[boringen[interpretation]=='true']['url_data'].values)
+                                             ),
+                                        columns=self.df_cols_dict[interpretation]
+                                        )
+        elif isinstance(boringen, str):
+            data_boringen = pd.DataFrame(self.extract_boringen_file(boringen, interpretation),
+                                         columns=self.df_cols_dict[interpretation]
+                                         )
+        return data_boringen
 
 
 if __name__ == '__main__':

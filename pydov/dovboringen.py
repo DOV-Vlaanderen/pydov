@@ -81,6 +81,15 @@ class DovBoringen(object):
                                'geotechnische_codering', 'hydrogeologische_stratigrafie', 'informele_hydrostratigrafie',
                                'informele_stratigrafie', 'lithologische_beschrijving', ]
 
+        # http://docs.geoserver.org/latest/en/user/filter/filter_reference.html
+        self.wfs_filters = {'=': fes.PropertyIsEqualTo,
+                            '!=': fes.PropertyIsNotEqualTo,
+                            '<': fes.PropertyIsLessThan,
+                            '<=': fes.PropertyIsLessThanOrEqualTo,
+                            '>': fes.PropertyIsGreaterThan,
+                            '>=': fes.PropertyIsGreaterThanOrEqualTo,
+                            '<<': fes.PropertyIsBetween,}
+
     def get_boringen(self, query_string='', bbox=None, add_props=[]):
         """Query the wfs_boring for a all boreholes within a selected bounding box or given constraints.
 
@@ -219,6 +228,9 @@ class DovBoringen(object):
 
         filterxml = fes.etree.tostring(filter, encoding="utf-8", method='xml')
         return filterxml
+
+
+
 
 if __name__ == '__main__':
     dov = DovBoringen(maxfeatures=10)

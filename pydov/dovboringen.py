@@ -251,54 +251,12 @@ class DovBoringen(object):
 
     @staticmethod
     def extract_boringen_urls(urls, interpretation, *args):
-        """Generator to extract the individual measurements from the XML export
         """
-        for url in urls:
-            r = requests.get(url + '.xml')
-            xml_data = xmltodict.parse(r.text)
-            for interval in xml_data['ns2:dov-schema']['interpretaties'][interpretation]['laag']:
-                if interpretation == 'hydrogeologischeinterpretatie':
-                    yield (xml_data['ns2:dov-schema']['boring']['identificatie'],
-                           xml_data['ns2:dov-schema']['boring']['xy']['x'],
-                           xml_data['ns2:dov-schema']['boring']['xy']['y'],
-                           xml_data['ns2:dov-schema']['boring']['oorspronkelijk_maaiveld']['waarde'],
-                           xml_data['ns2:dov-schema']['boring']['details']['boormethode']['methode'],
-                           xml_data['ns2:dov-schema']['interpretaties'][interpretation]['betrouwbaarheid'],
-                           xml_data['ns2:dov-schema']['interpretaties'][interpretation]['opdracht'],
-                           interval['van'],
-                           interval['tot'],
-                           interval['aquifer'],
-                           interval['regime']
-                           )
-                elif interpretation == 'gecodeerdelithologie':
-                    yield (xml_data['ns2:dov-schema']['boring']['identificatie'],
-                           xml_data['ns2:dov-schema']['boring']['xy']['x'],
-                           xml_data['ns2:dov-schema']['boring']['xy']['y'],
-                           xml_data['ns2:dov-schema']['boring']['oorspronkelijk_maaiveld']['waarde'],
-                           xml_data['ns2:dov-schema']['boring']['details']['boormethode']['methode'],
-                           xml_data['ns2:dov-schema']['interpretaties'][interpretation]['betrouwbaarheid'],
-                           xml_data['ns2:dov-schema']['interpretaties'][interpretation]['opdracht'],
-                           interval['van'],
-                           interval['tot'],
-                           interval['hoofdnaam']['grondsoort'],
-                           interval['bijmenging']['grondsoort'],
-                           interval['bijmenging']['hoeveelheid'],
-                           interval['bijmenging']['plaatselijk']
-                           )
-                elif interpretation == 'geotechnischecodering':
-                    yield (xml_data['ns2:dov-schema']['boring']['identificatie'],
-                           xml_data['ns2:dov-schema']['boring']['xy']['x'],
-                           xml_data['ns2:dov-schema']['boring']['xy']['y'],
-                           xml_data['ns2:dov-schema']['boring']['oorspronkelijk_maaiveld']['waarde'],
-                           xml_data['ns2:dov-schema']['boring']['details']['boormethode']['methode'],
-                           xml_data['ns2:dov-schema']['interpretaties'][interpretation]['betrouwbaarheid'],
-                           xml_data['ns2:dov-schema']['interpretaties'][interpretation]['opdracht'],
-                           interval['van'],
-                           interval['tot'],
-                           interval['hoofdnaam']['grondsoort'],
-                           interval['bijmenging']['grondsoort']
-                           )
-
+        """
+        #Don't know if a generator will work here (since you need to combine multiple levels from 'boringen' and
+        # 'interpretations' --> to be checked once dov.vlaanderen.be supports this querying of xmls for interpretations
+        print 'This option is not supported yet'
+        return None
 
     def extract_boringen_file(self, file, interpretation):
         """Extract the interpretation from the XML file obtained from dov.vlaanderen.be for 'boringen'

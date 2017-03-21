@@ -90,6 +90,18 @@ class DovBoringen(object):
                             '>=': fes.PropertyIsGreaterThanOrEqualTo,
                             '<<': fes.PropertyIsBetween,}
 
+        # define the key-cols to retrieve data from the xml
+        # this is currently misleading since the elements are hardcoded in extract_boringen()
+        # (renamed) common attributes of the interpretation to keep
+        interpretation_atts = ['boringid', 'betrouwbaar', 'opdracht', 'laag_van', 'laag_tot']
+        self.df_cols_dict = {'boringen':['boringid', 'x', 'y', 'mv', 'boring_van', 'boring_tot', 'methode'],
+                             'gecodeerdelithologie': interpretation_atts +
+                                                     ['prim_grondsoort', 'sec_grondsoort', 'hoeveelheid', 'plaatselijk'],
+                             'geotechnischecodering': interpretation_atts +
+                                                      ['prim_grondsoort', 'sec_grondsoort'],
+                             'hydrogeologischeinterpretatie': interpretation_atts +
+                                                              ['aquifer', 'regime'],}
+
     def get_boringen(self, query_string='', bbox=None, add_props=[]):
         """Query the wfs_boring for a all boreholes within a selected bounding box or given constraints.
 

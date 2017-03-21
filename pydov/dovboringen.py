@@ -17,6 +17,8 @@ from owslib import fes
 import xmltodict
 import requests
 import pandas as pd
+import numpy as np
+import os
 
 
 class DOVVariableError(Exception):
@@ -28,7 +30,13 @@ class DovBoringen(object):
     Examples
     --------
     >>>dov = DovBoringen()
-    >>>extracted_locations = dov.get_boringen(query_string="diepte_tot_m > 10" , bbox=(160000, 200000, 178100, 215100))
+    >>>># for a downloaded XML file do:
+    >>>>filepth = os.path.join(r'path/to/xlm','file.xml')
+    >>>># choose between ['hydrogeologischeinterpretatie', 'geotechnischecodering', 'gecodeerdelithologie']
+    >>>>df_boringen = dov.get_boringen_data(filepth, 'geotechnischecodering')
+    >>>># if the system of dov.vlaanderen.be allows for in-line querying of interpration data you can do
+    >>>extracted_locations = dov.get_boringen(bbox=(160000, 200000, 178100, 215100))
+    >>>df_boringen = dov.get_boringen_data(extracted_locations)
 
     """
 
@@ -376,6 +384,9 @@ if __name__ == '__main__':
     dov = DovBoringen(maxfeatures=10)
     query_str = 'diepte_tot_m > 20'
     extracted_locations = dov.get_boringen(query_string=query_str, bbox=(160000, 200000, 178100, 215100))
-    a = 1
-    df_boringen = dov.get_boringen_data(extracted_locations)
+    # df_boringen = dov.get_boringen_data(extracted_locations) # currently not supported by dov.vlaanderen.be
+    filepth = os.path.join(r'path/to/xlm','file.xml')
+    # ['hydrogeologischeinterpretatie', 'geotechnischecodering', 'gecodeerdelithologie']
+    df_boringen = dov.get_boringen_data(filepth, 'geotechnischecodering')
+
 

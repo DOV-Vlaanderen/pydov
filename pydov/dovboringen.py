@@ -255,7 +255,7 @@ class DovBoringen(object):
         """
         #Don't know if a generator will work here (since you need to combine multiple levels from 'boringen' and
         # 'interpretations' --> to be checked once dov.vlaanderen.be supports this querying of xmls for interpretations
-        print 'This option is not supported yet'
+        print('This option is not supported yet')
         return None
 
     def extract_boringen_file(self, file, interpretation):
@@ -306,7 +306,7 @@ class DovBoringen(object):
 
             # check if interpretation present
             if not interpretation in xml_data['ns2:dov-schema']['interpretaties']:
-                print 'No '+ interpretation + ' is present in the given XML file'
+                print('No '+ interpretation + ' is present in the given XML file')
                 return None
 
             # else parse the xml

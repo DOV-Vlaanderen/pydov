@@ -29,14 +29,14 @@ class DovBoringen(object):
     """
     Examples
     --------
-    >>>dov = DovBoringen()
-    >>>># for a downloaded XML file do:
-    >>>>filepth = os.path.join(r'path/to/xlm','file.xml')
-    >>>># choose between ['hydrogeologischeinterpretatie', 'geotechnischecodering', 'gecodeerdelithologie']
-    >>>>df_boringen = dov.get_boringen_data(filepth, 'geotechnischecodering')
-    >>>># if the system of dov.vlaanderen.be allows for in-line querying of interpration data you can do
-    >>>extracted_locations = dov.get_boringen(bbox=(160000, 200000, 178100, 215100))
-    >>>df_boringen = dov.get_boringen_data(extracted_locations)
+    >>> dov = DovBoringen()
+    >>> # for a downloaded XML file do:
+    >>> filepth = os.path.join(r'../tests/data','GEO-76_484-b137.xml')
+    >>> # choose between ['hydrogeologischeinterpretatie', 'geotechnischecodering', 'gecodeerdelithologie']
+    >>> df_boringen = dov.get_boringen_data(filepth, 'geotechnischecodering')
+    >>> # if the system of dov.vlaanderen.be allows for in-line querying of interpration data you can do
+    >>> extracted_locations = dov.get_boringen(bbox=(160000, 200000, 178100, 215100))
+    >>> df_boringen = dov.get_boringen_data(extracted_locations)
 
     """
 

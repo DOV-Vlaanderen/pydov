@@ -1,7 +1,7 @@
 """
 This module handles the selection of borehole data from the DOV webservice.
 
-It's development was made possible by the financing of Vlaio (Flanders, Belgium) and AGT n.v (www.agt.be).
+Its development was made possible by the financing of Vlaio (Flanders, Belgium) and AGT n.v (www.agt.be).
 """
 __author__ = ['Pieter Jan Haest']
 __copyright__ = 'Copyright 2017, DOV-Vlaanderen'
@@ -34,7 +34,7 @@ class DovBoringen(object):
     >>> filepth = os.path.join(r'../tests/data','GEO-76_484-b137.xml')
     >>> # choose between ['hydrogeologischeinterpretatie', 'geotechnischecodering', 'gecodeerdelithologie']
     >>> df_boringen = dov.get_boringen_data(filepth, 'geotechnischecodering')
-    >>> # if the system of dov.vlaanderen.be allows for in-line querying of interpration data you can do
+    >>> # if the system of dov.vlaanderen.be allows for in-line querying of interpretation data you can do
     >>> extracted_locations = dov.get_boringen(bbox=(160000, 200000, 178100, 215100))
     >>> df_boringen = dov.get_boringen_data(extracted_locations)
 
@@ -59,7 +59,7 @@ class DovBoringen(object):
         outputformat: str
             the format that is returned from the wfs_boring
         epsg: int
-            the epsg code in which data should be retrieved. Default value for Lamber72: 31370
+            the epsg code in which data should be retrieved. Default value for Lambert72: 31370
         """
         # define general wfs_boring info
         self.layer = layer
@@ -175,7 +175,7 @@ class DovBoringen(object):
         layer: str
             The wfs layer that is queried
         version: str
-            The version of the WFS server: only '1.1.0' and '
+            The version of the WFS server: only '1.1.0' and '2.0.0'
 
         """
         if version == "1.1.0":

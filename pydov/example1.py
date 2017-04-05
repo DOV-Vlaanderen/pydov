@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from dovseries import DovGroundwater
 
 
-dov = DovGroundwater("../exampleXML/1-0709.xml")
+dov = DovGroundwater("../tests/data/1-0709.xml")
 dov.peilmetingen.plot()
 
 dov.peilmetingen_timeseries.resample('A').mean().plot()

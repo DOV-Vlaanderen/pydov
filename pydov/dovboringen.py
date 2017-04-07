@@ -31,12 +31,14 @@ class DovBoringen(object):
     --------
     >>> dov = DovBoringen()
     >>> # for a downloaded XML file do:
-    >>> filepth = os.path.join(r'../tests/data','GEO-76_484-b137.xml')
+    >>> filepth = os.path.join(r'../tests/data','hcov.xml')
     >>> # choose between ['hydrogeologischeinterpretatie', 'geotechnischecodering', 'gecodeerdelithologie']
-    >>> df_boringen = dov.get_boringen_data(filepth, 'geotechnischecodering')
+    >>> df_boringen = dov.get_boringen_data(filepth, 'hydrogeologischeinterpretatie')
+    >>> df_boringen.shape
+    (397, 7)
     >>> # if the system of dov.vlaanderen.be allows for in-line querying of interpretation data you can do
-    >>> extracted_locations = dov.get_boringen(bbox=(160000, 200000, 178100, 215100))
-    >>> df_boringen = dov.get_boringen_data(extracted_locations)
+    >>> # extracted_locations = dov.get_boringen(bbox=(160000, 200000, 178100, 215100))
+    >>> # df_boringen = dov.get_boringen_data(extracted_locations, 'hydrogeologischeinterpretatie')
 
     """
 
@@ -392,10 +394,11 @@ class DovBoringen(object):
 if __name__ == '__main__':
     dov = DovBoringen(maxfeatures=10)
     query_str = 'diepte_tot_m > 20'
-    extracted_locations = dov.get_boringen(query_string=query_str, bbox=(160000, 200000, 178100, 215100))
+    # extracted_locations = dov.get_boringen(query_string=query_str, bbox=(160000, 200000, 178100, 215100))
     # df_boringen = dov.get_boringen_data(extracted_locations) # currently not supported by dov.vlaanderen.be
-    filepth = os.path.join(r'path/to/xlm','file.xml')
+    path_to_test = os.path.abspath(os.path.join(__file__ ,'../..'))
+    filepth = os.path.join(path_to_test, 'tests', 'data', 'hcov.xml')
     # ['hydrogeologischeinterpretatie', 'geotechnischecodering', 'gecodeerdelithologie']
-    df_boringen = dov.get_boringen_data(filepth, 'geotechnischecodering')
+    df_boringen = dov.get_boringen_data(filepth, 'hydrogeologischeinterpretatie')
 
 

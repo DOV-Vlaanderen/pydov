@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:dov-schema xmlns:ns2="http://kern.schemas.dov.vlaanderen.be">
+    <boring>
+        <identificatie>GEO-76/484-b137</identificatie>
+        <xy>
+            <x>68440.0</x>
+            <y>228000.0</y>
+            <betrouwbaarheid>goed</betrouwbaarheid>
+            <methode_opmeten>gedigitaliseerd op topokaart</methode_opmeten>
+            <origine_opmeten>
+                <naam>VO - Afdeling Geotechniek</naam>
+            </origine_opmeten>
+        </xy>
+        <beschrijving_locatie></beschrijving_locatie>
+        <aanvangspeil>
+            <waarde>-12.10</waarde>
+            <betrouwbaarheid>goed</betrouwbaarheid>
+            <methode_opmeten>methode onbekend</methode_opmeten>
+            <origine_opmeten>
+                <naam>MOW - Bestuur Waterwegen</naam>
+            </origine_opmeten>
+        </aanvangspeil>
+        <start_tov_maaiveld>
+            <gestart_op>AANVANGPEIL</gestart_op>
+        </start_tov_maaiveld>
+        <diepte_van>0.00</diepte_van>
+        <diepte_tot>4.50</diepte_tot>
+        <datum_aanvang>1976-09-15</datum_aanvang>
+        <uitvoerder>
+            <naam>derden</naam>
+        </uitvoerder>
+        <opdrachtgever>
+            <naam>MOW - Bestuur Waterwegen</naam>
+        </opdrachtgever>
+        <boorgatmeting>
+            <uitgevoerd>false</uitgevoerd>
+        </boorgatmeting>
+        <stalen>
+            <bewaard>false</bewaard>
+        </stalen>
+        <details>
+            <boormethode>
+                <van>0.00</van>
+                <tot>4.50</tot>
+                <methode>onbekend</methode>
+            </boormethode>
+        </details>
+        <opdracht>GEO-76/484</opdracht>
+    </boring>
+    <interpretaties/>
+</ns2:dov-schema>

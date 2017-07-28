@@ -145,8 +145,9 @@ Each feature of these feature types is uniquely and permanently identifiable by 
 For each of these featur etypes we also provide a map layer with all features and some key attributes, including the permanent URL described above. This allows using the map layer to search and identify features of interest (using the WFS service) and subsequently get their XML representation through the permanent URL.
 
 A short overview of the map layers including permanent URL's can be found below. Please note that a detailed description of each dataset and its attributes can be found in our [metadata catalogue](https://www.dov.vlaanderen.be/geonetwork).
+
 Featuretype (feature catalogue) | WFS layer | Permanent URL base
------------ | --------- | ------------------
+------------------------------- | --------- | ------------------
 [Boringen](https://www.dov.vlaanderen.be/geonetwork/?uuid=4e20bf9c-3a5c-42be-b5b6-bef6214d1fa7) | dov-pub:Boringen | `https://www.dov.vlaanderen.be/data/boring/`
 [Sonderingen](https://www.dov.vlaanderen.be/geonetwork/?uuid=b397faec-1b64-4854-8000-2375edb3b1a8) | dov-pub:Sonderingen | `https://www.dov.vlaanderen.be/data/sondering/`
 [Formele stratigrafie](https://www.dov.vlaanderen.be/geonetwork/?uuid=212af8cd-bffd-423c-9d2b-69c544ab3b04) [(fc)](https://www.dov.vlaanderen.be/geonetwork/?uuid=68405b5d-51e6-44d0-b634-b580bc2f9eb6) | interpretaties:formele_stratigrafie | `https://www.dov.vlaanderen.be/data/interpretatie/`

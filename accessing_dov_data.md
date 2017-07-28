@@ -106,7 +106,7 @@ Permanent URLs of all groundwater filters in Wuustwezel that have water level me
 
 ### Using raster data
 
-Getting the raw raster data of the grids published in our WMS service can be obtained using our [OGC WCS](http://www.opengeospatial.org/standards/wcs) service. We support versions 1.0.0, 1.1.1 and 2.0.1 of the WCS protocol.
+The raw raster data of the grids published in our WMS service can be obtained using our [OGC WCS](http://www.opengeospatial.org/standards/wcs) service. We support versions 1.0.0, 1.1.1 and 2.0.1 of the WCS protocol.
 
 We support a limited number of coordinate systems in our WCS service, all of them except EPSG:31370 (Lambert72, which is the native coordinate system of our data) are transformed on the fly.
 
@@ -142,9 +142,9 @@ For some core feature types DOV has custom applications to enter, edit, import a
 
 Each feature of these feature types is uniquely and permanently identifiable by its URL starting with `https://www.dov.vlaanderen.be/data/`. The URL resolves to an interactive HTML view of the feature, appending `.xml` to the URL will resolve to an XML representation of the feature according to the [DOV schema](https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/dov.xsd).
 
-For each of these featur etypes we also provide a map layer with all features and some key attributes, including the permanent URL described above. This allows using the map layer to search and identify features of interest (using the WFS service) and subsequently get their XML representation through the permanent URL.
+For each of these feature types we also provide a map layer that containts all features and some key attributes, including the permanent URL described above. This allows using the map layer to search and identify features of interest (using the WFS service) and subsequently get their XML representation through the permanent URL.
 
-A short overview of the map layers including permanent URL's can be found below. Please note that a detailed description of each dataset and its attributes can be found in our [metadata catalogue](https://www.dov.vlaanderen.be/geonetwork).
+A short overview of the map layers including permanent URL's can be found below. Please note that a detailed description of each dataset and its attributes can be found in our [metadata catalogue](https://www.dov.vlaanderen.be/geonetwork), linked to in the first column:
 
 Featuretype (feature catalogue) | WFS layer | Permanent URL base
 ------------------------------- | --------- | ------------------

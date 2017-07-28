@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The pydov package is a community effort and everyone is welcome to contribute. It is hosted on [GitHub](https://github.com/DOV-Vlaanderen/pydov) and development is coordinated by [Dienst Ondergrond Vlaanderen (DOV)](https://dov.vlaanderen.be/dovweb/html/index.html). DOV aggregates groundwater and affiliated data of Flanders and makes them publicly available. Interactive and human-readable extraction and querying of the data is provided by a [web application](https://www.dov.vlaanderen.be/portaal/?module=verkenner#ModulePage), whereas the focus of this package is to support **machine-based** extraction and conversion of the data. The latter aims to support a set of complementary use cases, for example:
+The pydov package is a community effort and everyone is welcome to contribute. It is hosted on [GitHub](https://github.com/DOV-Vlaanderen/pydov) and development is coordinated by [Databank Ondergrond Vlaanderen (DOV)](https://dov.vlaanderen.be/dovweb/html/index.html). DOV aggregates data about soil, subsoil and groundwater of Flanders and makes them publicly available. Interactive and human-readable extraction and querying of the data is provided by a [web application](https://www.dov.vlaanderen.be/portaal/?module=verkenner#ModulePage), whereas the focus of this package is to support **machine-based** extraction and conversion of the data. The latter aims to support a set of complementary use cases, for example:
 
 * integrate DOV data in larger data processing pipelines
 * support the reproducibility and/or repeatability of research studies
@@ -12,7 +12,7 @@ The machine-based availability of the data can potentially serve a diverse commu
 
 ## Scope of the package
 
-The `pydov` provides in the first place a convenient wrapper around the XML **export** of the [bodemverkenner](https://www.dov.vlaanderen.be/portaal/?module=verkenner#ModulePage), in combination with the available [DOV WMS/WFS webservices](https://dov.vlaanderen.be/dovweb/html/services.html). By combining the information of these web services, different data request use cases can be automated.
+The `pydov` provides in the first place a convenient wrapper around the XML **export** of the [DOV Verkenner](https://www.dov.vlaanderen.be/portaal/?module=verkenner#ModulePage) and related applications, in combination with the available [DOV WMS/WFS webservices](https://dov.vlaanderen.be/dovweb/html/services.html). By combining the information of these web services, different data request use cases can be automated.
 
 The central elements of the package are:
 

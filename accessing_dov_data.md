@@ -1,6 +1,6 @@
 # Accessing DOV data
 
-DOV manages and publishes a lot of data about the soil and the subsoil of Flanders. Next to our userfriendly and easy-to-use [web applications](https://www.dov.vlaanderen.be/portaal) like the 'DOV Verkenner', all of our data is also available in various publicly available services providing standards-based access to our content.
+DOV manages and publishes a lot of data about the soil, subsoil and groundwater of Flanders. Next to our userfriendly and easy-to-use [web applications](https://www.dov.vlaanderen.be/portaal) like the 'DOV Verkenner', all of our data is also available in various publicly available services providing standards-based access to our content.
 
 This document describes the standards and endpoints we use so you'll be able to find the data you need and use it in your projects.
 

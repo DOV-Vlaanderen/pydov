@@ -92,7 +92,7 @@ All hydrogeologic interpretations of boreholes created last year in KML format:
 
 ---
 
-Permanent URLs of all groundwater filters in Wuustwezel that have water level measurements later than January 1st 2017 in CSV format:
+Permanent URLs of all groundwater screens in Wuustwezel that have water level measurements later than January 1st 2017 in CSV format:
 > https://www.dov.vlaanderen.be/geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=gw_meetnetten:meetnetten&propertyname=filterfiche&CQL_Filter=peilmetingen_tot%3E2017-01-01%20and%20gemeente=%27Wuustwezel%27&outputFormat=csv
 
 #### Endpoints
@@ -138,7 +138,7 @@ For some core feature types DOV has custom applications to enter, edit, import a
     - Lithologische beschrijvingen
     - Quartaire stratigrafie
 - Putten (groundwater locations)
-- Filters (groundwater filters)
+- Filters (groundwater screens)
 
 Each feature of these feature types is uniquely and permanently identifiable by its URL starting with `https://www.dov.vlaanderen.be/data/`. The URL resolves to an interactive HTML view of the feature, appending `.xml` to the URL will resolve to an XML representation of the feature according to the [DOV schema](https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/dov.xsd).
 

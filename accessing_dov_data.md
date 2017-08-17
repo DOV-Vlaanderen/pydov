@@ -140,9 +140,9 @@ For some core feature types DOV has custom applications to enter, edit, import a
 - Putten (groundwater locations)
 - Filters (groundwater screens)
 
-Each feature of these feature types is uniquely and permanently identifiable by its URL starting with `https://www.dov.vlaanderen.be/data/`. The URL resolves to an interactive HTML view of the feature, appending `.xml` to the URL will resolve to an XML representation of the feature according to the [DOV schema](https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/dov.xsd).
+Each feature of these feature types is uniquely and permanently identifiable by its URL starting with `https://www.dov.vlaanderen.be/data/`. This URL resolves to an interactive HTML view of the feature. To obtain an XML representation of the same object according to the [DOV schema](https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/dov.xsd), you can append `.xml` to the URL.
 
-For each of these feature types we also provide a map layer that containts all features and some key attributes, including the permanent URL described above. This allows using the map layer to search and identify features of interest (using the WFS service) and subsequently get their XML representation through the permanent URL.
+For each of these feature types we also provide a map layer that contains all features and some key attributes, including the permanent URL described above. This allows using the map layer to search and identify features of interest (using the WFS service) and subsequently get their XML representation through the permanent URL.
 
 A short overview of the map layers including permanent URL's can be found below. Please note that a detailed description of each dataset and its attributes can be found in our [metadata catalogue](https://www.dov.vlaanderen.be/geonetwork), linked to in the first column:
 

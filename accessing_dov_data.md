@@ -173,4 +173,5 @@ The XML representation of borehole '1407-B4':
 - We do not provide an endpoint to get all features of a feature type as XML. You should use the WFS endpoint of the corresponding map layer to get the permanent URL of the features of interest to you and get their XML representation in a second step.
 
 #### More information
-- [DOV XML schema](https://dov.vlaanderen.be/dovweb/html/standaarden.html)
+- [DOV XML documentation](https://dov.vlaanderen.be/dovweb/html/standaarden.html)
+- [DOV XSD schema](https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/dov.xsd)

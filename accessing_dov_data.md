@@ -148,8 +148,8 @@ A short overview of the map layers including permanent URL's can be found below.
 
 Featuretype (feature catalogue) | WFS layer | Permanent URL base
 ------------------------------- | --------- | ------------------
-[Boringen](https://www.dov.vlaanderen.be/geonetwork/?uuid=4e20bf9c-3a5c-42be-b5b6-bef6214d1fa7) | dov-pub:Boringen | `https://www.dov.vlaanderen.be/data/boring/`
-[Sonderingen](https://www.dov.vlaanderen.be/geonetwork/?uuid=b397faec-1b64-4854-8000-2375edb3b1a8) | dov-pub:Sonderingen | `https://www.dov.vlaanderen.be/data/sondering/`
+[Boringen](https://www.dov.vlaanderen.be/geonetwork/?uuid=4e20bf9c-3a5c-42be-b5b6-bef6214d1fa7) [(fc)](https://www.dov.vlaanderen.be/geonetwork/?uuid=c0cbd397-520f-4ee1-aca7-d70e271eeed6) | dov-pub:Boringen | `https://www.dov.vlaanderen.be/data/boring/`
+[Sonderingen](https://www.dov.vlaanderen.be/geonetwork/?uuid=b397faec-1b64-4854-8000-2375edb3b1a8) [(fc)](https://www.dov.vlaanderen.be/geonetwork/?uuid=bd539ba5-5f4d-4c43-9662-51c16caea351) | dov-pub:Sonderingen | `https://www.dov.vlaanderen.be/data/sondering/`
 [Formele stratigrafie](https://www.dov.vlaanderen.be/geonetwork/?uuid=212af8cd-bffd-423c-9d2b-69c544ab3b04) [(fc)](https://www.dov.vlaanderen.be/geonetwork/?uuid=68405b5d-51e6-44d0-b634-b580bc2f9eb6) | interpretaties:formele_stratigrafie | `https://www.dov.vlaanderen.be/data/interpretatie/`
 [Gecodeerde lithologie](https://www.dov.vlaanderen.be/geonetwork/?uuid=35d630e4-9145-46f9-b7dc-da290a0adc55) [(fc)](https://www.dov.vlaanderen.be/geonetwork/?uuid=0032241d-8920-415e-b1d8-fa0a48154904) | interpretaties:gecodeerde_lithologie | `https://www.dov.vlaanderen.be/data/interpretatie/`
 [Geotechnische coderingen](https://www.dov.vlaanderen.be/geonetwork/?uuid=6a3dc5d4-0744-4d9c-85ce-da50913851cc) [(fc)](https://www.dov.vlaanderen.be/geonetwork/?uuid=85404aa6-2d88-46f6-ae5a-575aece71efd)| interpretaties:geotechnische_coderingen | `https://www.dov.vlaanderen.be/data/interpretatie/`

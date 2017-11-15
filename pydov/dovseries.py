@@ -1,5 +1,3 @@
-
-
 import xmltodict
 import pandas as pd
 
@@ -7,13 +5,15 @@ import pandas as pd
 class DOVVariableError(Exception):
     pass
 
-namespaces = {"http://kern.schemas.dov.vlaanderen.be":'kern'}
+
+namespaces = {"http://kern.schemas.dov.vlaanderen.be": 'kern'}
+
 
 class DovGroundwater(object):
-
     def __init__(self, xml_doc):
         with open(xml_doc) as fd:
-            doc = xmltodict.parse(fd.read(), process_namespaces = True, namespaces=namespaces)
+            doc = xmltodict.parse(fd.read(), process_namespaces=True,
+                                  namespaces=namespaces)
             self.peilmetingen = self._get_peilmetingen_df(doc)
             self.observaties = self._get_observaties_df(doc)
             self.metadata_locatie = doc["kern:dov-schema"]["grondwaterlocatie"]
@@ -99,15 +99,13 @@ class DovGroundwater(object):
 
         vardata = self.observaties[self.observaties["parameter"] == variable]
         return vardata.pivot_table(
-                            index="datum",
-                            columns=["filternummer"],
-                            values="waarde")
+            index="datum",
+            columns=["filternummer"],
+            values="waarde")
 
     @property
     def peilmetingen_timeseries(self):
         return self.peilmetingen.reset_index().pivot_table(
-                            index="datum",
-                            columns=["grondwaterlocatie", "filternummer"],
-                            values="diepte")
-
-
+            index="datum",
+            columns=["grondwaterlocatie", "filternummer"],
+            values="diepte")

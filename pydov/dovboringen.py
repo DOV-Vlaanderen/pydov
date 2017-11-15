@@ -48,19 +48,19 @@ class DovBoringen(object):
 
         Parameters
         ----------
-        url: str
+        url : str
             url string
-        version: str
+        version : str
             the version on the wfs_boring
-        layer: str
+        layer : str
             the layer with the general borehole data
-        maxfeatures: int
+        maxfeatures : int
             the maximum number of features that will be obtained from the wfs_boring
-        timeout: int
+        timeout : int
             time in seconds after which requests should time-out
-        outputformat: str
+        outputformat : str
             the format that is returned from the wfs_boring
-        epsg: int
+        epsg : int
             the epsg code in which data should be retrieved. Default value for Lambert72: 31370
         """
         # define general wfs_boring info
@@ -123,19 +123,19 @@ class DovBoringen(object):
         The following variables are remapped to a more readable name in the resulting dataframe:
         {fiche: url_data, X_ml72: x, Y_ml72: y, Z_mTAW: z_mv}.
 
-        Parameters:
-        -----------
-        query_string: str
+        Parameters
+        ----------
+        query_string : str
             A string containing the query that will be used as constrained in the WFS call
-        bbox: tuple of floats
+        bbox : tuple of floats
             The X, Y coordinates of the bounding box as (xmin, ymin, xmax, ymax)
-        add_props: list of strings
+        add_props : list of strings
             A list with the PropertyNames of attributes in the queried layer that need to be selected in addition
             to the default ones
 
-        Return:
+        Returns
         -------
-        boringen_df: dataframe
+        boringen_df : dataframe
             A dataframe with the selected attributes of the selected borehole locations
 
         """
@@ -170,13 +170,13 @@ class DovBoringen(object):
     def parse_wfs(response, layer, version):
         """A generator to parse the response from a wfs, depending on the server version
 
-        Parameters:
-        -----------
-        response: StringIO
+        Parameters
+        ----------
+        response : StringIO
             The response from a wfs.getfeature() query (OWSlib)
-        layer: str
+        layer : str
             The wfs layer that is queried
-        version: str
+        version : str
             The version of the WFS server: only '1.1.0' and '2.0.0'
 
         """
@@ -206,18 +206,18 @@ class DovBoringen(object):
          The PropertyIsBetween operator requires a lower and upper boundary, it is given by a tuple in the string, e.g.:
          "diepte_tot_m << (20,100)"
 
-        Parameters:
-        -----------
-        query_string: str
+        Parameters
+        ----------
+        query_string : str
             A string containing the query that will be used as constrained in the WFS call. See also: get_boringen()
-        bbox: tuple of floats, or empty tuple
+        bbox : tuple of floats, or empty tuple
             The X, Y coordinates of the bounding box as (xmin, ymin, xmax, ymax)
-        wfs_filters: dict
+        wfs_filters : dict
             A dictionary mapping the operator in the query string to the comparison operator of the wfs call
 
-        Returns:
-        --------
-        filterxml: str
+        Returns
+        -------
+        filterxml : str
             A string of the xml constraint for a wfs call using owslib
 
         """
@@ -269,16 +269,16 @@ class DovBoringen(object):
         In addition, multiple layers are supported for the 'boringen' and 'interpretation' by joining the data where
         'laag_van' >= 'boring_van' and 'laag_tot' <= 'boring_tot' for each boring.
 
-        Parameters:
-        -----------
-        file: str
+        Parameters
+        ----------
+        file : str
             The path where the xml file is located
-        interpretation: str
+        interpretation:  str
             The interpretation that should be extracted from the XML file
 
-        Returns:
-        --------
-        result: pd.DataFrame
+        Returns
+        -------
+        result : pd.DataFrame
             A dataframe with the attributes of the boringen and the interpretation defined by self.df_cols_dict
 
         """
@@ -365,18 +365,19 @@ class DovBoringen(object):
     def get_boringen_data(self, boringen, interpretation):
         """Retreive the data from the boringen of an on-line xml query or downloaded xml file
 
-        Parameters:
-        -----------
-        boringen: pd.DataFrame or str
+        Parameters
+        ----------
+        boringen : pd.DataFrame or str
             The pointer to the xml datasource: on-line as a pd.DataFrame from self.get_boringen(), or from an XML
             file downloaded from dov.vlaanderen.be (for boringen)
-        interpretation: str
+        interpretation : str
             The interpretation one would like to extract from the XML file
 
-        Returns:
-        --------
-        result: pd.DataFrame
+        Returns
+        -------
+        result : pd.DataFrame
             A dataframe with the attributes of the boringen and the interpretation defined by self.df_cols_dict
+
         """
         if isinstance(boringen, pd.DataFrame):
             data_boringen = pd.DataFrame(list(self.extract_boringen_urls(

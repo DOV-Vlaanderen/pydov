@@ -31,11 +31,11 @@ setup(
     author_email='dov@vlaanderen.be',
     url='https://github.com/DOV-Vlaanderen/pydov',
     packages=find_packages(include=['pydov']),
-    entry_points={
-        'console_scripts': [
-            'pydov=pydov.cli:main'
-        ]
-    },
+    # entry_points={
+    #     'console_scripts': [
+    #         'pydov=pydov.cli:main'
+    #     ]
+    # },
     include_package_data=True,
     install_requires=requirements,
     license="MIT license",

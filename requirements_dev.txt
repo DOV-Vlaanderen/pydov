@@ -12,3 +12,8 @@ pytest
 pytest-runner
 numpydoc
 pytest-cov
+
+owslib
+xmltodict
+pandas
+numpy

@@ -11,3 +11,4 @@ PyYAML
 pytest
 pytest-runner
 numpydoc
+pytest-cov

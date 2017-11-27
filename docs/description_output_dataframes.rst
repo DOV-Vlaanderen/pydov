@@ -1,10 +1,5 @@
-var
-type
-vb
-
-
 Interpretations
-==============
+===============
 
 Possible interpretations are:
  * Informele stratigrafie
@@ -27,133 +22,99 @@ as new records in the final dataframe.
     :header-rows: 1
 
     source,new_name,data_type,example
-    url,,,
-    ,permkey,full_url,https://.../2001-186513.xml
-    /ns3:dov-schema/interpretaties/informelestratigrafie/laag/van,,,
-    ,van,float,0.00
-    /ns3:dov-schema/interpretaties/informelestratigrafie/laag/tot,,,
-    ,tot,float,1.74
-    /ns3:dov-schema/interpretaties/informelestratigrafie/laag/beschrijving,,,
-    ,beschrijving,string,Quartair
+    url,permkey,full_url,https://.../2001-186513.xml
+    /ns3:dov-schema/interpretaties/informelestratigrafie/laag/van,van,float,0.00
+    /ns3:dov-schema/interpretaties/informelestratigrafie/laag/tot,tot,float,1.74
+    /ns3:dov-schema/interpretaties/informelestratigrafie/laag/beschrijving,beschrijving,string,Quartair
 
+|
 
-    .. csv-table:: Formele stratigrafie
+ .. csv-table:: Formele stratigrafie
     :header-rows: 1
 
     source,new_name,data_type,example
-    url,,,
-    ,permkey,full_url,https://.../2001-186513.xml
-    /ns3:dov-schema/interpretaties/formelestratigrafie/laag/van,,,
-    ,van,float,0.00
-    /ns3:dov-schema/interpretaties/formelestratigrafie/laag/tot,,,
-    ,tot,float,1.75
-    /ns3:dov-schema/interpretaties/formelestratigrafie/laag/lid1,,,
-    ,lid1,string,Q
-    /ns3:dov-schema/interpretaties/formelestratigrafie/laag/relatie_lid1_lid2,,,
-    ,relatie_lid1_lid2,string,T
-    /ns3:dov-schema/interpretaties/formelestratigrafie/laag/lid2,,,
-    ,lid2,string,Q
+    url,permkey,full_url,https://.../2001-186513.xml
+    /ns3:dov-schema/interpretaties/formelestratigrafie/laag/van,van,float,0.00
+    /ns3:dov-schema/interpretaties/formelestratigrafie/laag/tot,tot,float,1.75
+    /ns3:dov-schema/interpretaties/formelestratigrafie/laag/lid1,lid1,string,Q
+    /ns3:dov-schema/interpretaties/formelestratigrafie/laag/relatie_lid1_lid2,relatie_lid1_lid2,string,T
+    /ns3:dov-schema/interpretaties/formelestratigrafie/laag/lid2,lid2,string,Q
 
+|
 
   .. csv-table:: Lithologische beschrijvingen
     :header-rows: 1
 
     source,new_name,data_type,example
-    url,,,
-    ,permkey,full_url,https://.../2001-186513.xml
-    /ns3:dov-schema/interpretaties/lithologischebeschrijving/laag/van,,,
-    ,van,float,0.00
-    /ns3:dov-schema/interpretaties/lithologischebeschrijving/laag/tot,,,
-    ,tot,float,1.75
-    /ns3:dov-schema/interpretaties/lithologischebeschrijving/laag/beschrijving,,,
-    ,beschrijving,Terre végétale sableuse
+    url,permkey,full_url,https://.../2001-186513.xml
+    /ns3:dov-schema/interpretaties/lithologischebeschrijving/laag/van,van,float,0.00
+    /ns3:dov-schema/interpretaties/lithologischebeschrijving/laag/tot,tot,float,1.75
+    /ns3:dov-schema/interpretaties/lithologischebeschrijving/laag/beschrijving,beschrijving,Terre végétale sableuse
 
+|
 
   .. csv-table:: Gecodeerde lithologie
     :header-rows: 1
 
     source,new_name,data_type,example
-    url,,,
-    ,permkey,full_url,https://.../2001-186513.xml
-    /ns3:dov-schema/interpretaties/gecodeerdelithologie/laag/van,,,
-    ,van,float,0.00
-    /ns3:dov-schema/interpretaties/gecodeerdelithologie/laag/tot,,,
-    ,tot,float,1.75
-    /ns3:dov-schema/interpretaties/gecodeerdelithologie/laag/hoofdnaam/grondsoort,,,
-    ,hoofd_grondsoort,string,KL
-    /ns3:dov-schema/interpretaties/gecodeerdelithologie/laag/bijmenging/plaatselijk,,,
-    ,bijmenging_plaatselijk,boolean,false
-    /ns3:dov-schema/interpretaties/gecodeerdelithologie/laag/bijmenging/hoeveelheid,,,
-    ,bijmening_hoeveelheid,string,N
-    /ns3:dov-schema/interpretaties/gecodeerdelithologie/laag/bijmenging/grondsoort,,,
-    ,bijmenging_grondsoort,string,XZ
+    url,permkey,full_url,https://.../2001-186513.xml
+    /ns3:dov-schema/interpretaties/gecodeerdelithologie/laag/van,van,float,0.00
+    /ns3:dov-schema/interpretaties/gecodeerdelithologie/laag/tot,tot,float,1.75
+    /ns3:dov-schema/interpretaties/gecodeerdelithologie/laag/hoofdnaam/grondsoort,hoofd_grondsoort,string,KL
+    /ns3:dov-schema/interpretaties/gecodeerdelithologie/laag/bijmenging/plaatselijk,bijmenging_plaatselijk,boolean,false
+    /ns3:dov-schema/interpretaties/gecodeerdelithologie/laag/bijmenging/hoeveelheid,bijmening_hoeveelheid,string,N
+    /ns3:dov-schema/interpretaties/gecodeerdelithologie/laag/bijmenging/grondsoort,bijmenging_grondsoort,string,XZ
 
+|
 
   .. csv-table:: Hydrogeologische stratigrafie
     :header-rows: 1
 
     source,new_name,data_type,example
-    url,,,
-    ,permkey,full_url,https://.../2001-186513.xml
-    /ns3:dov-schema/interpretaties/hydrogeologischeinterpretatie/laag/van,,,
-    ,van,float,0.00
-    /ns3:dov-schema/interpretaties/hydrogeologischeinterpretatie/laag/tot,,,
-    ,tot,float,1.75
-    /ns3:dov-schema/interpretaties/hydrogeologischeinterpretatie/laag/aquifer,,,
-    ,aquifer,string,0252
+    url,permkey,full_url,https://.../2001-186513.xml
+    /ns3:dov-schema/interpretaties/hydrogeologischeinterpretatie/laag/van,van,float,0.00
+    /ns3:dov-schema/interpretaties/hydrogeologischeinterpretatie/laag/tot,tot,float,1.75
+    /ns3:dov-schema/interpretaties/hydrogeologischeinterpretatie/laag/aquifer,aquifer,string,0252
 
+|
 
   .. csv-table:: Informele hydrogeologische stratigrafie
     :header-rows: 1
 
     source,new_name,data_type,example
-    url,,,
-    ,permkey,full_url,https://.../2001-186513.xml
-    /ns3:dov-schema/interpretaties/informelehydrostratigrafie/laag/van,,,
-    ,van,float,0.00
-    /ns3:dov-schema/interpretaties/informelehydrostratigrafie/laag/tot,,,
-    ,tot,float,1.75
-    /ns3:dov-schema/interpretaties/informelehydrostratigrafie/laag/beschrijving,,,
-    ,beschrijving,string,Quartair
+    url,permkey,full_url,https://.../2001-186513.xml
+    /ns3:dov-schema/interpretaties/informelehydrostratigrafie/laag/van,van,float,0.00
+    /ns3:dov-schema/interpretaties/informelehydrostratigrafie/laag/tot,tot,float,1.75
+    /ns3:dov-schema/interpretaties/informelehydrostratigrafie/laag/beschrijving,beschrijving,string,Quartair
 
+|
 
   .. csv-table:: Quartaire stratigrafie
     :header-rows: 1
 
     source,new_name,data_type,example
-    url,,,
-    ,permkey,full_url,https://.../2001-186513.xml
-    /ns3:dov-schema/interpretaties/quartairstratigrafie/laag/van,,,
-    ,van,float,0.00
-    /ns3:dov-schema/interpretaties/quartairstratigrafie/laag/tot,,,
-    ,tot,float,1.75
-    /ns3:dov-schema/interpretaties/quartairstratigrafie/laag/lid1,,,
-    ,lid1,string,F
-    /ns3:dov-schema/interpretaties/quartairstratigrafie/laag/relatie_lid1_lid2,,,
-    ,relatie_lid1_lid2,string,T
-    /ns3:dov-schema/interpretaties/quartairstratigrafie/laag/lid2,,,
-    ,lid2,string,F
+    url,permkey,full_url,https://.../2001-186513.xml
+    /ns3:dov-schema/interpretaties/quartairstratigrafie/laag/van,van,float,0.00
+    /ns3:dov-schema/interpretaties/quartairstratigrafie/laag/tot,tot,float,1.75
+    /ns3:dov-schema/interpretaties/quartairstratigrafie/laag/lid1,lid1,string,F
+    /ns3:dov-schema/interpretaties/quartairstratigrafie/laag/relatie_lid1_lid2,relatie_lid1_lid2,string,T
+    /ns3:dov-schema/interpretaties/quartairstratigrafie/laag/lid2,lid2,string,F
 
+|
 
   .. csv-table:: Geotechnische coderingen
     :header-rows: 1
 
     source,new_name,data_type,example
-    url,,,
-    ,permkey,full_url,https://.../2001-186513.xml
-    /ns3:dov-schema/interpretaties/geotechnischecodering/laag/van,,,
-    ,van,float,0.00
-    /ns3:dov-schema/interpretaties/geotechnischecodering/laag/tot,,,
-    ,tot,float,1.75
-    /ns3:dov-schema/interpretaties/geotechnischecodering/laag/hoofdnaam/grondsoort,,,
-    ,hoofd_grondsoort,string,KL
-    /ns3:dov-schema/interpretaties/geotechnischecodering/laag/bijmenging/plaatselijk,,,
-    ,bijmenging_plaatselijk,boolean,false
-    /ns3:dov-schema/interpretaties/geotechnischecodering/laag/bijmenging/hoeveelheid,,,
-    ,bijmening_hoeveelheid,string,N
-    /ns3:dov-schema/interpretaties/geotechnischecodering/laag/bijmenging/grondsoort,,,
-    ,bijmenging_grondsoort,string,XZ
+    url,permkey,full_url,https://.../2001-186513.xml
+    /ns3:dov-schema/interpretaties/geotechnischecodering/laag/van,van,float,0.00
+    /ns3:dov-schema/interpretaties/geotechnischecodering/laag/tot,tot,float,1.75
+    /ns3:dov-schema/interpretaties/geotechnischecodering/laag/hoofdnaam/grondsoort,hoofd_grondsoort,string,KL
+    /ns3:dov-schema/interpretaties/geotechnischecodering/laag/bijmenging/plaatselijk,bijmenging_plaatselijk,boolean,false
+    /ns3:dov-schema/interpretaties/geotechnischecodering/laag/bijmenging/hoeveelheid,bijmening_hoeveelheid,string,N
+    /ns3:dov-schema/interpretaties/geotechnischecodering/laag/bijmenging/grondsoort,bijmenging_grondsoort,string,XZ
 
+|
 
 Boreholes
 =========
@@ -167,29 +128,16 @@ The new_name column represents the headers of the final dataframe.
     :header-rows: 1
 
     source,new_name,data_type,example
-    url,,,
-    ,permkey,full_url,https://.../2001-186513.xml
-    /ns3:dov-schema/boring/xy/x,,,
-    ,x,float,152301.0
-    /ns3:dov-schema/boring/xy/y,,,
-    ,y,float,211682.0
-    /ns3:dov-schema/boring/oorspronkelijk_maaiveld/waarde,,,
-    ,mv_taw,float,8.00
-    /ns3:dov-schema/boring/start_tov_maaiveld/gestart_op,,,
-    ,start_op,string,MAAIVELD
-    /ns3:dov-schema/boring/diepte_van,,,
-    ,diepte_van,float,0.00
-    /ns3:dov-schema/boring/diepte_tot,,,
-    ,diepte_van,float,19.00
-    /ns3:dov-schema/boring/datum_aanvang,,,
-    ,datum_aanvang,date,1930-10-01
-    /ns3:dov-schema/boring/uitvoerder/naam,,,
-    ,uitvoerder,string,Smet - Dessel
-    /ns3:dov-schema/boring/boorgatmeting/uitgevoerd,,,
-    ,boorgatmeting,boolean,false
-    /ns3:dov-schema/boring/details/boormethode/van,,,
-    ,van,float,0.00
-    /ns3:dov-schema/boring/details/boormethode/tot,,,
-    ,tot,float,19.00
-    /ns3:dov-schema/boring/details/boormethode/methode,,,
-    ,boormethode,string,droge boring
+    url,permkey,full_url,https://.../2001-186513.xml
+    /ns3:dov-schema/boring/xy/x,x,float,152301.0
+    /ns3:dov-schema/boring/xy/y,y,float,211682.0
+    /ns3:dov-schema/boring/oorspronkelijk_maaiveld/waarde,mv_taw,float,8.00
+    /ns3:dov-schema/boring/start_tov_maaiveld/gestart_op,start_op,string,MAAIVELD
+    /ns3:dov-schema/boring/diepte_van,diepte_van,float,0.00
+    /ns3:dov-schema/boring/diepte_tot,diepte_van,float,19.00
+    /ns3:dov-schema/boring/datum_aanvang,datum_aanvang,date,1930-10-01
+    /ns3:dov-schema/boring/uitvoerder/naam,uitvoerder,string,Smet - Dessel
+    /ns3:dov-schema/boring/boorgatmeting/uitgevoerd,boorgatmeting,boolean,false
+    /ns3:dov-schema/boring/details/boormethode/van,van,float,0.00
+    /ns3:dov-schema/boring/details/boormethode/tot,tot,float,19.00
+    /ns3:dov-schema/boring/details/boormethode/methode,boormethode,string,droge boring

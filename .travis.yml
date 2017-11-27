@@ -3,7 +3,7 @@ language: python
 install:
 - pip install -U tox-travis
 - pip install -U coveralls
-- pip install -U Sphinx
+- pip install -U Sphinx sphinx-rtd-theme
 
 matrix:
   include:

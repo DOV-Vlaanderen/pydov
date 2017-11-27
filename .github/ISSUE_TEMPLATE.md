@@ -1,4 +1,4 @@
-You can ask questions about the DOV webservices or about the `pydov` package. If you have a question about the `pydov` Python package, please use following template.
+<!-- You can ask questions about the DOV webservices or about the `pydov` package. If you have a question about the `pydov` Python package, please use following template. -->
 
 * PyDOV version:
 * Python version:

@@ -3,7 +3,6 @@ language: python
 install:
 - pip install -U tox-travis
 - pip install -U coveralls
-- pip install -U Sphinx sphinx-rtd-theme
 
 matrix:
   include:
@@ -19,7 +18,6 @@ script: tox
 
 after_success:
 - coveralls || echo "coveralls failure"
-- sphinx-build -b html docs docs/_build
 
 deploy:
 - provider: pypi

@@ -1,8 +1,11 @@
 language: python
 
+env:
+  - COVERALLS_PARALLEL=true
+
 install:
-- pip install -U tox-travis
-- pip install -U coveralls
+  - pip install -U tox-travis
+  - pip install -U coveralls
 
 matrix:
   include:
@@ -18,7 +21,7 @@ matrix:
 script: tox
 
 after-succes:
-- coveralls || echo "coveralls failure"
+  - coveralls || echo "coveralls failure"
 
 deploy:
 - provider: pypi

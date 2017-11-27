@@ -20,7 +20,7 @@ matrix:
 
 script: tox
 
-after-succes:
+after_success:
   - coveralls || echo "coveralls failure"
 
 deploy:

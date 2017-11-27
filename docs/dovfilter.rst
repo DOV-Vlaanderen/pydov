@@ -14,33 +14,36 @@ Ligging
 ~~~~~~~
 In deze dataframe komen dezelfde velden als bij het zoeken in de site:
 
- * GW-ID
- * Filternr
- * Filtertype
- * X (mL72)
- * Y (mL72)
- * Z (mTAW)
- * Gemeente
- * Deelgemeente
- * Meetnet
- * Aquifer
- * Grondwaterlichaam
- * Onderkant filter(m)
- * Lengte filter(m)
+* permkey
+* GW-ID
+* filternummer
+* Filtertype
+* X (mL72)
+* Y (mL72)
+* Z (mTAW)
+* Gemeente
+* Deelgemeente
+* Meetnet
+* Aquifer
+* Grondwaterlichaam
+* Onderkant filter(m)
+* Lengte filter(m)
 
 Observaties
 ~~~~~~~~~~~
 
 In deze dataframe worden volgende velden gegeven:
- * grondwaterlocatie
- * filternummer
- * diepte
- * methode
- * betrouwbaarheid
+* permkey
+* GW-ID
+* filternummer
+* diepte
+* betrouwbaarheid
+* methode
 
 Peilmetingen
 ~~~~~~~~~~~~
-* grondwaterlocatie
+* permkey
+* GW-ID
 * filternummer
 * monsternummer
 * datum (monstername)

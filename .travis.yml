@@ -17,11 +17,10 @@ matrix:
 
 script: tox
 
+after-succes:
+- coveralls || echo "coveralls failure"
+
 deploy:
-- provider: script
-  script: coveralls || echo "coveralls failure"
-  on:
-    condition: $MY_ENV = py35
 - provider: pypi
   distributions: sdist bdist_wheel
   user: roel

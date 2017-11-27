@@ -16,8 +16,8 @@ matrix:
 
 script: tox
 
-after_success:
-- coveralls || echo "coveralls failure"
+before_deploy:
+  - coveralls || echo "coveralls failure"
 
 deploy:
 - provider: pypi

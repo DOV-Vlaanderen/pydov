@@ -2,8 +2,8 @@ language: python
 
 install:
 - pip install -U tox-travis
-- pip install -U travis-sphinx
 - pip install -U coveralls
+- pip install -U Sphinx
 
 matrix:
   include:
@@ -19,9 +19,7 @@ script: tox
 
 after_success:
 - coveralls || echo "coveralls failure"
-
-before-deploy:
-- travis-sphinx --source=docs --outdir='docs/_build' --nowarn build
+- sphinx-build -b html docs docs/_build
 
 deploy:
 - provider: pypi

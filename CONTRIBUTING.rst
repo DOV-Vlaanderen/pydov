@@ -127,6 +127,6 @@ We aspire to treat everybody equally, and value their contributions. Decisions a
 Creating the documentation
 --------------------------
 
-We are glad to accept any sort of documentation: function docstrings, markdown/reStructuredText documents, tutorials, etc. Documentation lives in the ``doc/`` directory.
+We are glad to accept any sort of documentation: function docstrings, reStructuredText documents, tutorials, etc. Documentation lives in the ``docs/`` directory.
 
 You can edit the documentation using any text editor and then generate the HTML output by typing ``make html`` from the ``doc/`` directory. For building the documentation, you will need `sphinx <http://sphinx.pocoo.org/>`_.

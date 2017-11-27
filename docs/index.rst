@@ -9,10 +9,11 @@ Contents:
    readme
    installation
    usage
+   endpoints
    contributing
    authors
+   conduct
    history
-   endpoints
    reference
 
 Indices and tables

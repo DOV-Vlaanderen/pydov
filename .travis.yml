@@ -13,13 +13,15 @@ matrix:
     - python: 3.6
       env: TOXENV=py36
     - env: TOXENV=flake8
+    - env: TOXENV=docs
 
 script: tox
 
-before_deploy:
-  - coveralls || echo "coveralls failure"
-
 deploy:
+- provider: script
+  script: coveralls || echo "coveralls failure"
+  on:
+    condition: $MY_ENV = py35
 - provider: pypi
   distributions: sdist bdist_wheel
   user: roel

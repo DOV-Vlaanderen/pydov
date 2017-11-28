@@ -156,6 +156,7 @@ between the 'methode_van'/'methode_tot' of the borehole:
 
     source,new_name,data_type,example
     url,pkey_boring,string,https://.../2001-186513.xml
+    /ns3:dov-schema/boring/identificatie,boornummer,string,kb15d28w-B164
     /ns3:dov-schema/boring/xy/x,x,float,152301.0
     /ns3:dov-schema/boring/xy/y,y,float,211682.0
     /ns3:dov-schema/boring/oorspronkelijk_maaiveld/waarde,mv_mtaw,float,8.00

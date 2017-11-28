@@ -25,14 +25,27 @@ In deze dataframe komen gelijkaardige velden als bij het zoeken in de site:
     ns3:dov-schema/filter/filtertype, filtertype, tekst, peilfilter
     ns3:dov-schema/grondwaterlocatie/puntligging/xy/x, x, numeric, 257021.8
     ns3:dov-schema/grondwaterlocatie/puntligging/xy/y, y, numeric, 159758.4
-    (complex), z_mtaw, numeric, 257021.8
+    ns3:dov-schema/grondwaterlocatie/puntligging/oorspronkelijk_maaiveld, z_mtaw, numeric, 257021.8
     ns3:dov-schema/grondwaterlocatie/puntligging/gemeente, gemeente, niscode, 73109
     ns3:dov-schema/filter/meetnet, meetnet, numeriek(codelijst), 8
     ns3:dov-schema/filter/ligging/aquifer, aquifer, numeriek(codelijst), 1300
     ns3:dov-schema/filter/ligging/grondwaterlichaam, aquifer, numeriek(codelijst), BLKS_1100_GWL_1M
     ns3:dov-schema/filter/ligging/regime, aquifer, numeriek(codelijst), freatisch
-    (complex - filteropbouw), onderkant filter, numeriek(codelijst), 8
-    (complex - filteropbouw), lengte filter, numeriek(codelijst), 8
+    (complex - filteropbouw), onderkant_filter, numeriek(codelijst), 8
+    (complex - filteropbouw), lengte_filter, numeriek(codelijst), 8
+
+
+Logica filteropbouw
+-------------------
+voor het element waar
+``ns3:dov-schema/filter/opbouw/onderdeel/filterelement == 'filter'``
+
+De onderkant filter komt overeen met
+``ns3:dov-schema/filter/opbouw/onderdeel/tot/``
+
+de lengte met
+``ns3:dov-schema/filter/opbouw/onderdeel/tot/ -
+ns3:dov-schema/filter/opbouw/onderdeel/van/``
 
 
 Observaties

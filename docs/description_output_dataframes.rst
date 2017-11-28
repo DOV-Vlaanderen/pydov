@@ -140,6 +140,8 @@ between the 'van'/'tot' of the borehole:
     AND interpretation["tot"] <= boring["tot"]
 
 
+
+
   .. csv-table:: Boringen
     :header-rows: 1
 
@@ -148,7 +150,7 @@ between the 'van'/'tot' of the borehole:
     /ns3:dov-schema/boring/xy/x,x,float,152301.0
     /ns3:dov-schema/boring/xy/y,y,float,211682.0
     /ns3:dov-schema/boring/oorspronkelijk_maaiveld/waarde,mv_taw,float,8.00
-    /ns3:dov-schema/boring/start_tov_maaiveld/gestart_op,start_op,string,MAAIVELD
+    z_mtaw_boring,start_boring_mtaw,float,8.00
     /ns3:dov-schema/boring/diepte_van,diepte_van,float,0.00
     /ns3:dov-schema/boring/diepte_tot,diepte_van,float,19.00
     /ns3:dov-schema/boring/datum_aanvang,datum_aanvang,date,1930-10-01

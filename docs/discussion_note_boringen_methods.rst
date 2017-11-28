@@ -5,6 +5,8 @@ Possible schema:
 
 .. code-block:: python
 
+   import pandas
+   
    class DovSearch(object)
        def __init__(self, ):
            """instantiate class for certain location
@@ -46,15 +48,50 @@ Possible schema:
            
            """
            self.ip = globals()[interpretation]()
+           df_boring .... get data from....
+           data_ip ... get data from....
+           df_ip = self.ip.get_dataframe(data)
+           # add method to join with where clause
+           return df
 
 
-   class IpHydroStrat(DovSearch):
+   class HydrogeologischeStratigrafie(DovSearch):
        """class for interpretation of Hydrogeological Stratification
        """
-       def __init__(self, ):
-           """instantiate 
+       def __init__(self, location=None):
+           """instantiate class for certain location
+           
+           location can be anything from coordinates (with buffer), bbox
+           or polygon, default None
+           """
+           if location:
+               self.location = location # add method to derive location from input
+           self.headers = ['pkey_interpretatie', 
+                           'pkey_boring', 
+                           'pkey_sondering', 
+                           'diepte_laag_van',
+                           'diepte_laag_tot',
+                           'aquifer']
+ 
+       def get_dataframe(self, input):
+           """create dataframe from input
            
            """
-           pass
- 
- 
+           self.df = pd.DataFrame(input, columns=self.headers) 
+
+   """
+   Examples
+    --------
+   >>> boring = DovBoringen(location)
+   >>> boring_metadata = boring.get_metadata()
+   >>> boring_data = boring.get_data()
+   >>> df_iphydro = boring.get_interpretation('HydrogeologischeStratigrafie')
+   >>> # alternatively
+   >>> intepretatie = HydrogeologischeStratigrafie(location)
+   >>> interpretatie_metadata = interpretatie.get_metadata()
+   >>> interpretatie_data = intepretatie.get_data()
+   >>> df_iphydro = interpretatie.get_dataframe(interpretatie_data)
+   
+   """ 
+   
+   

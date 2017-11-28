@@ -18,26 +18,42 @@ Possible schema:
            """
            pass
 
-       def get_data(self, ):
+       def get_data(self, location=None, query=None, columns=None):
            """get data from wfs and/or xml
            """
-           pass
+           self.location = location # add method to derive location from input
+           self.query = query
+           self.columns = columns # the attributes that one wants to retreive
+                                  # this way a download of the XML is prevented
+                                  # if not required
+           # different steps to come to dataframe
+           return dataframe_with_columns_of_interest
    
-   
-   class DovBoringen(DovSearch):
-       def __init__(self, location):
+   class DovGrondwaterFilter(DovSearch):
+       def __init__(self, ):
            """instantiate class for certain location
            
-           location can be anything from coordinates (with buffer), bbox
-           or polygon
            """
-           self.location = location # add method to derive location from input
+           
+           pass
+
+       def get_data(location=None, query=None, columns=None, extra_argument=None):
+           """for the filters one can add an additional argument to get 'observaties' or
+           'kwaliteitsdata', joined with the location which is returned by default
+           """ 
+           pass
+
+   class DovBoringen(DovSearch):
+       def __init__(self, ):
+           """instantiate class 
+           """
+           
            pass
 
        def list_interpretations(self, ):
            """check which intepretations are available
            """
-           pass
+           return Interpretatie().defined_interpretations
 
        def get_interpretation(self, interpretation):
            """get data from wfs and/or xml for a certain interpretation
@@ -51,7 +67,7 @@ Possible schema:
            self.ip = globals()[interpretation]()
            df_boring .... get data from....
            data_ip ... get data from....
-           df_ip = self.ip.get_interpretation(data)
+           df_ip = self.ip.get_interpretation(data_ip)
            # add method to join with where clause
            return df
 
@@ -99,17 +115,16 @@ Possible schema:
    """
    Examples
     --------
-   >>> boring = DovBoringen(location)
+   >>> boring = DovBoringen()
    >>> boring_metadata = boring.get_metadata()
-   >>> boring_data = boring.get_data()
-   >>> df_iphydro = boring.get_interpretation('HydrogeologischeStratigrafie')
+   >>> df_boring = boring.get_data(location, query, columns=[columns of interest])
+   >>> print Interpretatie().defined_interpretations
+   >>> interpretatie = HydrogeologischeStratigrafie()
+   >>> df_interpretatie = interpretatie.get_data_from_boring(df_boring)
    >>> # alternatively
    >>> print Interpretatie().defined_interpretations
-   >>> intepretatie = HydrogeologischeStratigrafie(location)
+   >>> intepretatie = HydrogeologischeStratigrafie()
    >>> interpretatie_metadata = interpretatie.get_metadata()
-   >>> interpretatie_data = intepretatie.get_data()
-   >>> df_iphydro = interpretatie.get_interpretation(interpretatie_data)
-   
-   """ 
-   
+   >>> df_interpetatie = intepretatie.get_data_interpretatie(location, query, columns=[columns of interest])
+   """   
    

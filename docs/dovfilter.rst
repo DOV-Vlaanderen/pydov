@@ -53,7 +53,7 @@ Observaties
 Peilmetingen
 ~~~~~~~~~~~~
 
-  .. csv-table:: Observaties (grondwater)
+  .. csv-table:: Peilmetingen (grondwater)
     :header-rows: 1
 
     source,new_name,data_type,example

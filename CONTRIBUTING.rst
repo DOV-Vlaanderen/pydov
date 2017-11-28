@@ -112,6 +112,7 @@ In addition, we add the following guidelines:
 * Avoid multiple statements on one line. Prefer a line return after a control flow statement (\ ``if/for``\ ).
 * Please don’t use ``import *`` in any case. It is considered harmful by the official Python recommendations. It makes the code harder to read as the origin of symbols is no longer explicitly referenced, but most important, it prevents using a static analysis tool like pyflakes to automatically find bugs.
 * Use the `numpy docstring standard <https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt>`_ in all your docstrings.
+* The attributes for specific classes are Pandas data.frames, please use lowercase names (eventually with `_`) as column names.
 
 
 Contribution is not only code implementation!
@@ -127,6 +128,16 @@ We aspire to treat everybody equally, and value their contributions. Decisions a
 Creating the documentation
 --------------------------
 
-We are glad to accept any sort of documentation: function docstrings, markdown/reStructuredText documents, tutorials, etc. Documentation lives in the ``doc/`` directory.
+We are glad to accept any sort of documentation: function docstrings, reStructuredText documents, tutorials, etc. Documentation lives in the ``docs/`` directory.
 
 You can edit the documentation using any text editor and then generate the HTML output by typing ``make html`` from the ``doc/`` directory. For building the documentation, you will need `sphinx <http://sphinx.pocoo.org/>`_.
+
+
+Note for maintainers
+--------------------
+
+The repo uses the `bumpversion` package to keep track of the package version. use the following commands to switch the version:
+
+#. ``bumpversion patch`` to increase version from 1.0.0 to 1.0.1.
+#. ``bumpversion minor`` to increase version from 1.0.0 to 1.1.0.
+#. ``bumpversion major`` to increase version from 1.0.0 to 2.0.0.

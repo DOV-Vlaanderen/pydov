@@ -10,3 +10,5 @@ To use PyDOV in a project::
   :caption: Overview
 
   description_output_dataframes
+  discussion_note_boringen_methods
+  

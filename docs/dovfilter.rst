@@ -18,8 +18,8 @@ In deze dataframe komen gelijkaardige velden als bij het zoeken in de site:
     :header-rows: 1
 
     source,new_name,data_type,example
-    url,permkey_filter,permkey, https://www.dov.vlaanderen.be/data/filter/2003-000253.xml
-    url,permkey_gw_id,permkey, https://www.dov.vlaanderen.be/data/put/2017-002063.xml
+    url,pkey_filter,permkey, https://www.dov.vlaanderen.be/data/filter/2003-000253.xml
+    url,pkey_gw_id,permkey, https://www.dov.vlaanderen.be/data/put/2017-002063.xml
     ns3:dov-schema/grondwaterlocatie/identificatie, gw_id, tekst, 900/82/1
     ns3:dov-schema/filter/identificatie, filternummer, tekst, 1
     ns3:dov-schema/filter/filtertype, filtertype, tekst, peilfilter
@@ -54,7 +54,7 @@ Observaties
     :header-rows: 1
 
     source,new_name,data_type,example
-    ns3:dov-schema/filtermeting/filter/permkey**, permkey_filter, permkey, https://www.dov.vlaanderen.be/data/filter/2003-000253.xml
+    ns3:dov-schema/filtermeting/filter/permkey**, pkey_filter, permkey, https://www.dov.vlaanderen.be/data/filter/2003-000253.xml
     ns3:dov-schema/filtermeting/grondwaterlocatie, gw_id, tekst, 1-0709
     ns3:dov-schema/filtermeting/filter/identificatie, filternummer, tekst, 2
     ns3:dov-schema/filtermeting/watermonster/identificatie, watermonster, tekst, 1-0709-F2/M2015
@@ -73,7 +73,7 @@ Peilmetingen
     :header-rows: 1
 
     source,new_name,data_type,example
-    ns3:dov-schema/filtermeting/filter/permkey**, permkey_filter, permkey, https://www.dov.vlaanderen.be/data/filter/2003-000253.xml
+    ns3:dov-schema/filtermeting/filter/permkey**, pkey_filter, permkey, https://www.dov.vlaanderen.be/data/filter/2003-000253.xml
     ns3:dov-schema/filtermeting/grondwaterlocatie, gw_id, tekst, 900/82/1
     ns3:dov-schema/filtermeting/filter/identificatie, tekst, filternummer, 1
     ns3:dov-schema/filtermeting/peilmeting/peil_mtaw, peil_mtaw, numeriek, 121.88

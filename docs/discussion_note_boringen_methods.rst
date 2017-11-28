@@ -50,7 +50,7 @@ Possible schema:
            self.ip = globals()[interpretation]()
            df_boring .... get data from....
            data_ip ... get data from....
-           df_ip = self.ip.get_dataframe(data)
+           df_ip = self.ip.get_interpretation(data)
            # add method to join with where clause
            return df
 
@@ -90,7 +90,7 @@ Possible schema:
    >>> intepretatie = HydrogeologischeStratigrafie(location)
    >>> interpretatie_metadata = interpretatie.get_metadata()
    >>> interpretatie_data = intepretatie.get_data()
-   >>> df_iphydro = interpretatie.get_dataframe(interpretatie_data)
+   >>> df_iphydro = interpretatie.get_interpretation(interpretatie_data)
    
    """ 
    

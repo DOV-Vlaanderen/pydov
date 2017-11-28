@@ -12,25 +12,26 @@ namespaces = {"http://kern.schemas.dov.vlaanderen.be": 'kern'}
 class DovGroundwater(object):
     def __init__(self, xml_doc):
         with open(xml_doc) as fd:
-            doc = xmltodict.parse(fd.read(), process_namespaces=True,
-                                  namespaces=namespaces)
-            self.peilmetingen = self._get_peilmetingen_df(doc)
-            self.observaties = self._get_observaties_df(doc)
-            self.metadata_locatie = doc["kern:dov-schema"]["grondwaterlocatie"]
-            self.metadata_filters = self._get_filter_metadata(doc)
+            self._doc = xmltodict.parse(fd.read(), process_namespaces=True,
+                                        namespaces=namespaces)
+            self.peilmetingen = self._get_peilmetingen_df()
+            self.observaties = self._get_observaties_df()
+            self.metadata_locatie = \
+                self._doc["kern:dov-schema"]["grondwaterlocatie"]
+            self.metadata_filters = self._get_filter_metadata()
 
-    @staticmethod
-    def _get_filter_metadata(doc):
+    def _get_filter_metadata(self):
         """"""
+        doc = self._doc
         filter_info = {}
         for filterd in doc["kern:dov-schema"]['filter']:
             filter_info[filterd["identificatie"]] = filterd
         return filter_info
 
-    @staticmethod
-    def get_peilmetingen(doc):
+    def get_peilmetingen(self):
         """Generator to extract the individual measurements from the XML
         export"""
+        doc = self._doc
         for filterm in doc["kern:dov-schema"]['filtermeting']:
             for meting in filterm['peilmeting']:
                 yield (filterm['grondwaterlocatie'],
@@ -40,9 +41,9 @@ class DovGroundwater(object):
                        meting['methode'],
                        meting['betrouwbaarheid'])
 
-    def _get_peilmetingen_df(self, doc):
+    def _get_peilmetingen_df(self):
         """"""
-        doc_df = pd.DataFrame(list(self.get_peilmetingen(doc)),
+        doc_df = pd.DataFrame(list(self.get_peilmetingen()),
                               columns=["grondwaterlocatie",
                                        "filternummer",
                                        "datum",
@@ -54,10 +55,10 @@ class DovGroundwater(object):
         doc_df = doc_df.set_index("datum")
         return doc_df
 
-    @staticmethod
-    def get_observaties(doc):
+    def get_observaties(self):
         """Generator to extract the individual observations from the XML
         export"""
+        doc = self._doc
         for filterm in doc["kern:dov-schema"]['filtermeting']:
             for watermonster in filterm['watermonster']:
                 for observatie in watermonster['observatie']:
@@ -67,13 +68,14 @@ class DovGroundwater(object):
                            ' '.join([watermonster['monstername']['datum'],
                                      watermonster['monstername']['tijd']]),
                            observatie['parameter'],
+
                            observatie['waarde_numeriek'],
                            observatie['eenheid'],
                            observatie['betrouwbaarheid'])
 
-    def _get_observaties_df(self, doc):
+    def _get_observaties_df(self):
         """"""
-        doc_df = pd.DataFrame(list(self.get_observaties(doc)),
+        doc_df = pd.DataFrame(list(self.get_observaties()),
                               columns=["grondwaterlocatie",
                                        "filternummer",
                                        "monsternummer",

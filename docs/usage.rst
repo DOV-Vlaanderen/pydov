@@ -7,6 +7,6 @@ To use PyDOV in a project::
     import pydov
 
 .. toctree::
-  :caption: Overview
+  :caption: Object types
 
   description_output_dataframes

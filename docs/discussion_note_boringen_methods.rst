@@ -37,6 +37,7 @@ Possible schema:
        def list_interpretations(self, ):
            """check which intepretations are available
            """
+           pass
 
        def get_interpretation(self, interpretation):
            """get data from wfs and/or xml for a certain interpretation
@@ -55,7 +56,23 @@ Possible schema:
            return df
 
 
-   class HydrogeologischeStratigrafie(DovSearch):
+   class Interpretatie(DovSearch):
+       """class for interpretation related stuff
+       """
+       def __init__(self,):
+           """instantiate class 
+           """
+           self.defined_interpretations = ['InformeleStratigrafie',
+                                           'FormeleStratigrafie',
+                                           'Lithologische beschrijvingen',
+                                           'GecodeerdeLithologie',
+                                           'HydrogeologischeStratigrafie',
+                                           'InformeleHydrogeologischeStratigrafie',
+                                           'QuartaireStratigrafie',
+                                           'GeotechnischeCoderingen',]
+
+
+   class HydrogeologischeStratigrafie(Interpretatie):
        """class for interpretation of Hydrogeological Stratification
        """
        def __init__(self, location=None):
@@ -72,7 +89,7 @@ Possible schema:
                            'diepte_laag_van',
                            'diepte_laag_tot',
                            'aquifer']
- 
+           
        def get_dataframe(self, input):
            """create dataframe from input
            
@@ -87,6 +104,7 @@ Possible schema:
    >>> boring_data = boring.get_data()
    >>> df_iphydro = boring.get_interpretation('HydrogeologischeStratigrafie')
    >>> # alternatively
+   >>> print Interpretatie().defined_interpretations
    >>> intepretatie = HydrogeologischeStratigrafie(location)
    >>> interpretatie_metadata = interpretatie.get_metadata()
    >>> interpretatie_data = intepretatie.get_data()

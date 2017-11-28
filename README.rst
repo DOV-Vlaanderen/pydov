@@ -2,6 +2,19 @@
 PyDOV
 =====
 
+.. image:: https://travis-ci.org/DOV-Vlaanderen/pydov.svg?branch=master
+    :target: https://travis-ci.org/DOV-Vlaanderen/pydov
+
+.. image:: https://ci.appveyor.com/api/projects/status/4ljy2a0p661v3d9k?svg=true
+    :target: https://ci.appveyor.com/project/Roel/pydov
+
+.. image:: https://readthedocs.org/projects/pydov/badge/?version=latest
+    :target: http://pydov.readthedocs.io/en/latest/?badge=latest
+    :alt: Documentation Status
+
+.. image:: https://coveralls.io/repos/github/DOV-Vlaanderen/pydov/badge.svg?branch=master
+    :target: https://coveralls.io/github/DOV-Vlaanderen/pydov?branch=master
+
 A Python package to download data from Databank Ondergrond Vlaanderen (DOV).
 
 * Free software: MIT license

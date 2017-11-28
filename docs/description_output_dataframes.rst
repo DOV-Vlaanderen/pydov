@@ -131,12 +131,20 @@ Below the desired attributes for each borehole as
 item /newline/ new_name, data_type, example
 The new_name column represents the headers of the final dataframe.
 
+The output of the boreholes can be joined with the interpretations following
+the pkey_boring AND ('van' and 'tot') attributes of both dataframes. E.g.: 
+multiple layers are discernced 'van'/'tot' in the interpretations for in
+between the 'van'/'tot' of the borehole: 
+    JOIN ON pkey_boring
+    AND interpretation["van"] >= boring["van"]
+    AND interpretation["tot"] <= boring["tot"]
+
 
   .. csv-table:: Boringen
     :header-rows: 1
 
     source,new_name,data_type,example
-    url,permkey,full_url,https://.../2001-186513.xml
+    url,pkey_boring,full_url,https://.../2001-186513.xml
     /ns3:dov-schema/boring/xy/x,x,float,152301.0
     /ns3:dov-schema/boring/xy/y,y,float,211682.0
     /ns3:dov-schema/boring/oorspronkelijk_maaiveld/waarde,mv_taw,float,8.00

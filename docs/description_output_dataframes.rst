@@ -23,6 +23,7 @@ as new records in the final dataframe.
 
     source,new_name,data_type,example
     url,permkey,full_url,https://.../2001-186513.xml
+    url_boring,pkey_boring,full_url,https://.../2001-186513.xml
     /ns3:dov-schema/interpretaties/informelestratigrafie/laag/van,van,float,0.00
     /ns3:dov-schema/interpretaties/informelestratigrafie/laag/tot,tot,float,1.74
     /ns3:dov-schema/interpretaties/informelestratigrafie/laag/beschrijving,beschrijving,string,Quartair
@@ -34,6 +35,7 @@ as new records in the final dataframe.
 
     source,new_name,data_type,example
     url,permkey,full_url,https://.../2001-186513.xml
+    url_boring,pkey_boring,full_url,https://.../2001-186513.xml
     /ns3:dov-schema/interpretaties/formelestratigrafie/laag/van,van,float,0.00
     /ns3:dov-schema/interpretaties/formelestratigrafie/laag/tot,tot,float,1.75
     /ns3:dov-schema/interpretaties/formelestratigrafie/laag/lid1,lid1,string,Q
@@ -47,6 +49,7 @@ as new records in the final dataframe.
 
     source,new_name,data_type,example
     url,permkey,full_url,https://.../2001-186513.xml
+    url_boring,pkey_boring,full_url,https://.../2001-186513.xml
     /ns3:dov-schema/interpretaties/lithologischebeschrijving/laag/van,van,float,0.00
     /ns3:dov-schema/interpretaties/lithologischebeschrijving/laag/tot,tot,float,1.75
     /ns3:dov-schema/interpretaties/lithologischebeschrijving/laag/beschrijving,beschrijving,Terre végétale sableuse
@@ -58,6 +61,7 @@ as new records in the final dataframe.
 
     source,new_name,data_type,example
     url,permkey,full_url,https://.../2001-186513.xml
+    url_boring,pkey_boring,full_url,https://.../2001-186513.xml
     /ns3:dov-schema/interpretaties/gecodeerdelithologie/laag/van,van,float,0.00
     /ns3:dov-schema/interpretaties/gecodeerdelithologie/laag/tot,tot,float,1.75
     /ns3:dov-schema/interpretaties/gecodeerdelithologie/laag/hoofdnaam/grondsoort,hoofd_grondsoort,string,KL
@@ -72,6 +76,7 @@ as new records in the final dataframe.
 
     source,new_name,data_type,example
     url,permkey,full_url,https://.../2001-186513.xml
+    url_boring,pkey_boring,full_url,https://.../2001-186513.xml
     /ns3:dov-schema/interpretaties/hydrogeologischeinterpretatie/laag/van,van,float,0.00
     /ns3:dov-schema/interpretaties/hydrogeologischeinterpretatie/laag/tot,tot,float,1.75
     /ns3:dov-schema/interpretaties/hydrogeologischeinterpretatie/laag/aquifer,aquifer,string,0252
@@ -83,6 +88,7 @@ as new records in the final dataframe.
 
     source,new_name,data_type,example
     url,permkey,full_url,https://.../2001-186513.xml
+    url_boring,pkey_boring,full_url,https://.../2001-186513.xml
     /ns3:dov-schema/interpretaties/informelehydrostratigrafie/laag/van,van,float,0.00
     /ns3:dov-schema/interpretaties/informelehydrostratigrafie/laag/tot,tot,float,1.75
     /ns3:dov-schema/interpretaties/informelehydrostratigrafie/laag/beschrijving,beschrijving,string,Quartair
@@ -94,6 +100,7 @@ as new records in the final dataframe.
 
     source,new_name,data_type,example
     url,permkey,full_url,https://.../2001-186513.xml
+    url_boring,pkey_boring,full_url,https://.../2001-186513.xml
     /ns3:dov-schema/interpretaties/quartairstratigrafie/laag/van,van,float,0.00
     /ns3:dov-schema/interpretaties/quartairstratigrafie/laag/tot,tot,float,1.75
     /ns3:dov-schema/interpretaties/quartairstratigrafie/laag/lid1,lid1,string,F
@@ -107,6 +114,7 @@ as new records in the final dataframe.
 
     source,new_name,data_type,example
     url,permkey,full_url,https://.../2001-186513.xml
+    url_boring,pkey_boring,full_url,https://.../2001-186513.xml
     /ns3:dov-schema/interpretaties/geotechnischecodering/laag/van,van,float,0.00
     /ns3:dov-schema/interpretaties/geotechnischecodering/laag/tot,tot,float,1.75
     /ns3:dov-schema/interpretaties/geotechnischecodering/laag/hoofdnaam/grondsoort,hoofd_grondsoort,string,KL

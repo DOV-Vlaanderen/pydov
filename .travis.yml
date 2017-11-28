@@ -1,9 +1,11 @@
 language: python
 
+env:
+  - COVERALLS_PARALLEL=true
+
 install:
-- pip install -U tox-travis
-- pip install -U travis-sphinx
-- pip install -U coveralls
+  - pip install -U tox-travis
+  - pip install -U coveralls
 
 matrix:
   include:
@@ -14,14 +16,12 @@ matrix:
     - python: 3.6
       env: TOXENV=py36
     - env: TOXENV=flake8
+    - env: TOXENV=docs
 
 script: tox
 
 after_success:
-- coveralls || echo "coveralls failure"
-
-before-deploy:
-- travis-sphinx --source=docs --outdir='docs/_build' --nowarn build
+  - coveralls || echo "coveralls failure"
 
 deploy:
 - provider: pypi

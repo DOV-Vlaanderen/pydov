@@ -1,16 +1,16 @@
 API reference
 =============
 
-DOV Boringen
-------------
 
-.. automodule:: pydov.dovboringen
-   :members:
+OWS utilities
+-------------
+
+.. automodule:: pydov.util.owsutil
+    :members:
 
 
-DOV Series
-----------
+Errors
+------
 
-.. automodule:: pydov.dovseries
-   :members:
-   :undoc-members:
+.. automodule:: pydov.util.errors
+    :members:

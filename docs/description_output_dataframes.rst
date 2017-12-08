@@ -171,6 +171,7 @@ between the 'methode_van'/'methode_tot' of the borehole:
     wfs,Y_mL72,y,float,211682.0
     xml,/kern:dov-schema/boring/oorspronkelijk_maaiveld/waarde,mv_mtaw,float,8.00
     wfs,Z_mTAW,start_boring_mtaw,float,8.00
+    wfs,gemeente,gemeente,string,Wuustwezel
     xml,/kern:dov-schema/boring/diepte_van,diepte_boring_van,float,0.00
     wfs,diepte_tot_m,diepte_boring_tot,float,19.00
     wfs,datum_aanvang,datum_aanvang,date,1930-10-01

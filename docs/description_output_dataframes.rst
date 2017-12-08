@@ -248,5 +248,5 @@ Peilmetingen
     wfs,GW_ID,gw_id,string,1-0709
     wfs,filternr,filternummer,string,2
     xml,/kern:dov-schema/filtermeting/peilmeting/peil_mtaw,peil_mtaw,float,121.88
-    xml,/kern:dov-schema/filtermeting/peilmeting/betrouwbaarheid,betrouwbaarheid,string(codelijst),goed
+    xml,/kern:dov-schema/filtermeting/peilmeting/betrouwbaarheid,betrouwbaarheid,string(codelist),goed
     xml,/kern:dov-schema/filtermeting/peilmeting/methode,methode,string(codelist),peillint

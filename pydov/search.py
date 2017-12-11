@@ -45,18 +45,19 @@ class AbstractSearch(object):
 
     def _build_fields(self, wfs_schema, fc):
         fields = {}
-        for attr in wfs_schema['properties'].keys():
-            if attr in fc['attributes']:
-                attrft = fc['attributes'][attr]
-                field = {'name': attr,
-                         'definition': attrft['definition'],
-                         'type': wfs_schema['properties'][attr]}
-                if attrft['values'] is not None:
-                    stripped_values = [v.strip() for v in attrft['values']
+        for wfs_field in wfs_schema['properties'].keys():
+            if wfs_field in fc['attributes']:
+                fc_field = fc['attributes'][wfs_field]
+                field = {'name': wfs_field,
+                         'definition': fc_field['definition'],
+                         'type': wfs_schema['properties'][wfs_field],
+                         'notnull': fc_field['multiplicity'][0] > 0}
+                if fc_field['values'] is not None:
+                    stripped_values = [v.strip() for v in fc_field['values']
                                        if len(v.strip()) > 0]
                     if len(stripped_values) > 0:
                         field['values'] = stripped_values
-                fields[attr] = field
+                fields[wfs_field] = field
         return fields
 
     def get_description(self, layer):

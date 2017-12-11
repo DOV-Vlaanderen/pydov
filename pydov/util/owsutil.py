@@ -153,10 +153,14 @@ def get_remote_featurecatalogue(csw_url, fc_uuid):
         >>>   {'definition' : 'feature type definition',
         >>>    'attributes' : {'name':
         >>>      {'definition' : 'attribute definition',
-        >>>       'values' : [
-        >>>         'list of', 'values']}
+        >>>       'values' : ['list of', 'values'],
+        >>>       'multiplicity': (lower, upper)}
         >>>    }
         >>>   }
+
+        Where the lower multiplicity is always and integer and the upper
+        multiplicity is either an integer or the str 'Inf' indicating an
+        infinate value.
 
     Raises
     ------
@@ -191,6 +195,26 @@ def get_remote_featurecatalogue(csw_url, fc_uuid):
         attr['definition'] = a.findtext(nspath_eval(
             'gfc:definition/gco:CharacterString', __namespaces))
 
+        try:
+            multiplicity_lower = int(a.findtext(nspath_eval(
+                'gfc:cardinality/gco:Multiplicity/gco:range/gco'
+                ':MultiplicityRange/gco:lower/gco:Integer', __namespaces)))
+        except (TypeError, ValueError):
+            multiplicity_lower = 0
+
+        upper = a.find(nspath_eval(
+            'gfc:cardinality/gco:Multiplicity/gco:range/gco'
+            ':MultiplicityRange/gco:upper/gco:UnlimitedInteger',
+            __namespaces))
+
+        try:
+            multiplicity_upper = int(upper.text)
+        except (TypeError, ValueError):
+            multiplicity_upper = None
+
+        if upper.get('isInfinite', 'false').lower() == 'true':
+            multiplicity_upper = 'Inf'
+
         values = []
         for lv in a.findall(nspath_eval('gfc:listedValue/gfc:FC_ListedValue',
                                         __namespaces)):
@@ -199,6 +223,7 @@ def get_remote_featurecatalogue(csw_url, fc_uuid):
             if value is not None:
                 values.append(value)
         attr['values'] = values
+        attr['multiplicity'] = (multiplicity_lower, multiplicity_upper)
         attributes[name] = attr
 
     r['attributes'] = attributes

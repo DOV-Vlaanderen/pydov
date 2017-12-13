@@ -21,3 +21,8 @@ class MetadataNotFoundError(OWSError):
 class FeatureCatalogueNotFoundError(OWSError):
     """Error that occurs when the feature catalogue could not be found."""
     pass
+
+
+class InvalidSearchParameterError(DOVError):
+    """Error that occurs when given invalid parameters to the DOV search."""
+    pass

@@ -228,3 +228,18 @@ def get_remote_featurecatalogue(csw_url, fc_uuid):
 
     r['attributes'] = attributes
     return r
+
+
+def get_namespace(wfs, layer):
+    from owslib.feature.schema import _get_describefeaturetype_url
+    url = _get_describefeaturetype_url(url=wfs.url, version='1.1.0',
+                                       typename=layer)
+    schema = openURL(url_base=url).read()
+    tree = etree.fromstring(schema)
+    namespace = tree.attrib.get('targetNamespace', None)
+    return namespace
+
+
+def parse(fn, namespace, path):
+    ns = '{%s}' % namespace
+    return fn('./' + ns + ('/' + ns).join(path.split('/')))

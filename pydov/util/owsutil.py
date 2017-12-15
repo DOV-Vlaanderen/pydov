@@ -1,6 +1,12 @@
 # -*- coding: utf-8 -*-
 """Module grouping utility functions for OWS services."""
-from urllib.parse import urlparse
+
+try:
+    # Python3
+    from urllib.parse import urlparse
+except ImportError:
+    # Python2
+    import urlparse
 
 from owslib.etree import etree
 from owslib.iso import MD_Metadata

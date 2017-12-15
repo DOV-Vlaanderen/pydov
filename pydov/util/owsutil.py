@@ -6,7 +6,7 @@ try:
     from urllib.parse import urlparse
 except ImportError:
     # Python2
-    import urlparse
+    from urlparse import urlparse
 
 from owslib.etree import etree
 from owslib.iso import MD_Metadata

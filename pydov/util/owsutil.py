@@ -239,6 +239,23 @@ def get_remote_featurecatalogue(csw_url, fc_uuid):
 
 
 def get_namespace(wfs, layer):
+    """Request the namespace associated with a layer by performing a
+    DescribeFeatureType request.
+
+    Parameters
+    ----------
+    wfs : owslib.wfs.WebFeatureService
+        WFS service to use, associated with the layer.
+    layer : str
+        Workspace-qualified name of the layer to get the namespace of (
+        typename).
+
+    Returns
+    -------
+    namespace : str
+        URI of the namespace associated with the given layer.
+
+    """
     from owslib.feature.schema import _get_describefeaturetype_url
     url = _get_describefeaturetype_url(url=wfs.url, version='1.1.0',
                                        typename=layer)

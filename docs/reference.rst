@@ -1,6 +1,19 @@
 API reference
 =============
 
+Searching
+---------
+
+.. automodule:: pydov.search
+    :members:
+
+
+Object types
+------------
+
+.. automodule:: pydov.types
+    :members:
+
 
 OWS utilities
 -------------

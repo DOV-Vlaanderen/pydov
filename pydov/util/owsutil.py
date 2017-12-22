@@ -23,6 +23,8 @@ from pydov.util.errors import (
 
 
 def __get_namespaces():
+    """Get default namespaces from OWSLib, extended with the 'gfc' namespace
+    to be able to parse feature catalogues."""
     n = Namespaces()
     ns = n.get_namespaces()
     ns[None] = n.get_namespace("gmd")
@@ -244,8 +246,3 @@ def get_namespace(wfs, layer):
     tree = etree.fromstring(schema)
     namespace = tree.attrib.get('targetNamespace', None)
     return namespace
-
-
-def parse(fn, namespace, path):
-    ns = '{%s}' % namespace
-    return fn('./' + ns + ('/' + ns).join(path.split('/')))

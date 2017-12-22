@@ -276,6 +276,13 @@ class AbstractSearch(object):
             The WFS response containing the features matching the location
             and the query.
 
+        Raises
+        ------
+        pydov.util.errors.InvalidSearchParameterError
+            When not at least one of `location` or `query` is provided.
+
+            When at least one of the field in `return_fields` is unknown.
+
         """
         self._pre_search_validation(location, query, return_fields)
         self._init_namespace()
@@ -384,6 +391,13 @@ class BoringSearch(AbstractSearch):
         df : pandas.core.frame.DataFrame
             DataFrame containing the information about the boreholes (Boring)
             that match the search query.
+
+        Raises
+        ------
+        pydov.util.errors.InvalidSearchParameterError
+            When not at least one of `location` or `query` is provided.
+
+            When at least one of the field in `return_fields` is unknown.
 
         """
         fts = self._search(location=location, query=query,

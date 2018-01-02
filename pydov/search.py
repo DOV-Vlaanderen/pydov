@@ -4,7 +4,7 @@
 import pandas as pd
 from owslib.wfs import WebFeatureService
 
-from pydov.types import Boring
+from pydov.types.boring import Boring
 from pydov.util import owsutil
 from pydov.util.errors import (
     LayerNotFoundError,

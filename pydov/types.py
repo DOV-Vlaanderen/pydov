@@ -249,7 +249,17 @@ class AbstractDovType(object):
         return openURL(self.pkey + '.xml').read()
 
     def _parse_xml_data(self):
-        raise NotImplementedError
+        """Get remote XML data for this DOV object, parse the raw XML and
+        save the results in the data object.
+
+        Raises
+        ------
+        NotImplementedError
+            This is an abstract method that should be implemented in a
+            subclass.
+
+        """
+        raise NotImplementedError('This should be implemented in a subclass.')
 
     def get_df_array(self, return_fields=None):
         """Return the data array of the instance of this type for inclusion
@@ -416,6 +426,9 @@ class Boring(AbstractDovType):
         return b
 
     def _parse_xml_data(self):
+        """Get remote XML data for this DOV object, parse the raw XML and
+        save the results in the data object.
+        """
         data = self._get_xml_data()
         tree = etree.fromstring(data)
 

@@ -6,12 +6,14 @@ import types
 from collections import OrderedDict
 
 from owslib.etree import etree
+from owslib.util import openURL
 
 
 class AbstractDovType(object):
     """Abstract DOV type grouping fields and methods common to all DOV
     object types. Not to be instantiated or used directly."""
 
+    _UNRESOLVED = "{UNRESOLVED}"
     _fields = []
 
     def __init__(self, typename, pkey):
@@ -28,8 +30,12 @@ class AbstractDovType(object):
         """
         self.typename = typename
         self.pkey = pkey
-        self.data = dict(zip(self.get_field_names(),
-                             [None] * len(self.get_field_names())))
+
+        self.data = dict(
+            zip(self.get_field_names(),
+                [AbstractDovType._UNRESOLVED] * len(self.get_field_names()))
+        )
+
         self.data['pkey_%s' % self.typename] = self.pkey
 
     @classmethod
@@ -84,13 +90,13 @@ class AbstractDovType(object):
                                 'featureMembers'):
                 yield (cls.from_wfs_element(ft, namespace))
 
-        if type(response) in (list, tuple) \
+        if type(response) in (list, tuple, set) \
                 or isinstance(response, types.GeneratorType):
             for el in response:
                 yield (cls.from_wfs_element(el, namespace))
 
     @classmethod
-    def get_field_names(cls):
+    def get_field_names(cls, return_fields=None):
         """Return the names of the fields available for this type.
 
         Returns
@@ -98,9 +104,17 @@ class AbstractDovType(object):
         list<str>
             List of the field names available for this type. These are also
             the names of the columns in the output dataframe for this type.
+        return_fields : list<str> or tuple<str> or set<str> or iterable<str>
+            List of fields to include in the data array. The order is
+            ignored, the default order of the fields of the datatype is used
+            instead. Defaults to None, which will include all fields.
 
         """
-        return [f['name'] for f in cls._fields]
+        if return_fields is None:
+            return [f['name'] for f in cls._fields]
+        else:
+            return [f['name'] for f in cls._fields if f['name'] in
+                    return_fields]
 
     @classmethod
     def get_fields(cls, source=('wfs', 'xml')):
@@ -149,13 +163,17 @@ class AbstractDovType(object):
                 [f for f in cls._fields if f['source'] in source]))
 
     @classmethod
-    def to_df_array(cls, iterable):
+    def to_df_array(cls, iterable, return_fields=None):
         """Yield a dataframe array for each instance in the given iterable.
 
         Parameters
         ----------
         iterable : list<DovType> or tuple<DovType> or iterable<DovType>
             A list of instances of a DOV type.
+        return_fields : list<str> or tuple<str> or set<str> or iterable<str>
+            List of fields to include in the data array. The order is
+            ignored, the default order of the fields of the datatype is used
+            instead. Defaults to None, which will include all fields.
 
         Yields
         ------
@@ -166,7 +184,7 @@ class AbstractDovType(object):
 
         """
         for item in iterable:
-            yield (item.get_df_array())
+            yield (item.get_df_array(return_fields))
 
     @classmethod
     def _parse(cls, func, xpath, namespace, returntype):
@@ -179,8 +197,9 @@ class AbstractDovType(object):
            Function to call.
         xpath : str
             XML path of the element, used as the argument of `func`.
-        namespace : str
-            Namespace to be added to each item in the `xpath`.
+        namespace : str or None
+            Namespace to be added to each item in the `xpath`. None to use
+            the xpath as is.
         returntype : str
             Parse the text found with `func` to this output datatype. One of
             `string`, `float`, `integer`, `date`.
@@ -208,15 +227,40 @@ class AbstractDovType(object):
             def typeconvert(x):
                 return datetime.datetime.strptime(x, '%Y-%m-%dZ').date()
 
-        ns = '{%s}' % namespace
-        text = func('./' + ns + ('/' + ns).join(xpath.split('/')))
+        if namespace is not None:
+            ns = '{%s}' % namespace
+            text = func('./' + ns + ('/' + ns).join(xpath.split('/')))
+        else:
+            text = func('./' + xpath.lstrip('/'))
+
         if text is None:
             return None
         return typeconvert(text)
 
-    def get_df_array(self):
+    def _get_xml_data(self):
+        """Return the raw XML data for this DOV object.
+
+        Returns
+        -------
+        xml : bytes
+            The raw XML data of this DOV object as bytes.
+
+        """
+        return openURL(self.pkey + '.xml').read()
+
+    def _parse_xml_data(self):
+        raise NotImplementedError
+
+    def get_df_array(self, return_fields=None):
         """Return the data array of the instance of this type for inclusion
         in the resulting output dataframe of a search operation.
+
+        Parameters
+        ----------
+        return_fields : list<str> or tuple<str> or set<str> or iterable<str>
+            List of fields to include in the data array. The order is
+            ignored, the default order of the fields of the datatype is used
+            instead. Defaults to None, which will include all fields.
 
         Returns
         -------
@@ -226,7 +270,17 @@ class AbstractDovType(object):
             search operation.
 
         """
-        return [self.data[c] for c in self.get_field_names()]
+        if return_fields is None:
+            data = [self.data[c] for c in self.get_field_names()]
+        else:
+            data = [self.data[c] for c in self.get_field_names() if c in
+                    return_fields]
+
+        if self._UNRESOLVED in data:
+            self._parse_xml_data()
+            data = self.get_df_array(return_fields)
+
+        return data
 
 
 class Boring(AbstractDovType):
@@ -326,7 +380,7 @@ class Boring(AbstractDovType):
         ----------
         pkey : str
             Permanent key of the Boring (borehole), being a URI of the form
-            `https://www.dov.vlaanderen.be/data/boring/id`.
+            `https://www.dov.vlaanderen.be/data/boring/<id>`.
 
         """
         super(Boring, self).__init__('boring', pkey)
@@ -360,3 +414,15 @@ class Boring(AbstractDovType):
             )
 
         return b
+
+    def _parse_xml_data(self):
+        data = self._get_xml_data()
+        tree = etree.fromstring(data)
+
+        for field in self.get_fields(source=('xml',)).values():
+            self.data[field['name']] = self._parse(
+                func=tree.findtext,
+                xpath=field['sourcefield'],
+                namespace=None,
+                returntype=field.get('type', None)
+            )

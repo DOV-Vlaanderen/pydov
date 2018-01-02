@@ -405,17 +405,32 @@ class BoringSearch(AbstractSearch):
 
         boringen = Boring.from_wfs(fts, self.__wfs_namespace)
 
-        df = pd.DataFrame(data=Boring.to_df_array(boringen),
-                          columns=Boring.get_field_names())
+        df = pd.DataFrame(data=Boring.to_df_array(boringen, return_fields),
+                          columns=Boring.get_field_names(return_fields))
         return df
 
 
 if __name__ == '__main__':
-    for i in range(10):
-        b = BoringSearch()
-        print(b.get_fields())
+    # for i in range(10):
+    #     b = BoringSearch()
+    #     print(b.get_fields())
 
     b = BoringSearch()
-    print(b.get_description())
-    df = b.search(location=(115021, 196339, 118120, 197925))
+    # print(b.get_description())
+
+    df = b.search(location=(115021, 196339, 118120, 197925),
+                  return_fields=('pkey_boring',
+                                 'diepte_boring_van',
+                                 'diepte_boring_tot',
+                                 'diepte_methode_van',
+                                 'diepte_methode_tot',
+                                 'boormethode'))
+
+    # df = b.search(location=(151680, 214678, 151681, 214679),
+    #               return_fields=('pkey_boring',
+    #                              'diepte_boring_van',
+    #                              'diepte_boring_tot',
+    #                              'diepte_methode_van',
+    #                              'diepte_methode_tot',
+    #                              'boormethode'))
     print(df)

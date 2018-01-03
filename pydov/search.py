@@ -258,6 +258,11 @@ class AbstractSearch(object):
                     raise InvalidSearchParameterError(
                         "Unknown return field: '%s'" % rf)
 
+            for rf in return_fields:
+                if rf not in self._type.get_field_names():
+                    raise InvalidSearchParameterError(
+                        "Field cannot be used as a return field: '%s'" % rf)
+
     def _search(self, location=None, query=None, return_fields=None):
         """Perform the WFS search by issuing a GetFeature request.
 
@@ -418,19 +423,24 @@ if __name__ == '__main__':
     b = BoringSearch()
     # print(b.get_description())
 
-    df = b.search(location=(115021, 196339, 118120, 197925),
-                  return_fields=('pkey_boring',
-                                 'diepte_boring_van',
-                                 'diepte_boring_tot',
-                                 'diepte_methode_van',
-                                 'diepte_methode_tot',
-                                 'boormethode'))
-
-    # df = b.search(location=(151680, 214678, 151681, 214679),
+    # df = b.search(location=(115021, 196339, 118120, 197925),
     #               return_fields=('pkey_boring',
     #                              'diepte_boring_van',
     #                              'diepte_boring_tot',
     #                              'diepte_methode_van',
     #                              'diepte_methode_tot',
     #                              'boormethode'))
+
+    # df = b.search(location=(151680, 214678, 151681, 214679),
+    #               return_fields=('pkey_boring',
+    #                              # 'diepte_boring_van',
+    #                              'diepte_boring_tot',
+    #                              'uitvoerder',
+    #                              'diepte_methode_van',
+    #                              'diepte_methode_tot',
+    #                              'boormethode'))
+    #                              # ))
+
+    df = b.search(location=(151680, 214678, 151681, 214679))
+
     print(df)

@@ -3,11 +3,73 @@
 
 from owslib.etree import etree
 
-from pydov.types.abstract import AbstractDovType
+from pydov.types.abstract import (
+    AbstractDovType,
+    AbstractDovSubType,
+)
+
+
+class BoorMethode(AbstractDovSubType):
+
+    _name = 'boormethode'
+    _rootpath = './/boring/details/boormethode'
+
+    _fields = [{
+        'name': 'diepte_methode_van',
+        'source': 'xml',
+        'sourcefield': '/van',
+        'definition': 'Bovenkant van de laag die met een bepaalde '
+                      'methode aangeboord werd, in meter.',
+        'type': 'float',
+        'notnull': False
+    }, {
+        'name': 'diepte_methode_tot',
+        'source': 'xml',
+        'sourcefield': '/tot',
+        'definition': 'Onderkant van de laag die met een bepaalde '
+                      'methode aangeboord werd, in meter.',
+        'type': 'float',
+        'notnull': False
+    }, {
+        'name': 'boormethode',
+        'source': 'xml',
+        'sourcefield': '/methode',
+        'definition': 'Boormethode voor het diepte-interval.',
+        'type': 'string',
+        'notnull': False
+    }]
+
+    def __init__(self):
+        """Initialisation."""
+        super(BoorMethode, self).__init__('boormethode')
+
+    @classmethod
+    def from_xml_element(cls, element):
+        """Build an instance of this subtype from a single XML element.
+
+        Parameters
+        ----------
+        element : etree.Element
+            XML element representing a single record of this subtype.
+
+        """
+        boormethode = BoorMethode()
+
+        for field in cls.get_fields().values():
+            boormethode.data[field['name']] = boormethode._parse(
+                func=element.findtext,
+                xpath=field['sourcefield'],
+                namespace=None,
+                returntype=field.get('type', None)
+            )
+
+        return boormethode
 
 
 class Boring(AbstractDovType):
     """Class representing the DOV data type for boreholes."""
+
+    _subtypes = [BoorMethode]
 
     _fields = [{
         'name': 'pkey_boring',
@@ -71,29 +133,6 @@ class Boring(AbstractDovType):
         'definition': 'Is er een boorgatmeting uitgevoerd (ja/nee).',
         'type': 'boolean',
         'notnull': False
-    }, {
-        'name': 'diepte_methode_van',
-        'source': 'xml',
-        'sourcefield': '/boring/details/boormethode/van',
-        'definition': 'Bovenkant van de laag die met een bepaalde '
-                      'methode aangeboord werd, in meter.',
-        'type': 'float',
-        'notnull': False
-    }, {
-        'name': 'diepte_methode_tot',
-        'source': 'xml',
-        'sourcefield': '/boring/details/boormethode/tot',
-        'definition': 'Onderkant van de laag die met een bepaalde '
-                      'methode aangeboord werd, in meter.',
-        'type': 'float',
-        'notnull': False
-    }, {
-        'name': 'boormethode',
-        'source': 'xml',
-        'sourcefield': '/boring/details/boormethode/methode',
-        'definition': 'Boormethode voor het diepte-interval.',
-        'type': 'string',
-        'notnull': False
     }]
 
     def __init__(self, pkey):
@@ -142,13 +181,16 @@ class Boring(AbstractDovType):
         """Get remote XML data for this DOV object, parse the raw XML and
         save the results in the data object.
         """
-        data = self._get_xml_data()
-        tree = etree.fromstring(data)
+        xml = self._get_xml_data()
+        tree = etree.fromstring(xml)
 
-        for field in self.get_fields(source=('xml',)).values():
+        for field in self.get_fields(source=('xml',),
+                                     include_subtypes=False).values():
             self.data[field['name']] = self._parse(
                 func=tree.findtext,
                 xpath=field['sourcefield'],
                 namespace=None,
                 returntype=field.get('type', None)
             )
+
+        self._parse_subtypes(xml)

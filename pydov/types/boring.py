@@ -105,6 +105,11 @@ class Boring(AbstractDovType):
         'sourcefield': 'Z_mTAW',
         'type': 'float'
     }, {
+        'name': 'gemeente',
+        'source': 'wfs',
+        'sourcefield': 'gemeente',
+        'type': 'string'
+    }, {
         'name': 'diepte_boring_van',
         'source': 'xml',
         'sourcefield': '/boring/diepte_van',

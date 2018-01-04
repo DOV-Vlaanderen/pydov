@@ -1,7 +1,14 @@
 # -*- coding: utf-8 -*-
 """Module containing the search classes to retrieve DOV data."""
 
+import logging
+
 import pandas as pd
+from owslib.etree import etree
+from owslib.fes import (
+    FilterRequest,
+    PropertyIsEqualTo,
+)
 from owslib.wfs import WebFeatureService
 
 from pydov.types.boring import Boring
@@ -9,6 +16,8 @@ from pydov.util import owsutil
 from pydov.util.errors import (
     LayerNotFoundError,
     InvalidSearchParameterError,
+    FeatureOverflowError,
+    InvalidFieldError,
 )
 
 
@@ -31,8 +40,12 @@ class AbstractSearch(object):
         """
         self._layer = layer
         self._type = objecttype
+
         self._fields = None
+        self._wfs_fields = None
+
         self._map_wfs_source_df = {}
+        self._map_df_wfs_source = {}
 
     def _init_wfs(self):
         """Initialise the WFS service. If the WFS service is not
@@ -184,14 +197,17 @@ class AbstractSearch(object):
 
         """
         fields = {}
+        self._wfs_fields = []
 
         df_wfs_fields = self._type.get_fields(source=('wfs',)).values()
         for f in df_wfs_fields:
             self._map_wfs_source_df[f['sourcefield']] = f['name']
+            self._map_df_wfs_source[f['name']] = f['sourcefield']
 
         for wfs_field in wfs_schema['properties'].keys():
             if wfs_field in feature_catalogue['attributes']:
                 fc_field = feature_catalogue['attributes'][wfs_field]
+                self._wfs_fields.append(wfs_field)
 
                 name = self._map_wfs_source_df.get(wfs_field, wfs_field)
 
@@ -238,29 +254,58 @@ class AbstractSearch(object):
         Raises
         ------
         pydov.util.errors.InvalidSearchParameterError
-            When not at least one of `location` or `query` is provided.
+            When not one of `location` or `query` is provided.
 
-            When at least one of the field in `return_fields` is unknown.
+            When both `location` and `query` are provided.
+
+        pydov.util.errors.InvalidFieldError
+            When at least one of the fields in `return_fields` is unknown.
+
+            When a field that is only accessible as return field is used as
+            a query parameter.
+
+            When a field that can only be used as a query parameter is used as
+            a return field.
 
         """
         if location is None and query is None:
             raise InvalidSearchParameterError(
-                'Provide at least the location or the query parameter.')
+                'Provide either the location or the query parameter.'
+            )
+
+        if location is not None and query is not None:
+            raise InvalidSearchParameterError(
+                'Provide either the location or the query parameter, not both.'
+            )
+
+        if query is not None:
+            self._init_fields()
+            for property_name in query.findall(
+                    './/{http://www.opengis.net/ogc}PropertyName'):
+                name = property_name.text
+                if name not in self._map_df_wfs_source \
+                    and name not in self._wfs_fields:
+                    if name in self._fields:
+                        raise InvalidFieldError(
+                            "Cannot use return field '%s' in query." % name
+                        )
+                    raise InvalidFieldError(
+                        "Unknown query parameter: '%s'" % name)
 
         if return_fields is not None:
             self._init_fields()
             for rf in return_fields:
                 if rf not in self._fields:
                     if rf in self._map_wfs_source_df:
-                        raise InvalidSearchParameterError(
+                        raise InvalidFieldError(
                             "Unkown return field: '%s'. Did you mean '%s'?"
                             % (rf, self._map_wfs_source_df[rf]))
-                    raise InvalidSearchParameterError(
+                    raise InvalidFieldError(
                         "Unknown return field: '%s'" % rf)
 
             for rf in return_fields:
                 if rf not in self._type.get_field_names():
-                    raise InvalidSearchParameterError(
+                    raise InvalidFieldError(
                         "Field cannot be used as a return field: '%s'" % rf)
 
     def _search(self, location=None, query=None, return_fields=None):
@@ -270,33 +315,85 @@ class AbstractSearch(object):
         ----------
         location : tuple<minx,maxx,miny,maxy>
             The bounding box limiting the features to retrieve.
-        query : TODO
-            TODO
-        return_fields : TODO
-            TODO
+        query : owslib.fes.OgcExpression
+            OGC filter expression to use for searching. This can contain any
+            combination of filter elements defined in owslib.fes. The query
+            should use the fields provided in `get_fields()`. Note that not
+            all fields are currently supported as a search parameter.
+        return_fields : list<str>
+            A list of fields to be returned in the output data. This should
+            be a subset of the fields provided in `get_fields()`. Note that
+            not all fields are currently supported as return fields.
 
         Returns
         -------
-        file like
-            The WFS response containing the features matching the location
-            and the query.
+        etree.Element
+            XML tree of the WFS response containing the features matching
+            the location or the query.
 
         Raises
         ------
         pydov.util.errors.InvalidSearchParameterError
-            When not at least one of `location` or `query` is provided.
+            When not one of `location` or `query` is provided.
 
-            When at least one of the field in `return_fields` is unknown.
+            When both `location` and `query` are provided.
+
+        pydov.util.errors.InvalidFieldError
+            When at least one of the fields in `return_fields` is unknown.
+
+            When a field that is only accessible as return field is used as
+            a query parameter.
+
+            When a field that can only be used as a query parameter is used as
+            a return field.
+
+        pydov.util.errors.FeatureOverflowError
+            When the number of features to be returned is equal to the
+            maxFeatures limit of the WFS server.
 
         """
-        self._pre_search_validation(location, query, return_fields)
-        self._init_namespace()
+        filter_request = None
+        if query is not None:
+            filter_request = FilterRequest()
+            filter_request = filter_request.setConstraint(query)
 
-        if location is not None:  # FIXME
-            self._init_wfs()
-            fts = self.__wfs.getfeature(typename=self._layer,
-                                        bbox=location).read()
-            return fts
+        self._pre_search_validation(location, filter_request, return_fields)
+        self._init_namespace()
+        self._init_wfs()
+
+        if filter_request is not None:
+            for property_name in filter_request.findall(
+                    './/{http://www.opengis.net/ogc}PropertyName'):
+                property_name.text = self._map_df_wfs_source.get(
+                    property_name.text, property_name.text)
+
+            filter_request = etree.tostring(filter_request,
+                                            encoding='unicode')
+
+        if return_fields is None:
+            wfs_property_names = [str(f) for f in self._map_wfs_source_df]
+        else:
+            wfs_property_names = [self._map_df_wfs_source[i]
+                                  for i in self._map_df_wfs_source
+                                  if i.startswith('pkey')]
+            wfs_property_names.extend([self._map_df_wfs_source[i]
+                                       for i in self._map_df_wfs_source
+                                       if i in return_fields])
+            wfs_property_names = list(set(wfs_property_names))
+
+        fts = self.__wfs.getfeature(typename=self._layer,
+                                    bbox=location,
+                                    filter=filter_request,
+                                    propertyname=wfs_property_names).read()
+
+        tree = etree.fromstring(fts.encode('utf-8'))
+
+        if int(tree.get('numberOfFeatures')) == 10000:
+            raise FeatureOverflowError(
+                'Reached the limit of %i returned features. Please split up '
+                'the query to ensure getting all results.' % 10000)
+
+        return tree
 
     def get_description(self):
         """Get the description of this search layer.
@@ -379,30 +476,48 @@ class BoringSearch(AbstractSearch):
                 BoringSearch.__wfs_schema, BoringSearch.__fc_featurecatalogue)
 
     def search(self, location=None, query=None, return_fields=None):
-        """Search for boreholes (Boring). Provide at least one of `location`
-        or `query`. When `return_fields` is None, all fields are returned.
+        """Search for boreholes (Boring). Provide either `location` or `query`.
+        When `return_fields` is None, all fields are returned.
 
         Parameters
         ----------
         location : tuple<minx,maxx,miny,maxy>
             The bounding box limiting the features to retrieve.
-        query : TODO
-            TODO
-        return_fields : TODO
-            TODO
+        query : owslib.fes.OgcExpression
+            OGC filter expression to use for searching. This can contain any
+            combination of filter elements defined in owslib.fes. The query
+            should use the fields provided in `get_fields()`. Note that not
+            all fields are currently supported as a search parameter.
+        return_fields : list<str>
+            A list of fields to be returned in the output data. This should
+            be a subset of the fields provided in `get_fields()`. Note that
+            not all fields are currently supported as return fields.
 
         Returns
         -------
-        df : pandas.core.frame.DataFrame
-            DataFrame containing the information about the boreholes (Boring)
-            that match the search query.
+        etree.Element
+            XML tree of the WFS response containing the features matching
+            the location or the query.
 
         Raises
         ------
         pydov.util.errors.InvalidSearchParameterError
-            When not at least one of `location` or `query` is provided.
+            When not one of `location` or `query` is provided.
 
-            When at least one of the field in `return_fields` is unknown.
+            When both `location` and `query` are provided.
+
+        pydov.util.errors.InvalidFieldError
+            When at least one of the fields in `return_fields` is unknown.
+
+            When a field that is only accessible as return field is used as
+            a query parameter.
+
+            When a field that can only be used as a query parameter is used as
+            a return field.
+
+        pydov.util.errors.FeatureOverflowError
+            When the number of features to be returned is equal to the
+            maxFeatures limit of the WFS server.
 
         """
         fts = self._search(location=location, query=query,
@@ -416,6 +531,11 @@ class BoringSearch(AbstractSearch):
 
 
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.DEBUG)
+    owslib_log = logging.getLogger('owslib')
+    # Add formatting and handlers as needed
+    owslib_log.setLevel(logging.DEBUG)
+
     # for i in range(10):
     #     b = BoringSearch()
     #     print(b.get_fields())
@@ -441,6 +561,17 @@ if __name__ == '__main__':
     #                              'boormethode'))
     #                              # ))
 
-    df = b.search(location=(151680, 214678, 151681, 214679))
+    fields = b.get_fields()
+
+    query = PropertyIsEqualTo(propertyname='gemeente',
+                              literal='Blankenberge')
+    print(type(query))
+
+    # df = b.search(location=(151680, 214678, 151681, 214679))
+    #               # query=query)
+
+    df = b.search(query=query,
+                  return_fields=('pkey_boring', 'uitvoerder',
+                                 'diepte_boring_tot'))
 
     print(df)

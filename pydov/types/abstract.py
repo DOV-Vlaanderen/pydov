@@ -277,11 +277,14 @@ class AbstractDovType(AbstractCommon):
 
         Parameters
         ----------
-        response : str or bytes or iterable<etree.Element>
+        response : str or bytes or etree.Element or iterable<etree.Element>
             WFS response containing GML features.
 
             Can either be a GML `str` or `byte` sequence, in which case it
             will be parsed and scanned for `gml:featureMembers`.
+
+            Can also be a single instance of `etree.Element` containing the
+            parsed GML response.
 
             It can also be an iterable (list, tuple or generator) of
             `etree.Element` in which case it will be looped over.
@@ -297,11 +300,15 @@ class AbstractDovType(AbstractCommon):
             response = response.encode('utf8')
 
         if type(response) is bytes:
-            tree = etree.fromstring(response)
+            response = etree.fromstring(response)
 
-            for ft in tree.find('.//{http://www.opengis.net/gml}'
-                                'featureMembers'):
-                yield (cls.from_wfs_element(ft, namespace))
+        if isinstance(response, etree._Element):
+            feature_members = response.find('.//{http://www.opengis.net/gml}'
+                                            'featureMembers')
+
+            if feature_members is not None:
+                for ft in feature_members:
+                    yield (cls.from_wfs_element(ft, namespace))
 
         if type(response) in (list, tuple, set) \
                 or isinstance(response, types.GeneratorType):

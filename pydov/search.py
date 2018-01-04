@@ -495,9 +495,8 @@ class BoringSearch(AbstractSearch):
 
         Returns
         -------
-        etree.Element
-            XML tree of the WFS response containing the features matching
-            the location or the query.
+        pandas.core.frame.DataFrame
+            DataFrame containing the output of the search query.
 
         Raises
         ------

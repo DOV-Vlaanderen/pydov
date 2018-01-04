@@ -11,7 +11,10 @@ Searching
 Object types
 ------------
 
-.. automodule:: pydov.types
+.. automodule:: pydov.types.abstract
+    :members:
+
+.. automodule:: pydov.types.boring
     :members:
 
 

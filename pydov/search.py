@@ -1,13 +1,10 @@
 # -*- coding: utf-8 -*-
 """Module containing the search classes to retrieve DOV data."""
 
-import logging
-
 import pandas as pd
 from owslib.etree import etree
 from owslib.fes import (
     FilterRequest,
-    PropertyIsEqualTo,
 )
 from owslib.wfs import WebFeatureService
 
@@ -284,7 +281,7 @@ class AbstractSearch(object):
                     './/{http://www.opengis.net/ogc}PropertyName'):
                 name = property_name.text
                 if name not in self._map_df_wfs_source \
-                    and name not in self._wfs_fields:
+                        and name not in self._wfs_fields:
                     if name in self._fields:
                         raise InvalidFieldError(
                             "Cannot use return field '%s' in query." % name
@@ -530,10 +527,10 @@ class BoringSearch(AbstractSearch):
 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.DEBUG)
-    owslib_log = logging.getLogger('owslib')
-    # Add formatting and handlers as needed
-    owslib_log.setLevel(logging.DEBUG)
+    # logging.basicConfig(level=logging.DEBUG)
+    # owslib_log = logging.getLogger('owslib')
+    # # Add formatting and handlers as needed
+    # owslib_log.setLevel(logging.DEBUG)
 
     # for i in range(10):
     #     b = BoringSearch()
@@ -560,17 +557,13 @@ if __name__ == '__main__':
     #                              'boormethode'))
     #                              # ))
 
-    fields = b.get_fields()
+    # fields = b.get_fields()
+    #
+    # query = PropertyIsEqualTo(propertyname='gemeente',
+    #                           literal='Blankenberge')
 
-    query = PropertyIsEqualTo(propertyname='gemeente',
-                              literal='Blankenberge')
-    print(type(query))
+    df = b.search(location=(151680, 214678, 151681, 214679))
 
-    # df = b.search(location=(151680, 214678, 151681, 214679))
-    #               # query=query)
-
-    df = b.search(query=query,
-                  return_fields=('pkey_boring', 'uitvoerder',
-                                 'diepte_boring_tot'))
+    # df = b.search(query=query)
 
     print(df)

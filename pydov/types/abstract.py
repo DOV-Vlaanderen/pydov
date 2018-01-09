@@ -8,6 +8,8 @@ from collections import OrderedDict
 from owslib.etree import etree
 from owslib.util import openURL
 
+from pydov.util.errors import InvalidFieldError
+
 
 class AbstractCommon(object):
     """Class grouping methods common to AbstractDovType and
@@ -51,9 +53,6 @@ class AbstractCommon(object):
             `xpath`, converted to the type described by `returntype`.
 
         """
-        def typeconvert(x):
-            return x
-
         if returntype == 'string':
             def typeconvert(x):
                 return str(x).strip()
@@ -66,6 +65,9 @@ class AbstractCommon(object):
         elif returntype == 'date':
             def typeconvert(x):
                 return datetime.datetime.strptime(x, '%Y-%m-%dZ').date()
+        else:
+            def typeconvert(x):
+                return x
 
         if namespace is not None:
             ns = '{%s}' % namespace
@@ -321,7 +323,7 @@ class AbstractDovType(AbstractCommon):
 
         Parameters
         ----------
-        return_fields : list<str> or tuple<str> or set<str> or iterable<str>
+        return_fields : list<str> or tuple<str> or set<str>
             List of fields to include in the data array. The order is
             ignored, the default order of the fields of the datatype is used
             instead. Defaults to None, which will include all fields.
@@ -335,12 +337,23 @@ class AbstractDovType(AbstractCommon):
             List of the field names available for this type. These are also
             the names of the columns in the output dataframe for this type.
 
+        Raises
+        ------
+        AttributeError
+            If the type of `return_fields` is not one of None, list, tuple or
+            set.
+        pydov.util.errors.InvalidFieldError
+            If at least one of the fields listed in `return_fields` is unknown.
+
         """
         if return_fields is None:
             fields = [f['name'] for f in cls._fields]
             if include_subtypes:
                 for st in cls._subtypes:
                     fields.extend(st.get_field_names())
+        elif type(return_fields) not in (list, tuple, set):
+            raise AttributeError(
+                'return_fields should be a list, tuple or set')
         else:
             fields = [f['name'] for f in cls._fields if f['name'] in
                       return_fields]
@@ -348,6 +361,9 @@ class AbstractDovType(AbstractCommon):
                 for st in cls._subtypes:
                     fields.extend([f for f in st.get_field_names() if f in
                                    return_fields])
+            for rf in return_fields:
+                if rf not in fields:
+                    raise InvalidFieldError("Unkown return field: '%s'" % rf)
         return fields
 
     @classmethod
@@ -383,7 +399,7 @@ class AbstractDovType(AbstractCommon):
 
             type (str)
                 Datatype of the output data field (one of `string`, `float`,
-                `integer`, `date`, `datetime`).
+                `integer`, `date`, `datetime`, `boolean`).
 
             The metadata dictionary additionally includes for fields with
             source `xml`:

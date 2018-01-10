@@ -10,11 +10,17 @@ install:
 matrix:
   include:
     - python: 2.7
-      env: TOXENV=py27
+      env: TOXENV=py27-nolxml
+    - python: 2.7
+      env: TOXENV=py27-lxml
     - python: 3.5
-      env: TOXENV=py35
+      env: TOXENV=py35-nolxml
+    - python: 3.5
+      env: TOXENV=py35-lxml
     - python: 3.6
-      env: TOXENV=py36
+      env: TOXENV=py36-nolxml
+    - python: 3.6
+      env: TOXENV=py36-lxml
     - env: TOXENV=flake8
     - env: TOXENV=docs
 

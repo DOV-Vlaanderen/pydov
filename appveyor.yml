@@ -30,9 +30,9 @@ environment:
 install:
     # Use the pre-installed Miniconda for the desired arch
     - cmd: call %CONDA_INSTALL_LOCN%\Scripts\activate.bat
-    - cmd: conda update -y -q conda
-    - cmd: conda config --add channels conda-forge
-    - cmd: conda install -y -q numpy pandas
+    - cmd: conda.exe update -y -q conda
+    - cmd: conda.exe config --add channels conda-forge
+    - cmd: conda.exe install -y -q numpy pandas
     - cmd: pip install --no-cache-dir -r requirements_dev.txt
     - ps: if($env:PY_INSTALL) { pip install --disable-pip-version-check --no-cache-dir $env:PY_INSTALL }
 

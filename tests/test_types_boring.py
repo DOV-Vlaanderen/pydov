@@ -110,7 +110,6 @@ class TestBoring(object):
 
     def test_get_df_array(self, monkeypatch):
         def _get_xml_data(*args):
-            data = None
             with open('tests/data/types/boring/boring.xml', 'r') as f:
                 data = f.read().encode('utf-8')
             return data

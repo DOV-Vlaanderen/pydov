@@ -4,6 +4,7 @@
 import datetime
 import types
 from collections import OrderedDict
+from distutils.util import strtobool
 
 from owslib.etree import etree
 from owslib.util import openURL
@@ -44,7 +45,7 @@ class AbstractCommon(object):
             the xpath as is.
         returntype : str
             Parse the text found with `func` to this output datatype. One of
-            `string`, `float`, `integer`, `date`.
+            `string`, `float`, `integer`, `date`, `boolean`.
 
         Returns
         -------
@@ -65,6 +66,9 @@ class AbstractCommon(object):
         elif returntype == 'date':
             def typeconvert(x):
                 return datetime.datetime.strptime(x, '%Y-%m-%dZ').date()
+        elif returntype == 'boolean':
+            def typeconvert(x):
+                return strtobool(x) == 1
         else:
             def typeconvert(x):
                 return x

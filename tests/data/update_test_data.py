@@ -26,7 +26,6 @@ def update_file(filepath, url, process_fn=None):
         with open(filepath, 'wb') as f:
             if process_fn:
                 data = process_fn(data)
-            # data = data.replace('\r\n', '\n')
             f.write(data.encode('utf-8'))
 
 

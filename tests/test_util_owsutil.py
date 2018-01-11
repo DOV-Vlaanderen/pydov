@@ -104,7 +104,9 @@ def mp_remote_describefeaturetype(monkeypatch):
                 with open(
                     'tests/data/util/owsutil/wfsdescribefeaturetype.xml',
                         'r') as f:
-                    data = f.read().encode('utf-8')
+                    data = f.read()
+                    if type(data) is not bytes:
+                        data = data.encode('utf-8')
                 return data
         return Io()
 

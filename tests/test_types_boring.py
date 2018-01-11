@@ -14,7 +14,9 @@ from pydov.util.errors import InvalidFieldError
 def mp_boring_xml(monkeypatch):
     def _get_xml_data(*args, **kwargs):
         with open('tests/data/types/boring/boring.xml', 'r') as f:
-            data = f.read().encode('utf-8')
+            data = f.read()
+            if type(data) is not bytes:
+                data = data.encode('utf-8')
         return data
 
     monkeypatch.setattr(pydov.types.abstract.AbstractDovType,

@@ -10,6 +10,17 @@ from pydov.types.boring import Boring
 from pydov.util.errors import InvalidFieldError
 
 
+@pytest.fixture
+def mp_boring_xml(monkeypatch):
+    def _get_xml_data(*args, **kwargs):
+        with open('tests/data/types/boring/boring.xml', 'r') as f:
+            data = f.read().encode('utf-8')
+        return data
+
+    monkeypatch.setattr(pydov.types.abstract.AbstractDovType,
+                        '_get_xml_data', _get_xml_data)
+
+
 class TestBoring(object):
     def test_get_field_names(self):
         fields = Boring.get_field_names()
@@ -108,15 +119,7 @@ class TestBoring(object):
 
         assert type(boring) is Boring
 
-    def test_get_df_array(self, monkeypatch):
-        def _get_xml_data(*args):
-            with open('tests/data/types/boring/boring.xml', 'r') as f:
-                data = f.read().encode('utf-8')
-            return data
-
-        monkeypatch.setattr(pydov.types.abstract.AbstractDovType,
-                            '_get_xml_data', _get_xml_data)
-
+    def test_get_df_array(self, mp_boring_xml):
         with open('tests/data/types/boring/feature.xml', 'r') as f:
             feature = etree.fromstring(f.read())
 

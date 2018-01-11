@@ -299,7 +299,7 @@ class AbstractDovType(AbstractCommon):
 
         """
         if type(response) is str:
-            response = response.encode('utf8')
+            response = response.encode('utf-8')
 
         if type(response) is bytes:
             response = etree.fromstring(response)

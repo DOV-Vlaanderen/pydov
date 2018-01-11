@@ -5,6 +5,7 @@ import sys
 import owslib
 import pytest
 from numpy.compat import unicode
+
 from owslib.etree import etree
 from owslib.iso import MD_Metadata
 from owslib.util import nspath_eval
@@ -21,7 +22,10 @@ from pydov.util.errors import (
 def wfs(monkeypatch):
     def read(*args, **kwargs):
         with open('tests/data/util/owsutil/wfscapabilities.xml', 'r') as f:
-            data = etree.fromstring(f.read().encode('utf-8'))
+            data = f.read()
+            if type(data) is not bytes:
+                data = data.encode('utf-8')
+            data = etree.fromstring(data)
         return data
 
     monkeypatch.setattr(
@@ -37,10 +41,9 @@ def md_metadata(wfs, monkeypatch):
     def openURL(*args, **kwargs):
         class Io:
             def read(*args, **kwargs):
-                from numpy.compat import unicode
                 with open('tests/data/util/owsutil/md_metadata.xml', 'r') as f:
                     data = f.read()
-                    if type(data) is unicode:
+                    if type(data) is not bytes:
                         data = data.encode('utf-8')
                 return data
         return Io()
@@ -59,12 +62,11 @@ def mp_remote_fc(monkeypatch):
     def openURL(*args, **kwargs):
         class Io:
             def read(*args, **kwargs):
-                from numpy.compat import unicode
                 with open(
                     'tests/data/util/owsutil/fc_featurecatalogue.xml',
                         'r') as f:
                     data = f.read()
-                    if type(data) is unicode:
+                    if type(data) is not bytes:
                         data = data.encode('utf-8')
                 return data
         return Io()
@@ -83,7 +85,9 @@ def mp_remote_fc_notfound(monkeypatch):
                 with open(
                     'tests/data/util/owsutil/fc_featurecatalogue_notfound.xml',
                         'r') as f:
-                    data = f.read().encode('utf-8')
+                    data = f.read()
+                    if type(data) is not bytes:
+                        data = data.encode('utf-8')
                 return data
         return Io()
 

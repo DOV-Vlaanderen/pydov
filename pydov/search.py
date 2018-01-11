@@ -5,6 +5,7 @@ import pandas as pd
 from owslib.etree import etree
 from owslib.fes import (
     FilterRequest,
+    PropertyIsEqualTo,
 )
 from owslib.wfs import WebFeatureService
 
@@ -558,12 +559,10 @@ if __name__ == '__main__':
     #                              # ))
 
     # fields = b.get_fields()
-    #
-    # query = PropertyIsEqualTo(propertyname='gemeente',
-    #                           literal='Blankenberge')
+    query = PropertyIsEqualTo(propertyname='boornummer',
+                              literal='GEO-04/169-BNo-B1')
 
-    df = b.search(location=(151680, 214678, 151681, 214679))
-
-    # df = b.search(query=query)
+    # df = b.search(location=(151680, 214678, 151681, 214679))
+    df = b.search(query=query)
 
     print(df)

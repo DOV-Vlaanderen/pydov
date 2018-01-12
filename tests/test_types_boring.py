@@ -177,14 +177,18 @@ class TestBoring(object):
                                      'boolean']
 
             if field['source'] == 'wfs':
-                assert 'definition' not in field
-                assert 'notnull' not in field
+                assert sorted(field.keys()) == [
+                    'name', 'source', 'sourcefield', 'type']
             elif field['source'] == 'xml':
                 assert 'definition' in field
                 assert type(field['definition']) in (str, unicode)
 
                 assert 'notnull' in field
                 assert type(field['notnull']) is bool
+
+                assert sorted(field.keys()) == [
+                    'definition', 'name', 'notnull', 'source', 'sourcefield',
+                    'type']
 
     def test_get_fields_sourcewfs(self):
         """Test the Boring.get_fields method for fields of the WFS source.

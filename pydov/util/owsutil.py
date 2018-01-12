@@ -35,6 +35,42 @@ def __get_namespaces():
 __namespaces = __get_namespaces()
 
 
+def __get_remote_md(md_url):
+    """Request the remote metadata by calling the `md_url` and
+    returning the response.
+
+    Parameters
+    ----------
+    md_url : str
+        URL to the remote metadata.
+
+    Returns
+    -------
+    bytes
+        Response containing the remote metadata.
+
+    """
+    return openURL(md_url).read()
+
+
+def __get_remote_fc(fc_url):
+    """Request the remote featurecatalogue by calling the `fc_url` and
+    returning the response.
+
+    Parameters
+    ----------
+    fc_url : str
+        URL to the remote feature catalogue.
+
+    Returns
+    -------
+    bytes
+        Response containing the remote feature catalogue.
+
+    """
+    return openURL(fc_url).read()
+
+
 def get_remote_metadata(contentmetadata):
     """Request and parse the remote metadata associated with the layer
     described in `contentmetadata`.
@@ -66,8 +102,8 @@ def get_remote_metadata(contentmetadata):
     if md_url is None:
         raise MetadataNotFoundError
 
-    content = openURL(md_url)
-    doc = etree.fromstring(content.read())
+    content = __get_remote_md(md_url)
+    doc = etree.fromstring(content)
     return MD_Metadata(doc)
 
 
@@ -181,8 +217,8 @@ def get_remote_featurecatalogue(csw_url, fc_uuid):
                        '&outputSchema=http://www.isotc211.org/2005/gmd' \
                        '&elementSetName=full&id=' + fc_uuid
 
-    content = openURL(fc_url)
-    tree = etree.fromstring(content.read())
+    content = __get_remote_fc(fc_url)
+    tree = etree.fromstring(content)
 
     fc = tree.find(nspath_eval('gfc:FC_FeatureCatalogue', __namespaces))
     if fc is None:

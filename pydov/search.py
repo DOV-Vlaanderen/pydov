@@ -197,6 +197,11 @@ class AbstractSearch(object):
         fields = {}
         self._wfs_fields = []
 
+        _map_wfs_datatypes = {
+            'int': 'integer',
+            'decimal': 'float'
+        }
+
         df_wfs_fields = self._type.get_fields(source=('wfs',)).values()
         for f in df_wfs_fields:
             self._map_wfs_source_df[f['sourcefield']] = f['name']
@@ -212,7 +217,9 @@ class AbstractSearch(object):
                 field = {
                     'name': name,
                     'definition': fc_field['definition'],
-                    'type': wfs_schema['properties'][wfs_field],
+                    'type': _map_wfs_datatypes.get(
+                        wfs_schema['properties'][wfs_field],
+                        wfs_schema['properties'][wfs_field]),
                     'notnull': fc_field['multiplicity'][0] > 0,
                     'cost': 1
                 }
@@ -430,6 +437,11 @@ class AbstractSearch(object):
                 The cost associated with the request of this field in the
                 output dataframe.
 
+            Optionally, it can contain:
+
+            values (list)
+                A list of possible values for this field.
+
         """
         self._init_fields()
         return self._fields
@@ -558,7 +570,7 @@ if __name__ == '__main__':
     #                              'boormethode'))
     #                              # ))
 
-    # fields = b.get_fields()
+    print(b.get_fields())
     query = PropertyIsEqualTo(propertyname='boornummer',
                               literal='GEO-04/169-BNo-B1')
 

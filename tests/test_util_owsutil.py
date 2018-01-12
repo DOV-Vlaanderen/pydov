@@ -18,22 +18,15 @@ from pydov.util.errors import (
 
 
 @pytest.fixture
-def wfs(monkeypatch):
-    """PyTest fixture providing an instance of a WebFeatureService based on
-    a local copy of a GetCapabilities request.
+def mp_wfs(monkeypatch):
+    """Monkeypatch the call to the remote GetCapabilities request.
 
     Parameters
     ----------
     monkeypatch : pytest.fixture
         PyTest monkeypatch fixture.
 
-    Returns
-    -------
-    owslib.wfs.WebFeatureService
-        WebFeatureService based on the local GetCapabilities.
-
     """
-
     def read(*args, **kwargs):
         with open('tests/data/util/owsutil/wfscapabilities.xml', 'r') as f:
             data = f.read()
@@ -45,14 +38,31 @@ def wfs(monkeypatch):
     monkeypatch.setattr(
         owslib.feature.common.WFSCapabilitiesReader, 'read', read)
 
+
+@pytest.fixture
+def wfs(mp_wfs):
+    """PyTest fixture providing an instance of a WebFeatureService based on
+    a local copy of a GetCapabilities request.
+
+    Parameters
+    ----------
+    mp_wfs : pytest.fixture
+        Monkeypatch the call to the remote GetCapabilities request.
+
+    Returns
+    -------
+    owslib.wfs.WebFeatureService
+        WebFeatureService based on the local GetCapabilities.
+
+    """
     return WebFeatureService(
         url="https://www.dov.vlaanderen.be/geoserver/wfs",
         version="1.1.0")
 
 
 @pytest.fixture
-def md_metadata(wfs, monkeypatch):
-    """PyTest fixture providing a MD_Metadata instance of the
+def mp_remote_md(wfs, monkeypatch):
+    """Monkeypatch the call to get the remote metadata of the
     dov-pub:Boringen layer.
 
     Parameters
@@ -62,6 +72,35 @@ def md_metadata(wfs, monkeypatch):
     monkeypatch : pytest.fixture
         PyTest monkeypatch fixture.
 
+    """
+    def __get_remote_md(*args, **kwargs):
+        with open('tests/data/util/owsutil/md_metadata.xml', 'r') as f:
+            data = f.read()
+            if type(data) is not bytes:
+                data = data.encode('utf-8')
+        return data
+
+    if sys.version_info[0] < 3:
+        monkeypatch.setattr('pydov.util.owsutil.__get_remote_md.func_code',
+                            __get_remote_md.func_code)
+    else:
+        monkeypatch.setattr('pydov.util.owsutil.__get_remote_md.__code__',
+                            __get_remote_md.__code__)
+
+
+@pytest.fixture
+def md_metadata(wfs, mp_remote_md):
+    """PyTest fixture providing a MD_Metadata instance of the
+    dov-pub:Boringen layer.
+
+    Parameters
+    ----------
+    wfs : pytest.fixture returning owslib.wfs.WebFeatureService
+        WebFeatureService based on the local GetCapabilities.
+    mp_remote_md : pytest.fixture
+        Monkeypatch the call to get the remote metadata of the
+        dov-pub:Boringen layer.
+
     Returns
     -------
     owslib.iso.MD_Metadata
@@ -69,23 +108,6 @@ def md_metadata(wfs, monkeypatch):
         in the ISO 19115/19139 format.
 
     """
-
-    def openURL(*args, **kwargs):
-        class Io:
-            def read(*args, **kwargs):
-                with open('tests/data/util/owsutil/md_metadata.xml', 'r') as f:
-                    data = f.read()
-                    if type(data) is not bytes:
-                        data = data.encode('utf-8')
-                return data
-
-        return Io()
-
-    if sys.version_info[0] < 3:
-        monkeypatch.setattr('owslib.util.openURL.func_code', openURL.func_code)
-    else:
-        monkeypatch.setattr('owslib.util.openURL.__code__', openURL.__code__)
-
     contentmetadata = wfs.contents['dov-pub:Boringen']
     return owsutil.get_remote_metadata(contentmetadata)
 
@@ -101,24 +123,19 @@ def mp_remote_fc(monkeypatch):
         PyTest monkeypatch fixture.
 
     """
-
-    def openURL(*args, **kwargs):
-        class Io:
-            def read(*args, **kwargs):
-                with open(
-                    'tests/data/util/owsutil/fc_featurecatalogue.xml',
-                        'r') as f:
-                    data = f.read()
-                    if type(data) is not bytes:
-                        data = data.encode('utf-8')
-                return data
-
-        return Io()
+    def __get_remote_fc(*args, **kwargs):
+        with open('tests/data/util/owsutil/fc_featurecatalogue.xml', 'r') as f:
+            data = f.read()
+            if type(data) is not bytes:
+                data = data.encode('utf-8')
+        return data
 
     if sys.version_info[0] < 3:
-        monkeypatch.setattr('owslib.util.openURL.func_code', openURL.func_code)
+        monkeypatch.setattr('pydov.util.owsutil.__get_remote_fc.func_code',
+                            __get_remote_fc.func_code)
     else:
-        monkeypatch.setattr('owslib.util.openURL.__code__', openURL.__code__)
+        monkeypatch.setattr('pydov.util.owsutil.__get_remote_fc.__code__',
+                            __get_remote_fc.__code__)
 
 
 @pytest.fixture

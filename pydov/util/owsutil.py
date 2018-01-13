@@ -1,5 +1,11 @@
 # -*- coding: utf-8 -*-
 """Module grouping utility functions for OWS services."""
+from owslib.feature.schema import (
+    _get_describefeaturetype_url,
+    _get_elements,
+    _construct_schema,
+    XS_NAMESPACE,
+)
 
 try:
     # Python3
@@ -14,6 +20,7 @@ from owslib.namespaces import Namespaces
 from owslib.util import (
     openURL,
     nspath_eval,
+    findall,
 )
 
 from pydov.util.errors import (
@@ -69,6 +76,24 @@ def __get_remote_fc(fc_url):
 
     """
     return openURL(fc_url).read()
+
+
+def __get_remote_describefeaturetype(describefeaturetype_url):
+    """Request the remote DescribeFeatureType by calling the
+    `describefeaturetype_url` and returning the response.
+
+    Parameters
+    ----------
+    describefeaturetype_url : str
+        URL to the DescribeFeatureType.
+
+    Returns
+    -------
+    bytes
+        Response containing the remote DescribeFeatureType.
+
+    """
+    return openURL(describefeaturetype_url).read()
 
 
 def get_remote_metadata(contentmetadata):
@@ -295,7 +320,43 @@ def get_namespace(wfs, layer):
     from owslib.feature.schema import _get_describefeaturetype_url
     url = _get_describefeaturetype_url(url=wfs.url, version='1.1.0',
                                        typename=layer)
-    schema = openURL(url_base=url).read()
+    schema = __get_remote_describefeaturetype(url)
     tree = etree.fromstring(schema)
     namespace = tree.attrib.get('targetNamespace', None)
     return namespace
+
+
+def get_remote_schema(url, typename, version='1.0.0'):
+    """Copy the owslib.feature.schema.get_schema method to be able to
+    monkeypatch the openURL request in tests.
+
+    Parameters
+    ----------
+    url : str
+        Base URL of the WFS service.
+    typename : str
+        Typename of the feature type to get the schema of.
+    version : str
+        Version of WFS to use. Defaults to 1.0.0
+
+
+    Returns
+    -------
+    dict
+        Schema of the given WFS layer.
+
+    """
+    url = _get_describefeaturetype_url(url, version, typename)
+    res = __get_remote_describefeaturetype(url)
+    root = etree.fromstring(res)
+
+    if ':' in typename:
+        typename = typename.split(':')[1]
+    type_element = findall(root, '{%s}element' % XS_NAMESPACE,
+                           attribute_name='name', attribute_value=typename)[0]
+    complex_type = type_element.attrib['type'].split(":")[1]
+    elements = _get_elements(complex_type, root)
+    nsmap = None
+    if hasattr(root, 'nsmap'):
+        nsmap = root.nsmap
+    return _construct_schema(elements, nsmap)

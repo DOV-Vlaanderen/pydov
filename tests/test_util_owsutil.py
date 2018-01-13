@@ -148,24 +148,20 @@ def mp_remote_fc_notfound(monkeypatch):
         PyTest monkeypatch fixture.
 
     """
-
-    def openURL(*args, **kwargs):
-        class Io:
-            def read(*args, **kwargs):
-                with open(
-                    'tests/data/util/owsutil/fc_featurecatalogue_notfound.xml',
-                        'r') as f:
-                    data = f.read()
-                    if type(data) is not bytes:
-                        data = data.encode('utf-8')
-                return data
-
-        return Io()
+    def __get_remote_fc(*args, **kwargs):
+        with open('tests/data/util/owsutil/fc_featurecatalogue_notfound.xml',
+                  'r') as f:
+            data = f.read()
+            if type(data) is not bytes:
+                data = data.encode('utf-8')
+        return data
 
     if sys.version_info[0] < 3:
-        monkeypatch.setattr('owslib.util.openURL.func_code', openURL.func_code)
+        monkeypatch.setattr('pydov.util.owsutil.__get_remote_fc.func_code',
+                            __get_remote_fc.func_code)
     else:
-        monkeypatch.setattr('owslib.util.openURL.__code__', openURL.__code__)
+        monkeypatch.setattr('pydov.util.owsutil.__get_remote_fc.__code__',
+                            __get_remote_fc.__code__)
 
 
 @pytest.fixture
@@ -179,23 +175,22 @@ def mp_remote_describefeaturetype(monkeypatch):
         PyTest monkeypatch fixture.
 
     """
-    def openURL(*args, **kwargs):
-        class Io:
-            def read(*args, **kwargs):
-                with open(
-                    'tests/data/util/owsutil/wfsdescribefeaturetype.xml',
-                        'r') as f:
-                    data = f.read()
-                    if type(data) is not bytes:
-                        data = data.encode('utf-8')
-                return data
-
-        return Io()
+    def __get_remote_describefeaturetype(*args, **kwargs):
+        with open('tests/data/util/owsutil/wfsdescribefeaturetype.xml',
+                  'r') as f:
+            data = f.read()
+            if type(data) is not bytes:
+                data = data.encode('utf-8')
+        return data
 
     if sys.version_info[0] < 3:
-        monkeypatch.setattr('owslib.util.openURL.func_code', openURL.func_code)
+        monkeypatch.setattr(
+            'pydov.util.owsutil.__get_remote_describefeaturetype.func_code',
+            __get_remote_describefeaturetype.func_code)
     else:
-        monkeypatch.setattr('owslib.util.openURL.__code__', openURL.__code__)
+        monkeypatch.setattr(
+            'pydov.util.owsutil.__get_remote_describefeaturetype.__code__',
+            __get_remote_describefeaturetype.__code__)
 
 
 class TestOwsutil(object):

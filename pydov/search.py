@@ -17,6 +17,7 @@ from pydov.util.errors import (
     FeatureOverflowError,
     InvalidFieldError,
 )
+from pydov.util.owsutil import get_remote_schema
 
 
 class AbstractSearch(object):
@@ -116,7 +117,8 @@ class AbstractSearch(object):
         self._init_wfs()
         layername = self._layer.split(':')[1] if ':' in self._layer else \
             self._layer
-        return self.__wfs.get_schema(layername)
+        return get_remote_schema(
+            'https://www.dov.vlaanderen.be/geoserver/wfs', layername)
 
     def _get_namespace(self):
         """Get the WFS namespace of the layer.
@@ -313,6 +315,33 @@ class AbstractSearch(object):
                     raise InvalidFieldError(
                         "Field cannot be used as a return field: '%s'" % rf)
 
+    @staticmethod
+    def _get_remote_wfs_feature(wfs, typename, bbox, filter, propertyname):
+        """Perform the OWSLib call to get features from the remote service.
+
+        Parameters
+        ----------
+        typename : str
+            Layername to query.
+        bbox : tuple<minx,maxx,miny,maxy>
+            The bounding box limiting the features to retrieve.
+        filter : owslib.fes.FilterRequest
+            Filter request to search on attribute values.
+        propertyname : list<str>
+            List of properties to return.
+
+        Returns
+        -------
+        bytes
+            Response of the WFS service.
+
+        """
+        return wfs.getfeature(
+            typename=typename,
+            bbox=bbox,
+            filter=filter,
+            propertyname=propertyname).read().encode('utf-8')
+
     def _search(self, location=None, query=None, return_fields=None):
         """Perform the WFS search by issuing a GetFeature request.
 
@@ -372,8 +401,13 @@ class AbstractSearch(object):
                 property_name.text = self._map_df_wfs_source.get(
                     property_name.text, property_name.text)
 
-            filter_request = etree.tostring(filter_request,
-                                            encoding='unicode')
+            try:
+                filter_request = etree.tostring(filter_request,
+                                                encoding='unicode')
+            except LookupError:
+                # Python2.7 without lxml uses 'utf-8' instead.
+                filter_request = etree.tostring(filter_request,
+                                                encoding='utf-8')
 
         if return_fields is None:
             wfs_property_names = [str(f) for f in self._map_wfs_source_df]
@@ -386,12 +420,13 @@ class AbstractSearch(object):
                                        if i in return_fields])
             wfs_property_names = list(set(wfs_property_names))
 
-        fts = self.__wfs.getfeature(typename=self._layer,
-                                    bbox=location,
-                                    filter=filter_request,
-                                    propertyname=wfs_property_names).read()
+        fts = self._get_remote_wfs_feature(wfs=self.__wfs,
+                                           typename=self._layer,
+                                           bbox=location,
+                                           filter=filter_request,
+                                           propertyname=wfs_property_names)
 
-        tree = etree.fromstring(fts.encode('utf-8'))
+        tree = etree.fromstring(fts)
 
         if int(tree.get('numberOfFeatures')) == 10000:
             raise FeatureOverflowError(

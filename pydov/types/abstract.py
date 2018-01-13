@@ -308,7 +308,8 @@ class AbstractDovType(AbstractCommon):
         if type(response) is bytes:
             response = etree.fromstring(response)
 
-        if isinstance(response, etree._Element):
+        element_type = type(etree.Element(b'xml'))
+        if isinstance(response, element_type):
             feature_members = response.find('.//{http://www.opengis.net/gml}'
                                             'featureMembers')
 

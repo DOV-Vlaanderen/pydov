@@ -30,6 +30,14 @@ def update_file(filepath, url, process_fn=None):
 
 
 if __name__ == '__main__':
+    # search
+
+    update_file('search/wfsgetfeature.xml',
+                'https://www.dov.vlaanderen.be/geoserver/ows?service=WFS'
+                '&version=1.1.0&request=GetFeature&typeName=dov-pub:Boringen'
+                '&maxFeatures=1&CQL_Filter=fiche=%27https://www.dov'
+                '.vlaanderen.be/data/boring/2004-103984%27')
+
     # types/boring
 
     update_file('types/boring/boring.xml',

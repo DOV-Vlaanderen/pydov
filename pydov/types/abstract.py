@@ -65,7 +65,8 @@ class AbstractCommon(object):
                 return float(x)
         elif returntype == 'date':
             def typeconvert(x):
-                return datetime.datetime.strptime(x, '%Y-%m-%dZ').date()
+                return datetime.datetime.strptime(x, '%Y-%m-%dZ').date() + \
+                       datetime.timedelta(days=1)
         elif returntype == 'boolean':
             def typeconvert(x):
                 return strtobool(x) == 1

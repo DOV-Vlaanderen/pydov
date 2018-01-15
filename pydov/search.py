@@ -300,6 +300,10 @@ class AbstractSearch(object):
                         "Unknown query parameter: '%s'" % name)
 
         if return_fields is not None:
+            if type(return_fields) not in (list, tuple, set):
+                raise AttributeError('return_fields should be a list, '
+                                     'tuple or set')
+
             self._init_fields()
             for rf in return_fields:
                 if rf not in self._fields:
@@ -533,7 +537,7 @@ class BoringSearch(AbstractSearch):
             combination of filter elements defined in owslib.fes. The query
             should use the fields provided in `get_fields()`. Note that not
             all fields are currently supported as a search parameter.
-        return_fields : list<str>
+        return_fields : list<str> or tuple<str> or set<str>
             A list of fields to be returned in the output data. This should
             be a subset of the fields provided in `get_fields()`. Note that
             not all fields are currently supported as return fields.
@@ -562,6 +566,10 @@ class BoringSearch(AbstractSearch):
         pydov.util.errors.FeatureOverflowError
             When the number of features to be returned is equal to the
             maxFeatures limit of the WFS server.
+
+        AttributeError
+            When the argument supplied as return_fields is not a list,
+            tuple or set.
 
         """
         fts = self._search(location=location, query=query,

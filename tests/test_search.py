@@ -9,7 +9,11 @@ from pandas import DataFrame
 
 import pydov
 from pydov.search import BoringSearch
-from pydov.util.errors import InvalidSearchParameterError
+from pydov.types.boring import Boring
+from pydov.util.errors import (
+    InvalidSearchParameterError,
+    InvalidFieldError,
+)
 from tests.test_types_boring import mp_boring_xml
 from tests.test_util_owsutil import (
     mp_wfs,
@@ -221,4 +225,203 @@ class TestBoringSearch(object):
         query = PropertyIsEqualTo(propertyname='boornummer',
                                   literal='GEO-04/169-BNo-B1')
         df = boringsearch.search(query=query)
+
         assert type(df) is DataFrame
+
+        assert list(df) == ['pkey_boring', 'boornummer', 'x', 'y', 'mv_mtaw',
+                            'start_boring_mtaw', 'gemeente',
+                            'diepte_boring_van', 'diepte_boring_tot',
+                            'datum_aanvang', 'uitvoerder', 'boorgatmeting',
+                            'diepte_methode_van', 'diepte_methode_tot',
+                            'boormethode']
+
+        allfields = Boring.get_field_names()
+        ownfields = Boring.get_field_names(include_subtypes=False)
+        subfields = [f for f in allfields if f not in ownfields]
+
+        for field in list(df):
+            if field in ownfields:
+                assert len(df[field].unique()) == 1
+            elif field in subfields:
+                assert len(df[field].unique()) == len(df)
+
+        assert df.mv_mtaw.hasnans
+
+        fields = Boring.get_fields()
+        for field in list(df):
+            if field == 'mv_mtaw':
+                continue
+
+            datatype = fields[field]['type']
+            if datatype == 'string':
+                assert df[field].dtype.name == 'object'
+            elif datatype == 'float':
+                assert df[field].dtype.name == 'float64'
+            elif datatype == 'integer':
+                assert df[field].dtype.name == 'integer'
+            elif datatype == 'date':
+                assert df[field].dtype.name == 'object'
+            elif datatype == 'boolean':
+                assert df[field].dtype.name == 'bool'
+
+        assert len(df) == 2
+        assert df.datum_aanvang.unique()[0] == datetime.date(2004, 12, 20)
+
+    def test_search_returnfields(self, mp_remote_wfs_feature,
+                                     boringsearch):
+        """Test the search method with the query parameter and a selection of
+        return fields.
+
+        Test whether the output dataframe contains only the selected return
+        fields.
+
+        Parameters
+        ----------
+        mp_remote_wfs_feature : pytest.fixture
+            Monkeypatch the call to get WFS features.
+        boringsearch : pytest.fixture returning pydov.search.BoringSearch
+            An instance of BoringSearch to perform search operations on the DOV
+            type 'Boring'.
+
+        """
+        query = PropertyIsEqualTo(propertyname='boornummer',
+                                  literal='GEO-04/169-BNo-B1')
+
+        df = boringsearch.search(query=query,
+                                 return_fields=('pkey_boring', 'boornummer',
+                                                'diepte_boring_tot',
+                                                'datum_aanvang'))
+
+        assert type(df) is DataFrame
+
+        assert list(df) == ['pkey_boring', 'boornummer', 'diepte_boring_tot',
+                            'datum_aanvang']
+
+    def test_search_returnfields_order(self, mp_remote_wfs_feature,
+                                     boringsearch):
+        """Test the search method with the query parameter and a selection of
+        return fields in another ordering.
+
+        Test whether the output dataframe contains only the selected return
+        fields, in the order that is documented in
+        docs/description_output_dataframes.rst
+
+        Parameters
+        ----------
+        mp_remote_wfs_feature : pytest.fixture
+            Monkeypatch the call to get WFS features.
+        boringsearch : pytest.fixture returning pydov.search.BoringSearch
+            An instance of BoringSearch to perform search operations on the DOV
+            type 'Boring'.
+
+        """
+        query = PropertyIsEqualTo(propertyname='boornummer',
+                                  literal='GEO-04/169-BNo-B1')
+
+        df = boringsearch.search(query=query,
+                                 return_fields=('pkey_boring', 'boornummer',
+                                                'datum_aanvang',
+                                                'diepte_boring_tot'))
+
+        assert type(df) is DataFrame
+
+        assert list(df) == ['pkey_boring', 'boornummer', 'diepte_boring_tot',
+                            'datum_aanvang']
+
+    def test_search_wrongreturnfields(self, boringsearch):
+        """Test the search method with the query parameter and an inexistent
+        return field.
+
+        Test whether an InvalidFieldError is raised.
+
+        Parameters
+        ----------
+        boringsearch : pytest.fixture returning pydov.search.BoringSearch
+            An instance of BoringSearch to perform search operations on the DOV
+            type 'Boring'.
+
+        """
+        query = PropertyIsEqualTo(propertyname='boornummer',
+                                  literal='GEO-04/169-BNo-B1')
+
+        with pytest.raises(InvalidFieldError):
+            boringsearch.search(query=query,
+                                return_fields=('pkey_boring', 'onbestaand'))
+
+    def test_search_wrongreturnfields_queryfield(self, boringsearch):
+        """Test the search method with the query parameter and a query-only
+        field as return field.
+
+        Test whether an InvalidFieldError is raised.
+
+        Parameters
+        ----------
+        boringsearch : pytest.fixture returning pydov.search.BoringSearch
+            An instance of BoringSearch to perform search operations on the DOV
+            type 'Boring'.
+
+        """
+        query = PropertyIsEqualTo(propertyname='boornummer',
+                                  literal='GEO-04/169-BNo-B1')
+
+        with pytest.raises(InvalidFieldError):
+            boringsearch.search(query=query,
+                                return_fields=('pkey_boring', 'doel'))
+
+    def test_search_wrongreturnfieldstype(self, boringsearch):
+        """Test the search method with the query parameter and a single
+        return field as string.
+
+        Test whether an AttributeError is raised.
+
+        Parameters
+        ----------
+        boringsearch : pytest.fixture returning pydov.search.BoringSearch
+            An instance of BoringSearch to perform search operations on the DOV
+            type 'Boring'.
+
+        """
+        query = PropertyIsEqualTo(propertyname='boornummer',
+                                  literal='GEO-04/169-BNo-B1')
+
+        with pytest.raises(AttributeError):
+            boringsearch.search(query=query,
+                                return_fields='datum_aanvang')
+
+    def test_search_query_wrongfield(self, boringsearch):
+        """Test the search method with the query parameter using an
+        inexistent query field.
+
+        Test whether an InvalidFieldError is raised.
+
+        Parameters
+        ----------
+        boringsearch : pytest.fixture returning pydov.search.BoringSearch
+            An instance of BoringSearch to perform search operations on the DOV
+            type 'Boring'.
+
+        """
+        query = PropertyIsEqualTo(propertyname='onbestaand',
+                                  literal='Geotechnisch onderzoek')
+
+        with pytest.raises(InvalidFieldError):
+            boringsearch.search(query=query)
+
+    def test_search_query_wrongfield_returnfield(self, boringsearch):
+        """Test the search method with the query parameter using an
+        return-only field as query field.
+
+        Test whether an InvalidFieldError is raised.
+
+        Parameters
+        ----------
+        boringsearch : pytest.fixture returning pydov.search.BoringSearch
+            An instance of BoringSearch to perform search operations on the DOV
+            type 'Boring'.
+
+        """
+        query = PropertyIsEqualTo(propertyname='boormethode',
+                                  literal='Geotechnisch onderzoek')
+
+        with pytest.raises(InvalidFieldError):
+            boringsearch.search(query=query)

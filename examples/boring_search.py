@@ -4,6 +4,7 @@
 def get_description():
     """The description gives information about the Boring type."""
     from pydov.search import BoringSearch
+
     b = BoringSearch()
     print(b.get_description())
 
@@ -12,6 +13,7 @@ def get_fields():
     """The fields give details about what information is available for a
     Boring object."""
     from pydov.search import BoringSearch
+
     b = BoringSearch()
     fields = b.get_fields()
     for f in fields.values():
@@ -42,6 +44,7 @@ def get_borehole_depth_in_gent():
     """Get the borehole depths of all boreholes in Ghent."""
     from pydov.search import BoringSearch
     from owslib.fes import PropertyIsEqualTo
+
     b = BoringSearch()
     query = PropertyIsEqualTo(propertyname='gemeente',
                               literal='Gent')
@@ -54,6 +57,7 @@ def get_deep_boreholes():
     """Get all details of the boreholes with a depth of at least 2000m."""
     from pydov.search import BoringSearch
     from owslib.fes import PropertyIsGreaterThanOrEqualTo
+
     b = BoringSearch()
     query = PropertyIsGreaterThanOrEqualTo(
         propertyname='diepte_boring_tot', literal='2000')
@@ -69,13 +73,14 @@ def get_groundwater_related_boreholes_in_antwerp():
     'erkenning' equals '2. Andere grondwaterwinningen'.
     """
     from pydov.search import BoringSearch
-    b = BoringSearch()
-    from owslib.fes import PropertyIsNull
-    from owslib.fes import Or
     from owslib.fes import PropertyIsLike
     from owslib.fes import PropertyIsEqualTo
+    from owslib.fes import PropertyIsNull
     from owslib.fes import And
+    from owslib.fes import Or
     from owslib.fes import Not
+
+    b = BoringSearch()
     query = And([PropertyIsEqualTo(propertyname='gemeente',
                                    literal='Antwerpen'),
                  Or([Not([PropertyIsNull(propertyname='putnummer')]),
@@ -91,6 +96,7 @@ def get_groundwater_related_boreholes_in_antwerp():
 def get_boreholes_in_bounding_box():
     """Get all the boreholes within the given bounding box."""
     from pydov.search import BoringSearch
+
     b = BoringSearch()
     df = b.search(
         location=(151650, 214675, 151750, 214775)

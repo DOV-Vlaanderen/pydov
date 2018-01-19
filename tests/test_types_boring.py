@@ -239,6 +239,12 @@ class TestBoring(object):
 
         assert type(boring) is Boring
 
+        assert boring.pkey.startswith(
+            'https://www.dov.vlaanderen.be/data/boring/')
+        assert boring.typename == 'boring'
+        assert type(boring.data) is dict
+        assert type(boring.subdata) is dict
+
     def test_get_df_array(self, wfs_feature, mp_boring_xml):
         """Test the boring.get_df_array method.
 

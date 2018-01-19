@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-"""Module containing the base DOV data types."""
+"""Module containing the DOV data type for boreholes (Boring), including
+subtypes."""
 
 from owslib.etree import etree
 

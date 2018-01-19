@@ -5,7 +5,6 @@ import pandas as pd
 from owslib.etree import etree
 from owslib.fes import (
     FilterRequest,
-    PropertyIsEqualTo,
 )
 from owslib.wfs import WebFeatureService
 

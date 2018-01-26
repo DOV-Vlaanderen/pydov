@@ -252,10 +252,15 @@ class AbstractSearch(object):
         ----------
         location : tuple<minx,maxx,miny,maxy>
             The bounding box limiting the features to retrieve.
-        query : TODO
-            TODO
-        return_fields : TODO
-            TODO
+        query : owslib.fes.OgcExpression
+            OGC filter expression to use for searching. This can contain any
+            combination of filter elements defined in owslib.fes. The query
+            should use the fields provided in `get_fields()`. Note that not
+            all fields are currently supported as a search parameter.
+        return_fields : list<str> or tuple<str> or set<str>
+            A list of fields to be returned in the output data. This should
+            be a subset of the fields provided in `get_fields()`. Note that
+            not all fields are currently supported as return fields.
 
         Raises
         ------

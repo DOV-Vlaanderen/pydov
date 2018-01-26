@@ -339,7 +339,6 @@ def get_remote_schema(url, typename, version='1.0.0'):
     version : str
         Version of WFS to use. Defaults to 1.0.0
 
-
     Returns
     -------
     dict

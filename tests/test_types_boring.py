@@ -10,6 +10,9 @@ import pydov
 from pydov.types.boring import Boring
 from pydov.util.errors import InvalidFieldError
 
+from tests.test_util_owsutil import (
+    wfs_getfeature
+)
 
 @pytest.fixture
 def mp_boring_xml(monkeypatch):
@@ -306,3 +309,76 @@ class TestBoring(object):
 
         with pytest.raises(InvalidFieldError):
             boring.get_df_array(return_fields=('onbestaand',))
+
+    def test_from_wfs_str(self, wfs_getfeature):
+        """Test the boring.from_wfs method to construct Boring objects from
+        a WFS response, as str.
+
+        Parameters
+        ----------
+        wfs_getfeature : pytest.fixture returing str
+            Fixture providing a WFS GetFeature response of the
+            dov-pub:Boringen layer.
+
+        """
+        boringen = Boring.from_wfs(wfs_getfeature,
+                                   'http://dov.vlaanderen.be/ocdov/dov-pub')
+
+        for boring in boringen:
+            assert type(boring) is Boring
+
+    def test_from_wfs_bytes(self, wfs_getfeature):
+        """Test the boring.from_wfs method to construct Boring objects from
+        a WFS response, as bytes.
+
+        Parameters
+        ----------
+        wfs_getfeature : pytest.fixture returing str
+            Fixture providing a WFS GetFeature response of the
+            dov-pub:Boringen layer.
+
+        """
+        boringen = Boring.from_wfs(wfs_getfeature.encode('utf-8'),
+                                   'http://dov.vlaanderen.be/ocdov/dov-pub')
+
+        for boring in boringen:
+            assert type(boring) is Boring
+
+    def test_from_wfs_tree(self, wfs_getfeature):
+        """Test the boring.from_wfs method to construct Boring objects from
+        a WFS response, as elementtree.
+
+        Parameters
+        ----------
+        wfs_getfeature : pytest.fixture returing str
+            Fixture providing a WFS GetFeature response of the
+            dov-pub:Boringen layer.
+
+        """
+        tree = etree.fromstring(wfs_getfeature.encode('utf8'))
+        boringen = Boring.from_wfs(tree,
+                                   'http://dov.vlaanderen.be/ocdov/dov-pub')
+
+        for boring in boringen:
+            assert type(boring) is Boring
+
+    def test_from_wfs_list(self, wfs_getfeature):
+        """Test the boring.from_wfs method to construct Boring objects from
+        a WFS response, as list of elements.
+
+        Parameters
+        ----------
+        wfs_getfeature : pytest.fixture returing str
+            Fixture providing a WFS GetFeature response of the
+            dov-pub:Boringen layer.
+
+        """
+        tree = etree.fromstring(wfs_getfeature.encode('utf8'))
+        feature_members = tree.findall('.//{http://www.opengis.net/gml}'
+                                        'featureMembers')
+
+        boringen = Boring.from_wfs(feature_members,
+                                   'http://dov.vlaanderen.be/ocdov/dov-pub')
+
+        for boring in boringen:
+            assert type(boring) is Boring

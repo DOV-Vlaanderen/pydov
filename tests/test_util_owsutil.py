@@ -165,6 +165,22 @@ def mp_remote_fc_notfound(monkeypatch):
 
 
 @pytest.fixture
+def wfs_getfeature():
+    """PyTest fixture providing a WFS GetFeature response for the
+    dov-pub:Boringen layer.
+
+    Returns
+    -------
+    str
+        WFS response of a GetFeature call to the dov-pub:Boringen layer.
+
+    """
+    with open('tests/data/search/wfsgetfeature.xml', 'r') as f:
+        data = f.read()
+        return data
+
+
+@pytest.fixture
 def mp_remote_describefeaturetype(monkeypatch):
     """Monkeypatch the call to a remote DescribeFeatureType of the
     dov-pub:Boringen layer.

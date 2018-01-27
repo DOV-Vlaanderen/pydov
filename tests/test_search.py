@@ -425,3 +425,33 @@ class TestBoringSearch(object):
 
         with pytest.raises(InvalidFieldError):
             boringsearch.search(query=query)
+
+    def test_search_xmlresolving(self, mp_remote_wfs_feature, mp_boring_xml,
+                                     boringsearch):
+        """Test the search method with return fields from XML but not from a
+        subtype.
+
+        Test whether the output dataframe contains the resolved XML data.
+
+        Parameters
+        ----------
+        mp_remote_wfs_feature : pytest.fixture
+            Monkeypatch the call to get WFS features.
+        mp_boring_xml : pytest.fixture
+            Monkeypatch the call to get the remote Boring XML data.
+        boringsearch : pytest.fixture returning pydov.search.BoringSearch
+            An instance of BoringSearch to perform search operations on the DOV
+            type 'Boring'.
+
+        """
+        query = PropertyIsEqualTo(propertyname='boornummer',
+                                  literal='GEO-04/169-BNo-B1')
+
+        df = boringsearch.search(query=query,
+                                 return_fields=('pkey_boring', 'boornummer',
+                                                'boorgatmeting'))
+
+        assert type(df) is DataFrame
+
+        assert list(df) == ['pkey_boring', 'boornummer', 'boorgatmeting']
+        assert df.boorgatmeting[0] == False

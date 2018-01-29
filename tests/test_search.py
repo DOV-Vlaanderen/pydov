@@ -193,6 +193,23 @@ class TestBoringSearch(object):
             boringsearch.search(location=(1, 2, 3, 4),
                                 query=query)
 
+    def test_search_both_location_query_wrongquerytype(self, boringsearch):
+        """Test the search method providing both a location and a query,
+        using a query with an invalid type.
+
+        Test whether an InvalidSearchParameterError is raised.
+
+        Parameters
+        ----------
+        boringsearch : pytest.fixture returning pydov.search.BoringSearch
+            An instance of BoringSearch to perform search operations on the DOV
+            type 'Boring'.
+
+        """
+        with pytest.raises(InvalidSearchParameterError):
+            boringsearch.search(location=(1, 2, 3, 4),
+                                query='computer says no')
+
     def test_search(self, mp_wfs, mp_remote_describefeaturetype, mp_remote_md,
                     mp_remote_fc, mp_remote_wfs_feature, mp_boring_xml,
                     boringsearch):
@@ -406,6 +423,22 @@ class TestBoringSearch(object):
 
         with pytest.raises(InvalidFieldError):
             boringsearch.search(query=query)
+
+    def test_search_query_wrongtype(self, boringsearch):
+        """Test the search method with the query parameter using a wrong
+        query type.
+
+        Test whether an InvalidSearchParameterError is raised.
+
+        Parameters
+        ----------
+        boringsearch : pytest.fixture returning pydov.search.BoringSearch
+            An instance of BoringSearch to perform search operations on the DOV
+            type 'Boring'.
+
+        """
+        with pytest.raises(InvalidSearchParameterError):
+            boringsearch.search(query='computer says no')
 
     def test_search_query_wrongfield_returnfield(self, boringsearch):
         """Test the search method with the query parameter using an

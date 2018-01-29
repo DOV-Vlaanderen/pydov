@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Module containing the search classes to retrieve DOV data."""
-
+import owslib
 import pandas as pd
 from owslib.etree import etree
 from owslib.fes import (
@@ -290,8 +290,15 @@ class AbstractSearch(object):
             )
 
         if query is not None:
+            if not isinstance(query, owslib.fes.OgcExpression):
+                raise InvalidSearchParameterError(
+                    "Query should be an owslib.fes.OgcExpression.")
+
+            filter_request = FilterRequest()
+            filter_request = filter_request.setConstraint(query)
+
             self._init_fields()
-            for property_name in query.findall(
+            for property_name in filter_request.findall(
                     './/{http://www.opengis.net/ogc}PropertyName'):
                 name = property_name.text
                 if name not in self._map_df_wfs_source \
@@ -394,14 +401,14 @@ class AbstractSearch(object):
             maxFeatures limit of the WFS server.
 
         """
+        self._pre_search_validation(location, query, return_fields)
+        self._init_namespace()
+        self._init_wfs()
+
         filter_request = None
         if query is not None:
             filter_request = FilterRequest()
             filter_request = filter_request.setConstraint(query)
-
-        self._pre_search_validation(location, filter_request, return_fields)
-        self._init_namespace()
-        self._init_wfs()
 
         if filter_request is not None:
             for property_name in filter_request.findall(

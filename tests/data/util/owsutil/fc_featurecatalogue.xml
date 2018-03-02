@@ -25,9 +25,6 @@
                 <gmd:voice>
                   <gco:CharacterString>+32 9 240 75 93</gco:CharacterString>
                 </gmd:voice>
-                <gmd:facsimile>
-                  <gco:CharacterString>+32 9 240 75 01</gco:CharacterString>
-                </gmd:facsimile>
               </gmd:CI_Telephone>
             </gmd:phone>
             <gmd:address>
@@ -59,7 +56,7 @@
           </gmd:CI_Contact>
         </gmd:contactInfo>
         <gmd:role>
-          <gmd:CI_RoleCode codeListValue="distributor" codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#CI_RoleCode" />
+          <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_RoleCode" codeListValue="distributor" />
         </gmd:role>
       </gmd:CI_ResponsibleParty>
     </gfc:producer>

@@ -19,24 +19,14 @@
     <gmd:contact>
       <gmd:CI_ResponsibleParty>
         <gmd:organisationName>
-          <gco:CharacterString>Afdeling Land en Bodembescherming, Ondergrond, Natuurlijke Rijkdommen (ALBON) - Dienst Natuurlijke Rijkdommen</gco:CharacterString>
+          <gco:CharacterString>Vlaamse overheid, Departement Omgeving, Vlaams Planbureau voor Omgeving (VPO)</gco:CharacterString>
         </gmd:organisationName>
         <gmd:contactInfo>
           <gmd:CI_Contact>
-            <gmd:phone>
-              <gmd:CI_Telephone>
-                <gmd:voice>
-                  <gco:CharacterString>+32 2 553 46 47</gco:CharacterString>
-                </gmd:voice>
-                <gmd:facsimile>
-                  <gco:CharacterString>+32 2 553 27 60</gco:CharacterString>
-                </gmd:facsimile>
-              </gmd:CI_Telephone>
-            </gmd:phone>
             <gmd:address>
               <gmd:CI_Address>
                 <gmd:deliveryPoint>
-                  <gco:CharacterString>Graaf De Ferraris - Koning Albert II-laan 20, bus 20</gco:CharacterString>
+                  <gco:CharacterString>Koning Albert II-laan 20 bus 8</gco:CharacterString>
                 </gmd:deliveryPoint>
                 <gmd:city>
                   <gco:CharacterString>Brussel</gco:CharacterString>
@@ -48,14 +38,14 @@
                   <gco:CharacterString>België</gco:CharacterString>
                 </gmd:country>
                 <gmd:electronicMailAddress>
-                  <gco:CharacterString>natuurlijkerijkdommen@lne.vlaanderen.be</gco:CharacterString>
+                  <gco:CharacterString>natuurlijkerijkdommenbrussel.omgeving@vlaanderen.be</gco:CharacterString>
                 </gmd:electronicMailAddress>
               </gmd:CI_Address>
             </gmd:address>
             <gmd:onlineResource>
               <gmd:CI_OnlineResource>
                 <gmd:linkage>
-                  <gmd:URL>http://www.lne.be</gmd:URL>
+                  <gmd:URL>https://www.omgevingvlaanderen.be</gmd:URL>
                 </gmd:linkage>
               </gmd:CI_OnlineResource>
             </gmd:onlineResource>
@@ -67,7 +57,7 @@
       </gmd:CI_ResponsibleParty>
     </gmd:contact>
     <gmd:dateStamp>
-      <gco:DateTime>2017-12-20T11:50:25</gco:DateTime>
+      <gco:DateTime>2018-02-21T16:14:44</gco:DateTime>
     </gmd:dateStamp>
     <gmd:metadataStandardName>
       <gco:CharacterString>Vlaamse metadatastandaard voor geografie - GDI-Vlaanderen metadataprofiel</gco:CharacterString>
@@ -164,24 +154,14 @@
         <gmd:pointOfContact>
           <gmd:CI_ResponsibleParty>
             <gmd:organisationName>
-              <gco:CharacterString>Afdeling Land en Bodembescherming, Ondergrond, Natuurlijke Rijkdommen (ALBON) - Dienst Natuurlijke Rijkdommen</gco:CharacterString>
+              <gco:CharacterString>Vlaamse overheid, Departement Omgeving, Vlaams Planbureau voor Omgeving (VPO)</gco:CharacterString>
             </gmd:organisationName>
             <gmd:contactInfo>
               <gmd:CI_Contact>
-                <gmd:phone>
-                  <gmd:CI_Telephone>
-                    <gmd:voice>
-                      <gco:CharacterString>+32 2 553 46 47</gco:CharacterString>
-                    </gmd:voice>
-                    <gmd:facsimile>
-                      <gco:CharacterString>+32 2 553 27 60</gco:CharacterString>
-                    </gmd:facsimile>
-                  </gmd:CI_Telephone>
-                </gmd:phone>
                 <gmd:address>
                   <gmd:CI_Address>
                     <gmd:deliveryPoint>
-                      <gco:CharacterString>Graaf De Ferraris - Koning Albert II-laan 20, bus 20</gco:CharacterString>
+                      <gco:CharacterString>Koning Albert II-laan 20 bus 8</gco:CharacterString>
                     </gmd:deliveryPoint>
                     <gmd:city>
                       <gco:CharacterString>Brussel</gco:CharacterString>
@@ -193,14 +173,14 @@
                       <gco:CharacterString>België</gco:CharacterString>
                     </gmd:country>
                     <gmd:electronicMailAddress>
-                      <gco:CharacterString>natuurlijkerijkdommen@lne.vlaanderen.be</gco:CharacterString>
+                      <gco:CharacterString>natuurlijkerijkdommenbrussel.omgeving@vlaanderen.be</gco:CharacterString>
                     </gmd:electronicMailAddress>
                   </gmd:CI_Address>
                 </gmd:address>
                 <gmd:onlineResource>
                   <gmd:CI_OnlineResource>
                     <gmd:linkage>
-                      <gmd:URL>http://www.lne.be</gmd:URL>
+                      <gmd:URL>https://www.omgevingvlaanderen.be</gmd:URL>
                     </gmd:linkage>
                   </gmd:CI_OnlineResource>
                 </gmd:onlineResource>
@@ -214,24 +194,14 @@
         <gmd:pointOfContact>
           <gmd:CI_ResponsibleParty>
             <gmd:organisationName>
-              <gco:CharacterString>Vlaamse Milieumaatschappij (VMM) - Afdeling Operationeel Waterbeheer</gco:CharacterString>
+              <gco:CharacterString>Vlaamse overheid - Vlaamse MilieuMaatschappij - Afdeling Operationeel Waterbeheer</gco:CharacterString>
             </gmd:organisationName>
             <gmd:contactInfo>
               <gmd:CI_Contact>
-                <gmd:phone>
-                  <gmd:CI_Telephone>
-                    <gmd:voice>
-                      <gco:CharacterString>+32 2 214 21 22</gco:CharacterString>
-                    </gmd:voice>
-                    <gmd:facsimile>
-                      <gco:CharacterString>+32 2 553 21 05</gco:CharacterString>
-                    </gmd:facsimile>
-                  </gmd:CI_Telephone>
-                </gmd:phone>
                 <gmd:address>
                   <gmd:CI_Address>
                     <gmd:deliveryPoint>
-                      <gco:CharacterString>Graaf De Ferraris - Koning Albert II-laan 20, bus 16</gco:CharacterString>
+                      <gco:CharacterString>Koning Albert II-laan 20 bus 16</gco:CharacterString>
                     </gmd:deliveryPoint>
                     <gmd:city>
                       <gco:CharacterString>Brussel</gco:CharacterString>
@@ -250,7 +220,7 @@
                 <gmd:onlineResource>
                   <gmd:CI_OnlineResource>
                     <gmd:linkage>
-                      <gmd:URL>http://www.vmm.be</gmd:URL>
+                      <gmd:URL>https://www.vmm.be</gmd:URL>
                     </gmd:linkage>
                   </gmd:CI_OnlineResource>
                 </gmd:onlineResource>
@@ -323,9 +293,6 @@
                     <gmd:voice>
                       <gco:CharacterString>+32 9 240 75 93</gco:CharacterString>
                     </gmd:voice>
-                    <gmd:facsimile>
-                      <gco:CharacterString>+32 9 240 75 01</gco:CharacterString>
-                    </gmd:facsimile>
                   </gmd:CI_Telephone>
                 </gmd:phone>
                 <gmd:address>
@@ -815,9 +782,6 @@
                         <gmd:voice>
                           <gco:CharacterString>+32 9 240 75 93</gco:CharacterString>
                         </gmd:voice>
-                        <gmd:facsimile>
-                          <gco:CharacterString>+32 9 240 75 01</gco:CharacterString>
-                        </gmd:facsimile>
                       </gmd:CI_Telephone>
                     </gmd:phone>
                     <gmd:address>

@@ -200,7 +200,8 @@ class AbstractSearch(object):
 
         _map_wfs_datatypes = {
             'int': 'integer',
-            'decimal': 'float'
+            'decimal': 'float',
+            'double': 'float'
         }
 
         df_wfs_fields = self._type.get_fields(source=('wfs',)).values()

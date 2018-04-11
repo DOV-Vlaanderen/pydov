@@ -5,8 +5,8 @@ import requests
 from owslib.feature.schema import (
     _get_describefeaturetype_url,
     _get_elements,
-    _construct_schema,
     XS_NAMESPACE,
+    GML_NAMESPACES
 )
 
 try:
@@ -327,6 +327,72 @@ def get_namespace(wfs, layer):
     tree = etree.fromstring(schema)
     namespace = tree.attrib.get('targetNamespace', None)
     return namespace
+
+
+def _construct_schema(elements, nsmap):
+    """Copy the owslib.feature.schema.get_schema method to be able to get
+    the geometry column name.
+
+    Parameters
+    ----------
+    elements : list<Element>
+        List of elements
+    nsmap : dict
+        Namespace map
+
+    Returns
+    -------
+    dict
+        Schema
+
+    """
+    schema = {
+        'properties': {},
+        'geometry': None
+    }
+
+    schema_key = None
+    gml_key = None
+
+    # if nsmap is defined, use it
+    if nsmap:
+        for key in nsmap:
+            if nsmap[key] == XS_NAMESPACE:
+                schema_key = key
+            if nsmap[key] in GML_NAMESPACES:
+                gml_key = key
+    # if no nsmap is defined, we have to guess
+    else:
+        gml_key = 'gml'
+        schema_key = 'xsd'
+
+    mappings = {
+        'PointPropertyType': 'Point',
+        'PolygonPropertyType': 'Polygon',
+        'LineStringPropertyType': 'LineString',
+        'MultiPointPropertyType': 'MultiPoint',
+        'MultiLineStringPropertyType': 'MultiLineString',
+        'MultiPolygonPropertyType': 'MultiPolygon',
+        'MultiGeometryPropertyType': 'MultiGeometry',
+        'GeometryPropertyType': 'GeometryCollection',
+        'SurfacePropertyType': '3D Polygon',
+        'MultiSurfacePropertyType': '3D MultiPolygon'
+    }
+
+    for element in elements:
+        data_type = element.attrib['type'].replace(gml_key + ':', '')
+        name = element.attrib['name']
+
+        if data_type in mappings:
+            schema['geometry'] = mappings[data_type]
+            schema['geometry_column'] = name
+        else:
+            schema['properties'][name] = data_type.replace(schema_key+':', '')
+
+    if schema['properties'] or schema['geometry']:
+        return schema
+    else:
+        return None
 
 
 def get_remote_schema(url, typename, version='1.0.0'):

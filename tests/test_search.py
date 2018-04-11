@@ -44,11 +44,11 @@ def mp_remote_wfs_feature(monkeypatch):
 
     if sys.version_info[0] < 3:
         monkeypatch.setattr(
-            'pydov.search.AbstractSearch._get_remote_wfs_feature',
+            'pydov.util.owsutil.wfs_get_feature',
             __get_remote_wfs_feature)
     else:
         monkeypatch.setattr(
-            'pydov.search.AbstractSearch._get_remote_wfs_feature',
+            'pydov.util.owsutil.wfs_get_feature',
             __get_remote_wfs_feature)
 
 

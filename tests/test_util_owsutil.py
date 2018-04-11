@@ -1,15 +1,19 @@
 """Module grouping tests for the pydov.util.owsutil module."""
-
+import re
 import sys
 
-import owslib
 import pytest
 from numpy.compat import unicode
+
+import owslib
 from owslib.etree import etree
+from owslib.fes import (
+    PropertyIsEqualTo,
+    FilterRequest,
+)
 from owslib.iso import MD_Metadata
 from owslib.util import nspath_eval
 from owslib.wfs import WebFeatureService
-
 from pydov.util import owsutil
 from pydov.util.errors import (
     MetadataNotFoundError,
@@ -207,6 +211,36 @@ def mp_remote_describefeaturetype(monkeypatch):
         monkeypatch.setattr(
             'pydov.util.owsutil.__get_remote_describefeaturetype.__code__',
             __get_remote_describefeaturetype.__code__)
+
+
+def clean_xml(xml):
+    """Clean the given XML string of namespace definition, namespace
+    prefixes and syntactical but otherwise meaningless differences.
+
+    Parameters
+    ----------
+    xml : str
+        String representation of XML document.
+
+    Returns
+    -------
+    str
+        String representation of cleaned XML document.
+
+    """
+    # remove xmlns namespace definitions
+    r = re.sub(r'[ ]+xmlns:[^=]+="[^"]+"', '', xml)
+
+    # remove namespace prefixes in tags
+    r = re.sub(r'<(/?)[^:]+:([^ >]+)([ >])', r'<\1\2\3', r)
+
+    # remove extra spaces in tags
+    r = re.sub(r'[ ]+/>', '/>', r)
+
+    # remove extra spaces between tags
+    r = re.sub(r'>[ ]+<', '><', r)
+
+    return r
 
 
 class TestOwsutil(object):
@@ -419,3 +453,198 @@ class TestOwsutil(object):
         contentmetadata.metadataUrls = []
         with pytest.raises(MetadataNotFoundError):
             owsutil.get_remote_metadata(contentmetadata)
+
+    def test_wfs_build_getfeature_request_onlytypename(self):
+        """Test the owsutil.wfs_build_getfeature_request method with only a
+        typename specified.
+
+        Test whether the XML of the WFS GetFeature call is generated correctly.
+
+        """
+        xml = owsutil.wfs_build_getfeature_request('dov-pub:Boringen')
+        assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
+            '<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs" '
+            'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
+            'service="WFS" version="1.1.0" '
+            'xsi:schemaLocation="http://www.opengis.net/wfs '
+            'http://schemas.opengis.net/wfs/1.1.0/wfs.xsd"><wfs:Query '
+            'typeName="dov-pub:Boringen"><ogc:Filter '
+            'xmlns:ogc="http://www.opengis.net/ogc"/></wfs:Query></wfs'
+            ':GetFeature>')
+
+    def test_wfs_build_getfeature_request_bbox_nogeometrycolumn(self):
+        """Test the owsutil.wfs_build_getfeature_request method with a bbox
+        argument but without the geometry_column argument.
+
+        Test whether an AttributeError is raised.
+
+        """
+        with pytest.raises(AttributeError):
+            xml = owsutil.wfs_build_getfeature_request(
+                'dov-pub:Boringen', bbox=(151650, 214675, 151750, 214775))
+
+    def test_wfs_build_getfeature_request_bbox(self):
+        """Test the owsutil.wfs_build_getfeature_request method with a
+        typename, bbox and geometry_column.
+
+        Test whether the XML of the WFS GetFeature call is generated correctly.
+
+        """
+        xml = owsutil.wfs_build_getfeature_request(
+            'dov-pub:Boringen', bbox=(151650, 214675, 151750, 214775),
+            geometry_column='geom')
+        assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
+            '<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs" '
+            'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
+            'service="WFS" version="1.1.0" '
+            'xsi:schemaLocation="http://www.opengis.net/wfs '
+            'http://schemas.opengis.net/wfs/1.1.0/wfs.xsd"><wfs:Query '
+            'typeName="dov-pub:Boringen"><ogc:Filter '
+            'xmlns:ogc="http://www.opengis.net/ogc"><ogc:Within> '
+            '<ogc:PropertyName>geom</ogc:PropertyName><gml:Envelope '
+            'xmlns:gml="http://www.opengis.net/gml" srsDimension="2" '
+            'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370"><gml'
+            ':lowerCorner>151650.000 '
+            '214675.000</gml:lowerCorner><gml:upperCorner>151750.000 '
+            '214775.000</gml:upperCorner></gml:Envelope></ogc:Within></ogc'
+            ':Filter></wfs:Query></wfs:GetFeature>')
+
+    def test_wfs_build_getfeature_request_propertyname(self):
+        """Test the owsutil.wfs_build_getfeature_request method with a list
+        of propertynames.
+
+        Test whether the XML of the WFS GetFeature call is generated correctly.
+
+        """
+        xml = owsutil.wfs_build_getfeature_request(
+            'dov-pub:Boringen', propertyname=['fiche', 'diepte_tot_m'])
+        assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
+            '<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs" '
+            'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
+            'service="WFS" version="1.1.0" '
+            'xsi:schemaLocation="http://www.opengis.net/wfs '
+            'http://schemas.opengis.net/wfs/1.1.0/wfs.xsd"> <wfs:Query '
+            'typeName="dov-pub:Boringen"> '
+            '<wfs:PropertyName>fiche</wfs:PropertyName> '
+            '<wfs:PropertyName>diepte_tot_m</wfs:PropertyName> <ogc:Filter/> '
+            '</wfs:Query> </wfs:GetFeature>')
+
+    def test_wfs_build_getfeature_request_filter(self):
+        """Test the owsutil.wfs_build_getfeature_request method with an
+        attribute filter.
+
+        Test whether the XML of the WFS GetFeature call is generated correctly.
+
+        """
+        query = PropertyIsEqualTo(propertyname='gemeente',
+                                  literal='Herstappe')
+        filter_request = FilterRequest()
+        filter_request = filter_request.setConstraint(query)
+        try:
+            filter_request = etree.tostring(filter_request,
+                                            encoding='unicode')
+        except LookupError:
+            # Python2.7 without lxml uses 'utf-8' instead.
+            filter_request = etree.tostring(filter_request,
+                                            encoding='utf-8')
+
+        xml = owsutil.wfs_build_getfeature_request(
+            'dov-pub:Boringen', filter=filter_request)
+        assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
+            '<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs" '
+            'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
+            'service="WFS" version="1.1.0" '
+            'xsi:schemaLocation="http://www.opengis.net/wfs '
+            'http://schemas.opengis.net/wfs/1.1.0/wfs.xsd"> <wfs:Query '
+            'typeName="dov-pub:Boringen"> <ogc:Filter> '
+            '<ogc:PropertyIsEqualTo> '
+            '<ogc:PropertyName>gemeente</ogc:PropertyName> '
+            '<ogc:Literal>Herstappe</ogc:Literal> </ogc:PropertyIsEqualTo> '
+            '</ogc:Filter> </wfs:Query> </wfs:GetFeature>')
+
+    def test_wfs_build_getfeature_request_bbox_filter(self):
+        """Test the owsutil.wfs_build_getfeature_request method with an
+        attribute filter, a bbox and a geometry_column.
+
+        Test whether the XML of the WFS GetFeature call is generated correctly.
+
+        """
+        query = PropertyIsEqualTo(propertyname='gemeente',
+                                  literal='Herstappe')
+        filter_request = FilterRequest()
+        filter_request = filter_request.setConstraint(query)
+        try:
+            filter_request = etree.tostring(filter_request,
+                                            encoding='unicode')
+        except LookupError:
+            # Python2.7 without lxml uses 'utf-8' instead.
+            filter_request = etree.tostring(filter_request,
+                                            encoding='utf-8')
+
+        xml = owsutil.wfs_build_getfeature_request(
+            'dov-pub:Boringen', filter=filter_request,
+            bbox=(151650, 214675, 151750, 214775),
+            geometry_column='geom')
+        assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
+            '<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs" '
+            'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
+            'service="WFS" version="1.1.0" '
+            'xsi:schemaLocation="http://www.opengis.net/wfs '
+            'http://schemas.opengis.net/wfs/1.1.0/wfs.xsd"> <wfs:Query '
+            'typeName="dov-pub:Boringen"> <ogc:Filter> <ogc:And> '
+            '<ogc:PropertyIsEqualTo> '
+            '<ogc:PropertyName>gemeente</ogc:PropertyName> '
+            '<ogc:Literal>Herstappe</ogc:Literal> </ogc:PropertyIsEqualTo> '
+            '<ogc:Within> <ogc:PropertyName>geom</ogc:PropertyName> '
+            '<gml:Envelope xmlns:gml="http://www.opengis.net/gml" '
+            'srsDimension="2" '
+            'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370"> '
+            '<gml:lowerCorner>151650.000 214675.000</gml:lowerCorner> '
+            '<gml:upperCorner>151750.000 214775.000</gml:upperCorner> '
+            '</gml:Envelope> </ogc:Within> </ogc:And> </ogc:Filter> '
+            '</wfs:Query> </wfs:GetFeature>')
+
+    def test_wfs_build_getfeature_request_bbox_filter_propertyname(self):
+        """Test the owsutil.wfs_build_getfeature_request method with an
+        attribute filter, a bbox, a geometry_column and a list of
+        propertynames.
+
+        Test whether the XML of the WFS GetFeature call is generated correctly.
+
+        """
+        query = PropertyIsEqualTo(propertyname='gemeente',
+                                  literal='Herstappe')
+        filter_request = FilterRequest()
+        filter_request = filter_request.setConstraint(query)
+        try:
+            filter_request = etree.tostring(filter_request,
+                                            encoding='unicode')
+        except LookupError:
+            # Python2.7 without lxml uses 'utf-8' instead.
+            filter_request = etree.tostring(filter_request,
+                                            encoding='utf-8')
+
+        xml = owsutil.wfs_build_getfeature_request(
+            'dov-pub:Boringen', filter=filter_request,
+            bbox=(151650, 214675, 151750, 214775),
+            geometry_column='geom', propertyname=['fiche', 'diepte_tot_m'])
+        assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
+            '<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs" '
+            'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
+            'service="WFS" version="1.1.0" '
+            'xsi:schemaLocation="http://www.opengis.net/wfs '
+            'http://schemas.opengis.net/wfs/1.1.0/wfs.xsd"> <wfs:Query '
+            'typeName="dov-pub:Boringen"> '
+            '<wfs:PropertyName>fiche</wfs:PropertyName> '
+            '<wfs:PropertyName>diepte_tot_m</wfs:PropertyName> <ogc:Filter> '
+            '<ogc:And> <ogc:PropertyIsEqualTo> '
+            '<ogc:PropertyName>gemeente</ogc:PropertyName> '
+            '<ogc:Literal>Herstappe</ogc:Literal> </ogc:PropertyIsEqualTo> '
+            '<ogc:Within> <ogc:PropertyName>geom</ogc:PropertyName> '
+            '<gml:Envelope xmlns:gml="http://www.opengis.net/gml" '
+            'srsDimension="2" '
+            'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370"> '
+            '<gml:lowerCorner>151650.000 214675.000</gml:lowerCorner> '
+            '<gml:upperCorner>151750.000 214775.000</gml:upperCorner> '
+            '</gml:Envelope> </ogc:Within> </ogc:And> </ogc:Filter> '
+            '</wfs:Query> </wfs:GetFeature>')

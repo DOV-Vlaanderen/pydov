@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 """Module containing the search classes to retrieve DOV data."""
-import owslib
 import pandas as pd
+
+import owslib
 from owslib.etree import etree
 from owslib.fes import (
     FilterRequest,
 )
 from owslib.wfs import WebFeatureService
-
 from pydov.types.boring import Boring
 from pydov.util import owsutil
 from pydov.util.errors import (
@@ -41,6 +41,7 @@ class AbstractSearch(object):
 
         self._fields = None
         self._wfs_fields = None
+        self._geometry_column = None
 
         self._map_wfs_source_df = {}
         self._map_df_wfs_source = {}
@@ -197,6 +198,7 @@ class AbstractSearch(object):
         """
         fields = {}
         self._wfs_fields = []
+        self._geometry_column = wfs_schema.get('geometry_column', None)
 
         _map_wfs_datatypes = {
             'int': 'integer',
@@ -251,7 +253,7 @@ class AbstractSearch(object):
 
         Parameters
         ----------
-        location : tuple<minx,maxx,miny,maxy>
+        location : tuple<minx,miny,maxx,maxy>
             The bounding box limiting the features to retrieve.
         query : owslib.fes.OgcExpression
             OGC filter expression to use for searching. This can contain any
@@ -268,8 +270,6 @@ class AbstractSearch(object):
         pydov.util.errors.InvalidSearchParameterError
             When not one of `location` or `query` is provided.
 
-            When both `location` and `query` are provided.
-
         pydov.util.errors.InvalidFieldError
             When at least one of the fields in `return_fields` is unknown.
 
@@ -283,11 +283,6 @@ class AbstractSearch(object):
         if location is None and query is None:
             raise InvalidSearchParameterError(
                 'Provide either the location or the query parameter.'
-            )
-
-        if location is not None and query is not None:
-            raise InvalidSearchParameterError(
-                'Provide either the location or the query parameter, not both.'
             )
 
         if query is not None:
@@ -311,6 +306,9 @@ class AbstractSearch(object):
                     raise InvalidFieldError(
                         "Unknown query parameter: '%s'" % name)
 
+        if location is not None:
+            self._init_fields()
+
         if return_fields is not None:
             if type(return_fields) not in (list, tuple, set):
                 raise AttributeError('return_fields should be a list, '
@@ -332,19 +330,23 @@ class AbstractSearch(object):
                         "Field cannot be used as a return field: '%s'" % rf)
 
     @staticmethod
-    def _get_remote_wfs_feature(wfs, typename, bbox, filter, propertyname):
-        """Perform the OWSLib call to get features from the remote service.
+    def _get_remote_wfs_feature(wfs, typename, bbox, filter, propertyname,
+                                geometry_column):
+        """Perform the WFS GetFeature call to get features from the remote
+        service.
 
         Parameters
         ----------
         typename : str
             Layername to query.
-        bbox : tuple<minx,maxx,miny,maxy>
+        bbox : tuple<minx,miny,maxx,maxy>
             The bounding box limiting the features to retrieve.
         filter : owslib.fes.FilterRequest
             Filter request to search on attribute values.
         propertyname : list<str>
             List of properties to return.
+        geometry_column : str
+            Name of the geometry column to use in the spatial filter.
 
         Returns
         -------
@@ -352,18 +354,26 @@ class AbstractSearch(object):
             Response of the WFS service.
 
         """
-        return wfs.getfeature(
+        wfs_getfeature_xml = owsutil.wfs_build_getfeature_request(
+            version=wfs.version,
+            geometry_column=geometry_column,
             typename=typename,
             bbox=bbox,
             filter=filter,
-            propertyname=propertyname).read().encode('utf-8')
+            propertyname=propertyname
+        )
+
+        return owsutil.wfs_get_feature(
+            baseurl=wfs.url,
+            get_feature_request=wfs_getfeature_xml
+        )
 
     def _search(self, location=None, query=None, return_fields=None):
         """Perform the WFS search by issuing a GetFeature request.
 
         Parameters
         ----------
-        location : tuple<minx,maxx,miny,maxy>
+        location : tuple<minx,miny,maxx,maxy>
             The bounding box limiting the features to retrieve.
         query : owslib.fes.OgcExpression
             OGC filter expression to use for searching. This can contain any
@@ -385,8 +395,6 @@ class AbstractSearch(object):
         ------
         pydov.util.errors.InvalidSearchParameterError
             When not one of `location` or `query` is provided.
-
-            When both `location` and `query` are provided.
 
         pydov.util.errors.InvalidFieldError
             When at least one of the fields in `return_fields` is unknown.
@@ -436,11 +444,13 @@ class AbstractSearch(object):
                                        if i in return_fields])
             wfs_property_names = list(set(wfs_property_names))
 
-        fts = self._get_remote_wfs_feature(wfs=self.__wfs,
-                                           typename=self._layer,
-                                           bbox=location,
-                                           filter=filter_request,
-                                           propertyname=wfs_property_names)
+        fts = self._get_remote_wfs_feature(
+            wfs=self.__wfs,
+            typename=self._layer,
+            bbox=location,
+            filter=filter_request,
+            propertyname=wfs_property_names,
+            geometry_column=self._geometry_column)
 
         tree = etree.fromstring(fts)
 
@@ -542,7 +552,7 @@ class BoringSearch(AbstractSearch):
 
         Parameters
         ----------
-        location : tuple<minx,maxx,miny,maxy>
+        location : tuple<minx,miny,maxx,maxy>
             The bounding box limiting the features to retrieve.
         query : owslib.fes.OgcExpression
             OGC filter expression to use for searching. This can contain any
@@ -563,8 +573,6 @@ class BoringSearch(AbstractSearch):
         ------
         pydov.util.errors.InvalidSearchParameterError
             When not one of `location` or `query` is provided.
-
-            When both `location` and `query` are provided.
 
         pydov.util.errors.InvalidFieldError
             When at least one of the fields in `return_fields` is unknown.

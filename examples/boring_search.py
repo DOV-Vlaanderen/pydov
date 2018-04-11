@@ -104,6 +104,22 @@ def get_boreholes_in_bounding_box():
     print(df)
 
 
+def get_deep_boreholes_in_bounding_box():
+    """Get all details of the boreholes with a depth of at least 2000m
+    within the given bounding box."""
+    from pydov.search import BoringSearch
+    from owslib.fes import PropertyIsGreaterThanOrEqualTo
+
+    b = BoringSearch()
+    query = PropertyIsGreaterThanOrEqualTo(
+        propertyname='diepte_boring_tot', literal='2000')
+    df = b.search(
+        location=(200000, 211000, 205000, 214000),
+        query=query
+    )
+    print(df)
+
+
 if __name__ == '__main__':
     # Comment out to skip these examples:
     get_description()
@@ -116,3 +132,4 @@ if __name__ == '__main__':
     # get_deep_boreholes()
     # get_groundwater_related_boreholes_in_antwerp()
     # get_boreholes_in_bounding_box()
+    # get_deep_boreholes_in_bounding_box()

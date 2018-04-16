@@ -44,11 +44,11 @@ def mp_remote_wfs_feature(monkeypatch):
 
     if sys.version_info[0] < 3:
         monkeypatch.setattr(
-            'pydov.search.AbstractSearch._get_remote_wfs_feature',
+            'pydov.util.owsutil.wfs_get_feature',
             __get_remote_wfs_feature)
     else:
         monkeypatch.setattr(
-            'pydov.search.AbstractSearch._get_remote_wfs_feature',
+            'pydov.util.owsutil.wfs_get_feature',
             __get_remote_wfs_feature)
 
 
@@ -175,23 +175,32 @@ class TestBoringSearch(object):
         with pytest.raises(InvalidSearchParameterError):
             boringsearch.search(location=None, query=None)
 
-    def test_search_both_location_query(self, boringsearch):
+    def test_search_both_location_query(self, mp_remote_describefeaturetype,
+                                        mp_remote_wfs_feature, boringsearch):
         """Test the search method providing both a location and a query.
 
-        Test whether an InvalidSearchParameterError is raised.
+        Test whether a dataframe is returned.
 
         Parameters
         ----------
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType of the
+            dov-pub:Boringen layer.
+        mp_remote_wfs_feature : pytest.fixture
+            Monkeypatch the call to get WFS features.
         boringsearch : pytest.fixture returning pydov.search.BoringSearch
             An instance of BoringSearch to perform search operations on the DOV
             type 'Boring'.
 
         """
-        with pytest.raises(InvalidSearchParameterError):
-            query = PropertyIsEqualTo(propertyname='gemeente',
-                                      literal='Blankenberge')
-            boringsearch.search(location=(1, 2, 3, 4),
-                                query=query)
+        query = PropertyIsEqualTo(propertyname='gemeente',
+                                  literal='Blankenberge')
+
+        df = boringsearch.search(location=(1, 2, 3, 4),
+                                 query=query,
+                                 return_fields=('pkey_boring', 'boornummer'))
+
+        assert type(df) is DataFrame
 
     def test_search_both_location_query_wrongquerytype(self, boringsearch):
         """Test the search method providing both a location and a query,
@@ -459,8 +468,9 @@ class TestBoringSearch(object):
         with pytest.raises(InvalidFieldError):
             boringsearch.search(query=query)
 
-    def test_search_xmlresolving(self, mp_remote_wfs_feature, mp_boring_xml,
-                                     boringsearch):
+    def test_search_xmlresolving(self, mp_remote_describefeaturetype,
+                                 mp_remote_wfs_feature, mp_boring_xml,
+                                 boringsearch):
         """Test the search method with return fields from XML but not from a
         subtype.
 
@@ -468,6 +478,9 @@ class TestBoringSearch(object):
 
         Parameters
         ----------
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType of the
+            dov-pub:Boringen layer.
         mp_remote_wfs_feature : pytest.fixture
             Monkeypatch the call to get WFS features.
         mp_boring_xml : pytest.fixture

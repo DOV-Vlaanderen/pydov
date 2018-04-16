@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 """Module grouping utility functions for OWS services."""
+import requests
+
 from owslib.feature.schema import (
     _get_describefeaturetype_url,
     _get_elements,
-    _construct_schema,
     XS_NAMESPACE,
+    GML_NAMESPACES
 )
 
 try:
@@ -151,6 +153,7 @@ def get_csw_base_url(contentmetadata):
     ------
     pydov.util.errors.MetadataNotFoundError
         If the `contentmetadata` has no valid metadata URL associated with it.
+
     """
     md_url = None
     for md in contentmetadata.metadataUrls:
@@ -326,6 +329,72 @@ def get_namespace(wfs, layer):
     return namespace
 
 
+def _construct_schema(elements, nsmap):
+    """Copy the owslib.feature.schema.get_schema method to be able to get
+    the geometry column name.
+
+    Parameters
+    ----------
+    elements : list<Element>
+        List of elements
+    nsmap : dict
+        Namespace map
+
+    Returns
+    -------
+    dict
+        Schema
+
+    """
+    schema = {
+        'properties': {},
+        'geometry': None
+    }
+
+    schema_key = None
+    gml_key = None
+
+    # if nsmap is defined, use it
+    if nsmap:
+        for key in nsmap:
+            if nsmap[key] == XS_NAMESPACE:
+                schema_key = key
+            if nsmap[key] in GML_NAMESPACES:
+                gml_key = key
+    # if no nsmap is defined, we have to guess
+    else:
+        gml_key = 'gml'
+        schema_key = 'xsd'
+
+    mappings = {
+        'PointPropertyType': 'Point',
+        'PolygonPropertyType': 'Polygon',
+        'LineStringPropertyType': 'LineString',
+        'MultiPointPropertyType': 'MultiPoint',
+        'MultiLineStringPropertyType': 'MultiLineString',
+        'MultiPolygonPropertyType': 'MultiPolygon',
+        'MultiGeometryPropertyType': 'MultiGeometry',
+        'GeometryPropertyType': 'GeometryCollection',
+        'SurfacePropertyType': '3D Polygon',
+        'MultiSurfacePropertyType': '3D MultiPolygon'
+    }
+
+    for element in elements:
+        data_type = element.attrib['type'].replace(gml_key + ':', '')
+        name = element.attrib['name']
+
+        if data_type in mappings:
+            schema['geometry'] = mappings[data_type]
+            schema['geometry_column'] = name
+        else:
+            schema['properties'][name] = data_type.replace(schema_key+':', '')
+
+    if schema['properties'] or schema['geometry']:
+        return schema
+    else:
+        return None
+
+
 def get_remote_schema(url, typename, version='1.0.0'):
     """Copy the owslib.feature.schema.get_schema method to be able to
     monkeypatch the openURL request in tests.
@@ -359,3 +428,119 @@ def get_remote_schema(url, typename, version='1.0.0'):
     if hasattr(root, 'nsmap'):
         nsmap = root.nsmap
     return _construct_schema(elements, nsmap)
+
+
+def wfs_build_getfeature_request(typename, geometry_column=None, bbox=None,
+                                 filter=None, propertyname=None,
+                                 version='1.1.0'):
+    """Build a WFS GetFeature request in XML to be used as payload in a WFS
+    GetFeature request using POST.
+
+    Parameters
+    ----------
+    typename : str
+        Typename to query.
+    geometry_column : str, optional
+        Name of the geometry column to use in the spatial filter.
+        Required if the ``bbox`` parameter is supplied.
+    bbox : tuple<minx,miny,maxx,maxy>, optional
+        The bounding box limiting the features to retrieve.
+        Requires ``geometry_column`` to be supplied as well.
+    filter : owslib.fes.FilterRequest, optional
+        Filter request to search on attribute values.
+    propertyname : list<str>, optional
+        List of properties to return. Defaults to all properties.
+    version : str, optional
+        WFS version to use. Defaults to 1.1.0
+
+    Raises
+    ------
+    AttributeError
+        If ``bbox`` is given without ``geometry_column``.
+
+    Returns
+    -------
+    element : etree.Element
+        XML element representing the WFS GetFeature request.
+
+    """
+    if bbox is not None and geometry_column is None:
+        raise AttributeError('bbox requires geometry_column and it is None')
+
+    xml = etree.Element('{http://www.opengis.net/wfs}GetFeature')
+    xml.set('service', 'WFS')
+    xml.set('version', version)
+
+    xml.set('{http://www.w3.org/2001/XMLSchema-instance}schemaLocation',
+            'http://www.opengis.net/wfs '
+            'http://schemas.opengis.net/wfs/%s/wfs.xsd' % version)
+
+    query = etree.Element('{http://www.opengis.net/wfs}Query')
+    query.set('typeName', typename)
+
+    if propertyname and len(propertyname) > 0:
+        for property in propertyname:
+            propertyname_xml = etree.Element(
+                '{http://www.opengis.net/wfs}PropertyName')
+            propertyname_xml.text = property
+            query.append(propertyname_xml)
+
+    filter_xml = etree.Element('{http://www.opengis.net/ogc}Filter')
+    filter_parent = filter_xml
+
+    if filter is not None and bbox is not None:
+        # if both filter and bbox are specified, we wrap them inside an
+        # ogc:And
+        and_xml = etree.Element('{http://www.opengis.net/ogc}And')
+        filter_xml.append(and_xml)
+        filter_parent = and_xml
+
+    if filter is not None:
+        filterrequest = etree.fromstring(filter)
+        filter_parent.append(filterrequest[0])
+
+    if bbox is not None:
+        within = etree.Element('{http://www.opengis.net/ogc}Within')
+        geom = etree.Element('{http://www.opengis.net/ogc}PropertyName')
+        geom.text = geometry_column
+        within.append(geom)
+
+        envelope = etree.Element('{http://www.opengis.net/gml}Envelope')
+        envelope.set('srsDimension', '2')
+        envelope.set('srsName',
+                     'http://www.opengis.net/gml/srs/epsg.xml#31370')
+
+        lower_corner = etree.Element('{http://www.opengis.net/gml}lowerCorner')
+        lower_corner.text = '%0.3f %0.3f' % (bbox[0], bbox[1])
+        envelope.append(lower_corner)
+
+        upper_corner = etree.Element('{http://www.opengis.net/gml}upperCorner')
+        upper_corner.text = '%0.3f %0.3f' % (bbox[2], bbox[3])
+        envelope.append(upper_corner)
+        within.append(envelope)
+        filter_parent.append(within)
+
+    query.append(filter_xml)
+    xml.append(query)
+    return xml
+
+
+def wfs_get_feature(baseurl, get_feature_request):
+    """Perform a WFS request using POST.
+
+    Parameters
+    ----------
+    baseurl : str
+        Base URL of the WFS service.
+    get_feature_request : etree.Element
+        XML element representing the WFS GetFeature request.
+
+    Returns
+    -------
+    bytes
+        Response of the WFS service.
+
+    """
+    data = etree.tostring(get_feature_request)
+    request = requests.post(baseurl, data)
+    return request.text.encode('utf8')

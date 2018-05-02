@@ -276,9 +276,6 @@ class AbstractSearch(object):
             When a field that is only accessible as return field is used as
             a query parameter.
 
-            When a field that can only be used as a query parameter is used as
-            a return field.
-
         """
         if location is None and query is None:
             raise InvalidSearchParameterError(
@@ -319,15 +316,10 @@ class AbstractSearch(object):
                 if rf not in self._fields:
                     if rf in self._map_wfs_source_df:
                         raise InvalidFieldError(
-                            "Unkown return field: '%s'. Did you mean '%s'?"
+                            "Unknown return field: '%s'. Did you mean '%s'?"
                             % (rf, self._map_wfs_source_df[rf]))
                     raise InvalidFieldError(
                         "Unknown return field: '%s'" % rf)
-
-            for rf in return_fields:
-                if rf not in self._type.get_field_names():
-                    raise InvalidFieldError(
-                        "Field cannot be used as a return field: '%s'" % rf)
 
     @staticmethod
     def _get_remote_wfs_feature(wfs, typename, bbox, filter, propertyname,
@@ -434,7 +426,10 @@ class AbstractSearch(object):
                                                 encoding='utf-8')
 
         if return_fields is None:
-            wfs_property_names = [str(f) for f in self._map_wfs_source_df]
+            wfs_property_names = [
+                f['sourcefield'] for f in self._type.get_fields(
+                    source=('wfs',)).values() if not f.get(
+                    'wfs_injected', False)]
         else:
             wfs_property_names = [self._map_df_wfs_source[i]
                                   for i in self._map_df_wfs_source
@@ -542,6 +537,20 @@ class BoringSearch(AbstractSearch):
 
                 BoringSearch.__fc_featurecatalogue = \
                     owsutil.get_remote_featurecatalogue(csw_url, fc_uuid)
+
+            fields = self._build_fields(
+                BoringSearch.__wfs_schema, BoringSearch.__fc_featurecatalogue)
+
+            for field in fields.values():
+                if field['name'] not in self._type.get_field_names(
+                        include_wfs_injected=True):
+                    self._type._fields.append({
+                        'name': field['name'],
+                        'source': 'wfs',
+                        'sourcefield': field['name'],
+                        'type': field['type'],
+                        'wfs_injected': True
+                    })
 
             self._fields = self._build_fields(
                 BoringSearch.__wfs_schema, BoringSearch.__fc_featurecatalogue)

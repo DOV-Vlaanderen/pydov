@@ -374,26 +374,6 @@ class TestBoringSearch(object):
             boringsearch.search(query=query,
                                 return_fields=('pkey_boring', 'onbestaand'))
 
-    def test_search_wrongreturnfields_queryfield(self, boringsearch):
-        """Test the search method with the query parameter and a query-only
-        field as return field.
-
-        Test whether an InvalidFieldError is raised.
-
-        Parameters
-        ----------
-        boringsearch : pytest.fixture returning pydov.search.BoringSearch
-            An instance of BoringSearch to perform search operations on the DOV
-            type 'Boring'.
-
-        """
-        query = PropertyIsEqualTo(propertyname='boornummer',
-                                  literal='GEO-04/169-BNo-B1')
-
-        with pytest.raises(InvalidFieldError):
-            boringsearch.search(query=query,
-                                return_fields=('pkey_boring', 'doel'))
-
     def test_search_wrongreturnfieldstype(self, boringsearch):
         """Test the search method with the query parameter and a single
         return field as string.
@@ -467,6 +447,27 @@ class TestBoringSearch(object):
 
         with pytest.raises(InvalidFieldError):
             boringsearch.search(query=query)
+
+    def test_search_extrareturnfields(self, mp_remote_describefeaturetype,
+                                      mp_remote_wfs_feature, mp_boring_xml,
+                                      boringsearch):
+        """Test the search method with the query parameter and an extra WFS
+        field as return field.
+
+        Parameters
+        ----------
+        boringsearch : pytest.fixture returning pydov.search.BoringSearch
+            An instance of BoringSearch to perform search operations on the DOV
+            type 'Boring'.
+
+        """
+        query = PropertyIsEqualTo(propertyname='boornummer',
+                                  literal='GEO-04/169-BNo-B1')
+
+        df = boringsearch.search(query=query,
+                                 return_fields=('pkey_boring', 'doel'))
+
+        assert type(df) is DataFrame
 
     def test_search_xmlresolving(self, mp_remote_describefeaturetype,
                                  mp_remote_wfs_feature, mp_boring_xml,

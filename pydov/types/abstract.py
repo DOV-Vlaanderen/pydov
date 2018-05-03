@@ -324,7 +324,8 @@ class AbstractDovType(AbstractCommon):
                 yield (cls.from_wfs_element(el, namespace))
 
     @classmethod
-    def get_field_names(cls, return_fields=None, include_subtypes=True):
+    def get_field_names(cls, return_fields=None, include_subtypes=True,
+                        include_wfs_injected=False):
         """Return the names of the fields available for this type.
 
         Parameters
@@ -336,6 +337,9 @@ class AbstractDovType(AbstractCommon):
         include_subtypes : boolean
             Whether to include fields defined in subtypes (True) or not (
             False). Defaults to True.
+        include_wfs_injected : boolean
+            Whether to include fields defined in WFS only, not in the
+            default dataframe for this type. Defaults to False.
 
         Returns
         -------
@@ -353,7 +357,11 @@ class AbstractDovType(AbstractCommon):
 
         """
         if return_fields is None:
-            fields = [f['name'] for f in cls._fields]
+            if include_wfs_injected:
+                fields = [f['name'] for f in cls._fields]
+            else:
+                fields = [f['name'] for f in cls._fields if not f.get(
+                    'wfs_injected', False)]
             if include_subtypes:
                 for st in cls._subtypes:
                     fields.extend(st.get_field_names())
@@ -369,7 +377,7 @@ class AbstractDovType(AbstractCommon):
                                    return_fields])
             for rf in return_fields:
                 if rf not in fields:
-                    raise InvalidFieldError("Unkown return field: '%s'" % rf)
+                    raise InvalidFieldError("Unknown return field: '%s'" % rf)
         return fields
 
     @classmethod
@@ -506,7 +514,8 @@ class AbstractDovType(AbstractCommon):
 
         """
         fields = self.get_field_names(return_fields)
-        ownfields = self.get_field_names(include_subtypes=False)
+        ownfields = self.get_field_names(include_subtypes=False,
+                                         return_fields=return_fields)
         subfields = [f for f in fields if f not in ownfields]
 
         if len(subfields) > 0:

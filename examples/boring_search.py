@@ -120,6 +120,20 @@ def get_deep_boreholes_in_bounding_box():
     print(df)
 
 
+def get_borehole_purpose_in_blankenberge():
+    """Get the purpose (doel) of the boreholes in Blankenberge."""
+    from pydov.search import BoringSearch
+    from owslib.fes import PropertyIsEqualTo
+
+    b = BoringSearch()
+    query = PropertyIsEqualTo(propertyname='gemeente', literal='Blankenberge')
+    df = b.search(
+        query=query,
+        return_fields=['pkey_boring', 'doel']
+    )
+    print(df)
+
+
 if __name__ == '__main__':
     # Comment out to skip these examples:
     get_description()
@@ -133,3 +147,4 @@ if __name__ == '__main__':
     # get_groundwater_related_boreholes_in_antwerp()
     # get_boreholes_in_bounding_box()
     # get_deep_boreholes_in_bounding_box()
+    # get_borehole_purpose_in_blankenberge()

@@ -180,8 +180,13 @@ class TestBoring(object):
                                      'boolean']
 
             if field['source'] == 'wfs':
-                assert sorted(field.keys()) == [
-                    'name', 'source', 'sourcefield', 'type']
+                if 'wfs_injected' in field.keys():
+                    assert sorted(field.keys()) == [
+                        'name', 'source', 'sourcefield', 'type',
+                        'wfs_injected']
+                else:
+                    assert sorted(field.keys()) == [
+                        'name', 'source', 'sourcefield', 'type']
             elif field['source'] == 'xml':
                 assert 'definition' in field
                 assert type(field['definition']) in (str, unicode)
@@ -266,7 +271,8 @@ class TestBoring(object):
         boring = Boring.from_wfs_element(
             wfs_feature, 'http://dov.vlaanderen.be/ocdov/dov-pub')
 
-        fields = Boring.get_fields()
+        fields = [f for f in Boring.get_fields().values() if not f.get(
+            'wfs_injected', False)]
 
         df_array = boring.get_df_array()
         assert type(df_array) is list
@@ -275,7 +281,7 @@ class TestBoring(object):
         for record in df_array:
             assert len(record) == len(fields)
 
-            for value, field in zip(record, fields.values()):
+            for value, field in zip(record, fields):
                 if field['type'] == 'string':
                     assert type(value) in (str, unicode)
                 elif field['type'] == 'float':

@@ -176,23 +176,24 @@ between the 'methode_van'/'methode_tot' of the borehole:
     xml,/kern:dov-schema/boring/details/boormethode/methode,boormethode,string,droge boring
 
 
-DovGrondwaterFilter object
+GrondwaterFilter object
 ==========================
 
-Het DOVGrondwaterFilter object bevat alle data van een zoekactie op de laag meetnetten.
+The GrondwaterFilter object contains the data available using the `meetnetten`
 
-Acherliggend zit de meeste informatie vervat in 3 dataframes:
+This can be translated to three data.frames:
 
- * ligging: bevat de ligging (xyz)
- * observaties
- * peilmetingen
+ * Filter, with the screen location information
+ * Peilmetingen
+ * Observaties
+
 
 
 Ligging
 ~~~~~~~
 In deze dataframe komen gelijkaardige velden als bij het zoeken in de site:
 
-  .. csv-table:: Ligging
+  .. csv-table:: Filter
     :header-rows: 1
 
     source,field,new_name,data_type,example
@@ -203,7 +204,7 @@ In deze dataframe komen gelijkaardige velden als bij het zoeken in de site:
     wfs,filtertype,filtertype,string,peilfilter
     wfs,X_mL72,x,float,257021.8
     wfs,Y_mL72,y,float,159758.4
-    xml,/kern:dov-schema/grondwaterlocatie/puntligging/oorspronkelijk_maaiveld, mv_mtaw, numeric, 257021.8
+    xml,/kern:dov-schema/grondwaterlocatie/puntligging/oorspronkelijk_maaiveld, mv_mtaw, float, 257021.8
     wfs,gemeente,gemeente,string,Destelbergen
     xml,/kern:dov-schema/filter/meetnet,meetnet,integer(codelist),8
     xml,/kern:dov-schema/filter/ligging/aquifer,aquifer,string(codelist),1300

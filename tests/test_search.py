@@ -8,7 +8,7 @@ from owslib.fes import PropertyIsEqualTo
 from pandas import DataFrame
 
 import pydov
-from pydov.search import BoringSearch
+from pydov.search.boring import BoringSearch
 from pydov.types.boring import Boring
 from pydov.util.errors import (
     InvalidSearchParameterError,

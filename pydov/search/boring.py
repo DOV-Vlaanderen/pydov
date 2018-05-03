@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-"""Module containing the search classes to retrieve DOV data."""
+"""Module containing the search classes to retrieve DOV borehole data."""
 import pandas as pd
 
-import owslib
 from pydov.search.abstract import AbstractSearch
 from pydov.types.boring import Boring
 from pydov.util import owsutil

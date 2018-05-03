@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Module containing the search classes to retrieve DOV data."""
+"""Module containing the abstract search classes to retrieve DOV data."""
 
 import owslib
 from owslib.etree import etree

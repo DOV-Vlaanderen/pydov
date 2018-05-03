@@ -50,6 +50,19 @@ if __name__ == '__main__':
                 '.vlaanderen.be/data/boring/2004-103984%27',
                 get_first_featuremember)
 
+    # types/filter
+
+    update_file('types/filter/filter.xml',
+                'https://www.dov.vlaanderen.be/data/filter/2003-004471.xml')
+
+    update_file('types/filter/feature.xml',
+                'https://www.dov.vlaanderen.be/geoserver/ows?service=WFS'
+                '&version=1.1.0&request=GetFeature&typeName='
+                'gw_meetnetten:meetnetten&maxFeatures=1&'
+                'CQL_Filter=filterfiche=%27https://www.dov'
+                '.vlaanderen.be/data/filter/2003-004471%27',
+                get_first_featuremember)
+
     # util/owsutil
 
     update_file('util/owsutil/fc_featurecatalogue.xml',

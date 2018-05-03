@@ -1,16 +1,32 @@
 API reference
 =============
 
-DOV Boringen
+Searching
+---------
+
+.. automodule:: pydov.search
+    :members:
+
+
+Object types
 ------------
 
-.. automodule:: pydov.dovboringen
-   :members:
+.. automodule:: pydov.types.abstract
+    :members:
+
+.. automodule:: pydov.types.boring
+    :members:
 
 
-DOV Series
-----------
+OWS utilities
+-------------
 
-.. automodule:: pydov.dovseries
-   :members:
-   :undoc-members:
+.. automodule:: pydov.util.owsutil
+    :members:
+
+
+Errors
+------
+
+.. automodule:: pydov.util.errors
+    :members:

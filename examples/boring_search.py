@@ -3,7 +3,7 @@
 
 def get_description():
     """The description gives information about the Boring type."""
-    from pydov.search import BoringSearch
+    from pydov.search.boring import BoringSearch
 
     b = BoringSearch()
     print(b.get_description())
@@ -12,7 +12,7 @@ def get_description():
 def get_fields():
     """The fields give details about what information is available for a
     Boring object."""
-    from pydov.search import BoringSearch
+    from pydov.search.boring import BoringSearch
 
     b = BoringSearch()
     fields = b.get_fields()
@@ -30,7 +30,7 @@ def get_fields():
 
 def get_boreholes_in_herstappe():
     """Get all details of the boreholes where 'gemeente' is 'Herstappe'."""
-    from pydov.search import BoringSearch
+    from pydov.search.boring import BoringSearch
     from owslib.fes import PropertyIsEqualTo
 
     b = BoringSearch()
@@ -42,7 +42,7 @@ def get_boreholes_in_herstappe():
 
 def get_borehole_depth_in_gent():
     """Get the borehole depths of all boreholes in Ghent."""
-    from pydov.search import BoringSearch
+    from pydov.search.boring import BoringSearch
     from owslib.fes import PropertyIsEqualTo
 
     b = BoringSearch()
@@ -55,7 +55,7 @@ def get_borehole_depth_in_gent():
 
 def get_deep_boreholes():
     """Get all details of the boreholes with a depth of at least 2000m."""
-    from pydov.search import BoringSearch
+    from pydov.search.boring import BoringSearch
     from owslib.fes import PropertyIsGreaterThanOrEqualTo
 
     b = BoringSearch()
@@ -72,7 +72,7 @@ def get_groundwater_related_boreholes_in_antwerp():
     'putnummer' is not empty or 'doel' starts with 'Grondwater' or
     'erkenning' equals '2. Andere grondwaterwinningen'.
     """
-    from pydov.search import BoringSearch
+    from pydov.search.boring import BoringSearch
     from owslib.fes import PropertyIsLike
     from owslib.fes import PropertyIsEqualTo
     from owslib.fes import PropertyIsNull
@@ -95,7 +95,7 @@ def get_groundwater_related_boreholes_in_antwerp():
 
 def get_boreholes_in_bounding_box():
     """Get all the boreholes within the given bounding box."""
-    from pydov.search import BoringSearch
+    from pydov.search.boring import BoringSearch
 
     b = BoringSearch()
     df = b.search(
@@ -107,7 +107,7 @@ def get_boreholes_in_bounding_box():
 def get_deep_boreholes_in_bounding_box():
     """Get all details of the boreholes with a depth of at least 2000m
     within the given bounding box."""
-    from pydov.search import BoringSearch
+    from pydov.search.boring import BoringSearch
     from owslib.fes import PropertyIsGreaterThanOrEqualTo
 
     b = BoringSearch()
@@ -122,7 +122,7 @@ def get_deep_boreholes_in_bounding_box():
 
 def get_borehole_purpose_in_blankenberge():
     """Get the purpose (doel) of the boreholes in Blankenberge."""
-    from pydov.search import BoringSearch
+    from pydov.search.boring import BoringSearch
     from owslib.fes import PropertyIsEqualTo
 
     b = BoringSearch()

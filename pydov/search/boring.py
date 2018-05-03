@@ -60,7 +60,7 @@ class BoringSearch(AbstractSearch):
                 BoringSearch.__wfs_schema, BoringSearch.__fc_featurecatalogue)
 
     def search(self, location=None, query=None, return_fields=None):
-        """Search for boreholes (Boring). Provide either `location` or `query`.
+        """Search for boreholes (Boring). Provide `location` and/or `query`.
         When `return_fields` is None, all fields are returned.
 
         Parameters

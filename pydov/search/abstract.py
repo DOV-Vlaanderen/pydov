@@ -243,6 +243,17 @@ class AbstractSearch(object):
             }
             fields[field['name']] = field
 
+        for custom_field in self._type.get_fields(source=['custom']).values():
+            field = {
+                'name': custom_field['name'],
+                'type': custom_field['type'],
+                'definition': custom_field['definition'],
+                'notnull': custom_field['notnull'],
+                'cost': 10
+            }
+            fields[field['name']] = field
+
+
         return fields
 
     def _pre_search_validation(self, location=None, query=None,
@@ -358,7 +369,8 @@ class AbstractSearch(object):
             get_feature_request=wfs_getfeature_xml
         )
 
-    def _search(self, location=None, query=None, return_fields=None):
+    def _search(self, location=None, query=None, return_fields=None,
+                extra_wfs_fields=[]):
         """Perform the WFS search by issuing a GetFeature request.
 
         Parameters
@@ -435,7 +447,9 @@ class AbstractSearch(object):
             wfs_property_names.extend([self._map_df_wfs_source[i]
                                        for i in self._map_df_wfs_source
                                        if i in return_fields])
-            wfs_property_names = list(set(wfs_property_names))
+
+        wfs_property_names.extend(extra_wfs_fields)
+        wfs_property_names = list(set(wfs_property_names))
 
         fts = self._get_remote_wfs_feature(
             wfs=self.__wfs,

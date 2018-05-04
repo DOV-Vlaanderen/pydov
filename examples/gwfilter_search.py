@@ -8,8 +8,28 @@ def get_description():
     gwfilter = GrondwaterFilterSearch()
     print(gwfilter.get_description())
 
+
+def get_fields():
+    """The fields give details about what information is available for a
+    Boring object."""
+    from pydov.search.boring import BoringSearch
+
+    b = BoringSearch()
+    fields = b.get_fields()
+    for f in fields.values():
+        print(f['name'])
+        print(' ', f['definition'])
+        print('   datatype:', f['type'])
+        print('   mandatory:', f['notnull'])
+        if 'values' in f:
+            print('   possible values:', '; '.join(
+                ["'%s'" % i for i in f['values']]))
+        print('   cost: ', f['cost'])
+        print('')
+        
+
 def get_groundwaterfilters_in_hamme():
-    """Get all details of the boreholes where 'gemeente' is 'Herstappe'."""
+    """Get all details of the boreholes where 'gemeente' is 'Hamme'."""
     from pydov.search.grondwaterfilter import GrondwaterFilterSearch
     from owslib.fes import PropertyIsEqualTo
 

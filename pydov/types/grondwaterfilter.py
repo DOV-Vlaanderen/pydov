@@ -137,7 +137,8 @@ class GrondwaterFilter(AbstractDovType):
     }, {
         'name': 'mv_mtaw',
         'source': 'xml',
-        'sourcefield': '/grondwaterlocatie/puntligging/oorspronkelijk_maaiveld',
+        'sourcefield':
+            '/grondwaterlocatie/puntligging/oorspronkelijk_maaiveld',
         'definition': 'Maaiveldhoogte in mTAW op dag dat de put/boring '
                       'uitgevoerd werd.',
         'type': 'float',
@@ -202,7 +203,8 @@ class GrondwaterFilter(AbstractDovType):
             element.
 
         """
-        gwfilter = GrondwaterFilter(feature.findtext('./{%s}filterfiche' % namespace))
+        gwfilter = GrondwaterFilter(
+            feature.findtext('./{%s}filterfiche' % namespace))
 
         for field in cls.get_fields(source=('wfs',)).values():
             gwfilter.data[field['name']] = cls._parse(
@@ -231,7 +233,6 @@ class GrondwaterFilter(AbstractDovType):
             )
 
         self._parse_subtypes(xml)
-
 
 class FilterMeting(AbstractDovType):
     """Class representing the DOV data type for boreholes."""

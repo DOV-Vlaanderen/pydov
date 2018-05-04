@@ -183,8 +183,8 @@ CPT data (In Dutch: sonderingen)
 ================================
 
 Below the desired attributes for each CPT measurement. Two dataframes are discerned:
-* one with metadata about the measurement (location, type etc.)
-* one with actual measurement data from the xml, with the pkey to join the metadata
+ * one with metadata about the measurement (location, type etc.)
+ * one with actual measurement data from the xml, with the pkey to join the metadata
 
 The new_name column represents the headers of the final dataframe.
 More than one measurement can be performed, listed as a "metingWeerstand" type, i.e.:

@@ -56,17 +56,38 @@ if __name__ == '__main__':
 
     # types/interpretaties/informele_stratigrafie
 
-    update_file('types/interpretaties/informele_stratigrafie.xml',
+    update_file('types/interpretaties/informele_stratigrafie'
+                '/informele_stratigrafie.xml',
                 'https://www.dov.vlaanderen.be/data/interpretatie/1962'
                 '-101692.xml')
 
-    update_file('types/interpretaties/informele_stratigrafie_feature.xml',
+    update_file('types/interpretaties/informele_stratigrafie/feature.xml',
                 'https://www.dov.vlaanderen.be/geoserver/ows?service=WFS'
                 '&version=1.1.0&request=GetFeature&typeName=interpretaties'
                 ':informele_stratigrafie&maxFeatures=1&CQL_Filter'
                 '=Interpretatiefiche=%27https://www.dov.vlaanderen.be/data'
                 '/interpretatie/1962-101692%27',
                 get_first_featuremember)
+
+    update_file(
+        'types/interpretaties/informele_stratigrafie/fc_featurecatalogue.xml',
+        'https://www.dov.vlaanderen.be/geonetwork/srv/dut/csw'
+        '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+        '&outputSchema=http://www.isotc211.org/2005/gmd'
+        '&elementSetName=full&id=b6c651f9-5972-4252-ae10-ad69ad08e78d')
+
+    update_file('types/interpretaties/informele_stratigrafie/md_metadata.xml',
+                'https://www.dov.vlaanderen.be/geonetwork/srv/dut/csw'
+                '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+                '&outputSchema=http://www.isotc211.org/2005/gmd'
+                '&elementSetName=full&id=bd171ea4-2509-478d-a21c-c2728d3a9051')
+
+    update_file(
+        'types/interpretaties/informele_stratigrafie/wfsdescribefeaturetype'
+        '.xml',
+        'https://www.dov.vlaanderen.be/geoserver/interpretaties'
+        '/informele_stratigrafie/ows?service=wfs&version=1.1.0&request'
+        '=DescribeFeatureType')
 
     # util/owsutil
 

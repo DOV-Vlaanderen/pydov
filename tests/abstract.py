@@ -62,3 +62,30 @@ class AbstractTestSearch(object):
             else:
                 assert sorted(f.keys()) == ['cost', 'definition', 'name',
                                             'notnull', 'type']
+
+    @staticmethod
+    def abstract_test_df_dtypes(df, fields):
+        """Test the resulting column dtypes from data.frame.
+
+        Test whether the returned columns match the format specified
+        in the documentation.
+
+        Parameters
+        ----------
+        df : pd.DataFrame
+            result of the search
+        fields : dict
+            Fields returned by a specific search class to test.
+        """
+        for field in list(df):
+            datatype = fields[field]['type']
+            if datatype == 'string':
+                assert df[field].dtype.name == 'object'
+            elif datatype == 'float':
+                assert df[field].dtype.name == 'float64'
+            elif datatype == 'integer':
+                assert df[field].dtype.name == 'integer'
+            elif datatype == 'date':
+                assert df[field].dtype.name == 'object'
+            elif datatype == 'boolean':
+                assert df[field].dtype.name == 'bool'

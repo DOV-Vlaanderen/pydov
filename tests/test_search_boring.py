@@ -337,21 +337,9 @@ class TestBoringSearch(AbstractTestSearch):
         assert df.mv_mtaw.hasnans
 
         fields = Boring.get_fields()
-        for field in list(df):
-            if field == 'mv_mtaw':
-                continue
 
-            datatype = fields[field]['type']
-            if datatype == 'string':
-                assert df[field].dtype.name == 'object'
-            elif datatype == 'float':
-                assert df[field].dtype.name == 'float64'
-            elif datatype == 'integer':
-                assert df[field].dtype.name == 'integer'
-            elif datatype == 'date':
-                assert df[field].dtype.name == 'object'
-            elif datatype == 'boolean':
-                assert df[field].dtype.name == 'bool'
+        # dtype checks of the resulting df columns
+        self.abstract_test_df_dtypes(df, fields)
 
         assert len(df) == 2
         assert df.datum_aanvang.unique()[0] == datetime.date(2004, 12, 20)

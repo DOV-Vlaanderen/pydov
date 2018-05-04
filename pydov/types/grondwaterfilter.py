@@ -10,10 +10,65 @@ from pydov.types.abstract import (
 )
 
 
-class GrondwaterFilter(AbstractDovType):
-    """Class representing the DOV data type for boreholes."""
+class Peilmeting(AbstractDovSubType):
 
-    _subtypes = []
+    _name = 'peilmeting'
+    _rootpath = './/filtermeting/peilmeting'
+
+    _fields = [{
+        'name': 'peil_mtaw',
+        'source': 'xml',
+        'sourcefield': '/peil_mtaw', # relative to rootpath
+        'definition': 'Diepte van de peilmeting, uitgedrukt in mTAW.',
+        'type': 'float',
+        'notnull': False
+    }, {
+        'name': 'betrouwbaarheid',
+        'source': 'xml',
+        'sourcefield': '/betrouwbaarheid',
+        'definition': 'Lijst van betrouwbaarheden (goed, onbekend of'
+                      'twijfelachtig).',
+        'type': 'string',
+        'notnull': False
+    }, {
+        'name': 'methode',
+        'source': 'xml',
+        'sourcefield': '/peilmeting/methode',
+        'definition': 'Methode waarop de peilmeting uitgevoerd werd.',
+        'type': 'string',
+        'notnull': False
+    }]
+
+    def __init__(self):
+        """Initialisation."""
+        super(Peilmeting, self).__init__('peilmeting')
+
+    @classmethod
+    def from_xml_element(cls, element):
+        """Build an instance of this subtype from a single XML element.
+
+        Parameters
+        ----------
+        element : etree.Element
+            XML element representing a single record of this subtype.
+
+        """
+        peilmeting = Peilmeting()
+
+        for field in cls.get_fields().values():
+            peilmeting.data[field['name']] = peilmeting._parse(
+                func=element.findtext,
+                xpath=field['sourcefield'],
+                namespace=None,
+                returntype=field.get('type', None)
+            )
+
+        return peilmeting
+
+class GrondwaterFilter(AbstractDovType):
+    """Class representing the DOV data type for Groundwater screens."""
+
+    _subtypes = [Peilmeting]
 
     _fields = [{
         'name': 'pkey_filter',
@@ -164,55 +219,9 @@ class GrondwaterFilter(AbstractDovType):
         self._parse_subtypes(xml)
 
 
-# Indivual peilmetingen to support Filtermeting TODO
-class Peilmeting(AbstractDovSubType):
-
-    _name = 'peilmeting'
-    _rootpath = './/filtermeting/peilmeting'
-
-    _fields = [{
-        'name': 'pkey_filter',
-        'source': 'wfs',
-        'sourcefield': 'filterfiche',
-        'type': 'string'
-    }, {
-        'name': 'gw_id',
-        'source': 'wfs',
-        'sourcefield': 'GW_ID',
-        'type': 'string'
-    }, {
-        'name': 'filternummer',
-        'source': 'wfs',
-        'sourcefield': 'filternr',
-        'type': 'string'
-    }, {
-        'name': 'peil_mtaw',
-        'source': 'xml',
-        'sourcefield': '/filtermeting/peilmeting/peil_mtaw',
-        'definition': 'Diepte van de peilmeting, uitgedrukt in mTAW.',
-        'type': 'float',
-        'notnull': False
-    }, {
-        'name': 'betrouwbaarheid',
-        'source': 'xml',
-        'sourcefield': '/filtermeting/peilmeting/betrouwbaarheid',
-        'definition': 'Lijst van betrouwbaarheden (goed, onbekend of'
-                      'twijfelachtig).',
-        'type': 'string',
-        'notnull': False
-    }, {
-        'name': 'methode',
-        'source': 'xml',
-        'sourcefield': '/filtermeting/peilmeting/methode',
-        'definition': 'Methode waarop de peilmeting uitgevoerd werd.',
-        'type': 'string',
-        'notnull': False
-    }]
-
-
 class FilterMeting(AbstractDovType):
     """Class representing the DOV data type for boreholes."""
 
-    _subtypes = [Peilmeting]
+    _subtypes = []
 
     _fields = [{}]

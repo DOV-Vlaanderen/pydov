@@ -237,7 +237,7 @@ Observaties
     wfs,GW_ID,gw_id,string,1-0709
     wfs,filternr,filternummer,string,2
     xml,/kern:dov-schema/filtermeting/watermonster/identificatie,watermonster,string,1-0709-F2/M2015
-    xml,/kern:dov-schema/filtermeting/watermonster/monstername/datum,datum_monstername,datum,2015-09-03
+    xml,/kern:dov-schema/filtermeting/watermonster/monstername/datum,datum_monstername,date,2015-09-03
     xml,/kern:dov-schema/filtermeting/watermonster/observatie/parameter,parameter,string(codelist),pH
     xml,/kern:dov-schema/filtermeting/watermonster/observatie/waarde_numeriek,waarde,float,5.12
     xml,/kern:dov-schema/filtermeting/watermonster/observatie/eenheid,eenheid,string(codelist),Sörensen
@@ -253,6 +253,8 @@ Peilmetingen
     wfs,filterfiche,pkey_filter,string,https://www.dov.vlaanderen.be/data/filter/2003-000253.xml
     wfs,GW_ID,gw_id,string,1-0709
     wfs,filternr,filternummer,string,2
+    xml,/kern:dov-schema/filtermeting/peilmeting/datum,datum,date,2015-09-03
+    xml,/kern:dov-schema/filtermeting/peilmeting/tijdstip,tijdstip,string,00:00
     xml,/kern:dov-schema/filtermeting/peilmeting/peil_mtaw,peil_mtaw,float,121.88
     xml,/kern:dov-schema/filtermeting/peilmeting/betrouwbaarheid,betrouwbaarheid,string(codelist),goed
     xml,/kern:dov-schema/filtermeting/peilmeting/methode,methode,string(codelist),peillint

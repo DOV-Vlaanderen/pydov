@@ -8,6 +8,7 @@ from distutils.util import strtobool
 
 from owslib.etree import etree
 from owslib.util import openURL
+from pydov.util.caching import TransparentCache
 
 from pydov.util.errors import InvalidFieldError
 
@@ -245,6 +246,7 @@ class AbstractDovType(AbstractCommon):
         """
         self.typename = typename
         self.pkey = pkey
+        self.cache = TransparentCache()
 
         self.data = dict(
             zip(self.get_field_names(include_subtypes=False),
@@ -475,7 +477,7 @@ class AbstractDovType(AbstractCommon):
             The raw XML data of this DOV object as bytes.
 
         """
-        return openURL(self.pkey + '.xml').read()
+        return self.cache.get(self.pkey + '.xml')
 
     def _parse_subtypes(self, xml):
         """Parse the subtypes with the given XML data.

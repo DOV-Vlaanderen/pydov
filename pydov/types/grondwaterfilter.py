@@ -48,7 +48,7 @@ class GrondwaterFilter(AbstractDovType):
     }, {
         'name': 'y',
         'source': 'wfs',
-        'sourcefield': 'X_mL72',
+        'sourcefield': 'Y_mL72',
         'type': 'float'
     }, {
         'name': 'gemeente',
@@ -74,21 +74,21 @@ class GrondwaterFilter(AbstractDovType):
         'type': 'float',
         'notnull': False
     }, {
-        'name': 'meetnet',
+        'name': 'meetnet_code',
         'source': 'xml',
         'sourcefield': '/filter/meetnet',
         'definition': 'Tot welk meetnet behoort deze filter.',
         'type': 'integer',
         'notnull': False
     }, {
-        'name': 'aquifer',
+        'name': 'aquifer_code',
         'source': 'xml',
         'sourcefield': '/filter/ligging/aquifer',
         'definition': 'In welke watervoerende laag hangt de filter (code).',
         'type': 'string',
         'notnull': False
     }, {
-        'name': 'grondwaterlichaam',
+        'name': 'grondwaterlichaam_code',
         'source': 'xml',
         'sourcefield': '/filter/ligging/grondwaterlichaam',
         'definition': '',

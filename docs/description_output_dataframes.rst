@@ -206,9 +206,9 @@ In deze dataframe komen gelijkaardige velden als bij het zoeken in de site:
     wfs,Y_mL72,y,float,159758.4
     xml,/kern:dov-schema/grondwaterlocatie/puntligging/oorspronkelijk_maaiveld, mv_mtaw, float, 257021.8
     wfs,gemeente,gemeente,string,Destelbergen
-    xml,/kern:dov-schema/filter/meetnet,meetnet,integer(codelist),8
-    xml,/kern:dov-schema/filter/ligging/aquifer,aquifer,string(codelist),1300
-    xml,/kern:dov-schema/filter/ligging/grondwaterlichaam,grondwaterlichaam,string(codelist),BLKS_1100_GWL_1M
+    xml,/kern:dov-schema/filter/meetnet,meetnet_code,integer(codelist),8
+    xml,/kern:dov-schema/filter/ligging/aquifer,aquifer_code,string(codelist),1300
+    xml,/kern:dov-schema/filter/ligging/grondwaterlichaam,grondwaterlichaam_code,string(codelist),BLKS_1100_GWL_1M
     xml,/kern:dov-schema/filter/ligging/regime,regime,string(codelist),freatisch
     wfs,onderkant_filter_m,diepte_onderkant_filter,float,8.3
     wfs,lengte_filter_m,lengte_filter,float,5.1

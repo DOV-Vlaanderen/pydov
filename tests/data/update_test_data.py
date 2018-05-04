@@ -61,10 +61,10 @@ if __name__ == '__main__':
 
     # types/filter
 
-    update_file('types/filter/filter.xml',
+    update_file('types/grondwaterfilter/grondwaterfilter.xml',
                 'https://www.dov.vlaanderen.be/data/filter/2003-004471.xml')
 
-    update_file('types/filter/feature.xml',
+    update_file('types/grondwaterfilter/feature.xml',
                 'https://www.dov.vlaanderen.be/geoserver/ows?service=WFS'
                 '&version=1.1.0&request=GetFeature&typeName='
                 'gw_meetnetten:meetnetten&maxFeatures=1&'
@@ -72,19 +72,19 @@ if __name__ == '__main__':
                 '.vlaanderen.be/data/filter/2003-004471%27',
                 get_first_featuremember)
 
-    update_file('types/filter/fc_featurecatalogue.xml',
+    update_file('types/grondwaterfilter/fc_featurecatalogue.xml',
                 'https://www.dov.vlaanderen.be/geonetwork/srv/dut/csw'
                 '?Service=CSW&Request=GetRecordById&Version=2.0.2'
                 '&outputSchema=http://www.isotc211.org/2005/gmd'
                 '&elementSetName=full&id=b142965f-b2aa-429e-86ff-a7cb0e065d48')
 
-    update_file('types/filter/md_metadata.xml',
+    update_file('types/grondwaterfilter/md_metadata.xml',
                 'https://www.dov.vlaanderen.be/geonetwork/srv/dut/csw'
                 '?Service=CSW&Request=GetRecordById&Version=2.0.2'
                 '&outputSchema=http://www.isotc211.org/2005/gmd'
                 '&elementSetName=full&id=6c39d716-aecc-4fbc-bac8-4f05a49a78d5')
 
-    update_file('types/filter/wfsdescribefeaturetype.xml',
+    update_file('types/grondwaterfilter/wfsdescribefeaturetype.xml',
                 'https://www.dov.vlaanderen.be/geoserver/gw_meetnetten/'
                 'meetnetten/ows?service=wfs&version=1.1.0&'
                 'request=DescribeFeatureType')

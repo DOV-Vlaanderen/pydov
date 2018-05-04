@@ -6,49 +6,15 @@ import pytest
 from numpy.compat import unicode
 from owslib.etree import etree
 
-import pydov
 from pydov.types.boring import Boring
 from pydov.util.errors import InvalidFieldError
 
-from tests.test_util_owsutil import (
-    wfs_getfeature
+
+from tests.test_search_boring import (
+    wfs_getfeature,
+    wfs_feature,
+    mp_boring_xml
 )
-
-@pytest.fixture
-def mp_boring_xml(monkeypatch):
-    """Monkeypatch the call to get the remote Boring XML data.
-
-    Parameters
-    ----------
-    monkeypatch : pytest.fixture
-        PyTest monkeypatch fixture.
-
-    """
-
-    def _get_xml_data(*args, **kwargs):
-        with open('tests/data/types/boring/boring.xml', 'r') as f:
-            data = f.read()
-            if type(data) is not bytes:
-                data = data.encode('utf-8')
-        return data
-
-    monkeypatch.setattr(pydov.types.abstract.AbstractDovType,
-                        '_get_xml_data', _get_xml_data)
-
-
-@pytest.fixture
-def wfs_feature():
-    """PyTest fixture providing an XML of a WFS feature element of a Boring
-    record.
-
-    Returns
-    -------
-    etree.Element
-        XML element representing a single record of the Boring WFS layer.
-
-    """
-    with open('tests/data/types/boring/feature.xml', 'r') as f:
-        return etree.fromstring(f.read())
 
 
 class TestBoring(object):

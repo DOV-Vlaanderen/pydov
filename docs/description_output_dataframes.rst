@@ -182,9 +182,11 @@ fields available in the wfs to search on.
 CPT data (In Dutch: sonderingen)
 ================================
 
-Below the desired attributes for each CPT measurement
-The new_name column represents the headers of the final dataframe.
+Below the desired attributes for each CPT measurement. Two dataframes are discerned:
+* one with metadata about the measurement (location, type etc.)
+* one with actual measurement data from the xml, with the pkey to join the metadata
 
+The new_name column represents the headers of the final dataframe.
 More than one measurement can be performed, listed as a "metingWeerstand" type, i.e.:
 qc, Qt, fs, u and i. All elements are by default included in the output dataframe, where
 NaNs indicate that it wasn't measured.
@@ -194,7 +196,7 @@ to select records from the DOV database. E.g.: 'informele_stratigrafie',
 'formele_stratigrafie' and 'hydrogeologische_stratigrafie' are boolean
 fields available in the wfs to search on.
 
-  .. csv-table:: Sonderingen
+  .. csv-table:: Sonderingen metadata
     :header-rows: 1
 
     source,field,new_name,data_type,example
@@ -211,6 +213,14 @@ fields available in the wfs to search on.
     wfs,apparaat_type,apparaat,string,200kN - MAN2
     xml,/kern:dov-schema/sondering/visueelonderzoek/datumtijd_waarneming_grondwaterstand,datum_gw_meting,date,02/09/2011
     xml,/kern:dov-schema/sondering/visueelonderzoek/grondwaterstand,gw_meting,float,02/09/2011
+
+|
+
+  .. csv-table:: Sonderingen measurement data
+    :header-rows: 1
+
+    source,field,new_name,data_type,example
+    wfs,fiche,pkey_sondering,string,https://.../2011-009205.xml
     xml,/kern:dov-schema/sondering/sondeonderzoek/penetratietest/meetdata/sondeerdiepte,z,float,1.66
     xml,/kern:dov-schema/sondering/sondeonderzoek/penetratietest/meetdata/qc,qc,float,0.6500
     xml,/kern:dov-schema/sondering/sondeonderzoek/penetratietest/meetdata/Qt,Qt,float,NaN
@@ -218,6 +228,7 @@ fields available in the wfs to search on.
     xml,/kern:dov-schema/sondering/sondeonderzoek/penetratietest/meetdata/u,u,float,NaN
     xml,/kern:dov-schema/sondering/sondeonderzoek/penetratietest/meetdata/i,i,float,0.1000
     xml,/kern:dov-schema/sondering/sondeonderzoek/penetratietest/meetdata/qc,qc,float,NaN
+
 
 
 DovGrondwaterFilter object

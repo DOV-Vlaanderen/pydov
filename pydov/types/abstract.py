@@ -7,7 +7,6 @@ from collections import OrderedDict
 from distutils.util import strtobool
 
 from owslib.etree import etree
-from owslib.util import openURL
 from pydov.util.caching import TransparentCache
 
 from pydov.util.errors import InvalidFieldError

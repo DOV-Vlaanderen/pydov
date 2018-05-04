@@ -15,8 +15,11 @@ class TransparentCache(object):
         self.re_type_key = re.compile(
             r'https?://www.dov.vlaanderen.be/data/([' '^/]+)/([^\.]+)')
 
-        if not os.path.exists(self.basepath):
-            os.makedirs(self.basepath)
+        try:
+            if not os.path.exists(self.basepath):
+                os.makedirs(self.basepath)
+        except Exception:
+            pass
 
     def _get_type_key(self, url):
         datatype = self.re_type_key.search(url)
@@ -58,13 +61,13 @@ class TransparentCache(object):
         if self._valid(datatype, key):
             try:
                 return self._load(datatype, key).encode('utf-8')
-            except:
+            except Exception:
                 pass
 
         data = openURL(url).read()
         try:
             self._save(datatype, key, data.decode('utf-8'))
-        except:
+        except Exception:
             pass
 
         return data

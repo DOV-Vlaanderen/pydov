@@ -6,6 +6,8 @@ import types
 from collections import OrderedDict
 from distutils.util import strtobool
 
+import numpy as np
+
 from owslib.etree import etree
 from owslib.util import openURL
 
@@ -85,7 +87,7 @@ class AbstractCommon(object):
             text = func('./' + xpath.lstrip('/'))
 
         if text is None:
-            return None
+            return np.nan
         return typeconvert(text)
 
 

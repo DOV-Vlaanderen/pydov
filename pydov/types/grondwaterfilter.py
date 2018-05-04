@@ -233,10 +233,3 @@ class GrondwaterFilter(AbstractDovType):
             )
 
         self._parse_subtypes(xml)
-
-class FilterMeting(AbstractDovType):
-    """Class representing the DOV data type for boreholes."""
-
-    _subtypes = []
-
-    _fields = [{}]

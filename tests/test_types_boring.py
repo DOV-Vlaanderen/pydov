@@ -154,7 +154,7 @@ class TestBoring(object):
         requirements and the format listed in the docs.
 
         """
-        fields = Boring.get_fields()
+        fields = Boring.get_fields(source=('wfs', 'xml', 'custom'))
         assert isinstance(fields, OrderedDict)
 
         for f in fields.keys():
@@ -171,13 +171,21 @@ class TestBoring(object):
             assert type(field['source']) in (str, unicode)
             assert field['source'] in ('wfs', 'xml')
 
-            assert 'sourcefield' in field
-            assert type(field['sourcefield']) in (str, unicode)
-
             assert 'type' in field
             assert type(field['type']) in (str, unicode)
             assert field['type'] in ['string', 'float', 'integer', 'date',
                                      'boolean']
+
+            if field['source'] in ('wfs', 'xml'):
+                assert 'sourcefield' in field
+                assert type(field['sourcefield']) in (str, unicode)
+
+            if field['source'] in ('xml', 'custom'):
+                assert 'definition' in field
+                assert type(field['definition']) in (str, unicode)
+
+                assert 'notnull' in field
+                assert type(field['notnull']) is bool
 
             if field['source'] == 'wfs':
                 if 'wfs_injected' in field.keys():
@@ -188,15 +196,23 @@ class TestBoring(object):
                     assert sorted(field.keys()) == [
                         'name', 'source', 'sourcefield', 'type']
             elif field['source'] == 'xml':
-                assert 'definition' in field
-                assert type(field['definition']) in (str, unicode)
-
-                assert 'notnull' in field
-                assert type(field['notnull']) is bool
-
                 assert sorted(field.keys()) == [
                     'definition', 'name', 'notnull', 'source', 'sourcefield',
                     'type']
+            elif field['source'] == 'custom':
+                assert sorted(field.keys()) == [
+                    'definition', 'name', 'notnull', 'source', 'type']
+
+    def test_get_fields_default(self):
+        """Test the Boring.get_fields method for fields of the default
+        sources.
+
+        Test whether all return fields have 'wfs' or 'xml' as their
+        'source'.
+        """
+        fields = Boring.get_fields()
+        for field in fields.values():
+            assert field['source'] in ('wfs', 'xml')
 
     def test_get_fields_sourcewfs(self):
         """Test the Boring.get_fields method for fields of the WFS source.

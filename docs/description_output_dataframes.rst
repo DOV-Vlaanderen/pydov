@@ -201,7 +201,7 @@ fields available in the wfs to search on.
 
     source,field,new_name,data_type,example
     wfs,fiche,pkey_sondering,string,https://.../2011-009205.xml
-    wfs,sondeernummer,boornummer,string,GEO-10/139-S113
+    wfs,sondeernummer,sondeernummer,string,GEO-10/139-S113
     wfs,X_mL72,x,float,68517.9
     wfs,Y_mL72,y,float,223693.3
     wfs,Z_mTAW,start_sondering_mtaw,float,5.40
@@ -209,7 +209,7 @@ fields available in the wfs to search on.
     wfs,diepte_tot_m,diepte_sondering_tot,float,30.48
     wfs,datum_aanvang,datum_aanvang,date,02/09/2011
     wfs,uitvoerder,uitvoerder,string,VO - Afdeling Geotechniek
-    wfs,sondeermethode,methode,string,continu elektrisch
+    wfs,sondeermethode,sondeermethode,string,continu elektrisch
     wfs,apparaat_type,apparaat,string,200kN - MAN2
     xml,/kern:dov-schema/sondering/visueelonderzoek/datumtijd_waarneming_grondwaterstand,datum_gw_meting,date,02/09/2011
     xml,/kern:dov-schema/sondering/visueelonderzoek/grondwaterstand,gw_meting,float,02/09/2011

@@ -385,6 +385,10 @@ class AbstractSearch(object):
             A list of fields to be returned in the output data. This should
             be a subset of the fields provided in `get_fields()`. Note that
             not all fields are currently supported as return fields.
+        extra_wfs_fields: list<str>
+            A list of extra fields to be included in the WFS requests,
+            regardless whether they're needed as return field. Optional,
+            defaults to an empty list.
 
         Returns
         -------

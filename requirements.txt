@@ -1,5 +1,4 @@
 owslib
-xmltodict
 pandas
 numpy
 requests

@@ -16,6 +16,20 @@ class Peilmeting(AbstractDovSubType):
     _rootpath = './/filtermeting/peilmeting'
 
     _fields = [{
+        'name': 'datum',
+        'source': 'xml',
+        'sourcefield': '/datum',  # relative to rootpath
+        'definition': 'Datum van opmeten.',
+        'type': 'date',
+        'notnull': True
+    }, {
+        'name': 'tijdstip',
+        'source': 'xml',
+        'sourcefield': '/tijdstip',
+        'definition': 'Tijdstip van opmeten (optioneel).',
+        'type': 'string',
+        'notnull': False
+    }, {
         'name': 'peil_mtaw',
         'source': 'xml',
         'sourcefield': '/peil_mtaw', # relative to rootpath

@@ -253,7 +253,6 @@ class AbstractSearch(object):
             }
             fields[field['name']] = field
 
-
         return fields
 
     def _pre_search_validation(self, location=None, query=None,

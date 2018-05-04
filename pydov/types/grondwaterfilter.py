@@ -68,7 +68,8 @@ class GrondwaterFilter(AbstractDovType):
     }, {
         'name': 'mv_mtaw',
         'source': 'xml',
-        'sourcefield': '/grondwaterlocatie/puntligging/oorspronkelijk_maaiveld',
+        'sourcefield':
+            '/grondwaterlocatie/puntligging/oorspronkelijk_maaiveld',
         'definition': 'Maaiveldhoogte in mTAW op dag dat de put/boring '
                       'uitgevoerd werd.',
         'type': 'float',
@@ -133,7 +134,8 @@ class GrondwaterFilter(AbstractDovType):
             element.
 
         """
-        gwfilter = GrondwaterFilter(feature.findtext('./{%s}filterfiche' % namespace))
+        gwfilter = GrondwaterFilter(
+            feature.findtext('./{%s}filterfiche' % namespace))
 
         for field in cls.get_fields(source=('wfs',)).values():
             gwfilter.data[field['name']] = cls._parse(
@@ -166,7 +168,6 @@ class GrondwaterFilter(AbstractDovType):
 
 # Indivual peilmetingen to support Filtermeting TODO
 class Peilmeting(AbstractDovSubType):
-
     _name = 'peilmeting'
     _rootpath = './/filtermeting/peilmeting'
 

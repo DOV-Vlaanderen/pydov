@@ -35,7 +35,8 @@ class GrondwaterFilterSearch(AbstractSearch):
                 GrondwaterFilterSearch.__wfs_schema = self._get_schema()
 
             if GrondwaterFilterSearch.__md_metadata is None:
-                GrondwaterFilterSearch.__md_metadata = self._get_remote_metadata()
+                GrondwaterFilterSearch.__md_metadata = \
+                    self._get_remote_metadata()
 
             if GrondwaterFilterSearch.__fc_featurecatalogue is None:
                 csw_url = self._get_csw_base_url()
@@ -118,5 +119,6 @@ class GrondwaterFilterSearch(AbstractSearch):
 
         df = pd.DataFrame(data=GrondwaterFilter.to_df_array(gw_filters,
                                                             return_fields),
-                          columns=GrondwaterFilter.get_field_names(return_fields))
+                          columns=GrondwaterFilter.get_field_names(
+                              return_fields))
         return df

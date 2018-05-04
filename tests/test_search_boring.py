@@ -173,6 +173,7 @@ def mp_remote_wfs_feature(monkeypatch):
             'pydov.util.owsutil.wfs_get_feature',
             __get_remote_wfs_feature)
 
+
 @pytest.fixture
 def mp_boring_xml(monkeypatch):
     """Monkeypatch the call to get the remote Boring XML data.

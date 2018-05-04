@@ -1,7 +1,9 @@
 import datetime
 
 from numpy.compat import unicode
-
+from pandas.api.types import (
+    is_int64_dtype, is_object_dtype,
+    is_bool_dtype, is_float_dtype)
 
 class AbstractTestSearch(object):
     """Class grouping common test code for search classes."""
@@ -77,15 +79,17 @@ class AbstractTestSearch(object):
         fields : dict
             Fields returned by a specific search class to test.
         """
+
         for field in list(df):
             datatype = fields[field]['type']
             if datatype == 'string':
-                assert df[field].dtype.name == 'object'
+                assert (is_object_dtype(df[field]) or
+                        df[field].isnull().values.all()) # all Nan/None
             elif datatype == 'float':
-                assert df[field].dtype.name == 'float64'
+                assert is_float_dtype(df[field])
             elif datatype == 'integer':
-                assert df[field].dtype.name == 'integer'
+                assert is_int64_dtype(df[field])
             elif datatype == 'date':
-                assert df[field].dtype.name == 'object'
+                assert is_object_dtype(df[field])
             elif datatype == 'boolean':
-                assert df[field].dtype.name == 'bool'
+                assert is_bool_dtype(df[field])

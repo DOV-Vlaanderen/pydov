@@ -13,7 +13,7 @@ from pydov.util.errors import InvalidFieldError
 from tests.test_search_boring import (
     wfs_getfeature,
     wfs_feature,
-    mp_boring_xml
+    mp_dov_xml
 )
 
 
@@ -219,7 +219,7 @@ class TestBoring(object):
         assert type(boring.data) is dict
         assert type(boring.subdata) is dict
 
-    def test_get_df_array(self, wfs_feature, mp_boring_xml):
+    def test_get_df_array(self, wfs_feature, mp_dov_xml):
         """Test the boring.get_df_array method.
 
         Test whether the output of the dataframe array for the given Boring
@@ -230,7 +230,7 @@ class TestBoring(object):
         wfs_feature : pytest.fixture returning etree.Element
             Fixture providing an XML element representing a single record of
             the Boring WFS layer.
-        mp_boring_xml : pytest.fixture
+        mp_dov_xml : pytest.fixture
             Monkeypatch the call to get the remote Boring XML data.
 
         """

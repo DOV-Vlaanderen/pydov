@@ -175,7 +175,7 @@ def mp_remote_wfs_feature(monkeypatch):
 
 
 @pytest.fixture
-def mp_boring_xml(monkeypatch):
+def mp_dov_xml(monkeypatch):
     """Monkeypatch the call to get the remote Boring XML data.
 
     Parameters
@@ -282,25 +282,8 @@ class TestBoringSearch(AbstractTestSearch):
 
         assert type(df) is DataFrame
 
-    def test_search_both_location_query_wrongquerytype(self, boringsearch):
-        """Test the search method providing both a location and a query,
-        using a query with an invalid type.
-
-        Test whether an InvalidSearchParameterError is raised.
-
-        Parameters
-        ----------
-        boringsearch : pytest.fixture returning pydov.search.BoringSearch
-            An instance of BoringSearch to perform search operations on the DOV
-            type 'Boring'.
-
-        """
-        with pytest.raises(InvalidSearchParameterError):
-            boringsearch.search(location=(1, 2, 3, 4),
-                                query='computer says no')
-
     def test_search(self, mp_wfs, mp_remote_describefeaturetype, mp_remote_md,
-                    mp_remote_fc, mp_remote_wfs_feature, mp_boring_xml,
+                    mp_remote_fc, mp_remote_wfs_feature, mp_dov_xml,
                     boringsearch):
         """Test the search method with only the query parameter.
 
@@ -321,7 +304,7 @@ class TestBoringSearch(AbstractTestSearch):
             dov-pub:Boringen layer.
         mp_remote_wfs_feature : pytest.fixture
             Monkeypatch the call to get WFS features.
-        mp_boring_xml : pytest.fixture
+        mp_dov_xml : pytest.fixture
             Monkeypatch the call to get the remote Boring XML data.
         boringsearch : pytest.fixture returning pydov.search.BoringSearch
             An instance of BoringSearch to perform search operations on the DOV
@@ -529,7 +512,7 @@ class TestBoringSearch(AbstractTestSearch):
             boringsearch.search(query=query)
 
     def test_search_extrareturnfields(self, mp_remote_describefeaturetype,
-                                      mp_remote_wfs_feature, mp_boring_xml,
+                                      mp_remote_wfs_feature, mp_dov_xml,
                                       boringsearch):
         """Test the search method with the query parameter and an extra WFS
         field as return field.
@@ -550,7 +533,7 @@ class TestBoringSearch(AbstractTestSearch):
         assert type(df) is DataFrame
 
     def test_search_xmlresolving(self, mp_remote_describefeaturetype,
-                                 mp_remote_wfs_feature, mp_boring_xml,
+                                 mp_remote_wfs_feature, mp_dov_xml,
                                  boringsearch):
         """Test the search method with return fields from XML but not from a
         subtype.
@@ -564,7 +547,7 @@ class TestBoringSearch(AbstractTestSearch):
             dov-pub:Boringen layer.
         mp_remote_wfs_feature : pytest.fixture
             Monkeypatch the call to get WFS features.
-        mp_boring_xml : pytest.fixture
+        mp_dov_xml : pytest.fixture
             Monkeypatch the call to get the remote Boring XML data.
         boringsearch : pytest.fixture returning pydov.search.BoringSearch
             An instance of BoringSearch to perform search operations on the DOV

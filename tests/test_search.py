@@ -119,10 +119,29 @@ def test_search_nolocation_noquery(objectsearch):
 
     Parameters
     ----------
-    boringsearch : pytest.fixture returning pydov.search.BoringSearch
-        An instance of BoringSearch to perform search operations on the DOV
-        type 'Boring'.
+    objectsearch : pytest.fixture
+        An instance of a subclass of AbstractTestSearch to perform search
+        operations on the corresponding DOV type.
 
     """
     with pytest.raises(InvalidSearchParameterError):
         objectsearch.search(location=None, query=None)
+
+
+@pytest.mark.parametrize("objectsearch", search_objects)
+def test_search_both_location_query_wrongquerytype(objectsearch):
+    """Test the search method providing both a location and a query,
+    using a query with an invalid type.
+
+    Test whether an InvalidSearchParameterError is raised.
+
+    Parameters
+    ----------
+    objectsearch : pytest.fixture
+        An instance of a subclass of AbstractTestSearch to perform search
+        operations on the corresponding DOV type.
+
+    """
+    with pytest.raises(InvalidSearchParameterError):
+        objectsearch.search(location=(1, 2, 3, 4),
+                            query='computer says no')

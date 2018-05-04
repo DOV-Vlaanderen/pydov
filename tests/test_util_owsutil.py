@@ -78,7 +78,7 @@ def mp_remote_md(wfs, monkeypatch):
 
     """
     def __get_remote_md(*args, **kwargs):
-        with open('tests/data/util/owsutil/md_metadata.xml', 'r') as f:
+        with open('tests/data/types/boring/md_metadata.xml', 'r') as f:
             data = f.read()
             if type(data) is not bytes:
                 data = data.encode('utf-8')
@@ -128,7 +128,7 @@ def mp_remote_fc(monkeypatch):
 
     """
     def __get_remote_fc(*args, **kwargs):
-        with open('tests/data/util/owsutil/fc_featurecatalogue.xml', 'r') as f:
+        with open('tests/data/types/boring/fc_featurecatalogue.xml', 'r') as f:
             data = f.read()
             if type(data) is not bytes:
                 data = data.encode('utf-8')
@@ -179,7 +179,7 @@ def wfs_getfeature():
         WFS response of a GetFeature call to the dov-pub:Boringen layer.
 
     """
-    with open('tests/data/search/wfsgetfeature.xml', 'r') as f:
+    with open('tests/data/types/boring/feature.xml', 'r') as f:
         data = f.read()
         return data
 
@@ -196,7 +196,7 @@ def mp_remote_describefeaturetype(monkeypatch):
 
     """
     def __get_remote_describefeaturetype(*args, **kwargs):
-        with open('tests/data/util/owsutil/wfsdescribefeaturetype.xml',
+        with open('tests/data/types/boring/wfsdescribefeaturetype.xml',
                   'r') as f:
             data = f.read()
             if type(data) is not bytes:

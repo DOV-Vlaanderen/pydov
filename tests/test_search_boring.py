@@ -1,4 +1,4 @@
-"""Module grouping tests for the search module."""
+"""Module grouping tests for the boring search module."""
 import datetime
 import sys
 
@@ -23,7 +23,6 @@ from tests.test_util_owsutil import (
     wfs,
 )
 
-
 @pytest.fixture
 def mp_remote_wfs_feature(monkeypatch):
     """Monkeypatch the call to get WFS features.
@@ -35,7 +34,7 @@ def mp_remote_wfs_feature(monkeypatch):
 
     """
     def __get_remote_wfs_feature(*args, **kwargs):
-        with open('tests/data/search/wfsgetfeature.xml',
+        with open('tests/data/types/boring/feature.xml',
                   'r') as f:
             data = f.read()
             if type(data) is not bytes:
@@ -68,112 +67,6 @@ def boringsearch():
 
 class TestBoringSearch(object):
     """Class grouping tests for the pydov.search.BoringSearch class."""
-
-    def test_get_description(self, mp_wfs, boringsearch):
-        """Test the get_description method.
-
-        Test whether the method returns a non-empty string.
-
-        Parameters
-        ----------
-        mp_wfs : pytest.fixture
-            Monkeypatch the call to the remote GetCapabilities request.
-        boringsearch : pytest.fixture returning pydov.search.BoringSearch
-            An instance of BoringSearch to perform search operations on the DOV
-            type 'Boring'.
-
-        """
-        description = boringsearch.get_description()
-
-        assert type(description) in (str, unicode)
-        assert len(description) > 0
-
-    def test_get_fields(self, mp_wfs, mp_remote_describefeaturetype,
-                        mp_remote_md, mp_remote_fc, boringsearch):
-        """Test the get_fields method.
-
-        Test whether the returned fields match the format specified in the
-        documentation.
-
-        Parameters
-        ----------
-        mp_wfs : pytest.fixture
-            Monkeypatch the call to the remote GetCapabilities request.
-        mp_remote_describefeaturetype : pytest.fixture
-            Monkeypatch the call to a remote DescribeFeatureType of the
-            dov-pub:Boringen layer.
-        mp_remote_md : pytest.fixture
-            Monkeypatch the call to get the remote metadata of the
-            dov-pub:Boringen layer.
-        mp_remote_fc : pytest.fixture
-            Monkeypatch the call to get the remote feature catalogue of the
-            dov-pub:Boringen layer.
-        boringsearch : pytest.fixture returning pydov.search.BoringSearch
-            An instance of BoringSearch to perform search operations on the DOV
-            type 'Boring'.
-
-        """
-        fields = boringsearch.get_fields()
-
-        assert type(fields) is dict
-
-        for field in fields:
-            assert type(field) in (str, unicode)
-
-            f = fields[field]
-            assert type(f) is dict
-
-            assert 'name' in f
-            assert type(f['name']) in (str, unicode)
-            assert f['name'] == field
-
-            assert 'definition' in f
-            assert type(f['name']) in (str, unicode)
-
-            assert 'type' in f
-            assert type(f['type']) in (str, unicode)
-            assert f['type'] in ['string', 'float', 'integer', 'date',
-                                 'boolean']
-
-            assert 'notnull' in f
-            assert type(f['notnull']) is bool
-
-            assert 'cost' in f
-            assert type(f['cost']) is int
-            assert f['cost'] > 0
-
-            if 'values' in f:
-                assert sorted(f.keys()) == [
-                    'cost', 'definition', 'name', 'notnull', 'type', 'values']
-                for v in f['values']:
-                    if f['type'] == 'string':
-                        assert type(v) in (str, unicode)
-                    elif f['type'] == 'float':
-                        assert type(v) is float
-                    elif f['type'] == 'integer':
-                        assert type(v) is int
-                    elif f['type'] == 'date':
-                        assert type(v) is datetime.date
-                    elif f['type'] == 'boolean':
-                        assert type(v) is bool
-            else:
-                assert sorted(f.keys()) == ['cost', 'definition', 'name',
-                                            'notnull', 'type']
-
-    def test_search_nolocation_noquery(self, boringsearch):
-        """Test the search method without providing a location or a query.
-
-        Test whether an InvalidSearchParameterError is raised.
-
-        Parameters
-        ----------
-        boringsearch : pytest.fixture returning pydov.search.BoringSearch
-            An instance of BoringSearch to perform search operations on the DOV
-            type 'Boring'.
-
-        """
-        with pytest.raises(InvalidSearchParameterError):
-            boringsearch.search(location=None, query=None)
 
     def test_search_both_location_query(self, mp_remote_describefeaturetype,
                                         mp_remote_wfs_feature, boringsearch):

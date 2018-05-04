@@ -65,8 +65,12 @@ class AbstractCommon(object):
                 return float(x)
         elif returntype == 'date':
             def typeconvert(x):
-                return datetime.datetime.strptime(x, '%Y-%m-%dZ').date() + \
-                       datetime.timedelta(days=1)
+                # Patch for Zulu-time issue of geoserver for WFS 1.1.0
+                if x.endswith('Z'):
+                    return datetime.datetime.strptime(x, '%Y-%m-%dZ').date() \
+                           + datetime.timedelta(days=1)
+                else:
+                    return datetime.datetime.strptime(x, '%Y-%m-%d').date()
         elif returntype == 'boolean':
             def typeconvert(x):
                 return strtobool(x) == 1

@@ -14,19 +14,20 @@ class TransparentCache(object):
     def __init__(self, max_age=datetime.timedelta(weeks=2), cachedir=None):
         """Initialisation.
 
-        Set up the instance variables and create the basepath directory if
+        Set up the instance variables and create the cache directory if
         it does not exists already.
 
         Parameters
         ----------
-        max_age : datetime.timedelta
+        max_age : datetime.timedelta, optional
             The maximum age of a cached XML file to be valid. If the last
             modification date of the file is before this time, it will be
-            redownloaded.
-        cachedir : str
+            redownloaded. Defaults to two weeks.
+        cachedir : str, optional
             Path of the directory that will be used to save the cached XML
             files. Be sure to use a directory that will only be used for
-            this PyDOV cache.
+            this PyDOV cache. Default to a temporary directory provided by
+            the operating system.
 
         """
         if cachedir:
@@ -172,7 +173,7 @@ class TransparentCache(object):
         return data
 
     def clean(self):
-        """Clean the cache by removing the base directory.
+        """Clean the cache by removing the cache directory.
 
         Since during normal use the cache grows by adding new objects and
         overwriting existing ones with a new version, you can use this

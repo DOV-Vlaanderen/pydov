@@ -31,16 +31,16 @@ class TransparentCache(object):
 
         """
         if cachedir:
-            self.basepath = cachedir
+            self.cachedir = cachedir
         else:
-            self.basepath = os.path.join(tempfile.gettempdir(), 'pydov')
+            self.cachedir = os.path.join(tempfile.gettempdir(), 'pydov')
         self.max_age = max_age
         self.re_type_key = re.compile(
             r'https?://www.dov.vlaanderen.be/data/([' '^/]+)/([^\.]+)')
 
         try:
-            if not os.path.exists(self.basepath):
-                os.makedirs(self.basepath)
+            if not os.path.exists(self.cachedir):
+                os.makedirs(self.cachedir)
         except Exception:
             pass
 
@@ -78,7 +78,7 @@ class TransparentCache(object):
             XML content describing the DOV object.
 
         """
-        folder = os.path.join(self.basepath, datatype)
+        folder = os.path.join(self.cachedir, datatype)
 
         if not os.path.exists(folder):
             os.makedirs(folder)
@@ -107,7 +107,7 @@ class TransparentCache(object):
             True if a valid cached version exists, False otherwise.
 
         """
-        filepath = os.path.join(self.basepath, datatype, key + '.xml')
+        filepath = os.path.join(self.cachedir, datatype, key + '.xml')
         if not os.path.exists(filepath):
             return False
 
@@ -134,9 +134,25 @@ class TransparentCache(object):
             XML string of the DOV object, loaded from the cache.
 
         """
-        filepath = os.path.join(self.basepath, datatype, key + '.xml')
+        filepath = os.path.join(self.cachedir, datatype, key + '.xml')
         with open(filepath, 'r') as f:
             return f.read()
+
+    def _get_remote(self, url):
+        """Get the XML data by requesting it from the given URL.
+
+        Parameters
+        ----------
+        url : str
+            Permanent URL to a DOV object.
+
+        Returns
+        -------
+        str (xml)
+            XML content describing the DOV object.
+
+        """
+        return openURL(url).read()
 
     def get(self, url):
         """Get the XML data for the DOV object referenced by the given URL.
@@ -164,7 +180,7 @@ class TransparentCache(object):
             except Exception:
                 pass
 
-        data = openURL(url).read()
+        data = self._get_remote(url)
         try:
             self._save(datatype, key, data.decode('utf-8'))
         except Exception:
@@ -175,7 +191,7 @@ class TransparentCache(object):
     def clean(self):
         """Clean the cache by removing the cache directory.
 
-        Since during normal use the cache grows by adding new objects and
+        Since during normal use the cache only grows by adding new objects and
         overwriting existing ones with a new version, you can use this
         function to erase the cache.
 
@@ -187,4 +203,5 @@ class TransparentCache(object):
         but it is provided as reference.
 
         """
-        shutil.rmtree(self.basepath)
+        if os.path.exists(self.cachedir):
+            shutil.rmtree(self.cachedir)

@@ -113,3 +113,27 @@ class BoringSearch(AbstractSearch):
         df = pd.DataFrame(data=Boring.to_df_array(boringen, return_fields),
                           columns=Boring.get_field_names(return_fields))
         return df
+
+
+if __name__ == '__main__':
+    import pydov
+
+    print(pydov.__path__)
+    from pydov.search.boring import BoringSearch
+
+    boring = BoringSearch()
+
+    df = boring.search(location=(153100, 206000, 154000, 207000))
+
+    import folium
+    from pyproj import Proj, transform
+
+
+    def convert_latlon(x1, y1):
+        inProj = Proj(init='epsg:31370')
+        outProj = Proj(init='epsg:4326')
+        x2, y2 = transform(inProj, outProj, x1, y1)
+        return x2, y2
+
+
+    df['lon'], df['lat'] = zip(*map(convert_latlon, df['x'], df['y']))

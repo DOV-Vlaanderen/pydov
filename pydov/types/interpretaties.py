@@ -195,9 +195,9 @@ class InformeleStratigrafie(AbstractDovType):
         self._parse_subtypes(xml)
 
 
-class HydrogeologischeInterpretatieLaag(AbstractDovSubType):
+class HydrogeologischeStratigrafieLaag(AbstractDovSubType):
 
-    _name = 'hydrogeologische_interpretatie_laag'
+    _name = 'hydrogeologische_stratigrafie_laag'
     _rootpath = './/hydrogeologischeinterpretatie/laag'
 
     _fields = [{
@@ -228,7 +228,7 @@ class HydrogeologischeInterpretatieLaag(AbstractDovSubType):
 
     def __init__(self):
         """Initialisation."""
-        super(HydrogeologischeInterpretatieLaag, self).__init__(
+        super(HydrogeologischeStratigrafieLaag, self).__init__(
             'hydrogeologische_interpretatie_laag')
 
     @classmethod
@@ -241,7 +241,7 @@ class HydrogeologischeInterpretatieLaag(AbstractDovSubType):
             XML element representing a single record of this subtype.
 
         """
-        laag = HydrogeologischeInterpretatieLaag()
+        laag = HydrogeologischeStratigrafieLaag()
 
         for field in cls.get_fields().values():
             laag.data[field['name']] = laag._parse(
@@ -254,10 +254,10 @@ class HydrogeologischeInterpretatieLaag(AbstractDovSubType):
         return laag
 
 
-class HydrogeologischeInterpretatie(AbstractDovType):
+class HydrogeologischeStratigrafie(AbstractDovType):
     """Class representing the DOV data type for boreholes."""
 
-    _subtypes = [HydrogeologischeInterpretatieLaag]
+    _subtypes = [HydrogeologischeStratigrafieLaag]
 
     _fields = [{
         'name': 'pkey_interpretatie',
@@ -297,7 +297,7 @@ class HydrogeologischeInterpretatie(AbstractDovType):
             `https://www.dov.vlaanderen.be/data/boring/<id>`.
 
         """
-        super(HydrogeologischeInterpretatie, self).__init__(
+        super(HydrogeologischeStratigrafie, self).__init__(
             'interpretatie', pkey)
 
     @classmethod
@@ -318,7 +318,7 @@ class HydrogeologischeInterpretatie(AbstractDovType):
             element.
 
         """
-        infstrat = HydrogeologischeInterpretatie(
+        infstrat = HydrogeologischeStratigrafie(
             feature.findtext('./{%s}Interpretatiefiche' % namespace))
 
         typeproef = cls._parse(

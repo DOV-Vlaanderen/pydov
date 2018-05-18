@@ -2,7 +2,7 @@ import pandas as pd
 
 from pydov.search.abstract import AbstractSearch
 from pydov.types.interpretaties import InformeleStratigrafie
-from pydov.types.interpretaties import HydrogeologischeInterpretatie
+from pydov.types.interpretaties import HydrogeologischeStratigrafie
 from pydov.util import owsutil
 
 
@@ -122,7 +122,7 @@ class InformeleStratigrafieSearch(AbstractSearch):
         return df
 
 
-class HydrogeologischeInterpretatieSearch(AbstractSearch):
+class HydrogeologischeStratigrafieSearch(AbstractSearch):
     """Search class to retrieve hydrogeological interpretations """
 
     __wfs_schema = None
@@ -132,39 +132,39 @@ class HydrogeologischeInterpretatieSearch(AbstractSearch):
 
     def __init__(self):
         """Initialisation."""
-        super(HydrogeologischeInterpretatieSearch, self).__init__(
+        super(HydrogeologischeStratigrafieSearch, self).__init__(
             'interpretaties:hydrogeologische_stratigrafie',
-            HydrogeologischeInterpretatie)
+            HydrogeologischeStratigrafie)
 
     def _init_namespace(self):
         """Initialise the WFS namespace associated with the layer."""
-        if HydrogeologischeInterpretatieSearch.__wfs_namespace is None:
-            HydrogeologischeInterpretatieSearch.__wfs_namespace = \
+        if HydrogeologischeStratigrafieSearch.__wfs_namespace is None:
+            HydrogeologischeStratigrafieSearch.__wfs_namespace = \
                 self._get_namespace()
 
     def _init_fields(self):
         """Initialise the fields and their metadata available in this search
         class."""
         if self._fields is None:
-            if HydrogeologischeInterpretatieSearch.__wfs_schema is None:
-                HydrogeologischeInterpretatieSearch.__wfs_schema = \
+            if HydrogeologischeStratigrafieSearch.__wfs_schema is None:
+                HydrogeologischeStratigrafieSearch.__wfs_schema = \
                     self._get_schema()
 
-            if HydrogeologischeInterpretatieSearch.__md_metadata is None:
-                HydrogeologischeInterpretatieSearch.__md_metadata = \
+            if HydrogeologischeStratigrafieSearch.__md_metadata is None:
+                HydrogeologischeStratigrafieSearch.__md_metadata = \
                     self._get_remote_metadata()
 
-            if HydrogeologischeInterpretatieSearch.__fc_featurecatalogue is None:
+            if HydrogeologischeStratigrafieSearch.__fc_featurecatalogue is None:
                 csw_url = self._get_csw_base_url()
                 fc_uuid = owsutil.get_featurecatalogue_uuid(
-                    HydrogeologischeInterpretatieSearch.__md_metadata)
+                    HydrogeologischeStratigrafieSearch.__md_metadata)
 
-                HydrogeologischeInterpretatieSearch.__fc_featurecatalogue = \
+                HydrogeologischeStratigrafieSearch.__fc_featurecatalogue = \
                     owsutil.get_remote_featurecatalogue(csw_url, fc_uuid)
 
             fields = self._build_fields(
-                HydrogeologischeInterpretatieSearch.__wfs_schema,
-                HydrogeologischeInterpretatieSearch.__fc_featurecatalogue)
+                HydrogeologischeStratigrafieSearch.__wfs_schema,
+                HydrogeologischeStratigrafieSearch.__fc_featurecatalogue)
 
             for field in fields.values():
                 if field['name'] not in self._type.get_field_names(
@@ -178,8 +178,8 @@ class HydrogeologischeInterpretatieSearch(AbstractSearch):
                     })
 
             self._fields = self._build_fields(
-                HydrogeologischeInterpretatieSearch.__wfs_schema,
-                HydrogeologischeInterpretatieSearch.__fc_featurecatalogue)
+                HydrogeologischeStratigrafieSearch.__wfs_schema,
+                HydrogeologischeStratigrafieSearch.__fc_featurecatalogue)
 
     def search(self, location=None, query=None, return_fields=None):
         """Search for boreholes (Boring). Provide either `location` or `query`.
@@ -231,13 +231,13 @@ class HydrogeologischeInterpretatieSearch(AbstractSearch):
                            return_fields=return_fields,
                            extra_wfs_fields=['Type_proef', 'Proeffiche'])
 
-        interpretaties = HydrogeologischeInterpretatie.from_wfs(
+        interpretaties = HydrogeologischeStratigrafie.from_wfs(
             fts, self.__wfs_namespace)
 
         df = pd.DataFrame(
-            data=HydrogeologischeInterpretatie.to_df_array(
+            data=HydrogeologischeStratigrafie.to_df_array(
                 interpretaties, return_fields),
-            columns=HydrogeologischeInterpretatie.get_field_names(return_fields))
+            columns=HydrogeologischeStratigrafie.get_field_names(return_fields))
         return df
 
 
@@ -248,17 +248,31 @@ if __name__ == '__main__':
     import pydov
     print(pydov.__path__)
     from pydov.search.interpretaties import InformeleStratigrafieSearch
-    from pydov.search.interpretaties import HydrogeologischeInterpretatieSearch
+    from pydov.search.interpretaties import HydrogeologischeStratigrafieSearch
     ip_infstrat = InformeleStratigrafieSearch()
-    ip_hydrogeo = HydrogeologischeInterpretatieSearch()
+    ip_hydrogeo = HydrogeologischeStratigrafieSearch()
 
-    # information about the HydrogeologischeInterpretatie type (In Dutch):
+    # information about the HydrogeologischeStratigrafie type (In Dutch):
     print(ip_infstrat.get_description())
-    # information about the available fields for a HydrogeologischeInterpretatie object
+    # information about the available fields for a HydrogeologischeStratigrafie object
     fields = ip_infstrat.get_fields()
     # print available fields
     for f in fields.values():
         print(f['name'])
     df = ip_hydrogeo.search(location=(153145, 206930, 153150, 206935))
+
+    import folium
+    from pyproj import Proj, transform
+
+
+    def convert_latlon(x1, y1):
+        inProj = Proj(init='epsg:31370')
+        outProj = Proj(init='epsg:4326')
+        x2, y2 = transform(x1, y1)
+        return x2, y2
+
+
+    df['lon'], df['lat'] = zip(*map(convert_latlon, df['x'], df['y']))
+
     a = 'stop'
 

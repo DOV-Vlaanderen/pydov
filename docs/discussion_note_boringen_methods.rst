@@ -82,13 +82,13 @@ Possible schema:
                                            'FormeleStratigrafie',
                                            'Lithologische beschrijvingen',
                                            'GecodeerdeLithologie',
-                                           'HydrogeologischeInterpretatie',
+                                           'HydrogeologischeStratigrafie',
                                            'InformeleHydrogeologischeStratigrafie',
                                            'QuartaireStratigrafie',
                                            'GeotechnischeCoderingen',]
 
 
-   class HydrogeologischeInterpretatie(Interpretatie):
+   class HydrogeologischeStratigrafie(Interpretatie):
        """class for interpretation of Hydrogeological Stratification
        """
        def __init__(self, location=None):
@@ -119,11 +119,11 @@ Possible schema:
    >>> boring_metadata = boring.get_metadata()
    >>> df_boring = boring.get_data(location, query, columns=[columns of interest])
    >>> print Interpretatie().defined_interpretations
-   >>> interpretatie = HydrogeologischeInterpretatie()
+   >>> interpretatie = HydrogeologischeStratigrafie()
    >>> df_interpretatie = interpretatie.get_data_from_boring(df_boring)
    >>> # alternatively
    >>> print Interpretatie().defined_interpretations
-   >>> intepretatie = HydrogeologischeInterpretatie()
+   >>> intepretatie = HydrogeologischeStratigrafie()
    >>> interpretatie_metadata = interpretatie.get_metadata()
    >>> df_interpetatie = intepretatie.get_data_interpretatie(location, query, columns=[columns of interest])
    """

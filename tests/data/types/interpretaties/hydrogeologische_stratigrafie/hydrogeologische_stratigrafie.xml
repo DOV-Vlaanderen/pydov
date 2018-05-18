@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns3:dov-schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns3="http://kern.schemas.dov.vlaanderen.be" xsi:schemaLocation="http://kern.schemas.dov.vlaanderen.be https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/dov.xsd">
+    <interpretaties>
+        <hydrogeologischeinterpretatie>
+            <boring>GEO-74/254-b1</boring>
+            <auteur>
+                <persoon>
+                    <naam>Polfliet</naam>
+                    <voornaam>Tim</voornaam>
+                </persoon>
+                <bedrijf-dienst>
+                    <naam>Universiteit Gent</naam>
+                </bedrijf-dienst>
+            </auteur>
+            <datum>2001-06-26</datum>
+            <betrouwbaarheid>goed</betrouwbaarheid>
+            <dataleverancier>
+                <naam>onbekend</naam>
+            </dataleverancier>
+            <laag>
+                <van>0.00</van>
+                <tot>2.50</tot>
+                <aquifer>0152</aquifer>
+            </laag>
+            <laag>
+                <van>2.50</van>
+                <tot>7.00</tot>
+                <aquifer>0254</aquifer>
+            </laag>
+        </hydrogeologischeinterpretatie>
+    </interpretaties>
+</ns3:dov-schema>

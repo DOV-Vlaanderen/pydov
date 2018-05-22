@@ -56,7 +56,7 @@ class AbstractCommon(object):
         """
         if returntype == 'string':
             def typeconvert(x):
-                return str(x.encode("utf-8") ).strip()
+                return str(x.encode('latin-1') ).strip()
         elif returntype == 'integer':
             def typeconvert(x):
                 return int(x)

@@ -13,7 +13,8 @@ from pydov.search.grondwaterfilter import GrondwaterFilterSearch
 from numpy.compat import unicode
 
 from pydov.util.errors import (
-    InvalidSearchParameterError
+    InvalidSearchParameterError,
+    InvalidFieldError,
 )
 
 
@@ -145,3 +146,21 @@ def test_search_both_location_query_wrongquerytype(objectsearch):
     with pytest.raises(InvalidSearchParameterError):
         objectsearch.search(location=(1, 2, 3, 4),
                             query='computer says no')
+
+
+@pytest.mark.parametrize("objectsearch", search_objects)
+def test_search_query_wrongtype(objectsearch):
+    """Test the search method with the query parameter using a wrong
+    query type.
+
+    Test whether an InvalidSearchParameterError is raised.
+
+    Parameters
+    ----------
+    boringsearch : pytest.fixture returning pydov.search.BoringSearch
+        An instance of BoringSearch to perform search operations on the DOV
+        type 'Boring'.
+
+    """
+    with pytest.raises(InvalidSearchParameterError):
+        objectsearch.search(query='computer says no')

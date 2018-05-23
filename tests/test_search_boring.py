@@ -465,22 +465,6 @@ class TestBoringSearch(AbstractTestSearch):
         with pytest.raises(InvalidFieldError):
             boringsearch.search(query=query)
 
-    def test_search_query_wrongtype(self, boringsearch):
-        """Test the search method with the query parameter using a wrong
-        query type.
-
-        Test whether an InvalidSearchParameterError is raised.
-
-        Parameters
-        ----------
-        boringsearch : pytest.fixture returning pydov.search.BoringSearch
-            An instance of BoringSearch to perform search operations on the DOV
-            type 'Boring'.
-
-        """
-        with pytest.raises(InvalidSearchParameterError):
-            boringsearch.search(query='computer says no')
-
     def test_search_query_wrongfield_returnfield(self, boringsearch):
         """Test the search method with the query parameter using an
         return-only field as query field.
@@ -520,6 +504,8 @@ class TestBoringSearch(AbstractTestSearch):
                                  return_fields=('pkey_boring', 'doel'))
 
         assert type(df) is DataFrame
+
+        assert list(df) == ['pkey_boring', 'doel']
 
     def test_search_xmlresolving(self, mp_remote_describefeaturetype,
                                  mp_remote_wfs_feature, mp_dov_xml,

@@ -18,7 +18,7 @@ class Peilmeting(AbstractDovSubType):
     _fields = [{
         'name': 'datum',
         'source': 'xml',
-        'sourcefield': '/datum',  # relative to rootpath
+        'sourcefield': '/datum',
         'definition': 'Datum van opmeten.',
         'type': 'date',
         'notnull': True
@@ -32,7 +32,7 @@ class Peilmeting(AbstractDovSubType):
     }, {
         'name': 'peil_mtaw',
         'source': 'xml',
-        'sourcefield': '/peil_mtaw', # relative to rootpath
+        'sourcefield': '/peil_mtaw',
         'definition': 'Diepte van de peilmeting, uitgedrukt in mTAW.',
         'type': 'float',
         'notnull': False
@@ -78,6 +78,7 @@ class Peilmeting(AbstractDovSubType):
             )
 
         return peilmeting
+
 
 class GrondwaterFilter(AbstractDovType):
     """Class representing the DOV data type for Groundwater screens."""

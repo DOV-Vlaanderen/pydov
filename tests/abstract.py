@@ -5,6 +5,7 @@ from pandas.api.types import (
     is_int64_dtype, is_object_dtype,
     is_bool_dtype, is_float_dtype)
 
+
 class AbstractTestSearch(object):
     """Class grouping common test code for search classes."""
     @staticmethod
@@ -67,7 +68,7 @@ class AbstractTestSearch(object):
 
     @staticmethod
     def abstract_test_df_dtypes(df, fields):
-        """Test the resulting column dtypes from data.frame.
+        """Test the resulting column dtypes from dataframe.
 
         Test whether the returned columns match the format specified
         in the documentation.
@@ -79,12 +80,11 @@ class AbstractTestSearch(object):
         fields : dict
             Fields returned by a specific search class to test.
         """
-
         for field in list(df):
             datatype = fields[field]['type']
             if datatype == 'string':
                 assert (is_object_dtype(df[field]) or
-                        df[field].isnull().values.all()) # all Nan/None
+                        df[field].isnull().values.all())  # all Nan/None
             elif datatype == 'float':
                 assert is_float_dtype(df[field])
             elif datatype == 'integer':

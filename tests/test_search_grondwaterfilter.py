@@ -6,6 +6,7 @@ import pytest
 from pandas import DataFrame
 
 import pydov
+from owslib.etree import etree
 from owslib.fes import PropertyIsEqualTo
 from pydov.search.grondwaterfilter import GrondwaterFilterSearch
 from pydov.types.grondwaterfilter import GrondwaterFilter
@@ -201,6 +202,38 @@ def mp_dov_xml(monkeypatch):
                         '_get_xml_data', _get_xml_data)
 
 
+@pytest.fixture
+def wfs_getfeature():
+    """PyTest fixture providing a WFS GetFeature response for the
+    gw_meetnetten:meetnetten layer.
+
+    Returns
+    -------
+    str
+        WFS response of a GetFeature call to the gw_meetnetten:meetnetten
+        layer.
+
+    """
+    with open('tests/data/types/grondwaterfilter/wfsgetfeature.xml', 'r') as f:
+        data = f.read()
+        return data
+
+
+@pytest.fixture
+def wfs_feature():
+    """PyTest fixture providing an XML of a WFS feature element of a Boring
+    record.
+
+    Returns
+    -------
+    etree.Element
+        XML element representing a single record of the Boring WFS layer.
+
+    """
+    with open('tests/data/types/grondwaterfilter/feature.xml', 'r') as f:
+        return etree.fromstring(f.read())
+
+
 class TestGrondwaterFilterSearch(AbstractTestSearch):
     """Class grouping tests for the pydov.search.GrondwaterFilterSearch class.
     """
@@ -300,13 +333,13 @@ class TestGrondwaterFilterSearch(AbstractTestSearch):
 
         assert type(df) is DataFrame
 
-        assert list(df) == ['pkey_filter', 'pkey_grondwaterlocatie',
-                            'gw_id', 'filternummer', 'filtertype', 'x', 'y',
-                            'gemeente', 'diepte_onderkant_filter',
-                            'lengte_filter', 'mv_mtaw', 'meetnet_code',
-                            'aquifer_code', 'grondwaterlichaam_code', 'regime',
-                            'datum', 'tijdstip', 'peil_mtaw',
-                            'betrouwbaarheid', 'methode']
+        assert list(df) == ['pkey_filter', 'pkey_grondwaterlocatie', 'gw_id',
+                          'filternummer', 'filtertype', 'x', 'y', 'mv_mtaw',
+                          'gemeente', 'meetnet_code', 'aquifer_code',
+                          'grondwaterlichaam_code', 'regime',
+                          'diepte_onderkant_filter', 'lengte_filter',
+                          'datum', 'tijdstip', 'peil_mtaw',
+                          'betrouwbaarheid', 'methode']
 
         allfields = GrondwaterFilter.get_field_names()
         ownfields = GrondwaterFilter.get_field_names(include_subtypes=False)

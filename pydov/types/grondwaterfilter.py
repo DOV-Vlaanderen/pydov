@@ -121,21 +121,6 @@ class GrondwaterFilter(AbstractDovType):
         'sourcefield': 'Y_mL72',
         'type': 'float'
     }, {
-        'name': 'gemeente',
-        'source': 'wfs',
-        'sourcefield': 'gemeente',
-        'type': 'string'
-    }, {
-        'name': 'diepte_onderkant_filter',
-        'source': 'wfs',
-        'sourcefield': 'onderkant_filter_m',
-        'type': 'float'
-    }, {
-        'name': 'lengte_filter',
-        'source': 'wfs',
-        'sourcefield': 'lengte_filter_m',
-        'type': 'float'
-    }, {
         'name': 'mv_mtaw',
         'source': 'xml',
         'sourcefield':
@@ -144,6 +129,11 @@ class GrondwaterFilter(AbstractDovType):
                       'uitgevoerd werd.',
         'type': 'float',
         'notnull': False
+    }, {
+        'name': 'gemeente',
+        'source': 'wfs',
+        'sourcefield': 'gemeente',
+        'type': 'string'
     }, {
         'name': 'meetnet_code',
         'source': 'xml',
@@ -172,6 +162,16 @@ class GrondwaterFilter(AbstractDovType):
         'definition': '',
         'type': 'string',
         'notnull': False
+    }, {
+        'name': 'diepte_onderkant_filter',
+        'source': 'wfs',
+        'sourcefield': 'onderkant_filter_m',
+        'type': 'float'
+    }, {
+        'name': 'lengte_filter',
+        'source': 'wfs',
+        'sourcefield': 'lengte_filter_m',
+        'type': 'float'
     }]
 
     def __init__(self, pkey):

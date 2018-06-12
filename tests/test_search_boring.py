@@ -324,24 +324,14 @@ class TestBoringSearch(AbstractTestSearch):
                             'diepte_methode_van', 'diepte_methode_tot',
                             'boormethode']
 
-        allfields = Boring.get_field_names()
-        ownfields = Boring.get_field_names(include_subtypes=False)
-        subfields = [f for f in allfields if f not in ownfields]
-
-        for field in list(df):
-            if field in ownfields:
-                assert len(df[field].unique()) == 1
-            elif field in subfields:
-                assert len(df[field].unique()) >= 1
+        self.abstract_test_search_checkrows(df, Boring)
 
         assert df.mv_mtaw.hasnans
 
-        fields = Boring.get_fields()
-
         # dtype checks of the resulting df columns
+        fields = Boring.get_fields()
         self.abstract_test_df_dtypes(df, fields)
 
-        assert len(df) >= 1
         # specific test for the Zulu time wfs 1.1.0 issue
         assert df.datum_aanvang.unique()[0] == datetime.date(2004, 12, 20)
 
@@ -539,4 +529,4 @@ class TestBoringSearch(AbstractTestSearch):
         assert type(df) is DataFrame
 
         assert list(df) == ['pkey_boring', 'boornummer', 'boorgatmeting']
-        assert df.boorgatmeting[0] == False
+        assert not df.boorgatmeting[0]

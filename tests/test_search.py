@@ -14,7 +14,6 @@ from numpy.compat import unicode
 
 from pydov.util.errors import (
     InvalidSearchParameterError,
-    InvalidFieldError,
 )
 
 
@@ -157,9 +156,9 @@ def test_search_query_wrongtype(objectsearch):
 
     Parameters
     ----------
-    boringsearch : pytest.fixture returning pydov.search.BoringSearch
-        An instance of BoringSearch to perform search operations on the DOV
-        type 'Boring'.
+    objectsearch : pytest.fixture
+        An instance of a subclass of AbstractTestSearch to perform search
+        operations on the corresponding DOV type.
 
     """
     with pytest.raises(InvalidSearchParameterError):

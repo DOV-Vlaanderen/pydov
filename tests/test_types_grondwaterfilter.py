@@ -12,7 +12,7 @@ from owslib.etree import etree
 from pydov.types.boring import Boring
 from pydov.types.grondwaterfilter import GrondwaterFilter
 from pydov.util.errors import InvalidFieldError
-from tests.abstract import AbstractTestSearch
+from tests.abstract import AbstractTestTypes
 
 from tests.test_search_grondwaterfilter import (
     wfs_getfeature,
@@ -21,7 +21,7 @@ from tests.test_search_grondwaterfilter import (
 )
 
 
-class TestGrondwaterFilter(AbstractTestSearch):
+class TestGrondwaterFilter(AbstractTestTypes):
     """Class grouping tests for the
     pydov.types.grondwaterfilter.GrondwaterFilter class."""
 
@@ -129,68 +129,7 @@ class TestGrondwaterFilter(AbstractTestSearch):
 
         """
         fields = GrondwaterFilter.get_fields()
-        assert isinstance(fields, OrderedDict)
-
-        for f in fields.keys():
-            assert type(f) in (str, unicode)
-
-            field = fields[f]
-            assert type(field) is dict
-
-            assert 'name' in field
-            assert type(field['name']) in (str, unicode)
-            assert field['name'] == f
-
-            assert 'source' in field
-            assert type(field['source']) in (str, unicode)
-            assert field['source'] in ('wfs', 'xml')
-
-            assert 'sourcefield' in field
-            assert type(field['sourcefield']) in (str, unicode)
-
-            assert 'type' in field
-            assert type(field['type']) in (str, unicode)
-            assert field['type'] in ['string', 'float', 'integer', 'date',
-                                     'boolean']
-
-            if field['source'] == 'wfs':
-                if 'wfs_injected' in field.keys():
-                    assert sorted(field.keys()) == [
-                        'name', 'source', 'sourcefield', 'type',
-                        'wfs_injected']
-                else:
-                    assert sorted(field.keys()) == [
-                        'name', 'source', 'sourcefield', 'type']
-            elif field['source'] == 'xml':
-                assert 'definition' in field
-                assert type(field['definition']) in (str, unicode)
-
-                assert 'notnull' in field
-                assert type(field['notnull']) is bool
-
-                assert sorted(field.keys()) == [
-                    'definition', 'name', 'notnull', 'source', 'sourcefield',
-                    'type']
-
-    def test_get_fields_sourcewfs(self):
-        """Test the Boring.get_fields method for fields of the WFS source.
-
-        Test whether all returned fields have 'wfs' as their 'source'.
-
-        """
-        fields = GrondwaterFilter.get_fields(source=('wfs',))
-        for field in fields.values():
-            assert field['source'] == 'wfs'
-
-    def test_get_fields_sourcexml(self):
-        """Test the Boring.get_fields method for fields of the XML source.
-
-        Test whether all returned fields have 'xml' as their 'source'.
-
-        """
-        fields = GrondwaterFilter.get_fields(source=('xml',))
-        for field in fields.values():
-            assert field['source'] == 'xml'
+        self.abstract_test_get_fields(fields)
 
     def test_get_fields_nosubtypes(self):
         """Test the Boring.get_fields method not including subtypes.
@@ -249,27 +188,7 @@ class TestGrondwaterFilter(AbstractTestSearch):
                   if not f.get('wfs_injected', False)]
 
         df_array = grondwaterfilter.get_df_array()
-        assert type(df_array) is list
-
-        for record in df_array:
-            assert len(record) == len(fields)
-
-            for value, field in zip(record, fields):
-                if field['type'] == 'string':
-                    assert type(value) in (str, unicode) or np.isnan(value)
-                elif field['type'] == 'float':
-                    assert type(value) is float or np.isnan(value)
-                elif field['type'] == 'integer':
-                    assert type(value) is int or np.isnan(value)
-                elif field['type'] == 'date':
-                    assert type(value) is datetime.date or np.isnan(value)
-                elif field['type'] == 'boolean':
-                    assert type(value) is bool or np.isnan(value)
-
-                if field['name'] == 'pkey_filter':
-                    assert value.startswith(
-                        'https://www.dov.vlaanderen.be/data/filter/')
-                    assert not value.endswith('.xml')
+        self.abstract_test_get_df_array(df_array, fields)
 
     def test_get_df_array_wrongreturnfields(self, wfs_feature):
         """Test the boring.get_df_array specifying a nonexistent return field.

@@ -334,29 +334,20 @@ class TestGrondwaterFilterSearch(AbstractTestSearch):
         assert type(df) is DataFrame
 
         assert list(df) == ['pkey_filter', 'pkey_grondwaterlocatie', 'gw_id',
-                          'filternummer', 'filtertype', 'x', 'y', 'mv_mtaw',
-                          'gemeente', 'meetnet_code', 'aquifer_code',
-                          'grondwaterlichaam_code', 'regime',
-                          'diepte_onderkant_filter', 'lengte_filter',
-                          'datum', 'tijdstip', 'peil_mtaw',
-                          'betrouwbaarheid', 'methode']
+                            'filternummer', 'filtertype', 'x', 'y', 'mv_mtaw',
+                            'gemeente', 'meetnet_code', 'aquifer_code',
+                            'grondwaterlichaam_code', 'regime',
+                            'diepte_onderkant_filter', 'lengte_filter',
+                            'datum', 'tijdstip', 'peil_mtaw',
+                            'betrouwbaarheid', 'methode']
 
-        allfields = GrondwaterFilter.get_field_names()
-        ownfields = GrondwaterFilter.get_field_names(include_subtypes=False)
-        subfields = [f for f in allfields if f not in ownfields]
-
-        fields = GrondwaterFilter.get_fields()
-
-        for field in list(df):
-            if field in ownfields:
-                assert len(df[field].unique()) == 1
-            elif field in subfields:
-                assert len(df[field].unique()) >= 1
+        self.abstract_test_search_checkrows(df, GrondwaterFilter)
 
         # dtype checks of the resulting df columns
+        fields = GrondwaterFilter.get_fields()
         self.abstract_test_df_dtypes(df, fields)
 
-        assert len(df) >= 1
+        # specific test for the Zulu time wfs 1.1.0 issue
         assert df.datum.sort_values()[0] == datetime.date(2004, 4, 7)
 
     def test_search_returnfields(self, mp_remote_wfs_feature,

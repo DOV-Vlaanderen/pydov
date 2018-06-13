@@ -2,6 +2,7 @@ language: python
 
 env:
   - COVERALLS_PARALLEL=true
+  - HOME=/tmp
 
 install:
   - pip install -U tox-travis

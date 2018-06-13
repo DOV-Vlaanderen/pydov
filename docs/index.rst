@@ -15,6 +15,8 @@ Contents:
    conduct
    history
    reference
+   notebooks/example_search_boringen.ipynb
+   notebooks/example_search_grondwaterfilters.ipynb
 
 Indices and tables
 ==================

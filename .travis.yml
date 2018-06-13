@@ -7,6 +7,10 @@ install:
   - pip install -U tox-travis
   - pip install -U coveralls
 
+addons:
+  apt_packages:
+    - pandoc
+
 matrix:
   include:
     - python: 2.7

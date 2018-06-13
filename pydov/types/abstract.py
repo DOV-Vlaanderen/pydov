@@ -9,7 +9,6 @@ from distutils.util import strtobool
 import pydov
 from owslib.etree import etree
 from owslib.util import openURL
-from pydov.util.caching import TransparentCache
 
 from pydov.util.errors import InvalidFieldError
 

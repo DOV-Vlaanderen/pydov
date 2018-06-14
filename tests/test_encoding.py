@@ -29,4 +29,4 @@ class TestEncoding(AbstractTestSearch):
         df = boringsearch.search(query=query,
                                  return_fields=('pkey_boring', 'uitvoerder'))
 
-        assert df.uitvoerder[0] == 'Societé Belge des Bétons'
+        assert df.uitvoerder[0] == u'Societé Belge des Bétons'

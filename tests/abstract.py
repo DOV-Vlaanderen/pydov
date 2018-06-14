@@ -2,10 +2,40 @@ import datetime
 import numpy as np
 from collections import OrderedDict
 
+import requests
 from numpy.compat import unicode
 from pandas.api.types import (
     is_int64_dtype, is_object_dtype,
     is_bool_dtype, is_float_dtype)
+
+
+def service_ok(url='https://www.dov.vlaanderen.be/geoserver', timeout=5):
+    """Check whether the given URL is accessible.
+
+    Used to skip online tests when the service is unavailable or unreachable.
+
+    Parameters
+    ----------
+    url : str, optional
+        The URL to test. Defaults to the DOV Geoserver.
+    timeout : int, optional
+        Timeout in seconds. Defaults to 5.
+
+    Returns
+    -------
+    bool
+        True if the service is reachable, False otherwise.
+
+    """
+    try:
+        ok = requests.get(url, timeout=timeout).ok
+    except requests.exceptions.ReadTimeout:
+        ok = False
+    except requests.exceptions.ConnectTimeout:
+        ok = False
+    except Exception:
+        ok = False
+    return ok
 
 
 class AbstractTestSearch(object):

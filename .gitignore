@@ -44,6 +44,7 @@ nosetests.xml
 coverage.xml
 *,cover
 .hypothesis/
+.pytest_cache/
 
 # Translations
 *.mo
@@ -63,3 +64,6 @@ target/
 
 # PyCharm
 .idea/
+
+# Jupyter notebook checkpoints
+.ipynb_checkpoints

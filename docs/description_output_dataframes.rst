@@ -231,23 +231,24 @@ fields available in the wfs to search on.
 
 
 
-DovGrondwaterFilter object
+GrondwaterFilter object
 ==========================
 
-Het DOVGrondwaterFilter object bevat alle data van een zoekactie op de laag meetnetten.
+The GrondwaterFilter object contains the data available using the `meetnetten`
 
-Acherliggend zit de meeste informatie vervat in 3 dataframes:
+This can be translated to three data.frames:
 
- * ligging: bevat de ligging (xyz)
- * observaties
- * peilmetingen
+ * Filter, with the screen location information
+ * Peilmetingen
+ * Observaties
+
 
 
 Ligging
 ~~~~~~~
 In deze dataframe komen gelijkaardige velden als bij het zoeken in de site:
 
-  .. csv-table:: Ligging
+  .. csv-table:: Filter
     :header-rows: 1
 
     source,field,new_name,data_type,example
@@ -258,11 +259,11 @@ In deze dataframe komen gelijkaardige velden als bij het zoeken in de site:
     wfs,filtertype,filtertype,string,peilfilter
     wfs,X_mL72,x,float,257021.8
     wfs,Y_mL72,y,float,159758.4
-    xml,/kern:dov-schema/grondwaterlocatie/puntligging/oorspronkelijk_maaiveld, mv_mtaw, numeric, 257021.8
+    xml,/kern:dov-schema/grondwaterlocatie/puntligging/oorspronkelijk_maaiveld, mv_mtaw, float, 257021.8
     wfs,gemeente,gemeente,string,Destelbergen
-    xml,/kern:dov-schema/filter/meetnet,meetnet,integer(codelist),8
-    xml,/kern:dov-schema/filter/ligging/aquifer,aquifer,string(codelist),1300
-    xml,/kern:dov-schema/filter/ligging/grondwaterlichaam,grondwaterlichaam,string(codelist),BLKS_1100_GWL_1M
+    xml,/kern:dov-schema/filter/meetnet,meetnet_code,integer(codelist),8
+    xml,/kern:dov-schema/filter/ligging/aquifer,aquifer_code,string(codelist),1300
+    xml,/kern:dov-schema/filter/ligging/grondwaterlichaam,grondwaterlichaam_code,string(codelist),BLKS_1100_GWL_1M
     xml,/kern:dov-schema/filter/ligging/regime,regime,string(codelist),freatisch
     wfs,onderkant_filter_m,diepte_onderkant_filter,float,8.3
     wfs,lengte_filter_m,lengte_filter,float,5.1
@@ -291,7 +292,7 @@ Observaties
     wfs,GW_ID,gw_id,string,1-0709
     wfs,filternr,filternummer,string,2
     xml,/kern:dov-schema/filtermeting/watermonster/identificatie,watermonster,string,1-0709-F2/M2015
-    xml,/kern:dov-schema/filtermeting/watermonster/monstername/datum,datum_monstername,datum,2015-09-03
+    xml,/kern:dov-schema/filtermeting/watermonster/monstername/datum,datum_monstername,date,2015-09-03
     xml,/kern:dov-schema/filtermeting/watermonster/observatie/parameter,parameter,string(codelist),pH
     xml,/kern:dov-schema/filtermeting/watermonster/observatie/waarde_numeriek,waarde,float,5.12
     xml,/kern:dov-schema/filtermeting/watermonster/observatie/eenheid,eenheid,string(codelist),Sörensen
@@ -307,6 +308,8 @@ Peilmetingen
     wfs,filterfiche,pkey_filter,string,https://www.dov.vlaanderen.be/data/filter/2003-000253.xml
     wfs,GW_ID,gw_id,string,1-0709
     wfs,filternr,filternummer,string,2
+    xml,/kern:dov-schema/filtermeting/peilmeting/datum,datum,date,2015-09-03
+    xml,/kern:dov-schema/filtermeting/peilmeting/tijdstip,tijdstip,string,00:00
     xml,/kern:dov-schema/filtermeting/peilmeting/peil_mtaw,peil_mtaw,float,121.88
     xml,/kern:dov-schema/filtermeting/peilmeting/betrouwbaarheid,betrouwbaarheid,string(codelist),goed
     xml,/kern:dov-schema/filtermeting/peilmeting/methode,methode,string(codelist),peillint

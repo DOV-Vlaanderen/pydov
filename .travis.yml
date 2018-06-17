@@ -8,8 +8,6 @@ env:
 install:
   - pip install -U tox-travis
   - pip install -U coveralls
-  - pip install -r requirements_doc.txt
-  - pip install .
 
 addons:
   apt:

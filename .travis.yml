@@ -1,4 +1,5 @@
 language: python
+sudo: false
 
 env:
   global:
@@ -12,7 +13,6 @@ addons:
   apt:
     packages:
     - pandoc  # for generating documentation from jupyter notebook
-    - pandoc-citeproc
 
 matrix:
   include:

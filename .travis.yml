@@ -3,7 +3,6 @@ language: python
 env:
   global:
   - COVERALLS_PARALLEL=true
-  - HOME=/home/travis
 
 install:
   - pip install -U tox-travis
@@ -13,6 +12,7 @@ addons:
   apt:
     packages:
     - pandoc  # for generating documentation from jupyter notebook
+    - pandoc-citeproc
 
 matrix:
   include:

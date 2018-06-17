@@ -15,3 +15,5 @@ numpydoc
 pytest-cov
 sphinx_rtd_theme
 nbsphinx
+folium
+pyproj

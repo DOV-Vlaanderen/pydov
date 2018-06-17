@@ -1,6 +1,7 @@
 language: python
 
 env:
+  global:
   - COVERALLS_PARALLEL=true
   - HOME=/home/travis
 

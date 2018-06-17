@@ -8,6 +8,8 @@ install:
   - pip install -U coveralls
 
 addons:
+  sources:
+    - sourceline: 'ppa:ubuntugis/ubuntugis-unstable'
   apt:
     packages:
     - pandoc  # for generating documentation from jupyter notebook

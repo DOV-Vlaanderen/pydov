@@ -543,4 +543,5 @@ def wfs_get_feature(baseurl, get_feature_request):
     """
     data = etree.tostring(get_feature_request)
     request = requests.post(baseurl, data)
+    request.encoding = 'utf-8'
     return request.text.encode('utf8')

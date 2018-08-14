@@ -5,36 +5,42 @@ from collections import OrderedDict
 import datetime
 import pytest
 from numpy.compat import unicode
+from pandas.core.dtypes.common import is_object_dtype
+
 from owslib.etree import etree
 
 from pydov.types.boring import Boring
+from pydov.types.grondwaterfilter import GrondwaterFilter
 from pydov.util.errors import InvalidFieldError
 from tests.abstract import AbstractTestTypes
 
-from tests.test_search_boring import (
+from tests.test_search_grondwaterfilter import (
     wfs_getfeature,
     wfs_feature,
     mp_dov_xml
 )
 
 
-class TestBoring(AbstractTestTypes):
-    """Class grouping tests for the pydov.types.boring.Boring class."""
+class TestGrondwaterFilter(AbstractTestTypes):
+    """Class grouping tests for the
+    pydov.types.grondwaterfilter.GrondwaterFilter class."""
 
     def test_get_field_names(self):
-        """Test the Boring.get_field_names method.
+        """Test the GrondwaterFilter.get_field_names method.
 
         Tests whether the available fields for the Boring type match the
         ones we list in docs/description_output_dataframes.rst.
 
         """
-        fields = Boring.get_field_names()
+        fields = GrondwaterFilter.get_field_names()
 
-        assert fields == ['pkey_boring', 'boornummer', 'x', 'y', 'mv_mtaw',
-                          'start_boring_mtaw', 'gemeente', 'diepte_boring_van',
-                          'diepte_boring_tot', 'datum_aanvang', 'uitvoerder',
-                          'boorgatmeting', 'diepte_methode_van',
-                          'diepte_methode_tot', 'boormethode']
+        assert fields == ['pkey_filter', 'pkey_grondwaterlocatie', 'gw_id',
+                          'filternummer', 'filtertype', 'x', 'y', 'mv_mtaw',
+                          'gemeente', 'meetnet_code', 'aquifer_code',
+                          'grondwaterlichaam_code', 'regime',
+                          'diepte_onderkant_filter', 'lengte_filter',
+                          'datum', 'tijdstip', 'peil_mtaw',
+                          'betrouwbaarheid', 'methode']
 
     def test_get_field_names_nosubtypes(self):
         """Test the Boring.get_field_names method without including subtypes.
@@ -43,13 +49,14 @@ class TestBoring(AbstractTestTypes):
         disabling subtypes.
 
         """
-        fields = Boring.get_field_names(return_fields=None,
-                                        include_subtypes=False)
+        fields = GrondwaterFilter.get_field_names(return_fields=None,
+                                                  include_subtypes=False)
 
-        assert fields == ['pkey_boring', 'boornummer', 'x', 'y', 'mv_mtaw',
-                          'start_boring_mtaw', 'gemeente', 'diepte_boring_van',
-                          'diepte_boring_tot', 'datum_aanvang', 'uitvoerder',
-                          'boorgatmeting']
+        assert fields == ['pkey_filter', 'pkey_grondwaterlocatie', 'gw_id',
+                          'filternummer', 'filtertype', 'x', 'y', 'mv_mtaw',
+                          'gemeente', 'meetnet_code', 'aquifer_code',
+                          'grondwaterlichaam_code', 'regime',
+                          'diepte_onderkant_filter', 'lengte_filter']
 
     def test_get_field_names_returnfields_nosubtypes(self):
         """Test the Boring.get_field_names method when specifying return
@@ -58,11 +65,11 @@ class TestBoring(AbstractTestTypes):
         Tests whether the returned fields match the ones provided as return
         fields.
         """
-        fields = Boring.get_field_names(return_fields=('pkey_boring',
-                                                       'diepte_boring_tot'),
-                                        include_subtypes=False)
+        fields = GrondwaterFilter.get_field_names(
+            return_fields=('pkey_filter', 'meetnet_code'),
+            include_subtypes=False)
 
-        assert fields == ['pkey_boring', 'diepte_boring_tot']
+        assert fields == ['pkey_filter', 'meetnet_code']
 
     def test_get_field_names_returnfields_order(self):
         """Test the Boring.get_field_names method when specifying return
@@ -73,11 +80,11 @@ class TestBoring(AbstractTestTypes):
         docs/description_output_dataframes.rst.
 
         """
-        fields = Boring.get_field_names(
-            return_fields=('diepte_boring_tot', 'pkey_boring'),
+        fields = GrondwaterFilter.get_field_names(
+            return_fields=('meetnet_code', 'pkey_filter'),
             include_subtypes=False)
 
-        assert fields == ['pkey_boring', 'diepte_boring_tot']
+        assert fields == ['pkey_filter', 'meetnet_code']
 
     def test_get_field_names_wrongreturnfields(self):
         """Test the Boring.get_field_names method when specifying an
@@ -87,9 +94,9 @@ class TestBoring(AbstractTestTypes):
 
         """
         with pytest.raises(InvalidFieldError):
-            Boring.get_field_names(return_fields=('pkey_boring',
-                                                  'onbestaande'),
-                                   include_subtypes=False)
+            GrondwaterFilter.get_field_names(
+                return_fields=('pkey_filter', 'onbestaande'),
+                include_subtypes=False)
 
     def test_get_field_names_wrongreturnfieldstype(self):
         """Test the Boring.get_field_names method when listing a single
@@ -99,8 +106,8 @@ class TestBoring(AbstractTestTypes):
 
         """
         with pytest.raises(AttributeError):
-            Boring.get_field_names(return_fields='pkey_boring',
-                                   include_subtypes=False)
+            GrondwaterFilter.get_field_names(
+                return_fields='pkey_filter', include_subtypes=False)
 
     def test_get_field_names_wrongreturnfields_nosubtypes(self):
         """Test the Boring.get_field_names method when disabling subtypes
@@ -110,9 +117,9 @@ class TestBoring(AbstractTestTypes):
 
         """
         with pytest.raises(InvalidFieldError):
-            Boring.get_field_names(return_fields=['pkey_boring',
-                                                  'boormethode'],
-                                   include_subtypes=False)
+            GrondwaterFilter.get_field_names(
+                return_fields=['pkey_filter', 'peil_mtaw'],
+                include_subtypes=False)
 
     def test_get_fields(self):
         """Test the Boring.get_fields method.
@@ -121,7 +128,7 @@ class TestBoring(AbstractTestTypes):
         requirements and the format listed in the docs.
 
         """
-        fields = Boring.get_fields(source=('wfs', 'xml', 'custom'))
+        fields = GrondwaterFilter.get_fields()
         self.abstract_test_get_fields(fields)
 
     def test_get_fields_nosubtypes(self):
@@ -130,10 +137,10 @@ class TestBoring(AbstractTestTypes):
         Test whether fields provides by subtypes are not listed in the output.
 
         """
-        fields = Boring.get_fields(include_subtypes=False)
+        fields = GrondwaterFilter.get_fields(include_subtypes=False)
         for field in fields:
-            assert field not in ('diepte_methode_van',
-                                 'diepte_methode_tot', 'boormethode')
+            assert field not in ('datum', 'tijdstip', 'peil_mtaw',
+                                 'betrouwbaarheid', 'methode')
 
     def test_from_wfs_element(self, wfs_feature):
         """Test the Boring.from_wfs_element method.
@@ -148,16 +155,16 @@ class TestBoring(AbstractTestTypes):
             the Boring WFS layer.
 
         """
-        boring = Boring.from_wfs_element(
-            wfs_feature, 'http://dov.vlaanderen.be/ocdov/dov-pub')
+        grondwaterfilter = GrondwaterFilter.from_wfs_element(
+            wfs_feature, 'http://dov.vlaanderen.be/grondwater/gw_meetnetten')
 
-        assert type(boring) is Boring
+        assert type(grondwaterfilter) is GrondwaterFilter
 
-        assert boring.pkey.startswith(
-            'https://www.dov.vlaanderen.be/data/boring/')
-        assert boring.typename == 'boring'
-        assert type(boring.data) is dict
-        assert type(boring.subdata) is dict
+        assert grondwaterfilter.pkey.startswith(
+            'https://www.dov.vlaanderen.be/data/filter/')
+        assert grondwaterfilter.typename == 'grondwaterfilter'
+        assert type(grondwaterfilter.data) is dict
+        assert type(grondwaterfilter.subdata) is dict
 
     def test_get_df_array(self, wfs_feature, mp_dov_xml):
         """Test the boring.get_df_array method.
@@ -174,13 +181,13 @@ class TestBoring(AbstractTestTypes):
             Monkeypatch the call to get the remote Boring XML data.
 
         """
-        boring = Boring.from_wfs_element(
-            wfs_feature, 'http://dov.vlaanderen.be/ocdov/dov-pub')
+        grondwaterfilter = GrondwaterFilter.from_wfs_element(
+            wfs_feature, 'http://dov.vlaanderen.be/grondwater/gw_meetnetten')
 
-        fields = [f for f in Boring.get_fields().values() if not f.get(
-            'wfs_injected', False)]
+        fields = [f for f in GrondwaterFilter.get_fields().values()
+                  if not f.get('wfs_injected', False)]
 
-        df_array = boring.get_df_array()
+        df_array = grondwaterfilter.get_df_array()
         self.abstract_test_get_df_array(df_array, fields)
 
     def test_get_df_array_wrongreturnfields(self, wfs_feature):
@@ -195,11 +202,11 @@ class TestBoring(AbstractTestTypes):
             the Boring WFS layer.
 
         """
-        boring = Boring.from_wfs_element(
-            wfs_feature, 'http://dov.vlaanderen.be/ocdov/dov-pub')
+        grondwaterfilter = GrondwaterFilter.from_wfs_element(
+            wfs_feature, 'http://dov.vlaanderen.be/grondwater/gw_meetnetten')
 
         with pytest.raises(InvalidFieldError):
-            boring.get_df_array(return_fields=('onbestaand',))
+            grondwaterfilter.get_df_array(return_fields=('onbestaand',))
 
     def test_from_wfs_str(self, wfs_getfeature):
         """Test the boring.from_wfs method to construct Boring objects from
@@ -212,11 +219,12 @@ class TestBoring(AbstractTestTypes):
             dov-pub:Boringen layer.
 
         """
-        boringen = Boring.from_wfs(wfs_getfeature,
-                                   'http://dov.vlaanderen.be/ocdov/dov-pub')
+        grondwaterfilters = GrondwaterFilter.from_wfs(
+            wfs_getfeature,
+            'http://dov.vlaanderen.be/grondwater/gw_meetnetten')
 
-        for boring in boringen:
-            assert type(boring) is Boring
+        for grondwaterfilter in grondwaterfilters:
+            assert type(grondwaterfilter) is GrondwaterFilter
 
     def test_from_wfs_bytes(self, wfs_getfeature):
         """Test the boring.from_wfs method to construct Boring objects from
@@ -229,11 +237,12 @@ class TestBoring(AbstractTestTypes):
             dov-pub:Boringen layer.
 
         """
-        boringen = Boring.from_wfs(wfs_getfeature.encode('utf-8'),
-                                   'http://dov.vlaanderen.be/ocdov/dov-pub')
+        grondwaterfilters = GrondwaterFilter.from_wfs(
+            wfs_getfeature.encode('utf-8'),
+            'http://dov.vlaanderen.be/grondwater/gw_meetnetten')
 
-        for boring in boringen:
-            assert type(boring) is Boring
+        for grondwaterfilter in grondwaterfilters:
+            assert type(grondwaterfilter) is GrondwaterFilter
 
     def test_from_wfs_tree(self, wfs_getfeature):
         """Test the boring.from_wfs method to construct Boring objects from
@@ -247,11 +256,11 @@ class TestBoring(AbstractTestTypes):
 
         """
         tree = etree.fromstring(wfs_getfeature.encode('utf8'))
-        boringen = Boring.from_wfs(tree,
-                                   'http://dov.vlaanderen.be/ocdov/dov-pub')
+        grondwaterfilters = GrondwaterFilter.from_wfs(
+            tree, 'http://dov.vlaanderen.be/grondwater/gw_meetnetten')
 
-        for boring in boringen:
-            assert type(boring) is Boring
+        for grondwaterfilter in grondwaterfilters:
+            assert type(grondwaterfilter) is GrondwaterFilter
 
     def test_from_wfs_list(self, wfs_getfeature):
         """Test the boring.from_wfs method to construct Boring objects from
@@ -268,8 +277,9 @@ class TestBoring(AbstractTestTypes):
         feature_members = tree.findall('.//{http://www.opengis.net/gml}'
                                         'featureMembers')
 
-        boringen = Boring.from_wfs(feature_members,
-                                   'http://dov.vlaanderen.be/ocdov/dov-pub')
+        grondwaterfilters = GrondwaterFilter.from_wfs(
+            feature_members,
+            'http://dov.vlaanderen.be/grondwater/gw_meetnetten')
 
-        for boring in boringen:
-            assert type(boring) is Boring
+        for grondwaterfilter in grondwaterfilters:
+            assert type(grondwaterfilter) is GrondwaterFilter

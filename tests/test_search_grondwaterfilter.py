@@ -1,12 +1,9 @@
 """Module grouping tests for the search grondwaterfilter module."""
-import sys
 import datetime
 
 import pytest
 from pandas import DataFrame
 
-import pydov
-from owslib.etree import etree
 from owslib.fes import PropertyIsEqualTo
 from pydov.search.grondwaterfilter import GrondwaterFilterSearch
 from pydov.types.grondwaterfilter import GrondwaterFilter
@@ -16,7 +13,24 @@ from tests.abstract import AbstractTestSearch
 from tests.test_search import (
     mp_wfs,
     wfs,
+    mp_remote_md,
+    mp_remote_fc,
+    mp_remote_describefeaturetype,
+    mp_remote_wfs_feature,
+    mp_dov_xml,
+    wfs_getfeature,
+    wfs_feature,
 )
+
+location_md_metadata = 'tests/data/types/grondwaterfilter/md_metadata.xml'
+location_fc_featurecatalogue = \
+    'tests/data/types/grondwaterfilter/fc_featurecatalogue.xml'
+location_wfs_describefeaturetype = \
+    'tests/data/types/grondwaterfilter/wfsdescribefeaturetype.xml'
+location_wfs_getfeature = 'tests/data/types/grondwaterfilter/wfsgetfeature.xml'
+location_wfs_feature = 'tests/data/types/grondwaterfilter/feature.xml'
+location_dov_xml = 'tests/data/types/grondwaterfilter/grondwaterfilter.xml'
+
 
 @pytest.fixture
 def grondwaterfiltersearch():
@@ -31,207 +45,6 @@ def grondwaterfiltersearch():
 
     """
     return GrondwaterFilterSearch()
-
-
-@pytest.fixture
-def mp_remote_describefeaturetype(monkeypatch):
-    """Monkeypatch the call to a remote DescribeFeatureType of the
-    gw_meetnetten:meetnetten layer.
-
-    Parameters
-    ----------
-    monkeypatch : pytest.fixture
-        PyTest monkeypatch fixture.
-
-    """
-
-    def __get_remote_describefeaturetype(*args, **kwargs):
-        with open(
-            'tests/data/types/grondwaterfilter/wfsdescribefeaturetype.xml',
-            'r') as f:
-            data = f.read()
-            if type(data) is not bytes:
-                data = data.encode('utf-8')
-        return data
-
-    if sys.version_info[0] < 3:
-        monkeypatch.setattr(
-            'pydov.util.owsutil.__get_remote_describefeaturetype.func_code',
-            __get_remote_describefeaturetype.func_code)
-    else:
-        monkeypatch.setattr(
-            'pydov.util.owsutil.__get_remote_describefeaturetype.__code__',
-            __get_remote_describefeaturetype.__code__)
-
-
-@pytest.fixture
-def mp_remote_md(wfs, monkeypatch):
-    """Monkeypatch the call to get the remote metadata of the
-    gw_meetnetten:meetnetten layer.
-
-    Parameters
-    ----------
-    wfs : pytest.fixture returning owslib.wfs.WebFeatureService
-        WebFeatureService based on the local GetCapabilities.
-    monkeypatch : pytest.fixture
-        PyTest monkeypatch fixture.
-
-    """
-
-    def __get_remote_md(*args, **kwargs):
-        with open('tests/data/types/grondwaterfilter/md_metadata.xml',
-                  'r') as f:
-            data = f.read()
-            if type(data) is not bytes:
-                data = data.encode('utf-8')
-        return data
-
-    if sys.version_info[0] < 3:
-        monkeypatch.setattr('pydov.util.owsutil.__get_remote_md.func_code',
-                            __get_remote_md.func_code)
-    else:
-        monkeypatch.setattr('pydov.util.owsutil.__get_remote_md.__code__',
-                            __get_remote_md.__code__)
-
-
-@pytest.fixture
-def mp_remote_fc(monkeypatch):
-    """Monkeypatch the call to get the remote feature catalogue of the
-    gw_meetnetten:meetnetten layer.
-
-    Parameters
-    ----------
-    monkeypatch : pytest.fixture
-        PyTest monkeypatch fixture.
-
-    """
-
-    def __get_remote_fc(*args, **kwargs):
-        with open('tests/data/types/grondwaterfilter/fc_featurecatalogue.xml',
-                  'r') as f:
-            data = f.read()
-            if type(data) is not bytes:
-                data = data.encode('utf-8')
-        return data
-
-    if sys.version_info[0] < 3:
-        monkeypatch.setattr('pydov.util.owsutil.__get_remote_fc.func_code',
-                            __get_remote_fc.func_code)
-    else:
-        monkeypatch.setattr('pydov.util.owsutil.__get_remote_fc.__code__',
-                            __get_remote_fc.__code__)
-
-
-@pytest.fixture
-def mp_remote_describefeaturetype(monkeypatch):
-    """Monkeypatch the call to a remote DescribeFeatureType of the
-    gw_meetnetten:meetnetten layer.
-
-    Parameters
-    ----------
-    monkeypatch : pytest.fixture
-        PyTest monkeypatch fixture.
-
-    """
-    def __get_remote_describefeaturetype(*args, **kwargs):
-        with open('tests/data/types/grondwaterfilter/wfsdescribefeaturetype.xml',
-                  'r') as f:
-            data = f.read()
-            if type(data) is not bytes:
-                data = data.encode('utf-8')
-        return data
-
-    if sys.version_info[0] < 3:
-        monkeypatch.setattr(
-            'pydov.util.owsutil.__get_remote_describefeaturetype.func_code',
-            __get_remote_describefeaturetype.func_code)
-    else:
-        monkeypatch.setattr(
-            'pydov.util.owsutil.__get_remote_describefeaturetype.__code__',
-            __get_remote_describefeaturetype.__code__)
-
-
-@pytest.fixture
-def mp_remote_wfs_feature(monkeypatch):
-    """Monkeypatch the call to get WFS features.
-
-    Parameters
-    ----------
-    monkeypatch : pytest.fixture
-        PyTest monkeypatch fixture.
-
-    """
-    def __get_remote_wfs_feature(*args, **kwargs):
-        with open('tests/data/types/grondwaterfilter/wfsgetfeature.xml',
-                  'r') as f:
-            data = f.read()
-            if type(data) is not bytes:
-                data = data.encode('utf-8')
-        return data
-
-    if sys.version_info[0] < 3:
-        monkeypatch.setattr(
-            'pydov.util.owsutil.wfs_get_feature',
-            __get_remote_wfs_feature)
-    else:
-        monkeypatch.setattr(
-            'pydov.util.owsutil.wfs_get_feature',
-            __get_remote_wfs_feature)
-
-
-@pytest.fixture
-def mp_dov_xml(monkeypatch):
-    """Monkeypatch the call to get the remote GrondwaterFilter XML data.
-
-    Parameters
-    ----------
-    monkeypatch : pytest.fixture
-        PyTest monkeypatch fixture.
-
-    """
-
-    def _get_xml_data(*args, **kwargs):
-        with open('tests/data/types/grondwaterfilter/grondwaterfilter.xml',
-                  'r') as f:
-            data = f.read()
-            if type(data) is not bytes:
-                data = data.encode('utf-8')
-        return data
-
-    monkeypatch.setattr(pydov.types.abstract.AbstractDovType,
-                        '_get_xml_data', _get_xml_data)
-
-
-@pytest.fixture
-def wfs_getfeature():
-    """PyTest fixture providing a WFS GetFeature response for the
-    gw_meetnetten:meetnetten layer.
-
-    Returns
-    -------
-    str
-        WFS response of a GetFeature call to the gw_meetnetten:meetnetten
-        layer.
-
-    """
-    with open('tests/data/types/grondwaterfilter/wfsgetfeature.xml', 'r') as f:
-        data = f.read()
-        return data
-
-
-@pytest.fixture
-def wfs_feature():
-    """PyTest fixture providing an XML of a WFS feature element of a Boring
-    record.
-
-    Returns
-    -------
-    etree.Element
-        XML element representing a single record of the Boring WFS layer.
-
-    """
-    with open('tests/data/types/grondwaterfilter/feature.xml', 'r') as f:
-        return etree.fromstring(f.read())
 
 
 class TestGrondwaterFilterSearch(AbstractTestSearch):

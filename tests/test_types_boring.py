@@ -14,7 +14,10 @@ from tests.abstract import AbstractTestTypes
 from tests.test_search_boring import (
     wfs_getfeature,
     wfs_feature,
-    mp_dov_xml
+    mp_dov_xml,
+    location_wfs_getfeature,
+    location_wfs_feature,
+    location_dov_xml,
 )
 
 
@@ -121,7 +124,7 @@ class TestBoring(AbstractTestTypes):
         requirements and the format listed in the docs.
 
         """
-        fields = Boring.get_fields(source=('wfs', 'xml', 'custom'))
+        fields = Boring.get_fields()
         self.abstract_test_get_fields(fields)
 
     def test_get_fields_nosubtypes(self):

@@ -1,18 +1,14 @@
 """Module grouping tests for the boring search module."""
 import datetime
-import sys
 
 import pytest
 from pandas import DataFrame
 
-import pydov
-from owslib.etree import etree
 from owslib.fes import PropertyIsEqualTo
 from pydov.search.boring import BoringSearch
 from pydov.types.boring import Boring
 from pydov.util import owsutil
 from pydov.util.errors import (
-    InvalidSearchParameterError,
     InvalidFieldError,
 )
 from tests.abstract import AbstractTestSearch
@@ -20,35 +16,23 @@ from tests.abstract import AbstractTestSearch
 from tests.test_search import (
     mp_wfs,
     wfs,
+    mp_remote_md,
+    mp_remote_fc,
+    mp_remote_describefeaturetype,
+    mp_remote_wfs_feature,
+    mp_dov_xml,
+    wfs_getfeature,
+    wfs_feature,
 )
 
-
-@pytest.fixture
-def mp_remote_md(wfs, monkeypatch):
-    """Monkeypatch the call to get the remote metadata of the
-    dov-pub:Boringen layer.
-
-    Parameters
-    ----------
-    wfs : pytest.fixture returning owslib.wfs.WebFeatureService
-        WebFeatureService based on the local GetCapabilities.
-    monkeypatch : pytest.fixture
-        PyTest monkeypatch fixture.
-
-    """
-    def __get_remote_md(*args, **kwargs):
-        with open('tests/data/types/boring/md_metadata.xml', 'r') as f:
-            data = f.read()
-            if type(data) is not bytes:
-                data = data.encode('utf-8')
-        return data
-
-    if sys.version_info[0] < 3:
-        monkeypatch.setattr('pydov.util.owsutil.__get_remote_md.func_code',
-                            __get_remote_md.func_code)
-    else:
-        monkeypatch.setattr('pydov.util.owsutil.__get_remote_md.__code__',
-                            __get_remote_md.__code__)
+location_md_metadata = 'tests/data/types/boring/md_metadata.xml'
+location_fc_featurecatalogue = \
+    'tests/data/types/boring/fc_featurecatalogue.xml'
+location_wfs_describefeaturetype = \
+    'tests/data/types/boring/wfsdescribefeaturetype.xml'
+location_wfs_getfeature = 'tests/data/types/boring/wfsgetfeature.xml'
+location_wfs_feature = 'tests/data/types/boring/feature.xml'
+location_dov_xml = 'tests/data/types/boring/boring.xml'
 
 
 @pytest.fixture
@@ -73,142 +57,6 @@ def md_metadata(wfs, mp_remote_md):
     """
     contentmetadata = wfs.contents['dov-pub:Boringen']
     return owsutil.get_remote_metadata(contentmetadata)
-
-
-@pytest.fixture
-def mp_remote_fc(monkeypatch):
-    """Monkeypatch the call to get the remote feature catalogue of the
-    dov-pub:Boringen layer.
-
-    Parameters
-    ----------
-    monkeypatch : pytest.fixture
-        PyTest monkeypatch fixture.
-
-    """
-    def __get_remote_fc(*args, **kwargs):
-        with open('tests/data/types/boring/fc_featurecatalogue.xml', 'r') as f:
-            data = f.read()
-            if type(data) is not bytes:
-                data = data.encode('utf-8')
-        return data
-
-    if sys.version_info[0] < 3:
-        monkeypatch.setattr('pydov.util.owsutil.__get_remote_fc.func_code',
-                            __get_remote_fc.func_code)
-    else:
-        monkeypatch.setattr('pydov.util.owsutil.__get_remote_fc.__code__',
-                            __get_remote_fc.__code__)
-
-
-@pytest.fixture
-def mp_remote_describefeaturetype(monkeypatch):
-    """Monkeypatch the call to a remote DescribeFeatureType of the
-    dov-pub:Boringen layer.
-
-    Parameters
-    ----------
-    monkeypatch : pytest.fixture
-        PyTest monkeypatch fixture.
-
-    """
-    def __get_remote_describefeaturetype(*args, **kwargs):
-        with open('tests/data/types/boring/wfsdescribefeaturetype.xml',
-                  'r') as f:
-            data = f.read()
-            if type(data) is not bytes:
-                data = data.encode('utf-8')
-        return data
-
-    if sys.version_info[0] < 3:
-        monkeypatch.setattr(
-            'pydov.util.owsutil.__get_remote_describefeaturetype.func_code',
-            __get_remote_describefeaturetype.func_code)
-    else:
-        monkeypatch.setattr(
-            'pydov.util.owsutil.__get_remote_describefeaturetype.__code__',
-            __get_remote_describefeaturetype.__code__)
-
-
-@pytest.fixture
-def wfs_getfeature():
-    """PyTest fixture providing a WFS GetFeature response for the
-    dov-pub:Boringen layer.
-
-    Returns
-    -------
-    str
-        WFS response of a GetFeature call to the dov-pub:Boringen layer.
-
-    """
-    with open('tests/data/types/boring/wfsgetfeature.xml', 'r') as f:
-        data = f.read()
-        return data
-
-
-@pytest.fixture
-def mp_remote_wfs_feature(monkeypatch):
-    """Monkeypatch the call to get WFS features.
-
-    Parameters
-    ----------
-    monkeypatch : pytest.fixture
-        PyTest monkeypatch fixture.
-
-    """
-    def __get_remote_wfs_feature(*args, **kwargs):
-        with open('tests/data/types/boring/wfsgetfeature.xml',
-                  'r') as f:
-            data = f.read()
-            if type(data) is not bytes:
-                data = data.encode('utf-8')
-        return data
-
-    if sys.version_info[0] < 3:
-        monkeypatch.setattr(
-            'pydov.util.owsutil.wfs_get_feature',
-            __get_remote_wfs_feature)
-    else:
-        monkeypatch.setattr(
-            'pydov.util.owsutil.wfs_get_feature',
-            __get_remote_wfs_feature)
-
-
-@pytest.fixture
-def mp_dov_xml(monkeypatch):
-    """Monkeypatch the call to get the remote Boring XML data.
-
-    Parameters
-    ----------
-    monkeypatch : pytest.fixture
-        PyTest monkeypatch fixture.
-
-    """
-
-    def _get_xml_data(*args, **kwargs):
-        with open('tests/data/types/boring/boring.xml', 'r') as f:
-            data = f.read()
-            if type(data) is not bytes:
-                data = data.encode('utf-8')
-        return data
-
-    monkeypatch.setattr(pydov.types.abstract.AbstractDovType,
-                        '_get_xml_data', _get_xml_data)
-
-
-@pytest.fixture
-def wfs_feature():
-    """PyTest fixture providing an XML of a WFS feature element of a Boring
-    record.
-
-    Returns
-    -------
-    etree.Element
-        XML element representing a single record of the Boring WFS layer.
-
-    """
-    with open('tests/data/types/boring/feature.xml', 'r') as f:
-        return etree.fromstring(f.read())
 
 
 @pytest.fixture

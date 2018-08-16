@@ -17,7 +17,10 @@ from tests.abstract import AbstractTestTypes
 from tests.test_search_grondwaterfilter import (
     wfs_getfeature,
     wfs_feature,
-    mp_dov_xml
+    mp_dov_xml,
+    location_wfs_getfeature,
+    location_wfs_feature,
+    location_dov_xml,
 )
 
 

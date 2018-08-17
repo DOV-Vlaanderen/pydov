@@ -6,6 +6,7 @@ import types
 from collections import OrderedDict
 from distutils.util import strtobool
 
+import pydov
 import numpy as np
 
 from owslib.etree import etree
@@ -481,7 +482,10 @@ class AbstractDovType(AbstractCommon):
             The raw XML data of this DOV object as bytes.
 
         """
-        return openURL(self.pkey + '.xml').read()
+        if pydov.cache:
+            return pydov.cache.get(self.pkey + '.xml')
+        else:
+            return openURL(self.pkey + '.xml').read()
 
     def _parse_subtypes(self, xml):
         """Parse the subtypes with the given XML data.

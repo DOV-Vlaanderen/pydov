@@ -9,6 +9,8 @@ Contents:
    readme
    installation
    usage
+   description_output_dataframes
+   discussion_note_boringen_methods
    endpoints
    contributing
    authors

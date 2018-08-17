@@ -1,7 +1,7 @@
 """Module grouping tests for the interpretaties search module."""
-import datetime
-
+import pandas as pd
 import pytest
+import numpy as np
 from pandas import DataFrame
 
 from owslib.fes import PropertyIsEqualTo
@@ -397,5 +397,5 @@ class TestInformeleStratigrafieSearch(AbstractTestSearch):
         assert list(df) == ['pkey_interpretatie', 'pkey_boring',
                             'pkey_sondering']
 
-        assert df.pkey_boring[0] is not None
-        assert df.pkey_sondering[0] is None
+        assert not pd.isnull(df.pkey_boring[0])
+        assert np.isnan(df.pkey_sondering[0])

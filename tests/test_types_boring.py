@@ -1,10 +1,5 @@
 """Module grouping tests for the pydov.types.boring module."""
-import numpy as np
-from collections import OrderedDict
-
-import datetime
 import pytest
-from numpy.compat import unicode
 from owslib.etree import etree
 
 from pydov.types.boring import Boring

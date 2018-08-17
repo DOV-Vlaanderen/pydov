@@ -2,6 +2,7 @@ import datetime
 import numpy as np
 from collections import OrderedDict
 
+import pandas as pd
 import requests
 from numpy.compat import unicode
 from pandas.api.types import (
@@ -246,7 +247,7 @@ class AbstractTestTypes(object):
                 elif field['type'] == 'boolean':
                     assert type(value) is bool or np.isnan(value)
 
-                if field['name'].startswith('pkey'):
+                if field['name'].startswith('pkey') and not pd.isnull(value):
                     assert value.startswith(
                         'https://www.dov.vlaanderen.be/data/')
                     assert not value.endswith('.xml')

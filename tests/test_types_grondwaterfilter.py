@@ -1,15 +1,8 @@
 """Module grouping tests for the pydov.types.boring module."""
-import numpy as np
-from collections import OrderedDict
-
-import datetime
 import pytest
-from numpy.compat import unicode
-from pandas.core.dtypes.common import is_object_dtype
 
 from owslib.etree import etree
 
-from pydov.types.boring import Boring
 from pydov.types.grondwaterfilter import GrondwaterFilter
 from pydov.util.errors import InvalidFieldError
 from tests.abstract import AbstractTestTypes

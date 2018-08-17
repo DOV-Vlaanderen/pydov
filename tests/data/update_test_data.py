@@ -52,12 +52,36 @@ if __name__ == '__main__':
                 '.vlaanderen.be/data/boring/2004-103984%27',
                 get_first_featuremember)
 
+    update_file('types/boring/fc_featurecatalogue.xml',
+                'https://www.dov.vlaanderen.be/geonetwork/srv/dut/csw'
+                '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+                '&outputSchema=http://www.isotc211.org/2005/gmd'
+                '&elementSetName=full&id=c0cbd397-520f-4ee1-aca7-d70e271eeed6')
+
+    update_file('types/boring/md_metadata.xml',
+                'https://www.dov.vlaanderen.be/geonetwork/srv/dut/csw'
+                '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+                '&outputSchema=http://www.isotc211.org/2005/gmd'
+                '&elementSetName=full&id=4e20bf9c-3a5c-42be-b5b6-bef6214d1fa7')
+
+    update_file('types/boring/wfsdescribefeaturetype.xml',
+                'https://www.dov.vlaanderen.be/geoserver/dov-pub/Boringen'
+                '/ows?service=wfs&version=1.1.0&request=DescribeFeatureType')
+
     # types/interpretaties/informele_stratigrafie
 
     update_file('types/interpretaties/informele_stratigrafie'
                 '/informele_stratigrafie.xml',
                 'https://www.dov.vlaanderen.be/data/interpretatie/1962'
                 '-101692.xml')
+
+    update_file('types/interpretaties/informele_stratigrafie'
+                '/wfsgetfeature.xml',
+                'https://www.dov.vlaanderen.be/geoserver/ows?service=WFS'
+                '&version=1.1.0&request=GetFeature&typeName=interpretaties'
+                ':informele_stratigrafie&maxFeatures=1&CQL_Filter'
+                '=Interpretatiefiche=%27https://www.dov.vlaanderen.be/data'
+                '/interpretatie/1962-101692%27')
 
     update_file('types/interpretaties/informele_stratigrafie/feature.xml',
                 'https://www.dov.vlaanderen.be/geoserver/ows?service=WFS'
@@ -86,24 +110,6 @@ if __name__ == '__main__':
         'https://www.dov.vlaanderen.be/geoserver/interpretaties'
         '/informele_stratigrafie/ows?service=wfs&version=1.1.0&request'
         '=DescribeFeatureType')
-
-    # util/owsutil
-
-    update_file('types/boring/fc_featurecatalogue.xml',
-                'https://www.dov.vlaanderen.be/geonetwork/srv/dut/csw'
-                '?Service=CSW&Request=GetRecordById&Version=2.0.2'
-                '&outputSchema=http://www.isotc211.org/2005/gmd'
-                '&elementSetName=full&id=c0cbd397-520f-4ee1-aca7-d70e271eeed6')
-
-    update_file('types/boring/md_metadata.xml',
-                'https://www.dov.vlaanderen.be/geonetwork/srv/dut/csw'
-                '?Service=CSW&Request=GetRecordById&Version=2.0.2'
-                '&outputSchema=http://www.isotc211.org/2005/gmd'
-                '&elementSetName=full&id=4e20bf9c-3a5c-42be-b5b6-bef6214d1fa7')
-
-    update_file('types/boring/wfsdescribefeaturetype.xml',
-                'https://www.dov.vlaanderen.be/geoserver/dov-pub/Boringen'
-                '/ows?service=wfs&version=1.1.0&request=DescribeFeatureType')
 
     # types/filter
 

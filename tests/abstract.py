@@ -219,8 +219,7 @@ class AbstractTestTypes(object):
     def abstract_test_get_df_array(df_array, fields):
         """Test the output of the get_df_array method.
 
-        Test whether the output of the dataframe array for the given Boring
-        is correct.
+        Test whether the output of the dataframe array is correct.
 
         Parameters
         ----------

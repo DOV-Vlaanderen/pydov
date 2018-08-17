@@ -59,7 +59,7 @@ class AbstractCommon(object):
         """
         if returntype == 'string':
             def typeconvert(x):
-                return str(x).strip()
+                return x.strip()
         elif returntype == 'integer':
             def typeconvert(x):
                 return int(x)

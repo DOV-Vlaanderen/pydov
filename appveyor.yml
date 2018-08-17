@@ -33,8 +33,8 @@ install:
     - cmd: conda.exe update -y -q conda
     - cmd: conda.exe config --add channels conda-forge
     - cmd: conda.exe install -y -q numpy pandas
-    - cmd: pip install --no-cache-dir -r requirements_dev.txt
-    - ps: if($env:PY_INSTALL) { pip install --disable-pip-version-check --no-cache-dir $env:PY_INSTALL }
+    - cmd: pip install --no-cache-dir --ignore-installed -r requirements_dev.txt
+    - ps: if($env:PY_INSTALL) { pip install --disable-pip-version-check --ignore-installed --no-cache-dir $env:PY_INSTALL }
 
 build: false
 

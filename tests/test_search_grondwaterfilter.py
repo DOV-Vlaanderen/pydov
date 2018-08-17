@@ -193,6 +193,37 @@ class TestGrondwaterFilterSearch(AbstractTestSearch):
 
         assert list(df) == ['pkey_filter', 'gw_id', 'filternummer']
 
+    def test_search_returnfields_subtype(self, mp_remote_wfs_feature,
+                                         grondwaterfiltersearch):
+        """Test the search method with the query parameter and a selection of
+        return fields, including fields from a subtype.
+
+        Test whether the output dataframe contains only the selected return
+        fields.
+
+        Parameters
+        ----------
+        mp_remote_wfs_feature : pytest.fixture
+            Monkeypatch the call to get WFS features.
+        grondwaterfiltersearch : pytest.fixture returning
+            pydov.search.GrondwaterFilterSearch
+            An instance of GrondwaterFilterSearch to perform search operations
+            on the DOV type 'GrondwaterFilter'.
+
+        """
+        query = PropertyIsEqualTo(propertyname='filterfiche',
+                                  literal='https://www.dov.vlaanderen.be/'
+                                          'data/filter/2003-004471')
+
+        df = grondwaterfiltersearch.search(
+            query=query, return_fields=('pkey_filter', 'gw_id',
+                                        'filternummer', 'peil_mtaw'))
+
+        assert type(df) is DataFrame
+
+        assert list(df) == ['pkey_filter', 'gw_id', 'filternummer',
+                            'peil_mtaw']
+
     def test_search_returnfields_order(self, mp_remote_wfs_feature,
                                        grondwaterfiltersearch):
         """Test the search method with the query parameter and a selection of

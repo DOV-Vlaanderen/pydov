@@ -4,9 +4,11 @@ import pytest
 
 from pydov.types.boring import Boring
 from pydov.types.grondwaterfilter import GrondwaterFilter
+from pydov.types.interpretaties import InformeleStratigrafie
 
 type_objects = [Boring,
-                GrondwaterFilter]
+                GrondwaterFilter,
+                InformeleStratigrafie]
 
 
 @pytest.mark.parametrize("objecttype", type_objects)

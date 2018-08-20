@@ -11,13 +11,15 @@ from pydov.search.grondwaterfilter import GrondwaterFilterSearch
 
 from numpy.compat import unicode
 
+from pydov.search.interpretaties import InformeleStratigrafieSearch
 from pydov.util.errors import (
     InvalidSearchParameterError,
 )
 
 
 search_objects = [BoringSearch(),
-                  GrondwaterFilterSearch()]
+                  GrondwaterFilterSearch(),
+                  InformeleStratigrafieSearch()]
 
 
 @pytest.fixture(scope='module')

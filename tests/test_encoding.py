@@ -5,12 +5,11 @@ import pytest
 from owslib.fes import PropertyIsEqualTo
 from pydov.search.boring import BoringSearch
 from tests.abstract import (
-    AbstractTestSearch,
     service_ok,
 )
 
 
-class TestEncoding(AbstractTestSearch):
+class TestEncoding(object):
     """Class grouping tests related to encoding issues."""
 
     @pytest.mark.online

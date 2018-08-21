@@ -6,6 +6,7 @@ import tempfile
 import time
 
 import pytest
+from numpy.compat import unicode
 
 import pydov
 from pydov.util.caching import TransparentCache
@@ -159,3 +160,101 @@ class TestTransparentCache(object):
         cache.get('https://www.dov.vlaanderen.be/data/boring/2004-103984.xml')
         # assure we did redownload the file, since original is invalid now:
         assert os.path.getmtime(cached_file) > first_download_time
+
+    def test_save_content(self, cache, mp_remote_xml):
+        """Test whether the data is saved in the cache.
+
+        Test if the contents of the saved document are the same as the
+        original data.
+
+        Parameters
+        ----------
+        cache : pytest.fixture providing  pydov.util.caching.TransparentCache
+            TransparentCache using a temporary directory and a maximum age
+            of 1 second.
+        mp_remote_xml : pytest.fixture
+            Monkeypatch the call to the remote DOV service returning an XML
+            document.
+
+        """
+        cached_file = os.path.join(
+            cache.cachedir, 'boring', '2004-103984.xml')
+
+        cache.clean()
+        assert not os.path.exists(cached_file)
+
+        cache.get('https://www.dov.vlaanderen.be/data/boring/2004-103984.xml')
+        assert os.path.exists(cached_file)
+
+        with open('tests/data/types/boring/boring.xml', 'r') as ref:
+            ref_data = ref.read()
+
+        with open(cached_file, 'r') as cached:
+            cached_data = cached.read()
+
+        assert cached_data == ref_data
+
+    def test_reuse_content(self, cache, mp_remote_xml):
+        """Test whether the saved data is reused.
+
+        Test if the contents returned by the cache are the same as the
+        original data.
+
+        Parameters
+        ----------
+        cache : pytest.fixture providing  pydov.util.caching.TransparentCache
+            TransparentCache using a temporary directory and a maximum age
+            of 1 second.
+        mp_remote_xml : pytest.fixture
+            Monkeypatch the call to the remote DOV service returning an XML
+            document.
+
+        """
+        cached_file = os.path.join(
+            cache.cachedir, 'boring', '2004-103984.xml')
+
+        cache.clean()
+        assert not os.path.exists(cached_file)
+
+        cache.get('https://www.dov.vlaanderen.be/data/boring/2004-103984.xml')
+        assert os.path.exists(cached_file)
+
+        with open('tests/data/types/boring/boring.xml', 'r') as ref:
+            ref_data = ref.read()
+
+        cached_data = cache.get(
+            'https://www.dov.vlaanderen.be/data/boring/2004-103984.xml')
+
+        assert cached_data == ref_data
+
+    def test_return_type(self, cache, mp_remote_xml):
+        """The the return type of the get method.
+
+        Test wether the get method returns the data in the same datatype (
+        i.e. string) regardless of the data was cached or not.
+
+        Parameters
+        ----------
+        cache : pytest.fixture providing  pydov.util.caching.TransparentCache
+            TransparentCache using a temporary directory and a maximum age
+            of 1 second.
+        mp_remote_xml : pytest.fixture
+            Monkeypatch the call to the remote DOV service returning an XML
+            document.
+
+        """
+        cached_file = os.path.join(
+            cache.cachedir, 'boring', '2004-103984.xml')
+
+        cache.clean()
+        assert not os.path.exists(cached_file)
+
+        ref_data = cache.get(
+            'https://www.dov.vlaanderen.be/data/boring/2004-103984.xml')
+        assert type(ref_data) in (str, unicode)
+
+        assert os.path.exists(cached_file)
+
+        cached_data = cache.get(
+            'https://www.dov.vlaanderen.be/data/boring/2004-103984.xml')
+        assert type(cached_data) in (str, unicode)

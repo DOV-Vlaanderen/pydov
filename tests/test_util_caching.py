@@ -44,6 +44,23 @@ def cache():
     transparent_cache.clean()
 
 
+def nocache(func):
+    """Decorator to temporarily disable caching.
+
+    Parameters
+    ----------
+    func : function
+        Function to decorate.
+
+    """
+    def wrapper(*args, **kwargs):
+        orig_cache = pydov.cache
+        pydov.cache = None
+        func(*args, **kwargs)
+        pydov.cache = orig_cache
+    return wrapper
+
+
 class TestTransparentCache(object):
     """Class grouping tests for the pydov.util.caching.TransparentCache
     class."""

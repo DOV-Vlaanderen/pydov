@@ -15,6 +15,7 @@ from tests.abstract import (
 
 from tests.test_util_caching import (
     cache,
+    nocache,
 )
 
 class TestEncoding(AbstractTestSearch):
@@ -22,6 +23,7 @@ class TestEncoding(AbstractTestSearch):
 
     @pytest.mark.online
     @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
+    @nocache
     def test_search(self):
         """Test the search method with strange character in the output.
 

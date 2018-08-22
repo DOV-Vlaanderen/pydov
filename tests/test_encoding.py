@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 import os
 import time
+from io import open
 
 import pytest
 
@@ -103,9 +104,8 @@ class TestEncoding(AbstractTestSearch):
         cache.get('https://www.dov.vlaanderen.be/data/boring/1995-056089.xml')
         assert os.path.exists(cached_file)
 
-        with open(cached_file, 'r') as cf:
+        with open(cached_file, 'r', encoding='utf-8') as cf:
             cached_data = cf.read()
-            print(cached_data)
             assert cached_data != ""
 
         first_download_time = os.path.getmtime(cached_file)
@@ -140,8 +140,8 @@ class TestEncoding(AbstractTestSearch):
             'https://www.dov.vlaanderen.be/data/boring/1995-056089.xml')
         assert os.path.exists(cached_file)
 
-        with open(cached_file, 'r') as cached:
-            cached_data = cached.read()
+        with open(cached_file, 'r', encoding='utf-8') as cached:
+            cached_data = cached.read().encode('utf-8')
 
         assert cached_data == ref_data
 

@@ -2,6 +2,7 @@
 import datetime
 import os
 import tempfile
+from io import open
 
 import time
 
@@ -203,10 +204,11 @@ class TestTransparentCache(object):
         cache.get('https://www.dov.vlaanderen.be/data/boring/2004-103984.xml')
         assert os.path.exists(cached_file)
 
-        with open('tests/data/types/boring/boring.xml', 'r') as ref:
+        with open('tests/data/types/boring/boring.xml', 'r',
+                  encoding='utf-8') as ref:
             ref_data = ref.read()
 
-        with open(cached_file, 'r') as cached:
+        with open(cached_file, 'r', encoding='utf-8') as cached:
             cached_data = cached.read()
 
         assert cached_data == ref_data
@@ -237,7 +239,7 @@ class TestTransparentCache(object):
         assert os.path.exists(cached_file)
 
         with open('tests/data/types/boring/boring.xml', 'r') as ref:
-            ref_data = ref.read()
+            ref_data = ref.read().encode('utf-8')
 
         cached_data = cache.get(
             'https://www.dov.vlaanderen.be/data/boring/2004-103984.xml')
@@ -248,7 +250,7 @@ class TestTransparentCache(object):
         """The the return type of the get method.
 
         Test wether the get method returns the data in the same datatype (
-        i.e. string) regardless of the data was cached or not.
+        i.e. bytes) regardless of the data was cached or not.
 
         Parameters
         ----------
@@ -268,10 +270,10 @@ class TestTransparentCache(object):
 
         ref_data = cache.get(
             'https://www.dov.vlaanderen.be/data/boring/2004-103984.xml')
-        assert type(ref_data) in (str, unicode)
+        assert type(ref_data) is bytes
 
         assert os.path.exists(cached_file)
 
         cached_data = cache.get(
             'https://www.dov.vlaanderen.be/data/boring/2004-103984.xml')
-        assert type(cached_data) in (str, unicode)
+        assert type(cached_data) is bytes

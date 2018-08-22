@@ -4,6 +4,7 @@ import time
 
 import pytest
 
+import pydov
 from owslib.fes import PropertyIsEqualTo
 from pydov.search.boring import BoringSearch
 
@@ -36,6 +37,46 @@ class TestEncoding(AbstractTestSearch):
                                  return_fields=('pkey_boring', 'uitvoerder'))
 
         assert df.uitvoerder[0] == u'Societé Belge des Bétons'
+
+    @pytest.mark.online
+    @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
+    def test_search_cache(self, cache):
+        """Test the search method with strange character in the output.
+
+        Test whether the output has the correct encoding, both with and
+        without using the cache.
+
+        Parameters
+        ----------
+        cache : pytest.fixture providing  pydov.util.caching.TransparentCache
+            TransparentCache using a temporary directory and a maximum age
+            of 1 second.
+
+        """
+        orig_cache = pydov.cache
+        pydov.cache = cache
+
+        boringsearch = BoringSearch()
+        query = PropertyIsEqualTo(
+            propertyname='pkey_boring',
+            literal='https://www.dov.vlaanderen.be/data/boring/1928-031159')
+
+        df = boringsearch.search(query=query,
+                                 return_fields=('pkey_boring', 'uitvoerder',
+                                                'mv_mtaw'))
+
+        assert df.uitvoerder[0] == u'Societé Belge des Bétons'
+
+        assert os.path.exists(os.path.join(
+            cache.cachedir, 'boring', '1928-031159.xml'))
+
+        df = boringsearch.search(query=query,
+                                 return_fields=('pkey_boring', 'uitvoerder',
+                                                'mv_mtaw'))
+
+        assert df.uitvoerder[0] == u'Societé Belge des Bétons'
+
+        pydov.cache = orig_cache
 
     @pytest.mark.online
     @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")

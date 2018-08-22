@@ -355,7 +355,7 @@ class AbstractSearch(object):
         )
 
         for hook in pydov.hooks:
-            hook.wfs_search(typename)
+            hook.wfs_search_init(typename)
 
         return owsutil.wfs_get_feature(
             baseurl=wfs.url,
@@ -457,7 +457,7 @@ class AbstractSearch(object):
                 'the query to ensure getting all results.' % 10000)
 
         for hook in pydov.hooks:
-            hook.wfs_result(int(tree.get('numberOfFeatures')))
+            hook.wfs_search_result(int(tree.get('numberOfFeatures')))
 
         return tree
 

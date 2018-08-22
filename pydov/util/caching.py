@@ -155,7 +155,6 @@ class TransparentCache(object):
 
         """
         for hook in pydov.hooks:
-            hook.xml_cache_miss(url.rstrip('.xml'))
             hook.xml_downloaded(url.rstrip('.xml'))
         return openURL(url).read()
 

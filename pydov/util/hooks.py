@@ -8,7 +8,7 @@ import sys
 class AbstractHook(object):
     """Abstract base class for custom hook implementations.
 
-    Provides all avaiable methods with a default implementation to do
+    Provides all available methods with a default implementation to do
     nothing. This allows for hook subclasses to only implement the events
     they need.
 

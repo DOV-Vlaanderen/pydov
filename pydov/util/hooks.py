@@ -58,5 +58,5 @@ class SimpleStatusHook(AbstractHook):
     def xml_cache_hit(self, url):
         self._write_progress('c')
 
-    def xml_cache_miss(self, url):
+    def xml_downloaded(self, url):
         self._write_progress('.')

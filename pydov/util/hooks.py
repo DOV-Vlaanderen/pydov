@@ -53,6 +53,24 @@ class SimpleStatusHook(AbstractHook):
         self.result_count = 0
         self.prog_counter = 0
 
+    def _write_progress(self, char):
+        if self.prog_counter == 0:
+            sys.stdout.write('[%03i/%03i] ' % (self.prog_counter,
+                                               self.result_count))
+            sys.stdout.flush()
+        elif self.prog_counter % 50 == 0:
+            sys.stdout.write('\n[%03i/%03i] ' % (self.prog_counter,
+                                                 self.result_count))
+            sys.stdout.flush()
+
+        sys.stdout.write(char)
+        sys.stdout.flush()
+        self.prog_counter += 1
+
+        if self.prog_counter == self.result_count:
+            sys.stdout.write('\n')
+            sys.stdout.flush()
+
     def wfs_search(self, typename):
         self.result_count = 0
         self.prog_counter = 0
@@ -61,37 +79,7 @@ class SimpleStatusHook(AbstractHook):
         self.result_count = number_of_results
 
     def xml_cache_hit(self, url):
-        if self.prog_counter == 0:
-            sys.stdout.write('[%03i/%03i] ' % (self.prog_counter,
-                                               self.result_count))
-            sys.stdout.flush()
-        elif self.prog_counter % 50 == 0:
-            sys.stdout.write('\n[%03i/%03i] ' % (self.prog_counter,
-                                                 self.result_count))
-            sys.stdout.flush()
-
-        sys.stdout.write('c')
-        sys.stdout.flush()
-        self.prog_counter += 1
-
-        if self.prog_counter == self.result_count:
-            sys.stdout.write('\n')
-            sys.stdout.flush()
+        self._write_progress('c')
 
     def xml_cache_miss(self, url):
-        if self.prog_counter == 0:
-            sys.stdout.write('[%03i/%03i] ' % (self.prog_counter,
-                                               self.result_count))
-            sys.stdout.flush()
-        elif self.prog_counter % 50 == 0:
-            sys.stdout.write('\n[%03i/%03i] ' % (self.prog_counter,
-                                                 self.result_count))
-            sys.stdout.flush()
-
-        sys.stdout.write('.')
-        sys.stdout.flush()
-        self.prog_counter += 1
-
-        if self.prog_counter == self.result_count:
-            sys.stdout.write('\n')
-            sys.stdout.flush()
+        self._write_progress('.')

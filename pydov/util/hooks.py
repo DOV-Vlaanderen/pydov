@@ -2,9 +2,6 @@ import sys
 
 
 class AbstractHook(object):
-    def __init__(self, name):
-        self.name = name
-
     def wfs_search(self, typename):
         pass
 
@@ -26,7 +23,6 @@ class AbstractHook(object):
 
 class SimpleStatusHook(AbstractHook):
     def __init__(self):
-        super(SimpleStatusHook, self).__init__('SimpleStatusHook')
         self.result_count = 0
         self.prog_counter = 0
 

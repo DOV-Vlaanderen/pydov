@@ -5,6 +5,7 @@ import os
 import re
 import shutil
 import tempfile
+from io import open
 
 import pydov
 from owslib.util import openURL
@@ -75,8 +76,8 @@ class TransparentCache(object):
             Datatype of the DOV object to save.
         key : str
             Unique and permanent object key of the DOV object to save.
-        content : str (xml)
-            XML content describing the DOV object.
+        content : : bytes
+            The raw XML data of this DOV object as bytes.
 
         """
         folder = os.path.join(self.cachedir, datatype)
@@ -85,8 +86,8 @@ class TransparentCache(object):
             os.makedirs(folder)
 
         filepath = os.path.join(folder, key + '.xml')
-        with open(filepath, 'w') as f:
-            f.write(content)
+        with open(filepath, 'w', encoding='utf-8') as f:
+            f.write(content.decode('utf-8'))
 
     def _valid(self, datatype, key):
         """Check if a valid version of the given DOV object exists in the
@@ -136,7 +137,7 @@ class TransparentCache(object):
 
         """
         filepath = os.path.join(self.cachedir, datatype, key + '.xml')
-        with open(filepath, 'r') as f:
+        with open(filepath, 'r', encoding='utf-8') as f:
             return f.read()
 
     def _get_remote(self, url):
@@ -149,8 +150,8 @@ class TransparentCache(object):
 
         Returns
         -------
-        str (xml)
-            XML content describing the DOV object.
+        xml : bytes
+            The raw XML data of this DOV object as bytes.
 
         """
         for hook in pydov.hooks:
@@ -172,8 +173,8 @@ class TransparentCache(object):
 
         Returns
         -------
-        str (xml)
-            XML content describing the DOV object.
+        xml : bytes
+            The raw XML data of this DOV object as bytes.
 
         """
         datatype, key = self._get_type_key(url)
@@ -188,7 +189,7 @@ class TransparentCache(object):
 
         data = self._get_remote(url)
         try:
-            self._save(datatype, key, data.decode('utf-8'))
+            self._save(datatype, key, data)
         except Exception:
             pass
 

@@ -37,29 +37,27 @@ def mp_remote_xml(monkeypatch):
 
 @pytest.fixture
 def cache():
+    """Fixture for a temporary cache with max_age of 1 second."""
+    orig_cache = pydov.cache
+
     transparent_cache = TransparentCache(
         cachedir=os.path.join(tempfile.gettempdir(), 'pydov_tests'),
         max_age=datetime.timedelta(seconds=1))
+    pydov.cache = transparent_cache
+
     yield transparent_cache
 
     transparent_cache.clean()
+    pydov.cache = orig_cache
 
 
-def nocache(func):
-    """Decorator to temporarily disable caching.
-
-    Parameters
-    ----------
-    func : function
-        Function to decorate.
-
-    """
-    def wrapper(*args, **kwargs):
-        orig_cache = pydov.cache
-        pydov.cache = None
-        func(*args, **kwargs)
-        pydov.cache = orig_cache
-    return wrapper
+@pytest.fixture
+def nocache():
+    """Fixture to temporarily disable caching."""
+    orig_cache = pydov.cache
+    pydov.cache = None
+    yield
+    pydov.cache = orig_cache
 
 
 class TestTransparentCache(object):

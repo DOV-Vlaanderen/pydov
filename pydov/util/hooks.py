@@ -24,29 +24,6 @@ class AbstractHook(object):
         pass
 
 
-class VerboseHook(AbstractHook):
-    def __init__(self):
-        super(VerboseHook, self).__init__('VerboseHook')
-
-    def wfs_search(self, typename):
-        print('Searching WFS service for %s.' % typename)
-
-    def wfs_result(self, number_of_results):
-        print('WFS query yielded %i results.' % number_of_results)
-
-    def xml_requested(self, url):
-        print('Requesting XML for object %s.' % url)
-
-    def xml_cache_hit(self, url):
-        print('Using cached XML for object %s.' % url)
-
-    def xml_cache_miss(self, url):
-        pass
-
-    def xml_downloaded(self, url):
-        print('Downloaded XML from DOV services for object %s.' % url)
-
-
 class SimpleStatusHook(AbstractHook):
     def __init__(self):
         super(SimpleStatusHook, self).__init__('SimpleStatusHook')

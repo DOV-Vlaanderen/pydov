@@ -4,7 +4,7 @@ subtypes."""
 
 from owslib.etree import etree
 
-from pydov.types.abstract import (
+from .abstract import (
     AbstractDovType,
     AbstractDovSubType,
 )

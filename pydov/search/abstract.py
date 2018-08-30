@@ -14,7 +14,7 @@ from pydov.util.errors import (
     FeatureOverflowError,
     InvalidFieldError,
 )
-from pydov.util.owsutil import get_remote_schema
+from ..util.owsutil import get_remote_schema
 
 
 class AbstractSearch(object):

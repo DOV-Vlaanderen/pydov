@@ -326,6 +326,13 @@ class AbstractSearch(object):
                         raise InvalidFieldError(
                             "Unknown return field: '%s'. Did you mean '%s'?"
                             % (rf, self._map_wfs_source_df[rf]))
+                    if rf.lower() in [i.lower() for i in
+                                      self._map_wfs_source_df.keys()]:
+                        sugg = [i for i in self._map_wfs_source_df.keys() if
+                                i.lower() == rf.lower()][0]
+                        raise InvalidFieldError(
+                            "Unknown return field: '%s'. Did you mean '%s'?"
+                            % (rf, sugg))
                     raise InvalidFieldError(
                         "Unknown return field: '%s'" % rf)
 

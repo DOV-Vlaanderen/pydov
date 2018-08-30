@@ -9,4 +9,4 @@ python:
 formats: []
 
 # Add specific dependencies for the jupyter notebooks
-requirements_file: docs/requirements_doc.txt
+requirements_file: requirements_doc.txt

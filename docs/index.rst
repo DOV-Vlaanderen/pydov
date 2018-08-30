@@ -9,6 +9,7 @@ Contents:
    readme
    installation
    usage
+   tutorials
    endpoints
    contributing
    authors

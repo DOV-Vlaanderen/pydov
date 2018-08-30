@@ -6,11 +6,13 @@ watchdog
 flake8
 tox
 coverage
-Sphinx
 cryptography
 PyYAML
 pytest
 pytest-runner
-numpydoc
 pytest-cov
+Sphinx
 sphinx_rtd_theme
+nbsphinx
+numpydoc
+

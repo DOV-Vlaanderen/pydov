@@ -1,5 +1,6 @@
 
 python:
+    version: 3.6
     pip_install: true
     extra_requirements: # Add specific dependencies for the jupyter notebooks
         - docs

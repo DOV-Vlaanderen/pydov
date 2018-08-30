@@ -1,2 +1,22 @@
--r requirements_dev.txt
--r requirements_doc.txt
+pip
+bumpversion
+wheel
+watchdog
+flake8
+tox
+coverage
+cryptography
+PyYAML
+pytest
+pytest-runner
+pytest-cov
+Sphinx
+sphinx_rtd_theme
+nbsphinx
+numpydoc
+ipython
+jupyter_client
+ipykernel
+folium
+pyproj
+matplotlib

@@ -87,3 +87,7 @@ by issuing::
     import pydov
 
     pydov.cache.clean()
+
+
+Note that this will erase the entire cache, not only the records older than
+the maximum age.

@@ -14,13 +14,8 @@ with open('HISTORY.rst') as history_file:
 with open('requirements.txt') as f:
     requirements = f.read().splitlines()
 
-setup_requirements = [
-    'pytest-runner'
-]
-
-test_requirements = [
-    'pytest'
-]
+with open('requirements_dev.txt') as f:
+    requirements_dev = f.read().splitlines()
 
 setup(
     name='pydov',
@@ -53,6 +48,6 @@ setup(
         'Programming Language :: Python :: 3.6',
     ],
     test_suite='tests',
-    tests_require=test_requirements,
-    setup_requires=setup_requirements,
+    tests_require=requirements_dev,
+    setup_requires=requirements_dev,
 )

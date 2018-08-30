@@ -4,6 +4,6 @@ python:
     pip_install: true
     extra_requirements: # Add specific dependencies for the jupyter notebooks
         - docs
-
+        - devs
 # Don't build any extra formats apart from json/html
 formats: []

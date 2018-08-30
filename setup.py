@@ -51,6 +51,7 @@ setup(
     test_suite='tests',
     tests_require=requirements_dev,
     extras_require={
-        'docs': requirements_doc
+        'docs': requirements_doc,
+        'devs': requirements_dev
     }
 )

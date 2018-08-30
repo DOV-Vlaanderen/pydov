@@ -18,5 +18,5 @@ pytest-runner
 pytest-cov
 Sphinx
 sphinx_rtd_theme
-nbsphinx
 numpydoc
+nbsphinx

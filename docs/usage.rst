@@ -65,7 +65,7 @@ Changing the maximum age of cached data
 
 If you work with rapidly changing data or want to control when cached data
 is renewed, you can do so by changing the maximum age of cached data to
-be considered valid for the currenct runtime::
+be considered valid for the current runtime::
 
     import pydov.util.caching
     import datetime
@@ -85,6 +85,19 @@ the cache.
 Cleaning the cache
 ******************
 
+During normal use the cache only grows by adding new objects and overwriting
+existing ones with a new version. Should you want clean the cache of old
+items or remove the cache entirely, you can do so manually by calling the
+respective functions.
+
+To clean the cache, removing all records older than the maximum age, you can
+issue::
+
+    import pydov
+
+    pydov.cache.clean()
+
+
 Since we use a temporary directory provided by the operating system, we rely
 on the operating system to clean the folder when it deems necessary.
 
@@ -93,8 +106,8 @@ by issuing::
 
     import pydov
 
-    pydov.cache.clean()
+    pydov.cache.remove()
 
 
-Note that this will erase the entire cache, not only the records older than
-the maximum age.
+This will erase the entire cache, not only the records older than the
+maximum age.

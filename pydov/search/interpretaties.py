@@ -243,6 +243,7 @@ class HydrogeologischeStratigrafieSearch(AbstractSearch):
 
 if __name__ == '__main__':
     import os, sys
+    import numpy as np
     import inspect
     # check pydov path
     import pydov
@@ -252,6 +253,8 @@ if __name__ == '__main__':
     ip_infstrat = InformeleStratigrafieSearch()
     ip_hydrogeo = HydrogeologischeStratigrafieSearch()
 
+
+    """
     # information about the HydrogeologischeStratigrafie type (In Dutch):
     print(ip_infstrat.get_description())
     # information about the available fields for a HydrogeologischeStratigrafie object
@@ -259,10 +262,84 @@ if __name__ == '__main__':
     # print available fields
     for f in fields.values():
         print(f['name'])
-    df = ip_hydrogeo.search(location=(153145, 206930, 153150, 206935))
+    # df = ip_hydrogeo.search(location=(31020, 131890, 260900, 166610))
+    df_hydrogeo_wal = pd.read_csv(
+        os.path.join(r'Z:\AGT\ProjectenAGT\1310-Advies en review voor NIRAS\TECH-GEGEVENS\2017-2020\DATA\PJ',
+                     'df_hydrogeo_waltemp.csv'),
+        dtype={'pkey_interpretatie': object, 'pkey_boring': object, 'pkey_sondering': object,
+               'betrouwbaarheid_interpretatie': object, 'diepte_laag_van': float,
+               'diepte_laag_tot': float, 'aquifer': str})
+
+
 
     import folium
     from pyproj import Proj, transform
+
+    from pydov.search.boring import BoringSearch
+    from owslib.fes import PropertyIsLike
+
+    boring = BoringSearch()
+    df_borehole = pd.DataFrame([])
+    for idx, rec in df_hydrogeo_wal.iterrows():
+        query = PropertyIsLike(propertyname='fiche', literal=rec.pkey_boring)
+        df_borehole = df_borehole.append(boring.search(query=query))
+
+    # read csv if already obtained
+    df_boring = pd.read_csv(
+        os.path.join(r'Z:\AGT\ProjectenAGT\1310-Advies en review voor NIRAS\TECH-GEGEVENS\2017-2020\DATA\PJ',
+                     'df_boring.csv'))
+    df_hydrogeo = pd.read_csv(
+        os.path.join(r'Z:\AGT\ProjectenAGT\1310-Advies en review voor NIRAS\TECH-GEGEVENS\2017-2020\DATA\PJ',
+                     'df_hydrogeo.csv'),
+        dtype={'pkey_interpretatie': object, 'pkey_boring': object, 'pkey_sondering': object,
+               'betrouwbaarheid_interpretatie': object, 'diepte_laag_van': float,
+               'diepte_laag_tot': float, 'aquifer': str})
+
+    df_b = df_boring.append(df_borehole)
+    df_hydrogeo_b = df_hydrogeo.append(df_hydrogeo_wal)
+    df_b.drop_duplicates(subset='pkey_boring', inplace=True)
+    df_hydrogeo_b.drop_duplicates(subset=['pkey_boring', 'aquifer'], inplace=True)
+    df_join = pd.merge(df_b, df_hydrogeo_b, on='pkey_boring')
+    df_join.to_csv(os.path.join(r'Z:\AGT\ProjectenAGT\1310-Advies en review voor NIRAS\TECH-GEGEVENS\2017-2020\DATA\PJ',
+                                'df_join.csv'))
+    """
+    # limit to bottom of HCOV unit
+    df_join = pd.read_csv(
+        os.path.join(r'Z:\AGT\ProjectenAGT\1310-Advies en review voor NIRAS\TECH-GEGEVENS\2017-2020\DATA\PJ',
+                     'df_join.csv'))
+
+    # recalculate mtaw
+    df_join['tot_mtaw'] = df_join['mv_mtaw'] - df_join['diepte_laag_tot']
+    df_join['van_mtaw'] = df_join['mv_mtaw'] - df_join['diepte_laag_van']
+
+    df_join['hcov_main'] = df_join['aquifer'] // 100
+
+    def check_bottom_interpretation(df, hcov_col='aquifer', bottom_col='tot_mtaw'):
+        """
+
+        :param df:
+        :return:
+        """
+        # select lowest 'tot_mtaw'
+        df_min = df.groupby(hcov_col).agg({bottom_col: 'min'})
+        codes = sorted(df_min.index.values)
+        df['interpret_bottom'] = -999.
+        for code in codes:
+            # catch 0000 and 0100 because no top guaranteed
+            if code <= 1:
+                continue
+            df.loc[df[hcov_col] == code, 'interpret_bottom'] = df_min.loc[codes[codes.index(code) - 1], bottom_col]
+        return df
+
+    # drop na of bottom col
+    df_join.dropna(subset=['tot_mtaw', 'hcov_main'], inplace=True)
+    df_join['interpret_bottom'] = pd.DataFrame(index=df_join.index, columns=['interpret_bottom'])
+    df_join = df_join.groupby(['pkey_interpretatie']).apply(check_bottom_interpretation,
+                                                       hcov_col='hcov_main', bottom_col='tot_mtaw')
+    a = 1
+
+    df_join.to_csv(os.path.join(r'Z:\AGT\ProjectenAGT\1310-Advies en review voor NIRAS\TECH-GEGEVENS\2017-2020\DATA\PJ',
+                                'df_join_bottoms.csv'))
 
 
     def convert_latlon(x1, y1):

@@ -1,3 +1,7 @@
+owslib
+pandas
+numpy
+requests
 ipython
 jupyter_client
 ipykernel

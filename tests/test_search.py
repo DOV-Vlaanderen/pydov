@@ -86,6 +86,195 @@ def mp_remote_fc_notfound(monkeypatch):
     monkeypatch.setattr(pydov.util.owsutil, '__get_remote_fc', __get_remote_fc)
 
 
+@pytest.fixture(scope='module')
+def mp_remote_md(wfs, monkeysession, request):
+    """Monkeypatch the call to get the remote metadata of the layer.
+
+    This monkeypatch requires a module variable ``location_md_metadata``
+    with the path to the md_metadata file on disk.
+
+    Parameters
+    ----------
+    wfs : pytest.fixture returning owslib.wfs.WebFeatureService
+        WebFeatureService based on the local GetCapabilities.
+    monkeysession : pytest.fixture
+        PyTest monkeypatch fixture with session scope.
+    request : pytest.fixtue
+        PyTest fixture providing request context.
+
+    """
+    def __get_remote_md(*args, **kwargs):
+        file_path = getattr(request.module, "location_md_metadata")
+        with open(file_path, 'r') as f:
+            data = f.read()
+            if type(data) is not bytes:
+                data = data.encode('utf-8')
+        return data
+
+    monkeysession.setattr(pydov.util.owsutil, '__get_remote_md',
+                          __get_remote_md)
+
+
+@pytest.fixture(scope='module')
+def mp_remote_fc(monkeysession, request):
+    """Monkeypatch the call to get the remote feature catalogue.
+
+    This monkeypatch requires a module variable
+    ``location_fc_featurecatalogue`` with the path to the fc_featurecatalogue
+    file on disk.
+
+    Parameters
+    ----------
+    monkeysession : pytest.fixture
+        PyTest monkeypatch fixture with session scope.
+    request : pytest.fixtue
+        PyTest fixture providing request context.
+
+    """
+    def __get_remote_fc(*args, **kwargs):
+        file_path = getattr(request.module, "location_fc_featurecatalogue")
+        with open(file_path, 'r') as f:
+            data = f.read()
+            if type(data) is not bytes:
+                data = data.encode('utf-8')
+        return data
+
+    monkeysession.setattr(pydov.util.owsutil, '__get_remote_fc',
+                          __get_remote_fc)
+
+
+@pytest.fixture(scope='module')
+def mp_remote_describefeaturetype(monkeysession, request):
+    """Monkeypatch the call to a remote DescribeFeatureType.
+
+    This monkeypatch requires a module variable
+    ``location_wfs_describefeaturetype`` with the path to the
+    wfs_describefeaturetype file on disk.
+
+    Parameters
+    ----------
+    monkeysession : pytest.fixture
+        PyTest monkeypatch fixture with session scope.
+    request : pytest.fixtue
+        PyTest fixture providing request context.
+
+    """
+    def __get_remote_describefeaturetype(*args, **kwargs):
+        file_path = getattr(request.module, "location_wfs_describefeaturetype")
+        with open(file_path, 'r') as f:
+            data = f.read()
+            if type(data) is not bytes:
+                data = data.encode('utf-8')
+        return data
+
+    monkeysession.setattr(pydov.util.owsutil,
+                          '__get_remote_describefeaturetype',
+                          __get_remote_describefeaturetype)
+
+
+@pytest.fixture(scope='module')
+def wfs_getfeature(request):
+    """PyTest fixture providing a WFS GetFeature response.
+
+    This monkeypatch requires a module variable ``location_wfs_getfeature``
+    with the path to the wfs_getfeature file on disk.
+
+    Parameters
+    ----------
+    request : pytest.fixtue
+        PyTest fixture providing request context.
+
+    Returns
+    -------
+    str
+        WFS response of a GetFeature call to the dov-pub:Boringen layer.
+
+    """
+    file_path = getattr(request.module, "location_wfs_getfeature")
+    with open(file_path, 'r') as f:
+        data = f.read()
+        return data
+
+
+@pytest.fixture(scope='module')
+def wfs_feature(request):
+    """PyTest fixture providing an XML of a WFS feature element.
+
+    This monkeypatch requires a module variable ``location_wfs_feature``
+    with the path to the wfs_feature file on disk.
+
+    Parameters
+    ----------
+    request : pytest.fixtue
+        PyTest fixture providing request context.
+
+    Returns
+    -------
+    etree.Element
+        XML element representing a single record of the Boring WFS layer.
+
+    """
+    file_path = getattr(request.module, "location_wfs_feature")
+    with open(file_path, 'r') as f:
+        return etree.fromstring(f.read())
+
+
+@pytest.fixture(scope='module')
+def mp_remote_wfs_feature(monkeysession, request):
+    """Monkeypatch the call to get WFS features.
+
+    This monkeypatch requires a module variable ``location_wfs_getfeature``
+    with the path to the wfs_getfeature file on disk.
+
+    Parameters
+    ----------
+    monkeysession : pytest.fixture
+        PyTest monkeypatch fixture with session scope.
+    request : pytest.fixtue
+        PyTest fixture providing request context.
+
+    """
+    def __get_remote_wfs_feature(*args, **kwargs):
+        file_path = getattr(request.module, "location_wfs_getfeature")
+        with open(file_path, 'r') as f:
+            data = f.read()
+            if type(data) is not bytes:
+                data = data.encode('utf-8')
+        return data
+
+    monkeysession.setattr(pydov.util.owsutil,
+                          'wfs_get_feature',
+                          __get_remote_wfs_feature)
+
+
+@pytest.fixture(scope='module')
+def mp_dov_xml(monkeysession, request):
+    """Monkeypatch the call to get the remote XML data.
+
+    This monkeypatch requires a module variable ``location_dov_xml``
+    with the path to the dov_xml file on disk.
+
+    Parameters
+    ----------
+    monkeysession : pytest.fixture
+        PyTest monkeypatch fixture with session scope.
+    request : pytest.fixtue
+        PyTest fixture providing request context.
+
+    """
+
+    def _get_xml_data(*args, **kwargs):
+        file_path = getattr(request.module, "location_dov_xml")
+        with open(file_path, 'r') as f:
+            data = f.read()
+            if type(data) is not bytes:
+                data = data.encode('utf-8')
+        return data
+
+    monkeysession.setattr(pydov.types.abstract.AbstractDovType,
+                        '_get_xml_data', _get_xml_data)
+
+
 @pytest.mark.parametrize("objectsearch", search_objects)
 def test_get_description(mp_wfs, objectsearch):
     """Test the get_description method.
@@ -159,173 +348,3 @@ def test_search_query_wrongtype(objectsearch):
     """
     with pytest.raises(InvalidSearchParameterError):
         objectsearch.search(query='computer says no')
-
-
-@pytest.fixture(scope='module')
-def mp_remote_md(wfs, monkeysession, request):
-    """Monkeypatch the call to get the remote metadata of the layer.
-
-    Parameters
-    ----------
-    wfs : pytest.fixture returning owslib.wfs.WebFeatureService
-        WebFeatureService based on the local GetCapabilities.
-    monkeysession : pytest.fixture
-        PyTest monkeypatch fixture with session scope.
-    request : pytest.fixtue
-        PyTest fixture providing request context.
-
-    """
-    def __get_remote_md(*args, **kwargs):
-        file_path = getattr(request.module, "location_md_metadata")
-        with open(file_path, 'r') as f:
-            data = f.read()
-            if type(data) is not bytes:
-                data = data.encode('utf-8')
-        return data
-
-    monkeysession.setattr(pydov.util.owsutil, '__get_remote_md',
-                          __get_remote_md)
-
-
-@pytest.fixture(scope='module')
-def mp_remote_fc(monkeysession, request):
-    """Monkeypatch the call to get the remote feature catalogue of the
-    dov-pub:Boringen layer.
-
-    Parameters
-    ----------
-    monkeysession : pytest.fixture
-        PyTest monkeypatch fixture with session scope.
-    request : pytest.fixtue
-        PyTest fixture providing request context.
-
-    """
-    def __get_remote_fc(*args, **kwargs):
-        file_path = getattr(request.module, "location_fc_featurecatalogue")
-        with open(file_path, 'r') as f:
-            data = f.read()
-            if type(data) is not bytes:
-                data = data.encode('utf-8')
-        return data
-
-    monkeysession.setattr(pydov.util.owsutil, '__get_remote_fc',
-                          __get_remote_fc)
-
-
-@pytest.fixture(scope='module')
-def mp_remote_describefeaturetype(monkeysession, request):
-    """Monkeypatch the call to a remote DescribeFeatureType of the
-    dov-pub:Boringen layer.
-
-    Parameters
-    ----------
-    monkeysession : pytest.fixture
-        PyTest monkeypatch fixture with session scope.
-    request : pytest.fixtue
-        PyTest fixture providing request context.
-
-    """
-    def __get_remote_describefeaturetype(*args, **kwargs):
-        file_path = getattr(request.module, "location_wfs_describefeaturetype")
-        with open(file_path, 'r') as f:
-            data = f.read()
-            if type(data) is not bytes:
-                data = data.encode('utf-8')
-        return data
-
-    monkeysession.setattr(pydov.util.owsutil,
-                          '__get_remote_describefeaturetype',
-                          __get_remote_describefeaturetype)
-
-
-@pytest.fixture(scope='module')
-def wfs_getfeature(request):
-    """PyTest fixture providing a WFS GetFeature response for the
-    dov-pub:Boringen layer.
-
-    Parameters
-    ----------
-    request : pytest.fixtue
-        PyTest fixture providing request context.
-
-    Returns
-    -------
-    str
-        WFS response of a GetFeature call to the dov-pub:Boringen layer.
-
-    """
-    file_path = getattr(request.module, "location_wfs_getfeature")
-    with open(file_path, 'r') as f:
-        data = f.read()
-        return data
-
-
-@pytest.fixture(scope='module')
-def wfs_feature(request):
-    """PyTest fixture providing an XML of a WFS feature element of a Boring
-    record.
-
-    Parameters
-    ----------
-    request : pytest.fixtue
-        PyTest fixture providing request context.
-
-    Returns
-    -------
-    etree.Element
-        XML element representing a single record of the Boring WFS layer.
-
-    """
-    file_path = getattr(request.module, "location_wfs_feature")
-    with open(file_path, 'r') as f:
-        return etree.fromstring(f.read())
-
-
-@pytest.fixture(scope='module')
-def mp_remote_wfs_feature(monkeysession, request):
-    """Monkeypatch the call to get WFS features.
-
-    Parameters
-    ----------
-    monkeysession : pytest.fixture
-        PyTest monkeypatch fixture with session scope.
-    request : pytest.fixtue
-        PyTest fixture providing request context.
-
-    """
-    def __get_remote_wfs_feature(*args, **kwargs):
-        file_path = getattr(request.module, "location_wfs_getfeature")
-        with open(file_path, 'r') as f:
-            data = f.read()
-            if type(data) is not bytes:
-                data = data.encode('utf-8')
-        return data
-
-    monkeysession.setattr(pydov.util.owsutil,
-                          'wfs_get_feature',
-                          __get_remote_wfs_feature)
-
-
-@pytest.fixture(scope='module')
-def mp_dov_xml(monkeysession, request):
-    """Monkeypatch the call to get the remote Boring XML data.
-
-    Parameters
-    ----------
-    monkeysession : pytest.fixture
-        PyTest monkeypatch fixture with session scope.
-    request : pytest.fixtue
-        PyTest fixture providing request context.
-
-    """
-
-    def _get_xml_data(*args, **kwargs):
-        file_path = getattr(request.module, "location_dov_xml")
-        with open(file_path, 'r') as f:
-            data = f.read()
-            if type(data) is not bytes:
-                data = data.encode('utf-8')
-        return data
-
-    monkeysession.setattr(pydov.types.abstract.AbstractDovType,
-                        '_get_xml_data', _get_xml_data)

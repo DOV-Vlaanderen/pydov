@@ -176,8 +176,8 @@ class TestHooks(object):
         assert pydov.hooks[0].count_xml_downloaded == 2
 
     def test_wfs_and_xml_cache(self, mp_remote_describefeaturetype,
-                                 mp_remote_wfs_feature, boringsearch,
-                                 temp_hooks, cache):
+                               mp_remote_wfs_feature, boringsearch,
+                               temp_hooks, cache):
         """Test the search method providing both a location and a query.
 
         Test whether a dataframe is returned.

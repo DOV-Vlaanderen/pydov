@@ -37,7 +37,8 @@ class TransparentCache(object):
         else:
             self.cachedir = os.path.join(tempfile.gettempdir(), 'pydov')
         self.max_age = max_age
-        self.re_type_key = re.compile(
+
+        self._re_type_key = re.compile(
             r'https?://www.dov.vlaanderen.be/data/([' '^/]+)/([^\.]+)')
 
         try:
@@ -63,7 +64,7 @@ class TransparentCache(object):
             referred to by the URL.
 
         """
-        datatype = self.re_type_key.search(url)
+        datatype = self._re_type_key.search(url)
         if datatype and len(datatype.groups()) > 1:
             return datatype.group(1), datatype.group(2)
 

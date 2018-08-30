@@ -7,7 +7,6 @@ from io import open
 import time
 
 import pytest
-from numpy.compat import unicode
 
 import pydov
 from pydov.util.caching import TransparentCache

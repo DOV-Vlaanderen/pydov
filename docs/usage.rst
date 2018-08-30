@@ -22,14 +22,15 @@ it will be reused in favor of downloading from the DOV services.
 
 Disabling the cache
 *******************
-You can (temporarily) disable the caching mechanism by issuing::
+You can (temporarily!) disable the caching mechanism by issuing::
 
     import pydov
 
     pydov.cache = None
 
 This disables both the saving of newly downloaded data in the cache, as well
-as reusing existing data in the cache.
+as reusing existing data in the cache. It remains valid for the time being of
+the instantiated pydov.cache object.
 It does not delete existing data in the cache.
 
 Changing the location of cached data
@@ -40,8 +41,8 @@ user's operating system. On Windows, the cache is usually located in::
 
     C:\Users\username\AppData\Local\Temp\pydov\
 
-If you want the cache to be saved in another location you can define your
-own cache, as follows::
+If you want the cached xml files to be saved in another location you can define
+your own cache, as follows::
 
     import pydov.util.caching
 
@@ -56,8 +57,8 @@ Changing the maximum age of cached data
 ***************************************
 
 If you work with rapidly changing data or want to control when cached data
-is redownloaded, you can do so by changing the maximum age of cached data to
-be considered valid::
+is renewed, you can do so by changing the maximum age of cached data to
+be considered valid for the currenct runtime::
 
     import pydov.util.caching
     import datetime
@@ -67,8 +68,8 @@ be considered valid::
     )
 
 If a cached version exists and is younger than the maximum age, it is used
-in favor of redownloading the data from DOV services. If no cached version
-exists or is older than the maximum age, the data is redownloaded and saved
+in favor of renewing the data from DOV services. If no cached version
+exists or is older than the maximum age, the data is renewed and saved
 in the cache.
 
 Note that data older than the maximum age is not automatically deleted from

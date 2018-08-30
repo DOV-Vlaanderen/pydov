@@ -249,7 +249,7 @@ class AbstractSearch(object):
                 'type': custom_field['type'],
                 'definition': custom_field['definition'],
                 'notnull': custom_field['notnull'],
-                'cost': 10
+                'cost': 1
             }
             fields[field['name']] = field
 

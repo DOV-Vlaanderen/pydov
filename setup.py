@@ -48,6 +48,5 @@ setup(
         'Programming Language :: Python :: 3.6',
     ],
     test_suite='tests',
-    tests_require=requirements_dev,
-    setup_requires=requirements_dev,
+    tests_require=requirements_dev
 )

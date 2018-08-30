@@ -1,0 +1,2 @@
+-r ../requirements_dev.txt
+-r ../requirements_doc.txt

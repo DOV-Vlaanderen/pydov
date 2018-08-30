@@ -3,7 +3,7 @@ python:
     version: 3
     setup_py_install: true
 
-requirements_file: requirements_rtd.txt
+#requirements_file: requirements_rtd.txt
 
 # Don't build any extra formats apart from json/html
 formats: []

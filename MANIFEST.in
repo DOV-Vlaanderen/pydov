@@ -8,6 +8,8 @@ include requirements_dev.txt
 include requirements_doc.txt
 include requirements_rtd.txt
 
+recursive-include pydov *
+
 recursive-include tests *
 recursive-exclude * __pycache__
 recursive-exclude * *.py[co]

@@ -11,6 +11,7 @@ from pandas.api.types import (
     is_int64_dtype, is_object_dtype,
     is_bool_dtype, is_float_dtype)
 
+import pydov
 from owslib.fes import PropertyIsEqualTo
 from owslib.etree import etree
 from pydov.util.errors import InvalidFieldError
@@ -436,6 +437,26 @@ class AbstractTestSearch(object):
         assert type(df) is DataFrame
 
         assert list(df) == list(self.get_valid_returnfields_extra())
+
+    def test_search_xml_noresolve(self, mp_remote_describefeaturetype,
+                                  mp_remote_wfs_feature, mp_dov_xml_broken):
+        """Test the search method with return fields from WFS only.
+
+        Test whether no XML is resolved.
+
+        Parameters
+        ----------
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType.
+        mp_remote_wfs_feature : pytest.fixture
+            Monkeypatch the call to get WFS features.
+        mp_dov_xml_broken : pytest.fixture
+            Monkeypatch the call to break fetching of remote XML data.
+
+        """
+        df = self.get_search_object().search(
+            query=self.get_valid_query_single(),
+            return_fields=self.get_valid_returnfields_extra())
 
 
 class AbstractTestTypes(object):

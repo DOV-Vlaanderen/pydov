@@ -19,6 +19,7 @@ from tests.test_search import (
     mp_remote_describefeaturetype,
     mp_remote_wfs_feature,
     mp_dov_xml,
+    mp_dov_xml_broken,
     wfs_getfeature,
     wfs_feature,
 )

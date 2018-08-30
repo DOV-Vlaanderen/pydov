@@ -524,7 +524,8 @@ class AbstractDovType(AbstractCommon):
 
         """
         fields = self.get_field_names(return_fields)
-        ownfields = self.get_field_names(include_subtypes=False)
+        ownfields = self.get_field_names(include_subtypes=False,
+                                         include_wfs_injected=True)
         subfields = [f for f in fields if f not in ownfields]
 
         if len(subfields) > 0:

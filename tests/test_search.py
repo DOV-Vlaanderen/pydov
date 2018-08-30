@@ -272,6 +272,24 @@ def mp_dov_xml(monkeysession, request):
         return data
 
     monkeysession.setattr(pydov.types.abstract.AbstractDovType,
+                          '_get_xml_data', _get_xml_data)
+
+
+@pytest.fixture()
+def mp_dov_xml_broken(monkeypatch):
+    """Monkeypatch the call to break the fetching of remote XML data.
+
+    Parameters
+    ----------
+    monkeypatch : pytest.fixture
+        PyTest monkeypatch fixture.
+
+    """
+
+    def _get_xml_data(*args, **kwargs):
+        raise RuntimeError
+
+    monkeypatch.setattr(pydov.types.abstract.AbstractDovType,
                         '_get_xml_data', _get_xml_data)
 
 

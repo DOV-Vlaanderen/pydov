@@ -1,8 +1,10 @@
 """Module grouping tests for the interpretaties search module."""
 import pandas as pd
 import numpy as np
+import pytest
 from pandas import DataFrame
 
+import pydov
 from owslib.fes import PropertyIsEqualTo
 from pydov.search.interpretaties import InformeleStratigrafieSearch
 from pydov.types.interpretaties import InformeleStratigrafie
@@ -18,6 +20,7 @@ from tests.test_search import (
     mp_remote_describefeaturetype,
     mp_remote_wfs_feature,
     mp_dov_xml,
+    mp_dov_xml_broken,
     wfs_getfeature,
     wfs_feature,
 )
@@ -203,8 +206,8 @@ class TestInformeleStratigrafieSearch(AbstractTestSearch):
         assert not pd.isnull(df.pkey_boring[0])
         assert np.isnan(df.pkey_sondering[0])
 
-    def test_search_xmlresolving(self, mp_remote_describefeaturetype,
-                                 mp_remote_wfs_feature, mp_dov_xml):
+    def test_search_xml_resolve(self, mp_remote_describefeaturetype,
+                                mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with return fields from XML but not from a
         subtype.
 

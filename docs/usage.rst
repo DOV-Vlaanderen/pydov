@@ -53,6 +53,13 @@ your own cache, as follows::
 Besides controlling the cache's location, this also allows using a different
 cache in different scripts or projects.
 
+Mind that xmls are stored by search type because permalinks are not unique
+across types. Therefore, the dir structure of the cache will look like, e.g.::
+
+    ...\pydov\boring\filename.xml
+    ...\pydov\grondwaterfilter\filename.xml
+
+
 Changing the maximum age of cached data
 ***************************************
 

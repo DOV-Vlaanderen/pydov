@@ -20,6 +20,11 @@ The default cache will reuse cached data for up to two weeks: if cached data
 for an object is available and has been downloaded less than two weeks ago,
 it will be reused in favor of downloading from the DOV services.
 
+As mentioned below some convenient utility methods are provided to handle
+disk usage. However, pydov does not change any files present on disk. This
+holds true for all files, also those in the cache directory. It is up to the
+user to keep track of disk usage etc.
+
 Disabling the cache
 *******************
 You can (temporarily!) disable the caching mechanism by issuing::

@@ -11,7 +11,7 @@ import numpy as np
 from owslib.etree import etree
 from owslib.util import openURL
 
-from pydov.util.errors import InvalidFieldError
+from ..util.errors import InvalidFieldError
 
 
 class AbstractCommon(object):

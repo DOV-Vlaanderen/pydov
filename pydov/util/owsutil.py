@@ -25,7 +25,7 @@ from owslib.util import (
     findall,
 )
 
-from pydov.util.errors import (
+from .errors import (
     MetadataNotFoundError,
     FeatureCatalogueNotFoundError,
 )

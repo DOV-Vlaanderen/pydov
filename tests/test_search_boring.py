@@ -365,6 +365,36 @@ class TestBoringSearch(AbstractTestSearch):
         assert list(df) == ['pkey_boring', 'boornummer', 'diepte_boring_tot',
                             'datum_aanvang']
 
+    def test_search_returnfields_subtype(self, mp_remote_wfs_feature,
+                                         boringsearch):
+        """Test the search method with the query parameter and a selection of
+        return fields, including fields from a subtype.
+
+        Test whether the output dataframe contains only the selected return
+        fields.
+
+        Parameters
+        ----------
+        mp_remote_wfs_feature : pytest.fixture
+            Monkeypatch the call to get WFS features.
+        boringsearch : pytest.fixture returning pydov.search.BoringSearch
+            An instance of BoringSearch to perform search operations on the DOV
+            type 'Boring'.
+
+        """
+        query = PropertyIsEqualTo(propertyname='boornummer',
+                                  literal='GEO-04/169-BNo-B1')
+
+        df = boringsearch.search(query=query,
+                                 return_fields=('pkey_boring', 'boornummer',
+                                                'diepte_methode_van',
+                                                'diepte_methode_tot'))
+
+        assert type(df) is DataFrame
+
+        assert list(df) == ['pkey_boring', 'boornummer', 'diepte_methode_van',
+                            'diepte_methode_tot']
+
     def test_search_returnfields_order(self, mp_remote_wfs_feature,
                                        boringsearch):
         """Test the search method with the query parameter and a selection of

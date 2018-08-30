@@ -9,14 +9,13 @@ Contents:
    readme
    installation
    usage
+   tutorials
    endpoints
    contributing
    authors
    conduct
    history
    reference
-   notebooks/example_search_boringen.ipynb
-   notebooks/example_search_grondwaterfilters.ipynb
 
 Indices and tables
 ==================

@@ -211,6 +211,7 @@ the 'methode_van'/'methode_tot' of the Borehole:
     AND interpretation["van"] >= boring["methode_van"]
     AND interpretation["tot"] <= boring["methode_tot"]
 
+|
 
   .. csv-table:: Boringen
     :header-rows: 1

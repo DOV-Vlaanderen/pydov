@@ -2,13 +2,9 @@ import pytest
 
 import pydov
 from owslib.fes import PropertyIsEqualTo
+from pydov.search.boring import BoringSearch
 from pydov.util.hooks import AbstractHook
-
-from tests.test_search_boring import (
-    mp_remote_describefeaturetype,
-    mp_remote_wfs_feature,
-    boringsearch
-)
+from tests.abstract import service_ok
 
 from tests.test_util_caching import (
     cache,
@@ -99,8 +95,9 @@ def temp_hooks():
 
 
 class TestHooks(object):
-    def test_wfs_only(self, mp_remote_describefeaturetype,
-                      mp_remote_wfs_feature, boringsearch, temp_hooks):
+    @pytest.mark.online
+    @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
+    def test_wfs_only(self, temp_hooks):
         """Test the search method providing both a location and a query.
 
         Test whether a dataframe is returned.
@@ -112,9 +109,6 @@ class TestHooks(object):
             dov-pub:Boringen layer.
         mp_remote_wfs_feature : pytest.fixture
             Monkeypatch the call to get WFS features.
-        boringsearch : pytest.fixture returning pydov.search.BoringSearch
-            An instance of BoringSearch to perform search operations on
-            the DOV type 'Boring'.
         temp_hooks : pytest.fixture
             Fixture removing default hooks and installing HookCounter.
 
@@ -122,6 +116,7 @@ class TestHooks(object):
         query = PropertyIsEqualTo(propertyname='boornummer',
                                   literal='GEO-04/169-BNo-B1')
 
+        boringsearch = BoringSearch()
         df = boringsearch.search(
             query=query, return_fields=('pkey_boring', 'x', 'y'))
 
@@ -131,9 +126,9 @@ class TestHooks(object):
         assert pydov.hooks[0].count_xml_cache_hit == 0
         assert pydov.hooks[0].count_xml_downloaded == 0
 
-    def test_wfs_and_xml_nocache(self, mp_remote_describefeaturetype,
-                                 mp_remote_wfs_feature, boringsearch,
-                                 temp_hooks, nocache):
+    @pytest.mark.online
+    @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
+    def test_wfs_and_xml_nocache(self, temp_hooks, nocache):
         """Test the search method providing both a location and a query.
 
         Test whether a dataframe is returned.
@@ -145,9 +140,6 @@ class TestHooks(object):
             dov-pub:Boringen layer.
         mp_remote_wfs_feature : pytest.fixture
             Monkeypatch the call to get WFS features.
-        boringsearch : pytest.fixture returning pydov.search.BoringSearch
-            An instance of BoringSearch to perform search operations on
-            the DOV type 'Boring'.
         temp_hooks : pytest.fixture
             Fixture removing default hooks and installing HookCounter.
         nocache : pytest.fixture
@@ -157,6 +149,7 @@ class TestHooks(object):
         query = PropertyIsEqualTo(propertyname='boornummer',
                                   literal='GEO-04/169-BNo-B1')
 
+        boringsearch = BoringSearch()
         df = boringsearch.search(
             query=query, return_fields=('pkey_boring', 'mv_mtaw'))
 
@@ -175,9 +168,9 @@ class TestHooks(object):
         assert pydov.hooks[0].count_xml_cache_hit == 0
         assert pydov.hooks[0].count_xml_downloaded == 2
 
-    def test_wfs_and_xml_cache(self, mp_remote_describefeaturetype,
-                               mp_remote_wfs_feature, boringsearch,
-                               temp_hooks, cache):
+    @pytest.mark.online
+    @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
+    def test_wfs_and_xml_cache(self, temp_hooks, cache):
         """Test the search method providing both a location and a query.
 
         Test whether a dataframe is returned.
@@ -189,9 +182,6 @@ class TestHooks(object):
             dov-pub:Boringen layer.
         mp_remote_wfs_feature : pytest.fixture
             Monkeypatch the call to get WFS features.
-        boringsearch : pytest.fixture returning pydov.search.BoringSearch
-            An instance of BoringSearch to perform search operations on
-            the DOV type 'Boring'.
         temp_hooks : pytest.fixture
             Fixture removing default hooks and installing HookCounter.
         cache : pytest.fixture
@@ -202,6 +192,7 @@ class TestHooks(object):
         query = PropertyIsEqualTo(propertyname='boornummer',
                                   literal='GEO-04/169-BNo-B1')
 
+        boringsearch = BoringSearch()
         df = boringsearch.search(
             query=query, return_fields=('pkey_boring', 'mv_mtaw'))
 

@@ -241,21 +241,4 @@ class HydrogeologischeStratigrafieSearch(AbstractSearch):
         return df
 
 
-if __name__ == '__main__':
-    import os, sys
-    import numpy as np
-    import inspect
-    # check pydov path
-    import pydov
-    print(pydov.__path__)
-    from pydov.search.interpretaties import InformeleStratigrafieSearch
-    from pydov.search.interpretaties import HydrogeologischeStratigrafieSearch
-    ip_infstrat = InformeleStratigrafieSearch()
-    ip_hydrogeo = HydrogeologischeStratigrafieSearch()
-
-    df = ip_hydrogeo.search(location=(153145, 206930, 153150, 206935))
-
-    print(df.head())
-
-
 

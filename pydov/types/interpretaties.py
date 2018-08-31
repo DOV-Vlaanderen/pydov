@@ -357,6 +357,7 @@ class HydrogeologischeStratigrafie(AbstractDovType):
                 returntype='string'
             )
             infstrat.data['pkey_sondering'] = np.nan
+
         elif typeproef == 'Sondering':
             infstrat.data['pkey_sondering'] = cls._parse(
                 func=feature.findtext,

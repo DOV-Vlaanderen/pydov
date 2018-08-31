@@ -30,7 +30,19 @@ class AbstractCommon(object):
             subclass.
 
         """
-        raise NotImplementedError('This should be implemented in a subclass.')
+        xml = self._get_xml_data()
+        tree = etree.fromstring(xml)
+
+        for field in self.get_fields(source=('xml',),
+                                     include_subtypes=False).values():
+            self.data[field['name']] = self._parse(
+                func=tree.findtext,
+                xpath=field['sourcefield'],
+                namespace=None,
+                returntype=field.get('type', None)
+            )
+
+        self._parse_subtypes(xml)
 
     @classmethod
     def _parse(cls, func, xpath, namespace, returntype):

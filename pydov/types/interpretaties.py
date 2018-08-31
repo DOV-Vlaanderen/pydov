@@ -3,8 +3,6 @@
 subtypes."""
 import numpy as np
 
-from owslib.etree import etree
-
 from pydov.types.abstract import (
     AbstractDovType,
     AbstractDovSubType,
@@ -187,24 +185,6 @@ class InformeleStratigrafie(AbstractDovType):
 
         return infstrat
 
-    def _parse_xml_data(self):
-        """Get remote XML data for this DOV object, parse the raw XML and
-        save the results in the data object.
-        """
-        xml = self._get_xml_data()
-        tree = etree.fromstring(xml)
-
-        for field in self.get_fields(source=('xml',),
-                                     include_subtypes=False).values():
-            self.data[field['name']] = self._parse(
-                func=tree.findtext,
-                xpath=field['sourcefield'],
-                namespace=None,
-                returntype=field.get('type', None)
-            )
-
-        self._parse_subtypes(xml)
-
 
 class HydrogeologischeStratigrafieLaag(AbstractDovSubType):
 
@@ -321,7 +301,7 @@ class HydrogeologischeStratigrafie(AbstractDovType):
 
         """
         super(HydrogeologischeStratigrafie, self).__init__(
-            'interpretatie', pkey)
+              'interpretatie', pkey)
 
     @classmethod
     def from_wfs_element(cls, feature, namespace):
@@ -342,7 +322,7 @@ class HydrogeologischeStratigrafie(AbstractDovType):
             element.
 
         """
-        infstrat = HydrogeologischeStratigrafie(
+        hydstrat = HydrogeologischeStratigrafie(
             feature.findtext('./{%s}Interpretatiefiche' % namespace))
 
         typeproef = cls._parse(
@@ -353,53 +333,35 @@ class HydrogeologischeStratigrafie(AbstractDovType):
         )
 
         if typeproef == 'Boring':
-            infstrat.data['pkey_boring'] = cls._parse(
+            hydstrat.data['pkey_boring'] = cls._parse(
                 func=feature.findtext,
                 xpath='Proeffiche',
                 namespace=namespace,
                 returntype='string'
             )
-            infstrat.data['pkey_sondering'] = np.nan
+            hydstrat.data['pkey_sondering'] = np.nan
 
         elif typeproef == 'Sondering':
-            infstrat.data['pkey_sondering'] = cls._parse(
+            hydstrat.data['pkey_sondering'] = cls._parse(
                 func=feature.findtext,
                 xpath='Proeffiche',
                 namespace=namespace,
                 returntype='string'
             )
-            infstrat.data['pkey_boring'] = np.nan
+            hydstrat.data['pkey_boring'] = np.nan
         else:
-            infstrat.data['pkey_boring'] = np.nan
-            infstrat.data['pkey_sondering'] = np.nan
+            hydstrat.data['pkey_boring'] = np.nan
+            hydstrat.data['pkey_sondering'] = np.nan
 
         for field in cls.get_fields(source=('wfs',)).values():
             if field['name'] in ['pkey_boring', 'pkey_sondering']:
                 continue
 
-            infstrat.data[field['name']] = cls._parse(
+            hydstrat.data[field['name']] = cls._parse(
                 func=feature.findtext,
                 xpath=field['sourcefield'],
                 namespace=namespace,
                 returntype=field.get('type', None)
             )
 
-        return infstrat
-
-    def _parse_xml_data(self):
-        """Get remote XML data for this DOV object, parse the raw XML and
-        save the results in the data object.
-        """
-        xml = self._get_xml_data()
-        tree = etree.fromstring(xml)
-
-        for field in self.get_fields(source=('xml',),
-                                     include_subtypes=False).values():
-            self.data[field['name']] = self._parse(
-                func=tree.findtext,
-                xpath=field['sourcefield'],
-                namespace=None,
-                returntype=field.get('type', None)
-            )
-
-        self._parse_subtypes(xml)
+        return hydstrat

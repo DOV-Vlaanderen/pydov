@@ -85,6 +85,7 @@ class SimpleStatusHook(AbstractHook):
         self.result_count = 0
         self.prog_counter = 0
         self.init_time = None
+        self.previous_remaining = None
 
     def _write_progress(self, char):
         """Write progress to standard output.
@@ -107,8 +108,10 @@ class SimpleStatusHook(AbstractHook):
             time_per_item = time_elapsed/self.prog_counter
             remaining_mins = int((time_per_item*(
                 self.result_count-self.prog_counter))/60)
-            if remaining_mins > 1:
+            if remaining_mins > 1 and remaining_mins != \
+                    self.previous_remaining:
                 remaining = " (%i min. left)" % remaining_mins
+                self.previous_remaining = remaining_mins
             else:
                 remaining = ""
             sys.stdout.write('%s\n[%03i/%03i] ' % (
@@ -135,6 +138,7 @@ class SimpleStatusHook(AbstractHook):
         self.result_count = 0
         self.prog_counter = 0
         self.init_time = time.time()
+        self.previous_remaining = None
 
     def wfs_search_result(self, number_of_results):
         """When the WFS search completes, set the total result count to

@@ -270,8 +270,7 @@ class AbstractSearch(object):
             all fields are currently supported as a search parameter.
         return_fields : list<str> or tuple<str> or set<str>
             A list of fields to be returned in the output data. This should
-            be a subset of the fields provided in `get_fields()`. Note that
-            not all fields are currently supported as return fields.
+            be a subset of the fields provided in `get_fields()`.
 
         Raises
         ------

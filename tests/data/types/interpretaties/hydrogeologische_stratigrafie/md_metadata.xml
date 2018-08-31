@@ -2,7 +2,7 @@
 <csw:GetRecordByIdResponse xmlns:csw="http://www.opengis.net/cat/csw/2.0.2">
   <gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gml="http://www.opengis.net/gml" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:geonet="http://www.fao.org/geonetwork">
     <gmd:fileIdentifier>
-      <gco:CharacterString>bd171ea4-2509-478d-a21c-c2728d3a9051</gco:CharacterString>
+      <gco:CharacterString>25c5d9fa-c2ba-4184-b796-fde790e73d39</gco:CharacterString>
     </gmd:fileIdentifier>
     <gmd:language>
       <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="dut" />
@@ -67,7 +67,7 @@
       </gmd:CI_ResponsibleParty>
     </gmd:contact>
     <gmd:dateStamp>
-      <gco:DateTime>2018-02-21T16:15:28</gco:DateTime>
+      <gco:DateTime>2018-02-21T16:14:17</gco:DateTime>
     </gmd:dateStamp>
     <gmd:metadataStandardName>
       <gco:CharacterString>ISO 19115/2003/Cor.1:2006</gco:CharacterString>
@@ -122,7 +122,7 @@
         <gmd:citation>
           <gmd:CI_Citation>
             <gmd:title>
-              <gco:CharacterString>Informele stratigrafie</gco:CharacterString>
+              <gco:CharacterString>Hydrogeologische stratigrafie</gco:CharacterString>
             </gmd:title>
             <gmd:date>
               <gmd:CI_Date>
@@ -137,7 +137,7 @@
             <gmd:identifier>
               <gmd:RS_Identifier>
                 <gmd:code>
-                  <gco:CharacterString>9da89832-a27c-4ce0-ba99-758c3eb2164a</gco:CharacterString>
+                  <gco:CharacterString>ee286429-d2de-422d-84c0-c6e37624dc35</gco:CharacterString>
                 </gmd:code>
                 <gmd:codeSpace>
                   <gco:CharacterString>DOV-be</gco:CharacterString>
@@ -147,10 +147,10 @@
           </gmd:CI_Citation>
         </gmd:citation>
         <gmd:abstract>
-          <gco:CharacterString>Een informele stratigrafie van een boring is, net als een formele stratigrafie, een lithostratigrafische interpretatie van een (gecodeerde) lithologische beschrijving per diepte-interval. Het verschil met de formele stratigrafie is dat de informele stratigrafie niet moet voldoen aan een algemeen aanvaarde standaard. De informele stratigrafie is een plaats in DOV om oude interpretaties of interpretaties die niet voldoen aan de huidige stratigrafische indeling toch weer te geven. De informele stratigrafie kan ook een gedetailleerde beschrijving bevatten van een lithostratigrafische eenheid.</gco:CharacterString>
+          <gco:CharacterString>De hydrostratigrafie geeft, op basis van de (gecodeerde) lithologie, een indeling weer naar de al dan niet watervoerende eigenschappen van een bepaald beschreven diepte-interval. Deze interpretatie respecteert de lithostratigrafie van het Tertiair, maar deelt deze anders in. De hiervoor gebruikte standaard is de Hydrogeologische Codering van de Ondergrond van Vlaanderen (HCOV). Deze kan beschouwd worden als de officiele hydrogeologische codering voor het Vlaams Gewest.</gco:CharacterString>
         </gmd:abstract>
         <gmd:purpose>
-          <gco:CharacterString>De informele stratigrafie is een plaats in DOV om oude interpretaties, of interpretaties die niet voldoen aan de huidige Vlaamse stratigrafische indeling toch weer te geven. Ze wordt weergegeven op het DOV-boorrapport.</gco:CharacterString>
+          <gco:CharacterString>Indeling van een bepaald beschreven diepte-interval op basis van de al dan niet-watervoerende eigenschappen van dit diepte-interval volgens de HCOV-codering.</gco:CharacterString>
         </gmd:purpose>
         <gmd:status>
           <gmd:MD_ProgressCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ProgressCode" codeListValue="onGoing" />
@@ -205,46 +205,6 @@
         <gmd:pointOfContact>
           <gmd:CI_ResponsibleParty>
             <gmd:organisationName>
-              <gco:CharacterString>Vlaamse overheid, Departement Omgeving, Vlaams Planbureau voor Omgeving (VPO)</gco:CharacterString>
-            </gmd:organisationName>
-            <gmd:contactInfo>
-              <gmd:CI_Contact>
-                <gmd:address>
-                  <gmd:CI_Address>
-                    <gmd:deliveryPoint>
-                      <gco:CharacterString>Koning Albert II-laan 20 bus 8</gco:CharacterString>
-                    </gmd:deliveryPoint>
-                    <gmd:city>
-                      <gco:CharacterString>Brussel</gco:CharacterString>
-                    </gmd:city>
-                    <gmd:postalCode>
-                      <gco:CharacterString>1000</gco:CharacterString>
-                    </gmd:postalCode>
-                    <gmd:country>
-                      <gco:CharacterString>België</gco:CharacterString>
-                    </gmd:country>
-                    <gmd:electronicMailAddress>
-                      <gco:CharacterString>natuurlijkerijkdommenbrussel.omgeving@vlaanderen.be</gco:CharacterString>
-                    </gmd:electronicMailAddress>
-                  </gmd:CI_Address>
-                </gmd:address>
-                <gmd:onlineResource>
-                  <gmd:CI_OnlineResource>
-                    <gmd:linkage>
-                      <gmd:URL>https://www.omgevingvlaanderen.be</gmd:URL>
-                    </gmd:linkage>
-                  </gmd:CI_OnlineResource>
-                </gmd:onlineResource>
-              </gmd:CI_Contact>
-            </gmd:contactInfo>
-            <gmd:role>
-              <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_RoleCode" codeListValue="custodian" />
-            </gmd:role>
-          </gmd:CI_ResponsibleParty>
-        </gmd:pointOfContact>
-        <gmd:pointOfContact>
-          <gmd:CI_ResponsibleParty>
-            <gmd:organisationName>
               <gco:CharacterString>Vlaamse overheid - Vlaamse MilieuMaatschappij - Afdeling Operationeel Waterbeheer</gco:CharacterString>
             </gmd:organisationName>
             <gmd:contactInfo>
@@ -282,60 +242,10 @@
             </gmd:role>
           </gmd:CI_ResponsibleParty>
         </gmd:pointOfContact>
-        <gmd:pointOfContact>
-          <gmd:CI_ResponsibleParty>
-            <gmd:organisationName>
-              <gco:CharacterString>Departement Mobiliteit en Openbare Werken (MOW) - Afdeling Geotechniek</gco:CharacterString>
-            </gmd:organisationName>
-            <gmd:contactInfo>
-              <gmd:CI_Contact>
-                <gmd:phone>
-                  <gmd:CI_Telephone>
-                    <gmd:voice>
-                      <gco:CharacterString>+32 9 240 75 89</gco:CharacterString>
-                    </gmd:voice>
-                    <gmd:facsimile>
-                      <gco:CharacterString>+32 9 240 75 00</gco:CharacterString>
-                    </gmd:facsimile>
-                  </gmd:CI_Telephone>
-                </gmd:phone>
-                <gmd:address>
-                  <gmd:CI_Address>
-                    <gmd:deliveryPoint>
-                      <gco:CharacterString>Technologiepark Gebouw 905</gco:CharacterString>
-                    </gmd:deliveryPoint>
-                    <gmd:city>
-                      <gco:CharacterString>Zwijnaarde</gco:CharacterString>
-                    </gmd:city>
-                    <gmd:postalCode>
-                      <gco:CharacterString>9052</gco:CharacterString>
-                    </gmd:postalCode>
-                    <gmd:country>
-                      <gco:CharacterString>België</gco:CharacterString>
-                    </gmd:country>
-                    <gmd:electronicMailAddress>
-                      <gco:CharacterString>geotechniek@vlaanderen.be</gco:CharacterString>
-                    </gmd:electronicMailAddress>
-                  </gmd:CI_Address>
-                </gmd:address>
-                <gmd:onlineResource>
-                  <gmd:CI_OnlineResource>
-                    <gmd:linkage>
-                      <gmd:URL>http://www.geotechniekvo.be</gmd:URL>
-                    </gmd:linkage>
-                  </gmd:CI_OnlineResource>
-                </gmd:onlineResource>
-              </gmd:CI_Contact>
-            </gmd:contactInfo>
-            <gmd:role>
-              <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_RoleCode" codeListValue="custodian" />
-            </gmd:role>
-          </gmd:CI_ResponsibleParty>
-        </gmd:pointOfContact>
         <gmd:graphicOverview xmlns:srv="http://www.isotc211.org/2005/srv">
           <gmd:MD_BrowseGraphic>
             <gmd:fileName>
-              <gco:CharacterString>https://www.dov.vlaanderen.be/geonetwork/srv/eng/resources.get?uuid=bd171ea4-2509-478d-a21c-c2728d3a9051&amp;fname=informele_stratigrafie_1489503827259.png</gco:CharacterString>
+              <gco:CharacterString>https://www.dov.vlaanderen.be/geonetwork/srv/eng/resources.get?uuid=25c5d9fa-c2ba-4184-b796-fde790e73d39&amp;fname=hydrogeologische_stratigrafie_1489503916524.png</gco:CharacterString>
             </gmd:fileName>
             <gmd:fileDescription>
               <gco:CharacterString>thumbnail</gco:CharacterString>
@@ -446,6 +356,9 @@
             <gmd:keyword xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:srv="http://www.isotc211.org/2005/srv">
               <gco:CharacterString>Toegevoegd GDI-Vl</gco:CharacterString>
             </gmd:keyword>
+            <gmd:keyword xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:srv="http://www.isotc211.org/2005/srv">
+              <gco:CharacterString>Lijst M&amp;R INSPIRE</gco:CharacterString>
+            </gmd:keyword>
             <gmd:thesaurusName xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:srv="http://www.isotc211.org/2005/srv">
               <gmd:CI_Citation>
                 <gmd:title>
@@ -486,10 +399,7 @@
               <gco:CharacterString>Geologie</gco:CharacterString>
             </gmd:keyword>
             <gmd:keyword>
-              <gco:CharacterString>Geotechniek</gco:CharacterString>
-            </gmd:keyword>
-            <gmd:keyword>
-              <gco:CharacterString>Informele stratigrafie</gco:CharacterString>
+              <gco:CharacterString>Hydrogeologische stratigrafie</gco:CharacterString>
             </gmd:keyword>
             <gmd:thesaurusName>
               <gmd:CI_Citation>
@@ -513,7 +423,8 @@
         <gmd:resourceSpecificUsage>
           <gmd:MD_Usage>
             <gmd:specificUsage>
-              <gco:CharacterString>De informele stratigrafieën zijn vaak de basis geweest van de oudere geologische kaarten die niet in DOV zijn opgenomen.</gco:CharacterString>
+              <gco:CharacterString>Een hydrogeologische stratigrafie geeft een beeld van de watervoerende eigenschappen in de ondergrond op een welbepaalde locatie. 
+Deze vormen o.a. de basis van hydrogeologische modelleringen, studies, rapporteringen en  beleidsopdrachten.</gco:CharacterString>
             </gmd:specificUsage>
             <gmd:userContactInfo />
           </gmd:MD_Usage>
@@ -666,15 +577,15 @@
         <gmd:includedWithDataset>
           <gco:Boolean>true</gco:Boolean>
         </gmd:includedWithDataset>
-        <gmd:featureCatalogueCitation uuidref="b6c651f9-5972-4252-ae10-ad69ad08e78d">
+        <gmd:featureCatalogueCitation uuidref="b89e72de-35a9-4bca-8d0b-712d1e881ea6">
           <gmd:CI_Citation>
             <gmd:title>
-              <gco:CharacterString>Informele stratigrafie (objectencatalogus)</gco:CharacterString>
+              <gco:CharacterString>Hydrogeologische stratigrafie (objectencatalogus)</gco:CharacterString>
             </gmd:title>
             <gmd:date>
               <gmd:CI_Date>
                 <gmd:date>
-                  <gco:Date>2017-04-12</gco:Date>
+                  <gco:Date>2017-04-10</gco:Date>
                 </gmd:date>
                 <gmd:dateType>
                   <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation" />
@@ -769,10 +680,10 @@
                   <gco:CharacterString>OGC:WMS</gco:CharacterString>
                 </gmd:protocol>
                 <gmd:name>
-                  <gco:CharacterString>interpretaties:informele_stratigrafie</gco:CharacterString>
+                  <gco:CharacterString>interpretaties:hydrogeologische_stratigrafie</gco:CharacterString>
                 </gmd:name>
                 <gmd:description>
-                  <gco:CharacterString>WMS-endpoint Informele stratigrafie</gco:CharacterString>
+                  <gco:CharacterString>WMS-endpoint Hydrogeologische stratigrafie</gco:CharacterString>
                 </gmd:description>
               </gmd:CI_OnlineResource>
             </gmd:onLine>
@@ -785,10 +696,10 @@
                   <gco:CharacterString>OGC:WMS-1.3.0-http-get-capabilities</gco:CharacterString>
                 </gmd:protocol>
                 <gmd:name>
-                  <gco:CharacterString>interpretaties:informele_stratigrafie</gco:CharacterString>
+                  <gco:CharacterString>interpretaties:hydrogeologische_stratigrafie</gco:CharacterString>
                 </gmd:name>
                 <gmd:description>
-                  <gco:CharacterString>WMS-capabilities Informele stratigrafie</gco:CharacterString>
+                  <gco:CharacterString>WMS-capabilities Hydrogeologische stratigrafie</gco:CharacterString>
                 </gmd:description>
               </gmd:CI_OnlineResource>
             </gmd:onLine>
@@ -801,10 +712,10 @@
                   <gco:CharacterString>OGC:WMS-1.3.0-http-get-map</gco:CharacterString>
                 </gmd:protocol>
                 <gmd:name>
-                  <gco:CharacterString>interpretaties:informele_stratigrafie</gco:CharacterString>
+                  <gco:CharacterString>interpretaties:hydrogeologische_stratigrafie</gco:CharacterString>
                 </gmd:name>
                 <gmd:description>
-                  <gco:CharacterString>WMS-map Informele stratigrafie</gco:CharacterString>
+                  <gco:CharacterString>WMS-map Hydrogeologische stratigrafie</gco:CharacterString>
                 </gmd:description>
               </gmd:CI_OnlineResource>
             </gmd:onLine>
@@ -817,10 +728,10 @@
                   <gco:CharacterString>OGC:WFS</gco:CharacterString>
                 </gmd:protocol>
                 <gmd:name>
-                  <gco:CharacterString>interpretaties:informele_stratigrafie</gco:CharacterString>
+                  <gco:CharacterString>interpretaties:hydrogeologische_stratigrafie</gco:CharacterString>
                 </gmd:name>
                 <gmd:description>
-                  <gco:CharacterString>WFS-endpoint Informele stratigrafie</gco:CharacterString>
+                  <gco:CharacterString>WFS-endpoint Hydrogeologische stratigrafie</gco:CharacterString>
                 </gmd:description>
               </gmd:CI_OnlineResource>
             </gmd:onLine>
@@ -833,10 +744,10 @@
                   <gco:CharacterString>OGC:WFS-1.1.0-http-get-capabilities</gco:CharacterString>
                 </gmd:protocol>
                 <gmd:name>
-                  <gco:CharacterString>interpretaties:informele_stratigrafie</gco:CharacterString>
+                  <gco:CharacterString>interpretaties:hydrogeologische_stratigrafie</gco:CharacterString>
                 </gmd:name>
                 <gmd:description>
-                  <gco:CharacterString>WFS-capabilities Informele stratigrafie</gco:CharacterString>
+                  <gco:CharacterString>WFS-capabilities Hydrogeologische stratigrafie</gco:CharacterString>
                 </gmd:description>
               </gmd:CI_OnlineResource>
             </gmd:onLine>
@@ -849,26 +760,26 @@
                   <gco:CharacterString>OGC:WFS-1.1.0-http-get-feature</gco:CharacterString>
                 </gmd:protocol>
                 <gmd:name>
-                  <gco:CharacterString>interpretaties:informele_stratigrafie</gco:CharacterString>
+                  <gco:CharacterString>interpretaties:hydrogeologische_stratigrafie</gco:CharacterString>
                 </gmd:name>
                 <gmd:description>
-                  <gco:CharacterString>WFS-getfeature Informele stratigrafie</gco:CharacterString>
+                  <gco:CharacterString>WFS-getfeature Hydrogeologische stratigrafie</gco:CharacterString>
                 </gmd:description>
               </gmd:CI_OnlineResource>
             </gmd:onLine>
             <gmd:onLine>
               <gmd:CI_OnlineResource>
                 <gmd:linkage>
-                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/interpretaties/wms/kml?layers=interpretaties:informele_stratigrafie</gmd:URL>
+                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/interpretaties/wms/kml?layers=interpretaties:hydrogeologische_stratigrafie</gmd:URL>
                 </gmd:linkage>
                 <gmd:protocol>
                   <gco:CharacterString>GLG:KML-2.0-http-get-map</gco:CharacterString>
                 </gmd:protocol>
                 <gmd:name>
-                  <gco:CharacterString>interpretaties:informele_stratigrafie</gco:CharacterString>
+                  <gco:CharacterString>interpretaties:hydrogeologische_stratigrafie</gco:CharacterString>
                 </gmd:name>
                 <gmd:description>
-                  <gco:CharacterString>KML Informele stratigrafie</gco:CharacterString>
+                  <gco:CharacterString>KML Hydrogeologische stratigrafie</gco:CharacterString>
                 </gmd:description>
               </gmd:CI_OnlineResource>
             </gmd:onLine>
@@ -935,8 +846,7 @@
         <gmd:lineage>
           <gmd:LI_Lineage>
             <gmd:statement>
-              <gco:CharacterString>De informele stratigrafieën werden grotendeels overgenomen uit de archieven van de BGD ten tijde van de geologische karteringen. 
-De nauwkeurigheid van de interpretatie hangt af van de auteur, de boormethode, doelstelling van de boring, enz. De interpretaties in DOV worden zoveel als mogelijk overgenomen zoals deze door de originele auteur werden opgemaakt.</gco:CharacterString>
+              <gco:CharacterString>De nauwkeurigheid van de interpretatie hangt af van de auteur, de boormethode, doelstelling van de boring, enz. De interpretaties in DOV worden zoveel als mogelijk overgenomen zoals deze door de originele auteur werden opgemaakt.</gco:CharacterString>
             </gmd:statement>
           </gmd:LI_Lineage>
         </gmd:lineage>

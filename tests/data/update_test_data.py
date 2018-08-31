@@ -141,14 +141,14 @@ if __name__ == '__main__':
         'https://www.dov.vlaanderen.be/geonetwork/srv/dut/csw'
         '?Service=CSW&Request=GetRecordById&Version=2.0.2'
         '&outputSchema=http://www.isotc211.org/2005/gmd'
-        '&elementSetName=full&id=25c5d9fa-c2ba-4184-b796-fde790e73d39')
+        '&elementSetName=full&id=b89e72de-35a9-4bca-8d0b-712d1e881ea6')
 
     update_file('types/interpretaties/hydrogeologische_stratigrafie/'
                 'md_metadata.xml',
                 'https://www.dov.vlaanderen.be/geonetwork/srv/dut/csw'
                 '?Service=CSW&Request=GetRecordById&Version=2.0.2'
                 '&outputSchema=http://www.isotc211.org/2005/gmd'
-                '&elementSetName=full&id=bd171ea4-2509-478d-a21c-c2728d3a9051')
+                '&elementSetName=full&id=25c5d9fa-c2ba-4184-b796-fde790e73d39')
 
     update_file(
         'types/interpretaties/hydrogeologische_stratigrafie/'

@@ -26,17 +26,17 @@ from tests.test_search import (
 )
 
 location_md_metadata = \
-    'tests/data/types/interpretaties/hydrogeologische_stratigrafie' \
-    '/md_metadata.xml'
+    'tests/data/types/interpretaties/hydrogeologische_stratigrafie/' \
+    'md_metadata.xml'
 location_fc_featurecatalogue = \
-    'tests/data/types/interpretaties/hydrogeologische_stratigrafie' \
-    '/fc_featurecatalogue.xml'
+    'tests/data/types/interpretaties/hydrogeologische_stratigrafie/' \
+    'fc_featurecatalogue.xml'
 location_wfs_describefeaturetype = \
-    'tests/data/types/interpretaties/hydrogeologische_stratigrafie' \
-    '/wfsdescribefeaturetype.xml'
+    'tests/data/types/interpretaties/hydrogeologische_stratigrafie/' \
+    'wfsdescribefeaturetype.xml'
 location_wfs_getfeature = \
-    'tests/data/types/interpretaties/hydrogeologische_stratigrafie' \
-    '/wfsgetfeature.xml'
+    'tests/data/types/interpretaties/hydrogeologische_stratigrafie/' \
+    'wfsgetfeature.xml'
 location_wfs_feature = \
     'tests/data/types/interpretaties/hydrogeologische_stratigrafie/feature.xml'
 location_dov_xml = \

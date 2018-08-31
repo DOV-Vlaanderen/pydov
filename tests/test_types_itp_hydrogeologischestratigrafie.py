@@ -62,7 +62,7 @@ class TestHydrogeologischeStratigrafie(AbstractTestTypes):
         """
         return ['pkey_interpretatie', 'pkey_boring',
                 'pkey_sondering', 'betrouwbaarheid_interpretatie', 'x', 'y',
-                'diepte_laag_van', 'diepte_laag_tot', 'beschrijving']
+                'diepte_laag_van', 'diepte_laag_tot', 'aquifer']
 
     def get_field_names_subtypes(self):
         """Get the field names of this type that originate from subtypes only.

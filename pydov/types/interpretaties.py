@@ -356,7 +356,7 @@ class HydrogeologischeStratigrafie(AbstractDovType):
                 namespace=namespace,
                 returntype='string'
             )
-            infstrat.data['pkey_sondering'] = None
+            infstrat.data['pkey_sondering'] = np.nan
         elif typeproef == 'Sondering':
             infstrat.data['pkey_sondering'] = cls._parse(
                 func=feature.findtext,
@@ -364,10 +364,10 @@ class HydrogeologischeStratigrafie(AbstractDovType):
                 namespace=namespace,
                 returntype='string'
             )
-            infstrat.data['pkey_boring'] = None
+            infstrat.data['pkey_boring'] = np.nan
         else:
-            infstrat.data['pkey_boring'] = None
-            infstrat.data['pkey_sondering'] = None
+            infstrat.data['pkey_boring'] = np.nan
+            infstrat.data['pkey_sondering'] = np.nan
 
         for field in cls.get_fields(source=('wfs',)).values():
             if field['name'] in ['pkey_boring', 'pkey_sondering']:

@@ -11,7 +11,7 @@
       <gco:CharacterString>1</gco:CharacterString>
     </gmx:versionNumber>
     <gmx:versionDate>
-      <gco:DateTime>2018-01-04T15:35:35</gco:DateTime>
+      <gco:DateTime>2018-03-01T10:12:44</gco:DateTime>
     </gmx:versionDate>
     <gfc:producer>
       <gmd:CI_ResponsibleParty>
@@ -75,7 +75,7 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName>dataengine_id</gco:LocalName>
+              <gco:LocalName>generated_id</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
               <gco:CharacterString>Oplopend uniek volgnummer ter identificatie (intern en niet-stabiel).</gco:CharacterString>
@@ -1934,7 +1934,7 @@
               <gco:LocalName>doorheen_quartair</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>Geeft aan of de boring dieper ging dan de grens van het quartair en het Neogeen/Paleogeen (Tertiair). Dit veld is enkel ingevuld indien er minstens één interpretatie van het type 'formele stratigrafie' gekoppeld is aan de boring én het Quartair geïnterpreteerd werd.</gco:CharacterString>
+              <gco:CharacterString>Geeft aan of de boring dieper ging dan de grens van het Quartair en het Neogeen/Paleogeen (Tertiair). Dit veld is enkel ingevuld indien er minstens één interpretatie van het type 'formele stratigrafie' gekoppeld is aan de boring én het Quartair geïnterpreteerd werd.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>
@@ -1981,7 +1981,7 @@
               <gco:LocalName>dikte_quartair</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>Dit veld geeft de dikte weer van het quartair (in meter). Dit is een getal met twee decimalen, soms voorafgegaan door &lt; of &gt;= (bv. &gt;= 10.00).</gco:CharacterString>
+              <gco:CharacterString>Dit veld geeft de dikte weer van het Quartair (in meter). Dit is een getal met twee decimalen, soms voorafgegaan door &lt; of &gt;= (bv. &gt;= 10.00).</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>
@@ -2028,7 +2028,7 @@
               <gco:LocalName>tertiair_onder_quartair</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>Indien 'doorheen_quartair' true is bevat dit veld de afkorting van de eerste lithostratigrafische eenheid van het neogeen/paleogeen (tertiair) die voorkomt onder het quartair.</gco:CharacterString>
+              <gco:CharacterString>Indien 'doorheen_quartair' true is bevat dit veld de afkorting van de eerste lithostratigrafische eenheid van het Neogeen/Paleogeen (Tertiair) die voorkomt onder het Quartair.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>

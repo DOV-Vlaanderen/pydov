@@ -6,6 +6,8 @@ import types
 from collections import OrderedDict
 from distutils.util import strtobool
 
+import numpy as np
+
 from owslib.etree import etree
 from owslib.util import openURL
 
@@ -56,7 +58,7 @@ class AbstractCommon(object):
         """
         if returntype == 'string':
             def typeconvert(x):
-                return str(x).strip()
+                return x.strip()
         elif returntype == 'integer':
             def typeconvert(x):
                 return int(x)
@@ -65,8 +67,12 @@ class AbstractCommon(object):
                 return float(x)
         elif returntype == 'date':
             def typeconvert(x):
-                return datetime.datetime.strptime(x, '%Y-%m-%dZ').date() + \
-                       datetime.timedelta(days=1)
+                # Patch for Zulu-time issue of geoserver for WFS 1.1.0
+                if x.endswith('Z'):
+                    return datetime.datetime.strptime(x, '%Y-%m-%dZ').date() \
+                           + datetime.timedelta(days=1)
+                else:
+                    return datetime.datetime.strptime(x, '%Y-%m-%d').date()
         elif returntype == 'boolean':
             def typeconvert(x):
                 return strtobool(x) == 1
@@ -81,7 +87,7 @@ class AbstractCommon(object):
             text = func('./' + xpath.lstrip('/'))
 
         if text is None:
-            return None
+            return np.nan
         return typeconvert(text)
 
 
@@ -518,8 +524,7 @@ class AbstractDovType(AbstractCommon):
 
         """
         fields = self.get_field_names(return_fields)
-        ownfields = self.get_field_names(include_subtypes=False,
-                                         return_fields=return_fields)
+        ownfields = self.get_field_names(include_subtypes=False)
         subfields = [f for f in fields if f not in ownfields]
 
         if len(subfields) > 0:

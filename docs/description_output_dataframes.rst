@@ -11,8 +11,7 @@ Possible interpretations are:
  * Quartaire stratigrafie
  * Geotechnische coderingen
 
-Below the desired attributes for each interpretation as
-item /newline/ new_name, data_type, example
+Below the desired attributes for each interpretation.
 The new_name column represents the headers of the final dataframe.
 Some elements can occur more than once, e.g. 'bijmenging' in 'Gecodeerde
 lithologie' or 'Geotechnische coderingen'. All occurrences should be included
@@ -142,8 +141,7 @@ interpreted data.
 Boreholes
 =========
 
-Below the desired attributes for each borehole as
-item /newline/ new_name, data_type, example
+Below the desired attributes for each borehole.
 The new_name column represents the headers of the final dataframe.
 
 The output of the boreholes can be joined with the interpretations following
@@ -154,6 +152,10 @@ between the 'methode_van'/'methode_tot' of the borehole:
     AND interpretation["van"] >= boring["methode_van"]
     AND interpretation["tot"] <= boring["methode_tot"]
 
+In addition, not all wfs fields are included in the dataframe, but can be used
+to select records from the DOV database. E.g.: 'informele_stratigrafie', 
+'formele_stratigrafie', 'hydrogeologische_stratigrafie' etc. are boolean
+fields available in the wfs to search on.
 
   .. csv-table:: Boringen
     :header-rows: 1
@@ -175,24 +177,78 @@ between the 'methode_van'/'methode_tot' of the borehole:
     xml,/kern:dov-schema/boring/details/boormethode/tot,diepte_methode_tot,float,19.00
     xml,/kern:dov-schema/boring/details/boormethode/methode,boormethode,string,droge boring
 
+|
 
-DovGrondwaterFilter object
+CPT data (In Dutch: sonderingen)
+================================
+
+Below the desired attributes for each CPT measurement. Two dataframes are discerned:
+ * one with metadata about the measurement (location, type etc.)
+ * one with actual measurement data from the xml, with the pkey to join the metadata
+
+The new_name column represents the headers of the final dataframe.
+More than one measurement can be performed, listed as a "metingWeerstand" type, i.e.:
+qc, Qt, fs, u and i. All elements are by default included in the output dataframe, where
+NaNs indicate that it wasn't measured.
+
+In addition, not all wfs fields are included in the dataframe, but can be used
+to select records from the DOV database. E.g.: 'informele_stratigrafie', 
+'formele_stratigrafie' and 'hydrogeologische_stratigrafie' are boolean
+fields available in the wfs to search on.
+
+  .. csv-table:: Sonderingen metadata
+    :header-rows: 1
+
+    source,field,new_name,data_type,example
+    wfs,fiche,pkey_sondering,string,https://.../2011-009205.xml
+    wfs,sondeernummer,sondeernummer,string,GEO-10/139-S113
+    wfs,X_mL72,x,float,68517.9
+    wfs,Y_mL72,y,float,223693.3
+    wfs,Z_mTAW,start_sondering_mtaw,float,5.40
+    wfs,diepte_van_m,diepte_sondering_van,float,0.00
+    wfs,diepte_tot_m,diepte_sondering_tot,float,30.48
+    wfs,datum_aanvang,datum_aanvang,date,02/09/2011
+    wfs,uitvoerder,uitvoerder,string,VO - Afdeling Geotechniek
+    wfs,sondeermethode,sondeermethode,string,continu elektrisch
+    wfs,apparaat_type,apparaat,string,200kN - MAN2
+    xml,/kern:dov-schema/sondering/visueelonderzoek/datumtijd_waarneming_grondwaterstand,datum_gw_meting,date,02/09/2011
+    xml,/kern:dov-schema/sondering/visueelonderzoek/grondwaterstand,gw_meting,float,02/09/2011
+
+|
+
+  .. csv-table:: Sonderingen measurement data
+    :header-rows: 1
+
+    source,field,new_name,data_type,example
+    wfs,fiche,pkey_sondering,string,https://.../2011-009205.xml
+    xml,/kern:dov-schema/sondering/sondeonderzoek/penetratietest/meetdata/sondeerdiepte,z,float,1.66
+    xml,/kern:dov-schema/sondering/sondeonderzoek/penetratietest/meetdata/qc,qc,float,0.6500
+    xml,/kern:dov-schema/sondering/sondeonderzoek/penetratietest/meetdata/Qt,Qt,float,NaN
+    xml,/kern:dov-schema/sondering/sondeonderzoek/penetratietest/meetdata/fs,fs,float,18.0000
+    xml,/kern:dov-schema/sondering/sondeonderzoek/penetratietest/meetdata/u,u,float,NaN
+    xml,/kern:dov-schema/sondering/sondeonderzoek/penetratietest/meetdata/i,i,float,0.1000
+    xml,/kern:dov-schema/sondering/sondeonderzoek/penetratietest/meetdata/qc,qc,float,NaN
+
+
+
+GrondwaterFilter object
 ==========================
 
-Het DOVGrondwaterFilter object bevat alle data van een zoekactie op de laag meetnetten.
+The GrondwaterFilter object contains the data available using the `meetnetten`
 
-Acherliggend zit de meeste informatie vervat in 3 dataframes:
+This can be translated to three data.frames:
 
- * ligging: bevat de ligging (xyz)
- * observaties
- * peilmetingen
+ * Filter, with the screen location information
+ * Peilmetingen
+ * Observaties
+
 
 
 Ligging
 ~~~~~~~
 In deze dataframe komen gelijkaardige velden als bij het zoeken in de site:
 
-  .. csv-table:: Ligging
+  .. csv-table:: Filter
     :header-rows: 1
 
     source,field,new_name,data_type,example
@@ -203,11 +259,11 @@ In deze dataframe komen gelijkaardige velden als bij het zoeken in de site:
     wfs,filtertype,filtertype,string,peilfilter
     wfs,X_mL72,x,float,257021.8
     wfs,Y_mL72,y,float,159758.4
-    xml,/kern:dov-schema/grondwaterlocatie/puntligging/oorspronkelijk_maaiveld, mv_mtaw, numeric, 257021.8
+    xml,/kern:dov-schema/grondwaterlocatie/puntligging/oorspronkelijk_maaiveld, mv_mtaw, float, 257021.8
     wfs,gemeente,gemeente,string,Destelbergen
-    xml,/kern:dov-schema/filter/meetnet,meetnet,integer(codelist),8
-    xml,/kern:dov-schema/filter/ligging/aquifer,aquifer,string(codelist),1300
-    xml,/kern:dov-schema/filter/ligging/grondwaterlichaam,grondwaterlichaam,string(codelist),BLKS_1100_GWL_1M
+    xml,/kern:dov-schema/filter/meetnet,meetnet_code,integer(codelist),8
+    xml,/kern:dov-schema/filter/ligging/aquifer,aquifer_code,string(codelist),1300
+    xml,/kern:dov-schema/filter/ligging/grondwaterlichaam,grondwaterlichaam_code,string(codelist),BLKS_1100_GWL_1M
     xml,/kern:dov-schema/filter/ligging/regime,regime,string(codelist),freatisch
     wfs,onderkant_filter_m,diepte_onderkant_filter,float,8.3
     wfs,lengte_filter_m,lengte_filter,float,5.1
@@ -236,7 +292,7 @@ Observaties
     wfs,GW_ID,gw_id,string,1-0709
     wfs,filternr,filternummer,string,2
     xml,/kern:dov-schema/filtermeting/watermonster/identificatie,watermonster,string,1-0709-F2/M2015
-    xml,/kern:dov-schema/filtermeting/watermonster/monstername/datum,datum_monstername,datum,2015-09-03
+    xml,/kern:dov-schema/filtermeting/watermonster/monstername/datum,datum_monstername,date,2015-09-03
     xml,/kern:dov-schema/filtermeting/watermonster/observatie/parameter,parameter,string(codelist),pH
     xml,/kern:dov-schema/filtermeting/watermonster/observatie/waarde_numeriek,waarde,float,5.12
     xml,/kern:dov-schema/filtermeting/watermonster/observatie/eenheid,eenheid,string(codelist),Sörensen
@@ -252,6 +308,8 @@ Peilmetingen
     wfs,filterfiche,pkey_filter,string,https://www.dov.vlaanderen.be/data/filter/2003-000253.xml
     wfs,GW_ID,gw_id,string,1-0709
     wfs,filternr,filternummer,string,2
+    xml,/kern:dov-schema/filtermeting/peilmeting/datum,datum,date,2015-09-03
+    xml,/kern:dov-schema/filtermeting/peilmeting/tijdstip,tijdstip,string,00:00
     xml,/kern:dov-schema/filtermeting/peilmeting/peil_mtaw,peil_mtaw,float,121.88
     xml,/kern:dov-schema/filtermeting/peilmeting/betrouwbaarheid,betrouwbaarheid,string(codelist),goed
     xml,/kern:dov-schema/filtermeting/peilmeting/methode,methode,string(codelist),peillint

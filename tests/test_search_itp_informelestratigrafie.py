@@ -1,12 +1,13 @@
-"""Module grouping tests for the boring search module."""
-import datetime
-
+"""Module grouping tests for the interpretaties search module."""
+import pandas as pd
+import numpy as np
 import pytest
+from pandas import DataFrame
 
+import pydov
 from owslib.fes import PropertyIsEqualTo
-from pydov.search.boring import BoringSearch
-from pydov.types.boring import Boring
-from pydov.util import owsutil
+from pydov.search.interpretaties import InformeleStratigrafieSearch
+from pydov.types.interpretaties import InformeleStratigrafie
 from tests.abstract import (
     AbstractTestSearch,
 )
@@ -24,62 +25,43 @@ from tests.test_search import (
     wfs_feature,
 )
 
-location_md_metadata = 'tests/data/types/boring/md_metadata.xml'
+location_md_metadata = \
+    'tests/data/types/interpretaties/informele_stratigrafie/md_metadata.xml'
 location_fc_featurecatalogue = \
-    'tests/data/types/boring/fc_featurecatalogue.xml'
+    'tests/data/types/interpretaties/informele_stratigrafie/fc_featurecatalogue.xml'
 location_wfs_describefeaturetype = \
-    'tests/data/types/boring/wfsdescribefeaturetype.xml'
-location_wfs_getfeature = 'tests/data/types/boring/wfsgetfeature.xml'
-location_wfs_feature = 'tests/data/types/boring/feature.xml'
-location_dov_xml = 'tests/data/types/boring/boring.xml'
+    'tests/data/types/interpretaties/informele_stratigrafie/wfsdescribefeaturetype.xml'
+location_wfs_getfeature = \
+    'tests/data/types/interpretaties/informele_stratigrafie/wfsgetfeature.xml'
+location_wfs_feature = \
+    'tests/data/types/interpretaties/informele_stratigrafie/feature.xml'
+location_dov_xml = \
+    'tests/data/types/interpretaties/informele_stratigrafie' \
+    '/informele_stratigrafie.xml'
 
 
-@pytest.fixture
-def md_metadata(wfs, mp_remote_md):
-    """PyTest fixture providing a MD_Metadata instance of the
-    dov-pub:Boringen layer.
-
-    Parameters
-    ----------
-    wfs : pytest.fixture returning owslib.wfs.WebFeatureService
-        WebFeatureService based on the local GetCapabilities.
-    mp_remote_md : pytest.fixture
-        Monkeypatch the call to get the remote metadata of the
-        dov-pub:Boringen layer.
-
-    Returns
-    -------
-    owslib.iso.MD_Metadata
-        Parsed metadata describing the Boringen WFS layer in more detail,
-        in the ISO 19115/19139 format.
-
-    """
-    contentmetadata = wfs.contents['dov-pub:Boringen']
-    return owsutil.get_remote_metadata(contentmetadata)
-
-
-class TestBoringSearch(AbstractTestSearch):
+class TestInformeleStratigrafieSearch(AbstractTestSearch):
     def get_search_object(self):
         """Get an instance of the search object for this type.
 
         Returns
         -------
-        pydov.search.boring.BoringSearch
-            Instance of BoringSearch used for searching.
+        pydov.search.interpretaties.InformeleStratigrafieSearch
+            Instance of InformeleStratigrafieSearch used for searching.
 
         """
-        return BoringSearch()
+        return InformeleStratigrafieSearch()
 
     def get_type(self):
         """Get the class reference for this datatype.
 
         Returns
         -------
-        pydov.types.boring.Boring
-            Class reference for the Boring class.
+        pydov.types.interpretaties.InformeleStratigrafie
+            Class reference for the InformeleStratigrafie class.
 
         """
-        return Boring
+        return InformeleStratigrafie
 
     def get_valid_query_single(self):
         """Get a valid query returning a single feature.
@@ -90,8 +72,8 @@ class TestBoringSearch(AbstractTestSearch):
             OGC expression of the query.
 
         """
-        return PropertyIsEqualTo(propertyname='boornummer',
-                                 literal='GEO-04/169-BNo-B1')
+        return PropertyIsEqualTo(propertyname='Proefnummer',
+                                 literal='kb21d54e-B45')
 
     def get_inexistent_field(self):
         """Get the name of a field that doesn't exist.
@@ -113,7 +95,7 @@ class TestBoringSearch(AbstractTestSearch):
             The name of the XML field.
 
         """
-        return 'boormethode'
+        return 'diepte_laag_van'
 
     def get_valid_returnfields(self):
         """Get a list of valid return fields from the main type.
@@ -124,8 +106,7 @@ class TestBoringSearch(AbstractTestSearch):
             A tuple containing only valid return fields.
 
         """
-        return ('pkey_boring', 'boornummer', 'diepte_boring_tot',
-                'datum_aanvang')
+        return ('pkey_interpretatie', 'betrouwbaarheid_interpretatie')
 
     def get_valid_returnfields_subtype(self):
         """Get a list of valid return fields, including fields from a subtype.
@@ -137,8 +118,7 @@ class TestBoringSearch(AbstractTestSearch):
             subtype.
 
         """
-        return ('pkey_boring', 'boornummer', 'diepte_methode_van',
-                'diepte_methode_tot')
+        return ('pkey_interpretatie', 'diepte_laag_van', 'diepte_laag_tot')
 
     def get_valid_returnfields_extra(self):
         """Get a list of valid return fields, including extra WFS only
@@ -151,7 +131,7 @@ class TestBoringSearch(AbstractTestSearch):
             from WFS, not present in the default dataframe.
 
         """
-        return ('pkey_boring', 'doel')
+        return ('pkey_interpretatie', 'gemeente')
 
     def get_df_default_columns(self):
         """Get a list of the column names (and order) from the default
@@ -163,41 +143,11 @@ class TestBoringSearch(AbstractTestSearch):
             A list of the column names of the default dataframe.
 
         """
-        return ['pkey_boring', 'boornummer', 'x', 'y', 'mv_mtaw',
-                'start_boring_mtaw', 'gemeente',
-                'diepte_boring_van', 'diepte_boring_tot',
-                'datum_aanvang', 'uitvoerder', 'boorgatmeting',
-                'diepte_methode_van', 'diepte_methode_tot',
-                'boormethode']
-
-    def test_search_date(self, mp_wfs, mp_remote_describefeaturetype,
-                         mp_remote_md, mp_remote_fc, mp_remote_wfs_feature,
-                         mp_dov_xml):
-        """Test the search method with only the query parameter.
-
-        Test whether the result is correct.
-
-        Parameters
-        ----------
-        mp_wfs : pytest.fixture
-            Monkeypatch the call to the remote GetCapabilities request.
-        mp_remote_describefeaturetype : pytest.fixture
-            Monkeypatch the call to a remote DescribeFeatureType.
-        mp_remote_md : pytest.fixture
-            Monkeypatch the call to get the remote metadata.
-        mp_remote_fc : pytest.fixture
-            Monkeypatch the call to get the remote feature catalogue.
-        mp_remote_wfs_feature : pytest.fixture
-            Monkeypatch the call to get WFS features.
-        mp_dov_xml : pytest.fixture
-            Monkeypatch the call to get the remote XML data.
-
-        """
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single())
-
-        # specific test for the Zulu time wfs 1.1.0 issue
-        assert df.datum_aanvang.unique()[0] == datetime.date(2004, 12, 20)
+        return ['pkey_interpretatie', 'pkey_boring',
+                'pkey_sondering',
+                'betrouwbaarheid_interpretatie', 'x', 'y',
+                'diepte_laag_van', 'diepte_laag_tot',
+                'beschrijving']
 
     def test_search_nan(self, mp_wfs, mp_remote_describefeaturetype,
                         mp_remote_md, mp_remote_fc, mp_remote_wfs_feature,
@@ -225,10 +175,39 @@ class TestBoringSearch(AbstractTestSearch):
         df = self.get_search_object().search(
             query=self.get_valid_query_single())
 
-        assert df.mv_mtaw.hasnans
+        assert df.pkey_sondering.hasnans
 
-    def test_search_xmlresolving(self, mp_remote_describefeaturetype,
-                                 mp_remote_wfs_feature, mp_dov_xml):
+    def test_search_customreturnfields(self, mp_remote_describefeaturetype,
+                                       mp_remote_wfs_feature, mp_dov_xml):
+        """Test the search method with custom return fields.
+
+        Test whether the output dataframe is correct.
+
+        Parameters
+        ----------
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType .
+        mp_remote_wfs_feature : pytest.fixture
+            Monkeypatch the call to get WFS features.
+        mp_dov_xml : pytest.fixture
+            Monkeypatch the call to get the remote XML data.
+
+        """
+        df = self.get_search_object().search(
+            query=self.get_valid_query_single(),
+            return_fields=('pkey_interpretatie', 'pkey_boring',
+                           'pkey_sondering'))
+
+        assert type(df) is DataFrame
+
+        assert list(df) == ['pkey_interpretatie', 'pkey_boring',
+                            'pkey_sondering']
+
+        assert not pd.isnull(df.pkey_boring[0])
+        assert np.isnan(df.pkey_sondering[0])
+
+    def test_search_xml_resolve(self, mp_remote_describefeaturetype,
+                                mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with return fields from XML but not from a
         subtype.
 
@@ -246,6 +225,6 @@ class TestBoringSearch(AbstractTestSearch):
         """
         df = self.get_search_object().search(
             query=self.get_valid_query_single(),
-            return_fields=('pkey_boring', 'boornummer', 'boorgatmeting'))
+            return_fields=('pkey_interpretatie', 'diepte_laag_tot'))
 
-        assert not df.boorgatmeting[0]
+        assert df.diepte_laag_tot[0] == 15.5

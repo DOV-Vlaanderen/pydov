@@ -14,7 +14,7 @@ from pydov.util.errors import (
     FeatureOverflowError,
     InvalidFieldError,
 )
-from pydov.util.owsutil import get_remote_schema
+from ..util.owsutil import get_remote_schema
 
 
 class AbstractSearch(object):
@@ -249,7 +249,7 @@ class AbstractSearch(object):
                 'type': custom_field['type'],
                 'definition': custom_field['definition'],
                 'notnull': custom_field['notnull'],
-                'cost': 10
+                'cost': 1
             }
             fields[field['name']] = field
 
@@ -270,8 +270,7 @@ class AbstractSearch(object):
             all fields are currently supported as a search parameter.
         return_fields : list<str> or tuple<str> or set<str>
             A list of fields to be returned in the output data. This should
-            be a subset of the fields provided in `get_fields()`. Note that
-            not all fields are currently supported as return fields.
+            be a subset of the fields provided in `get_fields()`.
 
         Raises
         ------
@@ -326,6 +325,13 @@ class AbstractSearch(object):
                         raise InvalidFieldError(
                             "Unknown return field: '%s'. Did you mean '%s'?"
                             % (rf, self._map_wfs_source_df[rf]))
+                    if rf.lower() in [i.lower() for i in
+                                      self._map_wfs_source_df.keys()]:
+                        sugg = [i for i in self._map_wfs_source_df.keys() if
+                                i.lower() == rf.lower()][0]
+                        raise InvalidFieldError(
+                            "Unknown return field: '%s'. Did you mean '%s'?"
+                            % (rf, sugg))
                     raise InvalidFieldError(
                         "Unknown return field: '%s'" % rf)
 

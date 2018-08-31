@@ -2,9 +2,9 @@
 """Module containing the search classes to retrieve DOV borehole data."""
 import pandas as pd
 
-from pydov.search.abstract import AbstractSearch
-from pydov.types.boring import Boring
-from pydov.util import owsutil
+from .abstract import AbstractSearch
+from ..types.boring import Boring
+from ..util import owsutil
 
 
 class BoringSearch(AbstractSearch):

@@ -6,12 +6,13 @@ import types
 from collections import OrderedDict
 from distutils.util import strtobool
 
+import pydov
 import numpy as np
 
 from owslib.etree import etree
 from owslib.util import openURL
 
-from pydov.util.errors import InvalidFieldError
+from ..util.errors import InvalidFieldError
 
 
 class AbstractCommon(object):
@@ -485,7 +486,10 @@ class AbstractDovType(AbstractCommon):
             The raw XML data of this DOV object as bytes.
 
         """
-        return openURL(self.pkey + '.xml').read()
+        if pydov.cache:
+            return pydov.cache.get(self.pkey + '.xml')
+        else:
+            return openURL(self.pkey + '.xml').read()
 
     def _parse_subtypes(self, xml):
         """Parse the subtypes with the given XML data.
@@ -524,7 +528,8 @@ class AbstractDovType(AbstractCommon):
 
         """
         fields = self.get_field_names(return_fields)
-        ownfields = self.get_field_names(include_subtypes=False)
+        ownfields = self.get_field_names(include_subtypes=False,
+                                         include_wfs_injected=True)
         subfields = [f for f in fields if f not in ownfields]
 
         if len(subfields) > 0:

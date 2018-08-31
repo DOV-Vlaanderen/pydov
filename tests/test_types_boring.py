@@ -1,406 +1,126 @@
 """Module grouping tests for the pydov.types.boring module."""
-from collections import OrderedDict
 
-import datetime
-import pytest
-from numpy.compat import unicode
-from owslib.etree import etree
-
-import pydov
 from pydov.types.boring import Boring
-from pydov.util.errors import InvalidFieldError
+from tests.abstract import AbstractTestTypes
 
-from tests.test_util_owsutil import (
-    wfs_getfeature
+from tests.test_search_boring import (
+    wfs_getfeature,
+    wfs_feature,
+    mp_dov_xml,
+    location_wfs_getfeature,
+    location_wfs_feature,
+    location_dov_xml,
 )
 
-@pytest.fixture
-def mp_boring_xml(monkeypatch):
-    """Monkeypatch the call to get the remote Boring XML data.
-
-    Parameters
-    ----------
-    monkeypatch : pytest.fixture
-        PyTest monkeypatch fixture.
-
-    """
-
-    def _get_xml_data(*args, **kwargs):
-        with open('tests/data/types/boring/boring.xml', 'r') as f:
-            data = f.read()
-            if type(data) is not bytes:
-                data = data.encode('utf-8')
-        return data
-
-    monkeypatch.setattr(pydov.types.abstract.AbstractDovType,
-                        '_get_xml_data', _get_xml_data)
-
-
-@pytest.fixture
-def wfs_feature():
-    """PyTest fixture providing an XML of a WFS feature element of a Boring
-    record.
-
-    Returns
-    -------
-    etree.Element
-        XML element representing a single record of the Boring WFS layer.
-
-    """
-    with open('tests/data/types/boring/feature.xml', 'r') as f:
-        return etree.fromstring(f.read())
-
-
-class TestBoring(object):
+class TestBoring(AbstractTestTypes):
     """Class grouping tests for the pydov.types.boring.Boring class."""
+    def get_type(self):
+        """Get the class reference for this datatype.
 
-    def test_get_field_names(self):
-        """Test the Boring.get_field_names method.
-
-        Tests whether the available fields for the Boring type match the
-        ones we list in docs/description_output_dataframes.rst.
-
-        """
-        fields = Boring.get_field_names()
-
-        assert fields == ['pkey_boring', 'boornummer', 'x', 'y', 'mv_mtaw',
-                          'start_boring_mtaw', 'gemeente', 'diepte_boring_van',
-                          'diepte_boring_tot', 'datum_aanvang', 'uitvoerder',
-                          'boorgatmeting', 'diepte_methode_van',
-                          'diepte_methode_tot', 'boormethode']
-
-    def test_get_field_names_nosubtypes(self):
-        """Test the Boring.get_field_names method without including subtypes.
-
-        Tests whether the fields provided in a subtype are not listed when
-        disabling subtypes.
+        Returns
+        -------
+        pydov.types.boring.Boring
+            Class reference for the Boring class.
 
         """
-        fields = Boring.get_field_names(return_fields=None,
-                                        include_subtypes=False)
+        return Boring
 
-        assert fields == ['pkey_boring', 'boornummer', 'x', 'y', 'mv_mtaw',
-                          'start_boring_mtaw', 'gemeente', 'diepte_boring_van',
-                          'diepte_boring_tot', 'datum_aanvang', 'uitvoerder',
-                          'boorgatmeting']
+    def get_namespace(self):
+        """Get the WFS namespace associated with this datatype.
 
-    def test_get_field_names_returnfields_nosubtypes(self):
-        """Test the Boring.get_field_names method when specifying return
-        fields.
-
-        Tests whether the returned fields match the ones provided as return
-        fields.
-        """
-        fields = Boring.get_field_names(return_fields=('pkey_boring',
-                                                       'diepte_boring_tot'),
-                                        include_subtypes=False)
-
-        assert fields == ['pkey_boring', 'diepte_boring_tot']
-
-    def test_get_field_names_returnfields_order(self):
-        """Test the Boring.get_field_names method when specifying return
-        fields in a different order.
-
-        Tests whether the returned fields match the ones provided as return
-        fields and that the order is the one we list in
-        docs/description_output_dataframes.rst.
+        Returns
+        -------
+        str
+            WFS namespace for this type.
 
         """
-        fields = Boring.get_field_names(
-            return_fields=('diepte_boring_tot', 'pkey_boring'),
-            include_subtypes=False)
+        return 'http://dov.vlaanderen.be/ocdov/dov-pub'
 
-        assert fields == ['pkey_boring', 'diepte_boring_tot']
+    def get_pkey_base(self):
+        """Get the base URL for the permanent keys of this datatype.
 
-    def test_get_field_names_wrongreturnfields(self):
-        """Test the Boring.get_field_names method when specifying an
-        inexistent return field.
-
-        Test whether an InvalidFieldError is raised.
-
-        """
-        with pytest.raises(InvalidFieldError):
-            Boring.get_field_names(return_fields=('pkey_boring',
-                                                  'onbestaande'),
-                                   include_subtypes=False)
-
-    def test_get_field_names_wrongreturnfieldstype(self):
-        """Test the Boring.get_field_names method when listing a single
-        return field instead of a list.
-
-        Test whether an AttributeError is raised.
+        Returns
+        -------
+        str
+            Base URL for the permanent keys of this datatype. For example
+            "https://www.dov.vlaanderen.be/data/boring/"
 
         """
-        with pytest.raises(AttributeError):
-            Boring.get_field_names(return_fields='pkey_boring',
-                                   include_subtypes=False)
+        return 'https://www.dov.vlaanderen.be/data/boring/'
 
-    def test_get_field_names_wrongreturnfields_nosubtypes(self):
-        """Test the Boring.get_field_names method when disabling subtypes
-        and including an otherwise valid return field.
+    def get_field_names(self):
+        """Get the field names for this type as listed in the documentation in
+        docs/description_output_dataframes.rst
 
-        Test whether an InvalidFieldError is raised.
-
-        """
-        with pytest.raises(InvalidFieldError):
-            Boring.get_field_names(return_fields=['pkey_boring',
-                                                  'boormethode'],
-                                   include_subtypes=False)
-
-    def test_get_fields(self):
-        """Test the Boring.get_fields method.
-
-        Test whether the format returned by the method meets the
-        requirements and the format listed in the docs.
+        Returns
+        -------
+        list
+            List of field names.
 
         """
-        fields = Boring.get_fields(source=('wfs', 'xml', 'custom'))
-        assert isinstance(fields, OrderedDict)
+        return ['pkey_boring', 'boornummer', 'x', 'y', 'mv_mtaw',
+                'start_boring_mtaw', 'gemeente', 'diepte_boring_van',
+                'diepte_boring_tot', 'datum_aanvang', 'uitvoerder',
+                'boorgatmeting', 'diepte_methode_van',
+                'diepte_methode_tot', 'boormethode']
 
-        for f in fields.keys():
-            assert type(f) in (str, unicode)
+    def get_field_names_subtypes(self):
+        """Get the field names of this type that originate from subtypes only.
 
-            field = fields[f]
-            assert type(field) is dict
-
-            assert 'name' in field
-            assert type(field['name']) in (str, unicode)
-            assert field['name'] == f
-
-            assert 'source' in field
-            assert type(field['source']) in (str, unicode)
-            assert field['source'] in ('wfs', 'xml')
-
-            assert 'type' in field
-            assert type(field['type']) in (str, unicode)
-            assert field['type'] in ['string', 'float', 'integer', 'date',
-                                     'boolean']
-
-            if field['source'] in ('wfs', 'xml'):
-                assert 'sourcefield' in field
-                assert type(field['sourcefield']) in (str, unicode)
-
-            if field['source'] in ('xml', 'custom'):
-                assert 'definition' in field
-                assert type(field['definition']) in (str, unicode)
-
-                assert 'notnull' in field
-                assert type(field['notnull']) is bool
-
-            if field['source'] == 'wfs':
-                if 'wfs_injected' in field.keys():
-                    assert sorted(field.keys()) == [
-                        'name', 'source', 'sourcefield', 'type',
-                        'wfs_injected']
-                else:
-                    assert sorted(field.keys()) == [
-                        'name', 'source', 'sourcefield', 'type']
-            elif field['source'] == 'xml':
-                assert sorted(field.keys()) == [
-                    'definition', 'name', 'notnull', 'source', 'sourcefield',
-                    'type']
-            elif field['source'] == 'custom':
-                assert sorted(field.keys()) == [
-                    'definition', 'name', 'notnull', 'source', 'type']
-
-    def test_get_fields_default(self):
-        """Test the Boring.get_fields method for fields of the default
-        sources.
-
-        Test whether all return fields have 'wfs' or 'xml' as their
-        'source'.
-        """
-        fields = Boring.get_fields()
-        for field in fields.values():
-            assert field['source'] in ('wfs', 'xml')
-
-    def test_get_fields_sourcewfs(self):
-        """Test the Boring.get_fields method for fields of the WFS source.
-
-        Test whether all returned fields have 'wfs' as their 'source'.
+        Returns
+        -------
+        list<str>
+            List of field names from subtypes.
 
         """
-        fields = Boring.get_fields(source=('wfs',))
-        for field in fields.values():
-            assert field['source'] == 'wfs'
+        return ['diepte_methode_van', 'diepte_methode_tot', 'boormethode']
 
-    def test_get_fields_sourcexml(self):
-        """Test the Boring.get_fields method for fields of the XML source.
+    def get_field_names_nosubtypes(self):
+        """Get the field names for this type, without including fields from
+        subtypes.
 
-        Test whether all returned fields have 'xml' as their 'source'.
-
-        """
-        fields = Boring.get_fields(source=('xml',))
-        for field in fields.values():
-            assert field['source'] == 'xml'
-
-    def test_get_fields_nosubtypes(self):
-        """Test the Boring.get_fields method not including subtypes.
-
-        Test whether fields provides by subtypes are not listed in the output.
+        Returns
+        -------
+        list<str>
+            List of field names.
 
         """
-        fields = Boring.get_fields(include_subtypes=False)
-        for field in fields:
-            assert field not in ('diepte_methode_van',
-                                 'diepte_methode_tot', 'boormethode')
+        return ['pkey_boring', 'boornummer', 'x', 'y', 'mv_mtaw',
+                'start_boring_mtaw', 'gemeente', 'diepte_boring_van',
+                'diepte_boring_tot', 'datum_aanvang', 'uitvoerder',
+                'boorgatmeting']
 
-    def test_from_wfs_element(self, wfs_feature):
-        """Test the Boring.from_wfs_element method.
+    def get_valid_returnfields(self):
+        """Get a list of valid return fields from the main type.
 
-        Test whether we can construct a Boring instance from a WFS
-        response element.
-
-        Parameters
-        ----------
-        wfs_feature : pytest.fixture returning etree.Element
-            Fixture providing an XML element representing a single record of
-            the Boring WFS layer.
+        Returns
+        -------
+        tuple
+            A tuple containing only valid return fields.
 
         """
-        boring = Boring.from_wfs_element(
-            wfs_feature, 'http://dov.vlaanderen.be/ocdov/dov-pub')
+        return ('pkey_boring', 'diepte_boring_tot')
 
-        assert type(boring) is Boring
+    def get_valid_returnfields_subtype(self):
+        """Get a list of valid return fields, including fields from a subtype.
 
-        assert boring.pkey.startswith(
-            'https://www.dov.vlaanderen.be/data/boring/')
-        assert boring.typename == 'boring'
-        assert type(boring.data) is dict
-        assert type(boring.subdata) is dict
-
-    def test_get_df_array(self, wfs_feature, mp_boring_xml):
-        """Test the boring.get_df_array method.
-
-        Test whether the output of the dataframe array for the given Boring
-        is correct.
-
-        Parameters
-        ----------
-        wfs_feature : pytest.fixture returning etree.Element
-            Fixture providing an XML element representing a single record of
-            the Boring WFS layer.
-        mp_boring_xml : pytest.fixture
-            Monkeypatch the call to get the remote Boring XML data.
+        Returns
+        -------
+        tuple
+            A tuple containing valid return fields, including fields from a
+            subtype.
 
         """
-        boring = Boring.from_wfs_element(
-            wfs_feature, 'http://dov.vlaanderen.be/ocdov/dov-pub')
+        return ('pkey_boring', 'diepte_methode_van', 'boormethode')
 
-        fields = [f for f in Boring.get_fields().values() if not f.get(
-            'wfs_injected', False)]
+    def get_inexistent_field(self):
+        """Get the name of a field that doesn't exist.
 
-        df_array = boring.get_df_array()
-        assert type(df_array) is list
-        assert len(df_array) == 2
-
-        for record in df_array:
-            assert len(record) == len(fields)
-
-            for value, field in zip(record, fields):
-                if field['type'] == 'string':
-                    assert type(value) in (str, unicode)
-                elif field['type'] == 'float':
-                    assert type(value) is float or value is None
-                elif field['type'] == 'integer':
-                    assert type(value) is int or value is None
-                elif field['type'] == 'date':
-                    assert type(value) is datetime.date or value is None
-                elif field['type'] == 'boolean':
-                    assert type(value) is bool or value is None
-
-                if field['name'] == 'pkey_boring':
-                    assert value.startswith(
-                        'https://www.dov.vlaanderen.be/data/boring/')
-                    assert not value.endswith('.xml')
-
-    def test_get_df_array_wrongreturnfields(self, wfs_feature):
-        """Test the boring.get_df_array specifying a nonexistent return field.
-
-        Test whether an InvalidFieldError is raised.
-
-        Parameters
-        ----------
-        wfs_feature : pytest.fixture returning etree.Element
-            Fixture providing an XML element representing a single record of
-            the Boring WFS layer.
+        Returns
+        -------
+        str
+            The name of an inexistent field.
 
         """
-        boring = Boring.from_wfs_element(
-            wfs_feature, 'http://dov.vlaanderen.be/ocdov/dov-pub')
+        return 'onbestaand'
 
-        with pytest.raises(InvalidFieldError):
-            boring.get_df_array(return_fields=('onbestaand',))
-
-    def test_from_wfs_str(self, wfs_getfeature):
-        """Test the boring.from_wfs method to construct Boring objects from
-        a WFS response, as str.
-
-        Parameters
-        ----------
-        wfs_getfeature : pytest.fixture returing str
-            Fixture providing a WFS GetFeature response of the
-            dov-pub:Boringen layer.
-
-        """
-        boringen = Boring.from_wfs(wfs_getfeature,
-                                   'http://dov.vlaanderen.be/ocdov/dov-pub')
-
-        for boring in boringen:
-            assert type(boring) is Boring
-
-    def test_from_wfs_bytes(self, wfs_getfeature):
-        """Test the boring.from_wfs method to construct Boring objects from
-        a WFS response, as bytes.
-
-        Parameters
-        ----------
-        wfs_getfeature : pytest.fixture returing str
-            Fixture providing a WFS GetFeature response of the
-            dov-pub:Boringen layer.
-
-        """
-        boringen = Boring.from_wfs(wfs_getfeature.encode('utf-8'),
-                                   'http://dov.vlaanderen.be/ocdov/dov-pub')
-
-        for boring in boringen:
-            assert type(boring) is Boring
-
-    def test_from_wfs_tree(self, wfs_getfeature):
-        """Test the boring.from_wfs method to construct Boring objects from
-        a WFS response, as elementtree.
-
-        Parameters
-        ----------
-        wfs_getfeature : pytest.fixture returing str
-            Fixture providing a WFS GetFeature response of the
-            dov-pub:Boringen layer.
-
-        """
-        tree = etree.fromstring(wfs_getfeature.encode('utf8'))
-        boringen = Boring.from_wfs(tree,
-                                   'http://dov.vlaanderen.be/ocdov/dov-pub')
-
-        for boring in boringen:
-            assert type(boring) is Boring
-
-    def test_from_wfs_list(self, wfs_getfeature):
-        """Test the boring.from_wfs method to construct Boring objects from
-        a WFS response, as list of elements.
-
-        Parameters
-        ----------
-        wfs_getfeature : pytest.fixture returing str
-            Fixture providing a WFS GetFeature response of the
-            dov-pub:Boringen layer.
-
-        """
-        tree = etree.fromstring(wfs_getfeature.encode('utf8'))
-        feature_members = tree.findall('.//{http://www.opengis.net/gml}'
-                                        'featureMembers')
-
-        boringen = Boring.from_wfs(feature_members,
-                                   'http://dov.vlaanderen.be/ocdov/dov-pub')
-
-        for boring in boringen:
-            assert type(boring) is Boring

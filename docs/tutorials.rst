@@ -21,3 +21,5 @@ To run these interactively online without installation, use the following binder
 
    notebooks/example_search_boringen.ipynb
    notebooks/example_search_grondwaterfilters.ipynb
+   notebooks/example_search_interpretaties.ipynb
+   notebooks/example_caching.ipynb

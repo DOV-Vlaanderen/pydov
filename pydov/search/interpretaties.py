@@ -155,7 +155,7 @@ class HydrogeologischeStratigrafieSearch(AbstractSearch):
                     self._get_remote_metadata()
 
             if HydrogeologischeStratigrafieSearch.__fc_featurecatalogue \
-                is None:
+                    is None:
                 csw_url = self._get_csw_base_url()
                 fc_uuid = owsutil.get_featurecatalogue_uuid(
                     HydrogeologischeStratigrafieSearch.__md_metadata)

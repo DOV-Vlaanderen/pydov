@@ -19,7 +19,9 @@ To run these interactively online without installation, use the following binder
 .. toctree::
    :maxdepth: 1
 
-   notebooks/example_search_boringen.ipynb
-   notebooks/example_search_grondwaterfilters.ipynb
-   notebooks/example_search_interpretaties.ipynb
-   notebooks/example_caching.ipynb
+   notebooks/search_boringen.ipynb
+   notebooks/search_grondwaterfilters.ipynb
+   notebooks/search_informele_stratigrafie.ipynb
+   notebooks/search_hydrogeologische_stratigrafie.ipynb
+   notebooks/caching.ipynb
+   

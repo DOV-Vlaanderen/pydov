@@ -2,14 +2,12 @@
 User guide
 ==========
 
-To use PyDOV in a project::
-
-    import pydov
 
 
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
+   quickstart
    caching
 

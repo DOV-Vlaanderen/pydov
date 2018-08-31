@@ -1,3 +1,6 @@
+.. _endpoints:
+
+==================
 Accessing DOV data
 ==================
 

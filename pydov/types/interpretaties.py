@@ -184,3 +184,184 @@ class InformeleStratigrafie(AbstractDovType):
             )
 
         return infstrat
+
+
+class HydrogeologischeStratigrafieLaag(AbstractDovSubType):
+
+    _name = 'hydrogeologische_stratigrafie_laag'
+    _rootpath = './/hydrogeologischeinterpretatie/laag'
+
+    _fields = [{
+        'name': 'diepte_laag_van',
+        'source': 'xml',
+        'sourcefield': '/van',
+        'definition': 'Diepte van de bovenkant van de laag hydrogeologische '
+                      'stratigrafie in meter.',
+        'type': 'float',
+        'notnull': False
+    }, {
+        'name': 'diepte_laag_tot',
+        'source': 'xml',
+        'sourcefield': '/tot',
+        'definition': 'Diepte van de onderkant van de laag hydrogeologische '
+                      'stratigrafie in meter.',
+        'type': 'float',
+        'notnull': False
+    }, {
+        'name': 'aquifer',
+        'source': 'xml',
+        'sourcefield': '/aquifer',
+        'definition': 'code van de watervoerende laag waarin de laag '
+                      'Hydrogeologische stratigrafie zich bevindt.',
+        'type': 'string',
+        'notnull': False
+    }]
+
+    def __init__(self):
+        """Initialisation."""
+        super(HydrogeologischeStratigrafieLaag, self).__init__(
+            'hydrogeologische_interpretatie_laag')
+
+    @classmethod
+    def from_xml_element(cls, element):
+        """Build an instance of this subtype from a single XML element.
+
+        Parameters
+        ----------
+        element : etree.Element
+            XML element representing a single record of this subtype.
+
+        """
+        laag = HydrogeologischeStratigrafieLaag()
+
+        for field in cls.get_fields().values():
+            laag.data[field['name']] = laag._parse(
+                func=element.findtext,
+                xpath=field['sourcefield'],
+                namespace=None,
+                returntype=field.get('type', None)
+            )
+
+        return laag
+
+
+class HydrogeologischeStratigrafie(AbstractDovType):
+    """Class representing the DOV data type for boreholes."""
+
+    _subtypes = [HydrogeologischeStratigrafieLaag]
+
+    _fields = [{
+        'name': 'pkey_interpretatie',
+        'source': 'wfs',
+        'sourcefield': 'Interpretatiefiche',
+        'type': 'string'
+    }, {
+        'name': 'pkey_boring',
+        'source': 'custom',
+        'type': 'string',
+        'definition': 'URL die verwijst naar de gegevens van de boring '
+                      'waaraan deze hydrogeologische stratigrafie '
+                      'gekoppeld is '
+                      '(indien gekoppeld aan een boring).',
+        'notnull': False
+    }, {
+        'name': 'pkey_sondering',
+        'source': 'custom',
+        'type': 'string',
+        'definition': 'URL die verwijst naar de gegevens van de sondering '
+                      'waaraan deze informele stratigrafie gekoppeld is ('
+                      'indien gekoppeld aan een sondering).',
+        'notnull': False
+    }, {
+        'name': 'betrouwbaarheid_interpretatie',
+        'source': 'wfs',
+        'sourcefield': 'Betrouwbaarheid',
+        'type': 'string'
+    },  {
+        'name': 'x',
+        'source': 'wfs',
+        'sourcefield': 'X_mL72',
+        'type': 'float'
+    }, {
+        'name': 'y',
+        'source': 'wfs',
+        'sourcefield': 'Y_mL72',
+        'type': 'float'
+    }]
+
+    def __init__(self, pkey):
+        """Initialisation.
+
+        Parameters
+        ----------
+        pkey : str
+            Permanent key of the Hydrogeologische stratigrafie, being a URI
+            of the form
+            `https://www.dov.vlaanderen.be/data/boring/<id>`.
+
+        """
+        super(HydrogeologischeStratigrafie, self).__init__(
+              'interpretatie', pkey)
+
+    @classmethod
+    def from_wfs_element(cls, feature, namespace):
+        """Build 'HydrogeologischeStratigrafie' instance from a WFS feature
+        element.
+
+        Parameters
+        ----------
+        feature : etree.Element
+            XML element representing a single record of the WFS layer.
+        namespace : str
+            Namespace associated with this WFS featuretype.
+
+        Returns
+        -------
+        HydrogeologischeStratigrafie : HydrogeologischeStratigrafie
+            An instance of this class populated with the data from the WFS
+            element.
+
+        """
+        hydstrat = HydrogeologischeStratigrafie(
+            feature.findtext('./{%s}Interpretatiefiche' % namespace))
+
+        typeproef = cls._parse(
+            func=feature.findtext,
+            xpath='Type_proef',
+            namespace=namespace,
+            returntype='string'
+        )
+
+        if typeproef == 'Boring':
+            hydstrat.data['pkey_boring'] = cls._parse(
+                func=feature.findtext,
+                xpath='Proeffiche',
+                namespace=namespace,
+                returntype='string'
+            )
+            hydstrat.data['pkey_sondering'] = np.nan
+
+        elif typeproef == 'Sondering':
+            hydstrat.data['pkey_sondering'] = cls._parse(
+                func=feature.findtext,
+                xpath='Proeffiche',
+                namespace=namespace,
+                returntype='string'
+            )
+            hydstrat.data['pkey_boring'] = np.nan
+        else:
+            hydstrat.data['pkey_boring'] = np.nan
+            hydstrat.data['pkey_sondering'] = np.nan
+
+        for field in cls.get_fields(source=('wfs',)).values():
+            if field['name'] in ['pkey_boring', 'pkey_sondering']:
+                continue
+
+            hydstrat.data[field['name']] = cls._parse(
+                func=feature.findtext,
+                xpath=field['sourcefield'],
+                namespace=namespace,
+                returntype=field.get('type', None)
+            )
+
+        return hydstrat

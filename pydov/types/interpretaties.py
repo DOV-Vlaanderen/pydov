@@ -101,6 +101,16 @@ class InformeleStratigrafie(AbstractDovType):
         'source': 'wfs',
         'sourcefield': 'Betrouwbaarheid',
         'type': 'string'
+    }, {
+        'name': 'x',
+        'source': 'wfs',
+        'sourcefield': 'X_mL72',
+        'type': 'float'
+    }, {
+        'name': 'y',
+        'source': 'wfs',
+        'sourcefield': 'Y_mL72',
+        'type': 'float'
     }]
 
     def __init__(self, pkey):

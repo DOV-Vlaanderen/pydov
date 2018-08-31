@@ -28,6 +28,8 @@ interpreted data.
     wfs,Proeffiche if Type_proef=boring,pkey_boring,string,https://.../2001-186513.xml
     wfs,Proeffiche if Type_proef=sondering,pkey_sondering,string,https://.../2001-186513.xml
     wfs,Betrouwbaarheid,betrouwbaarheid_interpretatie,string,goed
+    wfs,X_mL72,x,float,152301.0
+    wfs,Y_mL72,y,float,211682.0
     xml,/kern:dov-schema/interpretaties/informelestratigrafie/laag/van,diepte_laag_van,float,0.00
     xml,/kern:dov-schema/interpretaties/informelestratigrafie/laag/tot,diepte_laag_tot,float,1.74
     xml,/kern:dov-schema/interpretaties/informelestratigrafie/laag/beschrijving,beschrijving,string,Quartair
@@ -42,6 +44,8 @@ interpreted data.
     wfs,Proeffiche if Type_proef=boring,pkey_boring,string,https://.../2001-186513.xml
     wfs,Proeffiche if Type_proef=sondering,pkey_sondering,string,https://.../2001-186513.xml
     wfs,Betrouwbaarheid,betrouwbaarheid_interpretatie,string,goed
+    wfs,X_mL72,x,float,152301.0
+    wfs,Y_mL72,y,float,211682.0
     xml,/kern:dov-schema/interpretaties/formelestratigrafie/laag/betrouwbaarheid,betrouwbaarheid_laag,string,goed
     xml,/kern:dov-schema/interpretaties/formelestratigrafie/laag/van,diepte_laag_van,float,0.00
     xml,/kern:dov-schema/interpretaties/formelestratigrafie/laag/tot,diepte_laag_tot,float,1.75
@@ -58,6 +62,8 @@ interpreted data.
     wfs,Interpretatiefiche,pkey_interpretatie,string,https://.../2001-186513.xml
     wfs,Proeffiche if Type_proef=boring,pkey_boring,string,https://.../2001-186513.xml
     wfs,Betrouwbaarheid,betrouwbaarheid_interpretatie,string,goed
+    wfs,X_mL72,x,float,152301.0
+    wfs,Y_mL72,y,float,211682.0
     xml,/kern:dov-schema/interpretaties/lithologischebeschrijving/laag/van,diepte_laag_van,float,0.00
     xml,/kern:dov-schema/interpretaties/lithologischebeschrijving/laag/tot,diepte_laag_tot,float,1.75
     xml,/kern:dov-schema/interpretaties/lithologischebeschrijving/laag/beschrijving,beschrijving,string,Terre végétale sableuse
@@ -71,6 +77,8 @@ interpreted data.
     wfs,Interpretatiefiche,pkey_interpretatie,string,https://.../2001-186513.xml
     wfs,Proeffiche if Type_proef=boring,pkey_boring,string,https://.../2001-186513.xml
     wfs,Betrouwbaarheid,betrouwbaarheid_interpretatie,string,goed
+    wfs,X_mL72,x,float,152301.0
+    wfs,Y_mL72,y,float,211682.0
     xml,/kern:dov-schema/interpretaties/gecodeerdelithologie/laag/van,diepte_laag_van,float,0.00
     xml,/kern:dov-schema/interpretaties/gecodeerdelithologie/laag/tot,diepte_laag_tot,float,1.75
     xml,/kern:dov-schema/interpretaties/gecodeerdelithologie/laag/hoofdnaam/grondsoort,hoofd_grondsoort,string,KL
@@ -87,6 +95,8 @@ interpreted data.
     wfs,Interpretatiefiche,pkey_interpretatie,string,https://.../2001-186513.xml
     wfs,Proeffiche if Type_proef=boring,pkey_boring,string,https://.../2001-186513.xml
     wfs,Betrouwbaarheid,betrouwbaarheid_interpretatie,string,goed
+    wfs,X_mL72,x,float,152301.0
+    wfs,Y_mL72,y,float,211682.0
     xml,/kern:dov-schema/interpretaties/hydrogeologischeinterpretatie/laag/van,diepte_laag_van,float,0.00
     xml,/kern:dov-schema/interpretaties/hydrogeologischeinterpretatie/laag/tot,diepte_laag_tot,float,1.75
     xml,/kern:dov-schema/interpretaties/hydrogeologischeinterpretatie/laag/aquifer,aquifer,string,0252
@@ -100,6 +110,8 @@ interpreted data.
     wfs,Interpretatiefiche,pkey_interpretatie,string,https://.../2001-186513.xml
     wfs,Proeffiche if Type_proef=boring,pkey_boring,string,https://.../2001-186513.xml
     wfs,Betrouwbaarheid,betrouwbaarheid_interpretatie,string,goed
+    wfs,X_mL72,x,float,152301.0
+    wfs,Y_mL72,y,float,211682.0
     xml,/kern:dov-schema/interpretaties/informelehydrostratigrafie/laag/van,diepte_laag_van,float,0.00
     xml,/kern:dov-schema/interpretaties/informelehydrostratigrafie/laag/tot,diepte_laag_tot,float,1.75
     xml,/kern:dov-schema/interpretaties/informelehydrostratigrafie/laag/beschrijving,beschrijving,string,Quartair
@@ -113,6 +125,8 @@ interpreted data.
     wfs,Interpretatiefiche,pkey_interpretatie,string,https://.../2001-186513.xml
     wfs,Proeffiche if Type_proef=boring,pkey_boring,string,https://.../2001-186513.xml
     wfs,Betrouwbaarheid,betrouwbaarheid_interpretatie,string,goed
+    wfs,X_mL72,x,float,152301.0
+    wfs,Y_mL72,y,float,211682.0
     xml,/kern:dov-schema/interpretaties/quartairstratigrafie/laag/betrouwbaarheid,betrouwbaarheid_laag,string,goed
     xml,/kern:dov-schema/interpretaties/quartairstratigrafie/laag/van,diepte_laag_van,float,0.00
     xml,/kern:dov-schema/interpretaties/quartairstratigrafie/laag/tot,diepte_laag_tot,float,1.75
@@ -129,6 +143,8 @@ interpreted data.
     wfs,Interpretatiefiche,pkey_interpretatie,string,https://.../2001-186513.xml
     wfs,Proeffiche if Type_proef=boring,pkey_boring,string,https://.../2001-186513.xml
     wfs,Betrouwbaarheid,betrouwbaarheid_interpretatie,string,goed
+    wfs,X_mL72,x,float,152301.0
+    wfs,Y_mL72,y,float,211682.0
     xml,/kern:dov-schema/interpretaties/geotechnischecodering/laag/van,diepte_laag_van,float,0.00
     xml,/kern:dov-schema/interpretaties/geotechnischecodering/laag/tot,diepte_laag_tot,float,1.75
     xml,/kern:dov-schema/interpretaties/geotechnischecodering/laag/hoofdnaam/grondsoort,hoofd_grondsoort,string,KL
@@ -153,7 +169,7 @@ between the 'methode_van'/'methode_tot' of the borehole:
     AND interpretation["tot"] <= boring["methode_tot"]
 
 In addition, not all wfs fields are included in the dataframe, but can be used
-to select records from the DOV database. E.g.: 'informele_stratigrafie', 
+to select records from the DOV database. E.g.: 'informele_stratigrafie',
 'formele_stratigrafie', 'hydrogeologische_stratigrafie' etc. are boolean
 fields available in the wfs to search on.
 
@@ -192,7 +208,7 @@ qc, Qt, fs, u and i. All elements are by default included in the output datafram
 NaNs indicate that it wasn't measured.
 
 In addition, not all wfs fields are included in the dataframe, but can be used
-to select records from the DOV database. E.g.: 'informele_stratigrafie', 
+to select records from the DOV database. E.g.: 'informele_stratigrafie',
 'formele_stratigrafie' and 'hydrogeologische_stratigrafie' are boolean
 fields available in the wfs to search on.
 

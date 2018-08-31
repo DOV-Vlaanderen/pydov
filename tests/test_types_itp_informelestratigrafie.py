@@ -61,7 +61,7 @@ class TestInformeleStratigrafie(AbstractTestTypes):
 
         """
         return ['pkey_interpretatie', 'pkey_boring',
-                'pkey_sondering', 'betrouwbaarheid_interpretatie',
+                'pkey_sondering', 'betrouwbaarheid_interpretatie', 'x', 'y',
                 'diepte_laag_van', 'diepte_laag_tot', 'beschrijving']
 
     def get_field_names_subtypes(self):
@@ -86,7 +86,7 @@ class TestInformeleStratigrafie(AbstractTestTypes):
 
         """
         return ['pkey_interpretatie', 'pkey_boring',
-                'pkey_sondering', 'betrouwbaarheid_interpretatie']
+                'pkey_sondering', 'betrouwbaarheid_interpretatie', 'x', 'y']
 
     def get_valid_returnfields(self):
         """Get a list of valid return fields from the main type.

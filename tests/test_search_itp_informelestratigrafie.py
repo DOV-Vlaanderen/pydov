@@ -145,7 +145,7 @@ class TestInformeleStratigrafieSearch(AbstractTestSearch):
         """
         return ['pkey_interpretatie', 'pkey_boring',
                 'pkey_sondering',
-                'betrouwbaarheid_interpretatie',
+                'betrouwbaarheid_interpretatie', 'x', 'y',
                 'diepte_laag_van', 'diepte_laag_tot',
                 'beschrijving']
 

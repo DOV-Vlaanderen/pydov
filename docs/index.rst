@@ -1,6 +1,9 @@
 Welcome to PyDOV's documentation!
 ======================================
 
+.. include:: ../README.rst
+
+
 Contents:
 
 .. toctree::

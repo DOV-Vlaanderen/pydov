@@ -30,16 +30,3 @@ The pydov package is a community effort and everyone is welcome to contribute. I
 * integrate the data in third-party applications
 
 The machine-based availability of the data can potentially serve a diverse community of researchers, consultants, modelers, and students. As performant and proper functioning of DOV data processing is of interest to the variety of users, we believe that a community-based effort to develop and maintain these functionalities as an open source package provides the optimal development traject.
-
-Scope of the package
---------------------
-
-The ``pydov`` provides in the first place a convenient wrapper around the XML **export** of the `DOV Verkenner <https://www.dov.vlaanderen.be/portaal/?module=verkenner#ModulePage>`_ and related applications, in combination with the available `DOV WMS/WFS webservices <https://dov.vlaanderen.be/dovweb/html/services.html>`_. By combining the information of these web services, different data request use cases can be automated.
-
-The central elements of the package are:
-
-#. ``search``, i.e. check the available information to download and atrributes to query
-#. ``download_``, i.e. extraction part: downloading data based on a single station or a list of stations. The user extracts data using the available filters. An important filter is the ``location``, which can be expressed using different spatial entities, ``coordinates``, ``boundingbox``\ , ``aquifer``\ , ``polygon``\ ,...
-#. ``subset_*``\ , i.e. filter part: this should provide some straightforward functions to further filter the downloaded data.
-#. ``to_***``\ , i.e. conversion part: the data is stored or exported to a new file-format that could be useful for the user. ``to_csv``\ / ``to_excel`` are straight forward examples, but more advanced and domain-specific export functionalities are envisioned, e.g. ``to_modflow()``\ , ``to_menyanthes()``\ , ``to_swap()``
-

@@ -154,7 +154,8 @@ class HydrogeologischeStratigrafieSearch(AbstractSearch):
                 HydrogeologischeStratigrafieSearch.__md_metadata = \
                     self._get_remote_metadata()
 
-            if HydrogeologischeStratigrafieSearch.__fc_featurecatalogue is None:
+            if HydrogeologischeStratigrafieSearch.__fc_featurecatalogue \
+                is None:
                 csw_url = self._get_csw_base_url()
                 fc_uuid = owsutil.get_featurecatalogue_uuid(
                     HydrogeologischeStratigrafieSearch.__md_metadata)
@@ -182,8 +183,9 @@ class HydrogeologischeStratigrafieSearch(AbstractSearch):
                 HydrogeologischeStratigrafieSearch.__fc_featurecatalogue)
 
     def search(self, location=None, query=None, return_fields=None):
-        """Search for boreholes (Boring). Provide either `location` or `query`.
-        When `return_fields` is None, all fields are returned.
+        """Search for hydrogeological interpretations. Provide either
+        `location` or `query`. When `return_fields` is None, all fields
+        are returned.
 
         Parameters
         ----------
@@ -237,8 +239,6 @@ class HydrogeologischeStratigrafieSearch(AbstractSearch):
         df = pd.DataFrame(
             data=HydrogeologischeStratigrafie.to_df_array(
                 interpretaties, return_fields),
-            columns=HydrogeologischeStratigrafie.get_field_names(return_fields))
+            columns=HydrogeologischeStratigrafie.get_field_names(
+                return_fields))
         return df
-
-
-

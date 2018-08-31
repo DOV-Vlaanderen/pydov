@@ -280,7 +280,8 @@ class HydrogeologischeStratigrafie(AbstractDovType):
         'source': 'custom',
         'type': 'string',
         'definition': 'URL die verwijst naar de gegevens van de boring '
-                      'waaraan deze hydrogeologische stratigrafie gekoppeld is '
+                      'waaraan deze hydrogeologische stratigrafie '
+                      'gekoppeld is '
                       '(indien gekoppeld aan een boring).',
         'notnull': False
     }, {
@@ -314,7 +315,8 @@ class HydrogeologischeStratigrafie(AbstractDovType):
         Parameters
         ----------
         pkey : str
-            Permanent key of the Boring (borehole), being a URI of the form
+            Permanent key of the Hydrogeologische stratigrafie, being a URI
+            of the form
             `https://www.dov.vlaanderen.be/data/boring/<id>`.
 
         """
@@ -323,7 +325,8 @@ class HydrogeologischeStratigrafie(AbstractDovType):
 
     @classmethod
     def from_wfs_element(cls, feature, namespace):
-        """Build `Boring` instance from a WFS feature element.
+        """Build 'HydrogeologischeStratigrafie' instance from a WFS feature
+        element.
 
         Parameters
         ----------
@@ -334,7 +337,7 @@ class HydrogeologischeStratigrafie(AbstractDovType):
 
         Returns
         -------
-        boring : Boring
+        HydrogeologischeStratigrafie : HydrogeologischeStratigrafie
             An instance of this class populated with the data from the WFS
             element.
 

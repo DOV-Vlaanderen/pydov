@@ -11,7 +11,7 @@ Contents:
 
    readme
    installation
-   usage
+   userguide
    tutorials
    endpoints
    contributing

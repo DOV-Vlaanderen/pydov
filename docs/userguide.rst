@@ -1,6 +1,6 @@
-=====
-Usage
-=====
+==========
+User guide
+==========
 
 To use PyDOV in a project::
 

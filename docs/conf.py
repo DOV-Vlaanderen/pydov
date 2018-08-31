@@ -195,7 +195,7 @@ html_static_path = ['_static', '_static/css/custom.css']
 htmlhelp_basename = 'pydovdoc'
 
 # Options for handling the nbsphinx notebook execution
-nbsphinx_kernel_name = 'python3'
+nbsphinx_kernel_name = 'python'
 nbsphinx_execute = 'always'
 
 # -- Options for LaTeX output ------------------------------------------

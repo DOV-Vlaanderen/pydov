@@ -14,3 +14,9 @@ Sphinx
 sphinx_rtd_theme
 nbsphinx
 numpydoc
+ipython
+jupyter_client
+ipykernel
+folium
+pyproj
+matplotlib

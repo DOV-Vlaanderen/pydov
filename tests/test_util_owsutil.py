@@ -1,4 +1,5 @@
 """Module grouping tests for the pydov.util.owsutil module."""
+import copy
 import re
 
 import pytest
@@ -21,7 +22,10 @@ from tests.test_search_boring import (
     md_metadata,
     mp_remote_md,
     mp_remote_describefeaturetype,
-    mp_remote_fc
+    mp_remote_fc,
+    location_md_metadata,
+    location_fc_featurecatalogue,
+    location_wfs_describefeaturetype,
 )
 
 from tests.test_search import (
@@ -91,7 +95,8 @@ class TestOwsutil(object):
             WebFeatureService based on the local GetCapabilities.
 
         """
-        contentmetadata = wfs.contents['dov-pub:Boringen']
+        contents = copy.deepcopy(wfs.contents)
+        contentmetadata = contents['dov-pub:Boringen']
         contentmetadata.metadataUrls = []
         with pytest.raises(MetadataNotFoundError):
             owsutil.get_csw_base_url(contentmetadata)
@@ -267,7 +272,8 @@ class TestOwsutil(object):
             WebFeatureService based on the local GetCapabilities.
 
         """
-        contentmetadata = wfs.contents['dov-pub:Boringen']
+        contents = copy.deepcopy(wfs.contents)
+        contentmetadata = contents['dov-pub:Boringen']
         contentmetadata.metadataUrls = []
         with pytest.raises(MetadataNotFoundError):
             owsutil.get_remote_metadata(contentmetadata)

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns3:dov-schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns3="http://kern.schemas.dov.vlaanderen.be" xsi:schemaLocation="http://kern.schemas.dov.vlaanderen.be https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/dov.xsd">
+    <interpretaties>
+        <informelestratigrafie>
+            <boring>kb21d54e-B45</boring>
+            <auteur>
+                <persoon>
+                    <naam>De Moor</naam>
+                    <voornaam>G.</voornaam>
+                </persoon>
+                <bedrijf-dienst>
+                    <naam>Universiteit Gent</naam>
+                </bedrijf-dienst>
+            </auteur>
+            <datum>1962-01-01</datum>
+            <betrouwbaarheid>goed</betrouwbaarheid>
+            <dataleverancier>
+                <naam>onbekend</naam>
+            </dataleverancier>
+            <laag>
+                <van>0.00</van>
+                <tot>15.50</tot>
+                <beschrijving>Quartair</beschrijving>
+            </laag>
+            <laag>
+                <van>15.50</van>
+                <tot>29.50</tot>
+                <beschrijving>Ieperiaan (Yd)</beschrijving>
+            </laag>
+        </informelestratigrafie>
+    </interpretaties>
+</ns3:dov-schema>

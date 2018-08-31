@@ -2,11 +2,19 @@ import datetime
 import numpy as np
 from collections import OrderedDict
 
+import pandas as pd
+import pytest
 import requests
 from numpy.compat import unicode
+from pandas import DataFrame
 from pandas.api.types import (
     is_int64_dtype, is_object_dtype,
     is_bool_dtype, is_float_dtype)
+
+import pydov
+from owslib.fes import PropertyIsEqualTo
+from owslib.etree import etree
+from pydov.util.errors import InvalidFieldError
 
 
 def service_ok(url='https://www.dov.vlaanderen.be/geoserver', timeout=5):
@@ -40,8 +48,111 @@ def service_ok(url='https://www.dov.vlaanderen.be/geoserver', timeout=5):
 
 class AbstractTestSearch(object):
     """Class grouping common test code for search classes."""
-    @staticmethod
-    def abstract_test_get_fields(fields):
+    def get_search_object(self):
+        """Get an instance of the search object for this type.
+
+        Returns
+        -------
+        pydov.search.abstract.AbstractSearch
+            Instance of subclass of this type used for searching.
+
+        """
+        raise NotImplementedError
+
+    def get_type(self):
+        """Get the class reference for this datatype.
+
+        Returns
+        -------
+        pydov.types.abstract.AbstractDovType
+            Class reference for the corresponding datatype.
+
+        """
+        raise NotImplementedError
+
+    def get_valid_query_single(self):
+        """Get a valid query returning a single feature.
+
+        Returns
+        -------
+        owslib.fes.OgcExpression
+            OGC expression of the query.
+
+        """
+        raise NotImplementedError
+
+    def get_inexistent_field(self):
+        """Get the name of a field that doesn't exist.
+
+        Returns
+        -------
+        str
+            The name of an inexistent field.
+
+        """
+        raise NotImplementedError
+
+    def get_xml_field(self):
+        """Get the name of a field defined in XML only.
+
+        Returns
+        -------
+        str
+            The name of the XML field.
+
+        """
+        raise NotImplementedError
+
+    def get_valid_returnfields(self):
+        """Get a list of valid return fields from the main type.
+
+        Returns
+        -------
+        tuple
+            A tuple containing only valid return fields.
+
+        """
+        raise NotImplementedError
+
+    def get_valid_returnfields_subtype(self):
+        """Get a list of valid return fields, including fields from a subtype.
+
+        Returns
+        -------
+        tuple
+            A tuple containing valid return fields, including fields from a
+            subtype.
+
+        """
+        raise NotImplementedError
+
+    def get_valid_returnfields_extra(self):
+        """Get a list of valid return fields, including extra WFS only
+        fields not present in the default dataframe.
+
+        Returns
+        -------
+        tuple
+            A tuple containing valid return fields, including extra fields
+            from WFS, not present in the default dataframe.
+
+        """
+        raise NotImplementedError
+
+    def get_df_default_columns(self):
+        """Get a list of the column names (and order) from the default
+        dataframe.
+
+        Returns
+        -------
+        list
+            A list of the column names of the default dataframe.
+
+        """
+        raise NotImplementedError
+
+    def test_get_fields(self, mp_wfs, mp_remote_describefeaturetype,
+                        mp_remote_md, mp_remote_fc):
         """Test the get_fields method.
 
         Test whether the returned fields match the format specified
@@ -49,10 +160,18 @@ class AbstractTestSearch(object):
 
         Parameters
         ----------
-        fields : dict
-            Fields returned by a specific search class to test.
+        mp_wfs : pytest.fixture
+            Monkeypatch the call to the remote GetCapabilities request.
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType.
+        mp_remote_md : pytest.fixture
+            Monkeypatch the call to get the remote metadata.
+        mp_remote_fc : pytest.fixture
+            Monkeypatch the call to get the remote feature catalogue.
 
         """
+        fields = self.get_search_object().get_fields()
+
         assert type(fields) is dict
 
         for field in fields:
@@ -98,21 +217,72 @@ class AbstractTestSearch(object):
                 assert sorted(f.keys()) == ['cost', 'definition', 'name',
                                             'notnull', 'type']
 
-    @staticmethod
-    def abstract_test_df_dtypes(df, fields):
-        """Test the resulting column dtypes from dataframe.
+    def test_search_both_location_query(self, mp_remote_describefeaturetype,
+                                        mp_remote_wfs_feature):
+        """Test the search method providing both a location and a query.
 
-        Test whether the returned columns match the format specified
-        in the documentation.
+        Test whether a dataframe is returned.
 
         Parameters
         ----------
-        df : pd.DataFrame
-            result of the search
-        fields : dict
-            Fields returned by a specific search class to test.
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType.
+        mp_remote_wfs_feature : pytest.fixture
+            Monkeypatch the call to get WFS features.
 
         """
+        df = self.get_search_object().search(
+            location=(1, 2, 3, 4),
+            query=self.get_valid_query_single(),
+            return_fields=self.get_valid_returnfields())
+
+        assert type(df) is DataFrame
+
+    def test_search(self, mp_wfs, mp_remote_describefeaturetype, mp_remote_md,
+                    mp_remote_fc, mp_remote_wfs_feature, mp_dov_xml):
+        """Test the search method with only the query parameter.
+
+        Test whether the result is correct.
+
+        Parameters
+        ----------
+        mp_wfs : pytest.fixture
+            Monkeypatch the call to the remote GetCapabilities request.
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType.
+        mp_remote_md : pytest.fixture
+            Monkeypatch the call to get the remote metadata.
+        mp_remote_fc : pytest.fixture
+            Monkeypatch the call to get the remote feature catalogue.
+        mp_remote_wfs_feature : pytest.fixture
+            Monkeypatch the call to get WFS features.
+        mp_dov_xml : pytest.fixture
+            Monkeypatch the call to get the remote XML data.
+
+        """
+        df = self.get_search_object().search(
+            query=self.get_valid_query_single())
+
+        assert type(df) is DataFrame
+
+        assert list(df) == self.get_df_default_columns()
+
+        datatype = self.get_type()
+        allfields = datatype.get_field_names()
+        ownfields = datatype.get_field_names(include_subtypes=False)
+        subfields = [f for f in allfields if f not in ownfields]
+
+        assert len(df) >= 1
+
+        for field in list(df):
+            if field in ownfields:
+                assert len(df[field].unique()) == 1
+            elif field in subfields:
+                assert len(df[field].unique()) >= 1
+
+        # dtype checks of the resulting df columns
+        fields = self.get_type().get_fields(source=('wfs', 'xml', 'custom'))
+
         for field in list(df):
             datatype = fields[field]['type']
             if datatype == 'string':
@@ -127,50 +297,372 @@ class AbstractTestSearch(object):
             elif datatype == 'boolean':
                 assert is_bool_dtype(df[field])
 
-    @staticmethod
-    def abstract_test_search_checkrows(df, datatype):
-        """Test the number of rows in the result dataframe.
+    def test_search_returnfields(self, mp_remote_wfs_feature):
+        """Test the search method with the query parameter and a selection of
+        return fields.
 
-        Tests whether fields of the main datatype have only one value
-        whereas the fields of a subtype may have multiple different values.
+        Test whether the output dataframe contains only the selected return
+        fields.
 
         Parameters
         ----------
-        df : pd.DataFrame
-            result of a search that returned a dataframe for a single
-            instance of the datatype
-        datatype : pydov.types.abstract.AbstractDovType
-            datatype of the data in the resulting dataframe
+        mp_remote_wfs_feature : pytest.fixture
+            Monkeypatch the call to get WFS features.
 
         """
-        allfields = datatype.get_field_names()
-        ownfields = datatype.get_field_names(include_subtypes=False)
-        subfields = [f for f in allfields if f not in ownfields]
+        df = self.get_search_object().search(
+            query=self.get_valid_query_single(),
+            return_fields=self.get_valid_returnfields())
 
-        assert len(df) >= 1
+        assert type(df) is DataFrame
 
-        for field in list(df):
-            if field in ownfields:
-                assert len(df[field].unique()) == 1
-            elif field in subfields:
-                assert len(df[field].unique()) >= 1
+        assert list(df) == list(self.get_valid_returnfields())
+
+    def test_search_returnfields_subtype(self, mp_remote_wfs_feature):
+        """Test the search method with the query parameter and a selection of
+        return fields, including fields from a subtype.
+
+        Test whether the output dataframe contains only the selected return
+        fields.
+
+        Parameters
+        ----------
+        mp_remote_wfs_feature : pytest.fixture
+            Monkeypatch the call to get WFS features.
+
+        """
+        df = self.get_search_object().search(
+            query=self.get_valid_query_single(),
+            return_fields=self.get_valid_returnfields_subtype())
+
+        assert type(df) is DataFrame
+
+        assert list(df) == list(self.get_valid_returnfields_subtype())
+
+    def test_search_returnfields_order(self, mp_remote_wfs_feature):
+        """Test the search method with the query parameter and a selection of
+        return fields in another ordering.
+
+        Test whether the output dataframe contains only the selected return
+        fields, in the order that is documented in
+        docs/description_output_dataframes.rst
+
+        Parameters
+        ----------
+        mp_remote_wfs_feature : pytest.fixture
+            Monkeypatch the call to get WFS features.
+
+        """
+        df = self.get_search_object().search(
+            query=self.get_valid_query_single(),
+            return_fields=self.get_valid_returnfields()[::-1])
+
+        assert type(df) is DataFrame
+
+        assert list(df) == list(self.get_valid_returnfields())
+
+    def test_search_wrongreturnfields(self):
+        """Test the search method with the query parameter and an inexistent
+        return field.
+
+        Test whether an InvalidFieldError is raised.
+
+        """
+        return_fields = list(self.get_valid_returnfields())
+        return_fields.append(self.get_inexistent_field())
+
+        with pytest.raises(InvalidFieldError):
+            self.get_search_object().search(
+                query=self.get_valid_query_single(),
+                return_fields=return_fields)
+
+    def test_search_wrongreturnfieldstype(self):
+        """Test the search method with the query parameter and a single
+        return field as string.
+
+        Test whether an AttributeError is raised.
+
+        """
+        with pytest.raises(AttributeError):
+            self.get_search_object().search(
+                query=self.get_valid_query_single(),
+                return_fields=self.get_valid_returnfields()[0])
+
+    def test_search_query_wrongfield(self):
+        """Test the search method with the query parameter using an
+        inexistent query field.
+
+        Test whether an InvalidFieldError is raised.
+
+        """
+        query = PropertyIsEqualTo(propertyname=self.get_inexistent_field(),
+                                  literal='The cat is out of the bag.')
+
+        with pytest.raises(InvalidFieldError):
+            self.get_search_object().search(
+                query=query)
+
+    def test_search_query_wrongfield_returnfield(self):
+        """Test the search method with the query parameter using an
+        return-only field as query field.
+
+        Test whether an InvalidFieldError is raised.
+
+        """
+        query = PropertyIsEqualTo(propertyname=self.get_xml_field(),
+                                  literal='Geotechnisch onderzoek')
+
+        with pytest.raises(InvalidFieldError):
+            self.get_search_object().search(query=query)
+
+    def test_search_extrareturnfields(self, mp_remote_describefeaturetype,
+                                      mp_remote_wfs_feature, mp_dov_xml):
+        """Test the search method with the query parameter and an extra WFS
+        field as return field.
+
+        Parameters
+        ----------
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType.
+        mp_remote_wfs_feature : pytest.fixture
+            Monkeypatch the call to get WFS features.
+        mp_dov_xml : pytest.fixture
+            Monkeypatch the call to get the remote XML data.
+
+        """
+        df = self.get_search_object().search(
+            query=self.get_valid_query_single(),
+            return_fields=self.get_valid_returnfields_extra())
+
+        assert type(df) is DataFrame
+
+        assert list(df) == list(self.get_valid_returnfields_extra())
+
+    def test_search_xml_noresolve(self, mp_remote_describefeaturetype,
+                                  mp_remote_wfs_feature, mp_dov_xml_broken):
+        """Test the search method with return fields from WFS only.
+
+        Test whether no XML is resolved.
+
+        Parameters
+        ----------
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType.
+        mp_remote_wfs_feature : pytest.fixture
+            Monkeypatch the call to get WFS features.
+        mp_dov_xml_broken : pytest.fixture
+            Monkeypatch the call to break fetching of remote XML data.
+
+        """
+        df = self.get_search_object().search(
+            query=self.get_valid_query_single(),
+            return_fields=self.get_valid_returnfields_extra())
 
 
 class AbstractTestTypes(object):
     """Class grouping common test code for datatype classes."""
-    @staticmethod
-    def abstract_test_get_fields(fields):
-        """Test the get_fields method of an AbstractDovType.
+    def get_type(self):
+        """Get the class reference for this datatype.
+
+        Returns
+        -------
+        pydov.types.abstract.AbstractDovType
+            Class reference for the corresponding datatype.
+
+        """
+        raise NotImplementedError
+
+    def get_namespace(self):
+        """Get the WFS namespace associated with this datatype.
+
+        Returns
+        -------
+        str
+            WFS namespace for this type.
+
+        """
+        raise NotImplementedError
+
+    def get_pkey_base(self):
+        """Get the base URL for the permanent keys of this datatype.
+
+        Returns
+        -------
+        str
+            Base URL for the permanent keys of this datatype. For example
+            "https://www.dov.vlaanderen.be/data/boring/"
+
+        """
+        raise NotImplementedError
+
+    def get_field_names(self):
+        """Get the field names for this type as listed in the documentation in
+        docs/description_output_dataframes.rst
+
+        Returns
+        -------
+        list<str>
+            List of field names.
+
+        """
+        raise NotImplementedError
+
+    def get_field_names_subtypes(self):
+        """Get the field names of this type that originate from subtypes only.
+
+        Returns
+        -------
+        list<str>
+            List of field names from subtypes.
+
+        """
+        raise NotImplementedError
+
+    def get_field_names_nosubtypes(self):
+        """Get the field names for this type, without including fields from
+        subtypes.
+
+        Returns
+        -------
+        list<str>
+            List of field names.
+
+        """
+        raise NotImplementedError
+
+    def get_valid_returnfields(self):
+        """Get a list of valid return fields from the main type.
+
+        Returns
+        -------
+        tuple
+            A tuple containing only valid return fields.
+
+        """
+        raise NotImplementedError
+
+    def get_valid_returnfields_subtype(self):
+        """Get a list of valid return fields, including fields from a subtype.
+
+        Returns
+        -------
+        tuple
+            A tuple containing valid return fields, including fields from a
+            subtype.
+
+        """
+        raise NotImplementedError
+
+    def get_inexistent_field(self):
+        """Get the name of a field that doesn't exist.
+
+        Returns
+        -------
+        str
+            The name of an inexistent field.
+
+        """
+        raise NotImplementedError
+
+    def test_get_field_names(self):
+        """Test the get_field_names method.
+
+        Tests whether the available fields for the type match the
+        ones we list in docs/description_output_dataframes.rst.
+
+        """
+        fields = self.get_type().get_field_names()
+        assert fields == self.get_field_names()
+
+    def test_get_field_names_nosubtypes(self):
+        """Test the get_field_names method without including subtypes.
+
+        Tests whether the fields provided in a subtype are not listed when
+        disabling subtypes.
+
+        """
+        fields = self.get_type().get_field_names(
+            return_fields=None, include_subtypes=False)
+
+        assert fields == self.get_field_names_nosubtypes()
+
+    def test_get_field_names_returnfields_nosubtypes(self):
+        """Test the get_field_names method when specifying return
+        fields.
+
+        Tests whether the returned fields match the ones provided as return
+        fields.
+
+        """
+        fields = self.get_type().get_field_names(
+            return_fields=self.get_valid_returnfields(),
+            include_subtypes=False)
+
+        assert fields == list(self.get_valid_returnfields())
+
+    def test_get_field_names_returnfields_order(self):
+        """Test the get_field_names method when specifying return
+        fields in a different order.
+
+        Tests whether the returned fields match the ones provided as return
+        fields and that the order is the one we list in
+        docs/description_output_dataframes.rst.
+
+        """
+        fields = self.get_type().get_field_names(
+            return_fields=self.get_valid_returnfields()[::-1],
+            include_subtypes=False)
+
+        assert fields == list(self.get_valid_returnfields())
+
+    def test_get_field_names_wrongreturnfields(self):
+        """Test the get_field_names method when specifying an
+        inexistent return field.
+
+        Test whether an InvalidFieldError is raised.
+
+        """
+        return_fields = list(self.get_valid_returnfields())
+        return_fields.append(self.get_inexistent_field())
+
+        with pytest.raises(InvalidFieldError):
+            self.get_type().get_field_names(
+                return_fields=return_fields,
+                include_subtypes=False)
+
+    def test_get_field_names_wrongreturnfieldstype(self):
+        """Test the get_field_names method when listing a single
+        return field instead of a list.
+
+        Test whether an AttributeError is raised.
+
+        """
+        with pytest.raises(AttributeError):
+            self.get_type().get_field_names(
+                return_fields=self.get_valid_returnfields()[0],
+                include_subtypes=False)
+
+    def test_get_field_names_wrongreturnfields_nosubtypes(self):
+        """Test the get_field_names method when disabling subtypes
+        and including an otherwise valid return field.
+
+        Test whether an InvalidFieldError is raised.
+
+        """
+        with pytest.raises(InvalidFieldError):
+            self.get_type().get_field_names(
+                return_fields=self.get_valid_returnfields_subtype(),
+                include_subtypes=False)
+
+    def test_get_fields(self):
+        """Test the get_fields method.
 
         Test whether the format returned by the method meets the
         requirements and the format listed in the docs.
 
-        Parameters
-        ----------
-        fields : dict
-            Fields returned by a specific datatype to test.
-
         """
+        fields = self.get_type().get_fields()
+
         assert isinstance(fields, OrderedDict)
 
         for f in fields.keys():
@@ -214,21 +706,65 @@ class AbstractTestTypes(object):
                     'definition', 'name', 'notnull', 'source', 'sourcefield',
                     'type']
 
-    @staticmethod
-    def abstract_test_get_df_array(df_array, fields):
-        """Test the output of the get_df_array method.
+    def test_get_fields_nosubtypes(self):
+        """Test the get_fields method not including subtypes.
 
-        Test whether the output of the dataframe array for the given Boring
-        is correct.
+        Test whether fields provides by subtypes are not listed in the output.
+
+        """
+        fields = self.get_type().get_fields(include_subtypes=False)
+        for field in fields:
+            assert field not in self.get_field_names_subtypes()
+
+    def test_from_wfs_element(self, wfs_feature):
+        """Test the from_wfs_element method.
+
+        Test whether we can construct an instance from a WFS response element.
 
         Parameters
         ----------
-        df_array : list
-            Dataframe array to test.
-        fields : list
-            Fields to test against.
+        wfs_feature : pytest.fixture returning etree.Element
+            Fixture providing an XML element representing a single record of
+            the WFS layer.
 
         """
+        feature = self.get_type().from_wfs_element(
+            wfs_feature, self.get_namespace())
+
+        assert type(feature) is self.get_type()
+
+        assert feature.pkey.startswith(self.get_pkey_base())
+
+        assert feature.pkey.startswith(
+            'https://www.dov.vlaanderen.be/data/%s/' %
+            feature.typename)
+
+        assert type(feature.data) is dict
+        assert type(feature.subdata) is dict
+
+    def test_get_df_array(self, wfs_feature, mp_dov_xml):
+        """Test the get_df_array method.
+
+        Test whether the output of the dataframe array is correct.
+
+        Parameters
+        ----------
+        wfs_feature : pytest.fixture returning etree.Element
+            Fixture providing an XML element representing a single record of
+            the WFS layer.
+        mp_dov_xml : pytest.fixture
+            Monkeypatch the call to get the remote XML data.
+
+        """
+        feature = self.get_type().from_wfs_element(
+            wfs_feature, self.get_namespace())
+
+        fields = [f for f in self.get_type().get_fields(
+            source=('wfs', 'xml', 'custom')).values() if not
+            f.get('wfs_injected', False)]
+
+        df_array = feature.get_df_array()
+
         assert type(df_array) is list
 
         for record in df_array:
@@ -246,7 +782,93 @@ class AbstractTestTypes(object):
                 elif field['type'] == 'boolean':
                     assert type(value) is bool or np.isnan(value)
 
-                if field['name'].startswith('pkey'):
+                if field['name'].startswith('pkey') and not pd.isnull(value):
                     assert value.startswith(
                         'https://www.dov.vlaanderen.be/data/')
                     assert not value.endswith('.xml')
+
+    def test_get_df_array_wrongreturnfields(self, wfs_feature):
+        """Test the get_df_array specifying a nonexistent return field.
+
+        Test whether an InvalidFieldError is raised.
+
+        Parameters
+        ----------
+        wfs_feature : pytest.fixture returning etree.Element
+            Fixture providing an XML element representing a single record of
+            the WFS layer.
+
+        """
+        feature = self.get_type().from_wfs_element(
+            wfs_feature, self.get_namespace())
+
+        with pytest.raises(InvalidFieldError):
+            feature.get_df_array(return_fields=(self.get_inexistent_field(),))
+
+    def test_from_wfs_str(self, wfs_getfeature):
+        """Test the from_wfs method to construct objects from a WFS response,
+        as str.
+
+        Parameters
+        ----------
+        wfs_getfeature : pytest.fixture returing str
+            Fixture providing a WFS GetFeature response.
+
+        """
+        features = self.get_type().from_wfs(wfs_getfeature,
+                                            self.get_namespace())
+
+        for feature in features:
+            assert type(feature) is self.get_type()
+
+    def test_from_wfs_bytes(self, wfs_getfeature):
+        """Test the from_wfs method to construct objects from a WFS response,
+        as bytes.
+
+        Parameters
+        ----------
+        wfs_getfeature : pytest.fixture returing str
+            Fixture providing a WFS GetFeature response.
+
+        """
+        features = self.get_type().from_wfs(wfs_getfeature.encode('utf-8'),
+                                            self.get_namespace())
+
+        for feature in features:
+            assert type(feature) is self.get_type()
+
+    def test_from_wfs_tree(self, wfs_getfeature):
+        """Test the from_wfs method to construct objects from a WFS response,
+        as elementtree.
+
+        Parameters
+        ----------
+        wfs_getfeature : pytest.fixture returing str
+            Fixture providing a WFS GetFeature response.
+
+        """
+        tree = etree.fromstring(wfs_getfeature.encode('utf8'))
+        features = self.get_type().from_wfs(tree, self.get_namespace())
+
+        for feature in features:
+            assert type(feature) is self.get_type()
+
+    def test_from_wfs_list(self, wfs_getfeature):
+        """Test the from_wfs method to construct objects from a WFS response,
+        as list of elements.
+
+        Parameters
+        ----------
+        wfs_getfeature : pytest.fixture returing str
+            Fixture providing a WFS GetFeature response.
+
+        """
+        tree = etree.fromstring(wfs_getfeature.encode('utf8'))
+        feature_members = tree.findall('.//{http://www.opengis.net/gml}'
+                                       'featureMembers')
+
+        features = self.get_type().from_wfs(feature_members,
+                                            self.get_namespace())
+
+        for feature in features:
+            assert type(feature) is self.get_type()

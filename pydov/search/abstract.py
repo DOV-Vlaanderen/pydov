@@ -15,7 +15,7 @@ from pydov.util.errors import (
     FeatureOverflowError,
     InvalidFieldError,
 )
-from pydov.util.owsutil import get_remote_schema
+from ..util.owsutil import get_remote_schema
 
 
 class AbstractSearch(object):
@@ -244,6 +244,16 @@ class AbstractSearch(object):
             }
             fields[field['name']] = field
 
+        for custom_field in self._type.get_fields(source=['custom']).values():
+            field = {
+                'name': custom_field['name'],
+                'type': custom_field['type'],
+                'definition': custom_field['definition'],
+                'notnull': custom_field['notnull'],
+                'cost': 1
+            }
+            fields[field['name']] = field
+
         return fields
 
     def _pre_search_validation(self, location=None, query=None,
@@ -261,8 +271,7 @@ class AbstractSearch(object):
             all fields are currently supported as a search parameter.
         return_fields : list<str> or tuple<str> or set<str>
             A list of fields to be returned in the output data. This should
-            be a subset of the fields provided in `get_fields()`. Note that
-            not all fields are currently supported as return fields.
+            be a subset of the fields provided in `get_fields()`.
 
         Raises
         ------
@@ -317,6 +326,13 @@ class AbstractSearch(object):
                         raise InvalidFieldError(
                             "Unknown return field: '%s'. Did you mean '%s'?"
                             % (rf, self._map_wfs_source_df[rf]))
+                    if rf.lower() in [i.lower() for i in
+                                      self._map_wfs_source_df.keys()]:
+                        sugg = [i for i in self._map_wfs_source_df.keys() if
+                                i.lower() == rf.lower()][0]
+                        raise InvalidFieldError(
+                            "Unknown return field: '%s'. Did you mean '%s'?"
+                            % (rf, sugg))
                     raise InvalidFieldError(
                         "Unknown return field: '%s'" % rf)
 
@@ -362,7 +378,8 @@ class AbstractSearch(object):
             get_feature_request=wfs_getfeature_xml
         )
 
-    def _search(self, location=None, query=None, return_fields=None):
+    def _search(self, location=None, query=None, return_fields=None,
+                extra_wfs_fields=[]):
         """Perform the WFS search by issuing a GetFeature request.
 
         Parameters
@@ -378,6 +395,10 @@ class AbstractSearch(object):
             A list of fields to be returned in the output data. This should
             be a subset of the fields provided in `get_fields()`. Note that
             not all fields are currently supported as return fields.
+        extra_wfs_fields: list<str>
+            A list of extra fields to be included in the WFS requests,
+            regardless whether they're needed as return field. Optional,
+            defaults to an empty list.
 
         Returns
         -------
@@ -439,7 +460,9 @@ class AbstractSearch(object):
             wfs_property_names.extend([self._map_df_wfs_source[i]
                                        for i in self._map_df_wfs_source
                                        if i in return_fields])
-            wfs_property_names = list(set(wfs_property_names))
+
+        wfs_property_names.extend(extra_wfs_fields)
+        wfs_property_names = list(set(wfs_property_names))
 
         fts = self._get_remote_wfs_feature(
             wfs=self.__wfs,

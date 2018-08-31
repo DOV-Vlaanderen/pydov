@@ -1,48 +1,51 @@
 # -*- coding: utf-8 -*-
 """Module containing the DOV data type for boreholes (Boring), including
 subtypes."""
+import numpy as np
 
 from owslib.etree import etree
 
-from .abstract import (
+from pydov.types.abstract import (
     AbstractDovType,
     AbstractDovSubType,
 )
 
 
-class BoorMethode(AbstractDovSubType):
+class InformeleStratigrafieLaag(AbstractDovSubType):
 
-    _name = 'boormethode'
-    _rootpath = './/boring/details/boormethode'
+    _name = 'informele_stratigrafie_laag'
+    _rootpath = './/informelestratigrafie/laag'
 
     _fields = [{
-        'name': 'diepte_methode_van',
+        'name': 'diepte_laag_van',
         'source': 'xml',
         'sourcefield': '/van',
-        'definition': 'Bovenkant van de laag die met een bepaalde '
-                      'methode aangeboord werd, in meter.',
+        'definition': 'Diepte van de bovenkant van de laag informele '
+                      'stratigrafie in meter.',
         'type': 'float',
         'notnull': False
     }, {
-        'name': 'diepte_methode_tot',
+        'name': 'diepte_laag_tot',
         'source': 'xml',
         'sourcefield': '/tot',
-        'definition': 'Onderkant van de laag die met een bepaalde '
-                      'methode aangeboord werd, in meter.',
+        'definition': 'Diepte van de onderkant van de laag informele '
+                      'stratigrafie in meter.',
         'type': 'float',
         'notnull': False
     }, {
-        'name': 'boormethode',
+        'name': 'beschrijving',
         'source': 'xml',
-        'sourcefield': '/methode',
-        'definition': 'Boormethode voor het diepte-interval.',
+        'sourcefield': '/beschrijving',
+        'definition': 'Benoeming van de eenheid van de laag informele '
+                      'stratigrafie in vrije tekst (onbeperkt in lengte).',
         'type': 'string',
         'notnull': False
     }]
 
     def __init__(self):
         """Initialisation."""
-        super(BoorMethode, self).__init__('boormethode')
+        super(InformeleStratigrafieLaag, self).__init__(
+            'informele_stratigrafie_laag')
 
     @classmethod
     def from_xml_element(cls, element):
@@ -54,33 +57,49 @@ class BoorMethode(AbstractDovSubType):
             XML element representing a single record of this subtype.
 
         """
-        boormethode = BoorMethode()
+        laag = InformeleStratigrafieLaag()
 
         for field in cls.get_fields().values():
-            boormethode.data[field['name']] = boormethode._parse(
+            laag.data[field['name']] = laag._parse(
                 func=element.findtext,
                 xpath=field['sourcefield'],
                 namespace=None,
                 returntype=field.get('type', None)
             )
 
-        return boormethode
+        return laag
 
 
-class Boring(AbstractDovType):
+class InformeleStratigrafie(AbstractDovType):
     """Class representing the DOV data type for boreholes."""
 
-    _subtypes = [BoorMethode]
+    _subtypes = [InformeleStratigrafieLaag]
 
     _fields = [{
-        'name': 'pkey_boring',
+        'name': 'pkey_interpretatie',
         'source': 'wfs',
-        'sourcefield': 'fiche',
+        'sourcefield': 'Interpretatiefiche',
         'type': 'string'
     }, {
-        'name': 'boornummer',
+        'name': 'pkey_boring',
+        'source': 'custom',
+        'type': 'string',
+        'definition': 'URL die verwijst naar de gegevens van de boring '
+                      'waaraan deze informele stratigrafie gekoppeld is ('
+                      'indien gekoppeld aan een boring).',
+        'notnull': False
+    }, {
+        'name': 'pkey_sondering',
+        'source': 'custom',
+        'type': 'string',
+        'definition': 'URL die verwijst naar de gegevens van de sondering '
+                      'waaraan deze informele stratigrafie gekoppeld is ('
+                      'indien gekoppeld aan een sondering).',
+        'notnull': False
+    }, {
+        'name': 'betrouwbaarheid_interpretatie',
         'source': 'wfs',
-        'sourcefield': 'boornummer',
+        'sourcefield': 'Betrouwbaarheid',
         'type': 'string'
     }, {
         'name': 'x',
@@ -92,53 +111,6 @@ class Boring(AbstractDovType):
         'source': 'wfs',
         'sourcefield': 'Y_mL72',
         'type': 'float'
-    }, {
-        'name': 'mv_mtaw',
-        'source': 'xml',
-        'sourcefield': '/boring/oorspronkelijk_maaiveld/waarde',
-        'definition': 'Maaiveldhoogte in mTAW op dag dat de boring '
-                      'uitgevoerd werd.',
-        'type': 'float',
-        'notnull': False
-    }, {
-        'name': 'start_boring_mtaw',
-        'source': 'wfs',
-        'sourcefield': 'Z_mTAW',
-        'type': 'float'
-    }, {
-        'name': 'gemeente',
-        'source': 'wfs',
-        'sourcefield': 'gemeente',
-        'type': 'string'
-    }, {
-        'name': 'diepte_boring_van',
-        'source': 'xml',
-        'sourcefield': '/boring/diepte_van',
-        'definition': 'Startdiepte van de boring (in meter).',
-        'type': 'float',
-        'notnull': True
-    }, {
-        'name': 'diepte_boring_tot',
-        'source': 'wfs',
-        'sourcefield': 'diepte_tot_m',
-        'type': 'float'
-    }, {
-        'name': 'datum_aanvang',
-        'source': 'wfs',
-        'sourcefield': 'datum_aanvang',
-        'type': 'date'
-    }, {
-        'name': 'uitvoerder',
-        'source': 'wfs',
-        'sourcefield': 'uitvoerder',
-        'type': 'string'
-    }, {
-        'name': 'boorgatmeting',
-        'source': 'xml',
-        'sourcefield': '/boring/boorgatmeting/uitgevoerd',
-        'definition': 'Is er een boorgatmeting uitgevoerd (ja/nee).',
-        'type': 'boolean',
-        'notnull': False
     }]
 
     def __init__(self, pkey):
@@ -151,7 +123,8 @@ class Boring(AbstractDovType):
             `https://www.dov.vlaanderen.be/data/boring/<id>`.
 
         """
-        super(Boring, self).__init__('boring', pkey)
+        super(InformeleStratigrafie, self).__init__(
+            'interpretatie', pkey)
 
     @classmethod
     def from_wfs_element(cls, feature, namespace):
@@ -171,17 +144,48 @@ class Boring(AbstractDovType):
             element.
 
         """
-        b = Boring(feature.findtext('./{%s}fiche' % namespace))
+        infstrat = InformeleStratigrafie(
+            feature.findtext('./{%s}Interpretatiefiche' % namespace))
+
+        typeproef = cls._parse(
+            func=feature.findtext,
+            xpath='Type_proef',
+            namespace=namespace,
+            returntype='string'
+        )
+
+        if typeproef == 'Boring':
+            infstrat.data['pkey_boring'] = cls._parse(
+                func=feature.findtext,
+                xpath='Proeffiche',
+                namespace=namespace,
+                returntype='string'
+            )
+            infstrat.data['pkey_sondering'] = np.nan
+        elif typeproef == 'Sondering':
+            infstrat.data['pkey_sondering'] = cls._parse(
+                func=feature.findtext,
+                xpath='Proeffiche',
+                namespace=namespace,
+                returntype='string'
+            )
+            infstrat.data['pkey_boring'] = np.nan
+        else:
+            infstrat.data['pkey_boring'] = np.nan
+            infstrat.data['pkey_sondering'] = np.nan
 
         for field in cls.get_fields(source=('wfs',)).values():
-            b.data[field['name']] = cls._parse(
+            if field['name'] in ['pkey_boring', 'pkey_sondering']:
+                continue
+
+            infstrat.data[field['name']] = cls._parse(
                 func=feature.findtext,
                 xpath=field['sourcefield'],
                 namespace=namespace,
                 returntype=field.get('type', None)
             )
 
-        return b
+        return infstrat
 
     def _parse_xml_data(self):
         """Get remote XML data for this DOV object, parse the raw XML and

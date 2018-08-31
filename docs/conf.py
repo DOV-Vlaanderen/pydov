@@ -42,7 +42,7 @@ import sphinx_rtd_theme
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.viewcode', 'numpydoc',
-              'sphinx.ext.autosummary']
+              'sphinx.ext.autosummary', 'nbsphinx']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -83,7 +83,7 @@ autoclass_content = 'both'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-exclude_patterns = ['_build']
+exclude_patterns = ['_build', '**.ipynb_checkpoints']
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
@@ -146,7 +146,7 @@ html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 # here, relative to this directory. They are copied after the builtin
 # static files, so a file named "default.css" will overwrite the builtin
 # "default.css".
-html_static_path = ['_static', '_static/custom.css']
+html_static_path = ['_static', '_static/css/custom.css']
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page
 # bottom, using the given strftime format.
@@ -194,6 +194,12 @@ html_static_path = ['_static', '_static/custom.css']
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'pydovdoc'
 
+# Options for handling the nbsphinx notebook execution
+nbsphinx_kernel_name = 'python3'
+if 'READTHEDOCS' in os.environ:
+    nbsphinx_execute = 'always'
+else:
+    nbsphinx_execute = 'never'
 
 # -- Options for LaTeX output ------------------------------------------
 

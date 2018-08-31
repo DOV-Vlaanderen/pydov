@@ -1,11 +1,18 @@
 language: python
+sudo: false
 
 env:
+  global:
   - COVERALLS_PARALLEL=true
 
 install:
   - pip install -U tox-travis
   - pip install -U coveralls
+
+addons:
+  apt:
+    packages:
+    - pandoc  # for generating documentation from jupyter notebook
 
 matrix:
   include:

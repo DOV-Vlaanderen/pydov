@@ -41,8 +41,12 @@ import sphinx_rtd_theme
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.autodoc', 'sphinx.ext.viewcode', 'numpydoc',
-              'sphinx.ext.autosummary', 'nbsphinx']
+extensions = ['sphinx.ext.autodoc',
+              'sphinx.ext.viewcode',
+              'numpydoc',
+              'sphinx.ext.autosummary',
+              'nbsphinx',
+              'sphinx.ext.intersphinx']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -195,11 +199,13 @@ html_static_path = ['_static', '_static/css/custom.css']
 htmlhelp_basename = 'pydovdoc'
 
 # Options for handling the nbsphinx notebook execution
-nbsphinx_kernel_name = 'python3'
-if 'READTHEDOCS' in os.environ:
-    nbsphinx_execute = 'always'
-else:
-    nbsphinx_execute = 'never'
+nbsphinx_kernel_name = 'python'
+nbsphinx_execute = 'never'
+
+# Interpshinx settings
+intersphinx_mapping = {'pandas':
+        ('http://pandas.pydata.org/pandas-docs/stable/', None)}
+
 
 # -- Options for LaTeX output ------------------------------------------
 

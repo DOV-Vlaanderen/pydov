@@ -8,6 +8,19 @@ code with certain events that occur while using the PyDOV package.
 By default, there is one hook that prints out the progress of XML downloads
 to standard output.
 
+Progress hook
+*************
+By default, PyDOV uses a single default hook used for printing out the
+progress of XML downloads to stdout.
+
+To disable this progress indication, one can disable the progress hook by
+issuing::
+
+    import pydov
+
+    pydov.hooks = []
+
+
 Writing custom hooks
 ********************
 Users can write custom hooks and add them to PyDOV at runtime, to be able to
@@ -81,15 +94,3 @@ completed and an XML document is requested.::
             print('Requested XML document for object %s.' % pkey_object)
 
     pydov.hooks.append(MyHooks())
-
-Progress hook
-*************
-By default, PyDOV uses a single default hook used for printing out the
-progress of XML downloads to stdout.
-
-To disable this progress indication, one can disable the progress hook by
-issuing::
-
-    import pydov
-
-    pydov.hooks = []

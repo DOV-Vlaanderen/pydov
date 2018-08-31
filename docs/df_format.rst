@@ -1,11 +1,46 @@
-============
-Object types
-============
 
-Interpretations
-===============
+.. _object_types:
+
+=======================
+Output data description
+=======================
+
+The defined output format description of the Pandas :class:`~pandas.DataFrame` for each of the
+downloadable data objects:
+
+* :ref:`Interpretations <ref_interpretations>`
+* :ref:`Boreholes <ref_boreholes>`
+* :ref:`CPT data <ref_cpt_data>`
+* :ref:`Groundwater screen<ref_gwfilter>`
+
+For each :class:`~pandas.DataFrame` the following fields are available:
+
+* ``source``: defines the origin of the value, either *wfs* or *xml*
+* ``field``: name of the field in the ``source``
+* ``new_name``: header name of the output Pandas :class:`~pandas.DataFrame`
+* ``data_type``: data type of the column output (e.g. float, date,...)
+* ``example``: an example value of the output
+
+The  ``source`` of the information has an implication on the duration of the data request, as data requests
+that require downloads of multiple ``xml`` file will take more time. For more information on the duration
+difference of ``wfs`` based versus ``xml`` based queries, see :ref:`query duration guide <query_cost>`.
+
+.. note::
+
+    Not all ``wfs`` fields are included in the :class:`~pandas.DataFrame`, but they can be used
+    to select records from the DOV database. For example, whe searching on :ref:`Boreholes <ref_boreholes>`,
+    the presence of the ``informele_stratigrafie``,
+    ``formele_stratigrafie``, ``hydrogeologische_stratigrafie``, etc. are available in the ``wfs`` as
+    boolean fields to search on.
+
+
+.. _ref_interpretations:
+
+Interpretations (In Dutch: interpretaties)
+==========================================
 
 Possible interpretations are:
+
  * Informele stratigrafie
  * Formele stratigrafie
  * Lithologische beschrijvingen
@@ -15,14 +50,15 @@ Possible interpretations are:
  * Quartaire stratigrafie
  * Geotechnische coderingen
 
-Below the desired attributes for each interpretation.
-The new_name column represents the headers of the final dataframe.
-Some elements can occur more than once, e.g. 'bijmenging' in 'Gecodeerde
-lithologie' or 'Geotechnische coderingen'. All occurrences should be included
-as new records in the final dataframe.
-One of pkey_boring or pkey_sondering is empty, the other pointing to the source of the
-interpreted data.
+For each of the interpretations, the available attributes are enlisted in each table table.
 
+Remark that for each depth record, different types can occur resulting in multiple rows for that specific
+depth record in the final :class:`~pandas.DataFrame`, e.g. *bijmenging* in *Gecodeerde
+lithologie* or *Geotechnische coderingen'*.
+
+As interpretations are either linked to :ref:`Boreholes <ref_boreholes>` or :ref:`CPT data <ref_cpt_data>`,
+one of the ``pkey_boring`` or ``pkey_sondering`` is empty and the other pointing to the source of the
+interpreted data.
 
   .. csv-table:: Informele stratigrafie
     :header-rows: 1
@@ -158,24 +194,23 @@ interpreted data.
 
 |
 
-Boreholes
-=========
+.. _ref_boreholes:
 
-Below the desired attributes for each borehole.
-The new_name column represents the headers of the final dataframe.
+Boreholes (In Dutch: boring)
+============================
 
-The output of the boreholes can be joined with the interpretations following
-the pkey_boring AND ('van' and 'tot') attributes of both dataframes. E.g.:
-multiple layers are discernced 'van'/'tot' in the interpretations for in
-between the 'methode_van'/'methode_tot' of the borehole:
+If required, the output of the :ref:`Boreholes <ref_boreholes>` can be joined with the
+:ref:`Interpretations <ref_interpretations>` using the ``pkey_boring``
+in combination with the ``van`` and ``tot`` attributes of both dataframes. For example,
+multiple layers are discernced 'van'/'tot' in the interpretations for in between
+the 'methode_van'/'methode_tot' of the Borehole:
+
+::
+
     JOIN ON pkey_boring
     AND interpretation["van"] >= boring["methode_van"]
     AND interpretation["tot"] <= boring["methode_tot"]
 
-In addition, not all wfs fields are included in the dataframe, but can be used
-to select records from the DOV database. E.g.: 'informele_stratigrafie',
-'formele_stratigrafie', 'hydrogeologische_stratigrafie' etc. are boolean
-fields available in the wfs to search on.
 
   .. csv-table:: Boringen
     :header-rows: 1
@@ -197,24 +232,21 @@ fields available in the wfs to search on.
     xml,/kern:dov-schema/boring/details/boormethode/tot,diepte_methode_tot,float,19.00
     xml,/kern:dov-schema/boring/details/boormethode/methode,boormethode,string,droge boring
 
-|
+
+
+.. _ref_cpt_data:
 
 CPT data (In Dutch: sonderingen)
 ================================
 
-Below the desired attributes for each CPT measurement. Two dataframes are discerned:
- * one with metadata about the measurement (location, type etc.)
- * one with actual measurement data from the xml, with the pkey to join the metadata
+When requesting Cone Penetration Test (CPT) data, two dataframes are discerned:
 
-The new_name column represents the headers of the final dataframe.
-More than one measurement can be performed, listed as a "metingWeerstand" type, i.e.:
+ 1. metadata about the measurement (location, type etc.)
+ 2. actual measurement data from the ``xml``, with the ``pkey`` to JOIN with the metadata
+
+More than one measurement can be performed, listed as a ``metingWeerstand`` type, i.e.:
 qc, Qt, fs, u and i. All elements are by default included in the output dataframe, where
-NaNs indicate that it wasn't measured.
-
-In addition, not all wfs fields are included in the dataframe, but can be used
-to select records from the DOV database. E.g.: 'informele_stratigrafie',
-'formele_stratigrafie' and 'hydrogeologische_stratigrafie' are boolean
-fields available in the wfs to search on.
+``NaN``s indicate that it wasn not measured.
 
   .. csv-table:: Sonderingen metadata
     :header-rows: 1
@@ -249,26 +281,28 @@ fields available in the wfs to search on.
     xml,/kern:dov-schema/sondering/sondeonderzoek/penetratietest/meetdata/i,i,float,0.1000
     xml,/kern:dov-schema/sondering/sondeonderzoek/penetratietest/meetdata/qc,qc,float,NaN
 
+.. _ref_gwfilter:
+
+Groundwater screen (In Dutch: Grondwaterfilter)
+===============================================
+
+The :class:`~pydov.types.GrondwaterFilter` contains the data available from the `meetnetten`
+
+This can be translated to three dataframes:
+
+ * Screen, with the screen location information
+ * Observations
+ * Piezometric water level
 
 
-GrondwaterFilter object
-==========================
+location
+~~~~~~~~
+The fields contained in the :class:`~pandas.DataFrame` are similar to those derived from an online search
+on the `DOV verkenner`_
 
-The GrondwaterFilter object contains the data available using the `meetnetten`
+.. _DOV verkenner: https://www.dov.vlaanderen.be/portaal/?module=verkenner#ModulePage
 
-This can be translated to three data.frames:
-
- * Filter, with the screen location information
- * Peilmetingen
- * Observaties
-
-
-
-Ligging
-~~~~~~~
-In deze dataframe komen gelijkaardige velden als bij het zoeken in de site:
-
-  .. csv-table:: Filter
+  .. csv-table:: Screen
     :header-rows: 1
 
     source,field,new_name,data_type,example
@@ -288,23 +322,26 @@ In deze dataframe komen gelijkaardige velden als bij het zoeken in de site:
     wfs,onderkant_filter_m,diepte_onderkant_filter,float,8.3
     wfs,lengte_filter_m,lengte_filter,float,5.1
 
+Piezometric water level
+~~~~~~~~~~~~~~~~~~~~~~~
 
-Logica filteropbouw
--------------------
-voor het element waar
-``kern:dov-schema/filter/opbouw/onderdeel/filterelement == 'filter'``
-komt de onderkant van de filter overen met:
-``kern:dov-schema/filter/opbouw/onderdeel/tot/``
+  .. csv-table:: Peilmetingen (groundwater)
+    :header-rows: 1
 
-De lengte komt overeen met
-``kern:dov-schema/filter/opbouw/onderdeel/tot/ -
-kern:dov-schema/filter/opbouw/onderdeel/van/``, dus de lengte van het filterelement.
+    source,field,new_name,data_type,example
+    wfs,filterfiche,pkey_filter,string,https://www.dov.vlaanderen.be/data/filter/2003-000253.xml
+    wfs,GW_ID,gw_id,string,1-0709
+    wfs,filternr,filternummer,string,2
+    xml,/kern:dov-schema/filtermeting/peilmeting/datum,datum,date,2015-09-03
+    xml,/kern:dov-schema/filtermeting/peilmeting/tijdstip,tijdstip,string,00:00
+    xml,/kern:dov-schema/filtermeting/peilmeting/peil_mtaw,peil_mtaw,float,121.88
+    xml,/kern:dov-schema/filtermeting/peilmeting/betrouwbaarheid,betrouwbaarheid,string(codelist),goed
+    xml,/kern:dov-schema/filtermeting/peilmeting/methode,methode,string(codelist),peillint
 
+Observations
+~~~~~~~~~~~~
 
-Observaties
-~~~~~~~~~~~
-
-  .. csv-table:: Observaties (grondwater)
+  .. csv-table:: Observations (groundwater)
     :header-rows: 1
 
     source,field,new_name,data_type,example
@@ -317,19 +354,3 @@ Observaties
     xml,/kern:dov-schema/filtermeting/watermonster/observatie/waarde_numeriek,waarde,float,5.12
     xml,/kern:dov-schema/filtermeting/watermonster/observatie/eenheid,eenheid,string(codelist),Sörensen
     xml,/kern:dov-schema/filtermeting/watermonster/observatie/betrouwbaarheid,betrouwbaarheid,string(codelist),twijfelachtig
-
-Peilmetingen
-~~~~~~~~~~~~
-
-  .. csv-table:: Peilmetingen (grondwater)
-    :header-rows: 1
-
-    source,field,new_name,data_type,example
-    wfs,filterfiche,pkey_filter,string,https://www.dov.vlaanderen.be/data/filter/2003-000253.xml
-    wfs,GW_ID,gw_id,string,1-0709
-    wfs,filternr,filternummer,string,2
-    xml,/kern:dov-schema/filtermeting/peilmeting/datum,datum,date,2015-09-03
-    xml,/kern:dov-schema/filtermeting/peilmeting/tijdstip,tijdstip,string,00:00
-    xml,/kern:dov-schema/filtermeting/peilmeting/peil_mtaw,peil_mtaw,float,121.88
-    xml,/kern:dov-schema/filtermeting/peilmeting/betrouwbaarheid,betrouwbaarheid,string(codelist),goed
-    xml,/kern:dov-schema/filtermeting/peilmeting/methode,methode,string(codelist),peillint

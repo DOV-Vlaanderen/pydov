@@ -7,10 +7,14 @@ Searching
 .. automodule:: pydov.search.abstract
     :members:
 
-
 .. automodule:: pydov.search.boring
     :members:
 
+.. automodule:: pydov.search.grondwaterfilter
+    :members:
+
+.. automodule:: pydov.search.interpretaties
+    :members:
 
 Object types
 ------------
@@ -21,6 +25,11 @@ Object types
 .. automodule:: pydov.types.boring
     :members:
 
+.. automodule:: pydov.types.grondwaterfilter
+    :members:
+
+.. automodule:: pydov.types.interpretaties
+    :members:
 
 Caching
 -------

@@ -4,7 +4,11 @@ API reference
 Searching
 ---------
 
-.. automodule:: pydov.search
+.. automodule:: pydov.search.abstract
+    :members:
+
+
+.. automodule:: pydov.search.boring
     :members:
 
 
@@ -15,6 +19,13 @@ Object types
     :members:
 
 .. automodule:: pydov.types.boring
+    :members:
+
+
+Caching
+-------
+
+.. automodule:: pydov.util.caching
     :members:
 
 

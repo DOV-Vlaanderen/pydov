@@ -196,10 +196,7 @@ htmlhelp_basename = 'pydovdoc'
 
 # Options for handling the nbsphinx notebook execution
 nbsphinx_kernel_name = 'python3'
-if 'READTHEDOCS' in os.environ:
-    nbsphinx_execute = 'always'
-else:
-    nbsphinx_execute = 'never'
+nbsphinx_execute = 'always'
 
 # -- Options for LaTeX output ------------------------------------------
 

@@ -3,8 +3,6 @@
 subtypes."""
 import numpy as np
 
-from owslib.etree import etree
-
 from pydov.types.abstract import (
     AbstractDovType,
     AbstractDovSubType,

@@ -2,8 +2,6 @@
 """Module containing the DOV data type for boreholes (Boring), including
 subtypes."""
 
-from owslib.etree import etree
-
 from .abstract import (
     AbstractDovType,
     AbstractDovSubType,

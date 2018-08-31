@@ -45,8 +45,8 @@ package provides the optimal development traject.
 Getting started
 ---------------
 
-After :ref:`installation`, check the :ref:`quick` instructions for a first introduction of
-the pydov functionalities. For a more in-depth overview of the functionalities,
+After :ref:`installation`, check the :ref:`userguide` instructions for a first introduction of
+the pydov functionalities. For a more in-depth overview of the capabilities,
 the :ref:`tutorials` illustrate different capabilities of the pydov package
 for each of the object types (:class:`~pydov.search.grondwaterfilter.GrondwaterFilterSearch`,
 :class:`~pydov.search.boring.BoringSearch` and the interpretations derived from

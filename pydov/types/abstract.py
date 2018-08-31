@@ -393,8 +393,9 @@ class AbstractDovType(AbstractCommon):
         Parameters
         ----------
         source : list<str> or tuple<str> or iterable<str>
-            A list of sources to include in the output. Can either be `wfs` or
-            `xml` or `wfs, xml`.
+            A list of sources to include in the output. Can be a combination
+            of one or more of `wfs`, `xml` or `custom . Defaults to (`wfs`,
+            `xml`).
         include_subtypes : boolean
             Whether to include fields defined in subtypes (True) or not (
             False). Defaults to True.
@@ -411,18 +412,21 @@ class AbstractDovType(AbstractCommon):
                 The name of the field in the output data.
 
             source (str)
-                The source of the field (either `wfs` or `xml`).
-
-            sourcefield (str)
-                The name of the field in the source (source + sourcefield
-                identify the origin of the data).
+                The source of the field (either `wfs`, `xml` or `custom`).
 
             type (str)
                 Datatype of the output data field (one of `string`, `float`,
                 `integer`, `date`, `datetime`, `boolean`).
 
             The metadata dictionary additionally includes for fields with
-            source `xml`:
+            source `xml` or `wfs`:
+
+            sourcefield (str)
+                The name of the field in the source (source + sourcefield
+                identify the origin of the data).
+
+            The metadata dictionary additionally includes for fields with
+            source `xml` or `custom`:
 
             definition (str)
                 The definition of the field.
@@ -520,7 +524,8 @@ class AbstractDovType(AbstractCommon):
 
         """
         fields = self.get_field_names(return_fields)
-        ownfields = self.get_field_names(include_subtypes=False)
+        ownfields = self.get_field_names(include_subtypes=False,
+                                         include_wfs_injected=True)
         subfields = [f for f in fields if f not in ownfields]
 
         if len(subfields) > 0:

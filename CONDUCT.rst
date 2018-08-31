@@ -1,3 +1,5 @@
+.. _code_conduct:
+
 ===============
 Code of Conduct
 ===============

@@ -23,13 +23,13 @@ search_objects = [BoringSearch(),
 
 
 @pytest.fixture(scope='module')
-def mp_wfs(monkeysession):
+def mp_wfs(monkeymodule):
     """Monkeypatch the call to the remote GetCapabilities request.
 
     Parameters
     ----------
-    monkeysession : pytest.fixture
-        PyTest monkeypatch fixture with session scope.
+    monkeymodule : pytest.fixture
+        PyTest monkeypatch fixture with module scope.
 
     """
     def read(*args, **kwargs):
@@ -40,7 +40,7 @@ def mp_wfs(monkeysession):
             data = etree.fromstring(data)
         return data
 
-    monkeysession.setattr(
+    monkeymodule.setattr(
         owslib.feature.common.WFSCapabilitiesReader, 'read', read)
 
 
@@ -87,7 +87,7 @@ def mp_remote_fc_notfound(monkeypatch):
 
 
 @pytest.fixture(scope='module')
-def mp_remote_md(wfs, monkeysession, request):
+def mp_remote_md(wfs, monkeymodule, request):
     """Monkeypatch the call to get the remote metadata of the layer.
 
     This monkeypatch requires a module variable ``location_md_metadata``
@@ -97,8 +97,8 @@ def mp_remote_md(wfs, monkeysession, request):
     ----------
     wfs : pytest.fixture returning owslib.wfs.WebFeatureService
         WebFeatureService based on the local GetCapabilities.
-    monkeysession : pytest.fixture
-        PyTest monkeypatch fixture with session scope.
+    monkeymodule : pytest.fixture
+        PyTest monkeypatch fixture with module scope.
     request : pytest.fixtue
         PyTest fixture providing request context.
 
@@ -111,12 +111,12 @@ def mp_remote_md(wfs, monkeysession, request):
                 data = data.encode('utf-8')
         return data
 
-    monkeysession.setattr(pydov.util.owsutil, '__get_remote_md',
-                          __get_remote_md)
+    monkeymodule.setattr(pydov.util.owsutil, '__get_remote_md',
+                         __get_remote_md)
 
 
 @pytest.fixture(scope='module')
-def mp_remote_fc(monkeysession, request):
+def mp_remote_fc(monkeymodule, request):
     """Monkeypatch the call to get the remote feature catalogue.
 
     This monkeypatch requires a module variable
@@ -125,8 +125,8 @@ def mp_remote_fc(monkeysession, request):
 
     Parameters
     ----------
-    monkeysession : pytest.fixture
-        PyTest monkeypatch fixture with session scope.
+    monkeymodule : pytest.fixture
+        PyTest monkeypatch fixture with module scope.
     request : pytest.fixtue
         PyTest fixture providing request context.
 
@@ -139,12 +139,12 @@ def mp_remote_fc(monkeysession, request):
                 data = data.encode('utf-8')
         return data
 
-    monkeysession.setattr(pydov.util.owsutil, '__get_remote_fc',
-                          __get_remote_fc)
+    monkeymodule.setattr(pydov.util.owsutil, '__get_remote_fc',
+                         __get_remote_fc)
 
 
 @pytest.fixture(scope='module')
-def mp_remote_describefeaturetype(monkeysession, request):
+def mp_remote_describefeaturetype(monkeymodule, request):
     """Monkeypatch the call to a remote DescribeFeatureType.
 
     This monkeypatch requires a module variable
@@ -153,8 +153,8 @@ def mp_remote_describefeaturetype(monkeysession, request):
 
     Parameters
     ----------
-    monkeysession : pytest.fixture
-        PyTest monkeypatch fixture with session scope.
+    monkeymodule : pytest.fixture
+        PyTest monkeypatch fixture with module scope.
     request : pytest.fixtue
         PyTest fixture providing request context.
 
@@ -167,9 +167,9 @@ def mp_remote_describefeaturetype(monkeysession, request):
                 data = data.encode('utf-8')
         return data
 
-    monkeysession.setattr(pydov.util.owsutil,
-                          '__get_remote_describefeaturetype',
-                          __get_remote_describefeaturetype)
+    monkeymodule.setattr(pydov.util.owsutil,
+                         '__get_remote_describefeaturetype',
+                         __get_remote_describefeaturetype)
 
 
 @pytest.fixture(scope='module')
@@ -220,7 +220,7 @@ def wfs_feature(request):
 
 
 @pytest.fixture(scope='module')
-def mp_remote_wfs_feature(monkeysession, request):
+def mp_remote_wfs_feature(monkeymodule, request):
     """Monkeypatch the call to get WFS features.
 
     This monkeypatch requires a module variable ``location_wfs_getfeature``
@@ -228,8 +228,8 @@ def mp_remote_wfs_feature(monkeysession, request):
 
     Parameters
     ----------
-    monkeysession : pytest.fixture
-        PyTest monkeypatch fixture with session scope.
+    monkeymodule : pytest.fixture
+        PyTest monkeypatch fixture with module scope.
     request : pytest.fixtue
         PyTest fixture providing request context.
 
@@ -242,13 +242,13 @@ def mp_remote_wfs_feature(monkeysession, request):
                 data = data.encode('utf-8')
         return data
 
-    monkeysession.setattr(pydov.util.owsutil,
-                          'wfs_get_feature',
-                          __get_remote_wfs_feature)
+    monkeymodule.setattr(pydov.util.owsutil,
+                         'wfs_get_feature',
+                         __get_remote_wfs_feature)
 
 
 @pytest.fixture(scope='module')
-def mp_dov_xml(monkeysession, request):
+def mp_dov_xml(monkeymodule, request):
     """Monkeypatch the call to get the remote XML data.
 
     This monkeypatch requires a module variable ``location_dov_xml``
@@ -256,8 +256,8 @@ def mp_dov_xml(monkeysession, request):
 
     Parameters
     ----------
-    monkeysession : pytest.fixture
-        PyTest monkeypatch fixture with session scope.
+    monkeymodule : pytest.fixture
+        PyTest monkeypatch fixture with module scope.
     request : pytest.fixtue
         PyTest fixture providing request context.
 
@@ -271,8 +271,8 @@ def mp_dov_xml(monkeysession, request):
                 data = data.encode('utf-8')
         return data
 
-    monkeysession.setattr(pydov.types.abstract.AbstractDovType,
-                          '_get_xml_data', _get_xml_data)
+    monkeymodule.setattr(pydov.types.abstract.AbstractDovType,
+                         '_get_xml_data', _get_xml_data)
 
 
 @pytest.fixture()

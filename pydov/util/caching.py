@@ -7,6 +7,7 @@ import shutil
 import tempfile
 from io import open
 
+import pydov
 from owslib.util import openURL
 
 
@@ -154,6 +155,8 @@ class TransparentCache(object):
             The raw XML data of this DOV object as bytes.
 
         """
+        for hook in pydov.hooks:
+            hook.xml_downloaded(url.rstrip('.xml'))
         return openURL(url).read()
 
     def get(self, url):
@@ -178,6 +181,8 @@ class TransparentCache(object):
 
         if self._valid(datatype, key):
             try:
+                for hook in pydov.hooks:
+                    hook.xml_cache_hit(url.rstrip('.xml'))
                 return self._load(datatype, key).encode('utf-8')
             except Exception:
                 pass

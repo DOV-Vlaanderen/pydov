@@ -12,4 +12,4 @@ To use PyDOV in a project::
    :maxdepth: 2
 
    caching
-
+   hooks

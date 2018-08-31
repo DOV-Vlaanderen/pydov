@@ -2,6 +2,7 @@
 """Module containing the abstract search classes to retrieve DOV data."""
 
 import owslib
+import pydov
 from owslib.etree import etree
 from owslib.fes import (
     FilterRequest,
@@ -369,6 +370,9 @@ class AbstractSearch(object):
             propertyname=propertyname
         )
 
+        for hook in pydov.hooks:
+            hook.wfs_search_init(typename)
+
         return owsutil.wfs_get_feature(
             baseurl=wfs.url,
             get_feature_request=wfs_getfeature_xml
@@ -474,6 +478,9 @@ class AbstractSearch(object):
             raise FeatureOverflowError(
                 'Reached the limit of %i returned features. Please split up '
                 'the query to ensure getting all results.' % 10000)
+
+        for hook in pydov.hooks:
+            hook.wfs_search_result(int(tree.get('numberOfFeatures')))
 
         return tree
 

@@ -498,9 +498,14 @@ class AbstractDovType(AbstractCommon):
             The raw XML data of this DOV object as bytes.
 
         """
+        for hook in pydov.hooks:
+            hook.xml_requested(self.pkey)
+
         if pydov.cache:
             return pydov.cache.get(self.pkey + '.xml')
         else:
+            for hook in pydov.hooks:
+                hook.xml_downloaded(self.pkey)
             return openURL(self.pkey + '.xml').read()
 
     def _parse_subtypes(self, xml):

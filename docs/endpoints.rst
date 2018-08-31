@@ -104,6 +104,8 @@ There are three ways of accessing data published by DOV. To get the data behind 
 
 Some of the data we publish is also available in an interactive web application as well as in an XML representation.
 
+.. _vector_wfs:
+
 Using vector data
 ~~~~~~~~~~~~~~~~~
 
@@ -195,6 +197,8 @@ More information
 
 * `OGC WCS standard <http://www.opengeospatial.org/standards/wcs>`_
 * `Geoserver WCS implementation <http://docs.geoserver.org/stable/en/user/services/wcs/index.html>`_
+
+.. _xml_data:
 
 Using XML data
 ~~~~~~~~~~~~~~

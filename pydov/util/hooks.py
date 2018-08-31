@@ -3,6 +3,7 @@
 PyDOV events."""
 
 import sys
+import time
 
 
 class AbstractHook(object):
@@ -83,6 +84,7 @@ class SimpleStatusHook(AbstractHook):
         """
         self.result_count = 0
         self.prog_counter = 0
+        self.init_time = None
 
     def _write_progress(self, char):
         """Write progress to standard output.
@@ -101,8 +103,16 @@ class SimpleStatusHook(AbstractHook):
                                                self.result_count))
             sys.stdout.flush()
         elif self.prog_counter % 50 == 0:
-            sys.stdout.write('\n[%03i/%03i] ' % (self.prog_counter,
-                                                 self.result_count))
+            time_elapsed = time.time() - self.init_time
+            time_per_item = time_elapsed/self.prog_counter
+            remaining_mins = int((time_per_item*(
+                self.result_count-self.prog_counter))/60)
+            if remaining_mins > 1:
+                remaining = " (%i min. left)" % remaining_mins
+            else:
+                remaining = ""
+            sys.stdout.write('%s\n[%03i/%03i] ' % (
+                remaining, self.prog_counter, self.result_count))
             sys.stdout.flush()
 
         sys.stdout.write(char)
@@ -124,6 +134,7 @@ class SimpleStatusHook(AbstractHook):
         """
         self.result_count = 0
         self.prog_counter = 0
+        self.init_time = time.time()
 
     def wfs_search_result(self, number_of_results):
         """When the WFS search completes, set the total result count to

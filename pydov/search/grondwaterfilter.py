@@ -2,9 +2,9 @@
 """Module containing the search classes to retrieve DOV borehole data."""
 import pandas as pd
 
-from pydov.search.abstract import AbstractSearch
-from pydov.types.grondwaterfilter import GrondwaterFilter
-from pydov.util import owsutil
+from .abstract import AbstractSearch
+from ..types.grondwaterfilter import GrondwaterFilter
+from ..util import owsutil
 
 
 class GrondwaterFilterSearch(AbstractSearch):

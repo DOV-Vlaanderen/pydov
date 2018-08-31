@@ -1,13 +1,11 @@
-# -*- coding: utf-8 -*-
-"""Module containing the search classes to retrieve DOV borehole data."""
 import pandas as pd
 
-from .abstract import AbstractSearch
-from ..types.boring import Boring
-from ..util import owsutil
+from pydov.search.abstract import AbstractSearch
+from pydov.types.interpretaties import InformeleStratigrafie
+from pydov.util import owsutil
 
 
-class BoringSearch(AbstractSearch):
+class InformeleStratigrafieSearch(AbstractSearch):
     """Search class to retrieve information about boreholes (Boring)."""
 
     __wfs_schema = None
@@ -17,33 +15,36 @@ class BoringSearch(AbstractSearch):
 
     def __init__(self):
         """Initialisation."""
-        super(BoringSearch, self).__init__('dov-pub:Boringen', Boring)
+        super(InformeleStratigrafieSearch, self).__init__(
+            'interpretaties:informele_stratigrafie', InformeleStratigrafie)
 
     def _init_namespace(self):
         """Initialise the WFS namespace associated with the layer."""
-        if BoringSearch.__wfs_namespace is None:
-            BoringSearch.__wfs_namespace = self._get_namespace()
+        if InformeleStratigrafieSearch.__wfs_namespace is None:
+            InformeleStratigrafieSearch.__wfs_namespace = self._get_namespace()
 
     def _init_fields(self):
         """Initialise the fields and their metadata available in this search
         class."""
         if self._fields is None:
-            if BoringSearch.__wfs_schema is None:
-                BoringSearch.__wfs_schema = self._get_schema()
+            if InformeleStratigrafieSearch.__wfs_schema is None:
+                InformeleStratigrafieSearch.__wfs_schema = self._get_schema()
 
-            if BoringSearch.__md_metadata is None:
-                BoringSearch.__md_metadata = self._get_remote_metadata()
+            if InformeleStratigrafieSearch.__md_metadata is None:
+                InformeleStratigrafieSearch.__md_metadata = \
+                    self._get_remote_metadata()
 
-            if BoringSearch.__fc_featurecatalogue is None:
+            if InformeleStratigrafieSearch.__fc_featurecatalogue is None:
                 csw_url = self._get_csw_base_url()
                 fc_uuid = owsutil.get_featurecatalogue_uuid(
-                    BoringSearch.__md_metadata)
+                    InformeleStratigrafieSearch.__md_metadata)
 
-                BoringSearch.__fc_featurecatalogue = \
+                InformeleStratigrafieSearch.__fc_featurecatalogue = \
                     owsutil.get_remote_featurecatalogue(csw_url, fc_uuid)
 
             fields = self._build_fields(
-                BoringSearch.__wfs_schema, BoringSearch.__fc_featurecatalogue)
+                InformeleStratigrafieSearch.__wfs_schema,
+                InformeleStratigrafieSearch.__fc_featurecatalogue)
 
             for field in fields.values():
                 if field['name'] not in self._type.get_field_names(
@@ -57,10 +58,11 @@ class BoringSearch(AbstractSearch):
                     })
 
             self._fields = self._build_fields(
-                BoringSearch.__wfs_schema, BoringSearch.__fc_featurecatalogue)
+                InformeleStratigrafieSearch.__wfs_schema,
+                InformeleStratigrafieSearch.__fc_featurecatalogue)
 
     def search(self, location=None, query=None, return_fields=None):
-        """Search for boreholes (Boring). Provide `location` and/or `query`.
+        """Search for boreholes (Boring). Provide either `location` or `query`.
         When `return_fields` is None, all fields are returned.
 
         Parameters
@@ -106,10 +108,14 @@ class BoringSearch(AbstractSearch):
 
         """
         fts = self._search(location=location, query=query,
-                           return_fields=return_fields)
+                           return_fields=return_fields,
+                           extra_wfs_fields=['Type_proef', 'Proeffiche'])
 
-        boringen = Boring.from_wfs(fts, self.__wfs_namespace)
+        interpretaties = InformeleStratigrafie.from_wfs(
+            fts, self.__wfs_namespace)
 
-        df = pd.DataFrame(data=Boring.to_df_array(boringen, return_fields),
-                          columns=Boring.get_field_names(return_fields))
+        df = pd.DataFrame(
+            data=InformeleStratigrafie.to_df_array(
+                interpretaties, return_fields),
+            columns=InformeleStratigrafie.get_field_names(return_fields))
         return df

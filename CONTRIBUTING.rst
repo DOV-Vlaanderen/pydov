@@ -141,13 +141,14 @@ documents, tutorials, etc. Documentation lives in the ``docs/`` directory.
 
 You can edit the documentation using any text editor and then generate the HTML
 output by typing ``make html`` from the ``doc/`` directory. For building the
-documentation, you will need `sphinx <http://sphinx.pocoo.org/>`_.
+documentation, you will need `sphinx <http://sphinx.pocoo.org/>`_. The ``_build``
+directory is not included in the repository as we rely on CI tooling for the
+documentation building. The documentation is checked on Travis_ and build
+by `Read the docs`_.
 
 .. _Travis: https://travis-ci.org/DOV-Vlaanderen/pydov
 .. _Read the docs: https://readthedocs.org/
 
-The ``_build`` directory is not included in the repository as we rely on CI tooling for the
-documentation building. The documentation is checked on Travis_ and build by `Read the docs`_.
 
 For the notebooks in :ref:`tutorials`, the default is to *always* run the code of the notebooks
 when the documentation is created. This is defined by the ``nbsphinx_execute = 'always'`` option

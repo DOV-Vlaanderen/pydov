@@ -12,6 +12,7 @@ User guide
    df_format
    query_cost
    caching
+   hooks
 
 All the pydov functionalities rely on the existing DOV webservices. An in-depth
 overview of the available services and endpoints is provided on the :ref:`accessing DOV data <endpoints>` page. To retrieve

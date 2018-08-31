@@ -23,8 +23,7 @@ class TestEncoding(object):
 
     @pytest.mark.online
     @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
-    @nocache
-    def test_search(self):
+    def test_search(self, nocache):
         """Test the search method with strange character in the output.
 
         Test whether the output has the correct encoding.
@@ -55,9 +54,6 @@ class TestEncoding(object):
             of 1 second.
 
         """
-        orig_cache = pydov.cache
-        pydov.cache = cache
-
         boringsearch = BoringSearch()
         query = PropertyIsEqualTo(
             propertyname='pkey_boring',
@@ -77,8 +73,6 @@ class TestEncoding(object):
                                                 'mv_mtaw'))
 
         assert df.uitvoerder[0] == u'Societé Belge des Bétons'
-
-        pydov.cache = orig_cache
 
     @pytest.mark.online
     @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")

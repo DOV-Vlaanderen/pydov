@@ -30,7 +30,19 @@ class AbstractCommon(object):
             subclass.
 
         """
-        raise NotImplementedError('This should be implemented in a subclass.')
+        xml = self._get_xml_data()
+        tree = etree.fromstring(xml)
+
+        for field in self.get_fields(source=('xml',),
+                                     include_subtypes=False).values():
+            self.data[field['name']] = self._parse(
+                func=tree.findtext,
+                xpath=field['sourcefield'],
+                namespace=None,
+                returntype=field.get('type', None)
+            )
+
+        self._parse_subtypes(xml)
 
     @classmethod
     def _parse(cls, func, xpath, namespace, returntype):
@@ -486,9 +498,14 @@ class AbstractDovType(AbstractCommon):
             The raw XML data of this DOV object as bytes.
 
         """
+        for hook in pydov.hooks:
+            hook.xml_requested(self.pkey)
+
         if pydov.cache:
             return pydov.cache.get(self.pkey + '.xml')
         else:
+            for hook in pydov.hooks:
+                hook.xml_downloaded(self.pkey)
             return openURL(self.pkey + '.xml').read()
 
     def _parse_subtypes(self, xml):

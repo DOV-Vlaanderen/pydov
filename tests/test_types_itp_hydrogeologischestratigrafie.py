@@ -1,29 +1,31 @@
-"""Module grouping tests for the pydov.types.boring module."""
-
-from pydov.types.boring import Boring
+"""Module grouping tests for the
+pydov.types.interpretaties.InformeleStratigrafie class."""
+from pydov.types.interpretaties import HydrogeologischeStratigrafie
 from tests.abstract import AbstractTestTypes
 
-from tests.test_search_boring import (
-    wfs_getfeature,
+from tests.test_search_itp_hydrogeologischestratigrafie import (
     wfs_feature,
+    wfs_getfeature,
     mp_dov_xml,
-    location_wfs_getfeature,
     location_wfs_feature,
+    location_wfs_getfeature,
     location_dov_xml,
 )
 
-class TestBoring(AbstractTestTypes):
-    """Class grouping tests for the pydov.types.boring.Boring class."""
+
+class TestHydrogeologischeStratigrafie(AbstractTestTypes):
+    """Class grouping tests for the
+    pydov.types.interpretaties.HydrogeologischeStratigrafie class."""
     def get_type(self):
         """Get the class reference for this datatype.
 
         Returns
         -------
-        pydov.types.boring.Boring
-            Class reference for the Boring class.
+        pydov.types.interpretatie.HydrogeologischeStratigrafie
+            Class reference for the HydrogeologischeStratigrafie class.
 
         """
-        return Boring
+        return HydrogeologischeStratigrafie
 
     def get_namespace(self):
         """Get the WFS namespace associated with this datatype.
@@ -34,7 +36,7 @@ class TestBoring(AbstractTestTypes):
             WFS namespace for this type.
 
         """
-        return 'http://dov.vlaanderen.be/ocdov/dov-pub'
+        return 'http://dov.vlaanderen.be/ocdov/interpretaties'
 
     def get_pkey_base(self):
         """Get the base URL for the permanent keys of this datatype.
@@ -46,7 +48,7 @@ class TestBoring(AbstractTestTypes):
             "https://www.dov.vlaanderen.be/data/boring/"
 
         """
-        return 'https://www.dov.vlaanderen.be/data/boring/'
+        return 'https://www.dov.vlaanderen.be/data/interpretatie/'
 
     def get_field_names(self):
         """Get the field names for this type as listed in the documentation in
@@ -58,11 +60,9 @@ class TestBoring(AbstractTestTypes):
             List of field names.
 
         """
-        return ['pkey_boring', 'boornummer', 'x', 'y', 'mv_mtaw',
-                'start_boring_mtaw', 'gemeente', 'diepte_boring_van',
-                'diepte_boring_tot', 'datum_aanvang', 'uitvoerder',
-                'boorgatmeting', 'diepte_methode_van',
-                'diepte_methode_tot', 'boormethode']
+        return ['pkey_interpretatie', 'pkey_boring',
+                'pkey_sondering', 'betrouwbaarheid_interpretatie', 'x', 'y',
+                'diepte_laag_van', 'diepte_laag_tot', 'aquifer']
 
     def get_field_names_subtypes(self):
         """Get the field names of this type that originate from subtypes only.
@@ -73,7 +73,7 @@ class TestBoring(AbstractTestTypes):
             List of field names from subtypes.
 
         """
-        return ['diepte_methode_van', 'diepte_methode_tot', 'boormethode']
+        return ['diepte_laag_van', 'diepte_laag_tot', 'aquifer']
 
     def get_field_names_nosubtypes(self):
         """Get the field names for this type, without including fields from
@@ -85,10 +85,8 @@ class TestBoring(AbstractTestTypes):
             List of field names.
 
         """
-        return ['pkey_boring', 'boornummer', 'x', 'y', 'mv_mtaw',
-                'start_boring_mtaw', 'gemeente', 'diepte_boring_van',
-                'diepte_boring_tot', 'datum_aanvang', 'uitvoerder',
-                'boorgatmeting']
+        return ['pkey_interpretatie', 'pkey_boring',
+                'pkey_sondering', 'betrouwbaarheid_interpretatie', 'x', 'y']
 
     def get_valid_returnfields(self):
         """Get a list of valid return fields from the main type.
@@ -99,7 +97,7 @@ class TestBoring(AbstractTestTypes):
             A tuple containing only valid return fields.
 
         """
-        return ('pkey_boring', 'diepte_boring_tot')
+        return ('pkey_interpretatie', 'pkey_boring')
 
     def get_valid_returnfields_subtype(self):
         """Get a list of valid return fields, including fields from a subtype.
@@ -111,7 +109,7 @@ class TestBoring(AbstractTestTypes):
             subtype.
 
         """
-        return ('pkey_boring', 'diepte_methode_van', 'boormethode')
+        return ('pkey_interpretatie', 'diepte_laag_van', 'diepte_laag_tot')
 
     def get_inexistent_field(self):
         """Get the name of a field that doesn't exist.
@@ -123,4 +121,3 @@ class TestBoring(AbstractTestTypes):
 
         """
         return 'onbestaand'
-

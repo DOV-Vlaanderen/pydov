@@ -2,8 +2,6 @@
 """Module containing the DOV data type for boreholes (Boring), including
 subtypes."""
 
-from owslib.etree import etree
-
 from .abstract import (
     AbstractDovType,
     AbstractDovSubType,
@@ -182,21 +180,3 @@ class Boring(AbstractDovType):
             )
 
         return b
-
-    def _parse_xml_data(self):
-        """Get remote XML data for this DOV object, parse the raw XML and
-        save the results in the data object.
-        """
-        xml = self._get_xml_data()
-        tree = etree.fromstring(xml)
-
-        for field in self.get_fields(source=('xml',),
-                                     include_subtypes=False).values():
-            self.data[field['name']] = self._parse(
-                func=tree.findtext,
-                xpath=field['sourcefield'],
-                namespace=None,
-                returntype=field.get('type', None)
-            )
-
-        self._parse_subtypes(xml)

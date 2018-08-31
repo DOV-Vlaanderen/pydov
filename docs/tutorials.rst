@@ -1,10 +1,12 @@
+.. _tutorials:
+
 =========
 Tutorials
 =========
 
 
-These tutorials provide an introduction to the possibilities the pydov
-package provides split up by different topics, each setup as a `jupyter notebook`_
+These tutorials illustrate use cases the pydov package supports, split
+up by different topics each setup as a `jupyter notebook`_
 you can run yourself.
 
 .. _jupyter notebook: http://jupyter.org/

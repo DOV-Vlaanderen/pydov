@@ -196,11 +196,25 @@ class TransparentCache(object):
         return data
 
     def clean(self):
-        """Clean the cache by removing the cache directory.
+        """Clean the cache by removing old records from the cache.
 
         Since during normal use the cache only grows by adding new objects and
         overwriting existing ones with a new version, you can use this
-        function to erase the cache.
+        function to clean the cache. It will remove all records older than
+        the maximum age from the cache.
+
+        Note that this method is currently not called anywhere in the code,
+        but it is provided as reference.
+
+        """
+        if os.path.exists(self.cachedir):
+            for type in os.listdir(self.cachedir):
+                for object in os.listdir(os.path.join(self.cachedir, type)):
+                    if not self._valid(type, object.rstrip('.xml')):
+                        os.remove(os.path.join(self.cachedir, type, object))
+
+    def remove(self):
+        """Remove the entire cache directory.
 
         Note that the default directory to save the cache is a temporary
         location provided by the operating system, and as a subsequence the

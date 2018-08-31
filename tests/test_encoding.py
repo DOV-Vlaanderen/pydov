@@ -126,7 +126,7 @@ class TestEncoding(object):
         cached_file = os.path.join(
             cache.cachedir, 'boring', '1995-056089.xml')
 
-        cache.clean()
+        cache.remove()
         assert not os.path.exists(cached_file)
 
         ref_data = cache.get(
@@ -156,7 +156,7 @@ class TestEncoding(object):
         cached_file = os.path.join(
             cache.cachedir, 'boring', '1995-056089.xml')
 
-        cache.clean()
+        cache.remove()
         assert not os.path.exists(cached_file)
 
         ref_data = cache.get(

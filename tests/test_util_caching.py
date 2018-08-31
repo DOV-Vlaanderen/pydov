@@ -46,7 +46,7 @@ def cache():
 
     yield transparent_cache
 
-    transparent_cache.clean()
+    transparent_cache.remove()
     pydov.cache = orig_cache
 
 
@@ -83,8 +83,40 @@ class TestTransparentCache(object):
             cache.cachedir, 'boring', '2004-103984.xml')
 
         cache.get('https://www.dov.vlaanderen.be/data/boring/2004-103984.xml')
+        assert os.path.exists(cached_file)
 
         cache.clean()
+        assert os.path.exists(cached_file)
+        assert os.path.exists(cache.cachedir)
+
+        time.sleep(1.5)
+        cache.clean()
+        assert not os.path.exists(cached_file)
+        assert os.path.exists(cache.cachedir)
+
+    def test_remove(self, cache, mp_remote_xml):
+        """Test the remove method.
+
+        Test whether the cache directory is nonexistent after the remove
+        method has been called.
+
+        Parameters
+        ----------
+        cache : pytest.fixture providing  pydov.util.caching.TransparentCache
+            TransparentCache using a temporary directory and a maximum age
+            of 1 second.
+        mp_remote_xml : pytest.fixture
+            Monkeypatch the call to the remote DOV service returning an XML
+            document.
+
+        """
+        cached_file = os.path.join(
+            cache.cachedir, 'boring', '2004-103984.xml')
+
+        cache.get('https://www.dov.vlaanderen.be/data/boring/2004-103984.xml')
+        assert os.path.exists(cached_file)
+
+        cache.remove()
         assert not os.path.exists(cached_file)
         assert not os.path.exists(cache.cachedir)
 

@@ -2,6 +2,24 @@
 Contributing to pydov
 =====================
 
+Contribution is not only code implementation!
+---------------------------------------------
+
+Even if you don't feel comfortable contributing code, there are still other ways
+to help! For instance, documentation is also a very important part and often doesn’t
+get as much attention as it deserves. If you find a typo in the documentation, or
+have made improvements, do not hesitate to update the documentation and submit a
+GitHub pull request (see further on how to do this). If you develop a good
+introduction tutorial or example case, these are typically the most popular
+sections for a new user!
+
+It also helps us if you spread the word: refer to the package from your blog and
+in articles, link to it from your website or integrate the package in a
+bachelor/masters course.
+
+We aspire to treat everybody equally, and value their contributions. Decisions
+are made based on technical merit and consensus. We abide by the :ref:`code_conduct`.
+
 Contribute to the repository
 ----------------------------
 
@@ -115,23 +133,40 @@ In addition, we add the following guidelines:
 * The attributes for specific classes are Pandas data.frames, please use lowercase names (eventually with `_`) as column names.
 
 
-Contribution is not only code implementation!
----------------------------------------------
-
-Even if you don't feel comfortable contributing code, there are still other ways to help! For instance, documentation is also a very important part and often doesn’t get as much attention as it deserves. If you find a typo in the documentation, or have made improvements, do not hesitate to update the documentation and submit a GitHub pull request (see further on how to do this). If you develop a good introduction tutorial or example case, these are typically the most popular sections for a new user!
-
-It also helps us if you spread the word: refer to the package from your blog and in articles, link to it from your website or integrate the package in a bachelor/masters course.
-
-We aspire to treat everybody equally, and value their contributions. Decisions are made based on technical merit and consensus. We abide by the principles of openness, respect, and consideration of others of the Python Software Foundation: https://www.python.org/psf/codeofconduct/
-
-
 Creating the documentation
 --------------------------
 
-We are glad to accept any sort of documentation: function docstrings, reStructuredText documents, tutorials, etc. Documentation lives in the ``docs/`` directory.
+We are glad to accept any sort of documentation: function docstrings, reStructuredText
+documents, tutorials, etc. Documentation lives in the ``docs/`` directory.
 
-You can edit the documentation using any text editor and then generate the HTML output by typing ``make html`` from the ``doc/`` directory. For building the documentation, you will need `sphinx <http://sphinx.pocoo.org/>`_.
+You can edit the documentation using any text editor and then generate the HTML
+output by typing ``make html`` from the ``doc/`` directory. For building the
+documentation, you will need `sphinx <http://sphinx.pocoo.org/>`_.
 
+.. _Travis: https://travis-ci.org/DOV-Vlaanderen/pydov
+.. _Read the docs: https://readthedocs.org/
+
+The ``_build`` directory is not included in the repository as we rely on CI tooling for the
+documentation building. The documentation is checked on Travis_ and build by `Read the docs`_.
+
+For the notebooks in :ref:`tutorials`, the default is to *always* run the code of the notebooks
+when the documentation is created. This is defined by the ``nbsphinx_execute = 'always'`` option
+in the ``conf.py`` file.
+
+However, when appropriate, this behavior can be undone on the individual level of the
+notebook as explained in the `nbsphinx documentation`_.
+
+.. _nbsphinx documentation: https://nbsphinx.readthedocs.io/en/0.3.4/never-execute.html
+
+In short, to make sure a notebook is not rerun, but the content used as such, add the following
+to the notebook(!) metadata:
+
+
+::
+
+  "nbsphinx": {
+   "execute": "never"
+  }
 
 Note for maintainers
 --------------------

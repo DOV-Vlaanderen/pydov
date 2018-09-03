@@ -14,7 +14,7 @@ with open('HISTORY.rst') as history_file:
 with open('requirements.txt') as f:
     requirements = f.read().splitlines()
 with open('requirements_dev.txt') as f:
-    requirements_dev = f.read().splitlines()
+    requirements_dev = f.read().splitlines()[1:] # ignore the general requirements
 with open('requirements_doc.txt') as f:
     requirements_doc = f.read().splitlines()
 

@@ -365,3 +365,186 @@ class HydrogeologischeStratigrafie(AbstractDovType):
             )
 
         return hydstrat
+
+
+class LithologischeBeschrijvingLaag(AbstractDovSubType):
+
+    _name = 'lithologische_beschrijving_laag'
+    _rootpath = './/lithologischebeschrijving/laag'
+
+    _fields = [{
+        'name': 'diepte_laag_van',
+        'source': 'xml',
+        'sourcefield': '/van',
+        'definition': 'Diepte van de bovenkant van de laag lithologische '
+                      'beschrijving in meter.',
+        'type': 'float',
+        'notnull': False
+    }, {
+        'name': 'diepte_laag_tot',
+        'source': 'xml',
+        'sourcefield': '/tot',
+        'definition': 'Diepte van de onderkant van de laag lithologische '
+                      'beschrijving in meter.',
+        'type': 'float',
+        'notnull': False
+    }, {
+        'name': 'aquifer',
+        'source': 'xml',
+        'sourcefield': '/aquifer',
+        'definition': 'Lithologische beschrijving van de laag in vrije tekst '
+                      '(onbeperkt in lengte)',
+        'type': 'string',
+        'notnull': False
+    }]
+
+    def __init__(self):
+        """Initialisation."""
+        super(LithologischeBeschrijvingLaag, self).__init__(
+            'lithologische_beschrijving_laag')
+
+    @classmethod
+    def from_xml_element(cls, element):
+        """Build an instance of this subtype from a single XML element.
+
+        Parameters
+        ----------
+        element : etree.Element
+            XML element representing a single record of this subtype.
+
+        """
+        laag = LithologischeBeschrijvingLaag()
+
+        for field in cls.get_fields().values():
+            laag.data[field['name']] = laag._parse(
+                func=element.findtext,
+                xpath=field['sourcefield'],
+                namespace=None,
+                returntype=field.get('type', None)
+            )
+
+        return laag
+
+
+class LithologischeBeschrijvingen(AbstractDovType):
+    """Class representing the DOV data type for 'lithologische beschrijvingen' interpretations."""
+
+    _subtypes = [LithologischeBeschrijvingLaag]
+
+    _fields = [{
+        'name': 'pkey_interpretatie',
+        'source': 'wfs',
+        'sourcefield': 'Interpretatiefiche',
+        'type': 'string'
+    }, {
+        'name': 'pkey_boring',
+        'source': 'custom',
+        'type': 'string',
+        'definition': 'URL die verwijst naar de gegevens van de boring '
+                      'waaraan deze lithologische beschrijving '
+                      'gekoppeld is '
+                      '(indien gekoppeld aan een boring).',
+        'notnull': False
+    }, {
+        'name': 'pkey_sondering',
+        'source': 'custom',
+        'type': 'string',
+        'definition': 'URL die verwijst naar de gegevens van de sondering '
+                      'waaraan deze lithologische beschrijving gekoppeld is '
+                      '(indien gekoppeld aan een sondering).',
+        'notnull': False
+    }, {
+        'name': 'betrouwbaarheid_interpretatie',
+        'source': 'wfs',
+        'sourcefield': 'Betrouwbaarheid',
+        'type': 'string'
+    },  {
+        'name': 'x',
+        'source': 'wfs',
+        'sourcefield': 'X_mL72',
+        'type': 'float'
+    }, {
+        'name': 'y',
+        'source': 'wfs',
+        'sourcefield': 'Y_mL72',
+        'type': 'float'
+    }]
+
+    def __init__(self, pkey):
+        """Initialisation.
+
+        Parameters
+        ----------
+        pkey : str
+            Permanent key of the 'Lithologische beschrijvingen', being a URI
+            of the form
+            `https://www.dov.vlaanderen.be/data/interpretaties/<id>`.
+
+        """
+        super(LithologischeBeschrijvingen, self).__init__(
+              'interpretatie', pkey)
+
+    @classmethod
+    def from_wfs_element(cls, feature, namespace):
+        """Build 'LithologischeBeschrijvingen' instance from a WFS feature
+        element.
+
+        Parameters
+        ----------
+        feature : etree.Element
+            XML element representing a single record of the WFS layer.
+        namespace : str
+            Namespace associated with this WFS featuretype.
+
+        Returns
+        -------
+        LithologischeBeschrijvingen : LithologischeBeschrijvingen
+            An instance of this class populated with the data from the WFS
+            element.
+
+        """
+        lithobes = LithologischeBeschrijvingen(
+            feature.findtext('./{%s}Interpretatiefiche' % namespace))
+
+        typeproef = cls._parse(
+            func=feature.findtext,
+            xpath='Type_proef',
+            namespace=namespace,
+            returntype='string'
+        )
+
+        if typeproef == 'Boring':
+            lithobes.data['pkey_boring'] = cls._parse(
+                func=feature.findtext,
+                xpath='Proeffiche',
+                namespace=namespace,
+                returntype='string'
+            )
+            lithobes.data['pkey_sondering'] = np.nan
+
+        elif typeproef == 'Sondering':
+            lithobes.data['pkey_sondering'] = cls._parse(
+                func=feature.findtext,
+                xpath='Proeffiche',
+                namespace=namespace,
+                returntype='string'
+            )
+            lithobes.data['pkey_boring'] = np.nan
+        else:
+            lithobes.data['pkey_boring'] = np.nan
+            lithobes.data['pkey_sondering'] = np.nan
+
+        for field in cls.get_fields(source=('wfs',)).values():
+            if field['name'] in ['pkey_boring', 'pkey_sondering']:
+                continue
+
+            lithobes.data[field['name']] = cls._parse(
+                func=feature.findtext,
+                xpath=field['sourcefield'],
+                namespace=namespace,
+                returntype=field.get('type', None)
+            )
+
+        return lithobes
+
+

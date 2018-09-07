@@ -389,9 +389,9 @@ class LithologischeBeschrijvingLaag(AbstractDovSubType):
         'type': 'float',
         'notnull': False
     }, {
-        'name': 'aquifer',
+        'name': 'beschrijving',
         'source': 'xml',
-        'sourcefield': '/aquifer',
+        'sourcefield': '/beschrijving',
         'definition': 'Lithologische beschrijving van de laag in vrije tekst '
                       '(onbeperkt in lengte)',
         'type': 'string',

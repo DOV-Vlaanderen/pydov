@@ -35,13 +35,28 @@ def mp_remote_xml(monkeypatch):
 
 
 @pytest.fixture
-def cache():
-    """Fixture for a temporary cache with max_age of 1 second."""
+def cache(request):
+    """Fixture for a temporary cache.
+
+    This fixture should be parametrized, with a list of parameters in the
+    order described below.
+
+    Paramaters
+    ----------
+    max_age : datetime.timedelta
+        The maximum age to use for the cache.
+
+    """
     orig_cache = pydov.cache
+
+    if len(request.param) == 0:
+        max_age = datetime.timedelta(seconds=1)
+    else:
+        max_age = request.param[0]
 
     transparent_cache = TransparentCache(
         cachedir=os.path.join(tempfile.gettempdir(), 'pydov_tests'),
-        max_age=datetime.timedelta(seconds=1))
+        max_age=max_age)
     pydov.cache = transparent_cache
 
     yield transparent_cache
@@ -63,6 +78,7 @@ class TestTransparentCache(object):
     """Class grouping tests for the pydov.util.caching.TransparentCache
     class."""
 
+    @pytest.mark.parametrize('cache', [[]], indirect=['cache'])
     def test_clean(self, cache, mp_remote_xml):
         """Test the clean method.
 
@@ -94,6 +110,7 @@ class TestTransparentCache(object):
         assert not os.path.exists(cached_file)
         assert os.path.exists(cache.cachedir)
 
+    @pytest.mark.parametrize('cache', [[]], indirect=['cache'])
     def test_remove(self, cache, mp_remote_xml):
         """Test the remove method.
 
@@ -120,6 +137,7 @@ class TestTransparentCache(object):
         assert not os.path.exists(cached_file)
         assert not os.path.exists(cache.cachedir)
 
+    @pytest.mark.parametrize('cache', [[]], indirect=['cache'])
     def test_get_save(self, cache, mp_remote_xml):
         """Test the get method.
 
@@ -144,6 +162,7 @@ class TestTransparentCache(object):
         cache.get('https://www.dov.vlaanderen.be/data/boring/2004-103984.xml')
         assert os.path.exists(cached_file)
 
+    @pytest.mark.parametrize('cache', [[]], indirect=['cache'])
     def test_get_reuse(self, cache, mp_remote_xml):
         """Test the get method.
 
@@ -176,6 +195,7 @@ class TestTransparentCache(object):
         # assure we didn't redownload the file:
         assert os.path.getmtime(cached_file) == first_download_time
 
+    @pytest.mark.parametrize('cache', [[]], indirect=['cache'])
     def test_get_invalid(self, cache, mp_remote_xml):
         """Test the get method.
 
@@ -208,6 +228,7 @@ class TestTransparentCache(object):
         # assure we did redownload the file, since original is invalid now:
         assert os.path.getmtime(cached_file) > first_download_time
 
+    @pytest.mark.parametrize('cache', [[]], indirect=['cache'])
     def test_save_content(self, cache, mp_remote_xml):
         """Test whether the data is saved in the cache.
 
@@ -242,6 +263,7 @@ class TestTransparentCache(object):
 
         assert cached_data == ref_data
 
+    @pytest.mark.parametrize('cache', [[]], indirect=['cache'])
     def test_reuse_content(self, cache, mp_remote_xml):
         """Test whether the saved data is reused.
 
@@ -275,6 +297,7 @@ class TestTransparentCache(object):
 
         assert cached_data == ref_data
 
+    @pytest.mark.parametrize('cache', [[]], indirect=['cache'])
     def test_return_type(self, cache, mp_remote_xml):
         """The the return type of the get method.
 

@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+import datetime
 import os
 import time
 from io import open
@@ -41,6 +42,8 @@ class TestEncoding(object):
 
     @pytest.mark.online
     @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
+    @pytest.mark.parametrize('cache', [[datetime.timedelta(minutes=15)]],
+                             indirect=['cache'])
     def test_search_cache(self, cache):
         """Test the search method with strange character in the output.
 
@@ -76,6 +79,8 @@ class TestEncoding(object):
 
     @pytest.mark.online
     @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
+    @pytest.mark.parametrize('cache', [[datetime.timedelta(minutes=15)]],
+                             indirect=['cache'])
     def test_caching(self, cache):
         """Test the caching of an XML containing strange characters.
 
@@ -110,6 +115,8 @@ class TestEncoding(object):
 
     @pytest.mark.online
     @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
+    @pytest.mark.parametrize('cache', [[datetime.timedelta(minutes=15)]],
+                             indirect=['cache'])
     def test_save_content(self, cache):
         """Test the caching of an XML containing strange characters.
 
@@ -140,6 +147,8 @@ class TestEncoding(object):
 
     @pytest.mark.online
     @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
+    @pytest.mark.parametrize('cache', [[datetime.timedelta(minutes=15)]],
+                             indirect=['cache'])
     def test_reuse_content(self, cache):
         """Test the caching of an XML containing strange characters.
 

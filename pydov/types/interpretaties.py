@@ -447,14 +447,6 @@ class LithologischeBeschrijvingen(AbstractDovType):
                       '(indien gekoppeld aan een boring).',
         'notnull': False
     }, {
-        'name': 'pkey_sondering',
-        'source': 'custom',
-        'type': 'string',
-        'definition': 'URL die verwijst naar de gegevens van de sondering '
-                      'waaraan deze lithologische beschrijving gekoppeld is '
-                      '(indien gekoppeld aan een sondering).',
-        'notnull': False
-    }, {
         'name': 'betrouwbaarheid_interpretatie',
         'source': 'wfs',
         'sourcefield': 'Betrouwbaarheid',
@@ -521,22 +513,13 @@ class LithologischeBeschrijvingen(AbstractDovType):
                 namespace=namespace,
                 returntype='string'
             )
-            lithobes.data['pkey_sondering'] = np.nan
 
-        elif typeproef == 'Sondering':
-            lithobes.data['pkey_sondering'] = cls._parse(
-                func=feature.findtext,
-                xpath='Proeffiche',
-                namespace=namespace,
-                returntype='string'
-            )
             lithobes.data['pkey_boring'] = np.nan
         else:
             lithobes.data['pkey_boring'] = np.nan
-            lithobes.data['pkey_sondering'] = np.nan
 
         for field in cls.get_fields(source=('wfs',)).values():
-            if field['name'] in ['pkey_boring', 'pkey_sondering']:
+            if field['name'] in ['pkey_boring']:
                 continue
 
             lithobes.data[field['name']] = cls._parse(

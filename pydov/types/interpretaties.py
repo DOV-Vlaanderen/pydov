@@ -427,7 +427,8 @@ class LithologischeBeschrijvingLaag(AbstractDovSubType):
 
 
 class LithologischeBeschrijvingen(AbstractDovType):
-    """Class representing the DOV data type for 'lithologische beschrijvingen' interpretations."""
+    """Class representing the DOV data type for 'lithologische
+    beschrijvingen' interpretations."""
 
     _subtypes = [LithologischeBeschrijvingLaag]
 
@@ -546,5 +547,3 @@ class LithologischeBeschrijvingen(AbstractDovType):
             )
 
         return lithobes
-
-

@@ -1,5 +1,5 @@
 """Module grouping tests for the
-pydov.types.interpretaties.InformeleStratigrafie class."""
+pydov.types.interpretaties.LithologischeBeschrijvingen class."""
 from pydov.types.interpretaties import LithologischeBeschrijvingen
 from tests.abstract import AbstractTestTypes
 

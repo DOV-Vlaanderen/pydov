@@ -179,8 +179,6 @@ class TestLithologischeBeschrijvingenSearch(AbstractTestSearch):
         assert list(df) == ['pkey_interpretatie', 'pkey_boring',
                             ]
 
-        assert not pd.isnull(df.pkey_boring[0])
-
     def test_search_xml_resolve(self, mp_remote_describefeaturetype,
                                 mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with return fields from XML but not from a

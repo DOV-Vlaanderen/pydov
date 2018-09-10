@@ -354,7 +354,7 @@ class LithologischeBeschrijvingenSearch(AbstractSearch):
         """
         fts = self._search(location=location, query=query,
                            return_fields=return_fields,
-                           extra_wfs_fields=['Type_proef', 'Proeffiche'])
+                           )
 
         interpretaties = LithologischeBeschrijvingen.from_wfs(
             fts, self.__wfs_namespace)

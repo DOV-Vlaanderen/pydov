@@ -1,3 +1,4 @@
+import datetime
 import pytest
 
 import pydov
@@ -170,6 +171,8 @@ class TestHooks(object):
 
     @pytest.mark.online
     @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
+    @pytest.mark.parametrize('cache', [[datetime.timedelta(minutes=15)]],
+                             indirect=['cache'])
     def test_wfs_and_xml_cache(self, temp_hooks, cache):
         """Test the search method providing both a location and a query.
 

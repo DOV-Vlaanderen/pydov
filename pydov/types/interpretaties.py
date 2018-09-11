@@ -441,7 +441,7 @@ class LithologischeBeschrijvingen(AbstractDovType):
         'name': 'pkey_boring',
         'source': 'wfs',
         'type': 'string',
-        'sourcefield': 'Proeffiche' ,
+        'sourcefield': 'Proeffiche',
     }, {
         'name': 'betrouwbaarheid_interpretatie',
         'source': 'wfs',

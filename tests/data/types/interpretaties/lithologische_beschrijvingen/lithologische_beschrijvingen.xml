@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns3:dov-schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns3="http://kern.schemas.dov.vlaanderen.be" xsi:schemaLocation="http://kern.schemas.dov.vlaanderen.be https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/dov.xsd">
+    <interpretaties>
+        <lithologischebeschrijving>
+            <boring>kb15d28w-B345</boring>
+            <auteur>
+                <persoon>
+                    <naam>Gulinck</naam>
+                    <voornaam>Marcel</voornaam>
+                </persoon>
+                <bedrijf-dienst>
+                    <naam>Belgische Geologische Dienst (BGD)</naam>
+                </bedrijf-dienst>
+            </auteur>
+            <datum>1958-01-01</datum>
+            <betrouwbaarheid>goed</betrouwbaarheid>
+            <dataleverancier>
+                <naam>onbekend</naam>
+            </dataleverancier>
+            <laag>
+                <van>0.00</van>
+                <tot>1.00</tot>
+                <beschrijving>Bruine klei</beschrijving>
+            </laag>
+            <laag>
+                <van>1.00</van>
+                <tot>2.00</tot>
+                <beschrijving>Veen</beschrijving>
+            </laag>
+            <laag>
+                <van>2.00</van>
+                <tot>3.00</tot>
+                <beschrijving>Tamelijk fijn kwartszand</beschrijving>
+            </laag>
+            <laag>
+                <van>3.00</van>
+                <tot>7.00</tot>
+                <beschrijving>Geelachtig zand, met schelpengruis, licht samenhangend</beschrijving>
+            </laag>
+            <laag>
+                <van>7.00</van>
+                <tot>10.00</tot>
+                <beschrijving>Grijs groen zand, met schelpengruis, een kleilens</beschrijving>
+            </laag>
+            <laag>
+                <van>10.00</van>
+                <tot>11.00</tot>
+                <beschrijving>Fijn homogeen zand</beschrijving>
+            </laag>
+            <laag>
+                <van>11.00</van>
+                <tot>15.00</tot>
+                <beschrijving>Groen half fijn glauconietrijk zand, schelpen</beschrijving>
+            </laag>
+            <laag>
+                <van>15.00</van>
+                <tot>16.00</tot>
+                <beschrijving>Tamelijk grof zand met schelpengruis, veel Ditrupa's</beschrijving>
+            </laag>
+            <laag>
+                <van>16.00</van>
+                <tot>20.00</tot>
+                <beschrijving>Fijn, grijs groen homogeen zand</beschrijving>
+            </laag>
+        </lithologischebeschrijving>
+    </interpretaties>
+</ns3:dov-schema>

@@ -157,6 +157,49 @@ if __name__ == '__main__':
         '/hydrogeologische_stratigrafie/ows?service=wfs&version=1.1.0&request'
         '=DescribeFeatureType')
 
+    # types/interpretaties/lithologische_beschrijvingen
+
+    update_file('types/interpretaties/lithologische_beschrijvingen'
+                '/lithologische_beschrijvingen.xml',
+                'https://www.dov.vlaanderen.be/data/interpretatie/1958'
+                '-003925.xml')
+
+    update_file('types/interpretaties/lithologische_beschrijvingen'
+                '/wfsgetfeature.xml',
+                'https://www.dov.vlaanderen.be/geoserver/ows?service=WFS'
+                '&version=1.1.0&request=GetFeature&typeName=interpretaties'
+                ':lithologische_beschrijvingen&maxFeatures=1&CQL_Filter'
+                '=Interpretatiefiche=%27https://www.dov.vlaanderen.be/data'
+                '/interpretatie/1958-003925%27')
+
+    update_file('types/interpretaties/lithologische_beschrijvingen/feature.xml',
+                'https://www.dov.vlaanderen.be/geoserver/ows?service=WFS'
+                '&version=1.1.0&request=GetFeature&typeName=interpretaties'
+                ':lithologische_beschrijvingen&maxFeatures=1&CQL_Filter'
+                '=Interpretatiefiche=%27https://www.dov.vlaanderen.be/data'
+                '/interpretatie/1958-003925%27',
+                get_first_featuremember)
+
+    update_file(
+        'types/interpretaties/lithologische_beschrijvingen/fc_featurecatalogue.xml',
+        'https://www.dov.vlaanderen.be/geonetwork/srv/dut/csw'
+        '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+        '&outputSchema=http://www.isotc211.org/2005/gmd'
+        '&elementSetName=full&id=2450d592-29bc-4970-a89f-a7b14bd38dc2')
+
+    update_file('types/interpretaties/lithologische_beschrijvingen/md_metadata.xml',
+                'https://www.dov.vlaanderen.be/geonetwork/srv/dut/csw'
+                '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+                '&outputSchema=http://www.isotc211.org/2005/gmd'
+                '&elementSetName=full&id=45b5610e-9a66-42bd-b920-af099e399f3b')
+
+    update_file(
+        'types/interpretaties/lithologische_beschrijvingen/wfsdescribefeaturetype'
+        '.xml',
+        'https://www.dov.vlaanderen.be/geoserver/interpretaties'
+        '/lithologische_beschrijvingen/ows?service=wfs&version=1.1.0&request'
+        '=DescribeFeatureType')
+
     # types/filter
 
     update_file('types/grondwaterfilter/grondwaterfilter.xml',

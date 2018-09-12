@@ -45,28 +45,6 @@ class InformeleStratigrafieLaag(AbstractDovSubType):
         super(InformeleStratigrafieLaag, self).__init__(
             'informele_stratigrafie_laag')
 
-    @classmethod
-    def from_xml_element(cls, element):
-        """Build an instance of this subtype from a single XML element.
-
-        Parameters
-        ----------
-        element : etree.Element
-            XML element representing a single record of this subtype.
-
-        """
-        laag = InformeleStratigrafieLaag()
-
-        for field in cls.get_fields().values():
-            laag.data[field['name']] = laag._parse(
-                func=element.findtext,
-                xpath=field['sourcefield'],
-                namespace=None,
-                returntype=field.get('type', None)
-            )
-
-        return laag
-
 
 class InformeleStratigrafie(AbstractDovType):
     """Class representing the DOV data type for boreholes."""
@@ -221,28 +199,6 @@ class HydrogeologischeStratigrafieLaag(AbstractDovSubType):
         """Initialisation."""
         super(HydrogeologischeStratigrafieLaag, self).__init__(
             'hydrogeologische_interpretatie_laag')
-
-    @classmethod
-    def from_xml_element(cls, element):
-        """Build an instance of this subtype from a single XML element.
-
-        Parameters
-        ----------
-        element : etree.Element
-            XML element representing a single record of this subtype.
-
-        """
-        laag = HydrogeologischeStratigrafieLaag()
-
-        for field in cls.get_fields().values():
-            laag.data[field['name']] = laag._parse(
-                func=element.findtext,
-                xpath=field['sourcefield'],
-                namespace=None,
-                returntype=field.get('type', None)
-            )
-
-        return laag
 
 
 class HydrogeologischeStratigrafie(AbstractDovType):
@@ -402,28 +358,6 @@ class LithologischeBeschrijvingLaag(AbstractDovSubType):
         """Initialisation."""
         super(LithologischeBeschrijvingLaag, self).__init__(
             'lithologische_beschrijving_laag')
-
-    @classmethod
-    def from_xml_element(cls, element):
-        """Build an instance of this subtype from a single XML element.
-
-        Parameters
-        ----------
-        element : etree.Element
-            XML element representing a single record of this subtype.
-
-        """
-        laag = LithologischeBeschrijvingLaag()
-
-        for field in cls.get_fields().values():
-            laag.data[field['name']] = laag._parse(
-                func=element.findtext,
-                xpath=field['sourcefield'],
-                namespace=None,
-                returntype=field.get('type', None)
-            )
-
-        return laag
 
 
 class LithologischeBeschrijvingen(AbstractDovType):

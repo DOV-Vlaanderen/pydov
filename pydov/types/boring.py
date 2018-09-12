@@ -42,28 +42,6 @@ class BoorMethode(AbstractDovSubType):
         """Initialisation."""
         super(BoorMethode, self).__init__('boormethode')
 
-    @classmethod
-    def from_xml_element(cls, element):
-        """Build an instance of this subtype from a single XML element.
-
-        Parameters
-        ----------
-        element : etree.Element
-            XML element representing a single record of this subtype.
-
-        """
-        boormethode = BoorMethode()
-
-        for field in cls.get_fields().values():
-            boormethode.data[field['name']] = boormethode._parse(
-                func=element.findtext,
-                xpath=field['sourcefield'],
-                namespace=None,
-                returntype=field.get('type', None)
-            )
-
-        return boormethode
-
 
 class Boring(AbstractDovType):
     """Class representing the DOV data type for boreholes."""

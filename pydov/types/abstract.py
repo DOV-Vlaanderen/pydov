@@ -112,7 +112,7 @@ class AbstractDovSubType(AbstractCommon):
     _UNRESOLVED = "{UNRESOLVED}"
     _fields = []
 
-    def __init__(self, name):
+    def __init__(self):
         """Initialisation.
 
         Parameters
@@ -121,8 +121,6 @@ class AbstractDovSubType(AbstractCommon):
             The name associated with this subtype.
 
         """
-        self._name = name
-
         self.data = dict(
             zip(self.get_field_names(),
                 [AbstractDovSubType._UNRESOLVED] * len(self.get_field_names()))

@@ -38,10 +38,6 @@ class BoorMethode(AbstractDovSubType):
         'notnull': False
     }]
 
-    def __init__(self):
-        """Initialisation."""
-        super(BoorMethode, self).__init__('boormethode')
-
 
 class Boring(AbstractDovType):
     """Class representing the DOV data type for boreholes."""

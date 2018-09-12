@@ -51,10 +51,6 @@ class Peilmeting(AbstractDovSubType):
         'notnull': False
     }]
 
-    def __init__(self):
-        """Initialisation."""
-        super(Peilmeting, self).__init__('peilmeting')
-
 
 class GrondwaterFilter(AbstractDovType):
     """Class representing the DOV data type for Groundwater screens."""

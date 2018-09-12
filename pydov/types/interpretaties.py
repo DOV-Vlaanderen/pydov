@@ -40,11 +40,6 @@ class InformeleStratigrafieLaag(AbstractDovSubType):
         'notnull': False
     }]
 
-    def __init__(self):
-        """Initialisation."""
-        super(InformeleStratigrafieLaag, self).__init__(
-            'informele_stratigrafie_laag')
-
 
 class InformeleStratigrafie(AbstractDovType):
     """Class representing the DOV data type for boreholes."""
@@ -194,11 +189,6 @@ class HydrogeologischeStratigrafieLaag(AbstractDovSubType):
         'type': 'string',
         'notnull': False
     }]
-
-    def __init__(self):
-        """Initialisation."""
-        super(HydrogeologischeStratigrafieLaag, self).__init__(
-            'hydrogeologische_interpretatie_laag')
 
 
 class HydrogeologischeStratigrafie(AbstractDovType):
@@ -353,11 +343,6 @@ class LithologischeBeschrijvingLaag(AbstractDovSubType):
         'type': 'string',
         'notnull': False
     }]
-
-    def __init__(self):
-        """Initialisation."""
-        super(LithologischeBeschrijvingLaag, self).__init__(
-            'lithologische_beschrijving_laag')
 
 
 class LithologischeBeschrijvingen(AbstractDovType):

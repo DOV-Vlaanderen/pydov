@@ -246,7 +246,7 @@ class HydrogeologischeStratigrafieLaag(AbstractDovSubType):
     }]
 
 
-class HydrogeologischeStratigrafie(AbstractCommonInterpretatie):
+class HydrogeologischeStratigrafie(AbstractBoringInterpretatie):
     """Class representing the DOV data type for 'hydrogeologische
     stratigrafie' interpretations."""
 
@@ -259,21 +259,9 @@ class HydrogeologischeStratigrafie(AbstractCommonInterpretatie):
         'type': 'string'
     }, {
         'name': 'pkey_boring',
-        'source': 'custom',
+        'source': 'wfs',
         'type': 'string',
-        'definition': 'URL die verwijst naar de gegevens van de boring '
-                      'waaraan deze hydrogeologische stratigrafie '
-                      'gekoppeld is '
-                      '(indien gekoppeld aan een boring).',
-        'notnull': False
-    }, {
-        'name': 'pkey_sondering',
-        'source': 'custom',
-        'type': 'string',
-        'definition': 'URL die verwijst naar de gegevens van de sondering '
-                      'waaraan deze informele stratigrafie gekoppeld is ('
-                      'indien gekoppeld aan een sondering).',
-        'notnull': False
+        'sourcefield': 'Proeffiche'
     }, {
         'name': 'betrouwbaarheid_interpretatie',
         'source': 'wfs',

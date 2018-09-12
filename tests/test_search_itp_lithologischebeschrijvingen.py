@@ -148,9 +148,8 @@ class TestLithologischeBeschrijvingenSearch(AbstractTestSearch):
 
         """
         return ['pkey_interpretatie', 'pkey_boring',
-                'betrouwbaarheid_interpretatie', 'x', 'y',
-                'diepte_laag_van', 'diepte_laag_tot',
-                'beschrijving']
+                'betrouwbaarheid_interpretatie', 'x', 'y', 'diepte_laag_van',
+                'diepte_laag_tot', 'beschrijving']
 
     def test_search_customreturnfields(self, mp_remote_describefeaturetype,
                                        mp_remote_wfs_feature, mp_dov_xml):
@@ -170,12 +169,10 @@ class TestLithologischeBeschrijvingenSearch(AbstractTestSearch):
         """
         df = self.get_search_object().search(
             query=self.get_valid_query_single(),
-            return_fields=('pkey_interpretatie', 'pkey_boring',
-                           )
+            return_fields=('pkey_interpretatie', 'pkey_boring')
         )
 
-        assert list(df) == ['pkey_interpretatie', 'pkey_boring',
-                            ]
+        assert list(df) == ['pkey_interpretatie', 'pkey_boring']
 
         assert not pd.isnull(df.pkey_boring[0])
 
@@ -200,4 +197,4 @@ class TestLithologischeBeschrijvingenSearch(AbstractTestSearch):
             query=self.get_valid_query_single(),
             return_fields=('pkey_interpretatie', 'diepte_laag_tot'))
 
-        assert df.diepte_laag_tot[0] == 1.
+        assert df.diepte_laag_tot[0] == 1

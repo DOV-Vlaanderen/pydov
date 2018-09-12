@@ -178,8 +178,6 @@ class TestHydrogeologischeStratigrafieSearch(AbstractTestSearch):
         df = self.get_search_object().search(
             query=self.get_valid_query_single())
 
-        assert df.pkey_sondering.hasnans
-
     def test_search_customreturnfields(self, mp_remote_describefeaturetype,
                                        mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with custom return fields.

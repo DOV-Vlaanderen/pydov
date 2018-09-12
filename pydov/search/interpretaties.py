@@ -231,8 +231,7 @@ class HydrogeologischeStratigrafieSearch(AbstractSearch):
 
         """
         fts = self._search(location=location, query=query,
-                           return_fields=return_fields,
-                           extra_wfs_fields=['Type_proef', 'Proeffiche'])
+                           return_fields=return_fields)
 
         interpretaties = HydrogeologischeStratigrafie.from_wfs(
             fts, self.__wfs_namespace)
@@ -353,8 +352,7 @@ class LithologischeBeschrijvingenSearch(AbstractSearch):
 
         """
         fts = self._search(location=location, query=query,
-                           return_fields=return_fields,
-                           )
+                           return_fields=return_fields)
 
         interpretaties = LithologischeBeschrijvingen.from_wfs(
             fts, self.__wfs_namespace)

@@ -1,5 +1,5 @@
 =====
-PyDOV
+pyDOV
 =====
 
 .. image:: https://travis-ci.org/DOV-Vlaanderen/pydov.svg?branch=master

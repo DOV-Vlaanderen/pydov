@@ -4,7 +4,10 @@ import pytest
 import pydov
 from owslib.fes import PropertyIsEqualTo
 from pydov.search.boring import BoringSearch
-from pydov.util.hooks import AbstractHook
+from pydov.util.hooks import (
+    AbstractHook,
+    SimpleStatusHook,
+)
 from tests.abstract import service_ok
 
 from tests.test_util_caching import (
@@ -213,3 +216,24 @@ class TestHooks(object):
         assert pydov.hooks[0].count_xml_requested == 2
         assert pydov.hooks[0].count_xml_cache_hit == 1
         assert pydov.hooks[0].count_xml_downloaded == 1
+
+    @pytest.mark.online
+    @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
+    def test_default_hooks(self, nocache):
+        """Test the default hooks by performing a simple search.
+
+        Test whether no exceptions are raised.
+
+        Parameters
+        ----------
+        nocache : pytest.fixture
+            Fixture temporarily disabling caching.
+
+        """
+        pydov.hooks = [SimpleStatusHook()]
+
+        query = PropertyIsEqualTo(propertyname='boornummer',
+                                  literal='GEO-04/169-BNo-B1')
+
+        boringsearch = BoringSearch()
+        df = boringsearch.search(query=query)

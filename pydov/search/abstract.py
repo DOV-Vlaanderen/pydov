@@ -337,7 +337,7 @@ class AbstractSearch(object):
                         "Unknown return field: '%s'" % rf)
 
     @staticmethod
-    def _get_remote_wfs_feature(wfs, typename, bbox, filter, propertyname,
+    def _get_remote_wfs_feature(wfs, typename, location, filter, propertyname,
                                 geometry_column):
         """Perform the WFS GetFeature call to get features from the remote
         service.
@@ -346,8 +346,8 @@ class AbstractSearch(object):
         ----------
         typename : str
             Layername to query.
-        bbox : tuple<minx,miny,maxx,maxy>
-            The bounding box limiting the features to retrieve.
+        location : pydov.util.location.AbstractLocationFilter
+            Location filter limiting the features to retrieve.
         filter : owslib.fes.FilterRequest
             Filter request to search on attribute values.
         propertyname : list<str>
@@ -365,7 +365,7 @@ class AbstractSearch(object):
             version=wfs.version,
             geometry_column=geometry_column,
             typename=typename,
-            bbox=bbox,
+            location=location,
             filter=filter,
             propertyname=propertyname
         )
@@ -384,8 +384,8 @@ class AbstractSearch(object):
 
         Parameters
         ----------
-        location : tuple<minx,miny,maxx,maxy>
-            The bounding box limiting the features to retrieve.
+        location : pydov.util.location.AbstractLocationFilter
+            Location filter limiting the features to retrieve.
         query : owslib.fes.OgcExpression
             OGC filter expression to use for searching. This can contain any
             combination of filter elements defined in owslib.fes. The query
@@ -467,7 +467,7 @@ class AbstractSearch(object):
         fts = self._get_remote_wfs_feature(
             wfs=self.__wfs,
             typename=self._layer,
-            bbox=location,
+            location=location,
             filter=filter_request,
             propertyname=wfs_property_names,
             geometry_column=self._geometry_column)

@@ -72,8 +72,8 @@ class GrondwaterFilterSearch(AbstractSearch):
 
         Parameters
         ----------
-        location : tuple<minx,miny,maxx,maxy>
-            The bounding box limiting the features to retrieve.
+        location : pydov.util.location.AbstractLocationFilter
+            Location filter limiting the features to retrieve.
         query : owslib.fes.OgcExpression
             OGC filter expression to use for searching. This can contain any
             combination of filter elements defined in owslib.fes. The query

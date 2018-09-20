@@ -11,10 +11,13 @@ from pandas.api.types import (
     is_int64_dtype, is_object_dtype,
     is_bool_dtype, is_float_dtype)
 
-import pydov
 from owslib.fes import PropertyIsEqualTo
 from owslib.etree import etree
 from pydov.util.errors import InvalidFieldError
+from pydov.util.location import (
+    Within,
+    Box,
+)
 
 
 def service_ok(url='https://www.dov.vlaanderen.be/geoserver', timeout=5):
@@ -232,7 +235,7 @@ class AbstractTestSearch(object):
 
         """
         df = self.get_search_object().search(
-            location=(1, 2, 3, 4),
+            location=Within(Box(1, 2, 3, 4)),
             query=self.get_valid_query_single(),
             return_fields=self.get_valid_returnfields())
 

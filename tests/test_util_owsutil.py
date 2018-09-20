@@ -17,6 +17,10 @@ from pydov.util.errors import (
     MetadataNotFoundError,
     FeatureCatalogueNotFoundError,
 )
+from pydov.util.location import (
+    Within,
+    Box,
+)
 
 from tests.test_search_boring import (
     md_metadata,
@@ -297,7 +301,7 @@ class TestOwsutil(object):
             ':GetFeature>')
 
     def test_wfs_build_getfeature_request_bbox_nogeometrycolumn(self):
-        """Test the owsutil.wfs_build_getfeature_request method with a bbox
+        """Test the owsutil.wfs_build_getfeature_request method with a location
         argument but without the geometry_column argument.
 
         Test whether an AttributeError is raised.
@@ -305,17 +309,19 @@ class TestOwsutil(object):
         """
         with pytest.raises(AttributeError):
             xml = owsutil.wfs_build_getfeature_request(
-                'dov-pub:Boringen', bbox=(151650, 214675, 151750, 214775))
+                'dov-pub:Boringen',
+                location=Within(Box(151650, 214675, 151750, 214775)))
 
     def test_wfs_build_getfeature_request_bbox(self):
         """Test the owsutil.wfs_build_getfeature_request method with a
-        typename, bbox and geometry_column.
+        typename, box and geometry_column.
 
         Test whether the XML of the WFS GetFeature call is generated correctly.
 
         """
         xml = owsutil.wfs_build_getfeature_request(
-            'dov-pub:Boringen', bbox=(151650, 214675, 151750, 214775),
+            'dov-pub:Boringen',
+            location=Within(Box(151650, 214675, 151750, 214775)),
             geometry_column='geom')
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
             '<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs" '
@@ -388,7 +394,7 @@ class TestOwsutil(object):
 
     def test_wfs_build_getfeature_request_bbox_filter(self):
         """Test the owsutil.wfs_build_getfeature_request method with an
-        attribute filter, a bbox and a geometry_column.
+        attribute filter, a box and a geometry_column.
 
         Test whether the XML of the WFS GetFeature call is generated correctly.
 
@@ -407,7 +413,7 @@ class TestOwsutil(object):
 
         xml = owsutil.wfs_build_getfeature_request(
             'dov-pub:Boringen', filter=filter_request,
-            bbox=(151650, 214675, 151750, 214775),
+            location=Within(Box(151650, 214675, 151750, 214775)),
             geometry_column='geom')
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
             '<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs" '
@@ -430,7 +436,7 @@ class TestOwsutil(object):
 
     def test_wfs_build_getfeature_request_bbox_filter_propertyname(self):
         """Test the owsutil.wfs_build_getfeature_request method with an
-        attribute filter, a bbox, a geometry_column and a list of
+        attribute filter, a box, a geometry_column and a list of
         propertynames.
 
         Test whether the XML of the WFS GetFeature call is generated correctly.
@@ -450,7 +456,7 @@ class TestOwsutil(object):
 
         xml = owsutil.wfs_build_getfeature_request(
             'dov-pub:Boringen', filter=filter_request,
-            bbox=(151650, 214675, 151750, 214775),
+            location=Within(Box(151650, 214675, 151750, 214775)),
             geometry_column='geom', propertyname=['fiche', 'diepte_tot_m'])
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
             '<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs" '

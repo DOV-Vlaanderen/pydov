@@ -430,7 +430,7 @@ def get_remote_schema(url, typename, version='1.0.0'):
     return _construct_schema(elements, nsmap)
 
 
-def wfs_build_getfeature_request(typename, geometry_column=None, bbox=None,
+def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
                                  filter=None, propertyname=None,
                                  version='1.1.0'):
     """Build a WFS GetFeature request in XML to be used as payload in a WFS
@@ -464,8 +464,9 @@ def wfs_build_getfeature_request(typename, geometry_column=None, bbox=None,
         XML element representing the WFS GetFeature request.
 
     """
-    if bbox is not None and geometry_column is None:
-        raise AttributeError('bbox requires geometry_column and it is None')
+    if location is not None and geometry_column is None:
+        raise AttributeError('location requires geometry_column and it is '
+                             'None')
 
     xml = etree.Element('{http://www.opengis.net/wfs}GetFeature')
     xml.set('service', 'WFS')
@@ -488,8 +489,8 @@ def wfs_build_getfeature_request(typename, geometry_column=None, bbox=None,
     filter_xml = etree.Element('{http://www.opengis.net/ogc}Filter')
     filter_parent = filter_xml
 
-    if filter is not None and bbox is not None:
-        # if both filter and bbox are specified, we wrap them inside an
+    if filter is not None and location is not None:
+        # if both filter and location are specified, we wrap them inside an
         # ogc:And
         and_xml = etree.Element('{http://www.opengis.net/ogc}And')
         filter_xml.append(and_xml)
@@ -499,26 +500,9 @@ def wfs_build_getfeature_request(typename, geometry_column=None, bbox=None,
         filterrequest = etree.fromstring(filter)
         filter_parent.append(filterrequest[0])
 
-    if bbox is not None:
-        within = etree.Element('{http://www.opengis.net/ogc}Within')
-        geom = etree.Element('{http://www.opengis.net/ogc}PropertyName')
-        geom.text = geometry_column
-        within.append(geom)
-
-        envelope = etree.Element('{http://www.opengis.net/gml}Envelope')
-        envelope.set('srsDimension', '2')
-        envelope.set('srsName',
-                     'http://www.opengis.net/gml/srs/epsg.xml#31370')
-
-        lower_corner = etree.Element('{http://www.opengis.net/gml}lowerCorner')
-        lower_corner.text = '%0.3f %0.3f' % (bbox[0], bbox[1])
-        envelope.append(lower_corner)
-
-        upper_corner = etree.Element('{http://www.opengis.net/gml}upperCorner')
-        upper_corner.text = '%0.3f %0.3f' % (bbox[2], bbox[3])
-        envelope.append(upper_corner)
-        within.append(envelope)
-        filter_parent.append(within)
+    if location is not None:
+        location.set_geometry_column(geometry_column)
+        filter_parent.append(location.get_element())
 
     query.append(filter_xml)
     xml.append(query)

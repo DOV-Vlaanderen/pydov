@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Module containing the DOV data type for boreholes (Boring), including
+"""Module containing the DOV data types for interpretations, including
 subtypes."""
 import numpy as np
 
@@ -7,6 +7,134 @@ from pydov.types.abstract import (
     AbstractDovType,
     AbstractDovSubType,
 )
+
+
+class AbstractCommonInterpretatie(AbstractDovType):
+    """Abstract base class for interpretations that can be linked to
+    boreholes or cone penetration tests."""
+    def __init__(self, pkey):
+        """Initialisation.
+
+        Parameters
+        ----------
+        pkey : str
+            Permanent key of the Interpretatie (interpretations), being a
+            URI of the form
+            `https://www.dov.vlaanderen.be/data/interpretatie/<id>`.
+
+        """
+        super(AbstractCommonInterpretatie, self).__init__(
+            'interpretatie', pkey)
+
+    @classmethod
+    def from_wfs_element(cls, feature, namespace):
+        """Build an instance from a WFS feature element.
+
+        Parameters
+        ----------
+        feature : etree.Element
+            XML element representing a single record of the WFS layer.
+        namespace : str
+            Namespace associated with this WFS featuretype.
+
+        Returns
+        -------
+        instance of this class
+            An instance of this class populated with the data from the WFS
+            element.
+
+        """
+        instance = cls(
+            feature.findtext('./{%s}Interpretatiefiche' % namespace))
+
+        typeproef = cls._parse(
+            func=feature.findtext,
+            xpath='Type_proef',
+            namespace=namespace,
+            returntype='string'
+        )
+
+        if typeproef == 'Boring':
+            instance.data['pkey_boring'] = cls._parse(
+                func=feature.findtext,
+                xpath='Proeffiche',
+                namespace=namespace,
+                returntype='string'
+            )
+            instance.data['pkey_sondering'] = np.nan
+        elif typeproef == 'Sondering':
+            instance.data['pkey_sondering'] = cls._parse(
+                func=feature.findtext,
+                xpath='Proeffiche',
+                namespace=namespace,
+                returntype='string'
+            )
+            instance.data['pkey_boring'] = np.nan
+        else:
+            instance.data['pkey_boring'] = np.nan
+            instance.data['pkey_sondering'] = np.nan
+
+        for field in cls.get_fields(source=('wfs',)).values():
+            if field['name'] in ['pkey_boring', 'pkey_sondering']:
+                continue
+
+            instance.data[field['name']] = cls._parse(
+                func=feature.findtext,
+                xpath=field['sourcefield'],
+                namespace=namespace,
+                returntype=field.get('type', None)
+            )
+
+        return instance
+
+
+class AbstractBoringInterpretatie(AbstractDovType):
+    """Abstract base class for interpretations that are linked to boreholes
+    only."""
+    def __init__(self, pkey):
+        """Initialisation.
+
+        Parameters
+        ----------
+        pkey : str
+            Permanent key of the Interpretatie (interpretations), being a
+            URI of the form
+            `https://www.dov.vlaanderen.be/data/interpretatie/<id>`.
+
+        """
+        super(AbstractBoringInterpretatie, self).__init__(
+            'interpretatie', pkey)
+
+    @classmethod
+    def from_wfs_element(cls, feature, namespace):
+        """Build an instance from a WFS feature element.
+
+        Parameters
+        ----------
+        feature : etree.Element
+            XML element representing a single record of the WFS layer.
+        namespace : str
+            Namespace associated with this WFS featuretype.
+
+        Returns
+        -------
+        instance of this class
+            An instance of this class populated with the data from the WFS
+            element.
+
+        """
+        instance = cls(
+            feature.findtext('./{%s}Interpretatiefiche' % namespace))
+
+        for field in cls.get_fields(source=('wfs',)).values():
+            instance.data[field['name']] = cls._parse(
+                func=feature.findtext,
+                xpath=field['sourcefield'],
+                namespace=namespace,
+                returntype=field.get('type', None)
+            )
+
+        return instance
 
 
 class InformeleStratigrafieLaag(AbstractDovSubType):
@@ -40,36 +168,10 @@ class InformeleStratigrafieLaag(AbstractDovSubType):
         'notnull': False
     }]
 
-    def __init__(self):
-        """Initialisation."""
-        super(InformeleStratigrafieLaag, self).__init__(
-            'informele_stratigrafie_laag')
 
-    @classmethod
-    def from_xml_element(cls, element):
-        """Build an instance of this subtype from a single XML element.
-
-        Parameters
-        ----------
-        element : etree.Element
-            XML element representing a single record of this subtype.
-
-        """
-        laag = InformeleStratigrafieLaag()
-
-        for field in cls.get_fields().values():
-            laag.data[field['name']] = laag._parse(
-                func=element.findtext,
-                xpath=field['sourcefield'],
-                namespace=None,
-                returntype=field.get('type', None)
-            )
-
-        return laag
-
-
-class InformeleStratigrafie(AbstractDovType):
-    """Class representing the DOV data type for boreholes."""
+class InformeleStratigrafie(AbstractCommonInterpretatie):
+    """Class representing the DOV data type for 'informele stratigrafie'
+    interpretations."""
 
     _subtypes = [InformeleStratigrafieLaag]
 
@@ -111,80 +213,6 @@ class InformeleStratigrafie(AbstractDovType):
         'type': 'float'
     }]
 
-    def __init__(self, pkey):
-        """Initialisation.
-
-        Parameters
-        ----------
-        pkey : str
-            Permanent key of the Boring (borehole), being a URI of the form
-            `https://www.dov.vlaanderen.be/data/boring/<id>`.
-
-        """
-        super(InformeleStratigrafie, self).__init__(
-            'interpretatie', pkey)
-
-    @classmethod
-    def from_wfs_element(cls, feature, namespace):
-        """Build `Boring` instance from a WFS feature element.
-
-        Parameters
-        ----------
-        feature : etree.Element
-            XML element representing a single record of the WFS layer.
-        namespace : str
-            Namespace associated with this WFS featuretype.
-
-        Returns
-        -------
-        boring : Boring
-            An instance of this class populated with the data from the WFS
-            element.
-
-        """
-        infstrat = InformeleStratigrafie(
-            feature.findtext('./{%s}Interpretatiefiche' % namespace))
-
-        typeproef = cls._parse(
-            func=feature.findtext,
-            xpath='Type_proef',
-            namespace=namespace,
-            returntype='string'
-        )
-
-        if typeproef == 'Boring':
-            infstrat.data['pkey_boring'] = cls._parse(
-                func=feature.findtext,
-                xpath='Proeffiche',
-                namespace=namespace,
-                returntype='string'
-            )
-            infstrat.data['pkey_sondering'] = np.nan
-        elif typeproef == 'Sondering':
-            infstrat.data['pkey_sondering'] = cls._parse(
-                func=feature.findtext,
-                xpath='Proeffiche',
-                namespace=namespace,
-                returntype='string'
-            )
-            infstrat.data['pkey_boring'] = np.nan
-        else:
-            infstrat.data['pkey_boring'] = np.nan
-            infstrat.data['pkey_sondering'] = np.nan
-
-        for field in cls.get_fields(source=('wfs',)).values():
-            if field['name'] in ['pkey_boring', 'pkey_sondering']:
-                continue
-
-            infstrat.data[field['name']] = cls._parse(
-                func=feature.findtext,
-                xpath=field['sourcefield'],
-                namespace=namespace,
-                returntype=field.get('type', None)
-            )
-
-        return infstrat
-
 
 class HydrogeologischeStratigrafieLaag(AbstractDovSubType):
 
@@ -217,36 +245,10 @@ class HydrogeologischeStratigrafieLaag(AbstractDovSubType):
         'notnull': False
     }]
 
-    def __init__(self):
-        """Initialisation."""
-        super(HydrogeologischeStratigrafieLaag, self).__init__(
-            'hydrogeologische_interpretatie_laag')
 
-    @classmethod
-    def from_xml_element(cls, element):
-        """Build an instance of this subtype from a single XML element.
-
-        Parameters
-        ----------
-        element : etree.Element
-            XML element representing a single record of this subtype.
-
-        """
-        laag = HydrogeologischeStratigrafieLaag()
-
-        for field in cls.get_fields().values():
-            laag.data[field['name']] = laag._parse(
-                func=element.findtext,
-                xpath=field['sourcefield'],
-                namespace=None,
-                returntype=field.get('type', None)
-            )
-
-        return laag
-
-
-class HydrogeologischeStratigrafie(AbstractDovType):
-    """Class representing the DOV data type for boreholes."""
+class HydrogeologischeStratigrafie(AbstractBoringInterpretatie):
+    """Class representing the DOV data type for 'hydrogeologische
+    stratigrafie' interpretations."""
 
     _subtypes = [HydrogeologischeStratigrafieLaag]
 
@@ -257,21 +259,9 @@ class HydrogeologischeStratigrafie(AbstractDovType):
         'type': 'string'
     }, {
         'name': 'pkey_boring',
-        'source': 'custom',
+        'source': 'wfs',
         'type': 'string',
-        'definition': 'URL die verwijst naar de gegevens van de boring '
-                      'waaraan deze hydrogeologische stratigrafie '
-                      'gekoppeld is '
-                      '(indien gekoppeld aan een boring).',
-        'notnull': False
-    }, {
-        'name': 'pkey_sondering',
-        'source': 'custom',
-        'type': 'string',
-        'definition': 'URL die verwijst naar de gegevens van de sondering '
-                      'waaraan deze informele stratigrafie gekoppeld is ('
-                      'indien gekoppeld aan een sondering).',
-        'notnull': False
+        'sourcefield': 'Proeffiche'
     }, {
         'name': 'betrouwbaarheid_interpretatie',
         'source': 'wfs',
@@ -288,83 +278,6 @@ class HydrogeologischeStratigrafie(AbstractDovType):
         'sourcefield': 'Y_mL72',
         'type': 'float'
     }]
-
-    def __init__(self, pkey):
-        """Initialisation.
-
-        Parameters
-        ----------
-        pkey : str
-            Permanent key of the Hydrogeologische stratigrafie, being a URI
-            of the form
-            `https://www.dov.vlaanderen.be/data/boring/<id>`.
-
-        """
-        super(HydrogeologischeStratigrafie, self).__init__(
-              'interpretatie', pkey)
-
-    @classmethod
-    def from_wfs_element(cls, feature, namespace):
-        """Build 'HydrogeologischeStratigrafie' instance from a WFS feature
-        element.
-
-        Parameters
-        ----------
-        feature : etree.Element
-            XML element representing a single record of the WFS layer.
-        namespace : str
-            Namespace associated with this WFS featuretype.
-
-        Returns
-        -------
-        HydrogeologischeStratigrafie : HydrogeologischeStratigrafie
-            An instance of this class populated with the data from the WFS
-            element.
-
-        """
-        hydstrat = HydrogeologischeStratigrafie(
-            feature.findtext('./{%s}Interpretatiefiche' % namespace))
-
-        typeproef = cls._parse(
-            func=feature.findtext,
-            xpath='Type_proef',
-            namespace=namespace,
-            returntype='string'
-        )
-
-        if typeproef == 'Boring':
-            hydstrat.data['pkey_boring'] = cls._parse(
-                func=feature.findtext,
-                xpath='Proeffiche',
-                namespace=namespace,
-                returntype='string'
-            )
-            hydstrat.data['pkey_sondering'] = np.nan
-
-        elif typeproef == 'Sondering':
-            hydstrat.data['pkey_sondering'] = cls._parse(
-                func=feature.findtext,
-                xpath='Proeffiche',
-                namespace=namespace,
-                returntype='string'
-            )
-            hydstrat.data['pkey_boring'] = np.nan
-        else:
-            hydstrat.data['pkey_boring'] = np.nan
-            hydstrat.data['pkey_sondering'] = np.nan
-
-        for field in cls.get_fields(source=('wfs',)).values():
-            if field['name'] in ['pkey_boring', 'pkey_sondering']:
-                continue
-
-            hydstrat.data[field['name']] = cls._parse(
-                func=feature.findtext,
-                xpath=field['sourcefield'],
-                namespace=namespace,
-                returntype=field.get('type', None)
-            )
-
-        return hydstrat
 
 
 class LithologischeBeschrijvingLaag(AbstractDovSubType):
@@ -398,35 +311,8 @@ class LithologischeBeschrijvingLaag(AbstractDovSubType):
         'notnull': False
     }]
 
-    def __init__(self):
-        """Initialisation."""
-        super(LithologischeBeschrijvingLaag, self).__init__(
-            'lithologische_beschrijving_laag')
 
-    @classmethod
-    def from_xml_element(cls, element):
-        """Build an instance of this subtype from a single XML element.
-
-        Parameters
-        ----------
-        element : etree.Element
-            XML element representing a single record of this subtype.
-
-        """
-        laag = LithologischeBeschrijvingLaag()
-
-        for field in cls.get_fields().values():
-            laag.data[field['name']] = laag._parse(
-                func=element.findtext,
-                xpath=field['sourcefield'],
-                namespace=None,
-                returntype=field.get('type', None)
-            )
-
-        return laag
-
-
-class LithologischeBeschrijvingen(AbstractDovType):
+class LithologischeBeschrijvingen(AbstractBoringInterpretatie):
     """Class representing the DOV data type for 'lithologische
     beschrijvingen' interpretations."""
 
@@ -458,49 +344,3 @@ class LithologischeBeschrijvingen(AbstractDovType):
         'sourcefield': 'Y_mL72',
         'type': 'float'
     }]
-
-    def __init__(self, pkey):
-        """Initialisation.
-
-        Parameters
-        ----------
-        pkey : str
-            Permanent key of the 'Lithologische beschrijvingen', being a URI
-            of the form
-            `https://www.dov.vlaanderen.be/data/interpretaties/<id>`.
-
-        """
-        super(LithologischeBeschrijvingen, self).__init__(
-              'interpretatie', pkey)
-
-    @classmethod
-    def from_wfs_element(cls, feature, namespace):
-        """Build 'LithologischeBeschrijvingen' instance from a WFS feature
-        element.
-
-        Parameters
-        ----------
-        feature : etree.Element
-            XML element representing a single record of the WFS layer.
-        namespace : str
-            Namespace associated with this WFS featuretype.
-
-        Returns
-        -------
-        LithologischeBeschrijvingen : LithologischeBeschrijvingen
-            An instance of this class populated with the data from the WFS
-            element.
-
-        """
-        lithobes = LithologischeBeschrijvingen(
-            feature.findtext('./{%s}Interpretatiefiche' % namespace))
-
-        for field in cls.get_fields(source=('wfs',)).values():
-            lithobes.data[field['name']] = cls._parse(
-                func=feature.findtext,
-                xpath=field['sourcefield'],
-                namespace=namespace,
-                returntype=field.get('type', None)
-            )
-
-        return lithobes

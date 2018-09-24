@@ -112,7 +112,7 @@ class AbstractDovSubType(AbstractCommon):
     _UNRESOLVED = "{UNRESOLVED}"
     _fields = []
 
-    def __init__(self, name):
+    def __init__(self):
         """Initialisation.
 
         Parameters
@@ -121,8 +121,6 @@ class AbstractDovSubType(AbstractCommon):
             The name associated with this subtype.
 
         """
-        self._name = name
-
         self.data = dict(
             zip(self.get_field_names(),
                 [AbstractDovSubType._UNRESOLVED] * len(self.get_field_names()))
@@ -157,14 +155,23 @@ class AbstractDovSubType(AbstractCommon):
         element : etree.Element
             XML element representing a single record of this subtype.
 
-        Raises
-        ------
-        NotImplementedError
-            This is an abstract method that should be implemented in a
-            subclass.
+        Returns
+        -------
+        instance of this class
+            An instance of this class based on the data in the XML element.
 
         """
-        raise NotImplementedError('This should be implemented in a subclass.')
+        instance = cls()
+
+        for field in cls.get_fields().values():
+            instance.data[field['name']] = instance._parse(
+                func=element.findtext,
+                xpath=field['sourcefield'],
+                namespace=None,
+                returntype=field.get('type', None)
+            )
+
+        return instance
 
     @classmethod
     def get_field_names(cls):

@@ -51,32 +51,6 @@ class Peilmeting(AbstractDovSubType):
         'notnull': False
     }]
 
-    def __init__(self):
-        """Initialisation."""
-        super(Peilmeting, self).__init__('peilmeting')
-
-    @classmethod
-    def from_xml_element(cls, element):
-        """Build an instance of this subtype from a single XML element.
-
-        Parameters
-        ----------
-        element : etree.Element
-            XML element representing a single record of this subtype.
-
-        """
-        peilmeting = Peilmeting()
-
-        for field in cls.get_fields().values():
-            peilmeting.data[field['name']] = peilmeting._parse(
-                func=element.findtext,
-                xpath=field['sourcefield'],
-                namespace=None,
-                returntype=field.get('type', None)
-            )
-
-        return peilmeting
-
 
 class GrondwaterFilter(AbstractDovType):
     """Class representing the DOV data type for Groundwater screens."""

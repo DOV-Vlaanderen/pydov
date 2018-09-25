@@ -4,6 +4,7 @@ from pydov.search.abstract import AbstractSearch
 from pydov.types.interpretaties import InformeleStratigrafie
 from pydov.types.interpretaties import HydrogeologischeStratigrafie
 from pydov.types.interpretaties import LithologischeBeschrijvingen
+from pydov.types.interpretaties import GecodeerdeLithologie
 from pydov.util import owsutil
 
 
@@ -361,5 +362,126 @@ class LithologischeBeschrijvingenSearch(AbstractSearch):
             data=LithologischeBeschrijvingen.to_df_array(
                 interpretaties, return_fields),
             columns=LithologischeBeschrijvingen.get_field_names(
+                return_fields))
+        return df
+
+
+class GecodeerdeLithologieSearch(AbstractSearch):
+    """Search class to retrieve gecodeerde lithologie """
+
+    __wfs_schema = None
+    __wfs_namespace = None
+    __md_metadata = None
+    __fc_featurecatalogue = None
+
+    def __init__(self):
+        """Initialisation."""
+        super(GecodeerdeLithologieSearch, self).__init__(
+            'interpretaties:gecodeerde_lithologie',
+            GecodeerdeLithologieSearch)
+
+    def _init_namespace(self):
+        """Initialise the WFS namespace associated with the layer."""
+        if GecodeerdeLithologieSearch.__wfs_namespace is None:
+            GecodeerdeLithologieSearch.__wfs_namespace = \
+                self._get_namespace()
+
+    def _init_fields(self):
+        """Initialise the fields and their metadata available in this search
+        class."""
+        if self._fields is None:
+            if GecodeerdeLithologieSearch.__wfs_schema is None:
+                GecodeerdeLithologieSearch.__wfs_schema = \
+                    self._get_schema()
+
+            if GecodeerdeLithologieSearch.__md_metadata is None:
+                GecodeerdeLithologieSearch.__md_metadata = \
+                    self._get_remote_metadata()
+
+            if GecodeerdeLithologieSearch.__fc_featurecatalogue \
+                    is None:
+                csw_url = self._get_csw_base_url()
+                fc_uuid = owsutil.get_featurecatalogue_uuid(
+                    GecodeerdeLithologieSearch.__md_metadata)
+
+                GecodeerdeLithologieSearch.__fc_featurecatalogue = \
+                    owsutil.get_remote_featurecatalogue(csw_url, fc_uuid)
+
+            fields = self._build_fields(
+                GecodeerdeLithologieSearch.__wfs_schema,
+                GecodeerdeLithologieSearch.__fc_featurecatalogue)
+
+            for field in fields.values():
+                if field['name'] not in self._type.get_field_names(
+                        include_wfs_injected=True):
+                    self._type._fields.append({
+                        'name': field['name'],
+                        'source': 'wfs',
+                        'sourcefield': field['name'],
+                        'type': field['type'],
+                        'wfs_injected': True
+                    })
+
+            self._fields = self._build_fields(
+                GecodeerdeLithologieSearch.__wfs_schema,
+                GecodeerdeLithologieSearch.__fc_featurecatalogue)
+
+    def search(self, location=None, query=None, return_fields=None):
+        """Search for 'gecodeerde lithologie'. Provide either
+        `location` or `query`. When `return_fields` is None, all fields
+        are returned.
+
+        Parameters
+        ----------
+        location : tuple<minx,miny,maxx,maxy>
+            The bounding box limiting the features to retrieve.
+        query : owslib.fes.OgcExpression
+            OGC filter expression to use for searching. This can contain any
+            combination of filter elements defined in owslib.fes. The query
+            should use the fields provided in `get_fields()`. Note that not
+            all fields are currently supported as a search parameter.
+        return_fields : list<str> or tuple<str> or set<str>
+            A list of fields to be returned in the output data. This should
+            be a subset of the fields provided in `get_fields()`. Note that
+            not all fields are currently supported as return fields.
+
+        Returns
+        -------
+        pandas.core.frame.DataFrame
+            DataFrame containing the output of the search query.
+
+        Raises
+        ------
+        pydov.util.errors.InvalidSearchParameterError
+            When not one of `location` or `query` is provided.
+
+        pydov.util.errors.InvalidFieldError
+            When at least one of the fields in `return_fields` is unknown.
+
+            When a field that is only accessible as return field is used as
+            a query parameter.
+
+            When a field that can only be used as a query parameter is used as
+            a return field.
+
+        pydov.util.errors.FeatureOverflowError
+            When the number of features to be returned is equal to the
+            maxFeatures limit of the WFS server.
+
+        AttributeError
+            When the argument supplied as return_fields is not a list,
+            tuple or set.
+
+        """
+        fts = self._search(location=location, query=query,
+                           return_fields=return_fields)
+
+        interpretaties = GecodeerdeLithologie.from_wfs(
+            fts, self.__wfs_namespace)
+
+        df = pd.DataFrame(
+            data=GecodeerdeLithologie.to_df_array(
+                interpretaties, return_fields),
+            columns=GecodeerdeLithologie.get_field_names(
                 return_fields))
         return df

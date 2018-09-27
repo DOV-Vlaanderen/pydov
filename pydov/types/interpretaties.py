@@ -344,3 +344,92 @@ class LithologischeBeschrijvingen(AbstractBoringInterpretatie):
         'sourcefield': 'Y_mL72',
         'type': 'float'
     }]
+
+
+class GecodeerdeLithologieLaag(AbstractDovSubType):
+
+    _name = 'gecodeerde_lithologie_laag'
+    _rootpath = './/gecodeerdelithologie/laag'
+
+    _fields = [{
+        'name': 'diepte_laag_van',
+        'source': 'xml',
+        'sourcefield': '/van',
+        'definition': 'Diepte van de bovenkant van de laag lithologische'
+                      ' beschrijving in meter.',
+        'type': 'float',
+        'notnull': False
+    }, {
+        'name': 'diepte_laag_tot',
+        'source': 'xml',
+        'sourcefield': '/tot',
+        'definition': 'Diepte van de onderkant van de laag lithologische'
+                      ' beschrijving in meter.',
+        'type': 'float',
+        'notnull': False
+    }, {
+        'name': 'hoofd_grondsoort',
+        'source': 'xml',
+        'sourcefield': '/hoofdnaam/grondsoort',
+        'definition': 'grondsoort (als code) van de laag gecodeerde '
+                      'lithologie',
+        'type': 'string',
+        'notnull': False
+    }, {
+        'name': 'bijmenging_plaatselijk',
+        'source': 'xml',
+        'sourcefield': '/bijmenging/plaatselijk',
+        'definition': 'plaatselijk of niet-plaatselijk',
+        'type': 'string',
+        'notnull': False
+    }, {
+        'name': 'bijmenging_hoeveelheid',
+        'source': 'xml',
+        'sourcefield': '/bijmenging/hoeveelheid',
+        'definition': 'aanduiding van de hoeveelheid bijmenging',
+        'type': 'string',
+        'notnull': False
+    }, {
+        'name': 'bijmenging_grondsoort',
+        'source': 'xml',
+        'sourcefield': '/bijmenging/grondsoort',
+        'definition': 'type grondsoort (als code) van de laag '
+                      'gecodeerde lithologie of geotechnische '
+                      'codering',
+        'type': 'string',
+        'notnull': False
+    }]
+
+
+class GecodeerdeLithologie(AbstractBoringInterpretatie):
+    """Class representing the DOV data type for 'gecodeerde
+    lithologie' interpretations."""
+
+    _subtypes = [GecodeerdeLithologieLaag]
+
+    _fields = [{
+        'name': 'pkey_interpretatie',
+        'source': 'wfs',
+        'sourcefield': 'Interpretatiefiche',
+        'type': 'string'
+    }, {
+        'name': 'pkey_boring',
+        'source': 'wfs',
+        'type': 'string',
+        'sourcefield': 'Proeffiche',
+    }, {
+        'name': 'betrouwbaarheid_interpretatie',
+        'source': 'wfs',
+        'sourcefield': 'Betrouwbaarheid',
+        'type': 'string'
+    },  {
+        'name': 'x',
+        'source': 'wfs',
+        'sourcefield': 'X_mL72',
+        'type': 'float'
+    }, {
+        'name': 'y',
+        'source': 'wfs',
+        'sourcefield': 'Y_mL72',
+        'type': 'float'
+    }]

@@ -200,6 +200,49 @@ if __name__ == '__main__':
         '/lithologische_beschrijvingen/ows?service=wfs&version=1.1.0&request'
         '=DescribeFeatureType')
 
+    # types/interpretaties/gecodeerde_lithologie
+
+    update_file('types/interpretaties/gecodeerde_lithologie'
+                '/gecodeerde_lithologie.xml',
+                'https://www.dov.vlaanderen.be/data/interpretatie/2001'
+                '-191079.xml')
+
+    update_file('types/interpretaties/gecodeerde_lithologie'
+                '/wfsgetfeature.xml',
+                'https://www.dov.vlaanderen.be/geoserver/ows?service=WFS'
+                '&version=1.1.0&request=GetFeature&typeName=interpretaties'
+                ':gecodeerde_lithologie&maxFeatures=1&CQL_Filter'
+                '=Interpretatiefiche=%27https://www.dov.vlaanderen.be/data'
+                '/interpretatie/2001-191079%27')
+
+    update_file('types/interpretaties/gecodeerde_lithologie/feature.xml',
+                'https://www.dov.vlaanderen.be/geoserver/ows?service=WFS'
+                '&version=1.1.0&request=GetFeature&typeName=interpretaties'
+                ':gecodeerde_lithologie&maxFeatures=1&CQL_Filter'
+                '=Interpretatiefiche=%27https://www.dov.vlaanderen.be/data'
+                '/interpretatie/2001-191079%27',
+                get_first_featuremember)
+
+    update_file(
+        'types/interpretaties/gecodeerde_lithologie/fc_featurecatalogue.xml',
+        'https://www.dov.vlaanderen.be/geonetwork/srv/dut/csw'
+        '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+        '&outputSchema=http://www.isotc211.org/2005/gmd'
+        '&elementSetName=full&id=0032241d-8920-415e-b1d8-fa0a48154904')
+
+    update_file('types/interpretaties/gecodeerde_lithologie/md_metadata.xml',
+                'https://www.dov.vlaanderen.be/geonetwork/srv/dut/csw'
+                '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+                '&outputSchema=http://www.isotc211.org/2005/gmd'
+                '&elementSetName=full&id=35d630e4-9145-46f9-b7dc-da290a0adc55')
+
+    update_file(
+        'types/interpretaties/gecodeerde_lithologie/wfsdescribefeaturetype'
+        '.xml',
+        'https://www.dov.vlaanderen.be/geoserver/interpretaties'
+        '/gecodeerde_lithologie/ows?service=wfs&version=1.1.0&request'
+        '=DescribeFeatureType')
+
     # types/filter
 
     update_file('types/grondwaterfilter/grondwaterfilter.xml',

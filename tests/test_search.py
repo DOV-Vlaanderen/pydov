@@ -12,6 +12,9 @@ from pydov.search.grondwaterfilter import GrondwaterFilterSearch
 from numpy.compat import unicode
 
 from pydov.search.interpretaties import InformeleStratigrafieSearch
+from pydov.search.interpretaties import HydrogeologischeStratigrafieSearch
+from pydov.search.interpretaties import GecodeerdeLithologieSearch
+from pydov.search.interpretaties import LithologischeBeschrijvingenSearch
 from pydov.util.errors import (
     InvalidSearchParameterError,
 )
@@ -19,7 +22,10 @@ from pydov.util.errors import (
 
 search_objects = [BoringSearch(),
                   GrondwaterFilterSearch(),
-                  InformeleStratigrafieSearch()]
+                  InformeleStratigrafieSearch(),
+                  HydrogeologischeStratigrafieSearch(),
+                  GecodeerdeLithologieSearch(),
+                  LithologischeBeschrijvingenSearch(),]
 
 
 @pytest.fixture(scope='module')

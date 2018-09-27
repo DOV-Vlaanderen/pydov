@@ -11,7 +11,7 @@
       <gco:CharacterString>1</gco:CharacterString>
     </gmx:versionNumber>
     <gmx:versionDate>
-      <gco:DateTime>2018-03-01T10:09:49</gco:DateTime>
+      <gco:DateTime>2018-09-26T15:23:55</gco:DateTime>
     </gmx:versionDate>
     <gfc:producer>
       <gmd:CI_ResponsibleParty>
@@ -389,6 +389,53 @@
             </gfc:memberName>
             <gfc:definition>
               <gco:CharacterString>De hoogte van het aanvangspeil van de proef in het TAW stelsel (in meter).</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity>
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>0</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:code>
+              <gco:CharacterString />
+            </gfc:code>
+            <gfc:valueType>
+              <gco:TypeName>
+                <gco:aName>
+                  <gco:CharacterString>Getal (5,2)</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+            <gfc:listedValue>
+              <gfc:FC_ListedValue>
+                <gfc:label>
+                  <gco:CharacterString />
+                </gfc:label>
+                <gfc:code>
+                  <gco:CharacterString />
+                </gfc:code>
+                <gfc:definition>
+                  <gco:CharacterString />
+                </gfc:definition>
+              </gfc:FC_ListedValue>
+            </gfc:listedValue>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName>diepte_tot_m</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString>De maximumdiepte van de informele stratigrafie in meter. Dit is de 'tot' van de diepste geïnterpreteerde laag.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>

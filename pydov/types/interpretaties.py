@@ -355,23 +355,24 @@ class GecodeerdeLithologieLaag(AbstractDovSubType):
         'name': 'diepte_laag_van',
         'source': 'xml',
         'sourcefield': '/van',
-        'definition': 'Diepte van de bovenkant van de laag lithologische '
-                      'beschrijving in meter.',
+        'definition': 'Diepte van de bovenkant van de laag lithologische'
+                      ' beschrijving in meter.',
         'type': 'float',
         'notnull': False
     }, {
         'name': 'diepte_laag_tot',
         'source': 'xml',
         'sourcefield': '/tot',
-        'definition': 'Diepte van de onderkant van de laag lithologische '
-                      'beschrijving in meter.',
+        'definition': 'Diepte van de onderkant van de laag lithologische'
+                      ' beschrijving in meter.',
         'type': 'float',
         'notnull': False
     }, {
         'name': 'hoofd_grondsoort',
         'source': 'xml',
         'sourcefield': '/hoofdnaam/grondsoort',
-        'definition': 'grondsoort (als code) van de laag gecodeerde lithologie',
+        'definition': 'grondsoort (als code) van de laag gecodeerde '
+                      'lithologie',
         'type': 'string',
         'notnull': False
     }, {
@@ -392,8 +393,9 @@ class GecodeerdeLithologieLaag(AbstractDovSubType):
         'name': 'bijmenging_grondsoort',
         'source': 'xml',
         'sourcefield': '/bijmenging/grondsoort',
-        'definition': 'type grondsoort (als code) van de laag gecodeerde '
-                      'lithologie of geotechnische codering',
+        'definition': 'type grondsoort (als code) van de laag '
+                      'gecodeerde lithologie of geotechnische '
+                      'codering',
         'type': 'string',
         'notnull': False
     }]

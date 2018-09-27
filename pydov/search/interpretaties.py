@@ -378,7 +378,7 @@ class GecodeerdeLithologieSearch(AbstractSearch):
         """Initialisation."""
         super(GecodeerdeLithologieSearch, self).__init__(
             'interpretaties:gecodeerde_lithologie',
-            GecodeerdeLithologieSearch)
+            GecodeerdeLithologie)
 
     def _init_namespace(self):
         """Initialise the WFS namespace associated with the layer."""

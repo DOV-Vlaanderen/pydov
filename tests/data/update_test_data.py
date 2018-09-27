@@ -211,7 +211,7 @@ if __name__ == '__main__':
                 '/wfsgetfeature.xml',
                 'https://www.dov.vlaanderen.be/geoserver/ows?service=WFS'
                 '&version=1.1.0&request=GetFeature&typeName=interpretaties'
-                ':lithologische_beschrijvingen&maxFeatures=1&CQL_Filter'
+                ':gecodeerde_lithologie&maxFeatures=1&CQL_Filter'
                 '=Interpretatiefiche=%27https://www.dov.vlaanderen.be/data'
                 '/interpretatie/2001-191079%27')
 

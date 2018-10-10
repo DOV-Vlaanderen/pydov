@@ -19,31 +19,6 @@ class AbstractCommon(object):
     """Class grouping methods common to AbstractDovType and
     AbstractDovSubType."""
 
-    def _parse_xml_data(self):
-        """Get remote XML data for this DOV object, parse the raw XML and
-        save the results in the data object.
-
-        Raises
-        ------
-        NotImplementedError
-            This is an abstract method that should be implemented in a
-            subclass.
-
-        """
-        xml = self._get_xml_data()
-        tree = etree.fromstring(xml)
-
-        for field in self.get_fields(source=('xml',),
-                                     include_subtypes=False).values():
-            self.data[field['name']] = self._parse(
-                func=tree.findtext,
-                xpath=field['sourcefield'],
-                namespace=None,
-                returntype=field.get('type', None)
-            )
-
-        self._parse_subtypes(xml)
-
     @classmethod
     def _parse(cls, func, xpath, namespace, returntype):
         """Parse the result of an XML path function, stripping the namespace
@@ -283,6 +258,31 @@ class AbstractDovType(AbstractCommon):
         )
 
         self.data['pkey_%s' % self.typename] = self.pkey
+
+    def _parse_xml_data(self):
+        """Get remote XML data for this DOV object, parse the raw XML and
+        save the results in the data object.
+
+        Raises
+        ------
+        NotImplementedError
+            This is an abstract method that should be implemented in a
+            subclass.
+
+        """
+        xml = self._get_xml_data()
+        tree = etree.fromstring(xml)
+
+        for field in self.get_fields(source=('xml',),
+                                     include_subtypes=False).values():
+            self.data[field['name']] = self._parse(
+                func=tree.findtext,
+                xpath=field['sourcefield'],
+                namespace=None,
+                returntype=field.get('type', None)
+            )
+
+        self._parse_subtypes(xml)
 
     @classmethod
     def from_wfs_element(cls, feature, namespace):

@@ -20,7 +20,8 @@ except ImportError:
 from owslib.etree import etree
 from owslib.iso import MD_Metadata
 from owslib.namespaces import Namespaces
-from owslib.util import (nspath_eval,
+from owslib.util import (
+    nspath_eval,
     findall,
 )
 

@@ -8,7 +8,7 @@ import tempfile
 from io import open
 
 import pydov
-from owslib.util import openURL
+from pydov.util.dovutil import get_dov_xml
 
 
 class TransparentCache(object):
@@ -155,9 +155,10 @@ class TransparentCache(object):
             The raw XML data of this DOV object as bytes.
 
         """
+        xml = get_dov_xml(url)
         for hook in pydov.hooks:
             hook.xml_downloaded(url.rstrip('.xml'))
-        return openURL(url).read()
+        return xml
 
     def get(self, url):
         """Get the XML data for the DOV object referenced by the given URL.

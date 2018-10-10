@@ -1,23 +1,46 @@
 # -*- encoding: utf-8 -*-
 import datetime
 import os
+
+import pandas as pd
 import time
 from io import open
 
 import pytest
 
-import pydov
 from owslib.fes import PropertyIsEqualTo
 from pydov.search.boring import BoringSearch
+from pydov.search.interpretaties import LithologischeBeschrijvingenSearch
+from pydov.util.errors import XmlParseWarning
 
 from tests.abstract import (
     service_ok,
 )
 
+from tests.test_search import (
+    mp_wfs,
+    wfs,
+    mp_remote_describefeaturetype,
+    mp_remote_md,
+    mp_remote_fc,
+    mp_remote_wfs_feature,
+    mp_dov_xml
+)
+
+from tests.test_search_itp_lithologischebeschrijvingen import (
+    location_wfs_describefeaturetype,
+    location_md_metadata,
+    location_fc_featurecatalogue,
+    location_wfs_getfeature
+)
+
+location_dov_xml = 'tests/data/encoding/invalidcharacters.xml'
+
 from tests.test_util_caching import (
     cache,
     nocache,
 )
+
 
 class TestEncoding(object):
     """Class grouping tests related to encoding issues."""
@@ -176,3 +199,36 @@ class TestEncoding(object):
             'https://www.dov.vlaanderen.be/data/boring/1995-056089.xml')
 
         assert cached_data == ref_data
+
+    def test_search_invalidxml_single(
+            self, mp_wfs, mp_remote_describefeaturetype, mp_remote_md,
+            mp_remote_fc, mp_remote_wfs_feature, mp_dov_xml, nocache):
+        """Test the search method when the XML is invalid.
+
+        If lxml is installed, the XML should parse regardless of invalid
+        characters. If lxml is not installed, the dataframe should be
+        returned with
+
+        """
+        lithosearch = LithologischeBeschrijvingenSearch()
+        query = PropertyIsEqualTo(
+            propertyname='pkey_interpretatie',
+            literal='https://www.dov.vlaanderen.be/data/interpretatie/'
+                    '1987-070909')
+
+        try:
+            import lxml
+            have_lxml = True
+        except ImportError:
+            have_lxml = False
+
+        if have_lxml:
+            df = lithosearch.search(query=query)
+            assert df.beschrijving[1].startswith(u'homogene groene zanden')
+        else:
+            with pytest.warns(XmlParseWarning):
+                df = lithosearch.search(query=query)
+                assert len(df) == 1
+                assert pd.isnull(df.diepte_laag_van[0])
+                assert pd.isnull(df.diepte_laag_tot[0])
+                assert pd.isnull(df.beschrijving[0])

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns3:dov-schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns3="http://kern.schemas.dov.vlaanderen.be" xsi:schemaLocation="http://kern.schemas.dov.vlaanderen.be https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/dov.xsd">
+    <interpretaties>
+        <lithologischebeschrijving>
+            <boring>kb24d60e-B255</boring>
+            <auteur>
+                <persoon>
+                    <naam>Onbekend</naam>
+                </persoon>
+                <bedrijf-dienst>
+                    <naam>bedrijf-dienst onbekend</naam>
+                </bedrijf-dienst>
+            </auteur>
+            <datum>1987-12-08</datum>
+            <betrouwbaarheid>goed</betrouwbaarheid>
+            <dataleverancier>
+                <naam>onbekend</naam>
+            </dataleverancier>
+            <laag>
+                <van>0.00</van>
+                <tot>5.00</tot>
+                <beschrijving>bruin lemig tot kleiig bodemmateriaal gemengd met grof groen zand, niet kalkhoudend</beschrijving>
+            </laag>
+            <laag>
+                <van>5.00</van>
+                <tot>33.00</tot>
+                <beschrijving>homogene groene zanden bestaande uit kwarts en glauconiet, niet kalkhoudend en geen macrofauna, kleiig aspect bij 10 en 30m ook ijzerzandsteenbrokjes</beschrijving>
+            </laag>
+            <laag>
+                <van>33.00</van>
+                <tot>64.00</tot>
+                <beschrijving>zelfde zand met kleiig aspect, kleur wordt donkerdertot zwart; glauconietgehalte wordt groter, geen duidelijke korrelgrootte variaties vast te stellen</beschrijving>
+            </laag>
+            <laag>
+                <van>64.00</van>
+                <tot>65.00</tot>
+                <beschrijving>bruine, zwarte, plastische klei</beschrijving>
+            </laag>
+        </lithologischebeschrijving>
+    </interpretaties>
+</ns3:dov-schema>

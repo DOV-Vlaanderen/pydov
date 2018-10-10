@@ -298,5 +298,5 @@ More information
 """"""""""""""""
 
 
-* `DOV XML documentation <https://dov.vlaanderen.be/dovweb/html/standaarden.html>`_
+* `DOV XML documentation <https://www.dov.vlaanderen.be/page/dov-uitwisselingsformaat>`_
 * `DOV XSD schema <https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/dov.xsd>`_

@@ -2,6 +2,7 @@
 """Module grouping utility functions for DOV XML services."""
 import requests
 
+import pydov
 from owslib.etree import etree
 from pydov.util.errors import XmlParseError
 
@@ -20,7 +21,9 @@ def get_dov_xml(url):
         The raw XML data of this DOV object as bytes.
 
     """
-    request = requests.get(url, timeout=60)
+    headers = {'user-agent': 'PyDOV/%s' % pydov.__version__}
+
+    request = requests.get(url, headers=headers, timeout=60)
     request.encoding = 'utf-8'
     return request.text.encode('utf8')
 

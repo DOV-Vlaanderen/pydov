@@ -294,7 +294,6 @@ class AbstractTestSearch(object):
         for field in list(df):
             field_datatype = fields[field]['type']
             datatypes = set((type(i) for i in df[field].dropna()))
-            print(field, datatypes)
             assert len(datatypes) <= 1
 
             if len(datatypes) > 0:

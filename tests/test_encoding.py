@@ -52,6 +52,11 @@ class TestEncoding(object):
 
         Test whether the output has the correct encoding.
 
+        Parameters
+        ----------
+        nocache : pytest.fixture
+            Fixture to disable caching.
+
         """
         boringsearch = BoringSearch()
         query = PropertyIsEqualTo(
@@ -207,7 +212,24 @@ class TestEncoding(object):
 
         If lxml is installed, the XML should parse regardless of invalid
         characters. If lxml is not installed, the dataframe should be
-        returned with
+        returned with a warning that it will be incomplete.
+
+        Parameters
+        ----------
+        mp_wfs : pytest.fixture
+            Monkeypatch the call to the remote GetCapabilities request.
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType.
+        mp_remote_md : pytest.fixture
+            Monkeypatch the call to get the remote metadata.
+        mp_remote_fc : pytest.fixture
+            Monkeypatch the call to get the remote feature catalogue.
+        mp_remote_wfs_feature : pytest.fixture
+            Monkeypatch the call to get WFS features.
+        mp_dov_xml : pytest.fixture
+            Monkeypatch the call to get the remote XML data.
+        nocache : pytest.fixture
+            Fixture to disable caching.
 
         """
         lithosearch = LithologischeBeschrijvingenSearch()

@@ -27,11 +27,11 @@ class Box(AbstractLocation):
                          'http://www.opengis.net/gml/srs/epsg.xml#%i' % epsg)
 
         lower_corner = etree.Element('{http://www.opengis.net/gml}lowerCorner')
-        lower_corner.text = '%0.3f %0.3f' % (self.minx, self.miny)
+        lower_corner.text = '%0.6f %0.6f' % (self.minx, self.miny)
         self.element.append(lower_corner)
 
         upper_corner = etree.Element('{http://www.opengis.net/gml}upperCorner')
-        upper_corner.text = '%0.3f %0.3f' % (self.maxx, self.maxy)
+        upper_corner.text = '%0.6f %0.6f' % (self.maxx, self.maxy)
         self.element.append(upper_corner)
 
     def get_element(self):

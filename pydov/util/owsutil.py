@@ -2,6 +2,7 @@
 """Module grouping utility functions for OWS services."""
 import requests
 
+import pydov
 from owslib.feature.schema import (
     _get_describefeaturetype_url,
     _get_elements,
@@ -20,7 +21,6 @@ from owslib.etree import etree
 from owslib.iso import MD_Metadata
 from owslib.namespaces import Namespaces
 from owslib.util import (
-    openURL,
     nspath_eval,
     findall,
 )
@@ -59,7 +59,7 @@ def __get_remote_md(md_url):
         Response containing the remote metadata.
 
     """
-    return openURL(md_url).read()
+    return get_url(md_url)
 
 
 def __get_remote_fc(fc_url):
@@ -77,7 +77,7 @@ def __get_remote_fc(fc_url):
         Response containing the remote feature catalogue.
 
     """
-    return openURL(fc_url).read()
+    return get_url(fc_url)
 
 
 def __get_remote_describefeaturetype(describefeaturetype_url):
@@ -95,7 +95,7 @@ def __get_remote_describefeaturetype(describefeaturetype_url):
         Response containing the remote DescribeFeatureType.
 
     """
-    return openURL(describefeaturetype_url).read()
+    return get_url(describefeaturetype_url)
 
 
 def get_remote_metadata(contentmetadata):
@@ -397,7 +397,7 @@ def _construct_schema(elements, nsmap):
 
 def get_remote_schema(url, typename, version='1.0.0'):
     """Copy the owslib.feature.schema.get_schema method to be able to
-    monkeypatch the openURL request in tests.
+    monkeypatch the request in tests.
 
     Parameters
     ----------
@@ -542,6 +542,29 @@ def wfs_get_feature(baseurl, get_feature_request):
 
     """
     data = etree.tostring(get_feature_request)
-    request = requests.post(baseurl, data)
+    headers = {'user-agent': 'PyDOV/%s' % pydov.__version__}
+
+    request = requests.post(baseurl, data, headers=headers, timeout=60)
+    request.encoding = 'utf-8'
+    return request.text.encode('utf8')
+
+
+def get_url(url):
+    """Perform a GET request to an OWS service an return the result.
+
+    Parameters
+    ----------
+    url : str
+        URL to request.
+
+    Returns
+    -------
+    bytes
+        Response containing the result of the GET request.
+
+    """
+    headers = {'user-agent': 'PyDOV/%s' % pydov.__version__}
+
+    request = requests.get(url, headers=headers, timeout=60)
     request.encoding = 'utf-8'
     return request.text.encode('utf8')

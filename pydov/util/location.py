@@ -89,9 +89,10 @@ class Box(AbstractLocation):
             X coordinate of the upper right corner of the box.
         maxy : float
             Y coordinate of the upper right corner of the box.
-        epsg : int
+        epsg : int, optional
             EPSG code of the coordinate reference system (CRS) of the
-            coordinates specified as minx, miny, maxx, maxy.
+            coordinates specified as minx, miny, maxx, maxy. Defaults to
+            31370 (Belgian Lambert72).
 
         """
         self.minx = minx
@@ -135,9 +136,10 @@ class Point(AbstractLocation):
             X coordinate of the point.
         y : float
             Y coordinate of the point.
-        epsg : int
+        epsg : int, optional
             EPSG code of the coordinate reference system (CRS) of the
-            coordinates specified as minx, miny, maxx, maxy.
+            coordinates specified as minx, miny, maxx, maxy. Defaults to
+            31370 (Belgian Lambert72).
 
         """
         self.x = x

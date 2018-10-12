@@ -47,11 +47,9 @@ class Point(AbstractLocation):
         self.element.set('srsName',
                          'http://www.opengis.net/gml/srs/epsg.xml#%i' % epsg)
 
-        coordinates = etree.Element('{http://www.opengis.net/gml}coordinates')
-        coordinates.set('decimal', '.')
-        coordinates.set('cs', ',')
-        coordinates.set('ts', ' ')
-        coordinates.text = '%f,%f' % (self.x, self.y)
+        coordinates = etree.Element('{http://www.opengis.net/gml}pos')
+        coordinates.text = '%0.6f %0.6f' % (self.x, self.y)
+        self.element.append(coordinates)
 
     def get_element(self):
         return self.element

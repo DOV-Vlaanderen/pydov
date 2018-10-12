@@ -334,9 +334,9 @@ class TestOwsutil(object):
             '<ogc:PropertyName>geom</ogc:PropertyName><gml:Envelope '
             'xmlns:gml="http://www.opengis.net/gml" srsDimension="2" '
             'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370"><gml'
-            ':lowerCorner>151650.000 '
-            '214675.000</gml:lowerCorner><gml:upperCorner>151750.000 '
-            '214775.000</gml:upperCorner></gml:Envelope></ogc:Within></ogc'
+            ':lowerCorner>151650.000000 '
+            '214675.000000</gml:lowerCorner><gml:upperCorner>151750.000000 '
+            '214775.000000</gml:upperCorner></gml:Envelope></ogc:Within></ogc'
             ':Filter></wfs:Query></wfs:GetFeature>')
 
     def test_wfs_build_getfeature_request_propertyname(self):
@@ -429,8 +429,8 @@ class TestOwsutil(object):
             '<gml:Envelope xmlns:gml="http://www.opengis.net/gml" '
             'srsDimension="2" '
             'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370"> '
-            '<gml:lowerCorner>151650.000 214675.000</gml:lowerCorner> '
-            '<gml:upperCorner>151750.000 214775.000</gml:upperCorner> '
+            '<gml:lowerCorner>151650.000000 214675.000000</gml:lowerCorner> '
+            '<gml:upperCorner>151750.000000 214775.000000</gml:upperCorner> '
             '</gml:Envelope> </ogc:Within> </ogc:And> </ogc:Filter> '
             '</wfs:Query> </wfs:GetFeature>')
 
@@ -474,7 +474,7 @@ class TestOwsutil(object):
             '<gml:Envelope xmlns:gml="http://www.opengis.net/gml" '
             'srsDimension="2" '
             'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370"> '
-            '<gml:lowerCorner>151650.000 214675.000</gml:lowerCorner> '
-            '<gml:upperCorner>151750.000 214775.000</gml:upperCorner> '
+            '<gml:lowerCorner>151650.000000 214675.000000</gml:lowerCorner> '
+            '<gml:upperCorner>151750.000000 214775.000000</gml:upperCorner> '
             '</gml:Envelope> </ogc:Within> </ogc:And> </ogc:Filter> '
             '</wfs:Query> </wfs:GetFeature>')

@@ -78,8 +78,10 @@ class TestGecodeerdeLithologie(AbstractTestTypes):
 
         """
         return ['diepte_laag_van', 'diepte_laag_tot',
-                'hoofd_grondsoort', 'bijmenging_plaatselijk',
-                'bijmenging_hoeveelheid', 'bijmenging_grondsoort']
+                'hoofdnaam1_grondsoort', 'hoofdnaam2_grondsoort',
+                'bijmenging1_plaatselijk', 'bijmenging1_hoeveelheid', 'bijmenging1_grondsoort',
+                'bijmenging2_plaatselijk', 'bijmenging2_hoeveelheid', 'bijmenging2_grondsoort',
+                'bijmenging3_plaatselijk', 'bijmenging3_hoeveelheid', 'bijmenging3_grondsoort',]
 
     def get_field_names_nosubtypes(self):
         """Get the field names for this type, without including fields from

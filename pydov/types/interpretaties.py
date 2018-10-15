@@ -355,12 +355,16 @@ class GecodeerdeLithologieLaag(AbstractDovSubType):
         'name': 'diepte_laag_van',
         'source': 'xml',
         'sourcefield': '/van',
+        'definition': 'Diepte van de bovenkant van de laag gecodeerde'
+                      ' lithologie in meter.',
         'type': 'float',
         'notnull': False
     }, {
         'name': 'diepte_laag_tot',
         'source': 'xml',
         'sourcefield': '/tot',
+        'definition': 'Diepte van de onderkant van de laag gecodeerde'
+                      ' lithologie in meter.',
         'type': 'float',
         'notnull': False
     }, {

@@ -63,8 +63,10 @@ class TestGecodeerdeLithologie(AbstractTestTypes):
         return ['pkey_interpretatie', 'pkey_boring',
                 'betrouwbaarheid_interpretatie', 'x', 'y',
                 'diepte_laag_van', 'diepte_laag_tot',
-                'hoofd_grondsoort', 'bijmenging_plaatselijk',
-                'bijmenging_hoeveelheid', 'bijmenging_grondsoort']
+                'hoofdnaam1_grondsoort', 'hoofdnaam2_grondsoort',
+                'bijmenging1_plaatselijk', 'bijmenging1_hoeveelheid', 'bijmenging1_grondsoort',
+                'bijmenging2_plaatselijk', 'bijmenging2_hoeveelheid', 'bijmenging2_grondsoort',
+                'bijmenging3_plaatselijk', 'bijmenging3_hoeveelheid', 'bijmenging3_grondsoort',]
 
     def get_field_names_subtypes(self):
         """Get the field names of this type that originate from subtypes only.

@@ -536,7 +536,7 @@ class AbstractSearch(object):
 class PropertyInList(Or):
     def __init__(self, propertyname, list):
         super(PropertyInList, self).__init__(
-            [PropertyIsEqualTo(propertyname, i) for i in list]
+            [PropertyIsEqualTo(propertyname, i) for i in set(list)]
         )
 
 

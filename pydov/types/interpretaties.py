@@ -355,44 +355,94 @@ class GecodeerdeLithologieLaag(AbstractDovSubType):
         'name': 'diepte_laag_van',
         'source': 'xml',
         'sourcefield': '/van',
-        'definition': 'Diepte van de bovenkant van de laag gecodeerde'
-                      ' lithologie in meter.',
         'type': 'float',
         'notnull': False
     }, {
         'name': 'diepte_laag_tot',
         'source': 'xml',
         'sourcefield': '/tot',
-        'definition': 'Diepte van de onderkant van de laag gecodeerde'
-                      ' lithologie in meter.',
         'type': 'float',
         'notnull': False
     }, {
-        'name': 'hoofd_grondsoort',
+       'name': 'hoofdnaam1_grondsoort',
         'source': 'xml',
-        'sourcefield': '/hoofdnaam/grondsoort',
-        'definition': 'lithologisch hoofdbestandeel van de laag gecodeerde'
-                      ' lithologiegrondsoort (als code).',
+        'sourcefield': '/hoofdnaam[1]/grondsoort',
+        'definition': 'Primaire grondsoort (als code) van de laag '
+                      'gecodeerde lithologie',
         'type': 'string',
         'notnull': False
     }, {
-        'name': 'bijmenging_plaatselijk',
+        'name': 'hoofdnaam2_grondsoort',
         'source': 'xml',
-        'sourcefield': '/bijmenging/plaatselijk',
+        'sourcefield': '/hoofdnaam[2]/grondsoort',
+        'definition': 'Secundaire grondsoort (als code) van de laag '
+                      'gecodeerde lithologie',
+        'type': 'string',
+        'notnull': False
+    }, {
+        'name': 'bijmenging1_plaatselijk',
+        'source': 'xml',
+        'sourcefield': '/bijmenging[1]/plaatselijk',
         'definition': 'plaatselijk of niet-plaatselijk',
         'type': 'boolean',
         'notnull': False
     }, {
-        'name': 'bijmenging_hoeveelheid',
+        'name': 'bijmenging1_hoeveelheid',
         'source': 'xml',
-        'sourcefield': '/bijmenging/hoeveelheid',
+        'sourcefield': '/bijmenging[1]/hoeveelheid',
         'definition': 'aanduiding van de hoeveelheid bijmenging',
         'type': 'string',
         'notnull': False
     }, {
-        'name': 'bijmenging_grondsoort',
+        'name': 'bijmenging1_grondsoort',
         'source': 'xml',
-        'sourcefield': '/bijmenging/grondsoort',
+        'sourcefield': '/bijmenging[1]/grondsoort',
+        'definition': 'type grondsoort (als code) van de laag '
+                      'gecodeerde lithologie of geotechnische '
+                      'codering',
+        'type': 'string',
+        'notnull': False
+    }, {
+        'name': 'bijmenging2_plaatselijk',
+        'source': 'xml',
+        'sourcefield': '/bijmenging[2]/plaatselijk',
+        'definition': 'plaatselijk of niet-plaatselijk',
+        'type': 'boolean',
+        'notnull': False
+    }, {
+        'name': 'bijmenging2_hoeveelheid',
+        'source': 'xml',
+        'sourcefield': '/bijmenging[2]/hoeveelheid',
+        'definition': 'aanduiding van de hoeveelheid bijmenging',
+        'type': 'string',
+        'notnull': False
+    }, {
+        'name': 'bijmenging2_grondsoort',
+        'source': 'xml',
+        'sourcefield': '/bijmenging[2]/grondsoort',
+        'definition': 'type grondsoort (als code) van de laag '
+                      'gecodeerde lithologie of geotechnische '
+                      'codering',
+        'type': 'string',
+        'notnull': False
+    }, {
+        'name': 'bijmenging3_plaatselijk',
+        'source': 'xml',
+        'sourcefield': '/bijmenging[3]/plaatselijk',
+        'definition': 'plaatselijk of niet-plaatselijk',
+        'type': 'boolean',
+        'notnull': False
+    }, {
+        'name': 'bijmenging3_hoeveelheid',
+        'source': 'xml',
+        'sourcefield': '/bijmenging[3]/hoeveelheid',
+        'definition': 'aanduiding van de hoeveelheid bijmenging',
+        'type': 'string',
+        'notnull': False
+    }, {
+        'name': 'bijmenging3_grondsoort',
+        'source': 'xml',
+        'sourcefield': '/bijmenging[3]/grondsoort',
         'definition': 'type grondsoort (als code) van de laag '
                       'gecodeerde lithologie of geotechnische '
                       'codering',

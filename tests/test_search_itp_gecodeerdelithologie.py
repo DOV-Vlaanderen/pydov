@@ -77,7 +77,7 @@ class TestGecodeerdeLithologieSearch(AbstractTestSearch):
 
         """
         return PropertyIsEqualTo(propertyname='Proefnummer',
-                                 literal='GEO-97/024-B9')
+                                 literal='kb22d56w-B165')
 
     def get_inexistent_field(self):
         """Get the name of a field that doesn't exist.
@@ -228,7 +228,7 @@ class TestGecodeerdeLithologieSearch(AbstractTestSearch):
             query=self.get_valid_query_single(),
             return_fields=('pkey_interpretatie', 'diepte_laag_tot'))
 
-        assert df.diepte_laag_tot[0] == 0.5
+        assert df.diepte_laag_tot[0] == 4.
 
     def test_search_multiple_return(self, mp_remote_describefeaturetype,
                                     mp_remote_wfs_feature, mp_dov_xml):
@@ -248,6 +248,20 @@ class TestGecodeerdeLithologieSearch(AbstractTestSearch):
         """
         df = self.get_search_object().search(
             query=self.get_valid_query_single(),
-            return_fields=('pkey_interpretatie', 'bijmenging2_grondsoort'))
+            return_fields=('pkey_interpretatie',
+                           'hoofdnaam1_grondsoort',
+                           'hoofdnaam2_grondsoort',
+                           'bijmenging1_grondsoort',
+                           'bijmenging1_hoeveelheid',
+                           'bijmenging1_plaatselijk',
+                           'bijmenging2_grondsoort',
+                           'bijmenging3_grondsoort'))
 
-        assert df.bijmenging2_grondsoort[2] == 'XZ'
+        assert df.hoofdnaam1_grondsoort[4] == 'XZ'
+        assert df.hoofdnaam2_grondsoort[4] == 'KL'
+        assert df.bijmenging1_grondsoort[4] == 'GL'
+        assert df.bijmenging1_hoeveelheid[2] == 'M'
+        # mind that the column below is of dtype 'object'
+        assert df.bijmenging1_plaatselijk[2] is False
+        assert df.bijmenging2_grondsoort[5] == 'GL'
+        assert df.bijmenging3_grondsoort[8] == 'NN'

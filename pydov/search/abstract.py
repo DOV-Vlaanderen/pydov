@@ -546,4 +546,4 @@ class Join(PropertyInList):
             raise ValueError("join_column should be present in the dataframe.")
 
         super(Join, self).__init__(
-            join_column, list(dataframe[join_column].unique()))
+            join_column, list(dataframe[join_column].dropna().unique()))

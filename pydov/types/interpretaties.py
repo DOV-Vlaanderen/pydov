@@ -368,7 +368,7 @@ class GecodeerdeLithologieLaag(AbstractDovSubType):
         'type': 'float',
         'notnull': False
     }, {
-       'name': 'hoofdnaam1_grondsoort',
+        'name': 'hoofdnaam1_grondsoort',
         'source': 'xml',
         'sourcefield': '/hoofdnaam[1]/grondsoort',
         'definition': 'Primaire grondsoort (als code) van de laag '

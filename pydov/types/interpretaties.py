@@ -409,14 +409,14 @@ class GecodeerdeLithologieLaag(AbstractDovSubType):
     }, {
         'name': 'bijmenging2_plaatselijk',
         'source': 'xml',
-        'sourcefield': '/bijmenging[1]/plaatselijk',
+        'sourcefield': '/bijmenging[2]/plaatselijk',
         'definition': 'plaatselijk of niet-plaatselijk',
         'type': 'boolean',
         'notnull': False
     }, {
         'name': 'bijmenging2_hoeveelheid',
         'source': 'xml',
-        'sourcefield': '/bijmenging[1]/hoeveelheid',
+        'sourcefield': '/bijmenging[2]/hoeveelheid',
         'definition': 'aanduiding van de hoeveelheid bijmenging',
         'type': 'string',
         'notnull': False
@@ -432,14 +432,14 @@ class GecodeerdeLithologieLaag(AbstractDovSubType):
     }, {
         'name': 'bijmenging3_plaatselijk',
         'source': 'xml',
-        'sourcefield': '/bijmenging[2]/plaatselijk',
+        'sourcefield': '/bijmenging[3]/plaatselijk',
         'definition': 'plaatselijk of niet-plaatselijk',
         'type': 'boolean',
         'notnull': False
     }, {
         'name': 'bijmenging3_hoeveelheid',
         'source': 'xml',
-        'sourcefield': '/bijmenging[2]/hoeveelheid',
+        'sourcefield': '/bijmenging[3]/hoeveelheid',
         'definition': 'aanduiding van de hoeveelheid bijmenging',
         'type': 'string',
         'notnull': False

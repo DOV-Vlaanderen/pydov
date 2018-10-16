@@ -205,7 +205,7 @@ if __name__ == '__main__':
     update_file('types/interpretaties/gecodeerde_lithologie'
                 '/gecodeerde_lithologie.xml',
                 'https://www.dov.vlaanderen.be/data/interpretatie/2001'
-                '-191079.xml')
+                '-046845.xml')
 
     update_file('types/interpretaties/gecodeerde_lithologie'
                 '/wfsgetfeature.xml',
@@ -213,14 +213,14 @@ if __name__ == '__main__':
                 '&version=1.1.0&request=GetFeature&typeName=interpretaties'
                 ':gecodeerde_lithologie&maxFeatures=1&CQL_Filter'
                 '=Interpretatiefiche=%27https://www.dov.vlaanderen.be/data'
-                '/interpretatie/2001-191079%27')
+                '/interpretatie/2001-046845%27')
 
     update_file('types/interpretaties/gecodeerde_lithologie/feature.xml',
                 'https://www.dov.vlaanderen.be/geoserver/ows?service=WFS'
                 '&version=1.1.0&request=GetFeature&typeName=interpretaties'
                 ':gecodeerde_lithologie&maxFeatures=1&CQL_Filter'
                 '=Interpretatiefiche=%27https://www.dov.vlaanderen.be/data'
-                '/interpretatie/2001-191079%27',
+                '/interpretatie/2001-046845%27',
                 get_first_featuremember)
 
     update_file(

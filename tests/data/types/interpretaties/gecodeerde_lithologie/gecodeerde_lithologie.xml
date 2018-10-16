@@ -2,178 +2,157 @@
 <ns3:dov-schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns3="http://kern.schemas.dov.vlaanderen.be" xsi:schemaLocation="http://kern.schemas.dov.vlaanderen.be https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/dov.xsd">
     <interpretaties>
         <gecodeerdelithologie>
-            <boring>kb31d88w-B1130</boring>
+            <boring>kb22d56w-B165</boring>
             <auteur>
                 <persoon>
-                    <naam>Buffel</naam>
-                    <voornaam>Ph.</voornaam>
+                    <naam>De Ceukelaire</naam>
+                    <voornaam>Marleen</voornaam>
                 </persoon>
                 <bedrijf-dienst>
-                    <naam>Matthijs-Buffel</naam>
+                    <naam>MVG - Afdeling Natuurlijke Rijkdommen en Energie (ANRE)</naam>
                 </bedrijf-dienst>
             </auteur>
-            <datum>2001-06-15</datum>
+            <datum>2001-05-14</datum>
             <betrouwbaarheid>goed</betrouwbaarheid>
             <dataleverancier>
                 <naam>onbekend</naam>
             </dataleverancier>
             <laag>
-                <van>17.00</van>
-                <tot>19.00</tot>
+                <van>0.00</van>
+                <tot>4.00</tot>
+                <kleur>onbekend</kleur>
+                <hoofdnaam>
+                    <grondsoort>LE</grondsoort>
+                </hoofdnaam>
+            </laag>
+            <laag>
+                <van>4.00</van>
+                <tot>8.00</tot>
+                <kleur>onbekend</kleur>
+                <hoofdnaam>
+                    <grondsoort>FZ</grondsoort>
+                </hoofdnaam>
+            </laag>
+            <laag>
+                <van>8.00</van>
+                <tot>10.00</tot>
                 <kleur>onbekend</kleur>
                 <hoofdnaam>
                     <grondsoort>FZ</grondsoort>
                 </hoofdnaam>
                 <bijmenging>
                     <plaatselijk>false</plaatselijk>
-                    <hoeveelheid>N</hoeveelheid>
-                    <grondsoort>KL</grondsoort>
+                    <hoeveelheid>M</hoeveelheid>
+                    <grondsoort>GL</grondsoort>
                 </bijmenging>
             </laag>
             <laag>
-                <van>19.00</van>
-                <tot>20.00</tot>
+                <van>10.00</van>
+                <tot>16.00</tot>
                 <kleur>onbekend</kleur>
                 <hoofdnaam>
                     <grondsoort>FZ</grondsoort>
                 </hoofdnaam>
                 <bijmenging>
                     <plaatselijk>false</plaatselijk>
-                    <hoeveelheid>W</hoeveelheid>
-                    <grondsoort>KL</grondsoort>
+                    <hoeveelheid>S</hoeveelheid>
+                    <grondsoort>GL</grondsoort>
                 </bijmenging>
             </laag>
             <laag>
-                <van>20.00</van>
-                <tot>22.00</tot>
-                <kleur>grijs</kleur>
+                <van>16.00</van>
+                <tot>18.00</tot>
+                <kleur>onbekend</kleur>
                 <hoofdnaam>
-                    <grondsoort>FZ</grondsoort>
+                    <grondsoort>XZ</grondsoort>
                 </hoofdnaam>
+                <hoofdnaam>
+                    <grondsoort>KL</grondsoort>
+                </hoofdnaam>
+                <bijmenging>
+                    <plaatselijk>false</plaatselijk>
+                    <hoeveelheid>Z</hoeveelheid>
+                    <grondsoort>GL</grondsoort>
+                </bijmenging>
             </laag>
             <laag>
-                <van>22.00</van>
+                <van>18.00</van>
                 <tot>24.00</tot>
-                <kleur>grijs</kleur>
+                <kleur>onbekend</kleur>
                 <hoofdnaam>
-                    <grondsoort>FZ</grondsoort>
+                    <grondsoort>KL</grondsoort>
                 </hoofdnaam>
+                <bijmenging>
+                    <plaatselijk>false</plaatselijk>
+                    <hoeveelheid>Z</hoeveelheid>
+                    <grondsoort>SI</grondsoort>
+                </bijmenging>
+                <bijmenging>
+                    <plaatselijk>false</plaatselijk>
+                    <hoeveelheid>Z</hoeveelheid>
+                    <grondsoort>GL</grondsoort>
+                </bijmenging>
             </laag>
             <laag>
                 <van>24.00</van>
-                <tot>26.00</tot>
-                <kleur>grijs</kleur>
-                <hoofdnaam>
-                    <grondsoort>FZ</grondsoort>
-                </hoofdnaam>
-            </laag>
-            <laag>
-                <van>26.00</van>
-                <tot>27.20</tot>
-                <kleur>grijs</kleur>
-                <hoofdnaam>
-                    <grondsoort>FZ</grondsoort>
-                </hoofdnaam>
-            </laag>
-            <laag>
-                <van>27.20</van>
-                <tot>29.50</tot>
+                <tot>25.00</tot>
                 <kleur>onbekend</kleur>
                 <hoofdnaam>
-                    <grondsoort>FZ</grondsoort>
-                </hoofdnaam>
-                <bijmenging>
-                    <plaatselijk>false</plaatselijk>
-                    <hoeveelheid>W</hoeveelheid>
-                    <grondsoort>KL</grondsoort>
-                </bijmenging>
-            </laag>
-            <laag>
-                <van>29.50</van>
-                <tot>31.10</tot>
-                <kleur>grijs</kleur>
-                <hoofdnaam>
                     <grondsoort>XZ</grondsoort>
                 </hoofdnaam>
                 <bijmenging>
                     <plaatselijk>false</plaatselijk>
-                    <hoeveelheid>N</hoeveelheid>
-                    <grondsoort>KL</grondsoort>
-                </bijmenging>
-            </laag>
-            <laag>
-                <van>31.10</van>
-                <tot>31.70</tot>
-                <kleur>grijs</kleur>
-                <hoofdnaam>
-                    <grondsoort>KL</grondsoort>
-                </hoofdnaam>
-                <bijmenging>
-                    <plaatselijk>false</plaatselijk>
-                    <hoeveelheid>W</hoeveelheid>
-                    <grondsoort>XZ</grondsoort>
-                </bijmenging>
-            </laag>
-            <laag>
-                <van>31.70</van>
-                <tot>34.00</tot>
-                <kleur>grijs</kleur>
-                <hoofdnaam>
-                    <grondsoort>FZ</grondsoort>
-                </hoofdnaam>
-                <bijmenging>
-                    <plaatselijk>false</plaatselijk>
-                    <hoeveelheid>N</hoeveelheid>
-                    <grondsoort>KL</grondsoort>
-                </bijmenging>
-            </laag>
-            <laag>
-                <van>34.00</van>
-                <tot>38.00</tot>
-                <kleur>grijs</kleur>
-                <hoofdnaam>
-                    <grondsoort>XZ</grondsoort>
-                </hoofdnaam>
-                <bijmenging>
-                    <plaatselijk>false</plaatselijk>
-                    <hoeveelheid>N</hoeveelheid>
-                    <grondsoort>KL</grondsoort>
-                </bijmenging>
-            </laag>
-            <laag>
-                <van>38.00</van>
-                <tot>41.00</tot>
-                <kleur>grijs</kleur>
-                <hoofdnaam>
-                    <grondsoort>XZ</grondsoort>
-                </hoofdnaam>
-                <bijmenging>
-                    <plaatselijk>false</plaatselijk>
-                    <hoeveelheid>W</hoeveelheid>
-                    <grondsoort>KL</grondsoort>
-                </bijmenging>
-            </laag>
-            <laag>
-                <van>41.00</van>
-                <tot>46.00</tot>
-                <kleur>groengrijs</kleur>
-                <hoofdnaam>
-                    <grondsoort>XZ</grondsoort>
-                </hoofdnaam>
-                <bijmenging>
-                    <plaatselijk>false</plaatselijk>
-                    <hoeveelheid>N</hoeveelheid>
-                    <grondsoort>QU</grondsoort>
-                </bijmenging>
-                <bijmenging>
-                    <plaatselijk>false</plaatselijk>
-                    <hoeveelheid>N</hoeveelheid>
+                    <hoeveelheid>S</hoeveelheid>
                     <grondsoort>GL</grondsoort>
                 </bijmenging>
             </laag>
             <laag>
-                <van>46.00</van>
-                <tot>50.00</tot>
+                <van>25.00</van>
+                <tot>27.00</tot>
+                <kleur>onbekend</kleur>
+                <hoofdnaam>
+                    <grondsoort>KL</grondsoort>
+                </hoofdnaam>
+                <bijmenging>
+                    <plaatselijk>false</plaatselijk>
+                    <hoeveelheid>Z</hoeveelheid>
+                    <grondsoort>KA</grondsoort>
+                </bijmenging>
+                <bijmenging>
+                    <plaatselijk>false</plaatselijk>
+                    <hoeveelheid>Z</hoeveelheid>
+                    <grondsoort>NN</grondsoort>
+                </bijmenging>
+            </laag>
+            <laag>
+                <van>27.00</van>
+                <tot>29.00</tot>
+                <kleur>onbekend</kleur>
+                <hoofdnaam>
+                    <grondsoort>XZ</grondsoort>
+                </hoofdnaam>
+                <hoofdnaam>
+                    <grondsoort>KL</grondsoort>
+                </hoofdnaam>
+                <bijmenging>
+                    <plaatselijk>false</plaatselijk>
+                    <hoeveelheid>M</hoeveelheid>
+                    <grondsoort>GL</grondsoort>
+                </bijmenging>
+                <bijmenging>
+                    <plaatselijk>false</plaatselijk>
+                    <hoeveelheid>M</hoeveelheid>
+                    <grondsoort>KA</grondsoort>
+                </bijmenging>
+                <bijmenging>
+                    <plaatselijk>false</plaatselijk>
+                    <hoeveelheid>V</hoeveelheid>
+                    <grondsoort>NN</grondsoort>
+                </bijmenging>
+            </laag>
+            <laag>
+                <van>29.00</van>
+                <tot>40.00</tot>
                 <kleur>onbekend</kleur>
                 <hoofdnaam>
                     <grondsoort>XZ</grondsoort>
@@ -181,300 +160,8 @@
                 <bijmenging>
                     <plaatselijk>false</plaatselijk>
                     <hoeveelheid>W</hoeveelheid>
-                    <grondsoort>KL</grondsoort>
+                    <grondsoort>SC</grondsoort>
                 </bijmenging>
-            </laag>
-            <laag>
-                <van>50.00</van>
-                <tot>53.00</tot>
-                <kleur>onbekend</kleur>
-                <hoofdnaam>
-                    <grondsoort>XZ</grondsoort>
-                </hoofdnaam>
-                <bijmenging>
-                    <plaatselijk>false</plaatselijk>
-                    <hoeveelheid>W</hoeveelheid>
-                    <grondsoort>KL</grondsoort>
-                </bijmenging>
-            </laag>
-            <laag>
-                <van>53.00</van>
-                <tot>55.00</tot>
-                <kleur>onbekend</kleur>
-                <hoofdnaam>
-                    <grondsoort>XZ</grondsoort>
-                </hoofdnaam>
-                <bijmenging>
-                    <plaatselijk>false</plaatselijk>
-                    <hoeveelheid>W</hoeveelheid>
-                    <grondsoort>KL</grondsoort>
-                </bijmenging>
-            </laag>
-            <laag>
-                <van>55.00</van>
-                <tot>58.50</tot>
-                <kleur>onbekend</kleur>
-                <hoofdnaam>
-                    <grondsoort>XZ</grondsoort>
-                </hoofdnaam>
-                <bijmenging>
-                    <plaatselijk>false</plaatselijk>
-                    <hoeveelheid>W</hoeveelheid>
-                    <grondsoort>KL</grondsoort>
-                </bijmenging>
-            </laag>
-            <laag>
-                <van>58.50</van>
-                <tot>62.50</tot>
-                <kleur>onbekend</kleur>
-                <hoofdnaam>
-                    <grondsoort>XZ</grondsoort>
-                </hoofdnaam>
-                <bijmenging>
-                    <plaatselijk>false</plaatselijk>
-                    <hoeveelheid>W</hoeveelheid>
-                    <grondsoort>KL</grondsoort>
-                </bijmenging>
-            </laag>
-            <laag>
-                <van>62.50</van>
-                <tot>68.50</tot>
-                <kleur>grijs</kleur>
-                <hoofdnaam>
-                    <grondsoort>XZ</grondsoort>
-                </hoofdnaam>
-                <bijmenging>
-                    <plaatselijk>false</plaatselijk>
-                    <hoeveelheid>N</hoeveelheid>
-                    <grondsoort>QU</grondsoort>
-                </bijmenging>
-                <bijmenging>
-                    <plaatselijk>false</plaatselijk>
-                    <hoeveelheid>N</hoeveelheid>
-                    <grondsoort>GL</grondsoort>
-                </bijmenging>
-            </laag>
-            <laag>
-                <van>68.50</van>
-                <tot>70.00</tot>
-                <kleur>grijs</kleur>
-                <hoofdnaam>
-                    <grondsoort>XZ</grondsoort>
-                </hoofdnaam>
-                <bijmenging>
-                    <plaatselijk>false</plaatselijk>
-                    <hoeveelheid>N</hoeveelheid>
-                    <grondsoort>QU</grondsoort>
-                </bijmenging>
-                <bijmenging>
-                    <plaatselijk>false</plaatselijk>
-                    <hoeveelheid>N</hoeveelheid>
-                    <grondsoort>GL</grondsoort>
-                </bijmenging>
-            </laag>
-            <laag>
-                <van>70.00</van>
-                <tot>71.00</tot>
-                <kleur>grijs</kleur>
-                <hoofdnaam>
-                    <grondsoort>XZ</grondsoort>
-                </hoofdnaam>
-                <bijmenging>
-                    <plaatselijk>false</plaatselijk>
-                    <hoeveelheid>N</hoeveelheid>
-                    <grondsoort>QU</grondsoort>
-                </bijmenging>
-                <bijmenging>
-                    <plaatselijk>false</plaatselijk>
-                    <hoeveelheid>N</hoeveelheid>
-                    <grondsoort>GL</grondsoort>
-                </bijmenging>
-            </laag>
-            <laag>
-                <van>71.00</van>
-                <tot>72.50</tot>
-                <kleur>grijs</kleur>
-                <hoofdnaam>
-                    <grondsoort>XZ</grondsoort>
-                </hoofdnaam>
-                <bijmenging>
-                    <plaatselijk>false</plaatselijk>
-                    <hoeveelheid>N</hoeveelheid>
-                    <grondsoort>QU</grondsoort>
-                </bijmenging>
-                <bijmenging>
-                    <plaatselijk>false</plaatselijk>
-                    <hoeveelheid>N</hoeveelheid>
-                    <grondsoort>GL</grondsoort>
-                </bijmenging>
-            </laag>
-            <laag>
-                <van>72.50</van>
-                <tot>75.60</tot>
-                <kleur>grijs</kleur>
-                <hoofdnaam>
-                    <grondsoort>XZ</grondsoort>
-                </hoofdnaam>
-                <bijmenging>
-                    <plaatselijk>false</plaatselijk>
-                    <hoeveelheid>N</hoeveelheid>
-                    <grondsoort>QU</grondsoort>
-                </bijmenging>
-                <bijmenging>
-                    <plaatselijk>false</plaatselijk>
-                    <hoeveelheid>N</hoeveelheid>
-                    <grondsoort>GL</grondsoort>
-                </bijmenging>
-            </laag>
-            <laag>
-                <van>75.60</van>
-                <tot>76.45</tot>
-                <kleur>grijs</kleur>
-                <hoofdnaam>
-                    <grondsoort>XZ</grondsoort>
-                </hoofdnaam>
-                <bijmenging>
-                    <plaatselijk>false</plaatselijk>
-                    <hoeveelheid>N</hoeveelheid>
-                    <grondsoort>QU</grondsoort>
-                </bijmenging>
-                <bijmenging>
-                    <plaatselijk>false</plaatselijk>
-                    <hoeveelheid>N</hoeveelheid>
-                    <grondsoort>GL</grondsoort>
-                </bijmenging>
-                <bijmenging>
-                    <plaatselijk>false</plaatselijk>
-                    <hoeveelheid>N</hoeveelheid>
-                    <grondsoort>ZS</grondsoort>
-                </bijmenging>
-            </laag>
-            <laag>
-                <van>76.45</van>
-                <tot>79.40</tot>
-                <kleur>grijs</kleur>
-                <hoofdnaam>
-                    <grondsoort>FZ</grondsoort>
-                </hoofdnaam>
-            </laag>
-            <laag>
-                <van>79.40</van>
-                <tot>80.45</tot>
-                <kleur>grijs</kleur>
-                <hoofdnaam>
-                    <grondsoort>FZ</grondsoort>
-                </hoofdnaam>
-            </laag>
-            <laag>
-                <van>80.45</van>
-                <tot>81.70</tot>
-                <kleur>grijs</kleur>
-                <hoofdnaam>
-                    <grondsoort>FZ</grondsoort>
-                </hoofdnaam>
-            </laag>
-            <laag>
-                <van>81.70</van>
-                <tot>82.36</tot>
-                <kleur>grijs</kleur>
-                <hoofdnaam>
-                    <grondsoort>FZ</grondsoort>
-                </hoofdnaam>
-                <bijmenging>
-                    <plaatselijk>false</plaatselijk>
-                    <hoeveelheid>N</hoeveelheid>
-                    <grondsoort>ZS</grondsoort>
-                </bijmenging>
-            </laag>
-            <laag>
-                <van>82.36</van>
-                <tot>84.50</tot>
-                <kleur>grijs</kleur>
-                <hoofdnaam>
-                    <grondsoort>FZ</grondsoort>
-                </hoofdnaam>
-            </laag>
-            <laag>
-                <van>84.50</van>
-                <tot>85.55</tot>
-                <kleur>grijs</kleur>
-                <hoofdnaam>
-                    <grondsoort>FZ</grondsoort>
-                </hoofdnaam>
-            </laag>
-            <laag>
-                <van>85.55</van>
-                <tot>88.50</tot>
-                <kleur>grijs</kleur>
-                <hoofdnaam>
-                    <grondsoort>FZ</grondsoort>
-                </hoofdnaam>
-            </laag>
-            <laag>
-                <van>88.50</van>
-                <tot>89.00</tot>
-                <kleur>grijs</kleur>
-                <hoofdnaam>
-                    <grondsoort>FZ</grondsoort>
-                </hoofdnaam>
-                <bijmenging>
-                    <plaatselijk>false</plaatselijk>
-                    <hoeveelheid>N</hoeveelheid>
-                    <grondsoort>ZS</grondsoort>
-                </bijmenging>
-            </laag>
-            <laag>
-                <van>89.00</van>
-                <tot>89.90</tot>
-                <kleur>grijs</kleur>
-                <hoofdnaam>
-                    <grondsoort>FZ</grondsoort>
-                </hoofdnaam>
-                <bijmenging>
-                    <plaatselijk>false</plaatselijk>
-                    <hoeveelheid>N</hoeveelheid>
-                    <grondsoort>ZS</grondsoort>
-                </bijmenging>
-            </laag>
-            <laag>
-                <van>89.90</van>
-                <tot>90.40</tot>
-                <kleur>onbekend</kleur>
-                <hoofdnaam>
-                    <grondsoort>SX</grondsoort>
-                </hoofdnaam>
-            </laag>
-            <laag>
-                <van>90.40</van>
-                <tot>98.90</tot>
-                <kleur>wit</kleur>
-                <hoofdnaam>
-                    <grondsoort>KR</grondsoort>
-                </hoofdnaam>
-            </laag>
-            <laag>
-                <van>98.90</van>
-                <tot>100.25</tot>
-                <kleur>wit</kleur>
-                <hoofdnaam>
-                    <grondsoort>KR</grondsoort>
-                </hoofdnaam>
-            </laag>
-            <laag>
-                <van>100.25</van>
-                <tot>102.40</tot>
-                <kleur>groengrijs</kleur>
-                <hoofdnaam>
-                    <grondsoort>FZ</grondsoort>
-                </hoofdnaam>
-            </laag>
-            <laag>
-                <van>102.40</van>
-                <tot>103.80</tot>
-                <kleur>onbekend</kleur>
-                <hoofdnaam>
-                    <grondsoort>SH</grondsoort>
-                </hoofdnaam>
             </laag>
         </gecodeerdelithologie>
     </interpretaties>

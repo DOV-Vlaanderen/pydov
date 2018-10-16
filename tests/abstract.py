@@ -5,7 +5,10 @@ from collections import OrderedDict
 import pandas as pd
 import pytest
 import requests
-from numpy.compat import unicode
+from numpy.compat import (
+    unicode,
+    long,
+)
 from pandas import DataFrame
 from pandas.api.types import (
     is_int64_dtype, is_object_dtype,
@@ -281,21 +284,30 @@ class AbstractTestSearch(object):
                 assert len(df[field].unique()) >= 1
 
         # dtype checks of the resulting df columns
-        fields = self.get_type().get_fields(source=('wfs', 'xml', 'custom'))
+        fields = self.get_search_object().get_fields()
 
         for field in list(df):
-            datatype = fields[field]['type']
-            if datatype == 'string':
-                assert (is_object_dtype(df[field]) or
-                        df[field].isnull().values.all())  # all Nan/None
-            elif datatype == 'float':
-                assert is_float_dtype(df[field])
-            elif datatype == 'integer':
-                assert is_int64_dtype(df[field])
-            elif datatype == 'date':
-                assert is_object_dtype(df[field])
-            elif datatype == 'boolean':
-                assert is_bool_dtype(df[field])
+            mandatory = fields[field]['notnull']
+            if mandatory:
+                assert len(df[field]) == len(df[field].dropna())
+
+        for field in list(df):
+            field_datatype = fields[field]['type']
+            datatypes = set((type(i) for i in df[field].dropna()))
+            assert len(datatypes) <= 1
+
+            if len(datatypes) > 0:
+                if field_datatype == 'string':
+                    assert str in datatypes
+                elif field_datatype == 'float':
+                    assert float in datatypes
+                elif field_datatype == 'integer':
+                    # in Python2 Panda's int64 dtype is translated into 'long'
+                    assert (int in datatypes or long in datatypes)
+                elif field_datatype == 'date':
+                    assert datetime.date in datatypes
+                elif field_datatype == 'boolean':
+                    assert bool in datatypes
 
     def test_search_returnfields(self, mp_remote_wfs_feature):
         """Test the search method with the query parameter and a selection of

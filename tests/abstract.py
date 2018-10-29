@@ -1,4 +1,6 @@
 import datetime
+import re
+
 import numpy as np
 from collections import OrderedDict
 
@@ -47,6 +49,36 @@ def service_ok(url='https://www.dov.vlaanderen.be/geoserver', timeout=5):
     except Exception:
         ok = False
     return ok
+
+
+def clean_xml(xml):
+    """Clean the given XML string of namespace definition, namespace
+    prefixes and syntactical but otherwise meaningless differences.
+
+    Parameters
+    ----------
+    xml : str
+        String representation of XML document.
+
+    Returns
+    -------
+    str
+        String representation of cleaned XML document.
+
+    """
+    # remove xmlns namespace definitions
+    r = re.sub(r'[ ]+xmlns:[^=]+="[^"]+"', '', xml)
+
+    # remove namespace prefixes in tags
+    r = re.sub(r'<(/?)[^:]+:([^ >]+)([ >])', r'<\1\2\3', r)
+
+    # remove extra spaces in tags
+    r = re.sub(r'[ ]+/>', '/>', r)
+
+    # remove extra spaces between tags
+    r = re.sub(r'>[ ]+<', '><', r)
+
+    return r
 
 
 class AbstractTestSearch(object):

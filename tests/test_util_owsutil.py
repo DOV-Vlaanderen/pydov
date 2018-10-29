@@ -1,6 +1,5 @@
 """Module grouping tests for the pydov.util.owsutil module."""
 import copy
-import re
 
 import pytest
 from numpy.compat import unicode
@@ -21,6 +20,7 @@ from pydov.util.location import (
     Within,
     Box,
 )
+from tests.abstract import clean_xml
 
 from tests.test_search_boring import (
     md_metadata,
@@ -37,36 +37,6 @@ from tests.test_search import (
     mp_wfs,
     mp_remote_fc_notfound
 )
-
-
-def clean_xml(xml):
-    """Clean the given XML string of namespace definition, namespace
-    prefixes and syntactical but otherwise meaningless differences.
-
-    Parameters
-    ----------
-    xml : str
-        String representation of XML document.
-
-    Returns
-    -------
-    str
-        String representation of cleaned XML document.
-
-    """
-    # remove xmlns namespace definitions
-    r = re.sub(r'[ ]+xmlns:[^=]+="[^"]+"', '', xml)
-
-    # remove namespace prefixes in tags
-    r = re.sub(r'<(/?)[^:]+:([^ >]+)([ >])', r'<\1\2\3', r)
-
-    # remove extra spaces in tags
-    r = re.sub(r'[ ]+/>', '/>', r)
-
-    # remove extra spaces between tags
-    r = re.sub(r'>[ ]+<', '><', r)
-
-    return r
 
 
 class TestOwsutil(object):

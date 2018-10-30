@@ -148,7 +148,6 @@ class TestHydrogeologischeStratigrafieSearch(AbstractTestSearch):
 
         """
         return ['pkey_interpretatie', 'pkey_boring',
-                'pkey_sondering',
                 'betrouwbaarheid_interpretatie', 'x', 'y',
                 'diepte_laag_van', 'diepte_laag_tot',
                 'aquifer']
@@ -179,8 +178,6 @@ class TestHydrogeologischeStratigrafieSearch(AbstractTestSearch):
         df = self.get_search_object().search(
             query=self.get_valid_query_single())
 
-        assert df.pkey_sondering.hasnans
-
     def test_search_customreturnfields(self, mp_remote_describefeaturetype,
                                        mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with custom return fields.
@@ -199,16 +196,13 @@ class TestHydrogeologischeStratigrafieSearch(AbstractTestSearch):
         """
         df = self.get_search_object().search(
             query=self.get_valid_query_single(),
-            return_fields=('pkey_interpretatie', 'pkey_boring',
-                           'pkey_sondering'))
+            return_fields=('pkey_interpretatie', 'pkey_boring'))
 
         assert type(df) is DataFrame
 
-        assert list(df) == ['pkey_interpretatie', 'pkey_boring',
-                            'pkey_sondering']
+        assert list(df) == ['pkey_interpretatie', 'pkey_boring']
 
         assert not pd.isnull(df.pkey_boring[0])
-        assert np.isnan(df.pkey_sondering[0])
 
     def test_search_xml_resolve(self, mp_remote_describefeaturetype,
                                 mp_remote_wfs_feature, mp_dov_xml):

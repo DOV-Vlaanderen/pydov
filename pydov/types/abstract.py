@@ -3,6 +3,7 @@
 
 import datetime
 import types
+import warnings
 from collections import OrderedDict
 from distutils.util import strtobool
 
@@ -10,39 +11,21 @@ import pydov
 import numpy as np
 
 from owslib.etree import etree
-from owslib.util import openURL
+from pydov.util.dovutil import (
+    get_dov_xml,
+    parse_dov_xml,
+)
 
-from ..util.errors import InvalidFieldError
+from ..util.errors import (
+    InvalidFieldError,
+    XmlParseError,
+    XmlParseWarning,
+)
 
 
 class AbstractCommon(object):
     """Class grouping methods common to AbstractDovType and
     AbstractDovSubType."""
-
-    def _parse_xml_data(self):
-        """Get remote XML data for this DOV object, parse the raw XML and
-        save the results in the data object.
-
-        Raises
-        ------
-        NotImplementedError
-            This is an abstract method that should be implemented in a
-            subclass.
-
-        """
-        xml = self._get_xml_data()
-        tree = etree.fromstring(xml)
-
-        for field in self.get_fields(source=('xml',),
-                                     include_subtypes=False).values():
-            self.data[field['name']] = self._parse(
-                func=tree.findtext,
-                xpath=field['sourcefield'],
-                namespace=None,
-                returntype=field.get('type', None)
-            )
-
-        self._parse_subtypes(xml)
 
     @classmethod
     def _parse(cls, func, xpath, namespace, returntype):
@@ -112,7 +95,7 @@ class AbstractDovSubType(AbstractCommon):
     _UNRESOLVED = "{UNRESOLVED}"
     _fields = []
 
-    def __init__(self, name):
+    def __init__(self):
         """Initialisation.
 
         Parameters
@@ -121,8 +104,6 @@ class AbstractDovSubType(AbstractCommon):
             The name associated with this subtype.
 
         """
-        self._name = name
-
         self.data = dict(
             zip(self.get_field_names(),
                 [AbstractDovSubType._UNRESOLVED] * len(self.get_field_names()))
@@ -144,9 +125,16 @@ class AbstractDovSubType(AbstractCommon):
             the XML document.
 
         """
-        tree = etree.fromstring(xml_data)
-        for element in tree.findall(cls._rootpath):
-            yield cls.from_xml_element(element)
+        try:
+            tree = parse_dov_xml(xml_data)
+            for element in tree.findall(cls._rootpath):
+                yield cls.from_xml_element(element)
+        except XmlParseError:
+            # Ignore XmlParseError here in subtypes, assuming it will be
+            # reported in the corresponding main type. We can make this
+            # assumption safely because both main and subtypes are in a
+            # single XML file.
+            pass
 
     @classmethod
     def from_xml_element(cls, element):
@@ -157,14 +145,23 @@ class AbstractDovSubType(AbstractCommon):
         element : etree.Element
             XML element representing a single record of this subtype.
 
-        Raises
-        ------
-        NotImplementedError
-            This is an abstract method that should be implemented in a
-            subclass.
+        Returns
+        -------
+        instance of this class
+            An instance of this class based on the data in the XML element.
 
         """
-        raise NotImplementedError('This should be implemented in a subclass.')
+        instance = cls()
+
+        for field in cls.get_fields().values():
+            instance.data[field['name']] = instance._parse(
+                func=element.findtext,
+                xpath=field['sourcefield'],
+                namespace=None,
+                returntype=field.get('type', None)
+            )
+
+        return instance
 
     @classmethod
     def get_field_names(cls):
@@ -276,6 +273,37 @@ class AbstractDovType(AbstractCommon):
         )
 
         self.data['pkey_%s' % self.typename] = self.pkey
+
+    def _parse_xml_data(self):
+        """Get remote XML data for this DOV object, parse the raw XML and
+        save the results in the data object.
+
+        Raises
+        ------
+        NotImplementedError
+            This is an abstract method that should be implemented in a
+            subclass.
+
+        """
+        xml = self._get_xml_data()
+
+        try:
+            tree = parse_dov_xml(xml)
+
+            for field in self.get_fields(source=('xml',),
+                                         include_subtypes=False).values():
+                self.data[field['name']] = self._parse(
+                    func=tree.findtext,
+                    xpath=field['sourcefield'],
+                    namespace=None,
+                    returntype=field.get('type', None)
+                )
+
+            self._parse_subtypes(xml)
+        except XmlParseError:
+            warnings.warn(("Failed to parse XML for object '%s'. Resulting "
+                          "dataframe will be incomplete.") % self.pkey,
+                          XmlParseWarning)
 
     @classmethod
     def from_wfs_element(cls, feature, namespace):
@@ -504,9 +532,10 @@ class AbstractDovType(AbstractCommon):
         if pydov.cache:
             return pydov.cache.get(self.pkey + '.xml')
         else:
+            xml = get_dov_xml(self.pkey + '.xml')
             for hook in pydov.hooks:
                 hook.xml_downloaded(self.pkey)
-            return openURL(self.pkey + '.xml').read()
+            return xml
 
     def _parse_subtypes(self, xml):
         """Parse the subtypes with the given XML data.
@@ -566,7 +595,7 @@ class AbstractDovType(AbstractCommon):
                     datadicts.append(datadict)
 
         for d in datadicts:
-            datarecords.append([d[field] for field in fields])
+            datarecords.append([d.get(field, np.nan) for field in fields])
 
         for d in datarecords:
             if self._UNRESOLVED in d:

@@ -1,9 +1,9 @@
 """Module grouping tests for the
 pydov.types.interpretaties.InformeleStratigrafie class."""
-from pydov.types.interpretaties import HydrogeologischeStratigrafie
+from pydov.types.interpretaties import GecodeerdeLithologie
 from tests.abstract import AbstractTestTypes
 
-from tests.test_search_itp_hydrogeologischestratigrafie import (
+from tests.test_search_itp_gecodeerdelithologie import (
     wfs_feature,
     wfs_getfeature,
     mp_dov_xml,
@@ -13,19 +13,19 @@ from tests.test_search_itp_hydrogeologischestratigrafie import (
 )
 
 
-class TestHydrogeologischeStratigrafie(AbstractTestTypes):
+class TestGecodeerdeLithologie(AbstractTestTypes):
     """Class grouping tests for the
-    pydov.types.interpretaties.HydrogeologischeStratigrafie class."""
+    pydov.types.interpretaties.GecodeerdeLithologie class."""
     def get_type(self):
         """Get the class reference for this datatype.
 
         Returns
         -------
-        pydov.types.interpretatie.HydrogeologischeStratigrafie
-            Class reference for the HydrogeologischeStratigrafie class.
+        pydov.types.interpretatie.GecodeerdeLithologie
+            Class reference for the GecodeerdeLithologie class.
 
         """
-        return HydrogeologischeStratigrafie
+        return GecodeerdeLithologie
 
     def get_namespace(self):
         """Get the WFS namespace associated with this datatype.
@@ -61,8 +61,12 @@ class TestHydrogeologischeStratigrafie(AbstractTestTypes):
 
         """
         return ['pkey_interpretatie', 'pkey_boring',
-                'betrouwbaarheid_interpretatie', 'x', 'y', 'diepte_laag_van',
-                'diepte_laag_tot', 'aquifer']
+                'betrouwbaarheid_interpretatie', 'x', 'y',
+                'diepte_laag_van', 'diepte_laag_tot',
+                'hoofdnaam1_grondsoort', 'hoofdnaam2_grondsoort',
+                'bijmenging1_plaatselijk', 'bijmenging1_hoeveelheid', 'bijmenging1_grondsoort',
+                'bijmenging2_plaatselijk', 'bijmenging2_hoeveelheid', 'bijmenging2_grondsoort',
+                'bijmenging3_plaatselijk', 'bijmenging3_hoeveelheid', 'bijmenging3_grondsoort',]
 
     def get_field_names_subtypes(self):
         """Get the field names of this type that originate from subtypes only.
@@ -73,7 +77,11 @@ class TestHydrogeologischeStratigrafie(AbstractTestTypes):
             List of field names from subtypes.
 
         """
-        return ['diepte_laag_van', 'diepte_laag_tot', 'aquifer']
+        return ['diepte_laag_van', 'diepte_laag_tot',
+                'hoofdnaam1_grondsoort', 'hoofdnaam2_grondsoort',
+                'bijmenging1_plaatselijk', 'bijmenging1_hoeveelheid', 'bijmenging1_grondsoort',
+                'bijmenging2_plaatselijk', 'bijmenging2_hoeveelheid', 'bijmenging2_grondsoort',
+                'bijmenging3_plaatselijk', 'bijmenging3_hoeveelheid', 'bijmenging3_grondsoort',]
 
     def get_field_names_nosubtypes(self):
         """Get the field names for this type, without including fields from

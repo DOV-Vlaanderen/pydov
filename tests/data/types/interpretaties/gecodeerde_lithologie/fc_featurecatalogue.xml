@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <csw:GetRecordByIdResponse xmlns:csw="http://www.opengis.net/cat/csw/2.0.2">
-  <gfc:FC_FeatureCatalogue xmlns:gfc="http://www.isotc211.org/2005/gfc" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:geonet="http://www.fao.org/geonetwork" uuid="b6c651f9-5972-4252-ae10-ad69ad08e78d" xsi:schemaLocation="http://www.isotc211.org/2005/gfc http://www.isotc211.org/2005/gfc/gfc.xsd">
+  <gfc:FC_FeatureCatalogue xmlns:gfc="http://www.isotc211.org/2005/gfc" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:geonet="http://www.fao.org/geonetwork" uuid="0032241d-8920-415e-b1d8-fa0a48154904" xsi:schemaLocation="http://www.isotc211.org/2005/gfc http://www.isotc211.org/2005/gfc/gfc.xsd">
     <gmx:name>
-      <gco:CharacterString>Informele stratigrafie (objectencatalogus)</gco:CharacterString>
+      <gco:CharacterString>Gecodeerde lithologie (objectencatalogus)</gco:CharacterString>
     </gmx:name>
     <gmx:scope>
       <gco:CharacterString>geoscientificInformation</gco:CharacterString>
@@ -11,7 +11,7 @@
       <gco:CharacterString>1</gco:CharacterString>
     </gmx:versionNumber>
     <gmx:versionDate>
-      <gco:DateTime>2018-09-26T15:23:55</gco:DateTime>
+      <gco:DateTime>2018-09-26T15:34:26</gco:DateTime>
     </gmx:versionDate>
     <gfc:producer>
       <gmd:CI_ResponsibleParty>
@@ -56,17 +56,17 @@
           </gmd:CI_Contact>
         </gmd:contactInfo>
         <gmd:role>
-          <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_RoleCode" codeListValue="distributor" />
+          <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_RoleCode" codeListValue="custodian" />
         </gmd:role>
       </gmd:CI_ResponsibleParty>
     </gfc:producer>
     <gfc:featureType>
       <gfc:FC_FeatureType uuid="generate-uniq-5508-4b5d-ac0e86394c4e" id="ID1">
         <gfc:typeName>
-          <gco:LocalName>informele_stratigrafieType</gco:LocalName>
+          <gco:LocalName>gecodeerde_lithologieType</gco:LocalName>
         </gfc:typeName>
         <gfc:definition>
-          <gco:CharacterString>Een informele stratigrafie van een boring is, net als een formele stratigrafie, een lithostratigrafische interpretatie van een (gecodeerde) lithologische beschrijving per diepte-interval. Het verschil met de formele stratigrafie is dat de informele stratigrafie niet moet voldoen aan een algemeen aanvaarde standaard. De informele stratigrafie is een plaats in DOV om oude interpretaties of interpretaties die niet voldoen aan de huidige stratigrafische indeling toch weer te geven. De informele stratigrafie kan ook een gedetailleerde beschrijving bevatten van een lithostratigrafische eenheid.</gco:CharacterString>
+          <gco:CharacterString>Een gecodeerde lithologie van een boring is een geologische codering van een lithologische beschrijving op basis van een vaste DOV-standaard per diepte-interval. U vindt een overzicht van de gebruikte standaarden op onze website.</gco:CharacterString>
         </gfc:definition>
         <gfc:isAbstract>
           <gco:Boolean>false</gco:Boolean>
@@ -109,7 +109,7 @@
               <gco:LocalName>Interpretatiefiche</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>URL die verwijst naar de gegevens van deze informele stratigrafie op de website. Voeg '.xml' toe om een XML voorstelling van deze gegevens te verkrijgen.</gco:CharacterString>
+              <gco:CharacterString>URL die verwijst naar de gegevens van deze gecodeerde lithologie op de website. Voeg '.xml' toe om een XML voorstelling van deze gegevens te verkrijgen.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>
@@ -140,7 +140,7 @@
               <gco:LocalName>Type_proef</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>Het type van de proef waarvan de informele stratigrafie een interpretatie is.</gco:CharacterString>
+              <gco:CharacterString>Het type van de proef waarvan de gecodeerde lithologie een interpretatie is. Bij een gecodeerde lithologie zal dit altijd 'Boring' zijn.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>
@@ -175,20 +175,7 @@
                   <gco:CharacterString />
                 </gfc:code>
                 <gfc:definition>
-                  <gco:CharacterString>De informele stratigrafie is een interpretatie van een boring.</gco:CharacterString>
-                </gfc:definition>
-              </gfc:FC_ListedValue>
-            </gfc:listedValue>
-            <gfc:listedValue>
-              <gfc:FC_ListedValue>
-                <gfc:label>
-                  <gco:CharacterString>Sondering</gco:CharacterString>
-                </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString>De informele stratigrafie is een interpretatie van een sondering.</gco:CharacterString>
+                  <gco:CharacterString>De gecodeerde lithologie is een interpretatie van een boring.</gco:CharacterString>
                 </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
@@ -200,7 +187,7 @@
               <gco:LocalName>Proefnummer</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>Het proefnummer van de proef (boring of sondering) waarvan de informele stratigrafie een interpretatie is.</gco:CharacterString>
+              <gco:CharacterString>Het proefnummer van de boring waarvan de gecodeerde lithologie een interpretatie is.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>
@@ -247,7 +234,7 @@
               <gco:LocalName>Proeffiche</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>URL die verwijst naar de gegevens van de proef (boring of sondering) op de website. Voeg '.xml' toe om een XML voorstelling van deze gegevens te verkrijgen.</gco:CharacterString>
+              <gco:CharacterString>URL die verwijst naar de gegevens van de boring op de website. Voeg '.xml' toe om een XML voorstelling van deze gegevens te verkrijgen.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>
@@ -294,7 +281,7 @@
               <gco:LocalName>X_mL72</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>De x-coördinaat van de proef in het Lambert72 coördinaatsysteem (in meter, EPSG:31370).</gco:CharacterString>
+              <gco:CharacterString>De x-coördinaat van de boring in het Lambert72 coördinaatsysteem (in meter, EPSG:31370).</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>
@@ -341,7 +328,7 @@
               <gco:LocalName>Y_mL72</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>De y-coördinaat van de proef in het Lambert72 coördinaatsysteem (in meter, EPSG:31370).</gco:CharacterString>
+              <gco:CharacterString>De y-coördinaat van de boring in het Lambert72 coördinaatsysteem (in meter, EPSG:31370).</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>
@@ -388,7 +375,7 @@
               <gco:LocalName>Z_mTAW</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>De hoogte van het aanvangspeil van de proef in het TAW stelsel (in meter).</gco:CharacterString>
+              <gco:CharacterString>De hoogte van het aanvangspeil van de boring in het TAW stelsel (in meter).</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>
@@ -435,7 +422,7 @@
               <gco:LocalName>diepte_tot_m</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>De maximumdiepte van de informele stratigrafie in meter. Dit is de 'tot' van de diepste geïnterpreteerde laag.</gco:CharacterString>
+              <gco:CharacterString>De maximumdiepte van de gecodeerde lithologie in meter. Dit is de 'tot' van de diepste geïnterpreteerde laag.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>
@@ -482,7 +469,7 @@
               <gco:LocalName>gemeente</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>De gemeente waarin de proef van deze interpretatie gelegen is.</gco:CharacterString>
+              <gco:CharacterString>De gemeente waarin de boring van deze interpretatie gelegen is.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>
@@ -529,7 +516,7 @@
               <gco:LocalName>Auteurs</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>De auteur of auteurs van de informele stratigrafie.</gco:CharacterString>
+              <gco:CharacterString>De auteur of auteurs van de gecodeerde lithologie.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>
@@ -576,7 +563,7 @@
               <gco:LocalName>Datum</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>De datum waarop de informele stratigrafie werd beschreven.</gco:CharacterString>
+              <gco:CharacterString>De datum waarop de gecodeerde lithologie werd beschreven.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>
@@ -623,7 +610,7 @@
               <gco:LocalName>Opdrachten</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>De opdracht(en) waaraan de informele stratigrafie gekoppeld is.</gco:CharacterString>
+              <gco:CharacterString>De opdracht(en) waaraan de gecodeerde lithologie gekoppeld is.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>
@@ -670,7 +657,7 @@
               <gco:LocalName>Betrouwbaarheid</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>De betrouwbaarheid van het geheel van de informele stratigrafie (goed, twijfelachtig of onbekend). Deze wordt toegekend door een DOV-medewerker verantwoordelijk voor de ingave.</gco:CharacterString>
+              <gco:CharacterString>De betrouwbaarheid van het geheel van de gecodeerde lithologie (goed, twijfelachtig of onbekend). Deze wordt toegekend door een DOV-medewerker verantwoordelijk voor de ingave.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>
@@ -717,7 +704,7 @@
               <gco:LocalName>Geldig_van</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>Het tijdstip vanaf wanneer de informele stratigrafie geldig is.</gco:CharacterString>
+              <gco:CharacterString>Het tijdstip vanaf wanneer de gecodeerde lithologie geldig is.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>
@@ -764,7 +751,7 @@
               <gco:LocalName>Geldig_tot</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>Het tijdstip tot wanneer de informele stratigrafie geldig is.</gco:CharacterString>
+              <gco:CharacterString>Het tijdstip tot wanneer de gecodeerde lithologie geldig is.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>
@@ -811,7 +798,7 @@
               <gco:LocalName>geom</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>De geometrie van de proef (punt). Dit komt overeen met het punt beschreven door de coördinaten "X_mL72", "Y_mL72".</gco:CharacterString>
+              <gco:CharacterString>De geometrie van de boring (punt). Dit komt overeen met het punt beschreven door de coördinaten "X_mL72", "Y_mL72".</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>

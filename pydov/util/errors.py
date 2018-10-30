@@ -37,3 +37,18 @@ class InvalidSearchParameterError(DOVError):
 class InvalidFieldError(DOVError):
     """Error that occurs when using a field outside its scope."""
     pass
+
+
+class XmlParseError(DOVError):
+    """Error that occurs when the parsing of a DOV XML document failed."""
+    pass
+
+
+class DOVWarning(Warning):
+    """General warning in PyDOV."""
+    pass
+
+
+class XmlParseWarning(DOVWarning):
+    """Emitted when the failure to parse an XML document results in
+    an incomplete dataframe."""

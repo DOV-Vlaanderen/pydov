@@ -11,7 +11,7 @@
       <gco:CharacterString>1</gco:CharacterString>
     </gmx:versionNumber>
     <gmx:versionDate>
-      <gco:DateTime>2018-03-01T10:09:55</gco:DateTime>
+      <gco:DateTime>2018-09-26T15:48:51</gco:DateTime>
     </gmx:versionDate>
     <gfc:producer>
       <gmd:CI_ResponsibleParty>
@@ -140,7 +140,7 @@
               <gco:LocalName>Type_proef</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>Het type van de proef waarvan de hydrogeologische stratigrafie een interpretatie is.</gco:CharacterString>
+              <gco:CharacterString>Het type van de proef waarvan de hydrogeologische stratigrafie een interpretatie is. Bij een hydrogeologische stratigrafie zal dit altijd 'Boring' zijn.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>
@@ -179,19 +179,6 @@
                 </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
-            <gfc:listedValue>
-              <gfc:FC_ListedValue>
-                <gfc:label>
-                  <gco:CharacterString>Sondering</gco:CharacterString>
-                </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString>De hydrogeologische stratigrafie is een interpretatie van een sondering.</gco:CharacterString>
-                </gfc:definition>
-              </gfc:FC_ListedValue>
-            </gfc:listedValue>
           </gfc:FC_FeatureAttribute>
         </gfc:carrierOfCharacteristics>
         <gfc:carrierOfCharacteristics>
@@ -200,7 +187,7 @@
               <gco:LocalName>Proefnummer</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>Het proefnummer van de proef (boring of sondering) waarvan de hydrogeologische stratigrafie een interpretatie is.</gco:CharacterString>
+              <gco:CharacterString>Het proefnummer van de boring waarvan de hydrogeologische stratigrafie een interpretatie is.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>
@@ -247,7 +234,7 @@
               <gco:LocalName>Proeffiche</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>URL die verwijst naar de gegevens van de proef (boring of sondering) op de website. Voeg '.xml' toe om een XML voorstelling van deze gegevens te verkrijgen.</gco:CharacterString>
+              <gco:CharacterString>URL die verwijst naar de gegevens van de boring op de website. Voeg '.xml' toe om een XML voorstelling van deze gegevens te verkrijgen.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>
@@ -294,7 +281,7 @@
               <gco:LocalName>X_mL72</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>De x-coördinaat van de proef in het Lambert72 coördinaatsysteem (in meter, EPSG:31370).</gco:CharacterString>
+              <gco:CharacterString>De x-coördinaat van de boring in het Lambert72 coördinaatsysteem (in meter, EPSG:31370).</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>
@@ -341,7 +328,7 @@
               <gco:LocalName>Y_mL72</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>De y-coördinaat van de proef in het Lambert72 coördinaatsysteem (in meter, EPSG:31370).</gco:CharacterString>
+              <gco:CharacterString>De y-coördinaat van de boring in het Lambert72 coördinaatsysteem (in meter, EPSG:31370).</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>
@@ -388,7 +375,54 @@
               <gco:LocalName>Z_mTAW</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>De hoogte van het aanvangspeil van de proef in het TAW stelsel (in meter).</gco:CharacterString>
+              <gco:CharacterString>De hoogte van het aanvangspeil van de boring in het TAW stelsel (in meter).</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity>
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>0</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:code>
+              <gco:CharacterString />
+            </gfc:code>
+            <gfc:valueType>
+              <gco:TypeName>
+                <gco:aName>
+                  <gco:CharacterString>Getal (5,2)</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+            <gfc:listedValue>
+              <gfc:FC_ListedValue>
+                <gfc:label>
+                  <gco:CharacterString />
+                </gfc:label>
+                <gfc:code>
+                  <gco:CharacterString />
+                </gfc:code>
+                <gfc:definition>
+                  <gco:CharacterString />
+                </gfc:definition>
+              </gfc:FC_ListedValue>
+            </gfc:listedValue>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName>diepte_tot_m</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString>De maximumdiepte van de hydrogeologische stratigrafie in meter. Dit is de 'tot' van de diepste geïnterpreteerde laag.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>
@@ -435,7 +469,7 @@
               <gco:LocalName>gemeente</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>De gemeente waarin de proef van deze interpretatie gelegen is.</gco:CharacterString>
+              <gco:CharacterString>De gemeente waarin de boring van deze interpretatie gelegen is.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>
@@ -764,7 +798,7 @@
               <gco:LocalName>geom</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>De geometrie van de proef (punt). Dit komt overeen met het punt beschreven door de coördinaten "X_mL72", "Y_mL72".</gco:CharacterString>
+              <gco:CharacterString>De geometrie van de boring (punt). Dit komt overeen met het punt beschreven door de coördinaten "X_mL72", "Y_mL72".</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>

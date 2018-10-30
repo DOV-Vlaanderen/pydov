@@ -5,10 +5,16 @@ import pytest
 from pydov.types.boring import Boring
 from pydov.types.grondwaterfilter import GrondwaterFilter
 from pydov.types.interpretaties import InformeleStratigrafie
+from pydov.search.interpretaties import HydrogeologischeStratigrafie
+from pydov.search.interpretaties import GecodeerdeLithologie
+from pydov.search.interpretaties import LithologischeBeschrijvingen
 
 type_objects = [Boring,
                 GrondwaterFilter,
-                InformeleStratigrafie]
+                InformeleStratigrafie,
+                HydrogeologischeStratigrafie,
+                GecodeerdeLithologie,
+                LithologischeBeschrijvingen,]
 
 
 @pytest.mark.parametrize("objecttype", type_objects)

@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
-"""Module grouping classes for location based filters used for searching."""
+"""Module grouping classes for location based filters used for searching.
+
+This module is designed to comply with the WFS 1.1.0 standard, implying
+Filter Encoding 1.1 and GML 3.1.1.
+
+"""
 
 from owslib.etree import etree
 
@@ -8,6 +13,8 @@ class AbstractLocation(object):
     """Abstract base class for location types (f.ex. point, box, polygon).
 
     Locations are GML elements, for inclusion in the WFS GetFeature request.
+    As described in the Filter Encoding 1.1 standard, locations are expressed
+    using GML 3.1.1.
 
     The initialisation should require all necessary parameters to construct
     a valid location of this type: i.e. all locations should be valid after
@@ -28,8 +35,8 @@ class AbstractLocation(object):
 class AbstractLocationFilter(object):
     """Abstract base class for location filters (f.ex. within, dwithin).
 
-    Location filters are ogc:Filter elements, for inclusion in the WFS
-    GetFeature request.
+    Location filters are ogc:SpatialOpsType elements, for inclusion in
+    the WFS GetFeature request.
 
     The initialisation should accept at least a (subclass of)
     AbstractLocation and require all additional parameters that are required
@@ -73,6 +80,72 @@ class AbstractLocationFilter(object):
         raise NotImplementedError
 
 
+class AbstractBinarySpatialFilter(AbstractLocationFilter):
+    """Class representing a binary spatial filter.
+
+    Binary spatial filters are ogc:BinarySpatialOpType elements, i.e. one of
+    Equals, Disjoint, Touches, Within, Overlaps, Crosses, Intersects or
+    Contains.
+
+    """
+    def __init__(self, type, location):
+        """Initialise a Binary spatial filter.
+
+        Parameters
+        ----------
+        type : str
+            Type of this filter: one of Equals, Disjoint, Touches, Within,
+            Overlaps, Crosses, Intersects or Contains.
+        location : AbstractLocation
+            An instance of a location to use as location for the Within
+            filter.
+
+        """
+        self.location = location
+        self.geom_column = ''
+
+        self.element = etree.Element('{http://www.opengis.net/ogc}%s' % type)
+
+        geom = etree.Element('{http://www.opengis.net/ogc}PropertyName')
+        geom.text = self.geom_column
+
+        self.element.append(geom)
+        self.element.append(location.get_element())
+
+    def set_geometry_column(self, geometry_column):
+        """Set the name of the geometry column to query.
+
+        Parameters
+        ----------
+        geometry_column : str
+            The name of the geometry column to query.
+
+        """
+        self.geom_column = geometry_column
+        geom = self.element.find('.//{http://www.opengis.net/ogc}PropertyName')
+        geom.text = geometry_column
+
+    def get_element(self):
+        """Return the XML representation of the Within filter.
+
+        Returns
+        -------
+        etree.Element
+            XML element of this Within filter.
+
+        Raises
+        ------
+        RuntimeError
+            When called before the geometry column name is set: location
+            filters without the geometry column name are invalid.
+
+        """
+        if self.geom_column == '':
+            raise RuntimeError('Geometry column has not been set. Use '
+                               '"set_geometry_column" to set it.')
+        return self.element
+
+
 class Box(AbstractLocation):
     """Class representing a box location, also known as bounding box,
     envelope, extent."""
@@ -91,10 +164,22 @@ class Box(AbstractLocation):
             Y coordinate of the upper right corner of the box.
         epsg : int, optional
             EPSG code of the coordinate reference system (CRS) of the
-            coordinates specified as minx, miny, maxx, maxy. Defaults to
-            31370 (Belgian Lambert72).
+            coordinates specified in `minx`, `miny`, `maxx`, `maxy`. Defaults
+            to 31370 (Belgian Lambert72).
+
+        Raises
+        ------
+        ValueError
+            If `maxx` is lower than or equal to `minx`.
+            If `maxy` is lower than or equal to `miny`.
 
         """
+        if maxx <= minx:
+            raise ValueError("MaxX should be greater than MinX.")
+
+        if maxy <= miny:
+            raise ValueError("MaxY should be greater than MinY.")
+
         self.minx = minx
         self.miny = miny
         self.maxx = maxx
@@ -138,7 +223,7 @@ class Point(AbstractLocation):
             Y coordinate of the point.
         epsg : int, optional
             EPSG code of the coordinate reference system (CRS) of the
-            coordinates specified as minx, miny, maxx, maxy. Defaults to
+            coordinates specified in `x`, `y`. Defaults to
             31370 (Belgian Lambert72).
 
         """
@@ -146,6 +231,7 @@ class Point(AbstractLocation):
         self.y = y
 
         self.element = etree.Element('{http://www.opengis.net/gml}Point')
+        self.element.set('srsDimension', '2')
         self.element.set('srsName',
                          'http://www.opengis.net/gml/srs/epsg.xml#%i' % epsg)
 
@@ -164,11 +250,72 @@ class Point(AbstractLocation):
         return self.element
 
 
-class Within(AbstractLocationFilter):
+class Equals(AbstractBinarySpatialFilter):
+    """Class representing a spatial Equals filter.
+
+    A spatial Equals will return all points that are equal to another point.
+
+    """
+    def __init__(self, location):
+        """Initialise an Equals filter.
+
+        Parameters
+        ----------
+        location : AbstractLocation
+            An instance of a location to use as location for the Equals
+            filter.
+
+        """
+        super(Equals, self).__init__('Equals', location)
+
+
+class Disjoint(AbstractBinarySpatialFilter):
+    """Class representing a spatial Disjoint filter.
+
+    A spatial Disjoint will return all points that are disjoint from a
+    polygon or box location: i.e. that are not inside nor on the boundary.
+
+    A spatial Disjoint is the inverse of a spatial Intersects.
+
+    """
+    def __init__(self, location):
+        """Initialise a Disjoint filter.
+
+        Parameters
+        ----------
+        location : AbstractLocation
+            An instance of a location to use as location for the Disjoint
+            filter.
+
+        """
+        super(Disjoint, self).__init__('Disjoint', location)
+
+
+class Touches(AbstractBinarySpatialFilter):
+    """Class representing a spatial Touches filter.
+
+    A spatial Touches will return all points that touch a polygon or box
+    location: i.e. that are on the boundary but not inside.
+
+    """
+    def __init__(self, location):
+        """Initialise a Touches filter.
+
+        Parameters
+        ----------
+        location : AbstractLocation
+            An instance of a location to use as location for the Touches
+            filter.
+
+        """
+        super(Touches, self).__init__('Touches', location)
+
+
+class Within(AbstractBinarySpatialFilter):
     """Class representing a spatial Within filter.
 
-    A spatial Within will return all points that are within a polygon or
-    box location.
+    A spatial Within will return all points that are entirely within a
+    polygon or box location (i.e. are not on the boundary).
 
     """
     def __init__(self, location):
@@ -181,49 +328,29 @@ class Within(AbstractLocationFilter):
             filter.
 
         """
-        self.location = location
-        self.geom_column = ''
+        super(Within, self).__init__('Within', location)
 
-        self.element = etree.Element('{http://www.opengis.net/ogc}Within')
 
-        geom = etree.Element('{http://www.opengis.net/ogc}PropertyName')
-        geom.text = self.geom_column
+class Intersects(AbstractBinarySpatialFilter):
+    """Class representing a spatial Intersects filter.
 
-        self.element.append(geom)
-        self.element.append(location.get_element())
+    A spatial Intersects will return all points that are within or on the
+    boundary of a polygon or box location.
 
-    def set_geometry_column(self, geometry_column):
-        """Set the name of the geometry column to query.
+    A spatial Intersects is the inverse of a spatial Disjoint.
+
+    """
+    def __init__(self, location):
+        """Initialise an Intersects filter.
 
         Parameters
         ----------
-        geometry_column : str
-            The name of the geometry column to query.
+        location : AbstractLocation
+            An instance of a location to use as location for the Intersects
+            filter.
 
         """
-        self.geom_column = geometry_column
-        geom = self.element.find('.//{http://www.opengis.net/ogc}PropertyName')
-        geom.text = geometry_column
-
-    def get_element(self):
-        """Return the XML representation of the Within filter.
-
-        Returns
-        -------
-        etree.Element
-            XML element of this Within filter.
-
-        Raises
-        ------
-        RuntimeError
-            When called before the geometry column name is set: location
-            filters without the geometry column name are invalid.
-
-        """
-        if self.geom_column == '':
-            raise RuntimeError('Geometry column has not been set. Use '
-                               '"set_geometry_column" to set it.')
-        return self.element
+        super(Intersects, self).__init__('Intersects', location)
 
 
 class WithinDistance(AbstractLocationFilter):
@@ -259,7 +386,7 @@ class WithinDistance(AbstractLocationFilter):
 
         distance = etree.Element('{http://www.opengis.net/ogc}Distance')
         distance.set('units', self.distance_units)
-        distance.text = '%f' % self.distance
+        distance.text = '%0.6f' % self.distance
 
         self.element.append(geom)
         self.element.append(point.get_element())

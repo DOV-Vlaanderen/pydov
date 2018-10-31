@@ -152,6 +152,10 @@ class Box(AbstractLocation):
     def __init__(self, minx, miny, maxx, maxy, epsg=31370):
         """Initialise a Box.
 
+        To initialise a Box using GPS coordinates in decimal degrees,
+        use epsg=4326 and enter the longitude range as `minx` and `maxx` and
+        the latitude range as `miny` and `maxy`.
+
         Parameters
         ----------
         minx : float
@@ -215,12 +219,15 @@ class Point(AbstractLocation):
     def __init__(self, x, y, epsg=31370):
         """Initialise a Point.
 
+        To initialise a Point using GPS coordinates in decimal degrees,
+        use epsg=4326 and enter the longitude as `x` and the latitude as `y`.
+
         Parameters
         ----------
         x : float
-            X coordinate of the point.
+            X coordinate (or longitude) of the point.
         y : float
-            Y coordinate of the point.
+            Y coordinate (or latitude) of the point.
         epsg : int, optional
             EPSG code of the coordinate reference system (CRS) of the
             coordinates specified in `x`, `y`. Defaults to

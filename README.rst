@@ -2,7 +2,7 @@
 
     <h1>
         pydov
-        <img src="logo.png" align="right">
+        <img src="docs/_static/img/logo.png" align="right">
     </h1>
 
 .. image:: https://travis-ci.org/DOV-Vlaanderen/pydov.svg?branch=master

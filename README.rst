@@ -21,7 +21,7 @@
 A Python package to query and download data from Databank Ondergrond Vlaanderen (DOV).
 
 * Free software: MIT license
-* Documentation: https://pydov.readthedocs.io.
+* Documentation: https://pydov.readthedocs.io
 
 Introduction
 ------------

@@ -1,6 +1,9 @@
-=====
-PyDOV
-=====
+.. raw:: html
+
+    <h1>
+        pydov
+        <img src="logo.png" align="right">
+    </h1>
 
 .. image:: https://travis-ci.org/DOV-Vlaanderen/pydov.svg?branch=master
     :target: https://travis-ci.org/DOV-Vlaanderen/pydov

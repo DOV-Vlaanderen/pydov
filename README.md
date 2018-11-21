@@ -11,4 +11,4 @@ To get started, see the documentation at https://pydov.readthedocs.io.
 
 - We welcome [contributions](.github/CONTRIBUTING.rst) including bug reports.
 - License: MIT
-- Please note that this project is released with a [Contributor Code of Conduct](.github/CONDUCT.rst). By participating in this project you agree to abide by its terms.
+- Please note that this project is released with a [Contributor Code of Conduct](.github/CODE_OF_CONDUCT.rst). By participating in this project you agree to abide by its terms.

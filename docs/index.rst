@@ -1,4 +1,4 @@
-Welcome to PyDOV's documentation!
+Welcome to pydov's documentation!
 ==================================
 
 .. image:: https://travis-ci.org/DOV-Vlaanderen/pydov.svg?branch=master

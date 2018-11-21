@@ -9,6 +9,6 @@ To get started, see the documentation at https://pydov.readthedocs.io.
 
 ## Meta
 
-- We welcome [contributions](https://github.com/DOV-Vlaanderen/pydov/tree/master/.github/CONTRIBUTING.rst) including bug reports.
+- We welcome [contributions](.github/CONTRIBUTING.rst) including bug reports.
 - License: MIT
-- Please note that this project is released with a [Contributor Code of Conduct](https://github.com/DOV-Vlaanderen/pydov/tree/master/.github/CONDUCT.rst). By participating in this project you agree to abide by its terms.
+- Please note that this project is released with a [Contributor Code of Conduct](.github/CONDUCT.rst). By participating in this project you agree to abide by its terms.

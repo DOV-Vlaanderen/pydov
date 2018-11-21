@@ -10,13 +10,13 @@ Installation
 Stable release
 --------------
 
-To install PyDOV, run this command in your terminal:
+To install pydov, run this command in your terminal:
 
 .. code-block:: console
 
     $ pip install pydov
 
-This is the preferred method to install PyDOV, as it will always install the most recent stable release.
+This is the preferred method to install pydov, as it will always install the most recent stable release.
 
 If you don't have `pip`_ installed, this `Python installation guide`_ can guide
 you through the process.
@@ -28,7 +28,7 @@ you through the process.
 From sources
 ------------
 
-The sources for PyDOV can be downloaded from the `Github repo`_.
+The sources for pydov can be downloaded from the `Github repo`_.
 
 You can either clone the public repository:
 

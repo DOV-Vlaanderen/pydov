@@ -2,15 +2,15 @@
 Hooks
 =====
 
-PyDOV uses a simple system of 'hooks' to enable users to integrate custom
-code with certain events that occur while using the PyDOV package.
+pydov uses a simple system of 'hooks' to enable users to integrate custom
+code with certain events that occur while using the pydov package.
 
 By default, there is one hook that prints out the progress of XML downloads
 to standard output.
 
 Progress hook
 *************
-By default, PyDOV uses a single default hook used for printing out the
+By default, pydov uses a single default hook used for printing out the
 progress of XML downloads to stdout.
 
 To disable this progress indication, one can disable the progress hook by
@@ -23,18 +23,18 @@ issuing::
 
 Writing custom hooks
 ********************
-Users can write custom hooks and add them to PyDOV at runtime, to be able to
-interact with PyDOV at the occurance of certain 'events'.
+Users can write custom hooks and add them to pydov at runtime, to be able to
+interact with pydov at the occurance of certain 'events'.
 
 To implement custom hooks, create a new subclass of
 pydov.util.hooks.AbstractHook. An instance of this class can then by
-registered as a PyDOV hook, and implemented methods will be subsequently be
-called when the user interacts with PyDOV code. The AbstractHook class
+registered as a pydov hook, and implemented methods will be subsequently be
+called when the user interacts with pydov code. The AbstractHook class
 provides default, empty, implementation of all
 available methods allowing users to only implement the methods for the
 events they need.
 
-Note that hooks are executed inline in PyDOV and as a result can halt or
+Note that hooks are executed inline in pydov and as a result can halt or
 slow down usage of the package, depending on the implementation of the hooks
 itself.
 
@@ -68,7 +68,7 @@ Integrating custom hooks
 ........................
 
 After implementing custom hooks by creating a subclass of AbstractHook as
-described above, one needs to register an instance of this class with PyDOV
+described above, one needs to register an instance of this class with pydov
 to enable the execution of the custom hooks.
 
 One can do so by appending an instance to pydov.hooks::

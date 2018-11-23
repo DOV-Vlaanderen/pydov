@@ -39,7 +39,7 @@ class TransparentCache(object):
         self.max_age = max_age
 
         self._re_type_key = re.compile(
-            r'https?://www.dov.vlaanderen.be/data/([' '^/]+)/([^\.]+)')
+            r'https?://www\.dov\.vlaanderen\.be/data/([^ /]+)/([^.]+)')
 
         try:
             if not os.path.exists(self.cachedir):

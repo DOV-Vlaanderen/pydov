@@ -14,6 +14,7 @@ from pydov.util.errors import (
     InvalidSearchParameterError,
     FeatureOverflowError,
     InvalidFieldError,
+    WfsGetFeatureError,
 )
 from ..util.owsutil import get_remote_schema
 
@@ -473,6 +474,11 @@ class AbstractSearch(object):
             geometry_column=self._geometry_column)
 
         tree = etree.fromstring(fts)
+
+        if tree.get('numberOfFeatures') is None:
+            raise WfsGetFeatureError(
+                'Error retrieving features from DOV WFS server:\n%s' %
+                etree.tostring(tree).decode('utf8'))
 
         if int(tree.get('numberOfFeatures')) == 10000:
             raise FeatureOverflowError(

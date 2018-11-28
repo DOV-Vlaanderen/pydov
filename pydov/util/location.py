@@ -257,6 +257,37 @@ class Point(AbstractLocation):
         return self.element
 
 
+class GmlObject(AbstractLocation):
+    """Class representing a raw GML location, f.ex. gml:Surface or
+    gml:MultiSurface."""
+    def __init__(self, gml_element):
+        """Initialise a GmlObject.
+
+        Initialise a GmlObject from an existing XML element representing a
+        GML location.
+
+        Parameters
+        ----------
+        gml_element : etree.Element or str
+            XML element of the GML location, either as etree.Element or
+            string representation.
+        """
+        if isinstance(gml_element, etree.Element):
+            self.element = gml_element
+        else:
+            self.element = etree.fromstring(gml_element)
+
+    def get_element(self):
+        """Return the GML representation of this location.
+
+        Returns
+        -------
+        etree.Element
+            XML element of the GML representation of this location.
+        """
+        return self.element
+
+
 class Equals(AbstractBinarySpatialFilter):
     """Class representing a spatial Equals filter.
 

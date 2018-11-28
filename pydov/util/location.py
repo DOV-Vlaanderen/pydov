@@ -5,6 +5,7 @@ This module is designed to comply with the WFS 1.1.0 standard, implying
 Filter Encoding 1.1 and GML 3.1.1.
 
 """
+from numpy.compat import unicode
 
 from owslib.etree import etree
 
@@ -269,13 +270,15 @@ class GmlObject(AbstractLocation):
         Parameters
         ----------
         gml_element : etree.Element or str
-            XML element of the GML location, either as etree.Element or
+            XML element of the GML location, either as etree.Element, bytes or
             string representation.
         """
-        if isinstance(gml_element, etree.Element):
-            self.element = gml_element
-        else:
+        if type(gml_element) in (str, unicode):
+            self.element = etree.fromstring(gml_element.encode('utf8'))
+        elif type(gml_element) is bytes:
             self.element = etree.fromstring(gml_element)
+        else:
+            self.element = gml_element
 
     def get_element(self):
         """Return the GML representation of this location.

@@ -517,27 +517,27 @@ class GmlFilter(Or):
         gml_tree = etree.fromstring(self.gml.encode('utf8'))
 
         for e in gml_tree.findall(
-            './/{http://www.opengis.net/gml}Surface'):
+                './/{http://www.opengis.net/gml}Surface'):
             self.subelements.add(e)
 
         for e in gml_tree.findall(
-            './/{http://www.opengis.net/gml}MultiSurface'):
+                './/{http://www.opengis.net/gml}MultiSurface'):
             self.subelements.add(e)
 
         for e in gml_tree.findall(
-            './/{http://www.opengis.net/gml}LineString'):
+                './/{http://www.opengis.net/gml}LineString'):
             self.subelements.add(e)
 
         for e in gml_tree.findall(
-            './/{http://www.opengis.net/gml}MultiLineString'):
+                './/{http://www.opengis.net/gml}MultiLineString'):
             self.subelements.add(e)
 
         for e in gml_tree.findall(
-            './/{http://www.opengis.net/gml}Point'):
+                './/{http://www.opengis.net/gml}Point'):
             self.subelements.add(e)
 
         for e in gml_tree.findall(
-            './/{http://www.opengis.net/gml}MultiPoint'):
+                './/{http://www.opengis.net/gml}MultiPoint'):
             self.subelements.add(e)
 
         if len(self.subelements) == 0:

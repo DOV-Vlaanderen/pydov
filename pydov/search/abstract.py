@@ -535,3 +535,55 @@ class AbstractSearch(object):
         """
         self._init_fields()
         return self._fields
+
+    def search(self, location=None, query=None, return_fields=None):
+        """Search for objects of this type. Provide `location` and/or `query`.
+        When `return_fields` is None, all fields are returned.
+
+        Parameters
+        ----------
+        location : pydov.util.location.AbstractLocationFilter or
+                    owslib.fes.BinaryLogicOpType<AbstractLocationFilter> or
+                    owslib.fes.UnaryLogicOpType<AbstractLocationFilter>
+            Location filter limiting the features to retrieve. Can either be a
+            single instance of a subclass of AbstractLocationFilter, or a
+            combination using And, Or, Not of AbstractLocationFilters.
+        query : owslib.fes.OgcExpression
+            OGC filter expression to use for searching. This can contain any
+            combination of filter elements defined in owslib.fes. The query
+            should use the fields provided in `get_fields()`. Note that not
+            all fields are currently supported as a search parameter.
+        return_fields : list<str> or tuple<str> or set<str>
+            A list of fields to be returned in the output data. This should
+            be a subset of the fields provided in `get_fields()`. Note that
+            not all fields are currently supported as return fields.
+
+        Returns
+        -------
+        pandas.core.frame.DataFrame
+            DataFrame containing the output of the search query.
+
+        Raises
+        ------
+        pydov.util.errors.InvalidSearchParameterError
+            When not one of `location` or `query` is provided.
+
+        pydov.util.errors.InvalidFieldError
+            When at least one of the fields in `return_fields` is unknown.
+
+            When a field that is only accessible as return field is used as
+            a query parameter.
+
+            When a field that can only be used as a query parameter is used as
+            a return field.
+
+        pydov.util.errors.FeatureOverflowError
+            When the number of features to be returned is equal to the
+            maxFeatures limit of the WFS server.
+
+        AttributeError
+            When the argument supplied as return_fields is not a list,
+            tuple or set.
+
+        """
+        raise NotImplementedError

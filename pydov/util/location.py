@@ -59,7 +59,7 @@ class AbstractLocationFilter(object):
         """
         raise NotImplementedError
 
-    def get_element(self):
+    def toXML(self):
         """Return the XML representation of the location filter.
 
         Should raise a RuntimeError when called before the geometry column
@@ -126,7 +126,7 @@ class AbstractBinarySpatialFilter(AbstractLocationFilter):
         geom = self.element.find('.//{http://www.opengis.net/ogc}PropertyName')
         geom.text = geometry_column
 
-    def get_element(self):
+    def toXML(self):
         """Return the XML representation of the Within filter.
 
         Returns
@@ -446,7 +446,7 @@ class WithinDistance(AbstractLocationFilter):
         geom = self.element.find('.//{http://www.opengis.net/ogc}PropertyName')
         geom.text = geometry_column
 
-    def get_element(self):
+    def toXML(self):
         """Return the XML representation of the WithinDistance filter.
 
         Returns

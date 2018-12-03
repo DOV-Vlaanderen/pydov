@@ -65,8 +65,12 @@ class BoringSearch(AbstractSearch):
 
         Parameters
         ----------
-        location : pydov.util.location.AbstractLocationFilter
-            Location filter limiting the features to retrieve.
+        location : pydov.util.location.AbstractLocationFilter or
+                    owslib.fes.BinaryLogicOpType<AbstractLocationFilter> or
+                    owslib.fes.UnaryLogicOpType<AbstractLocationFilter>
+            Location filter limiting the features to retrieve. Can either be a
+            single instance of a subclass of AbstractLocationFilter, or a
+            combination using And, Or, Not of AbstractLocationFilters.
         query : owslib.fes.OgcExpression
             OGC filter expression to use for searching. This can contain any
             combination of filter elements defined in owslib.fes. The query

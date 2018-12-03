@@ -9,6 +9,10 @@ from owslib.feature.schema import (
     XS_NAMESPACE,
     GML_NAMESPACES
 )
+from owslib.fes import (
+    UnaryLogicOpType,
+    BinaryLogicOpType,
+)
 
 try:
     # Python3
@@ -430,6 +434,36 @@ def get_remote_schema(url, typename, version='1.0.0'):
     return _construct_schema(elements, nsmap)
 
 
+def set_geometry_column(location, geometry_column):
+    """Set the geometry column of the location query recursively.
+
+    Parameters
+    ----------
+    location : pydov.util.location.AbstractLocationFilter or
+                owslib.fes.BinaryLogicOpType<AbstractLocationFilter> or
+                owslib.fes.UnaryLogicOpType<AbstractLocationFilter>
+        Location filter limiting the features to retrieve. Can either be a
+        single instance of a subclass of AbstractLocationFilter, or a
+        combination using And, Or, Not of AbstractLocationFilters.
+    geometry_column : str
+        The name of the geometry column to query.
+
+    Returns
+    -------
+    etree.Element
+        XML element of this location filter.
+
+    """
+    if isinstance(location, UnaryLogicOpType) or \
+            isinstance(location, BinaryLogicOpType):
+        for i in location.operations:
+            set_geometry_column(i, geometry_column)
+    else:
+        location.set_geometry_column(geometry_column)
+
+    return location.toXML()
+
+
 def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
                                  filter=None, propertyname=None,
                                  version='1.1.0'):
@@ -501,8 +535,8 @@ def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
         filter_parent.append(filterrequest[0])
 
     if location is not None:
-        location.set_geometry_column(geometry_column)
-        filter_parent.append(location.get_element())
+        location = set_geometry_column(location, geometry_column)
+        filter_parent.append(location)
 
     query.append(filter_xml)
     xml.append(query)

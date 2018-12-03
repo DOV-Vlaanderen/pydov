@@ -8,6 +8,9 @@ Filter Encoding 1.1 and GML 3.1.1.
 from numpy.compat import unicode
 
 from owslib.etree import etree
+from owslib.fes import (
+    Or,
+)
 
 
 class AbstractLocation(object):
@@ -465,3 +468,77 @@ class WithinDistance(AbstractLocationFilter):
             raise RuntimeError('Geometry column has not been set. Use '
                                '"set_geometry_column" to set it.')
         return self.element
+
+
+class GmlFilter(Or):
+    """Class for construction a spatial filter expression from a GML
+    3.1.1 document.
+    """
+
+    def __init__(self, gml, location_filter, location_filter_kwargs=None):
+        """Initialise a spatial filter expression from a GML 3.1.1 string.
+
+        Parameters
+        ----------
+        gml : str
+            String representation of the GML document to parse.
+        location_filter : AbstractLocationFilter
+            Location filter to use for the geometries in the GML document.
+        location_filter_kwargs : dict, optional
+            Keyword-based arguments to pass to the `location_filter` on
+            initialisation (with the exception of the `location` parameter,
+            which is automatically parsed from the GML). Can be skipped in
+            cases where the location_filter takes no extra arguments besides
+            location.
+
+        """
+        self.gml = gml
+        self.subelements = set()
+
+        if location_filter_kwargs is None:
+            location_filter_kwargs = {}
+
+        self._parse_gml()
+
+        if len(self.subelements) == 1:
+            # WithinDistance(Point(0, 0), 0) is a hack to have a second
+            # operation for the Or expression (that never returns a result).
+            ops = [location_filter(GmlObject(self.subelements.pop()),
+                                   **location_filter_kwargs),
+                   WithinDistance(Point(0, 0), 0)]
+        else:
+            ops = [location_filter(GmlObject(e), **location_filter_kwargs)
+                   for e in self.subelements]
+
+        super(GmlFilter, self).__init__(ops)
+
+    def _parse_gml(self):
+        """Parse the GML string and add subelements for geometries."""
+        gml_tree = etree.fromstring(self.gml.encode('utf8'))
+
+        for e in gml_tree.findall(
+            './/{http://www.opengis.net/gml}Surface'):
+            self.subelements.add(e)
+
+        for e in gml_tree.findall(
+            './/{http://www.opengis.net/gml}MultiSurface'):
+            self.subelements.add(e)
+
+        for e in gml_tree.findall(
+            './/{http://www.opengis.net/gml}LineString'):
+            self.subelements.add(e)
+
+        for e in gml_tree.findall(
+            './/{http://www.opengis.net/gml}MultiLineString'):
+            self.subelements.add(e)
+
+        for e in gml_tree.findall(
+            './/{http://www.opengis.net/gml}Point'):
+            self.subelements.add(e)
+
+        for e in gml_tree.findall(
+            './/{http://www.opengis.net/gml}MultiPoint'):
+            self.subelements.add(e)
+
+        if len(self.subelements) == 0:
+            raise ValueError('Failed to extract geometries from GML file.')

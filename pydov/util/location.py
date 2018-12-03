@@ -401,13 +401,13 @@ class WithinDistance(AbstractLocationFilter):
     distance of a certain location.
 
     """
-    def __init__(self, point, distance, distance_units='meter'):
+    def __init__(self, location, distance, distance_units='meter'):
         """Initialise a WithinDistance filter.
 
         Parameters
         ----------
-        point : Point
-            Instance of a Point location to use as location for the
+        location : AbstractLocation
+            An instance of a location to use as location for the
             WithinDistance filter.
         distance : float
             Amount of distance units to use for the filter.
@@ -415,7 +415,7 @@ class WithinDistance(AbstractLocationFilter):
             The distance unit of the value of `distance`.
 
         """
-        self.point = point
+        self.location = location
         self.distance = distance
         self.distance_units = distance_units
         self.geom_column = ''
@@ -430,7 +430,7 @@ class WithinDistance(AbstractLocationFilter):
         distance.text = '%0.6f' % self.distance
 
         self.element.append(geom)
-        self.element.append(point.get_element())
+        self.element.append(location.get_element())
         self.element.append(distance)
 
     def set_geometry_column(self, geometry_column):

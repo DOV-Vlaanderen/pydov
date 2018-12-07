@@ -214,6 +214,98 @@ class InformeleStratigrafie(AbstractCommonInterpretatie):
     }]
 
 
+class FormeleStratigrafieLaag(AbstractDovSubType):
+
+    _name = 'formele_stratigrafie_laag'
+    _rootpath = './/formelestratigrafie/laag'
+
+    _fields = [{
+        'name': 'diepte_laag_van',
+        'source': 'xml',
+        'sourcefield': '/van',
+        'definition': 'Diepte van de bovenkant van de laag Formele '
+                      'stratigrafie in meter.',
+        'type': 'float',
+        'notnull': False
+    }, {
+        'name': 'diepte_laag_tot',
+        'source': 'xml',
+        'sourcefield': '/tot',
+        'definition': 'Diepte van de onderkant van de laag Formele '
+                      'stratigrafie in meter.',
+        'type': 'float',
+        'notnull': False
+    }, {
+        'name': 'beschrijving',
+        'source': 'xml',
+        'sourcefield': '/beschrijving',
+        'definition': 'Benoeming van de eenheid van de laag Formele '
+                      'stratigrafie in vrije tekst (onbeperkt in lengte).',
+        'type': 'string',
+        'notnull': False
+    }, {
+        'name': 'lid1',
+        'source': 'xml',
+        'sourcefield': 'lid2',
+        'type': 'float'
+    }, {
+        'name': 'relatie_lid1_lid2',
+        'source': 'xml',
+        'sourcefield': 'relatie_lid1_lid2',
+        'type': 'float'
+    }, {
+        'name': 'lid2',
+        'source': 'xml',
+        'sourcefield': 'lid2',
+        'type': 'float'
+    }]
+
+
+class FormeleStratigrafie(AbstractCommonInterpretatie):
+    """Class representing the DOV data type for 'Formele stratigrafie'
+    interpretations."""
+
+    _subtypes = [FormeleStratigrafieLaag]
+
+    _fields = [{
+        'name': 'pkey_interpretatie',
+        'source': 'wfs',
+        'sourcefield': 'Interpretatiefiche',
+        'type': 'string'
+    }, {
+        'name': 'pkey_boring',
+        'source': 'custom',
+        'type': 'string',
+        'definition': 'URL die verwijst naar de gegevens van de boring '
+                      'waaraan deze formele stratigrafie gekoppeld is ('
+                      'indien gekoppeld aan een boring).',
+        'notnull': False
+    }, {
+        'name': 'pkey_sondering',
+        'source': 'custom',
+        'type': 'string',
+        'definition': 'URL die verwijst naar de gegevens van de sondering '
+                      'waaraan deze formele stratigrafie gekoppeld is ('
+                      'indien gekoppeld aan een sondering).',
+        'notnull': False
+    }, {
+        'name': 'betrouwbaarheid_interpretatie',
+        'source': 'wfs',
+        'sourcefield': 'Betrouwbaarheid',
+        'type': 'string'
+    }, {
+        'name': 'x',
+        'source': 'wfs',
+        'sourcefield': 'X_mL72',
+        'type': 'float'
+    }, {
+        'name': 'y',
+        'source': 'wfs',
+        'sourcefield': 'Y_mL72',
+        'type': 'float'
+    }]
+
+
 class HydrogeologischeStratigrafieLaag(AbstractDovSubType):
 
     _name = 'hydrogeologische_stratigrafie_laag'

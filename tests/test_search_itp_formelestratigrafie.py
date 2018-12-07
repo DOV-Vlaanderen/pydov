@@ -61,7 +61,7 @@ class TestFormeleStratigrafieSearch(AbstractTestSearch):
             Class reference for the FormeleStratigrafie class.
 
         """
-        return InformeleStratigrafie
+        return FormeleStratigrafie
 
     def get_valid_query_single(self):
         """Get a valid query returning a single feature.

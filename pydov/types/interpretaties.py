@@ -236,28 +236,26 @@ class FormeleStratigrafieLaag(AbstractDovSubType):
         'type': 'float',
         'notnull': False
     }, {
-        'name': 'beschrijving',
+        'name': 'lid1',
         'source': 'xml',
-        'sourcefield': '/beschrijving',
-        'definition': 'Benoeming van de eenheid van de laag Formele '
-                      'stratigrafie in vrije tekst (onbeperkt in lengte).',
+        'sourcefield': '/lid1',
+        'definition': '',
         'type': 'string',
         'notnull': False
     }, {
-        'name': 'lid1',
-        'source': 'xml',
-        'sourcefield': 'lid2',
-        'type': 'float'
-    }, {
         'name': 'relatie_lid1_lid2',
         'source': 'xml',
-        'sourcefield': 'relatie_lid1_lid2',
-        'type': 'float'
+        'sourcefield': '/relatie_lid1_lid2',
+        'definition': '',
+        'type': 'string',
+        'notnull': False
     }, {
         'name': 'lid2',
         'source': 'xml',
-        'sourcefield': 'lid2',
-        'type': 'float'
+        'sourcefield': '/lid2',
+        'definition': '',
+        'type': 'string',
+        'notnull': False
     }]
 
 

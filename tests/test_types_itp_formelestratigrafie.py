@@ -1,5 +1,5 @@
 """Module grouping tests for the
-pydov.types.interpretaties.InformeleStratigrafie class."""
+pydov.types.interpretaties.FormeleStratigrafie class."""
 from pydov.types.interpretaties import FormeleStratigrafie
 from tests.abstract import AbstractTestTypes
 

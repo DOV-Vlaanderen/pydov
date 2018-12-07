@@ -482,7 +482,7 @@ class GmlFilter(Or):
         ----------
         gml : str
             String representation of the GML document to parse.
-        location_filter : AbstractLocationFilter
+        location_filter : class<AbstractLocationFilter>
             Location filter to use for the geometries in the GML document.
         location_filter_kwargs : dict, optional
             Keyword-based arguments to pass to the `location_filter` on
@@ -490,6 +490,12 @@ class GmlFilter(Or):
             which is automatically parsed from the GML). Can be skipped in
             cases where the location_filter takes no extra arguments besides
             location.
+
+        Raises
+        ------
+
+        ValueError
+            When no geometries could be parsed from the given GML record.
 
         """
         self.gml = gml

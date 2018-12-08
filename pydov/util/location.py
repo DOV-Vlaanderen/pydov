@@ -272,9 +272,10 @@ class GmlObject(AbstractLocation):
 
         Parameters
         ----------
-        gml_element : etree.Element or str
+        gml_element : etree.Element or str or bytes
             XML element of the GML location, either as etree.Element, bytes or
             string representation.
+
         """
         if type(gml_element) in (str, unicode):
             self.element = etree.fromstring(gml_element.encode('utf8'))
@@ -518,33 +519,63 @@ class GmlFilter(Or):
 
         super(GmlFilter, self).__init__(ops)
 
+    def _dedup_multi(self, tree, xpath_single, xpath_multi):
+        """Parse single and multi* geometries from the same type from the
+        GML tree. Deduplicates in the sense that single geometries inside a
+        multi* geometry will be discarded in favor of the latter.
+
+        Parameters
+        ----------
+        tree : etree.ElementTree
+            XML tree of the GML to parse.
+        xpath_single : str
+            XPath of the single geometries to parse.
+        xpath_multi : str
+            XPath of the multi* geometries to parse.
+
+        Returns
+        -------
+        single, multi : set of etree.Element, set of etree.Element
+            Sets of the parsed single and multi geometry Elements.
+
+        """
+        single = set(tree.findall(xpath_single))
+        multi = set(tree.findall(xpath_multi))
+
+        for m in multi:
+            single -= set(m.findall(xpath_single))
+
+        return single, multi
+
     def _parse_gml(self):
         """Parse the GML string and add subelements for geometries."""
         gml_tree = etree.fromstring(self.gml.encode('utf8'))
 
-        for e in gml_tree.findall(
-                './/{http://www.opengis.net/gml}Surface'):
-            self.subelements.add(e)
+        points, multipoints = self._dedup_multi(
+            gml_tree,
+            './/{http://www.opengis.net/gml}Point',
+            './/{http://www.opengis.net/gml}MultiPoint'
+        )
 
-        for e in gml_tree.findall(
-                './/{http://www.opengis.net/gml}MultiSurface'):
-            self.subelements.add(e)
+        self.subelements.update(points)
+        self.subelements.update(multipoints)
 
-        for e in gml_tree.findall(
-                './/{http://www.opengis.net/gml}LineString'):
-            self.subelements.add(e)
+        linestrings, multilinestrings = self._dedup_multi(
+            gml_tree,
+            './/{http://www.opengis.net/gml}LineString',
+            './/{http://www.opengis.net/gml}MultiLineString'
+        )
 
-        for e in gml_tree.findall(
-                './/{http://www.opengis.net/gml}MultiLineString'):
-            self.subelements.add(e)
+        self.subelements.update(linestrings)
+        self.subelements.update(multilinestrings)
 
-        for e in gml_tree.findall(
-                './/{http://www.opengis.net/gml}Point'):
-            self.subelements.add(e)
+        polygons, multisurfaces = self._dedup_multi(
+            gml_tree,
+            './/{http://www.opengis.net/gml}Polygon',
+            './/{http://www.opengis.net/gml}MultiSurface')
 
-        for e in gml_tree.findall(
-                './/{http://www.opengis.net/gml}MultiPoint'):
-            self.subelements.add(e)
+        self.subelements.update(polygons)
+        self.subelements.update(multisurfaces)
 
         if len(self.subelements) == 0:
             raise ValueError('Failed to extract geometries from GML file.')

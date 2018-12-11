@@ -531,19 +531,3 @@ class AbstractSearch(object):
         """
         self._init_fields()
         return self._fields
-
-
-class PropertyInList(Or):
-    def __init__(self, propertyname, list):
-        super(PropertyInList, self).__init__(
-            [PropertyIsEqualTo(propertyname, i) for i in set(list)]
-        )
-
-
-class Join(PropertyInList):
-    def __init__(self, dataframe, join_column):
-        if join_column not in list(dataframe):
-            raise ValueError("join_column should be present in the dataframe.")
-
-        super(Join, self).__init__(
-            join_column, list(dataframe[join_column].dropna().unique()))

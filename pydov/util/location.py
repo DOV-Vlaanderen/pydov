@@ -471,12 +471,13 @@ class WithinDistance(AbstractLocationFilter):
         return self.element
 
 
-class GmlFilter(Or):
+class GmlFilter(AbstractLocationFilter):
     """Class for construction a spatial filter expression from a GML
     3.1.1 document.
     """
 
-    def __init__(self, gml, location_filter, location_filter_kwargs=None):
+    def __init__(self, gml, location_filter, location_filter_kwargs=None,
+                 combinator=Or):
         """Initialise a spatial filter expression from a GML 3.1.1 string.
 
         Parameters
@@ -491,10 +492,12 @@ class GmlFilter(Or):
             which is automatically parsed from the GML). Can be skipped in
             cases where the location_filter takes no extra arguments besides
             location.
+        combinator : class<BinaryLogicOpType>, optional, defaults to Or
+            One of (Or, And) used to combine filters for different geometries
+            in the GML document.
 
         Raises
         ------
-
         ValueError
             When no geometries could be parsed from the given GML record.
 
@@ -508,16 +511,13 @@ class GmlFilter(Or):
         self._parse_gml()
 
         if len(self.subelements) == 1:
-            # WithinDistance(Point(0, 0), 0) is a hack to have a second
-            # operation for the Or expression (that never returns a result).
-            ops = [location_filter(GmlObject(self.subelements.pop()),
-                                   **location_filter_kwargs),
-                   WithinDistance(Point(0, 0), 0)]
+            self.element = location_filter(
+                GmlObject(list(self.subelements)[0]),
+                **location_filter_kwargs)
         else:
-            ops = [location_filter(GmlObject(e), **location_filter_kwargs)
-                   for e in self.subelements]
-
-        super(GmlFilter, self).__init__(ops)
+            self.element = combinator(
+                [location_filter(GmlObject(e), **location_filter_kwargs)
+                 for e in self.subelements])
 
     def _dedup_multi(self, tree, xpath_single, xpath_multi):
         """Parse single and multi* geometries from the same type from the
@@ -579,3 +579,13 @@ class GmlFilter(Or):
 
         if len(self.subelements) == 0:
             raise ValueError('Failed to extract geometries from GML file.')
+
+    def set_geometry_column(self, geometry_column):
+        if len(self.subelements) == 1:
+            self.element.set_geometry_column(geometry_column)
+        else:
+            for sub_element in self.element.operations:
+                sub_element.set_geometry_column(geometry_column)
+
+    def toXML(self):
+        return self.element.toXML()

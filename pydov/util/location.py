@@ -581,6 +581,14 @@ class GmlFilter(AbstractLocationFilter):
             raise ValueError('Failed to extract geometries from GML file.')
 
     def set_geometry_column(self, geometry_column):
+        """Set the name of the geometry column to query.
+
+        Parameters
+        ----------
+        geometry_column : str
+            The name of the geometry column to query.
+
+        """
         if len(self.subelements) == 1:
             self.element.set_geometry_column(geometry_column)
         else:
@@ -588,4 +596,18 @@ class GmlFilter(AbstractLocationFilter):
                 sub_element.set_geometry_column(geometry_column)
 
     def toXML(self):
+        """Return the XML representation of the GML filter.
+
+        Returns
+        -------
+        etree.Element
+            XML element of this GML filter.
+
+        Raises
+        ------
+        RuntimeError
+            When called before the geometry column name is set: location
+            filters without the geometry column name are invalid.
+
+        """
         return self.element.toXML()

@@ -560,14 +560,14 @@ class GmlFilter(AbstractLocationFilter):
         self.subelements.update(points)
         self.subelements.update(multipoints)
 
-        linestrings, multilinestrings = self._dedup_multi(
+        linestrings, multicurves = self._dedup_multi(
             gml_tree,
             './/{http://www.opengis.net/gml}LineString',
-            './/{http://www.opengis.net/gml}MultiLineString'
+            './/{http://www.opengis.net/gml}MultiCurve'
         )
 
         self.subelements.update(linestrings)
-        self.subelements.update(multilinestrings)
+        self.subelements.update(multicurves)
 
         polygons, multisurfaces = self._dedup_multi(
             gml_tree,

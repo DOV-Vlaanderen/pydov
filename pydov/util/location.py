@@ -5,6 +5,8 @@ This module is designed to comply with the WFS 1.1.0 standard, implying
 Filter Encoding 1.1 and GML 3.1.1.
 
 """
+import os
+
 from numpy.compat import unicode
 
 from owslib.etree import etree
@@ -483,7 +485,8 @@ class GmlFilter(AbstractLocationFilter):
         Parameters
         ----------
         gml : str
-            String representation of the GML document to parse.
+            Either a string representation of the GML document to parse,
+            or a path to a GML file on disk.
         location_filter : class<AbstractLocationFilter>
             Location filter to use for the geometries in the GML document.
         location_filter_kwargs : dict, optional
@@ -548,9 +551,46 @@ class GmlFilter(AbstractLocationFilter):
         return single, multi
 
     def _parse_gml(self):
-        """Parse the GML string and add subelements for geometries."""
-        gml_tree = etree.fromstring(self.gml.encode('utf8'))
+        """Checks the gml parameter and tries parsing the file.
 
+        Raises
+        ------
+        ValueError
+            When the file could not be parsed.
+
+        """
+        gml_tree = None
+        try:
+            if type(self.gml) in (str, unicode):
+                gml_tree = etree.fromstring(self.gml.encode('utf8'))
+            elif type(self.gml) is bytes:
+                gml_tree = etree.fromstring(self.gml)
+        except etree.ParseError as error:
+            if os.path.isfile(self.gml):
+                with open(self.gml, 'r') as gml_file:
+                    gml_tree = etree.fromstring(gml_file.read().encode('utf8'))
+            else:
+                raise error
+        finally:
+            if gml_tree is not None:
+                self._parse_gml_tree(gml_tree)
+            else:
+                raise ValueError('Failed to parse GML file.')
+
+    def _parse_gml_tree(self, gml_tree):
+        """Parse the GML tree and add subelements for geometries.
+
+        Parameters
+        ----------
+        gml_tree : etree.ElementTree
+            XML tree of the GML to parse.
+
+        Raises
+        ------
+        ValueError
+            When no geometries could be parsed from the given GML record.
+
+        """
         points, multipoints = self._dedup_multi(
             gml_tree,
             './/{http://www.opengis.net/gml}Point',

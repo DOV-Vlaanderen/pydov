@@ -6,8 +6,6 @@ import pydov
 from owslib.etree import etree
 from owslib.fes import (
     FilterRequest,
-    Or,
-    PropertyIsEqualTo,
 )
 from owslib.wfs import WebFeatureService
 from pydov.util import owsutil

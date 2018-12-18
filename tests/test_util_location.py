@@ -16,7 +16,6 @@ from pydov.util.location import (
     Intersects,
     WithinDistance,
     GmlObject,
-    GmlFilter,
 )
 from owslib.etree import etree
 from pydov.util.owsutil import set_geometry_column

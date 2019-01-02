@@ -47,14 +47,14 @@ class TestLocation(object):
         Test whether the generated XML is correct.
 
         """
-        box = Box(50.9850, 3.6214, 51.1270, 3.8071, epsg=4326)
+        box = Box(3.6214, 50.9850, 3.8071, 51.1270, epsg=4326)
         xml = box.get_element()
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
             '<gml:Envelope srsDimension="2" '
             'srsName="http://www.opengis.net/gml/srs/epsg.xml#4326">'
-            '<gml:lowerCorner>50.985000 3.621400</gml:lowerCorner>'
-            '<gml:upperCorner>51.127000 3.807100</gml:upperCorner>'
+            '<gml:lowerCorner>3.621400 50.985000</gml:lowerCorner>'
+            '<gml:upperCorner>3.807100 51.127000</gml:upperCorner>'
             '</gml:Envelope>')
 
     def test_box_invalid(self):
@@ -95,13 +95,13 @@ class TestLocation(object):
         Test whether the generated XML is correct.
 
         """
-        point = Point(51.1270, 3.8071, epsg=4326)
+        point = Point(3.8071, 51.1270, epsg=4326)
         xml = point.get_element()
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
             '<gml:Point srsDimension="2" '
             'srsName="http://www.opengis.net/gml/srs/epsg.xml#4326">'
-            '<gml:pos>51.127000 3.807100</gml:pos></gml:Point>')
+            '<gml:pos>3.807100 51.127000</gml:pos></gml:Point>')
 
     def test_gmlobject_element(self):
         """Test the GmlObject type with an etree.Element.

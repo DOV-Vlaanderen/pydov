@@ -407,7 +407,7 @@ class WithinDistance(AbstractLocationFilter):
     distance of a certain location.
 
     """
-    def __init__(self, location, distance, distance_units='meter'):
+    def __init__(self, location, distance, distance_unit='meter'):
         """Initialise a WithinDistance filter.
 
         Parameters
@@ -417,13 +417,13 @@ class WithinDistance(AbstractLocationFilter):
             WithinDistance filter.
         distance : float
             Amount of distance units to use for the filter.
-        distance_units : string, optional, defaults to 'meter'
+        distance_unit : string, optional, defaults to 'meter'
             The distance unit of the value of `distance`.
 
         """
         self.location = location
         self.distance = distance
-        self.distance_units = distance_units
+        self.distance_unit = distance_unit
         self.geom_column = ''
 
         self.element = etree.Element('{http://www.opengis.net/ogc}DWithin')
@@ -432,7 +432,7 @@ class WithinDistance(AbstractLocationFilter):
         geom.text = self.geom_column
 
         distance = etree.Element('{http://www.opengis.net/ogc}Distance')
-        distance.set('units', self.distance_units)
+        distance.set('units', self.distance_unit)
         distance.text = '%0.6f' % self.distance
 
         self.element.append(geom)

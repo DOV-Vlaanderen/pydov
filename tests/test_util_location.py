@@ -352,6 +352,25 @@ class TestLocationFilters(object):
             '<gml:Distance units="meter">100.000000</gml:Distance>'
             '</ogc:DWithin>')
 
+    def test_withindistance_point_named_args(self):
+        """Test the WithinDistance spatial filter with a Point location.
+
+        Test whether the generated XML is correct.
+
+        """
+        withindistance = WithinDistance(location=Point(150000, 150000),
+                                        distance=100, distance_unit='meter')
+        withindistance.set_geometry_column('geom')
+        xml = withindistance.toXML()
+
+        assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
+            '<ogc:DWithin><ogc:PropertyName>geom</ogc:PropertyName>'
+            '<gml:Point srsDimension="2" '
+            'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370">'
+            '<gml:pos>150000.000000 150000.000000</gml:pos></gml:Point>'
+            '<gml:Distance units="meter">100.000000</gml:Distance>'
+            '</ogc:DWithin>')
+
     def test_withindistance_nogeom(self):
         """Test the WithinDistance spatial filter without setting a geometry
         column.

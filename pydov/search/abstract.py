@@ -224,6 +224,7 @@ class AbstractSearch(object):
                         wfs_schema['properties'][wfs_field],
                         wfs_schema['properties'][wfs_field]),
                     'notnull': fc_field['multiplicity'][0] > 0,
+                    'query': True,
                     'cost': 1
                 }
 
@@ -240,6 +241,7 @@ class AbstractSearch(object):
                 'type': xml_field['type'],
                 'definition': xml_field['definition'],
                 'notnull': xml_field['notnull'],
+                'query': False,
                 'cost': 10
             }
             fields[field['name']] = field
@@ -250,6 +252,7 @@ class AbstractSearch(object):
                 'type': custom_field['type'],
                 'definition': custom_field['definition'],
                 'notnull': custom_field['notnull'],
+                'query': False,
                 'cost': 1
             }
             fields[field['name']] = field
@@ -516,6 +519,9 @@ class AbstractSearch(object):
 
             notnull (boolean)
                 Whether the field is mandatory (True) or can be null (False).
+
+            query (boolean)
+                Whether the field can be used in an attribute query.
 
             cost (integer)
                 The cost associated with the request of this field in the

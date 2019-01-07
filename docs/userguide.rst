@@ -9,66 +9,82 @@ User guide
    :maxdepth: 1
    :hidden:
 
+   quickstart
+   query_attribute
+   query_location
+   output_df_fields
+   performance
    df_format
-   query_cost
    caching
    hooks
 
-All the pydov functionalities rely on the existing DOV webservices. An in-depth
-overview of the available services and endpoints is provided on the :ref:`accessing DOV data <endpoints>` page. To retrieve
-data, pydov uses a combination of the available :ref:`WFS services <vector_wfs>` and the
-:ref:`XML representation <xml_data>` of the core DOV data.
+.. _quickstart:
 
-For the main data sources (the overview is enlisted :ref:`here <xml_data>`), the package converts the data
-into (a set of) Pandas :class:`~pandas.DataFrame`, i.e. denormalizing the data. A Pandas :class:`~pandas.DataFrame`
-is a column based format and the Python `Pandas package`_ provides powerful operations such as
-filtering, subsetting, group by operations, etc. making further analysis possible.
+-----------
+Quick start
+-----------
+
+To get started with pydov you should first determine which information you want to search for. DOV provides a lot of different datasets about soil, subsoil and groundwater of Flanders, some of which can be queried using pydov.
+
+Currently, we support the following datasets:
+
+.. csv-table:: Dataset search objects
+    :header-rows: 1
+
+    Dataset,Dataset (Dutch),Search object
+    Boreholes,Boringen,pydov.search.boring.BoringSearch
+    Groundwater screens,Grondwater filters,pydov.search.grondwaterfilter.GrondwaterFilterSearch
+    Informal stratigraphy,Informele stratigrafie,pydov.search.interpretaties.InformeleStratigrafieSearch
+    Hydrogeological stratigraphy,Hydrogeologische stratigrafie,pydov.search.interpretaties.HydrogeologischeStratigrafieSearch
+    Coded lithology,Gecodeerde lithologie,pydov.search.interpretaties.GecodeerdeLithologieSearch
+    Lithological descriptions,Lithologische beschrijvingen,pydov.search.interpretaties.LithologischeBeschrijvingenSearch
+
+Each of the datasets can be queried using a search object for this dataset. While the search objects are different, the workflow is the same for each dataset. Relevant classes can be imported from the pydov.search package, for example if we'd like to query the boreholes dataset:
+
+::
+
+    from pydov.search.boring import BoringSearch
+    boringsearch = BoringSearch()
+
+Now we can query for boreholes either on attributes, on location or on a combination of both. To query on attributes, we use the OGC filter functions from OWSLib. For example, to request all boreholes with a depth over 2000 m, we would use the following ``query`` parameter:
+
+::
+
+    from owslib.fes import PropertyIsGreaterThan
+
+    dataframe = boringsearch.search(
+        query=PropertyIsGreaterThan(
+            propertyname='diepte_tot_m', literal='2000')
+    )
+
+To query on location, we use location objects and spatial filters from the pydov.util.location module. For example, to request all boreholes in a given bounding box, we would use the following ``location`` parameter:
+
+::
+
+    from pydov.util.location import Within, Box
+
+    dataframe = boringsearch.search(
+        location=Within(Box(94720, 186910, 112220, 202870))
+    )
+
+Attribute queries can be combined with location filtering by specifying both parameters in the search call:
+
+::
+
+    dataframe = boringsearch.search(
+        query=PropertyIsGreaterThan(
+            propertyname='diepte_tot_m', literal='2000'),
+        location=Within(Box(94720, 186910, 112220, 202870))
+    )
+
+----------
+Background
+----------
+
+All the pydov functionalities rely on the existing DOV webservices. An in-depth overview of the available services and endpoints is provided on the :ref:`accessing DOV data <endpoints>` page. To retrieve data, pydov uses a combination of the available :ref:`WFS services <vector_wfs>` and the :ref:`XML representation <xml_data>` of the core DOV data.
+
+For the datasets listed above (the full overview is enlisted :ref:`here <xml_data>`), the package converts the data into a Pandas :class:`~pandas.DataFrame`, i.e. denormalizing the data. A Pandas DataFrame is a table-like format and the Python `Pandas package`_ provides powerful operations, such as filtering, subsetting, group by operations, etc., making further analysis easy.
 
 .. _Pandas package: https://pandas.pydata.org/
 
-The output format for each of the main data object types is defined in the
-:ref:`object type overview <object_types>`:
-
-* :ref:`Boreholes <ref_boreholes>` output derived from :class:`~pydov.search.boring.BoringSearch`
-* :ref:`Groundwater screen<ref_gwfilter>` output derived from :class:`~pydov.search.grondwaterfilter.GrondwaterFilterSearch`
-* :ref:`Interpretations <ref_interpretations>` output derived from one of the available interpretation search classes, e.g. :class:`~pydov.search.interpretaties.InformeleStratigrafieSearch`
-* :ref:`CPT data <ref_cpt_data>` (not yet implemented)
-
-
-The workflow to query data is for each of the data object types the same. In the following,
-:ref:`Groundwater screen<ref_gwfilter>` is used for the example.
-
-Start with creating an instance of a ``**Search`` class of the appropriate data object class:
-
-::
-
-    from pydov.search.grondwaterfilter import GrondwaterFilterSearch
-    gwfilter = GrondwaterFilterSearch()
-
-To search the locations and data points of interest, you can search with ``location`` options, ``query`` options
-or both:
-
-::
-
-    df = gwfilter.search(query=PropertyIsEqualTo(propertyname='gemeente',
-                                                 literal='Boortmeerbeek'),
-                         location=(87676, 163442, 91194, 168043))
-
-The returned information is a :class:`~pandas.DataFrame` as described in the :ref:`object type overview <object_types>`.
-
-The supported query elements for the ``location`` argument is currently a bbox, provided as
-tuple (*minx, miny, maxx, maxy*). Other geographical inputs like a coorindate with buffer or
-a polygon are not yet implemented.
-
-For the ``query`` argument, pydov relies on the `OWSLib package`_ operators, providing a Python interface to
-the WFS protocol operators, such as ``PropertyIsEqualTo``, ``PropertyIsGreaterThan``,...
-
-.. _OWSLib package: https://geopython.github.io/OWSLib/
-
-Hence, in the example code, the groundwater screens in between the given bbox and with the property ``gemeente``
-equal to *Boortmeerbeek*. More detailed use cases using these operators are provided
-in the :ref:`tutorials section <tutorials>`.
-
-As pydov relies on the ``XML`` returned by the existing DOV webservices, recurrent downloads of these files
-can slow down the data search and queries. To counteract this, pydov implementes some additional features
-explained in the :ref:`query duration guide <query_cost>`.
+As pydov relies on the XML data returned by the existing DOV webservices, downloads of these files can slow down the data retrieval. To mitigate this, pydov implementes some additional features that you can use to speed up your searches. Details are explained in the :ref:`performance guide <performance>`.

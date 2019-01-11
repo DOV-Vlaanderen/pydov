@@ -3,6 +3,8 @@
 PyDOV events."""
 
 import sys
+from multiprocessing import Lock
+
 import time
 
 
@@ -86,6 +88,7 @@ class SimpleStatusHook(AbstractHook):
         self.prog_counter = 0
         self.init_time = None
         self.previous_remaining = None
+        self.lock = Lock()
 
     def _write_progress(self, char):
         """Write progress to standard output.
@@ -162,7 +165,8 @@ class SimpleStatusHook(AbstractHook):
             Permanent key of the requested object.
 
         """
-        self._write_progress('c')
+        with self.lock:
+            self._write_progress('c')
 
     def xml_downloaded(self, pkey_object):
         """When an XML document is downloaded from the DOV services,
@@ -174,4 +178,5 @@ class SimpleStatusHook(AbstractHook):
             Permanent key of the requested object.
 
         """
-        self._write_progress('.')
+        with self.lock:
+            self._write_progress('.')

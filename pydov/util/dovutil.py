@@ -7,13 +7,16 @@ from owslib.etree import etree
 from pydov.util.errors import XmlParseError
 
 
-def get_dov_xml(url):
+def get_dov_xml(url, session=None):
     """Request the XML from the remote DOV webservices and return it.
 
     Parameters
     ----------
     url : str
         URL of the DOV object to download.
+    session: requests.Session, optional
+        Requests session object. This increases performance as using a
+        session object allows connection pooling and TCP connection reuse.
 
     Returns
     -------
@@ -21,9 +24,12 @@ def get_dov_xml(url):
         The raw XML data of this DOV object as bytes.
 
     """
-    headers = {'user-agent': 'PyDOV/%s' % pydov.__version__}
+    if session:
+        request = session.get(url, timeout=60)
+    else:
+        headers = {'user-agent': 'PyDOV/%s' % pydov.__version__}
+        request = requests.get(url, headers=headers, timeout=60)
 
-    request = requests.get(url, headers=headers, timeout=60)
     request.encoding = 'utf-8'
     return request.text.encode('utf8')
 

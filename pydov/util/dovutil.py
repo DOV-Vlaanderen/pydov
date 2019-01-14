@@ -6,17 +6,19 @@ import pydov
 from owslib.etree import etree
 from pydov.util.errors import XmlParseError
 
+# Global requests session object. This increases performance as using a
+# session object allows connection pooling and TCP connection reuse. It is
+# initialised upon first usage by get_dov_xml().
+session = None
 
-def get_dov_xml(url, session=None):
+
+def get_dov_xml(url):
     """Request the XML from the remote DOV webservices and return it.
 
     Parameters
     ----------
     url : str
         URL of the DOV object to download.
-    session: requests.Session, optional
-        Requests session object. This increases performance as using a
-        session object allows connection pooling and TCP connection reuse.
 
     Returns
     -------
@@ -24,12 +26,12 @@ def get_dov_xml(url, session=None):
         The raw XML data of this DOV object as bytes.
 
     """
-    if session:
-        request = session.get(url, timeout=60)
-    else:
-        headers = {'user-agent': 'PyDOV/%s' % pydov.__version__}
-        request = requests.get(url, headers=headers, timeout=60)
+    global session
+    if not session:
+        session = requests.Session()
+        session.headers.update({'user-agent': 'PyDOV/%s' % pydov.__version__})
 
+    request = session.get(url, timeout=60)
     request.encoding = 'utf-8'
     return request.text.encode('utf8')
 

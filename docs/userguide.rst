@@ -72,3 +72,72 @@ in the :ref:`tutorials section <tutorials>`.
 As pydov relies on the ``XML`` returned by the existing DOV webservices, recurrent downloads of these files
 can slow down the data search and queries. To counteract this, pydov implementes some additional features
 explained in the :ref:`query duration guide <query_cost>`.
+
+Using custom filter expressions
+*******************************
+
+pydov adds two custom filter expressions to the available set from OGC described above. They can be imported from the pydov.util.query module.
+
+
+Query using lists
+-----------------
+
+pydov extends the default OGC filter expressions described above with a new expression `PropertyInList` that allows you to use lists (of strings) in search queries.
+
+The `PropertyInList` internally translates to a `PropertyIsEqualTo` and is relevant for string, numeric, date or boolean attributes:
+
+PropertyInList
+    Search for one of a list of exact matches.
+
+    Internally this is translated to ``Or([PropertyIsEqualTo(), PropertyIsEqualTo(), ...])``.
+
+    Example: ``PropertyInList(propertyname='methode', list=['ramkernboring', 'spoelboring', 'spade'])``
+
+
+Join different searches
+-----------------------
+
+The `Join` expression allows you to join multiple searches together. This allows combining results from different datasets to get the results you're looking for. Instead of an propertyname and a literal (or a list of literals), this expression takes a Pandas dataframe and a join column. The join column should be a column that exists in the dataframe and is one of the attributes of the type that is being searched.
+
+Join
+    Join searches together using a common attribute.
+
+    Example: ``Join(dataframe=df_boringen, join_column='pkey_boring')``
+
+The following example returns all the lithological descriptions of boreholes that are at least 20 meters deep (note that this is different from 'lithological descriptions with a depth of at least 20m'):
+
+::
+
+    from pydov.util.query import Join
+
+    from pydov.search.boring import BoringSearch
+    from pydov.search.interpretaties import LithologischeBeschrijvingenSearch
+
+    bs = BoringSearch()
+    ls = LithologischeBeschrijvingenSearch()
+
+    boringen = bs.search(query=PropertyIsGreaterThan('diepte_tot_m', '20'),
+                         return_fields=('pkey_boring',))
+
+    lithologische_beschrijvingen = ls.search(query=Join(boringen, 'pkey_boring'))
+
+`Join` expressions can be logically combined with other filter expressions, for example to further restrict the resultset:
+
+::
+
+    from owslib.fes import And
+    from owslib.fes import PropertyIsEqualTo
+
+    from pydov.util.query import Join
+
+    from pydov.search.boring import BoringSearch
+    from pydov.search.interpretaties import LithologischeBeschrijvingenSearch
+
+    bs = BoringSearch()
+    ls = LithologischeBeschrijvingenSearch()
+
+    boringen = bs.search(query=PropertyIsGreaterThan('diepte_tot_m', '20'),
+                         return_fields=('pkey_boring',))
+
+    lithologische_beschrijvingen = ls.search(query=And([Join(boringen, 'pkey_boring'),
+                                                        PropertyIsEqualTo('betrouwbaarheid_interpretatie', 'goed')]))

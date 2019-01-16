@@ -20,14 +20,14 @@ class PropertyInList(Or):
     'spoelboring')])
 
     """
-    def __init__(self, propertyname, list):
+    def __init__(self, propertyname, lst):
         """Initialisation.
 
         Parameters
         ----------
         propertyname : str
             Name of the attribute to query.
-        list : list of str
+        lst : list of str
             List of literals to match against (exact matches).
 
         Raises
@@ -36,12 +36,15 @@ class PropertyInList(Or):
             If the given list does not contain at least two distinct items.
 
         """
-        if len(set(list)) < 2:
+        if not isinstance(lst, list) and not isinstance(lst, set):
+            raise ValueError('list should be of type "list" or "set"')
+
+        if len(set(lst)) < 2:
             raise ValueError('list should contain at least two different '
                              'elements.')
 
         super(PropertyInList, self).__init__(
-            [PropertyIsEqualTo(propertyname, i) for i in set(list)]
+            [PropertyIsEqualTo(propertyname, i) for i in set(lst)]
         )
 
 

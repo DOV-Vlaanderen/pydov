@@ -58,6 +58,8 @@ Attribute queries can be combined with location filtering by specifying both par
         location=Within(Box(94720, 186910, 112220, 202870))
     )
 
+The :ref:`query_attribute` and :ref:`query_location` pages provide an overview of the query options for attributes and locations respectively.
+
 Background
     All the pydov functionalities rely on the existing DOV webservices. An in-depth overview of the available services and endpoints is provided on the :ref:`accessing DOV data <endpoints>` page. To retrieve data, pydov uses a combination of the available :ref:`WFS services <vector_wfs>` and the :ref:`XML representation <xml_data>` of the core DOV data.
 

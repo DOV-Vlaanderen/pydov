@@ -53,7 +53,7 @@ for each of the object types (:class:`~pydov.search.grondwaterfilter.GrondwaterF
 
 The setup of appropriate queries on attribute or location is similar for the different data types and
 crucial to get acces to the required data. The :ref:`query_attribute` and :ref:`query_location` explain
-the query options for attributes and locations respectively.  
+the query options for attributes and locations respectively.
 
 All functionalities are build on top of the existing webservices provided
 by DOV. For more details about these services and endpoints, check

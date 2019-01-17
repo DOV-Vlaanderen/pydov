@@ -63,7 +63,6 @@ Contents:
    :maxdepth: 1
 
    installation
-   quickstart
    userguide
    tutorials
    endpoints

@@ -286,10 +286,10 @@ PropertyInList
 Join different searches
 -----------------------
 
-The `Join` expression allows you to join multiple searches together. This allows combining results from different datasets to get the results you're looking for. Instead of an propertyname and a literal (or a list of literals), this expression takes a Pandas dataframe and a join column. The join column should be a column that exists in the dataframe and is one of the attributes of the type that is being searched.
+The `Join` expression allows you to join multiple searches together. This allows combining results from different datasets to get the results you're looking for.
 
 Join
-    Join searches together using a common attribute.
+    Join searches together using a common attribute. Instead of a propertyname and a literal (or a list of literals), this expression takes a Pandas dataframe and a join column. The join column should be a column that exists in the dataframe and is one of the attributes of the type that is being searched.
 
     Example: ``Join(dataframe=df_boringen, join_column='pkey_boring')``
 

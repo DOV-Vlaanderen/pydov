@@ -499,7 +499,7 @@ class GeotechnischeCoderingSearch(AbstractSearch):
     def __init__(self):
         """Initialisation."""
         super(GeotechnischeCoderingSearch, self).__init__(
-            'interpretaties:geotechnische_codering',
+            'interpretaties:geotechnische_coderingen',
             GeotechnischeCodering)
 
     def _init_namespace(self):

@@ -44,12 +44,16 @@ package provides the optimal development traject.
 Getting started
 ---------------
 
-After :ref:`installation`, check the :ref:`userguide` instructions for a first introduction of
+After :ref:`installation`, check the :ref:`quickstart` instructions for a first introduction of
 the pydov functionalities. For a more in-depth overview of the capabilities,
 the :ref:`tutorials` illustrate different capabilities of the pydov package
 for each of the object types (:class:`~pydov.search.grondwaterfilter.GrondwaterFilterSearch`,
 :class:`~pydov.search.boring.BoringSearch` and the interpretations derived from
 :class:`~pydov.search.interpretaties.InformeleStratigrafieSearch`).
+
+The setup of appropriate queries on attribute or location is similar for the different data types and
+crucial to get acces to the required data. The :ref:`query_attribute` and :ref:`query_location` explain
+the query options for attributes and locations respectively.  
 
 All functionalities are build on top of the existing webservices provided
 by DOV. For more details about these services and endpoints, check

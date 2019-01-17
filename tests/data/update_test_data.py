@@ -68,6 +68,40 @@ if __name__ == '__main__':
                 'https://www.dov.vlaanderen.be/geoserver/dov-pub/Boringen'
                 '/ows?service=wfs&version=1.1.0&request=DescribeFeatureType')
 
+    # types/sondering
+
+    update_file('types/sondering/sondering.xml',
+                'https://www.dov.vlaanderen.be/data/sondering/2002-018435.xml')
+
+    update_file('types/sondering/wfsgetfeature.xml',
+                'https://www.dov.vlaanderen.be/geoserver/ows?service=WFS'
+                '&version=1.1.0&request=GetFeature&typeName=dov-pub'
+                ':Sonderingen&maxFeatures=1&CQL_Filter=fiche=%27https://www.'
+                'dov.vlaanderen.be/data/sondering/2002-018435%27')
+
+    update_file('types/sondering/feature.xml',
+                'https://www.dov.vlaanderen.be/geoserver/ows?service=WFS'
+                '&version=1.1.0&request=GetFeature&typeName=dov-pub'
+                ':Sonderingen&maxFeatures=1&CQL_Filter=fiche=%27https://www.'
+                'dov.vlaanderen.be/data/sondering/2002-018435%27',
+                get_first_featuremember)
+
+    update_file('types/sondering/fc_featurecatalogue.xml',
+                'https://www.dov.vlaanderen.be/geonetwork/srv/dut/csw'
+                '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+                '&outputSchema=http://www.isotc211.org/2005/gmd'
+                '&elementSetName=full&id=bd539ba5-5f4d-4c43-9662-51c16caea351')
+
+    update_file('types/sondering/md_metadata.xml',
+                'https://www.dov.vlaanderen.be/geonetwork/srv/dut/csw'
+                '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+                '&outputSchema=http://www.isotc211.org/2005/gmd'
+                '&elementSetName=full&id=b397faec-1b64-4854-8000-2375edb3b1a8')
+
+    update_file('types/sondering/wfsdescribefeaturetype.xml',
+                'https://www.dov.vlaanderen.be/geoserver/dov-pub/Sonderingen'
+                '/ows?service=wfs&version=1.1.0&request=DescribeFeatureType')
+
     # types/interpretaties/informele_stratigrafie
 
     update_file('types/interpretaties/informele_stratigrafie'

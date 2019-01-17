@@ -256,11 +256,12 @@ class TestGeotechnischeCoderingSearch(AbstractTestSearch):
                            'hoofdnaam2_grondsoort',
                            'bijmenging1_grondsoort',
                            'bijmenging1_hoeveelheid',
-                           'bijmenging1_plaatselijk',
-                           'bijmenging2_grondsoort',
-                           'bijmenging3_grondsoort'))
+                           'bijmenging1_plaatselijk'
+                           ))
 
-        assert df.hoofdnaam1_grondsoort[4] == 'FZ'
-        assert df.hoofdnaam2_grondsoort[4] == 'LE'
-        assert df.bijmenging1_grondsoort[4] == 'SN'
-        assert df.bijmenging1_hoeveelheid[2] == 'N'
+        assert df.hoofdnaam1_grondsoort[0] == 'FZ'
+        assert df.hoofdnaam2_grondsoort[0] == 'LE'
+        assert df.bijmenging1_grondsoort[0] == 'SN'
+        assert df.bijmenging1_hoeveelheid[0] == 'N'
+        # mind that the column below is of dtype 'object'
+        assert df.bijmenging1_plaatselijk[0] is False

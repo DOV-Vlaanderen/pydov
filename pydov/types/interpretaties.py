@@ -510,7 +510,7 @@ class GeotechnischeCoderingLaag(AbstractDovSubType):
         'type': 'float',
         'notnull': False
     }, {
-        'name': 'hoofdnaam_grondsoort',
+        'name': 'hoofdnaam1_grondsoort',
         'source': 'xml',
         'sourcefield': '/hoofdnaam[1]/grondsoort',
         'definition': 'hoofdnaam (als code) van de laag '

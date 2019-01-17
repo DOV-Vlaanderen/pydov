@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <csw:GetRecordByIdResponse xmlns:csw="http://www.opengis.net/cat/csw/2.0.2">
-  <gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gml="http://www.opengis.net/gml" xmlns:geonet="http://www.fao.org/geonetwork">
+  <gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gml="http://www.opengis.net/gml" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:geonet="http://www.fao.org/geonetwork">
     <gmd:fileIdentifier>
-      <gco:CharacterString>b397faec-1b64-4854-8000-2375edb3b1a8</gco:CharacterString>
+      <gco:CharacterString>212af8cd-bffd-423c-9d2b-69c544ab3b04</gco:CharacterString>
     </gmd:fileIdentifier>
     <gmd:language>
       <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="dut" />
     </gmd:language>
     <gmd:characterSet>
-      <gmd:MD_CharacterSetCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_CharacterSetCode" codeListValue="utf8" />
+      <gmd:MD_CharacterSetCode codeListValue="utf8" codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_CharacterSetCode" />
     </gmd:characterSet>
-    <gmd:parentIdentifier gco:nilReason="missing">
-      <gco:CharacterString />
+    <gmd:parentIdentifier>
+      <gco:CharacterString>c9128330-1124-4c46-9d37-77796e10df71</gco:CharacterString>
     </gmd:parentIdentifier>
     <gmd:hierarchyLevel>
-      <gmd:MD_ScopeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ScopeCode" codeListValue="dataset" />
+      <gmd:MD_ScopeCode codeListValue="dataset" codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ScopeCode" />
     </gmd:hierarchyLevel>
+    <gmd:hierarchyLevelName>
+      <gco:CharacterString>dataset</gco:CharacterString>
+    </gmd:hierarchyLevelName>
     <gmd:contact>
       <gmd:CI_ResponsibleParty>
         <gmd:organisationName>
-          <gco:CharacterString>Departement Mobiliteit en Openbare Werken (MOW) - Afdeling Geotechniek</gco:CharacterString>
+          <gco:CharacterString>Databank Ondergrond Vlaanderen (DOV)</gco:CharacterString>
         </gmd:organisationName>
         <gmd:contactInfo>
           <gmd:CI_Contact>
             <gmd:phone>
               <gmd:CI_Telephone>
                 <gmd:voice>
-                  <gco:CharacterString>+32 9 240 75 89</gco:CharacterString>
+                  <gco:CharacterString>+32 9 240 75 93</gco:CharacterString>
                 </gmd:voice>
-                <gmd:facsimile>
-                  <gco:CharacterString>+32 9 240 75 00</gco:CharacterString>
-                </gmd:facsimile>
               </gmd:CI_Telephone>
             </gmd:phone>
             <gmd:address>
@@ -48,14 +48,14 @@
                   <gco:CharacterString>België</gco:CharacterString>
                 </gmd:country>
                 <gmd:electronicMailAddress>
-                  <gco:CharacterString>geotechniek@vlaanderen.be</gco:CharacterString>
+                  <gco:CharacterString>dov@vlaanderen.be</gco:CharacterString>
                 </gmd:electronicMailAddress>
               </gmd:CI_Address>
             </gmd:address>
             <gmd:onlineResource>
               <gmd:CI_OnlineResource>
                 <gmd:linkage>
-                  <gmd:URL>http://www.geotechniekvo.be</gmd:URL>
+                  <gmd:URL>https://www.dov.vlaanderen.be</gmd:URL>
                 </gmd:linkage>
               </gmd:CI_OnlineResource>
             </gmd:onlineResource>
@@ -67,7 +67,7 @@
       </gmd:CI_ResponsibleParty>
     </gmd:contact>
     <gmd:dateStamp>
-      <gco:DateTime>2019-01-17T17:39:46</gco:DateTime>
+      <gco:DateTime>2018-02-21T16:13:51</gco:DateTime>
     </gmd:dateStamp>
     <gmd:metadataStandardName>
       <gco:CharacterString>ISO 19115/2003/Cor.1:2006</gco:CharacterString>
@@ -122,15 +122,12 @@
         <gmd:citation>
           <gmd:CI_Citation>
             <gmd:title>
-              <gco:CharacterString>Sonderingen</gco:CharacterString>
+              <gco:CharacterString>Formele stratigrafie</gco:CharacterString>
             </gmd:title>
-            <gmd:alternateTitle>
-              <gco:CharacterString>Publieke sonderingen</gco:CharacterString>
-            </gmd:alternateTitle>
             <gmd:date>
               <gmd:CI_Date>
                 <gmd:date>
-                  <gco:Date>2002-05-22</gco:Date>
+                  <gco:Date>2017-03-06</gco:Date>
                 </gmd:date>
                 <gmd:dateType>
                   <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication" />
@@ -140,118 +137,24 @@
             <gmd:identifier>
               <gmd:RS_Identifier>
                 <gmd:code>
-                  <gco:CharacterString>952c223e-0c4f-45c4-94b7-64da7c89ddd5</gco:CharacterString>
+                  <gco:CharacterString>ebfb2977-713c-4518-b65d-44186ef64fd4</gco:CharacterString>
                 </gmd:code>
                 <gmd:codeSpace>
                   <gco:CharacterString>DOV-be</gco:CharacterString>
                 </gmd:codeSpace>
               </gmd:RS_Identifier>
             </gmd:identifier>
-            <gmd:series>
-              <gmd:CI_Series />
-            </gmd:series>
           </gmd:CI_Citation>
         </gmd:citation>
         <gmd:abstract>
-          <gco:CharacterString>In DOV worden de resultaten van sonderingen ter beschikking gesteld. Bij het uitvoeren van de sondering wordt een sondeerpunt met conus bij middel van buizen statisch de grond ingedrukt. Continu of met bepaalde diepte-intervallen wordt de weerstand aan de conuspunt, de plaatselijke wrijvingsweerstand en/of de totale indringingsweerstand opgemeten. Eventueel kan aanvullend de waterspanning in de grond rond de conus tijdens de sondering worden opgemeten met een waterspanningsmeter. Het op diepte drukken van de sondeerbuizen gebeurt met een indrukapparaat. De nodige reactie voor het indrukken van de buizen wordt geleverd door een verankering en/of door het gewicht van de sondeerwagen. De totale indrukcapaciteit varieert van 25 kN tot 250 kN, afhankelijk van apparaat en opstellingswijze.</gco:CharacterString>
+          <gco:CharacterString>Een formele stratigrafie van een boring of een sondering is een lithostratigrafische interpretatie van een (gecodeerde) lithologische beschrijving op basis van een welbepaalde vastgelegde standaard per diepte-interval. DOV gebruikt de gangbare standaarden binnen Vlaanderen. U vindt een overzicht van de gebruikte standaarden op onze website. De formele stratigrafie wordt gebruikt om de dikte van het Quartair te identificeren, en om de onderliggende pakketten Neogene, Paleogene en/of oudere lagen te onderscheiden en te identificeren.</gco:CharacterString>
         </gmd:abstract>
         <gmd:purpose>
-          <gco:CharacterString>Het doel van elke sondering op zich kan sterk verschillen. Sonderingen kunnen kaderen in een geotechnische proef of studie om bv. het draagvermogen van de grond te onderkennen, om een lagenopbouw op te stellen, om de grond te identificeren, enz. Sonderingen kunnen kaderen in een geologische proef of studie om bv. de formele stratigrafie te onderkennen, enz. In DOV worden de resultaten van sonderingen ter beschikking gesteld.
-Sonderingen laten toe op een snelle en efficiënte manier en tegen een behoorlijke kostprijs, informatie te verzamelen met betrekking tot de ondergrond. De geotechnische data werden verzameld bij de digitalisatie van de archieven van de afdeling Geotechniek van de Vlaamse overheid. De geologische data werden verzameld in het kader van de geologische karteringen. De data worden continu bijgehouden en ingezet bij allerlei geologische, geotechnische, hydrogeologische en pedologische karteringen, modelleringen, vooronderzoeken, enz.</gco:CharacterString>
+          <gco:CharacterString>Tijdens geologische karteringen i.o.v. ALBON worden er steeds formele interpretaties aangemaakt indien mogelijk. Ook sonderingen worden formeel geïnterpreteerd op basis van omliggende proefgegevens. Door deze gegevens op standaardwijze te interpreteren wordt het mogelijk om te zoeken naar gelijkaardige eenheden over verschillende boringen en/of sonderingen heen en na te gaan of correlaties mogelijk zijn. De gehele dataset van DOV kan onderzocht worden door deze systematische interpretaties. Op die manier worden ze gebruikt bij de opmaak van geologische kaarten en modellen.</gco:CharacterString>
         </gmd:purpose>
         <gmd:status>
           <gmd:MD_ProgressCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ProgressCode" codeListValue="onGoing" />
         </gmd:status>
-        <gmd:pointOfContact>
-          <gmd:CI_ResponsibleParty>
-            <gmd:organisationName>
-              <gco:CharacterString>Departement Mobiliteit en Openbare Werken (MOW) - Afdeling Geotechniek</gco:CharacterString>
-            </gmd:organisationName>
-            <gmd:contactInfo>
-              <gmd:CI_Contact>
-                <gmd:phone>
-                  <gmd:CI_Telephone>
-                    <gmd:voice>
-                      <gco:CharacterString>+32 9 240 75 89</gco:CharacterString>
-                    </gmd:voice>
-                    <gmd:facsimile>
-                      <gco:CharacterString>+32 9 240 75 00</gco:CharacterString>
-                    </gmd:facsimile>
-                  </gmd:CI_Telephone>
-                </gmd:phone>
-                <gmd:address>
-                  <gmd:CI_Address>
-                    <gmd:deliveryPoint>
-                      <gco:CharacterString>Technologiepark Gebouw 905</gco:CharacterString>
-                    </gmd:deliveryPoint>
-                    <gmd:city>
-                      <gco:CharacterString>Zwijnaarde</gco:CharacterString>
-                    </gmd:city>
-                    <gmd:postalCode>
-                      <gco:CharacterString>9052</gco:CharacterString>
-                    </gmd:postalCode>
-                    <gmd:country>
-                      <gco:CharacterString>België</gco:CharacterString>
-                    </gmd:country>
-                    <gmd:electronicMailAddress>
-                      <gco:CharacterString>geotechniek@vlaanderen.be</gco:CharacterString>
-                    </gmd:electronicMailAddress>
-                  </gmd:CI_Address>
-                </gmd:address>
-                <gmd:onlineResource>
-                  <gmd:CI_OnlineResource>
-                    <gmd:linkage>
-                      <gmd:URL>http://www.geotechniekvo.be</gmd:URL>
-                    </gmd:linkage>
-                  </gmd:CI_OnlineResource>
-                </gmd:onlineResource>
-              </gmd:CI_Contact>
-            </gmd:contactInfo>
-            <gmd:role>
-              <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_RoleCode" codeListValue="custodian" />
-            </gmd:role>
-          </gmd:CI_ResponsibleParty>
-        </gmd:pointOfContact>
-        <gmd:pointOfContact>
-          <gmd:CI_ResponsibleParty>
-            <gmd:organisationName>
-              <gco:CharacterString>Vlaamse overheid, Departement Omgeving, Vlaams Planbureau voor Omgeving (VPO)</gco:CharacterString>
-            </gmd:organisationName>
-            <gmd:contactInfo>
-              <gmd:CI_Contact>
-                <gmd:address>
-                  <gmd:CI_Address>
-                    <gmd:deliveryPoint>
-                      <gco:CharacterString>Koning Albert II-laan 20 bus 8</gco:CharacterString>
-                    </gmd:deliveryPoint>
-                    <gmd:city>
-                      <gco:CharacterString>Brussel</gco:CharacterString>
-                    </gmd:city>
-                    <gmd:postalCode>
-                      <gco:CharacterString>1000</gco:CharacterString>
-                    </gmd:postalCode>
-                    <gmd:country>
-                      <gco:CharacterString>België</gco:CharacterString>
-                    </gmd:country>
-                    <gmd:electronicMailAddress>
-                      <gco:CharacterString>natuurlijkerijkdommenbrussel.omgeving@vlaanderen.be</gco:CharacterString>
-                    </gmd:electronicMailAddress>
-                  </gmd:CI_Address>
-                </gmd:address>
-                <gmd:onlineResource>
-                  <gmd:CI_OnlineResource>
-                    <gmd:linkage>
-                      <gmd:URL>https://www.omgevingvlaanderen.be</gmd:URL>
-                    </gmd:linkage>
-                  </gmd:CI_OnlineResource>
-                </gmd:onlineResource>
-              </gmd:CI_Contact>
-            </gmd:contactInfo>
-            <gmd:role>
-              <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_RoleCode" codeListValue="custodian" />
-            </gmd:role>
-          </gmd:CI_ResponsibleParty>
-        </gmd:pointOfContact>
         <gmd:pointOfContact>
           <gmd:CI_ResponsibleParty>
             <gmd:organisationName>
@@ -299,33 +202,53 @@ Sonderingen laten toe op een snelle en efficiënte manier en tegen een behoorlij
             </gmd:role>
           </gmd:CI_ResponsibleParty>
         </gmd:pointOfContact>
-        <gmd:resourceMaintenance>
-          <gmd:MD_MaintenanceInformation>
-            <gmd:maintenanceAndUpdateFrequency>
-              <gmd:MD_MaintenanceFrequencyCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_MaintenanceFrequencyCode" codeListValue="continual" />
-            </gmd:maintenanceAndUpdateFrequency>
-          </gmd:MD_MaintenanceInformation>
-        </gmd:resourceMaintenance>
+        <gmd:pointOfContact>
+          <gmd:CI_ResponsibleParty>
+            <gmd:organisationName>
+              <gco:CharacterString>Vlaamse overheid, Departement Omgeving, Vlaams Planbureau voor Omgeving (VPO)</gco:CharacterString>
+            </gmd:organisationName>
+            <gmd:contactInfo>
+              <gmd:CI_Contact>
+                <gmd:address>
+                  <gmd:CI_Address>
+                    <gmd:deliveryPoint>
+                      <gco:CharacterString>Koning Albert II-laan 20 bus 8</gco:CharacterString>
+                    </gmd:deliveryPoint>
+                    <gmd:city>
+                      <gco:CharacterString>Brussel</gco:CharacterString>
+                    </gmd:city>
+                    <gmd:postalCode>
+                      <gco:CharacterString>1000</gco:CharacterString>
+                    </gmd:postalCode>
+                    <gmd:country>
+                      <gco:CharacterString>België</gco:CharacterString>
+                    </gmd:country>
+                    <gmd:electronicMailAddress>
+                      <gco:CharacterString>natuurlijkerijkdommenbrussel.omgeving@vlaanderen.be</gco:CharacterString>
+                    </gmd:electronicMailAddress>
+                  </gmd:CI_Address>
+                </gmd:address>
+                <gmd:onlineResource>
+                  <gmd:CI_OnlineResource>
+                    <gmd:linkage>
+                      <gmd:URL>https://www.omgevingvlaanderen.be</gmd:URL>
+                    </gmd:linkage>
+                  </gmd:CI_OnlineResource>
+                </gmd:onlineResource>
+              </gmd:CI_Contact>
+            </gmd:contactInfo>
+            <gmd:role>
+              <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_RoleCode" codeListValue="custodian" />
+            </gmd:role>
+          </gmd:CI_ResponsibleParty>
+        </gmd:pointOfContact>
         <gmd:graphicOverview xmlns:srv="http://www.isotc211.org/2005/srv">
           <gmd:MD_BrowseGraphic>
             <gmd:fileName>
-              <gco:CharacterString>https://www.dov.vlaanderen.be/geonetwork/srv/eng/resources.get?uuid=b397faec-1b64-4854-8000-2375edb3b1a8&amp;fname=Sonderingen_s.png</gco:CharacterString>
+              <gco:CharacterString>https://www.dov.vlaanderen.be/geonetwork/srv/eng/resources.get?uuid=212af8cd-bffd-423c-9d2b-69c544ab3b04&amp;fname=formele_stratigrafie_1489504090060.png</gco:CharacterString>
             </gmd:fileName>
             <gmd:fileDescription>
               <gco:CharacterString>thumbnail</gco:CharacterString>
-            </gmd:fileDescription>
-            <gmd:fileType>
-              <gco:CharacterString>png</gco:CharacterString>
-            </gmd:fileType>
-          </gmd:MD_BrowseGraphic>
-        </gmd:graphicOverview>
-        <gmd:graphicOverview xmlns:srv="http://www.isotc211.org/2005/srv">
-          <gmd:MD_BrowseGraphic>
-            <gmd:fileName>
-              <gco:CharacterString>https://www.dov.vlaanderen.be/geonetwork/srv/eng/resources.get?uuid=b397faec-1b64-4854-8000-2375edb3b1a8&amp;fname=Sonderingen.png</gco:CharacterString>
-            </gmd:fileName>
-            <gmd:fileDescription>
-              <gco:CharacterString>large_thumbnail</gco:CharacterString>
             </gmd:fileDescription>
             <gmd:fileType>
               <gco:CharacterString>png</gco:CharacterString>
@@ -362,10 +285,7 @@ Sonderingen laten toe op een snelle en efficiënte manier en tegen een behoorlij
         <gmd:descriptiveKeywords>
           <gmd:MD_Keywords xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:srv="http://www.isotc211.org/2005/srv">
             <gmd:keyword>
-              <gco:CharacterString>geologie</gco:CharacterString>
-            </gmd:keyword>
-            <gmd:keyword>
-              <gco:CharacterString>bodemmechanica</gco:CharacterString>
+              <gco:CharacterString>ondergrond</gco:CharacterString>
             </gmd:keyword>
             <gmd:type gco:nilReason="missing">
               <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_KeywordTypeCode" codeListValue="" />
@@ -418,54 +338,15 @@ Sonderingen laten toe op een snelle en efficiënte manier en tegen een behoorlij
         </gmd:descriptiveKeywords>
         <gmd:descriptiveKeywords>
           <gmd:MD_Keywords>
-            <gmd:keyword>
-              <gco:CharacterString>Ondergrond</gco:CharacterString>
+            <gmd:keyword xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:srv="http://www.isotc211.org/2005/srv">
+              <gco:CharacterString>Herbruikbaar</gco:CharacterString>
             </gmd:keyword>
-            <gmd:keyword>
-              <gco:CharacterString>DOV</gco:CharacterString>
+            <gmd:keyword xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:srv="http://www.isotc211.org/2005/srv">
+              <gco:CharacterString>Vlaamse Open data</gco:CharacterString>
             </gmd:keyword>
-            <gmd:keyword>
-              <gco:CharacterString>Databank Ondergrond Vlaanderen</gco:CharacterString>
+            <gmd:keyword xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:srv="http://www.isotc211.org/2005/srv">
+              <gco:CharacterString>Kosteloos</gco:CharacterString>
             </gmd:keyword>
-            <gmd:keyword>
-              <gco:CharacterString>Sondering</gco:CharacterString>
-            </gmd:keyword>
-            <gmd:keyword>
-              <gco:CharacterString>Weerstandsmetingen</gco:CharacterString>
-            </gmd:keyword>
-            <gmd:keyword>
-              <gco:CharacterString>Geotechniek</gco:CharacterString>
-            </gmd:keyword>
-            <gmd:keyword>
-              <gco:CharacterString>Grondmechanica</gco:CharacterString>
-            </gmd:keyword>
-            <gmd:keyword>
-              <gco:CharacterString>Geologie</gco:CharacterString>
-            </gmd:keyword>
-            <gmd:keyword>
-              <gco:CharacterString>Formele stratigrafie</gco:CharacterString>
-            </gmd:keyword>
-            <gmd:thesaurusName>
-              <gmd:CI_Citation>
-                <gmd:title>
-                  <gco:CharacterString>DOV-versie 1</gco:CharacterString>
-                </gmd:title>
-                <gmd:date>
-                  <gmd:CI_Date>
-                    <gmd:date>
-                      <gco:Date>2011-04-11</gco:Date>
-                    </gmd:date>
-                    <gmd:dateType>
-                      <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication" />
-                    </gmd:dateType>
-                  </gmd:CI_Date>
-                </gmd:date>
-              </gmd:CI_Citation>
-            </gmd:thesaurusName>
-          </gmd:MD_Keywords>
-        </gmd:descriptiveKeywords>
-        <gmd:descriptiveKeywords>
-          <gmd:MD_Keywords>
             <gmd:keyword xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:srv="http://www.isotc211.org/2005/srv">
               <gco:CharacterString>Metadata INSPIRE-conform</gco:CharacterString>
             </gmd:keyword>
@@ -474,9 +355,6 @@ Sonderingen laten toe op een snelle en efficiënte manier en tegen een behoorlij
             </gmd:keyword>
             <gmd:keyword xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:srv="http://www.isotc211.org/2005/srv">
               <gco:CharacterString>Toegevoegd GDI-Vl</gco:CharacterString>
-            </gmd:keyword>
-            <gmd:keyword xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:srv="http://www.isotc211.org/2005/srv">
-              <gco:CharacterString>Vlaamse Open data</gco:CharacterString>
             </gmd:keyword>
             <gmd:keyword xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:srv="http://www.isotc211.org/2005/srv">
               <gco:CharacterString>Lijst M&amp;R INSPIRE</gco:CharacterString>
@@ -500,22 +378,52 @@ Sonderingen laten toe op een snelle en efficiënte manier en tegen een behoorlij
             </gmd:thesaurusName>
           </gmd:MD_Keywords>
         </gmd:descriptiveKeywords>
+        <gmd:descriptiveKeywords>
+          <gmd:MD_Keywords>
+            <gmd:keyword>
+              <gco:CharacterString>DOV</gco:CharacterString>
+            </gmd:keyword>
+            <gmd:keyword>
+              <gco:CharacterString>Vlaanderen</gco:CharacterString>
+            </gmd:keyword>
+            <gmd:keyword>
+              <gco:CharacterString>Ondergrond</gco:CharacterString>
+            </gmd:keyword>
+            <gmd:keyword>
+              <gco:CharacterString>Boringen</gco:CharacterString>
+            </gmd:keyword>
+            <gmd:keyword>
+              <gco:CharacterString>Monster</gco:CharacterString>
+            </gmd:keyword>
+            <gmd:keyword>
+              <gco:CharacterString>Geologie</gco:CharacterString>
+            </gmd:keyword>
+            <gmd:keyword>
+              <gco:CharacterString>Formele stratigrafie</gco:CharacterString>
+            </gmd:keyword>
+            <gmd:thesaurusName>
+              <gmd:CI_Citation>
+                <gmd:title>
+                  <gco:CharacterString>DOV</gco:CharacterString>
+                </gmd:title>
+                <gmd:date>
+                  <gmd:CI_Date>
+                    <gmd:date>
+                      <gco:Date>2010-12-01</gco:Date>
+                    </gmd:date>
+                    <gmd:dateType>
+                      <gmd:CI_DateTypeCode codeListValue="publication" codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode" />
+                    </gmd:dateType>
+                  </gmd:CI_Date>
+                </gmd:date>
+              </gmd:CI_Citation>
+            </gmd:thesaurusName>
+          </gmd:MD_Keywords>
+        </gmd:descriptiveKeywords>
         <gmd:resourceSpecificUsage>
           <gmd:MD_Usage>
             <gmd:specificUsage>
-              <gco:CharacterString>In DOV worden de resultaten van sonderingen ter beschikking gesteld. 
-In Vlaanderen is het gebruikelijk om in het kader van ieder geotechnisch onderzoek sonderingen uit te voeren. Sonderingen laten toe op een snelle en efficiënte manier en tegen een behoorlijke kostprijs, informatie te verzamelen met betrekking tot onder meer:
-
-de plaatselijke lagenopbouw en de homogeniteit van de grond; 
-de weerstand en het draagvermogen van de grond; 
-de lokalisatie van holten en andere discontinuïteiten; 
-de identificatie van de grondsoort; 
-de fysische en de mechanische karakteristieken van de grond; 
-het opstellen van funderingstechnische en grondmechanische studies. 
-
-In combinatie met geologische informatie  kan de informatie uit een sondering meer inzicht geven in de opeenvolging van de voorkomende geologische lagen en in de geologische stratigrafie.
-
-Bij gebruik van de data moet met de nodige kennis van zaken geoordeeld worden over de kwaliteit. De medegedeelde gegevens moeten steeds worden bevestigd door verder onderzoek. De gebruiker dient in te staan voor dit verder onderzoek waarbij hij rekening moet houden met het specifieke aspect van zijn project, studie of interesse. Dit verder onderzoek kan bestaan uit het uitvoeren van bijkomende proeven en metingen, eigen waarnemingen, verder opzoekingswerk, raadplegen van historische gegevens, raadplegen van experten, e.a.</gco:CharacterString>
+              <gco:CharacterString>De formele stratigrafie vormt vaak de basis van de recentere geologische kaarten en modellen zoals die in DOV zijn opgenomen.</gco:CharacterString>
             </gmd:specificUsage>
             <gmd:userContactInfo />
           </gmd:MD_Usage>
@@ -523,32 +431,30 @@ Bij gebruik van de data moet met de nodige kennis van zaken geoordeeld worden ov
         <gmd:resourceConstraints>
           <gmd:MD_Constraints>
             <gmd:useLimitation>
-              <gco:CharacterString>De in de databank aanwezige gegevens zijn een verzameling van door de overheid en door diverse instellingen en firma's beschikbaar gestelde gegevens over de Vlaamse Ondergrond.
-              De medegedeelde gegevens moeten steeds worden bevestigd door verder onderzoek. De gebruiker dient in te staan voor dit verder onderzoek waarbij hij rekening moet houden met het specifieke aspect van zijn project, studie of interesse. Dit verder onderzoek kan bestaan uit het uitvoeren van bijkomende proeven en metingen, eigen waarnemingen, verder opzoekingswerk, raadplegen van historische gegevens, raadplegen van experten, e.a.
-              In een verzameling van gegevens waarvan de oudste dateren van in de 19e eeuw en welke door de meest uiteenlopende auteurs, diensten, instellingen en firma's werden genoteerd, uitgevoerd, geïnterpreteerd en verwerkt is een onvolledigheid of fout of tegenspraak steeds mogelijk.</gco:CharacterString>
+              <gco:CharacterString>Zie 'Overige beperkingen'</gco:CharacterString>
             </gmd:useLimitation>
           </gmd:MD_Constraints>
         </gmd:resourceConstraints>
         <gmd:resourceConstraints>
           <gmd:MD_LegalConstraints>
             <gmd:useLimitation>
-              <gco:CharacterString>Bij het gebruik van de informatie die DOV aanbiedt, dient steeds volgende standaardreferentie gebruikt te worden: Databank Ondergrond Vlaanderen - (vermelding van de specifieke geraadpleegde gegevens) - Geraadpleegd op dd/mm/jjjj, op https://www.dov.vlaanderen.be .</gco:CharacterString>
+              <gco:CharacterString>Bij het gebruik van de informatie die DOV aanbiedt, dient steeds volgende standaardreferentie gebruikt te worden: Databank Ondergrond Vlaanderen - (vermelding van de beheerder en de specifieke geraadpleegde gegevens) - Geraadpleegd op dd/mm/jjjj, op https://www.dov.vlaanderen.be</gco:CharacterString>
             </gmd:useLimitation>
             <gmd:useLimitation>
-              <gco:CharacterString>Volgende aansprakelijkheidsbepalingen gelden: https://www.dov.vlaanderen.be/page/disclaimer.</gco:CharacterString>
+              <gco:CharacterString>Volgende aansprakelijkheidsbepalingen gelden: https://www.dov.vlaanderen.be/page/disclaimer</gco:CharacterString>
             </gmd:useLimitation>
             <gmd:accessConstraints>
-              <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_RestrictionCode" codeListValue="otherRestrictions" />
+              <gmd:MD_RestrictionCode codeListValue="otherRestrictions" codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_RestrictionCode" />
             </gmd:accessConstraints>
             <gmd:otherConstraints>
               <gco:CharacterString>Data beschikbaar voor hergebruik volgens de Modellicentie Gratis Hergebruik. Toelichting beschikbaar op https://www.dov.vlaanderen.be/page/gebruiksvoorwaarden-dov-services</gco:CharacterString>
             </gmd:otherConstraints>
           </gmd:MD_LegalConstraints>
         </gmd:resourceConstraints>
-        <gmd:resourceConstraints xlink:type="simple">
+        <gmd:resourceConstraints>
           <gmd:MD_SecurityConstraints>
             <gmd:classification>
-              <gmd:MD_ClassificationCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ClassificationCode" codeListValue="unclassified" />
+              <gmd:MD_ClassificationCode codeListValue="unclassified" codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ClassificationCode" />
             </gmd:classification>
           </gmd:MD_SecurityConstraints>
         </gmd:resourceConstraints>
@@ -565,7 +471,7 @@ Bij gebruik van de data moet met de nodige kennis van zaken geoordeeld worden ov
                 <gmd:date>
                   <gmd:CI_Date>
                     <gmd:date>
-                      <gco:Date>2017-03-28</gco:Date>
+                      <gco:Date>2002-01-01</gco:Date>
                     </gmd:date>
                     <gmd:dateType>
                       <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation" />
@@ -602,7 +508,7 @@ Bij gebruik van de data moet met de nodige kennis van zaken geoordeeld worden ov
               </gmd:MD_Identifier>
             </gmd:aggregateDataSetIdentifier>
             <gmd:associationType>
-              <gmd:DS_AssociationTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#DS_AssociationTypeCode" codeListValue="crossReference" />
+              <gmd:DS_AssociationTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#DS_AssociationTypeCode" codeListValue="largerWorkCitation" />
             </gmd:associationType>
           </gmd:MD_AggregateInformation>
         </gmd:aggregationInfo>
@@ -623,11 +529,11 @@ Bij gebruik van de data moet met de nodige kennis van zaken geoordeeld worden ov
         <gmd:language>
           <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="dut" />
         </gmd:language>
+        <gmd:characterSet>
+          <gmd:MD_CharacterSetCode codeListValue="utf8" codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_CharacterSetCode" />
+        </gmd:characterSet>
         <gmd:topicCategory>
           <gmd:MD_TopicCategoryCode>geoscientificInformation</gmd:MD_TopicCategoryCode>
-        </gmd:topicCategory>
-        <gmd:topicCategory>
-          <gmd:MD_TopicCategoryCode>structure</gmd:MD_TopicCategoryCode>
         </gmd:topicCategory>
         <gmd:extent>
           <gmd:EX_Extent>
@@ -637,13 +543,13 @@ Bij gebruik van de data moet met de nodige kennis van zaken geoordeeld worden ov
                   <gco:Decimal>2.540</gco:Decimal>
                 </gmd:westBoundLongitude>
                 <gmd:eastBoundLongitude>
-                  <gco:Decimal>5.847</gco:Decimal>
+                  <gco:Decimal>5.910</gco:Decimal>
                 </gmd:eastBoundLongitude>
                 <gmd:southBoundLatitude>
-                  <gco:Decimal>50.666</gco:Decimal>
+                  <gco:Decimal>50.688</gco:Decimal>
                 </gmd:southBoundLatitude>
                 <gmd:northBoundLatitude>
-                  <gco:Decimal>51.500</gco:Decimal>
+                  <gco:Decimal>51.506</gco:Decimal>
                 </gmd:northBoundLatitude>
               </gmd:EX_GeographicBoundingBox>
             </gmd:geographicElement>
@@ -658,18 +564,11 @@ Bij gebruik van de data moet met de nodige kennis van zaken geoordeeld worden ov
                 </gmd:geographicIdentifier>
               </gmd:EX_GeographicDescription>
             </gmd:geographicElement>
-            <gmd:temporalElement>
-              <gmd:EX_TemporalExtent>
-                <gmd:extent>
-                  <gml:TimePeriod gml:id="tp1">
-                    <gml:beginPosition>1930-01-01</gml:beginPosition>
-                    <gml:endPosition>3999-01-01</gml:endPosition>
-                  </gml:TimePeriod>
-                </gmd:extent>
-              </gmd:EX_TemporalExtent>
-            </gmd:temporalElement>
           </gmd:EX_Extent>
         </gmd:extent>
+        <gmd:supplementalInformation>
+          <gco:CharacterString>meer info op: https://www.dov.vlaanderen.be/page/interpretaties</gco:CharacterString>
+        </gmd:supplementalInformation>
       </gmd:MD_DataIdentification>
     </gmd:identificationInfo>
     <gmd:contentInfo>
@@ -677,15 +576,15 @@ Bij gebruik van de data moet met de nodige kennis van zaken geoordeeld worden ov
         <gmd:includedWithDataset>
           <gco:Boolean>true</gco:Boolean>
         </gmd:includedWithDataset>
-        <gmd:featureCatalogueCitation uuidref="bd539ba5-5f4d-4c43-9662-51c16caea351">
+        <gmd:featureCatalogueCitation uuidref="68405b5d-51e6-44d0-b634-b580bc2f9eb6">
           <gmd:CI_Citation>
             <gmd:title>
-              <gco:CharacterString>Sonderingen (objectencatalogus)</gco:CharacterString>
+              <gco:CharacterString>Formele stratigrafie (objectencatalogus)</gco:CharacterString>
             </gmd:title>
             <gmd:date>
               <gmd:CI_Date>
                 <gmd:date>
-                  <gco:Date>2017-10-06</gco:Date>
+                  <gco:Date>2017-04-10</gco:Date>
                 </gmd:date>
                 <gmd:dateType>
                   <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation" />
@@ -780,10 +679,10 @@ Bij gebruik van de data moet met de nodige kennis van zaken geoordeeld worden ov
                   <gco:CharacterString>OGC:WMS</gco:CharacterString>
                 </gmd:protocol>
                 <gmd:name>
-                  <gco:CharacterString>dov-pub:Sonderingen</gco:CharacterString>
+                  <gco:CharacterString>interpretaties:formele_stratigrafie</gco:CharacterString>
                 </gmd:name>
                 <gmd:description>
-                  <gco:CharacterString>WMS-endpoint Sonderingen</gco:CharacterString>
+                  <gco:CharacterString>WMS-endpoint Formele stratigrafie</gco:CharacterString>
                 </gmd:description>
               </gmd:CI_OnlineResource>
             </gmd:onLine>
@@ -796,10 +695,10 @@ Bij gebruik van de data moet met de nodige kennis van zaken geoordeeld worden ov
                   <gco:CharacterString>OGC:WMS-1.3.0-http-get-capabilities</gco:CharacterString>
                 </gmd:protocol>
                 <gmd:name>
-                  <gco:CharacterString>dov-pub:Sonderingen</gco:CharacterString>
+                  <gco:CharacterString>interpretaties:formele_stratigrafie</gco:CharacterString>
                 </gmd:name>
                 <gmd:description>
-                  <gco:CharacterString>WMS-capabilities Sonderingen</gco:CharacterString>
+                  <gco:CharacterString>WMS-capabilities Formele stratigrafie</gco:CharacterString>
                 </gmd:description>
               </gmd:CI_OnlineResource>
             </gmd:onLine>
@@ -812,10 +711,10 @@ Bij gebruik van de data moet met de nodige kennis van zaken geoordeeld worden ov
                   <gco:CharacterString>OGC:WMS-1.3.0-http-get-map</gco:CharacterString>
                 </gmd:protocol>
                 <gmd:name>
-                  <gco:CharacterString>dov-pub:Sonderingen</gco:CharacterString>
+                  <gco:CharacterString>interpretaties:formele_stratigrafie</gco:CharacterString>
                 </gmd:name>
                 <gmd:description>
-                  <gco:CharacterString>WMS-map Sonderingen</gco:CharacterString>
+                  <gco:CharacterString>WMS-map Formele stratigrafie</gco:CharacterString>
                 </gmd:description>
               </gmd:CI_OnlineResource>
             </gmd:onLine>
@@ -828,10 +727,10 @@ Bij gebruik van de data moet met de nodige kennis van zaken geoordeeld worden ov
                   <gco:CharacterString>OGC:WFS</gco:CharacterString>
                 </gmd:protocol>
                 <gmd:name>
-                  <gco:CharacterString>dov-pub:Sonderingen</gco:CharacterString>
+                  <gco:CharacterString>interpretaties:formele_stratigrafie</gco:CharacterString>
                 </gmd:name>
                 <gmd:description>
-                  <gco:CharacterString>WFS-endpoint Sonderingen</gco:CharacterString>
+                  <gco:CharacterString>WFS-endpoint Formele stratigrafie</gco:CharacterString>
                 </gmd:description>
               </gmd:CI_OnlineResource>
             </gmd:onLine>
@@ -844,10 +743,10 @@ Bij gebruik van de data moet met de nodige kennis van zaken geoordeeld worden ov
                   <gco:CharacterString>OGC:WFS-1.1.0-http-get-capabilities</gco:CharacterString>
                 </gmd:protocol>
                 <gmd:name>
-                  <gco:CharacterString>dov-pub:Sonderingen</gco:CharacterString>
+                  <gco:CharacterString>interpretaties:formele_stratigrafie</gco:CharacterString>
                 </gmd:name>
                 <gmd:description>
-                  <gco:CharacterString>WFS-capabilities Sonderingen</gco:CharacterString>
+                  <gco:CharacterString>WFS-capabilities Formele stratigrafie</gco:CharacterString>
                 </gmd:description>
               </gmd:CI_OnlineResource>
             </gmd:onLine>
@@ -860,32 +759,45 @@ Bij gebruik van de data moet met de nodige kennis van zaken geoordeeld worden ov
                   <gco:CharacterString>OGC:WFS-1.1.0-http-get-feature</gco:CharacterString>
                 </gmd:protocol>
                 <gmd:name>
-                  <gco:CharacterString>dov-pub:Sonderingen</gco:CharacterString>
+                  <gco:CharacterString>interpretaties:formele_stratigrafie</gco:CharacterString>
                 </gmd:name>
                 <gmd:description>
-                  <gco:CharacterString>WFS-getfeature Sonderingen</gco:CharacterString>
+                  <gco:CharacterString>WFS-getfeature Formele stratigrafie</gco:CharacterString>
                 </gmd:description>
               </gmd:CI_OnlineResource>
             </gmd:onLine>
             <gmd:onLine>
               <gmd:CI_OnlineResource>
                 <gmd:linkage>
-                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/wms/kml?layers=dov-pub:Sonderingen</gmd:URL>
+                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/interpretaties/wms/kml?layers=interpretaties:formele_stratigrafie</gmd:URL>
                 </gmd:linkage>
                 <gmd:protocol>
                   <gco:CharacterString>GLG:KML-2.0-http-get-map</gco:CharacterString>
                 </gmd:protocol>
                 <gmd:name>
-                  <gco:CharacterString>dov-pub:Sonderingen</gco:CharacterString>
+                  <gco:CharacterString>interpretaties:formele_stratigrafie</gco:CharacterString>
                 </gmd:name>
                 <gmd:description>
-                  <gco:CharacterString>KML Sonderingen</gco:CharacterString>
+                  <gco:CharacterString>KML Formele stratigrafie</gco:CharacterString>
                 </gmd:description>
               </gmd:CI_OnlineResource>
             </gmd:onLine>
-            <gmd:offLine>
-              <gmd:MD_Medium />
-            </gmd:offLine>
+            <gmd:onLine>
+              <gmd:CI_OnlineResource>
+                <gmd:linkage>
+                  <gmd:URL>https://www.dov.vlaanderen.be/portaal</gmd:URL>
+                </gmd:linkage>
+                <gmd:protocol>
+                  <gco:CharacterString>WWW:LINK-1.0-http--related</gco:CharacterString>
+                </gmd:protocol>
+                <gmd:name>
+                  <gco:CharacterString>DOV portaal</gco:CharacterString>
+                </gmd:name>
+                <gmd:description>
+                  <gco:CharacterString>Link naar DOV portaalapplicatie</gco:CharacterString>
+                </gmd:description>
+              </gmd:CI_OnlineResource>
+            </gmd:onLine>
           </gmd:MD_DigitalTransferOptions>
         </gmd:transferOptions>
       </gmd:MD_Distribution>
@@ -895,7 +807,7 @@ Bij gebruik van de data moet met de nodige kennis van zaken geoordeeld worden ov
         <gmd:scope>
           <gmd:DQ_Scope>
             <gmd:level>
-              <gmd:MD_ScopeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ScopeCode" codeListValue="dataset" />
+              <gmd:MD_ScopeCode codeListValue="dataset" codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ScopeCode" />
             </gmd:level>
           </gmd:DQ_Scope>
         </gmd:scope>
@@ -914,7 +826,7 @@ Bij gebruik van de data moet met de nodige kennis van zaken geoordeeld worden ov
                           <gco:Date>2010-12-08</gco:Date>
                         </gmd:date>
                         <gmd:dateType>
-                          <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                          <gmd:CI_DateTypeCode codeListValue="publication" codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode" />
                         </gmd:dateType>
                       </gmd:CI_Date>
                     </gmd:date>
@@ -933,13 +845,9 @@ Bij gebruik van de data moet met de nodige kennis van zaken geoordeeld worden ov
         <gmd:lineage>
           <gmd:LI_Lineage>
             <gmd:statement>
-              <gco:CharacterString>In DOV worden de resultaten van sonderingen ter beschikking gesteld.
+              <gco:CharacterString>Tijdens geologische karteringen i.o.v. ALBON worden er steeds formele interpretaties aangemaakt. Ook sonderingen worden hierbij formeel geïnterpreteerd op basis van omliggende proefgegevens.
 
-								Recent uitgevoerde sonderingen zijn vaak uitgevoerd volgens de geldende NBN of ISO normen. 
-								Bij de invoer van de "historische" data uit de archieven van de afdeling Geotechniek werden zo waarheidsgetrouw mogelijk de toen geldende normen behouden. Uiteraard kunnen de gegevens van bijvoorbeeld een volledig mechanische sondering uit de jaren '60 niet op dezelfde lijn gezet worden als de geautomatiseerde elektrische sonderingen die vandaag de dag worden uitgevoerd.
-								Bij gebruik van de data moet met de nodige kennis van zaken geoordeeld worden over de kwaliteit. Voor de historische data geldt dat deze eerder als referentiedata gezien moeten worden. Op voorwaarde dat de site na uitvoering van de geotechnische proeven niet verstoord werd, zijn de historische gegevens geschikt voor het opstellen van het globale geotechnische plaatje. De gegevens mogen nooit als absoluut beschouwd worden en kunnen dus ook niet gebruikt worden voor doorgedreven geotechnische berekeningen.
-
-								Aan de verstrekte gegevens mag evenmin een absolute nauwkeurigheid worden toegekend omwille van interpollaties en extrapollaties welke bij het interpreteren en opstellen ervan werden gemaakt. Ook was het niet mogelijk voor de minder recente gegevens de coördinaten en hoogtepeilen nauwkeurig te bepalen.</gco:CharacterString>
+De nauwkeurigheid van de interpretatie hangt af van de auteur, de boormethode, doelstelling van de boring, enz. De interpretaties in DOV worden zoveel als mogelijk overgenomen zoals deze door de originele auteur werden opgemaakt.</gco:CharacterString>
             </gmd:statement>
           </gmd:LI_Lineage>
         </gmd:lineage>

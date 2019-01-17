@@ -231,40 +231,52 @@ A short overview of the map layers including permanent URL's can be found below.
 .. list-table::
    :header-rows: 1
 
-   * - Featuretype (feature catalogue)
+   * - Featuretype
+     - Feature catalogue (fc)
      - WFS layer
      - Permanent URL base
-   * - `Boringen <https://www.dov.vlaanderen.be/geonetwork/?uuid=4e20bf9c-3a5c-42be-b5b6-bef6214d1fa7>`_ `(fc) <https://www.dov.vlaanderen.be/geonetwork/?uuid=c0cbd397-520f-4ee1-aca7-d70e271eeed6>`_
+   * - `Boringen <https://www.dov.vlaanderen.be/geonetwork/?uuid=4e20bf9c-3a5c-42be-b5b6-bef6214d1fa7>`_
+     - `Boringen fc <https://www.dov.vlaanderen.be/geonetwork/?uuid=c0cbd397-520f-4ee1-aca7-d70e271eeed6>`_
      - dov-pub:Boringen
      - ``https://www.dov.vlaanderen.be/data/boring/``
-   * - `Sonderingen <https://www.dov.vlaanderen.be/geonetwork/?uuid=b397faec-1b64-4854-8000-2375edb3b1a8>`_ `(fc) <https://www.dov.vlaanderen.be/geonetwork/?uuid=bd539ba5-5f4d-4c43-9662-51c16caea351>`_
+   * - `Sonderingen <https://www.dov.vlaanderen.be/geonetwork/?uuid=b397faec-1b64-4854-8000-2375edb3b1a8>`_
+     - `Sonderingen fc <https://www.dov.vlaanderen.be/geonetwork/?uuid=bd539ba5-5f4d-4c43-9662-51c16caea351>`_
      - dov-pub:Sonderingen
      - ``https://www.dov.vlaanderen.be/data/sondering/``
-   * - `Formele stratigrafie <https://www.dov.vlaanderen.be/geonetwork/?uuid=212af8cd-bffd-423c-9d2b-69c544ab3b04>`_ `(fc) <https://www.dov.vlaanderen.be/geonetwork/?uuid=68405b5d-51e6-44d0-b634-b580bc2f9eb6>`_
+   * - `Formele stratigrafie <https://www.dov.vlaanderen.be/geonetwork/?uuid=212af8cd-bffd-423c-9d2b-69c544ab3b04>`_
+     - `Formele stratigrafie fc <https://www.dov.vlaanderen.be/geonetwork/?uuid=68405b5d-51e6-44d0-b634-b580bc2f9eb6>`_
      - interpretaties:formele_stratigrafie
      - ``https://www.dov.vlaanderen.be/data/interpretatie/``
-   * - `Gecodeerde lithologie <https://www.dov.vlaanderen.be/geonetwork/?uuid=35d630e4-9145-46f9-b7dc-da290a0adc55>`_ `(fc) <https://www.dov.vlaanderen.be/geonetwork/?uuid=0032241d-8920-415e-b1d8-fa0a48154904>`_
+   * - `Gecodeerde lithologie <https://www.dov.vlaanderen.be/geonetwork/?uuid=35d630e4-9145-46f9-b7dc-da290a0adc55>`_
+     - `Gecodeerde lithologie fc <https://www.dov.vlaanderen.be/geonetwork/?uuid=0032241d-8920-415e-b1d8-fa0a48154904>`_
      - interpretaties:gecodeerde_lithologie
      - ``https://www.dov.vlaanderen.be/data/interpretatie/``
-   * - `Geotechnische coderingen <https://www.dov.vlaanderen.be/geonetwork/?uuid=6a3dc5d4-0744-4d9c-85ce-da50913851cc>`_ `(fc) <https://www.dov.vlaanderen.be/geonetwork/?uuid=85404aa6-2d88-46f6-ae5a-575aece71efd>`_
+   * - `Geotechnische coderingen <https://www.dov.vlaanderen.be/geonetwork/?uuid=6a3dc5d4-0744-4d9c-85ce-da50913851cc>`_
+     - `Geotechnische coderingen fc <https://www.dov.vlaanderen.be/geonetwork/?uuid=85404aa6-2d88-46f6-ae5a-575aece71efd>`_
      - interpretaties:geotechnische_coderingen
      - ``https://www.dov.vlaanderen.be/data/interpretatie/``
-   * - `Hydrogeologische stratigrafie <https://www.dov.vlaanderen.be/geonetwork/?uuid=25c5d9fa-c2ba-4184-b796-fde790e73d39>`_ `(fc) <https://www.dov.vlaanderen.be/geonetwork/?uuid=b89e72de-35a9-4bca-8d0b-712d1e881ea6>`_
+   * - `Hydrogeologische stratigrafie <https://www.dov.vlaanderen.be/geonetwork/?uuid=25c5d9fa-c2ba-4184-b796-fde790e73d39>`_
+     - `Hydrogeologische stratigrafie fc <https://www.dov.vlaanderen.be/geonetwork/?uuid=b89e72de-35a9-4bca-8d0b-712d1e881ea6>`_
      - interpretaties:hydrogeologische_stratigrafie
      - ``https://www.dov.vlaanderen.be/data/interpretatie/``
-   * - `Informele hydrogeologische stratigrafie <https://www.dov.vlaanderen.be/geonetwork/?uuid=ca1d704a-cdee-4968-aa65-9c353863e4b1>`_ `(fc) <https://www.dov.vlaanderen.be/geonetwork/?uuid=69f71840-bd29-4b59-9b02-4e36aafaa041>`_
+   * - `Informele hydrogeologische stratigrafie <https://www.dov.vlaanderen.be/geonetwork/?uuid=ca1d704a-cdee-4968-aa65-9c353863e4b1>`_
+     - `Informele hydrogeologische stratigrafie fc <https://www.dov.vlaanderen.be/geonetwork/?uuid=69f71840-bd29-4b59-9b02-4e36aafaa041>`_
      - interpretaties:informele_hydrogeologische_stratigrafie
      - ``https://www.dov.vlaanderen.be/data/interpretatie/``
-   * - `Informele stratigrafie <https://www.dov.vlaanderen.be/geonetwork/?uuid=bd171ea4-2509-478d-a21c-c2728d3a9051>`_ `(fc) <https://www.dov.vlaanderen.be/geonetwork/?uuid=b6c651f9-5972-4252-ae10-ad69ad08e78d>`_
+   * - `Informele stratigrafie <https://www.dov.vlaanderen.be/geonetwork/?uuid=bd171ea4-2509-478d-a21c-c2728d3a9051>`_
+     - `Informele stratigrafie fc <https://www.dov.vlaanderen.be/geonetwork/?uuid=b6c651f9-5972-4252-ae10-ad69ad08e78d>`_
      - interpretaties:informele_stratigrafie
      - ``https://www.dov.vlaanderen.be/data/interpretatie/``
-   * - `Lithologische beschrijvingen <https://www.dov.vlaanderen.be/geonetwork/?uuid=45b5610e-9a66-42bd-b920-af099e399f3b>`_ `(fc) <https://www.dov.vlaanderen.be/geonetwork/?uuid=2450d592-29bc-4970-a89f-a7b14bd38dc2>`_
+   * - `Lithologische beschrijvingen <https://www.dov.vlaanderen.be/geonetwork/?uuid=45b5610e-9a66-42bd-b920-af099e399f3b>`_
+     - `Lithologische beschrijvingen fc <https://www.dov.vlaanderen.be/geonetwork/?uuid=2450d592-29bc-4970-a89f-a7b14bd38dc2>`_
      - interpretaties:lithologische_beschrijvingen
      - ``https://www.dov.vlaanderen.be/data/interpretatie/``
-   * - `Quartaire stratigrafie <https://www.dov.vlaanderen.be/geonetwork/?uuid=8b204ed6-e44c-4567-bbe8-bd427eba082c>`_ `(fc) <https://www.dov.vlaanderen.be/geonetwork/?uuid=d40ef884-3278-45db-ad69-2c2a8c3981c3>`_
+   * - `Quartaire stratigrafie <https://www.dov.vlaanderen.be/geonetwork/?uuid=8b204ed6-e44c-4567-bbe8-bd427eba082c>`_
+     - `Quartaire stratigrafie fc <https://www.dov.vlaanderen.be/geonetwork/?uuid=d40ef884-3278-45db-ad69-2c2a8c3981c3>`_
      - interpretaties:quartaire_stratigrafie
      - ``https://www.dov.vlaanderen.be/data/interpretatie/``
-   * - `Grondwatermeetnetten <https://www.dov.vlaanderen.be/geonetwork/?uuid=6c39d716-aecc-4fbc-bac8-4f05a49a78d5>`_ `(fc) <https://www.dov.vlaanderen.be/geonetwork/?uuid=b142965f-b2aa-429e-86ff-a7cb0e065d48>`_
+   * - `Grondwatermeetnetten <https://www.dov.vlaanderen.be/geonetwork/?uuid=6c39d716-aecc-4fbc-bac8-4f05a49a78d5>`_
+     - `Grondwatermeetnetten fc <https://www.dov.vlaanderen.be/geonetwork/?uuid=b142965f-b2aa-429e-86ff-a7cb0e065d48>`_
      - gw_meetnetten:meetnetten
      - ``https://www.dov.vlaanderen.be/data/put``\ , ``https://www.dov.vlaanderen.be/data/filter``
 

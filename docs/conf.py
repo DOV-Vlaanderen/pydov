@@ -114,6 +114,10 @@ pygments_style = 'sphinx'
 # documents.
 #keep_warnings = False
 
+# numpydoc issue
+# https://stackoverflow.com/questions/12206334/sphinx-autosummary-toctree-contains-reference-to-nonexisting-document-warnings
+# solved by https://github.com/numpy/numpydoc/pull/6
+numpydoc_class_members_toctree = False
 
 # -- Options for HTML output -------------------------------------------
 

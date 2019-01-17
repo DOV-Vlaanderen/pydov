@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns3:dov-schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns3="http://kern.schemas.dov.vlaanderen.be" xsi:schemaLocation="http://kern.schemas.dov.vlaanderen.be https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/dov.xsd">
+    <interpretaties>
+        <formelestratigrafie>
+            <sondering>GEO-64/340-S3</sondering>
+            <auteur>
+                <persoon>
+                    <naam>Vergauwen</naam>
+                    <voornaam>Ilse</voornaam>
+                </persoon>
+                <bedrijf-dienst>
+                    <naam>VO - Afdeling Geotechniek</naam>
+                </bedrijf-dienst>
+            </auteur>
+            <datum>2011-02-02</datum>
+            <betrouwbaarheid>goed</betrouwbaarheid>
+            <dataleverancier>
+                <naam>onbekend</naam>
+            </dataleverancier>
+            <laag>
+                <van>0.10</van>
+                <tot>8.00</tot>
+                <lid1>Q</lid1>
+                <relatie_lid1_lid2>T</relatie_lid1_lid2>
+                <lid2>Q</lid2>
+                <betrouwbaarheid>goed</betrouwbaarheid>
+            </laag>
+            <laag>
+                <van>8.00</van>
+                <tot>9.50</tot>
+                <lid1>GeMe</lid1>
+                <relatie_lid1_lid2>T</relatie_lid1_lid2>
+                <lid2>GeMe</lid2>
+                <betrouwbaarheid>goed</betrouwbaarheid>
+            </laag>
+            <laag>
+                <van>9.50</van>
+                <tot>14.20</tot>
+                <lid1>TtEg</lid1>
+                <relatie_lid1_lid2>T</relatie_lid1_lid2>
+                <lid2>TtEg</lid2>
+                <betrouwbaarheid>goed</betrouwbaarheid>
+            </laag>
+        </formelestratigrafie>
+    </interpretaties>
+</ns3:dov-schema>

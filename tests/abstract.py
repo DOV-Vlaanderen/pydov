@@ -233,13 +233,17 @@ class AbstractTestSearch(object):
             assert 'notnull' in f
             assert type(f['notnull']) is bool
 
+            assert 'query' in f
+            assert type(f['query']) is bool
+
             assert 'cost' in f
             assert type(f['cost']) is int
             assert f['cost'] > 0
 
             if 'values' in f:
                 assert sorted(f.keys()) == [
-                    'cost', 'definition', 'name', 'notnull', 'type', 'values']
+                    'cost', 'definition', 'name', 'notnull', 'query', 'type',
+                    'values']
                 for v in f['values']:
                     if f['type'] == 'string':
                         assert type(v) in (str, unicode)
@@ -253,7 +257,7 @@ class AbstractTestSearch(object):
                         assert type(v) is bool
             else:
                 assert sorted(f.keys()) == ['cost', 'definition', 'name',
-                                            'notnull', 'type']
+                                            'notnull', 'query', 'type']
 
     def test_search_both_location_query(self, mp_remote_describefeaturetype,
                                         mp_remote_wfs_feature):

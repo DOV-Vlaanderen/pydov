@@ -1,5 +1,4 @@
-
-# pydov <img src="docs/_static/img/logo.png" align="right">
+# pydov <img src="docs/_static/img/logo.png" align="right" alt="" width="120">
 
 [![Build Status](https://travis-ci.org/DOV-Vlaanderen/pydov.svg?branch=master)](https://travis-ci.org/DOV-Vlaanderen/pydov) [![AppVeyor Build status](https://ci.appveyor.com/api/projects/status/4ljy2a0p661v3d9k?svg=true)](https://ci.appveyor.com/project/Roel/pydov) [![Documentation Status](https://readthedocs.org/projects/pydov/badge/?version=latest)](https://pydov.readthedocs.io/en/latest/?badge=latest) [![Coverage Status](https://coveralls.io/repos/github/DOV-Vlaanderen/pydov/badge.svg?branch=master)](https://coveralls.io/github/DOV-Vlaanderen/pydov?branch=master)
 

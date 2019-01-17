@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """Module grouping utility functions for OWS services."""
+import warnings
+
 import requests
 
 import pydov
@@ -135,7 +137,10 @@ def get_remote_metadata(contentmetadata):
 
     content = __get_remote_md(md_url)
     doc = etree.fromstring(content)
-    return MD_Metadata(doc)
+
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore", category=FutureWarning)
+        return MD_Metadata(doc)
 
 
 def get_csw_base_url(contentmetadata):

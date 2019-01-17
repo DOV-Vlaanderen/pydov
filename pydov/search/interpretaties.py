@@ -70,8 +70,12 @@ class InformeleStratigrafieSearch(AbstractSearch):
 
         Parameters
         ----------
-        location : tuple<minx,miny,maxx,maxy>
-            The bounding box limiting the features to retrieve.
+        location : pydov.util.location.AbstractLocationFilter or
+                    owslib.fes.BinaryLogicOpType<AbstractLocationFilter> or
+                    owslib.fes.UnaryLogicOpType<AbstractLocationFilter>
+            Location filter limiting the features to retrieve. Can either be a
+            single instance of a subclass of AbstractLocationFilter, or a
+            combination using And, Or, Not of AbstractLocationFilters.
         query : owslib.fes.OgcExpression
             OGC filter expression to use for searching. This can contain any
             combination of filter elements defined in owslib.fes. The query
@@ -191,8 +195,12 @@ class HydrogeologischeStratigrafieSearch(AbstractSearch):
 
         Parameters
         ----------
-        location : tuple<minx,miny,maxx,maxy>
-            The bounding box limiting the features to retrieve.
+        location : pydov.util.location.AbstractLocationFilter or
+                    owslib.fes.BinaryLogicOpType<AbstractLocationFilter> or
+                    owslib.fes.UnaryLogicOpType<AbstractLocationFilter>
+            Location filter limiting the features to retrieve. Can either be a
+            single instance of a subclass of AbstractLocationFilter, or a
+            combination using And, Or, Not of AbstractLocationFilters.
         query : owslib.fes.OgcExpression
             OGC filter expression to use for searching. This can contain any
             combination of filter elements defined in owslib.fes. The query
@@ -312,8 +320,12 @@ class LithologischeBeschrijvingenSearch(AbstractSearch):
 
         Parameters
         ----------
-        location : tuple<minx,miny,maxx,maxy>
-            The bounding box limiting the features to retrieve.
+        location : pydov.util.location.AbstractLocationFilter or
+                    owslib.fes.BinaryLogicOpType<AbstractLocationFilter> or
+                    owslib.fes.UnaryLogicOpType<AbstractLocationFilter>
+            Location filter limiting the features to retrieve. Can either be a
+            single instance of a subclass of AbstractLocationFilter, or a
+            combination using And, Or, Not of AbstractLocationFilters.
         query : owslib.fes.OgcExpression
             OGC filter expression to use for searching. This can contain any
             combination of filter elements defined in owslib.fes. The query
@@ -433,8 +445,12 @@ class GecodeerdeLithologieSearch(AbstractSearch):
 
         Parameters
         ----------
-        location : tuple<minx,miny,maxx,maxy>
-            The bounding box limiting the features to retrieve.
+        location : pydov.util.location.AbstractLocationFilter or
+                    owslib.fes.BinaryLogicOpType<AbstractLocationFilter> or
+                    owslib.fes.UnaryLogicOpType<AbstractLocationFilter>
+            Location filter limiting the features to retrieve. Can either be a
+            single instance of a subclass of AbstractLocationFilter, or a
+            combination using And, Or, Not of AbstractLocationFilters.
         query : owslib.fes.OgcExpression
             OGC filter expression to use for searching. This can contain any
             combination of filter elements defined in owslib.fes. The query

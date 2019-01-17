@@ -23,6 +23,11 @@ class FeatureCatalogueNotFoundError(OWSError):
     pass
 
 
+class WfsGetFeatureError(OWSError):
+    """Error that occurs when requesting features using WFS GetFeature."""
+    pass
+
+
 class FeatureOverflowError(OWSError):
     """Error that occurs when the amount of features returned by the WFS
     query reached the server limit."""

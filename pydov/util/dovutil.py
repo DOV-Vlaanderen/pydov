@@ -37,7 +37,7 @@ def get_dov_xml(url):
 
 
 def parse_dov_xml(xml_data):
-    """Parse the given XML data into an ElemenTree.
+    """Parse the given XML data into an ElementTree.
 
     Parameters
     ----------

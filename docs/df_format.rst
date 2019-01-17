@@ -1,9 +1,12 @@
-
 .. _object_types:
 
 =======================
 Output data description
 =======================
+
+.. warning::
+
+    This page is to be removed once all datasets described below are implemented and documented in the :ref:`output_df_fields` section.
 
 The defined output format description of the Pandas :class:`~pandas.DataFrame` for each of the
 downloadable data objects:
@@ -25,13 +28,11 @@ The  ``source`` of the information has an implication on the duration of the dat
 that require downloads of multiple ``xml`` file will take more time. For more information on the duration
 difference of ``wfs`` based versus ``xml`` based queries, see :ref:`query duration guide <query_cost>`.
 
-.. note::
-
-    Not all ``wfs`` fields are included in the :class:`~pandas.DataFrame`, but they can be used
-    to select records from the DOV database. For example, whe searching on :ref:`Boreholes <ref_boreholes>`,
-    the presence of the ``informele_stratigrafie``,
-    ``formele_stratigrafie``, ``hydrogeologische_stratigrafie``, etc. are available in the ``wfs`` as
-    boolean fields to search on.
+Not all ``wfs`` fields are included in the :class:`~pandas.DataFrame`, but they can be used
+to select records from the DOV database. For example, whe searching on :ref:`Boreholes <ref_boreholes>`,
+the presence of the ``informele_stratigrafie``,
+``formele_stratigrafie``, ``hydrogeologische_stratigrafie``, etc. are available in the ``wfs`` as
+boolean fields to search on.
 
 
 .. _ref_interpretations:

@@ -1,6 +1,5 @@
 """Module grouping tests for the pydov.util.owsutil module."""
 import copy
-import re
 
 import pytest
 from numpy.compat import unicode
@@ -17,6 +16,11 @@ from pydov.util.errors import (
     MetadataNotFoundError,
     FeatureCatalogueNotFoundError,
 )
+from pydov.util.location import (
+    Within,
+    Box,
+)
+from tests.abstract import clean_xml
 
 from tests.test_search_boring import (
     md_metadata,
@@ -33,36 +37,6 @@ from tests.test_search import (
     mp_wfs,
     mp_remote_fc_notfound
 )
-
-
-def clean_xml(xml):
-    """Clean the given XML string of namespace definition, namespace
-    prefixes and syntactical but otherwise meaningless differences.
-
-    Parameters
-    ----------
-    xml : str
-        String representation of XML document.
-
-    Returns
-    -------
-    str
-        String representation of cleaned XML document.
-
-    """
-    # remove xmlns namespace definitions
-    r = re.sub(r'[ ]+xmlns:[^=]+="[^"]+"', '', xml)
-
-    # remove namespace prefixes in tags
-    r = re.sub(r'<(/?)[^:]+:([^ >]+)([ >])', r'<\1\2\3', r)
-
-    # remove extra spaces in tags
-    r = re.sub(r'[ ]+/>', '/>', r)
-
-    # remove extra spaces between tags
-    r = re.sub(r'>[ ]+<', '><', r)
-
-    return r
 
 
 class TestOwsutil(object):
@@ -297,7 +271,7 @@ class TestOwsutil(object):
             ':GetFeature>')
 
     def test_wfs_build_getfeature_request_bbox_nogeometrycolumn(self):
-        """Test the owsutil.wfs_build_getfeature_request method with a bbox
+        """Test the owsutil.wfs_build_getfeature_request method with a location
         argument but without the geometry_column argument.
 
         Test whether an AttributeError is raised.
@@ -305,17 +279,19 @@ class TestOwsutil(object):
         """
         with pytest.raises(AttributeError):
             xml = owsutil.wfs_build_getfeature_request(
-                'dov-pub:Boringen', bbox=(151650, 214675, 151750, 214775))
+                'dov-pub:Boringen',
+                location=Within(Box(151650, 214675, 151750, 214775)))
 
     def test_wfs_build_getfeature_request_bbox(self):
         """Test the owsutil.wfs_build_getfeature_request method with a
-        typename, bbox and geometry_column.
+        typename, box and geometry_column.
 
         Test whether the XML of the WFS GetFeature call is generated correctly.
 
         """
         xml = owsutil.wfs_build_getfeature_request(
-            'dov-pub:Boringen', bbox=(151650, 214675, 151750, 214775),
+            'dov-pub:Boringen',
+            location=Within(Box(151650, 214675, 151750, 214775)),
             geometry_column='geom')
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
             '<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs" '
@@ -328,9 +304,9 @@ class TestOwsutil(object):
             '<ogc:PropertyName>geom</ogc:PropertyName><gml:Envelope '
             'xmlns:gml="http://www.opengis.net/gml" srsDimension="2" '
             'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370"><gml'
-            ':lowerCorner>151650.000 '
-            '214675.000</gml:lowerCorner><gml:upperCorner>151750.000 '
-            '214775.000</gml:upperCorner></gml:Envelope></ogc:Within></ogc'
+            ':lowerCorner>151650.000000 '
+            '214675.000000</gml:lowerCorner><gml:upperCorner>151750.000000 '
+            '214775.000000</gml:upperCorner></gml:Envelope></ogc:Within></ogc'
             ':Filter></wfs:Query></wfs:GetFeature>')
 
     def test_wfs_build_getfeature_request_propertyname(self):
@@ -388,7 +364,7 @@ class TestOwsutil(object):
 
     def test_wfs_build_getfeature_request_bbox_filter(self):
         """Test the owsutil.wfs_build_getfeature_request method with an
-        attribute filter, a bbox and a geometry_column.
+        attribute filter, a box and a geometry_column.
 
         Test whether the XML of the WFS GetFeature call is generated correctly.
 
@@ -407,7 +383,7 @@ class TestOwsutil(object):
 
         xml = owsutil.wfs_build_getfeature_request(
             'dov-pub:Boringen', filter=filter_request,
-            bbox=(151650, 214675, 151750, 214775),
+            location=Within(Box(151650, 214675, 151750, 214775)),
             geometry_column='geom')
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
             '<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs" '
@@ -423,14 +399,14 @@ class TestOwsutil(object):
             '<gml:Envelope xmlns:gml="http://www.opengis.net/gml" '
             'srsDimension="2" '
             'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370"> '
-            '<gml:lowerCorner>151650.000 214675.000</gml:lowerCorner> '
-            '<gml:upperCorner>151750.000 214775.000</gml:upperCorner> '
+            '<gml:lowerCorner>151650.000000 214675.000000</gml:lowerCorner> '
+            '<gml:upperCorner>151750.000000 214775.000000</gml:upperCorner> '
             '</gml:Envelope> </ogc:Within> </ogc:And> </ogc:Filter> '
             '</wfs:Query> </wfs:GetFeature>')
 
     def test_wfs_build_getfeature_request_bbox_filter_propertyname(self):
         """Test the owsutil.wfs_build_getfeature_request method with an
-        attribute filter, a bbox, a geometry_column and a list of
+        attribute filter, a box, a geometry_column and a list of
         propertynames.
 
         Test whether the XML of the WFS GetFeature call is generated correctly.
@@ -450,7 +426,7 @@ class TestOwsutil(object):
 
         xml = owsutil.wfs_build_getfeature_request(
             'dov-pub:Boringen', filter=filter_request,
-            bbox=(151650, 214675, 151750, 214775),
+            location=Within(Box(151650, 214675, 151750, 214775)),
             geometry_column='geom', propertyname=['fiche', 'diepte_tot_m'])
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
             '<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs" '
@@ -468,7 +444,7 @@ class TestOwsutil(object):
             '<gml:Envelope xmlns:gml="http://www.opengis.net/gml" '
             'srsDimension="2" '
             'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370"> '
-            '<gml:lowerCorner>151650.000 214675.000</gml:lowerCorner> '
-            '<gml:upperCorner>151750.000 214775.000</gml:upperCorner> '
+            '<gml:lowerCorner>151650.000000 214675.000000</gml:lowerCorner> '
+            '<gml:upperCorner>151750.000000 214775.000000</gml:upperCorner> '
             '</gml:Envelope> </ogc:Within> </ogc:And> </ogc:Filter> '
             '</wfs:Query> </wfs:GetFeature>')

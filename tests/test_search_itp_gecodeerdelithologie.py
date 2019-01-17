@@ -77,7 +77,7 @@ class TestGecodeerdeLithologieSearch(AbstractTestSearch):
 
         """
         return PropertyIsEqualTo(propertyname='Proefnummer',
-                                 literal='kb31d88w-B1130')
+                                 literal='kb22d56w-B165')
 
     def get_inexistent_field(self):
         """Get the name of a field that doesn't exist.
@@ -99,7 +99,7 @@ class TestGecodeerdeLithologieSearch(AbstractTestSearch):
             The name of the XML field.
 
         """
-        return 'hoofd_grondsoort'
+        return 'grondsoort'
 
     def get_valid_returnfields(self):
         """Get a list of valid return fields from the main type.
@@ -150,8 +150,10 @@ class TestGecodeerdeLithologieSearch(AbstractTestSearch):
         return ['pkey_interpretatie', 'pkey_boring',
                 'betrouwbaarheid_interpretatie', 'x', 'y',
                 'diepte_laag_van', 'diepte_laag_tot',
-                'hoofd_grondsoort', 'bijmenging_plaatselijk',
-                'bijmenging_hoeveelheid', 'bijmenging_grondsoort']
+                'hoofdnaam1_grondsoort', 'hoofdnaam2_grondsoort',
+                'bijmenging1_plaatselijk', 'bijmenging1_hoeveelheid', 'bijmenging1_grondsoort',
+                'bijmenging2_plaatselijk', 'bijmenging2_hoeveelheid', 'bijmenging2_grondsoort',
+                'bijmenging3_plaatselijk', 'bijmenging3_hoeveelheid', 'bijmenging3_grondsoort']
 
     def test_search_nan(self, mp_wfs, mp_remote_describefeaturetype,
                         mp_remote_md, mp_remote_fc, mp_remote_wfs_feature,
@@ -226,4 +228,40 @@ class TestGecodeerdeLithologieSearch(AbstractTestSearch):
             query=self.get_valid_query_single(),
             return_fields=('pkey_interpretatie', 'diepte_laag_tot'))
 
-        assert df.diepte_laag_tot[0] == 19.0
+        assert df.diepte_laag_tot[0] == 4.
+
+    def test_search_multiple_return(self, mp_remote_describefeaturetype,
+                                    mp_remote_wfs_feature, mp_dov_xml):
+        """Test the search method returning multiple (sub)elements of the same subject.
+
+        Test whether the output dataframe contains the resolved XML data.
+
+        Parameters
+        ----------
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType.
+        mp_remote_wfs_feature : pytest.fixture
+            Monkeypatch the call to get WFS features.
+        mp_dov_xml : pytest.fixture
+            Monkeypatch the call to get the remote XML data.
+
+        """
+        df = self.get_search_object().search(
+            query=self.get_valid_query_single(),
+            return_fields=('pkey_interpretatie',
+                           'hoofdnaam1_grondsoort',
+                           'hoofdnaam2_grondsoort',
+                           'bijmenging1_grondsoort',
+                           'bijmenging1_hoeveelheid',
+                           'bijmenging1_plaatselijk',
+                           'bijmenging2_grondsoort',
+                           'bijmenging3_grondsoort'))
+
+        assert df.hoofdnaam1_grondsoort[4] == 'XZ'
+        assert df.hoofdnaam2_grondsoort[4] == 'KL'
+        assert df.bijmenging1_grondsoort[4] == 'GL'
+        assert df.bijmenging1_hoeveelheid[2] == 'M'
+        # mind that the column below is of dtype 'object'
+        assert df.bijmenging1_plaatselijk[2] is False
+        assert df.bijmenging2_grondsoort[5] == 'GL'
+        assert df.bijmenging3_grondsoort[8] == 'NN'

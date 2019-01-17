@@ -1,9 +1,12 @@
-
 .. _object_types:
 
 =======================
 Output data description
 =======================
+
+.. warning::
+
+    This page is to be removed once all datasets described below are implemented and documented in the :ref:`output_df_fields` section.
 
 The defined output format description of the Pandas :class:`~pandas.DataFrame` for each of the
 downloadable data objects:
@@ -25,13 +28,11 @@ The  ``source`` of the information has an implication on the duration of the dat
 that require downloads of multiple ``xml`` file will take more time. For more information on the duration
 difference of ``wfs`` based versus ``xml`` based queries, see :ref:`query duration guide <query_cost>`.
 
-.. note::
-
-    Not all ``wfs`` fields are included in the :class:`~pandas.DataFrame`, but they can be used
-    to select records from the DOV database. For example, whe searching on :ref:`Boreholes <ref_boreholes>`,
-    the presence of the ``informele_stratigrafie``,
-    ``formele_stratigrafie``, ``hydrogeologische_stratigrafie``, etc. are available in the ``wfs`` as
-    boolean fields to search on.
+Not all ``wfs`` fields are included in the :class:`~pandas.DataFrame`, but they can be used
+to select records from the DOV database. For example, whe searching on :ref:`Boreholes <ref_boreholes>`,
+the presence of the ``informele_stratigrafie``,
+``formele_stratigrafie``, ``hydrogeologische_stratigrafie``, etc. are available in the ``wfs`` as
+boolean fields to search on.
 
 
 .. _ref_interpretations:
@@ -121,10 +122,17 @@ interpreted data.
     wfs,Y_mL72,y,float,211682.0
     xml,/kern:dov-schema/interpretaties/gecodeerdelithologie/laag/van,diepte_laag_van,float,0.00
     xml,/kern:dov-schema/interpretaties/gecodeerdelithologie/laag/tot,diepte_laag_tot,float,1.75
-    xml,/kern:dov-schema/interpretaties/gecodeerdelithologie/laag/hoofdnaam/grondsoort,hoofd_grondsoort,string,KL
-    xml,/kern:dov-schema/interpretaties/gecodeerdelithologie/laag/bijmenging/plaatselijk,bijmenging_plaatselijk,boolean,false
-    xml,/kern:dov-schema/interpretaties/gecodeerdelithologie/laag/bijmenging/hoeveelheid,bijmening_hoeveelheid,string,N
-    xml,/kern:dov-schema/interpretaties/gecodeerdelithologie/laag/bijmenging/grondsoort,bijmenging_grondsoort,string,XZ
+    xml,/kern:dov-schema/interpretaties/gecodeerdelithologie/laag/hoofdnaam[1]/grondsoort,hoofdnaam1_grondsoort,string,KL
+    xml,/kern:dov-schema/interpretaties/gecodeerdelithologie/laag/hoofdnaam[2]/grondsoort,hoofdnaam2_grondsoort,string,KL
+    xml,/kern:dov-schema/interpretaties/gecodeerdelithologie/laag/bijmenging[1]/plaatselijk,bijmenging1_plaatselijk,boolean,false
+    xml,/kern:dov-schema/interpretaties/gecodeerdelithologie/laag/bijmenging[1]/hoeveelheid,bijmenging1_hoeveelheid,string,N
+    xml,/kern:dov-schema/interpretaties/gecodeerdelithologie/laag/bijmenging[1]/grondsoort,bijmenging1_grondsoort,string,XZ
+    xml,/kern:dov-schema/interpretaties/gecodeerdelithologie/laag/bijmenging[2]/plaatselijk,bijmenging2_plaatselijk,boolean,false
+    xml,/kern:dov-schema/interpretaties/gecodeerdelithologie/laag/bijmenging[2]/hoeveelheid,bijmenging2_hoeveelheid,string,N
+    xml,/kern:dov-schema/interpretaties/gecodeerdelithologie/laag/bijmenging[2]/grondsoort,bijmenging2_grondsoort,string,XZ
+    xml,/kern:dov-schema/interpretaties/gecodeerdelithologie/laag/bijmenging[3]/plaatselijk,bijmenging3_plaatselijk,boolean,false
+    xml,/kern:dov-schema/interpretaties/gecodeerdelithologie/laag/bijmenging[3]/hoeveelheid,bijmenging3_hoeveelheid,string,N
+    xml,/kern:dov-schema/interpretaties/gecodeerdelithologie/laag/bijmenging[3]/grondsoort,bijmenging3_grondsoort,string,XZ
 
 |
 

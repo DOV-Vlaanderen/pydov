@@ -1,1 +1,1 @@
-.. include:: ../CONDUCT.rst
+.. include:: ../.github/CODE_OF_CONDUCT.rst

@@ -1,20 +1,28 @@
 import datetime
+import re
+
 import numpy as np
 from collections import OrderedDict
 
 import pandas as pd
 import pytest
 import requests
-from numpy.compat import unicode
+from numpy.compat import (
+    unicode,
+    long,
+)
 from pandas import DataFrame
 from pandas.api.types import (
     is_int64_dtype, is_object_dtype,
     is_bool_dtype, is_float_dtype)
 
-import pydov
 from owslib.fes import PropertyIsEqualTo
 from owslib.etree import etree
 from pydov.util.errors import InvalidFieldError
+from pydov.util.location import (
+    Within,
+    Box,
+)
 
 
 def service_ok(url='https://www.dov.vlaanderen.be/geoserver', timeout=5):
@@ -44,6 +52,36 @@ def service_ok(url='https://www.dov.vlaanderen.be/geoserver', timeout=5):
     except Exception:
         ok = False
     return ok
+
+
+def clean_xml(xml):
+    """Clean the given XML string of namespace definition, namespace
+    prefixes and syntactical but otherwise meaningless differences.
+
+    Parameters
+    ----------
+    xml : str
+        String representation of XML document.
+
+    Returns
+    -------
+    str
+        String representation of cleaned XML document.
+
+    """
+    # remove xmlns namespace definitions
+    r = re.sub(r'[ ]+xmlns:[^=]+="[^"]+"', '', xml)
+
+    # remove namespace prefixes in tags
+    r = re.sub(r'<(/?)[^:]+:([^ >]+)([ >])', r'<\1\2\3', r)
+
+    # remove extra spaces in tags
+    r = re.sub(r'[ ]+/>', '/>', r)
+
+    # remove extra spaces between tags
+    r = re.sub(r'>[ ]+<', '><', r)
+
+    return r
 
 
 class AbstractTestSearch(object):
@@ -195,13 +233,17 @@ class AbstractTestSearch(object):
             assert 'notnull' in f
             assert type(f['notnull']) is bool
 
+            assert 'query' in f
+            assert type(f['query']) is bool
+
             assert 'cost' in f
             assert type(f['cost']) is int
             assert f['cost'] > 0
 
             if 'values' in f:
                 assert sorted(f.keys()) == [
-                    'cost', 'definition', 'name', 'notnull', 'type', 'values']
+                    'cost', 'definition', 'name', 'notnull', 'query', 'type',
+                    'values']
                 for v in f['values']:
                     if f['type'] == 'string':
                         assert type(v) in (str, unicode)
@@ -215,7 +257,7 @@ class AbstractTestSearch(object):
                         assert type(v) is bool
             else:
                 assert sorted(f.keys()) == ['cost', 'definition', 'name',
-                                            'notnull', 'type']
+                                            'notnull', 'query', 'type']
 
     def test_search_both_location_query(self, mp_remote_describefeaturetype,
                                         mp_remote_wfs_feature):
@@ -232,7 +274,7 @@ class AbstractTestSearch(object):
 
         """
         df = self.get_search_object().search(
-            location=(1, 2, 3, 4),
+            location=Within(Box(1, 2, 3, 4)),
             query=self.get_valid_query_single(),
             return_fields=self.get_valid_returnfields())
 
@@ -281,21 +323,30 @@ class AbstractTestSearch(object):
                 assert len(df[field].unique()) >= 1
 
         # dtype checks of the resulting df columns
-        fields = self.get_type().get_fields(source=('wfs', 'xml', 'custom'))
+        fields = self.get_search_object().get_fields()
 
         for field in list(df):
-            datatype = fields[field]['type']
-            if datatype == 'string':
-                assert (is_object_dtype(df[field]) or
-                        df[field].isnull().values.all())  # all Nan/None
-            elif datatype == 'float':
-                assert is_float_dtype(df[field])
-            elif datatype == 'integer':
-                assert is_int64_dtype(df[field])
-            elif datatype == 'date':
-                assert is_object_dtype(df[field])
-            elif datatype == 'boolean':
-                assert is_bool_dtype(df[field])
+            mandatory = fields[field]['notnull']
+            if mandatory:
+                assert len(df[field]) == len(df[field].dropna())
+
+        for field in list(df):
+            field_datatype = fields[field]['type']
+            datatypes = set((type(i) for i in df[field].dropna()))
+            assert len(datatypes) <= 1
+
+            if len(datatypes) > 0:
+                if field_datatype == 'string':
+                    assert str in datatypes
+                elif field_datatype == 'float':
+                    assert float in datatypes
+                elif field_datatype == 'integer':
+                    # in Python2 Panda's int64 dtype is translated into 'long'
+                    assert (int in datatypes or long in datatypes)
+                elif field_datatype == 'date':
+                    assert datetime.date in datatypes
+                elif field_datatype == 'boolean':
+                    assert bool in datatypes
 
     def test_search_returnfields(self, mp_remote_wfs_feature):
         """Test the search method with the query parameter and a selection of

@@ -61,8 +61,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'PyDOV'
-copyright = u"2017, DOV and contributors"
+project = u'pydov'
+copyright = u"2017-2019, DOV and contributors"
 
 # The version info for the project you're documenting, acts as replacement
 # for |version| and |release|, also used in various other places throughout
@@ -139,7 +139,7 @@ html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 
 # The name of an image file (relative to this directory) to place at the
 # top of the sidebar.
-#html_logo = None
+html_logo = '_static/img/logo.png'
 
 # The name of an image file (within the static path) to use as favicon
 # of the docs.  This file should be a Windows icon file (.ico) being
@@ -225,7 +225,7 @@ latex_elements = {
 # [howto/manual]).
 latex_documents = [
     ('index', 'pydov.tex',
-     u'PyDOV Documentation',
+     u'pydov Documentation',
      u'Roel Huybrechts', 'manual'),
 ]
 
@@ -256,7 +256,7 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     ('index', 'pydov',
-     u'PyDOV Documentation',
+     u'pydov Documentation',
      [u'Roel Huybrechts'], 1)
 ]
 
@@ -271,7 +271,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     ('index', 'pydov',
-     u'PyDOV Documentation',
+     u'pydov Documentation',
      u'Roel Huybrechts',
      'pydov',
      'One line description of project.',

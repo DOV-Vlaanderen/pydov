@@ -12,6 +12,7 @@
           <xsd:element maxOccurs="1" minOccurs="0" name="X_mL72" nillable="true" type="xsd:double"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="Y_mL72" nillable="true" type="xsd:double"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="Z_mTAW" nillable="true" type="xsd:decimal"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="diepte_tot_m" nillable="true" type="xsd:decimal"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="gemeente" nillable="true" type="xsd:string"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="Auteurs" nillable="true" type="xsd:string"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="Datum" nillable="true" type="xsd:date"/>

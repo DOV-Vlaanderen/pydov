@@ -52,6 +52,12 @@ Interpretaties
 Search utilities
 ----------------
 
+Query
+*****
+
+.. automodule:: pydov.util.query
+    :members:
+
 Location
 ********
 

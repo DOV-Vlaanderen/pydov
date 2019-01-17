@@ -130,7 +130,8 @@ class InformeleStratigrafieSearch(AbstractSearch):
 
 
 class FormeleStratigrafieSearch(AbstractSearch):
-    """Search class to retrieve the interpretations for Formele stratigrafie."""
+    """Search class to retrieve the interpretation for Formele
+    stratigrafie"""
 
     __wfs_schema = None
     __wfs_namespace = None

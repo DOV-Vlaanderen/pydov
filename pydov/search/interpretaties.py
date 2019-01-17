@@ -71,8 +71,8 @@ class InformeleStratigrafieSearch(AbstractSearch):
 
         Parameters
         ----------
-        location : pydov.util.location.AbstractLocationFilter or
-                    owslib.fes.BinaryLogicOpType<AbstractLocationFilter> or
+        location : pydov.util.location.AbstractLocationFilter or \
+                    owslib.fes.BinaryLogicOpType<AbstractLocationFilter> or \
                     owslib.fes.UnaryLogicOpType<AbstractLocationFilter>
             Location filter limiting the features to retrieve. Can either be a
             single instance of a subclass of AbstractLocationFilter, or a
@@ -317,8 +317,8 @@ class HydrogeologischeStratigrafieSearch(AbstractSearch):
 
         Parameters
         ----------
-        location : pydov.util.location.AbstractLocationFilter or
-                    owslib.fes.BinaryLogicOpType<AbstractLocationFilter> or
+        location : pydov.util.location.AbstractLocationFilter or \
+                    owslib.fes.BinaryLogicOpType<AbstractLocationFilter> or \
                     owslib.fes.UnaryLogicOpType<AbstractLocationFilter>
             Location filter limiting the features to retrieve. Can either be a
             single instance of a subclass of AbstractLocationFilter, or a
@@ -442,8 +442,8 @@ class LithologischeBeschrijvingenSearch(AbstractSearch):
 
         Parameters
         ----------
-        location : pydov.util.location.AbstractLocationFilter or
-                    owslib.fes.BinaryLogicOpType<AbstractLocationFilter> or
+        location : pydov.util.location.AbstractLocationFilter or \
+                    owslib.fes.BinaryLogicOpType<AbstractLocationFilter> or \
                     owslib.fes.UnaryLogicOpType<AbstractLocationFilter>
             Location filter limiting the features to retrieve. Can either be a
             single instance of a subclass of AbstractLocationFilter, or a
@@ -567,8 +567,8 @@ class GecodeerdeLithologieSearch(AbstractSearch):
 
         Parameters
         ----------
-        location : pydov.util.location.AbstractLocationFilter or
-                    owslib.fes.BinaryLogicOpType<AbstractLocationFilter> or
+        location : pydov.util.location.AbstractLocationFilter or \
+                    owslib.fes.BinaryLogicOpType<AbstractLocationFilter> or \
                     owslib.fes.UnaryLogicOpType<AbstractLocationFilter>
             Location filter limiting the features to retrieve. Can either be a
             single instance of a subclass of AbstractLocationFilter, or a

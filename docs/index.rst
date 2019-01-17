@@ -64,17 +64,34 @@ Contents:
 =========
 
 .. toctree::
+   :caption: Getting started
    :maxdepth: 1
 
    installation
-   userguide
+   quickstart
    tutorials
-   endpoints
+
+.. toctree::
+   :caption: User guide
+   :maxdepth: 1
+
+   query_attribute
+   query_location
+   performance
+   df_format
+   caching
+   hooks
+
+.. toctree::
+   :caption: Developer guide
+   :maxdepth: 1
+
    contributing
+   endpoints
+   reference
+   history
    authors
    conduct
-   history
-   reference
 
 Indices and tables
 ==================

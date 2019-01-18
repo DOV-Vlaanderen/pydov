@@ -578,6 +578,7 @@ class GecodeerdeLithologie(AbstractBoringInterpretatie):
         'type': 'float'
     }]
 
+
 class GeotechnischeCoderingLaag(AbstractDovSubType):
 
     _name = 'geotechnische_codering_laag'

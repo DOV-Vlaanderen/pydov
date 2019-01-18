@@ -252,10 +252,11 @@ class AbstractSearch(object):
                 }
 
                 if fc_field['values'] is not None:
-                    stripped_values = [v.strip() for v in fc_field['values']
-                                       if len(v.strip()) > 0]
-                    if len(stripped_values) > 0:
-                        field['values'] = stripped_values
+                    field['values'] = fc_field['values']
+
+                if fc_field['vocabulary'] is not None:
+                    field['vocabulary'] = fc_field['vocabulary']
+
                 fields[name] = field
 
         for xml_field in self._type.get_fields(source=['xml']).values():
@@ -269,9 +270,9 @@ class AbstractSearch(object):
                 'cost': 10
             }
 
-            values = self._get_xsd_values(xsd_enums, xml_field)
-            if values is not None:
-                field['values'] = values
+            vocab = self._get_xsd_values(xsd_enums, xml_field)
+            if vocab is not None:
+                field['vocabulary'] = vocab
 
             fields[field['name']] = field
 
@@ -574,10 +575,10 @@ class AbstractSearch(object):
         df = df.copy()
         fields = self.get_fields()
         for f in fields.values():
-            if f['cost'] == 10 and f.get('values', None) is not None:
-                values = f['values']
+            if f.get('vocabulary', None) is not None and f['name'] in list(df):
+                vocabulary = f['vocabulary']
                 df[df[f['name']].notnull()] = df[
-                    df[f['name']].notnull()].replace(values)
+                    df[f['name']].notnull()].replace(vocabulary)
         return df
 
     def search(self, location=None, query=None, return_fields=None):

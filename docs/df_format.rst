@@ -114,7 +114,7 @@ interpreted data.
 
 |
 
-  .. csv-table:: Gecodeerde lithologie
+  .. csv-table:: Gecodeerde lithologie and Geotechnische codering
     :header-rows: 1
 
     source,field,new_name,data_type,example
@@ -281,7 +281,7 @@ qc, Qt, fs, u and i. All elements are by default included in the output datafram
     wfs,sondeermethode,sondeermethode,string,continu elektrisch
     wfs,apparaat_type,apparaat,string,200kN - MAN2
     xml,/kern:dov-schema/sondering/visueelonderzoek/datumtijd_waarneming_grondwaterstand,datum_gw_meting,date,02/09/2011
-    xml,/kern:dov-schema/sondering/visueelonderzoek/grondwaterstand,gw_meting,float,02/09/2011
+    xml,/kern:dov-schema/sondering/visueelonderzoek/grondwaterstand,diepte_gw_m,float,02/09/2011
 
 |
 

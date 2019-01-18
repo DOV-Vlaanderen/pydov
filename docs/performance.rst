@@ -18,8 +18,6 @@ You can get an overview of the available fields for a dataset using its search o
 Default dataframe columns
 *************************
 
-Below the default dataframe fields for each dataset are listed:
-
 Boreholes (boringen)
 --------------------
   .. csv-table:: Boreholes (boringen)
@@ -41,6 +39,31 @@ Boreholes (boringen)
     diepte_methode_van,10,float,0.00
     diepte_methode_tot,10,float,19.00
     boormethode,10,string,droge boring
+
+CPT measurements (sonderingen)
+------------------------------
+  .. csv-table:: CPT measurements (sonderingen)
+    :header-rows: 1
+
+    Field,Cost,Datatype,Example
+    pkey_sondering,1,string,https://www.dov.vlaanderen.be/data/sondering/2002-010317
+    x,1,float,142767
+    y,1,float,221907
+    start_sondering_mtaw,1,float,2.39
+    diepte_sondering_van,1,float,0
+    diepte_sondering_tot,1,float,16
+    datum_aanvang,1,date,2002-07-04
+    uitvoerder,1,string,MVG - Afdeling Geotechniek
+    sondeermethode,1,string,continu elektrisch
+    apparaat,1,string,200kN - RUPS
+    datum_gw_meting,10,datetime,2002-07-04 13:50:00
+    diepte_gw_m,10,float,1.2
+    z,10,float,1.2
+    qc,10,float,0.68
+    Qt,10,float,NaN
+    fs,10,float,10
+    u,10,float,7
+    i,10,float,0.1
 
 Groundwater screens (grondwaterfilters)
 ---------------------------------------
@@ -68,6 +91,24 @@ Groundwater screens (grondwaterfilters)
     peil_mtaw,10,float,4.6
     betrouwbaarheid,10,string,goed
     methode,10,string,NaN
+
+Formal stratigraphy (Formele stratigrafie)
+------------------------------------------
+  .. csv-table:: Formal stratigraphy (Formele stratigrafie)
+    :header-rows: 1
+
+    Field,Cost,Datatype,Example
+    pkey_interpretatie,1,string,https://www.dov.vlaanderen.be/data/interpretatie/2002-227082
+    pkey_boring,1,string,NaN
+    pkey_sondering,1,string,https://www.dov.vlaanderen.be/data/sondering/1989-068788
+    betrouwbaarheid_interpretatie,1,string,goed
+    x,1,float,108455
+    y,1,float,194565
+    diepte_laag_van,10,float,0
+    diepte_laag_tot,10,float,13
+    lid1,10,string,Q
+    relatie_lid1_lid2,10,string,T
+    lid2,10,string,Q
 
 Informal stratigraphy (Informele stratigrafie)
 ----------------------------------------------
@@ -118,6 +159,31 @@ Coded lithology (Gecodeerde lithologie)
     bijmenging1_plaatselijk,10,boolean,False
     bijmenging1_hoeveelheid,10,string,N
     bijmenging1_grondsoort,10,string,SC
+    bijmenging2_plaatselijk,10,boolean,NaN
+    bijmenging2_hoeveelheid,10,string,NaN
+    bijmenging2_grondsoort,10,string,NaN
+    bijmenging3_plaatselijk,10,boolean,NaN
+    bijmenging3_hoeveelheid,10,string,NaN
+    bijmenging3_grondsoort,10,string,NaN
+
+Geotechnical encoding (Geotechnische codering)
+----------------------------------------------
+  .. csv-table:: Geotechnical encoding (Geotechnische codering)
+    :header-rows: 1
+
+    Field,Cost,Datatype,Example
+    pkey_interpretatie,1,string,https://www.dov.vlaanderen.be/data/interpretatie/2014-184535
+    pkey_boring,1,string,https://www.dov.vlaanderen.be/data/boring/1957-033538
+    betrouwbaarheid_interpretatie,1,string,goed
+    x,1,float,108851
+    y,1,float,196510
+    diepte_laag_van,10,float,1
+    diepte_laag_tot,10,float,1.5
+    hoofdnaam1_grondsoort,10,string,XZ
+    hoofdnaam2_grondsoort,10,string,NaN
+    bijmenging1_plaatselijk,10,boolean,NaN
+    bijmenging1_hoeveelheid,10,string,NaN
+    bijmenging1_grondsoort,10,string,NaN
     bijmenging2_plaatselijk,10,boolean,NaN
     bijmenging2_hoeveelheid,10,string,NaN
     bijmenging2_grondsoort,10,string,NaN

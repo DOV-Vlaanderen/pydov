@@ -22,9 +22,12 @@ To run these interactively online without installation, use the following binder
    :maxdepth: 1
 
    notebooks/search_boringen.ipynb
+   notebooks/search_sonderingen.ipynb
    notebooks/search_grondwaterfilters.ipynb
    notebooks/search_formele_stratigrafie.ipynb
    notebooks/search_informele_stratigrafie.ipynb
    notebooks/search_hydrogeologische_stratigrafie.ipynb
    notebooks/search_lithologische_beschrijvingen.ipynb
+   notebooks/search_gecodeerde_lithologie.ipynb
+   notebooks/search_geotechnische_coderingen.ipynb
    notebooks/caching.ipynb

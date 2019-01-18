@@ -13,6 +13,12 @@ Boring
 .. automodule:: pydov.search.boring
     :members:
 
+Sondering
+*********
+
+.. automodule:: pydov.search.sondering
+    :members:
+
 Grondwaterfilter
 ****************
 
@@ -35,6 +41,13 @@ Boring
 ******
 
 .. automodule:: pydov.types.boring
+    :members:
+    :show-inheritance:
+
+Sondering
+*********
+
+.. automodule:: pydov.types.sondering
     :members:
     :show-inheritance:
 

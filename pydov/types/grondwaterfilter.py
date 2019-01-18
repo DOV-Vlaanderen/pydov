@@ -94,13 +94,9 @@ class GrondwaterFilter(AbstractDovType):
         'type': 'float'
     }, {
         'name': 'mv_mtaw',
-        'source': 'xml',
-        'sourcefield':
-            '/grondwaterlocatie/puntligging/oorspronkelijk_maaiveld',
-        'definition': 'Maaiveldhoogte in mTAW op dag dat de put/boring '
-                      'uitgevoerd werd.',
-        'type': 'float',
-        'notnull': False
+        'source': 'wfs',
+        'sourcefield': 'Z_mTAW',
+        'type': 'float'
     }, {
         'name': 'gemeente',
         'source': 'wfs',

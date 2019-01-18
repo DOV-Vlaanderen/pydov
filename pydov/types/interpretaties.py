@@ -577,3 +577,102 @@ class GecodeerdeLithologie(AbstractBoringInterpretatie):
         'sourcefield': 'Y_mL72',
         'type': 'float'
     }]
+
+
+class QuartairStratigrafieLaag(AbstractDovSubType):
+
+    _name = 'quartair_stratigrafie_laag'
+    _rootpath = './/quartairstratigrafie/laag'
+
+    _fields = [{
+        'name': 'diepte_laag_van',
+        'source': 'xml',
+        'sourcefield': '/van',
+        'definition': 'diepte van de bovenkant van de laag '
+                      'quartairstratigrafie in meter',
+        'type': 'float',
+        'notnull': False
+    }, {
+        'name': 'diepte_laag_tot',
+        'source': 'xml',
+        'sourcefield': '/tot',
+        'definition': 'diepte van de onderkant van de laag '
+                      'quartairstratigrafie in meter',
+        'type': 'float',
+        'notnull': False
+    }, {
+        'name': 'lid1',
+        'source': 'xml',
+        'sourcefield': '/lid1',
+        'definition': 'eerste eenheid van de laag quartairstratigrafie',
+        'type': 'string',
+        'notnull': False
+    }, {
+        'name': 'relatie_lid1_lid2',
+        'source': 'xml',
+        'sourcefield': '/relatie_lid1_lid2',
+        'definition': 'verbinding of relatie tussen lid1 en lid2 van de '
+                      'laag quartairstratigrafie',
+        'type': 'string',
+        'notnull': False
+    }, {
+        'name': 'lid2',
+        'source': 'xml',
+        'sourcefield': '/lid2',
+        'definition': 'tweede eenheid van de laag quartairstratigrafie. '
+                      'Indien niet ingevuld wordt default dezelfde waarde '
+                      'als voor Lid1 ingevuld',
+        'type': 'string',
+        'notnull': False
+    }]
+
+
+class QuartairStratigrafie(AbstractCommonInterpretatie):
+    """Class representing the DOV data type for 'Quartair stratigrafie'
+    interpretations.
+
+    In Dutch: Afgeleid type van interpretatie, specifiek voor de quartaire
+    stratigrafie. Een Quartair interpretatie omvat een discrete formele
+    interpretatie van het materiaal in de ondergrond, al dan niet aan
+    de hand van monsters, op basis van een door DOV gestandaardiseerde
+    codering. De Quartair interpretatie gebeurt in tegenstelling tot de
+    formele interpretatie op basis van sedimentgenetische profieltypen
+    ipv lithostratigrafie
+    """
+
+    _subtypes = [QuartairStratigrafieLaag]
+
+    _fields = [{
+        'name': 'pkey_interpretatie',
+        'source': 'wfs',
+        'sourcefield': 'Interpretatiefiche',
+        'type': 'string'
+    }, {
+        'name': 'pkey_boring',
+        'source': 'custom',
+        'type': 'string',
+        'definition': 'URL die verwijst naar de gegevens van de boring '
+                      'waaraan deze quartair stratigrafie gekoppeld is ('
+                      'indien gekoppeld aan een boring).',
+        'notnull': False
+    }, {
+        'name': 'betrouwbaarheid_interpretatie',
+        'source': 'wfs',
+        'sourcefield': 'Betrouwbaarheid',
+        'type': 'string'
+    }, {
+        'name': 'x',
+        'source': 'wfs',
+        'sourcefield': 'X_mL72',
+        'type': 'float'
+    }, {
+        'name': 'y',
+        'source': 'wfs',
+        'sourcefield': 'Y_mL72',
+        'type': 'float'
+    }, {
+        'name': 'diepte_tot_m',
+        'source': 'wfs',
+        'sourcefield': 'diepte_tot_m',
+        'type': 'float'
+    }]

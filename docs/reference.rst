@@ -1,17 +1,26 @@
 API reference
 =============
 
-Searching
----------
+Search classes
+--------------
 
-.. automodule:: pydov.search.abstract
+.. .. automodule:: pydov.search.abstract
     :members:
+
+Boring
+******
 
 .. automodule:: pydov.search.boring
     :members:
 
+Grondwaterfilter
+****************
+
 .. automodule:: pydov.search.grondwaterfilter
     :members:
+
+Interpretaties
+**************
 
 .. automodule:: pydov.search.interpretaties
     :members:
@@ -19,34 +28,77 @@ Searching
 Object types
 ------------
 
-.. automodule:: pydov.types.abstract
+.. .. automodule:: pydov.types.abstract
     :members:
+
+Boring
+******
 
 .. automodule:: pydov.types.boring
     :members:
+    :show-inheritance:
+
+Grondwaterfilter
+****************
 
 .. automodule:: pydov.types.grondwaterfilter
     :members:
+    :show-inheritance:
+
+Interpretaties
+**************
 
 .. automodule:: pydov.types.interpretaties
     :members:
+    :show-inheritance:
+
+Search utilities
+----------------
+
+Query
+*****
+
+.. automodule:: pydov.util.query
+    :members:
+
+Location
+********
+
+.. automodule:: pydov.util.location
+    :members:
+    :show-inheritance:
+
+OWS utilities
+*************
+
+.. automodule:: pydov.util.owsutil
+    :members:
+    :show-inheritance:
+
+DOV utilities
+*************
+
+.. automodule:: pydov.util.dovutil
+    :members:
+    :show-inheritance:
 
 Caching
 -------
 
 .. automodule:: pydov.util.caching
     :members:
+    :show-inheritance:
 
+Hooks
+-----
 
-OWS utilities
--------------
-
-.. automodule:: pydov.util.owsutil
+.. automodule:: pydov.util.hooks
     :members:
+    :show-inheritance:
 
-
-Errors
-------
+Errors and warnings
+-------------------
 
 .. automodule:: pydov.util.errors
     :members:
+    :show-inheritance:

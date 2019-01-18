@@ -1,4 +1,4 @@
-Welcome to PyDOV's documentation!
+Welcome to pydov's documentation!
 ==================================
 
 .. image:: https://travis-ci.org/DOV-Vlaanderen/pydov.svg?branch=master
@@ -44,12 +44,16 @@ package provides the optimal development traject.
 Getting started
 ---------------
 
-After :ref:`installation`, check the :ref:`userguide` instructions for a first introduction of
+After :ref:`installation`, check the :ref:`quickstart` instructions for a first introduction of
 the pydov functionalities. For a more in-depth overview of the capabilities,
 the :ref:`tutorials` illustrate different capabilities of the pydov package
 for each of the object types (:class:`~pydov.search.grondwaterfilter.GrondwaterFilterSearch`,
 :class:`~pydov.search.boring.BoringSearch` and the interpretations derived from
 :class:`~pydov.search.interpretaties.InformeleStratigrafieSearch`).
+
+The setup of appropriate queries on attribute or location is similar for the different data types and
+crucial to get acces to the required data. The :ref:`query_attribute` and :ref:`query_location` explain
+the query options for attributes and locations respectively.
 
 All functionalities are build on top of the existing webservices provided
 by DOV. For more details about these services and endpoints, check
@@ -60,17 +64,34 @@ Contents:
 =========
 
 .. toctree::
+   :caption: Getting started
    :maxdepth: 1
 
    installation
-   userguide
+   quickstart
    tutorials
-   endpoints
+
+.. toctree::
+   :caption: User guide
+   :maxdepth: 1
+
+   query_attribute
+   query_location
+   performance
+   df_format
+   caching
+   hooks
+
+.. toctree::
+   :caption: Developer guide
+   :maxdepth: 1
+
    contributing
+   endpoints
+   reference
+   history
    authors
    conduct
-   history
-   reference
 
 Indices and tables
 ==================

@@ -14,6 +14,7 @@ from pydov.util.errors import (
     InvalidSearchParameterError,
     FeatureOverflowError,
     InvalidFieldError,
+    WfsGetFeatureError,
 )
 from ..util.owsutil import get_remote_schema
 
@@ -224,6 +225,7 @@ class AbstractSearch(object):
                         wfs_schema['properties'][wfs_field],
                         wfs_schema['properties'][wfs_field]),
                     'notnull': fc_field['multiplicity'][0] > 0,
+                    'query': True,
                     'cost': 1
                 }
 
@@ -240,6 +242,7 @@ class AbstractSearch(object):
                 'type': xml_field['type'],
                 'definition': xml_field['definition'],
                 'notnull': xml_field['notnull'],
+                'query': False,
                 'cost': 10
             }
             fields[field['name']] = field
@@ -250,6 +253,7 @@ class AbstractSearch(object):
                 'type': custom_field['type'],
                 'definition': custom_field['definition'],
                 'notnull': custom_field['notnull'],
+                'query': False,
                 'cost': 1
             }
             fields[field['name']] = field
@@ -262,8 +266,8 @@ class AbstractSearch(object):
 
         Parameters
         ----------
-        location : tuple<minx,miny,maxx,maxy>
-            The bounding box limiting the features to retrieve.
+        location : pydov.util.location.AbstractLocationFilter
+            Location filter limiting the features to retrieve.
         query : owslib.fes.OgcExpression
             OGC filter expression to use for searching. This can contain any
             combination of filter elements defined in owslib.fes. The query
@@ -337,7 +341,7 @@ class AbstractSearch(object):
                         "Unknown return field: '%s'" % rf)
 
     @staticmethod
-    def _get_remote_wfs_feature(wfs, typename, bbox, filter, propertyname,
+    def _get_remote_wfs_feature(wfs, typename, location, filter, propertyname,
                                 geometry_column):
         """Perform the WFS GetFeature call to get features from the remote
         service.
@@ -346,8 +350,8 @@ class AbstractSearch(object):
         ----------
         typename : str
             Layername to query.
-        bbox : tuple<minx,miny,maxx,maxy>
-            The bounding box limiting the features to retrieve.
+        location : pydov.util.location.AbstractLocationFilter
+            Location filter limiting the features to retrieve.
         filter : owslib.fes.FilterRequest
             Filter request to search on attribute values.
         propertyname : list<str>
@@ -365,7 +369,7 @@ class AbstractSearch(object):
             version=wfs.version,
             geometry_column=geometry_column,
             typename=typename,
-            bbox=bbox,
+            location=location,
             filter=filter,
             propertyname=propertyname
         )
@@ -384,8 +388,8 @@ class AbstractSearch(object):
 
         Parameters
         ----------
-        location : tuple<minx,miny,maxx,maxy>
-            The bounding box limiting the features to retrieve.
+        location : pydov.util.location.AbstractLocationFilter
+            Location filter limiting the features to retrieve.
         query : owslib.fes.OgcExpression
             OGC filter expression to use for searching. This can contain any
             combination of filter elements defined in owslib.fes. The query
@@ -467,12 +471,17 @@ class AbstractSearch(object):
         fts = self._get_remote_wfs_feature(
             wfs=self.__wfs,
             typename=self._layer,
-            bbox=location,
+            location=location,
             filter=filter_request,
             propertyname=wfs_property_names,
             geometry_column=self._geometry_column)
 
         tree = etree.fromstring(fts)
+
+        if tree.get('numberOfFeatures') is None:
+            raise WfsGetFeatureError(
+                'Error retrieving features from DOV WFS server:\n%s' %
+                etree.tostring(tree).decode('utf8'))
 
         if int(tree.get('numberOfFeatures')) == 10000:
             raise FeatureOverflowError(
@@ -517,6 +526,9 @@ class AbstractSearch(object):
             notnull (boolean)
                 Whether the field is mandatory (True) or can be null (False).
 
+            query (boolean)
+                Whether the field can be used in an attribute query.
+
             cost (integer)
                 The cost associated with the request of this field in the
                 output dataframe.
@@ -529,3 +541,55 @@ class AbstractSearch(object):
         """
         self._init_fields()
         return self._fields
+
+    def search(self, location=None, query=None, return_fields=None):
+        """Search for objects of this type. Provide `location` and/or `query`.
+        When `return_fields` is None, all fields are returned.
+
+        Parameters
+        ----------
+        location : pydov.util.location.AbstractLocationFilter or
+                    owslib.fes.BinaryLogicOpType<AbstractLocationFilter> or
+                    owslib.fes.UnaryLogicOpType<AbstractLocationFilter>
+            Location filter limiting the features to retrieve. Can either be a
+            single instance of a subclass of AbstractLocationFilter, or a
+            combination using And, Or, Not of AbstractLocationFilters.
+        query : owslib.fes.OgcExpression
+            OGC filter expression to use for searching. This can contain any
+            combination of filter elements defined in owslib.fes. The query
+            should use the fields provided in `get_fields()`. Note that not
+            all fields are currently supported as a search parameter.
+        return_fields : list<str> or tuple<str> or set<str>
+            A list of fields to be returned in the output data. This should
+            be a subset of the fields provided in `get_fields()`. Note that
+            not all fields are currently supported as return fields.
+
+        Returns
+        -------
+        pandas.core.frame.DataFrame
+            DataFrame containing the output of the search query.
+
+        Raises
+        ------
+        pydov.util.errors.InvalidSearchParameterError
+            When not one of `location` or `query` is provided.
+
+        pydov.util.errors.InvalidFieldError
+            When at least one of the fields in `return_fields` is unknown.
+
+            When a field that is only accessible as return field is used as
+            a query parameter.
+
+            When a field that can only be used as a query parameter is used as
+            a return field.
+
+        pydov.util.errors.FeatureOverflowError
+            When the number of features to be returned is equal to the
+            maxFeatures limit of the WFS server.
+
+        AttributeError
+            When the argument supplied as return_fields is not a list,
+            tuple or set.
+
+        """
+        raise NotImplementedError

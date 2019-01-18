@@ -61,8 +61,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'PyDOV'
-copyright = u"2017, DOV and contributors"
+project = u'pydov'
+copyright = u"2017-2019, DOV and contributors"
 
 # The version info for the project you're documenting, acts as replacement
 # for |version| and |release|, also used in various other places throughout
@@ -114,6 +114,10 @@ pygments_style = 'sphinx'
 # documents.
 #keep_warnings = False
 
+# numpydoc issue
+# https://stackoverflow.com/questions/12206334/sphinx-autosummary-toctree-contains-reference-to-nonexisting-document-warnings
+# solved by https://github.com/numpy/numpydoc/pull/6
+numpydoc_class_members_toctree = False
 
 # -- Options for HTML output -------------------------------------------
 
@@ -225,7 +229,7 @@ latex_elements = {
 # [howto/manual]).
 latex_documents = [
     ('index', 'pydov.tex',
-     u'PyDOV Documentation',
+     u'pydov Documentation',
      u'Roel Huybrechts', 'manual'),
 ]
 
@@ -256,7 +260,7 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     ('index', 'pydov',
-     u'PyDOV Documentation',
+     u'pydov Documentation',
      [u'Roel Huybrechts'], 1)
 ]
 
@@ -271,7 +275,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     ('index', 'pydov',
-     u'PyDOV Documentation',
+     u'pydov Documentation',
      u'Roel Huybrechts',
      'pydov',
      'One line description of project.',

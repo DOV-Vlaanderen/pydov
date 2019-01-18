@@ -45,11 +45,11 @@ class AbstractCommon(object):
             the xpath as is.
         returntype : str
             Parse the text found with `func` to this output datatype. One of
-            `string`, `float`, `integer`, `date`, `boolean`.
+            `string`, `float`, `integer`, `date`, `datetime`, `boolean`.
 
         Returns
         -------
-        str or float or int or datetime.date
+        str or float or int or bool or datetime.date or datetime.datetime
             Returns the parsed value of the output from calling `func` on
             `xpath`, converted to the type described by `returntype`.
 
@@ -71,6 +71,10 @@ class AbstractCommon(object):
                            + datetime.timedelta(days=1)
                 else:
                     return datetime.datetime.strptime(x, '%Y-%m-%d').date()
+        elif returntype == 'datetime':
+            def typeconvert(x):
+                return datetime.datetime.strptime(
+                    x.split('.')[0], '%Y-%m-%dT%H:%M:%S')
         elif returntype == 'boolean':
             def typeconvert(x):
                 return strtobool(x) == 1

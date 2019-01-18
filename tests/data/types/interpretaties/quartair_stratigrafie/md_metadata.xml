@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <csw:GetRecordByIdResponse xmlns:csw="http://www.opengis.net/cat/csw/2.0.2">
-  <gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gml="http://www.opengis.net/gml" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:geonet="http://www.fao.org/geonetwork" xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.isotc211.org/2005/gmd/gmd.xsd">
+  <gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gml="http://www.opengis.net/gml" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:geonet="http://www.fao.org/geonetwork">
     <gmd:fileIdentifier>
-      <gco:CharacterString>c9128330-1124-4c46-9d37-77796e10df71</gco:CharacterString>
+      <gco:CharacterString>8b204ed6-e44c-4567-bbe8-bd427eba082c</gco:CharacterString>
     </gmd:fileIdentifier>
     <gmd:language>
       <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="dut" />
     </gmd:language>
     <gmd:characterSet>
-      <gmd:MD_CharacterSetCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_CharacterSetCode" codeListValue="utf8" />
+      <gmd:MD_CharacterSetCode codeListValue="utf8" codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_CharacterSetCode" />
     </gmd:characterSet>
-    <gmd:parentIdentifier gco:nilReason="missing">
-      <gco:CharacterString />
+    <gmd:parentIdentifier>
+      <gco:CharacterString>c9128330-1124-4c46-9d37-77796e10df71</gco:CharacterString>
     </gmd:parentIdentifier>
     <gmd:hierarchyLevel>
-      <gmd:MD_ScopeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ScopeCode" codeListValue="series" />
+      <gmd:MD_ScopeCode codeListValue="dataset" codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ScopeCode" />
     </gmd:hierarchyLevel>
     <gmd:hierarchyLevelName>
-      <gco:CharacterString>datasetseries</gco:CharacterString>
+      <gco:CharacterString>dataset</gco:CharacterString>
     </gmd:hierarchyLevelName>
     <gmd:contact>
       <gmd:CI_ResponsibleParty>
@@ -67,7 +67,7 @@
       </gmd:CI_ResponsibleParty>
     </gmd:contact>
     <gmd:dateStamp>
-      <gco:DateTime>2018-02-21T16:14:06</gco:DateTime>
+      <gco:DateTime>2018-02-21T16:14:10</gco:DateTime>
     </gmd:dateStamp>
     <gmd:metadataStandardName>
       <gco:CharacterString>ISO 19115/2003/Cor.1:2006</gco:CharacterString>
@@ -103,53 +103,54 @@
         </gmd:referenceSystemIdentifier>
       </gmd:MD_ReferenceSystem>
     </gmd:referenceSystemInfo>
+    <gmd:referenceSystemInfo>
+      <gmd:MD_ReferenceSystem>
+        <gmd:referenceSystemIdentifier>
+          <gmd:RS_Identifier>
+            <gmd:code>
+              <gco:CharacterString>http://www.opengis.net/def/crs/EPSG/0/3043</gco:CharacterString>
+            </gmd:code>
+            <gmd:codeSpace>
+              <gco:CharacterString>EPSG</gco:CharacterString>
+            </gmd:codeSpace>
+          </gmd:RS_Identifier>
+        </gmd:referenceSystemIdentifier>
+      </gmd:MD_ReferenceSystem>
+    </gmd:referenceSystemInfo>
     <gmd:identificationInfo>
       <gmd:MD_DataIdentification>
         <gmd:citation>
           <gmd:CI_Citation>
             <gmd:title>
-              <gco:CharacterString>Interpretaties</gco:CharacterString>
+              <gco:CharacterString>Quartaire stratigrafie</gco:CharacterString>
             </gmd:title>
             <gmd:date>
               <gmd:CI_Date>
                 <gmd:date>
-                  <gco:Date>2002-01-01</gco:Date>
-                </gmd:date>
-                <gmd:dateType>
-                  <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation" />
-                </gmd:dateType>
-              </gmd:CI_Date>
-            </gmd:date>
-            <gmd:date>
-              <gmd:CI_Date>
-                <gmd:date>
-                  <gco:Date>2017-03-28</gco:Date>
+                  <gco:Date>2017-03-06</gco:Date>
                 </gmd:date>
                 <gmd:dateType>
                   <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication" />
                 </gmd:dateType>
               </gmd:CI_Date>
             </gmd:date>
-            <gmd:edition gco:nilReason="missing">
-              <gco:CharacterString />
-            </gmd:edition>
             <gmd:identifier>
               <gmd:RS_Identifier>
                 <gmd:code>
-                  <gco:CharacterString>560f4ec8-95c4-4f29-8377-4f5a014b552a</gco:CharacterString>
+                  <gco:CharacterString>70ea6ffb-b570-480e-bf7c-bf7e17460fab</gco:CharacterString>
                 </gmd:code>
-                <gmd:codeSpace gco:nilReason="missing">
-                  <gco:CharacterString />
+                <gmd:codeSpace>
+                  <gco:CharacterString>DOV-be</gco:CharacterString>
                 </gmd:codeSpace>
               </gmd:RS_Identifier>
             </gmd:identifier>
           </gmd:CI_Citation>
         </gmd:citation>
         <gmd:abstract>
-          <gco:CharacterString>De beschrijvingen en interpretaties van de ondergrond omvatten de lithologische beschrijvingen, formele stratigrafie, informele stratigrafie, quartaire stratigrafie, gecodeerde lithologie, hydrogeologische stratigrafie, informele hydrogeologische stratigrafie en de geotechnische coderingen allen gekoppeld aan de boringen en/of sonderingen.</gco:CharacterString>
+          <gco:CharacterString>De quartaire afzettingen in Vlaanderen, de jongste afzettingen, zijn lateraal en verticaal heterogeen en varieren erg in dikte. De afzettingen zijn vooral onder continentale omstandigheden tot stand gekomen (rivier-, duinafzettingen). Eigenlijk zijn het pakketten die zelden meer dan 30 meter en soms zelfs minder dan 1 meter dik zijn. Omwille van deze grote eigenheid en de grote mate van detail van de beschrijvingen, werd hiervoor een eigen stratigrafische codering uitgewerkt voor Vlaanderen.</gco:CharacterString>
         </gmd:abstract>
         <gmd:purpose>
-          <gco:CharacterString>Deze datasetserie biedt een overzicht van de beschikbare beschrijvingen en interpretaties van de ondergrond.</gco:CharacterString>
+          <gco:CharacterString>Tijdens de quartairgeologische kartering op schaal 1/50.000 i.o.v. ALBON werden er quartaire interpretaties aangemaakt. Deze kunnen gebruikt worden voor een detailbeschrijving van het Quartaire dek.</gco:CharacterString>
         </gmd:purpose>
         <gmd:status>
           <gmd:MD_ProgressCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ProgressCode" codeListValue="onGoing" />
@@ -241,105 +242,21 @@
             </gmd:role>
           </gmd:CI_ResponsibleParty>
         </gmd:pointOfContact>
-        <gmd:pointOfContact>
-          <gmd:CI_ResponsibleParty>
-            <gmd:organisationName>
-              <gco:CharacterString>Vlaamse overheid - Vlaamse MilieuMaatschappij - Afdeling Operationeel Waterbeheer</gco:CharacterString>
-            </gmd:organisationName>
-            <gmd:contactInfo>
-              <gmd:CI_Contact>
-                <gmd:address>
-                  <gmd:CI_Address>
-                    <gmd:deliveryPoint>
-                      <gco:CharacterString>Koning Albert II-laan 20 bus 16</gco:CharacterString>
-                    </gmd:deliveryPoint>
-                    <gmd:city>
-                      <gco:CharacterString>Brussel</gco:CharacterString>
-                    </gmd:city>
-                    <gmd:postalCode>
-                      <gco:CharacterString>1000</gco:CharacterString>
-                    </gmd:postalCode>
-                    <gmd:country>
-                      <gco:CharacterString>België</gco:CharacterString>
-                    </gmd:country>
-                    <gmd:electronicMailAddress>
-                      <gco:CharacterString>info@vmm.be</gco:CharacterString>
-                    </gmd:electronicMailAddress>
-                  </gmd:CI_Address>
-                </gmd:address>
-                <gmd:onlineResource>
-                  <gmd:CI_OnlineResource>
-                    <gmd:linkage>
-                      <gmd:URL>https://www.vmm.be</gmd:URL>
-                    </gmd:linkage>
-                  </gmd:CI_OnlineResource>
-                </gmd:onlineResource>
-              </gmd:CI_Contact>
-            </gmd:contactInfo>
-            <gmd:role>
-              <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_RoleCode" codeListValue="custodian" />
-            </gmd:role>
-          </gmd:CI_ResponsibleParty>
-        </gmd:pointOfContact>
-        <gmd:pointOfContact>
-          <gmd:CI_ResponsibleParty>
-            <gmd:organisationName>
-              <gco:CharacterString>Departement Mobiliteit en Openbare Werken (MOW) - Afdeling Geotechniek</gco:CharacterString>
-            </gmd:organisationName>
-            <gmd:contactInfo>
-              <gmd:CI_Contact>
-                <gmd:phone>
-                  <gmd:CI_Telephone>
-                    <gmd:voice>
-                      <gco:CharacterString>+32 9 240 75 89</gco:CharacterString>
-                    </gmd:voice>
-                    <gmd:facsimile>
-                      <gco:CharacterString>+32 9 240 75 00</gco:CharacterString>
-                    </gmd:facsimile>
-                  </gmd:CI_Telephone>
-                </gmd:phone>
-                <gmd:address>
-                  <gmd:CI_Address>
-                    <gmd:deliveryPoint>
-                      <gco:CharacterString>Technologiepark Gebouw 905</gco:CharacterString>
-                    </gmd:deliveryPoint>
-                    <gmd:city>
-                      <gco:CharacterString>Zwijnaarde</gco:CharacterString>
-                    </gmd:city>
-                    <gmd:postalCode>
-                      <gco:CharacterString>9052</gco:CharacterString>
-                    </gmd:postalCode>
-                    <gmd:country>
-                      <gco:CharacterString>België</gco:CharacterString>
-                    </gmd:country>
-                    <gmd:electronicMailAddress>
-                      <gco:CharacterString>geotechniek@vlaanderen.be</gco:CharacterString>
-                    </gmd:electronicMailAddress>
-                  </gmd:CI_Address>
-                </gmd:address>
-                <gmd:onlineResource>
-                  <gmd:CI_OnlineResource>
-                    <gmd:linkage>
-                      <gmd:URL>http://www.geotechniekvo.be</gmd:URL>
-                    </gmd:linkage>
-                  </gmd:CI_OnlineResource>
-                </gmd:onlineResource>
-              </gmd:CI_Contact>
-            </gmd:contactInfo>
-            <gmd:role>
-              <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_RoleCode" codeListValue="custodian" />
-            </gmd:role>
-          </gmd:CI_ResponsibleParty>
-        </gmd:pointOfContact>
-        <gmd:resourceMaintenance>
-          <gmd:MD_MaintenanceInformation>
-            <gmd:maintenanceAndUpdateFrequency gco:nilReason="missing">
-              <gmd:MD_MaintenanceFrequencyCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_MaintenanceFrequencyCode" codeListValue="" />
-            </gmd:maintenanceAndUpdateFrequency>
-          </gmd:MD_MaintenanceInformation>
-        </gmd:resourceMaintenance>
+        <gmd:graphicOverview xmlns:srv="http://www.isotc211.org/2005/srv">
+          <gmd:MD_BrowseGraphic>
+            <gmd:fileName>
+              <gco:CharacterString>https://www.dov.vlaanderen.be/geonetwork/srv/eng/resources.get?uuid=8b204ed6-e44c-4567-bbe8-bd427eba082c&amp;fname=quartaire_stratigrafie_1489503481535.png</gco:CharacterString>
+            </gmd:fileName>
+            <gmd:fileDescription>
+              <gco:CharacterString>thumbnail</gco:CharacterString>
+            </gmd:fileDescription>
+            <gmd:fileType>
+              <gco:CharacterString>png</gco:CharacterString>
+            </gmd:fileType>
+          </gmd:MD_BrowseGraphic>
+        </gmd:graphicOverview>
         <gmd:descriptiveKeywords>
-          <gmd:MD_Keywords xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gmx="http://www.isotc211.org/2005/gmx">
+          <gmd:MD_Keywords xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:srv="http://www.isotc211.org/2005/srv">
             <gmd:keyword>
               <gco:CharacterString>Geologie</gco:CharacterString>
             </gmd:keyword>
@@ -366,7 +283,7 @@
           </gmd:MD_Keywords>
         </gmd:descriptiveKeywords>
         <gmd:descriptiveKeywords>
-          <gmd:MD_Keywords xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gmx="http://www.isotc211.org/2005/gmx">
+          <gmd:MD_Keywords xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:srv="http://www.isotc211.org/2005/srv">
             <gmd:keyword>
               <gco:CharacterString>ondergrond</gco:CharacterString>
             </gmd:keyword>
@@ -393,7 +310,7 @@
           </gmd:MD_Keywords>
         </gmd:descriptiveKeywords>
         <gmd:descriptiveKeywords>
-          <gmd:MD_Keywords xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gmx="http://www.isotc211.org/2005/gmx">
+          <gmd:MD_Keywords xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:srv="http://www.isotc211.org/2005/srv">
             <gmd:keyword>
               <gco:CharacterString>Vlaams Gewest</gco:CharacterString>
             </gmd:keyword>
@@ -421,25 +338,28 @@
         </gmd:descriptiveKeywords>
         <gmd:descriptiveKeywords>
           <gmd:MD_Keywords>
-            <gmd:keyword xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gmx="http://www.isotc211.org/2005/gmx">
+            <gmd:keyword xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:srv="http://www.isotc211.org/2005/srv">
               <gco:CharacterString>Herbruikbaar</gco:CharacterString>
             </gmd:keyword>
-            <gmd:keyword xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gmx="http://www.isotc211.org/2005/gmx">
+            <gmd:keyword xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:srv="http://www.isotc211.org/2005/srv">
               <gco:CharacterString>Vlaamse Open data</gco:CharacterString>
             </gmd:keyword>
-            <gmd:keyword xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gmx="http://www.isotc211.org/2005/gmx">
+            <gmd:keyword xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:srv="http://www.isotc211.org/2005/srv">
               <gco:CharacterString>Kosteloos</gco:CharacterString>
             </gmd:keyword>
-            <gmd:keyword xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gmx="http://www.isotc211.org/2005/gmx">
+            <gmd:keyword xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:srv="http://www.isotc211.org/2005/srv">
               <gco:CharacterString>Metadata INSPIRE-conform</gco:CharacterString>
             </gmd:keyword>
-            <gmd:keyword xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gmx="http://www.isotc211.org/2005/gmx">
+            <gmd:keyword xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:srv="http://www.isotc211.org/2005/srv">
               <gco:CharacterString>Metadata GDI-Vl-conform</gco:CharacterString>
             </gmd:keyword>
-            <gmd:keyword xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gmx="http://www.isotc211.org/2005/gmx">
+            <gmd:keyword xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:srv="http://www.isotc211.org/2005/srv">
               <gco:CharacterString>Toegevoegd GDI-Vl</gco:CharacterString>
             </gmd:keyword>
-            <gmd:thesaurusName xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gmx="http://www.isotc211.org/2005/gmx">
+            <gmd:keyword xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:srv="http://www.isotc211.org/2005/srv">
+              <gco:CharacterString>Lijst M&amp;R INSPIRE</gco:CharacterString>
+            </gmd:keyword>
+            <gmd:thesaurusName xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:srv="http://www.isotc211.org/2005/srv">
               <gmd:CI_Citation>
                 <gmd:title>
                   <gco:CharacterString>GDI-Vlaanderen Trefwoorden</gco:CharacterString>
@@ -479,31 +399,7 @@
               <gco:CharacterString>Geologie</gco:CharacterString>
             </gmd:keyword>
             <gmd:keyword>
-              <gco:CharacterString>Geotechniek</gco:CharacterString>
-            </gmd:keyword>
-            <gmd:keyword>
-              <gco:CharacterString>Formele stratigrafie</gco:CharacterString>
-            </gmd:keyword>
-            <gmd:keyword>
-              <gco:CharacterString>Informele stratigrafie</gco:CharacterString>
-            </gmd:keyword>
-            <gmd:keyword>
-              <gco:CharacterString>Lithologische beschrijvingen</gco:CharacterString>
-            </gmd:keyword>
-            <gmd:keyword>
-              <gco:CharacterString>Gecodeerde lithologie</gco:CharacterString>
-            </gmd:keyword>
-            <gmd:keyword>
               <gco:CharacterString>Quartaire stratigrafie</gco:CharacterString>
-            </gmd:keyword>
-            <gmd:keyword>
-              <gco:CharacterString>Informele hydrogeologische stratigrafie</gco:CharacterString>
-            </gmd:keyword>
-            <gmd:keyword>
-              <gco:CharacterString>Hydrogeologische stratigrafie</gco:CharacterString>
-            </gmd:keyword>
-            <gmd:keyword>
-              <gco:CharacterString>Geotechnische coderingen</gco:CharacterString>
             </gmd:keyword>
             <gmd:thesaurusName>
               <gmd:CI_Citation>
@@ -516,7 +412,7 @@
                       <gco:Date>2010-12-01</gco:Date>
                     </gmd:date>
                     <gmd:dateType>
-                      <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                      <gmd:CI_DateTypeCode codeListValue="publication" codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode" />
                     </gmd:dateType>
                   </gmd:CI_Date>
                 </gmd:date>
@@ -524,6 +420,14 @@
             </gmd:thesaurusName>
           </gmd:MD_Keywords>
         </gmd:descriptiveKeywords>
+        <gmd:resourceSpecificUsage>
+          <gmd:MD_Usage>
+            <gmd:specificUsage>
+              <gco:CharacterString>De quartaire stratigrafieën vormen vaak de basis van de recentere geologische kaarten zoals die in DOV zijn opgenomen.</gco:CharacterString>
+            </gmd:specificUsage>
+            <gmd:userContactInfo />
+          </gmd:MD_Usage>
+        </gmd:resourceSpecificUsage>
         <gmd:resourceConstraints>
           <gmd:MD_Constraints>
             <gmd:useLimitation>
@@ -540,17 +444,17 @@
               <gco:CharacterString>Volgende aansprakelijkheidsbepalingen gelden: https://www.dov.vlaanderen.be/page/disclaimer</gco:CharacterString>
             </gmd:useLimitation>
             <gmd:accessConstraints>
-              <gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_RestrictionCode" codeListValue="otherRestrictions" />
+              <gmd:MD_RestrictionCode codeListValue="otherRestrictions" codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_RestrictionCode" />
             </gmd:accessConstraints>
             <gmd:otherConstraints>
-              <gco:CharacterString>Data beschikbaar voor hergebruik volgens de Gratis Open Data Licentie Vlaanderen. Toelichting beschikbaar op https://www.dov.vlaanderen.be/page/gebruiksvoorwaarden-dov-services</gco:CharacterString>
+              <gco:CharacterString>Data beschikbaar voor hergebruik volgens de Modellicentie Gratis Hergebruik. Toelichting beschikbaar op https://www.dov.vlaanderen.be/page/gebruiksvoorwaarden-dov-services</gco:CharacterString>
             </gmd:otherConstraints>
           </gmd:MD_LegalConstraints>
         </gmd:resourceConstraints>
         <gmd:resourceConstraints>
           <gmd:MD_SecurityConstraints>
             <gmd:classification>
-              <gmd:MD_ClassificationCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ClassificationCode" codeListValue="unclassified" />
+              <gmd:MD_ClassificationCode codeListValue="unclassified" codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ClassificationCode" />
             </gmd:classification>
           </gmd:MD_SecurityConstraints>
         </gmd:resourceConstraints>
@@ -559,10 +463,10 @@
             <gmd:aggregateDataSetName>
               <gmd:CI_Citation>
                 <gmd:title>
-                  <gco:CharacterString>Boringen</gco:CharacterString>
+                  <gco:CharacterString>Interpretaties</gco:CharacterString>
                 </gmd:title>
-                <gmd:alternateTitle>
-                  <gco:CharacterString>Publieke boringen</gco:CharacterString>
+                <gmd:alternateTitle gco:nilReason="missing">
+                  <gco:CharacterString />
                 </gmd:alternateTitle>
                 <gmd:date>
                   <gmd:CI_Date>
@@ -590,7 +494,7 @@
                 <gmd:identifier>
                   <gmd:MD_Identifier>
                     <gmd:code>
-                      <gco:CharacterString>9f3ff1ea-5043-4253-8124-f86eee0fa1b0</gco:CharacterString>
+                      <gco:CharacterString>560f4ec8-95c4-4f29-8377-4f5a014b552a</gco:CharacterString>
                     </gmd:code>
                   </gmd:MD_Identifier>
                 </gmd:identifier>
@@ -599,66 +503,12 @@
             <gmd:aggregateDataSetIdentifier>
               <gmd:MD_Identifier>
                 <gmd:code>
-                  <gco:CharacterString>4e20bf9c-3a5c-42be-b5b6-bef6214d1fa7</gco:CharacterString>
+                  <gco:CharacterString>c9128330-1124-4c46-9d37-77796e10df71</gco:CharacterString>
                 </gmd:code>
               </gmd:MD_Identifier>
             </gmd:aggregateDataSetIdentifier>
             <gmd:associationType>
-              <gmd:DS_AssociationTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#DS_AssociationTypeCode" codeListValue="crossReference" />
-            </gmd:associationType>
-          </gmd:MD_AggregateInformation>
-        </gmd:aggregationInfo>
-        <gmd:aggregationInfo>
-          <gmd:MD_AggregateInformation>
-            <gmd:aggregateDataSetName>
-              <gmd:CI_Citation>
-                <gmd:title>
-                  <gco:CharacterString>Sonderingen</gco:CharacterString>
-                </gmd:title>
-                <gmd:alternateTitle>
-                  <gco:CharacterString>Publieke sonderingen</gco:CharacterString>
-                </gmd:alternateTitle>
-                <gmd:date>
-                  <gmd:CI_Date>
-                    <gmd:date>
-                      <gco:Date>2002-01-01</gco:Date>
-                    </gmd:date>
-                    <gmd:dateType>
-                      <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation" />
-                    </gmd:dateType>
-                  </gmd:CI_Date>
-                </gmd:date>
-                <gmd:date>
-                  <gmd:CI_Date>
-                    <gmd:date>
-                      <gco:Date>2017-03-28</gco:Date>
-                    </gmd:date>
-                    <gmd:dateType>
-                      <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication" />
-                    </gmd:dateType>
-                  </gmd:CI_Date>
-                </gmd:date>
-                <gmd:edition gco:nilReason="missing">
-                  <gco:CharacterString />
-                </gmd:edition>
-                <gmd:identifier>
-                  <gmd:MD_Identifier>
-                    <gmd:code>
-                      <gco:CharacterString>952c223e-0c4f-45c4-94b7-64da7c89ddd5</gco:CharacterString>
-                    </gmd:code>
-                  </gmd:MD_Identifier>
-                </gmd:identifier>
-              </gmd:CI_Citation>
-            </gmd:aggregateDataSetName>
-            <gmd:aggregateDataSetIdentifier>
-              <gmd:MD_Identifier>
-                <gmd:code>
-                  <gco:CharacterString>b397faec-1b64-4854-8000-2375edb3b1a8</gco:CharacterString>
-                </gmd:code>
-              </gmd:MD_Identifier>
-            </gmd:aggregateDataSetIdentifier>
-            <gmd:associationType>
-              <gmd:DS_AssociationTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#DS_AssociationTypeCode" codeListValue="crossReference" />
+              <gmd:DS_AssociationTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#DS_AssociationTypeCode" codeListValue="largerWorkCitation" />
             </gmd:associationType>
           </gmd:MD_AggregateInformation>
         </gmd:aggregationInfo>
@@ -680,7 +530,7 @@
           <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="dut" />
         </gmd:language>
         <gmd:characterSet>
-          <gmd:MD_CharacterSetCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_CharacterSetCode" codeListValue="utf8" />
+          <gmd:MD_CharacterSetCode codeListValue="utf8" codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_CharacterSetCode" />
         </gmd:characterSet>
         <gmd:topicCategory>
           <gmd:MD_TopicCategoryCode>geoscientificInformation</gmd:MD_TopicCategoryCode>
@@ -693,7 +543,7 @@
                   <gco:Decimal>2.540</gco:Decimal>
                 </gmd:westBoundLongitude>
                 <gmd:eastBoundLongitude>
-                  <gco:Decimal>5.710</gco:Decimal>
+                  <gco:Decimal>5.910</gco:Decimal>
                 </gmd:eastBoundLongitude>
                 <gmd:southBoundLatitude>
                   <gco:Decimal>50.688</gco:Decimal>
@@ -721,6 +571,33 @@
         </gmd:supplementalInformation>
       </gmd:MD_DataIdentification>
     </gmd:identificationInfo>
+    <gmd:contentInfo>
+      <gmd:MD_FeatureCatalogueDescription>
+        <gmd:includedWithDataset>
+          <gco:Boolean>true</gco:Boolean>
+        </gmd:includedWithDataset>
+        <gmd:featureCatalogueCitation uuidref="d40ef884-3278-45db-ad69-2c2a8c3981c3">
+          <gmd:CI_Citation>
+            <gmd:title>
+              <gco:CharacterString>Quartaire stratigrafie (objectencatalogus)</gco:CharacterString>
+            </gmd:title>
+            <gmd:date>
+              <gmd:CI_Date>
+                <gmd:date>
+                  <gco:Date>2017-04-10</gco:Date>
+                </gmd:date>
+                <gmd:dateType>
+                  <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation" />
+                </gmd:dateType>
+              </gmd:CI_Date>
+            </gmd:date>
+            <gmd:edition>
+              <gco:CharacterString>1</gco:CharacterString>
+            </gmd:edition>
+          </gmd:CI_Citation>
+        </gmd:featureCatalogueCitation>
+      </gmd:MD_FeatureCatalogueDescription>
+    </gmd:contentInfo>
     <gmd:distributionInfo>
       <gmd:MD_Distribution>
         <gmd:distributionFormat>
@@ -796,6 +673,118 @@
             <gmd:onLine>
               <gmd:CI_OnlineResource>
                 <gmd:linkage>
+                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/ows?SERVICE=WMS&amp;</gmd:URL>
+                </gmd:linkage>
+                <gmd:protocol>
+                  <gco:CharacterString>OGC:WMS</gco:CharacterString>
+                </gmd:protocol>
+                <gmd:name>
+                  <gco:CharacterString>interpretaties:quartaire_stratigrafie</gco:CharacterString>
+                </gmd:name>
+                <gmd:description>
+                  <gco:CharacterString>WMS-endpoint Quartaire stratigrafie</gco:CharacterString>
+                </gmd:description>
+              </gmd:CI_OnlineResource>
+            </gmd:onLine>
+            <gmd:onLine>
+              <gmd:CI_OnlineResource>
+                <gmd:linkage>
+                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/ows?SERVICE=WMS&amp;version=1.3.0&amp;request=GetCapabilities</gmd:URL>
+                </gmd:linkage>
+                <gmd:protocol>
+                  <gco:CharacterString>OGC:WMS-1.3.0-http-get-capabilities</gco:CharacterString>
+                </gmd:protocol>
+                <gmd:name>
+                  <gco:CharacterString>interpretaties:quartaire_stratigrafie</gco:CharacterString>
+                </gmd:name>
+                <gmd:description>
+                  <gco:CharacterString>WMS-capabilities Quartaire stratigrafie</gco:CharacterString>
+                </gmd:description>
+              </gmd:CI_OnlineResource>
+            </gmd:onLine>
+            <gmd:onLine>
+              <gmd:CI_OnlineResource>
+                <gmd:linkage>
+                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/ows?SERVICE=WMS&amp;version=1.3.0&amp;request=GetMap</gmd:URL>
+                </gmd:linkage>
+                <gmd:protocol>
+                  <gco:CharacterString>OGC:WMS-1.3.0-http-get-map</gco:CharacterString>
+                </gmd:protocol>
+                <gmd:name>
+                  <gco:CharacterString>interpretaties:quartaire_stratigrafie</gco:CharacterString>
+                </gmd:name>
+                <gmd:description>
+                  <gco:CharacterString>WMS-map Quartaire stratigrafie</gco:CharacterString>
+                </gmd:description>
+              </gmd:CI_OnlineResource>
+            </gmd:onLine>
+            <gmd:onLine>
+              <gmd:CI_OnlineResource>
+                <gmd:linkage>
+                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/wfs?</gmd:URL>
+                </gmd:linkage>
+                <gmd:protocol>
+                  <gco:CharacterString>OGC:WFS</gco:CharacterString>
+                </gmd:protocol>
+                <gmd:name>
+                  <gco:CharacterString>interpretaties:quartaire_stratigrafie</gco:CharacterString>
+                </gmd:name>
+                <gmd:description>
+                  <gco:CharacterString>WFS-endpoint Quartaire stratigrafie</gco:CharacterString>
+                </gmd:description>
+              </gmd:CI_OnlineResource>
+            </gmd:onLine>
+            <gmd:onLine>
+              <gmd:CI_OnlineResource>
+                <gmd:linkage>
+                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/wfs?SERVICE=WFS&amp;version=1.1.0&amp;request=GetCapabilities</gmd:URL>
+                </gmd:linkage>
+                <gmd:protocol>
+                  <gco:CharacterString>OGC:WFS-1.1.0-http-get-capabilities</gco:CharacterString>
+                </gmd:protocol>
+                <gmd:name>
+                  <gco:CharacterString>interpretaties:quartaire_stratigrafie</gco:CharacterString>
+                </gmd:name>
+                <gmd:description>
+                  <gco:CharacterString>WFS-capabilities Quartaire stratigrafie</gco:CharacterString>
+                </gmd:description>
+              </gmd:CI_OnlineResource>
+            </gmd:onLine>
+            <gmd:onLine>
+              <gmd:CI_OnlineResource>
+                <gmd:linkage>
+                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/wfs?SERVICE=WFS&amp;version=1.1.0&amp;request=GetFeature</gmd:URL>
+                </gmd:linkage>
+                <gmd:protocol>
+                  <gco:CharacterString>OGC:WFS-1.1.0-http-get-feature</gco:CharacterString>
+                </gmd:protocol>
+                <gmd:name>
+                  <gco:CharacterString>interpretaties:quartaire_stratigrafie</gco:CharacterString>
+                </gmd:name>
+                <gmd:description>
+                  <gco:CharacterString>WFS-getfeature Quartaire stratigrafie</gco:CharacterString>
+                </gmd:description>
+              </gmd:CI_OnlineResource>
+            </gmd:onLine>
+            <gmd:onLine>
+              <gmd:CI_OnlineResource>
+                <gmd:linkage>
+                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/interpretaties/wms/kml?layers=interpretaties:quartaire_stratigrafie</gmd:URL>
+                </gmd:linkage>
+                <gmd:protocol>
+                  <gco:CharacterString>GLG:KML-2.0-http-get-map</gco:CharacterString>
+                </gmd:protocol>
+                <gmd:name>
+                  <gco:CharacterString>interpretaties:quartaire_stratigrafie</gco:CharacterString>
+                </gmd:name>
+                <gmd:description>
+                  <gco:CharacterString>KML Quartaire stratigrafie</gco:CharacterString>
+                </gmd:description>
+              </gmd:CI_OnlineResource>
+            </gmd:onLine>
+            <gmd:onLine>
+              <gmd:CI_OnlineResource>
+                <gmd:linkage>
                   <gmd:URL>https://www.dov.vlaanderen.be/portaal</gmd:URL>
                 </gmd:linkage>
                 <gmd:protocol>
@@ -818,7 +807,7 @@
         <gmd:scope>
           <gmd:DQ_Scope>
             <gmd:level>
-              <gmd:MD_ScopeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ScopeCode" codeListValue="dataset" />
+              <gmd:MD_ScopeCode codeListValue="dataset" codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ScopeCode" />
             </gmd:level>
           </gmd:DQ_Scope>
         </gmd:scope>
@@ -837,7 +826,7 @@
                           <gco:Date>2010-12-08</gco:Date>
                         </gmd:date>
                         <gmd:dateType>
-                          <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication" />
+                          <gmd:CI_DateTypeCode codeListValue="publication" codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode" />
                         </gmd:dateType>
                       </gmd:CI_Date>
                     </gmd:date>
@@ -856,7 +845,9 @@
         <gmd:lineage>
           <gmd:LI_Lineage>
             <gmd:statement>
-              <gco:CharacterString>Voor de beschrijving van de herkomst wordt verwezen naar de afzonderlijke types interpretaties.</gco:CharacterString>
+              <gco:CharacterString>Tijdens de quartairgeologische kartering op schaal 1/50.000 i.o.v. ALBON werden er quartaire interpretaties aangemaakt. Deze kunnen gebruikt worden voor een detailbeschrijving van het Quartaire dek.
+
+De nauwkeurigheid van de interpretatie hangt af van de auteur, de boormethode, doelstelling van de boring, enz. De interpretaties in DOV worden zoveel als mogelijk overgenomen zoals deze door de originele auteur werden opgemaakt.</gco:CharacterString>
             </gmd:statement>
           </gmd:LI_Lineage>
         </gmd:lineage>

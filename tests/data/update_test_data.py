@@ -369,7 +369,7 @@ if __name__ == '__main__':
                 'https://www.dov.vlaanderen.be/geonetwork/srv/dut/csw'
                 '?Service=CSW&Request=GetRecordById&Version=2.0.2'
                 '&outputSchema=http://www.isotc211.org/2005/gmd'
-                '&elementSetName=full&id=c9128330-1124-4c46-9d37-77796e10df71')
+                '&elementSetName=full&id=8b204ed6-e44c-4567-bbe8-bd427eba082c')
 
     update_file(
         'types/interpretaties/quartair_stratigrafie/wfsdescribefeaturetype'

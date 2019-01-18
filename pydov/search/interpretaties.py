@@ -194,7 +194,6 @@ class FormeleStratigrafieSearch(AbstractSearch):
         ----------
         location : pydov.util.location.AbstractLocationFilter or \
                     owslib.fes.BinaryLogicOpType<AbstractLocationFilter> or \
-                    
                     owslib.fes.UnaryLogicOpType<AbstractLocationFilter>
             Location filter limiting the features to retrieve. Can either be a
             single instance of a subclass of AbstractLocationFilter, or a

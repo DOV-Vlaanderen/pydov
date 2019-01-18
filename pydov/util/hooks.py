@@ -41,6 +41,10 @@ class AbstractHook(object):
     def xml_requested(self, pkey_object):
         """Called upon requesting an XML document of an object.
 
+        Because of parallel processing, this method will be called
+        simultaneously from multiple threads. Make sure your implementation is
+        threadsafe or uses locking.
+
         This is either followed by ``xml_cache_hit`` or ``xml_downloaded``.
 
         Parameters
@@ -55,6 +59,10 @@ class AbstractHook(object):
         """Called when the XML document of an object is retrieved from the
         cache.
 
+        Because of parallel processing, this method will be called
+        simultaneously from multiple threads. Make sure your implementation is
+        threadsafe or uses locking.
+
         Parameters
         ----------
         pkey_object : str
@@ -66,6 +74,10 @@ class AbstractHook(object):
     def xml_downloaded(self, pkey_object):
         """Called when the XML document of an object is downloaded from the
         DOV services.
+
+        Because of parallel processing, this method will be called
+        simultaneously from multiple threads. Make sure your implementation is
+        threadsafe or uses locking.
 
         Parameters
         ----------

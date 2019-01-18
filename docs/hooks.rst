@@ -34,9 +34,12 @@ provides default, empty, implementation of all
 available methods allowing users to only implement the methods for the
 events they need.
 
-Note that hooks are executed inline in pydov and as a result can halt or
-slow down usage of the package, depending on the implementation of the hooks
-itself.
+Note that certain events (notably the XML related events) will be called from
+multiple threads simultaneously, so implementations must be threadsafe or use
+locking. Nonetheless, hooks are executed inline in the processing threads and
+as a result can halt or slow down usage of the package, depending on the
+implementation of the hooks itself.
+
 
 Available event hooks
 .....................
@@ -54,15 +57,27 @@ xml_requested
     one parameter `pkey_object` with the permanent key of the DOV object.
     This event is either followed by `xml_cache_hit` or `xml_downloaded`.
 
+    Because of parallel processing, this method will be called simultaneously
+    from multiple threads. Make sure your implementation is threadsafe or uses
+    locking.
+
 xml_cache_hit
     This method will be called whenever an XML document is reused from the
     cache. There is one parameter `pkey_object` with the permanent key of
     the DOV object.
 
+    Because of parallel processing, this method will be called simultaneously
+    from multiple threads. Make sure your implementation is threadsafe or uses
+    locking.
+
 xml_downloaded
     This method will be called whenever an XML document is downloaded from
     the DOV webservices. There is one parameter `pkey_object` with the
     permanent key of the DOV object.
+
+    Because of parallel processing, this method will be called simultaneously
+    from multiple threads. Make sure your implementation is threadsafe or uses
+    locking.
 
 Integrating custom hooks
 ........................

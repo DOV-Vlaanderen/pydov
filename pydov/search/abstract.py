@@ -9,6 +9,7 @@ from owslib.fes import (
 )
 from owslib.wfs import WebFeatureService
 from pydov.util import owsutil
+from pydov.util.dovutil import get_dov_xml
 from pydov.util.errors import (
     LayerNotFoundError,
     InvalidSearchParameterError,
@@ -147,6 +148,11 @@ class AbstractSearch(object):
         wfs_layer = self._get_layer()
         return owsutil.get_remote_metadata(wfs_layer)
 
+    def _get_remote_xsd_enums(self):
+        print("getting remote xsd schema")
+        return [etree.fromstring(get_dov_xml(i)) for i in
+                self._type.get_xsd_enums()]
+
     def _get_csw_base_url(self):
         """Get the CSW base url for the remote metadata associated with the
         layer.
@@ -161,7 +167,7 @@ class AbstractSearch(object):
         wfs_layer = self._get_layer()
         return owsutil.get_csw_base_url(wfs_layer)
 
-    def _build_fields(self, wfs_schema, feature_catalogue):
+    def _build_fields(self, wfs_schema, feature_catalogue, xsd_enums):
         """Build the dictionary containing the metadata about the available
         fields.
 
@@ -237,6 +243,23 @@ class AbstractSearch(object):
                 fields[name] = field
 
         for xml_field in self._type.get_fields(source=['xml']).values():
+
+            values = None
+            if xml_field.get('xsd_type', None):
+                print(xml_field)
+                # print(xsd_enums)
+                values = {}
+                schema = xsd_enums[0]
+                tree_values = schema.findall(
+                    './/{http://www.w3.org/2001/XMLSchema}simpleType[@'
+                    'name="%s"]/{http://www.w3.org/2001/XMLSchema}restriction/'
+                    '{http://www.w3.org/2001/XMLSchema}enumeration' %
+                    xml_field.get('xsd_type'))
+                for e in tree_values:
+                    values[e.get('value')] = e.find(
+                        './{http://www.w3.org/2001/XMLSchema}annotation/{'
+                        'http://www.w3.org/2001/XMLSchema}documentation').text
+
             field = {
                 'name': xml_field['name'],
                 'type': xml_field['type'],
@@ -245,6 +268,10 @@ class AbstractSearch(object):
                 'query': False,
                 'cost': 10
             }
+
+            if values is not None:
+                field['values'] = values
+
             fields[field['name']] = field
 
         for custom_field in self._type.get_fields(source=['custom']).values():

@@ -95,6 +95,8 @@ class AbstractDovSubType(AbstractCommon):
     _UNRESOLVED = "{UNRESOLVED}"
     _fields = []
 
+    _xsd_enums = None
+
     def __init__(self):
         """Initialisation.
 
@@ -246,6 +248,8 @@ class AbstractDovType(AbstractCommon):
 
     _UNRESOLVED = "{UNRESOLVED}"
     _fields = []
+
+    _xsd_enums = None
 
     def __init__(self, typename, pkey):
         """Initialisation.
@@ -485,6 +489,18 @@ class AbstractDovType(AbstractCommon):
                 fields.update(st.get_fields())
 
         return fields
+
+    @classmethod
+    def get_xsd_enums(cls):
+        xsd_enums = []
+        if cls._xsd_enums:
+            xsd_enums.append(cls._xsd_enums)
+
+        for st in cls._subtypes:
+            if st._xsd_enums:
+                xsd_enums.append(st._xsd_enums)
+
+        return xsd_enums
 
     @classmethod
     def to_df_array(cls, iterable, return_fields=None):

@@ -507,6 +507,7 @@ class GecodeerdeLithologieSearch(AbstractSearch):
     __wfs_namespace = None
     __md_metadata = None
     __fc_featurecatalogue = None
+    __xsd_enums = None
 
     def __init__(self):
         """Initialisation."""
@@ -541,9 +542,14 @@ class GecodeerdeLithologieSearch(AbstractSearch):
                 GecodeerdeLithologieSearch.__fc_featurecatalogue = \
                     owsutil.get_remote_featurecatalogue(csw_url, fc_uuid)
 
+            if GecodeerdeLithologieSearch.__xsd_enums is None:
+                GecodeerdeLithologieSearch.__xsd_enums = \
+                    self._get_remote_xsd_enums()
+
             fields = self._build_fields(
                 GecodeerdeLithologieSearch.__wfs_schema,
-                GecodeerdeLithologieSearch.__fc_featurecatalogue)
+                GecodeerdeLithologieSearch.__fc_featurecatalogue,
+                GecodeerdeLithologieSearch.__xsd_enums)
 
             for field in fields.values():
                 if field['name'] not in self._type.get_field_names(
@@ -558,7 +564,8 @@ class GecodeerdeLithologieSearch(AbstractSearch):
 
             self._fields = self._build_fields(
                 GecodeerdeLithologieSearch.__wfs_schema,
-                GecodeerdeLithologieSearch.__fc_featurecatalogue)
+                GecodeerdeLithologieSearch.__fc_featurecatalogue,
+                GecodeerdeLithologieSearch.__xsd_enums)
 
     def search(self, location=None, query=None, return_fields=None):
         """Search for 'gecodeerde lithologie'. Provide either

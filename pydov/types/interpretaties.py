@@ -441,6 +441,9 @@ class GecodeerdeLithologieLaag(AbstractDovSubType):
     _name = 'gecodeerde_lithologie_laag'
     _rootpath = './/gecodeerdelithologie/laag'
 
+    _xsd_enums = 'https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/' \
+                 'interpretatie/GecodeerdeLithologieDataCodes.xsd'
+
     _fields = [{
         'name': 'diepte_laag_van',
         'source': 'xml',
@@ -463,6 +466,7 @@ class GecodeerdeLithologieLaag(AbstractDovSubType):
         'sourcefield': '/hoofdnaam[1]/grondsoort',
         'definition': 'Primaire grondsoort (als code) van de laag '
                       'gecodeerde lithologie',
+        'xsd_type': 'GecodeerdHoofdnaamCodesEnumType',
         'type': 'string',
         'notnull': False
     }, {
@@ -471,6 +475,7 @@ class GecodeerdeLithologieLaag(AbstractDovSubType):
         'sourcefield': '/hoofdnaam[2]/grondsoort',
         'definition': 'Secundaire grondsoort (als code) van de laag '
                       'gecodeerde lithologie',
+        'xsd_type': 'GecodeerdHoofdnaamCodesEnumType',
         'type': 'string',
         'notnull': False
     }, {

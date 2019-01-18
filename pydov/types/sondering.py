@@ -64,7 +64,7 @@ class Meetdata(AbstractDovSubType):
 
 
 class Sondering(AbstractDovType):
-    """Class representing the DOV data type for boreholes."""
+    """Class representing the DOV data type for CPT measurements."""
 
     _subtypes = [Meetdata]
 

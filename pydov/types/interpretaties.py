@@ -490,6 +490,7 @@ class GecodeerdeLithologieLaag(AbstractDovSubType):
         'source': 'xml',
         'sourcefield': '/bijmenging[1]/hoeveelheid',
         'definition': 'aanduiding van de hoeveelheid bijmenging',
+        'xsd_type': 'GecodeerdBijmengingHoeveelheidEnumType',
         'type': 'string',
         'notnull': False
     }, {
@@ -499,6 +500,7 @@ class GecodeerdeLithologieLaag(AbstractDovSubType):
         'definition': 'type grondsoort (als code) van de laag '
                       'gecodeerde lithologie of geotechnische '
                       'codering',
+        'xsd_type': 'GecodeerdHoofdnaamCodesEnumType',
         'type': 'string',
         'notnull': False
     }, {
@@ -513,6 +515,7 @@ class GecodeerdeLithologieLaag(AbstractDovSubType):
         'source': 'xml',
         'sourcefield': '/bijmenging[2]/hoeveelheid',
         'definition': 'aanduiding van de hoeveelheid bijmenging',
+        'xsd_type': 'GecodeerdBijmengingHoeveelheidEnumType',
         'type': 'string',
         'notnull': False
     }, {
@@ -522,6 +525,7 @@ class GecodeerdeLithologieLaag(AbstractDovSubType):
         'definition': 'type grondsoort (als code) van de laag '
                       'gecodeerde lithologie of geotechnische '
                       'codering',
+        'xsd_type': 'GecodeerdHoofdnaamCodesEnumType',
         'type': 'string',
         'notnull': False
     }, {
@@ -536,6 +540,7 @@ class GecodeerdeLithologieLaag(AbstractDovSubType):
         'source': 'xml',
         'sourcefield': '/bijmenging[3]/hoeveelheid',
         'definition': 'aanduiding van de hoeveelheid bijmenging',
+        'xsd_type': 'GecodeerdBijmengingHoeveelheidEnumType',
         'type': 'string',
         'notnull': False
     }, {
@@ -545,6 +550,7 @@ class GecodeerdeLithologieLaag(AbstractDovSubType):
         'definition': 'type grondsoort (als code) van de laag '
                       'gecodeerde lithologie of geotechnische '
                       'codering',
+        'xsd_type': 'GecodeerdHoofdnaamCodesEnumType',
         'type': 'string',
         'notnull': False
     }]

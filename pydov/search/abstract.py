@@ -149,7 +149,6 @@ class AbstractSearch(object):
         return owsutil.get_remote_metadata(wfs_layer)
 
     def _get_remote_xsd_enums(self):
-        print("getting remote xsd schema")
         return [etree.fromstring(get_dov_xml(i)) for i in
                 self._type.get_xsd_enums()]
 
@@ -166,6 +165,23 @@ class AbstractSearch(object):
         """
         wfs_layer = self._get_layer()
         return owsutil.get_csw_base_url(wfs_layer)
+
+    @staticmethod
+    def _get_xsd_values(xsd_enums, xml_field):
+        values = None
+        if xml_field.get('xsd_type', None):
+            values = {}
+            for schema in xsd_enums:
+                tree_values = schema.findall(
+                    './/{http://www.w3.org/2001/XMLSchema}simpleType[@'
+                    'name="%s"]/{http://www.w3.org/2001/XMLSchema}restriction/'
+                    '{http://www.w3.org/2001/XMLSchema}enumeration' %
+                    xml_field.get('xsd_type'))
+                for e in tree_values:
+                    values[e.get('value')] = e.find(
+                        './{http://www.w3.org/2001/XMLSchema}annotation/{'
+                        'http://www.w3.org/2001/XMLSchema}documentation').text
+        return values
 
     def _build_fields(self, wfs_schema, feature_catalogue, xsd_enums):
         """Build the dictionary containing the metadata about the available
@@ -244,22 +260,6 @@ class AbstractSearch(object):
 
         for xml_field in self._type.get_fields(source=['xml']).values():
 
-            values = None
-            if xml_field.get('xsd_type', None):
-                print(xml_field)
-                # print(xsd_enums)
-                values = {}
-                schema = xsd_enums[0]
-                tree_values = schema.findall(
-                    './/{http://www.w3.org/2001/XMLSchema}simpleType[@'
-                    'name="%s"]/{http://www.w3.org/2001/XMLSchema}restriction/'
-                    '{http://www.w3.org/2001/XMLSchema}enumeration' %
-                    xml_field.get('xsd_type'))
-                for e in tree_values:
-                    values[e.get('value')] = e.find(
-                        './{http://www.w3.org/2001/XMLSchema}annotation/{'
-                        'http://www.w3.org/2001/XMLSchema}documentation').text
-
             field = {
                 'name': xml_field['name'],
                 'type': xml_field['type'],
@@ -269,6 +269,7 @@ class AbstractSearch(object):
                 'cost': 10
             }
 
+            values = self._get_xsd_values(xsd_enums, xml_field)
             if values is not None:
                 field['values'] = values
 
@@ -568,6 +569,16 @@ class AbstractSearch(object):
         """
         self._init_fields()
         return self._fields
+
+    def replace_df_codes(self, df):
+        df = df.copy()
+        fields = self.get_fields()
+        for f in fields.values():
+            if f['cost'] == 10 and f.get('values', None) is not None:
+                values = f['values']
+                df[df[f['name']].notnull()] = df[
+                    df[f['name']].notnull()].replace(values)
+        return df
 
     def search(self, location=None, query=None, return_fields=None):
         """Search for objects of this type. Provide `location` and/or `query`.

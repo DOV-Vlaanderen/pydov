@@ -36,8 +36,7 @@ location_wfs_getfeature = \
 location_wfs_feature = \
     'tests/data/types/interpretaties/quartair_stratigrafie/feature.xml'
 location_dov_xml = \
-    'tests/data/types/interpretaties/quartair_stratigrafie' \
-    '/quartair_stratigrafie.xml'
+    'tests/data/types/interpretaties/quartair_stratigrafie/quartair_stratigrafie.xml'
 
 
 class TestQuartairStratigrafieSearch(AbstractTestSearch):

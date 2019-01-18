@@ -724,10 +724,10 @@ class GeotechnischeCodering(AbstractBoringInterpretatie):
     }]
 
 
-class QuartairStratigrafieLaag(AbstractDovSubType):
+class QuartaireStratigrafieLaag(AbstractDovSubType):
 
-    _name = 'quartair_stratigrafie_laag'
-    _rootpath = './/quartaire_stratigrafie/laag'
+    _name = 'quartaire_stratigrafie_laag'
+    _rootpath = './/quartairstratigrafie/laag'
 
     _fields = [{
         'name': 'diepte_laag_van',
@@ -772,7 +772,7 @@ class QuartairStratigrafieLaag(AbstractDovSubType):
     }]
 
 
-class QuartairStratigrafie(AbstractCommonInterpretatie):
+class QuartaireStratigrafie(AbstractCommonInterpretatie):
     """Class representing the DOV data type for 'Quartair stratigrafie'
     interpretations.
 
@@ -785,7 +785,7 @@ class QuartairStratigrafie(AbstractCommonInterpretatie):
     ipv lithostratigrafie
     """
 
-    _subtypes = [QuartairStratigrafieLaag]
+    _subtypes = [QuartaireStratigrafieLaag]
 
     _fields = [{
         'name': 'pkey_interpretatie',

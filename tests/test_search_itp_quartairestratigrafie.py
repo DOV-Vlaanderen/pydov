@@ -6,8 +6,8 @@ from pandas import DataFrame
 
 import pydov
 from owslib.fes import PropertyIsEqualTo
-from pydov.search.interpretaties import QuartairStratigrafieSearch
-from pydov.types.interpretaties import QuartairStratigrafie
+from pydov.search.interpretaties import QuartaireStratigrafieSearch
+from pydov.types.interpretaties import QuartaireStratigrafie
 from tests.abstract import (
     AbstractTestSearch,
 )
@@ -26,41 +26,41 @@ from tests.test_search import (
 )
 
 location_md_metadata = \
-    'tests/data/types/interpretaties/quartair_stratigrafie/md_metadata.xml'
+    'tests/data/types/interpretaties/quartaire_stratigrafie/md_metadata.xml'
 location_fc_featurecatalogue = \
-    'tests/data/types/interpretaties/quartair_stratigrafie/fc_featurecatalogue.xml'
+    'tests/data/types/interpretaties/quartaire_stratigrafie/fc_featurecatalogue.xml'
 location_wfs_describefeaturetype = \
-    'tests/data/types/interpretaties/quartair_stratigrafie/wfsdescribefeaturetype.xml'
+    'tests/data/types/interpretaties/quartaire_stratigrafie/wfsdescribefeaturetype.xml'
 location_wfs_getfeature = \
-    'tests/data/types/interpretaties/quartair_stratigrafie/wfsgetfeature.xml'
+    'tests/data/types/interpretaties/quartaire_stratigrafie/wfsgetfeature.xml'
 location_wfs_feature = \
-    'tests/data/types/interpretaties/quartair_stratigrafie/feature.xml'
+    'tests/data/types/interpretaties/quartaire_stratigrafie/feature.xml'
 location_dov_xml = \
-    'tests/data/types/interpretaties/quartair_stratigrafie/quartair_stratigrafie.xml'
+    'tests/data/types/interpretaties/quartaire_stratigrafie/quartaire_stratigrafie.xml'
 
 
-class TestQuartairStratigrafieSearch(AbstractTestSearch):
+class TestQuartaireStratigrafieSearch(AbstractTestSearch):
     def get_search_object(self):
         """Get an instance of the search object for this type.
 
         Returns
         -------
-        pydov.search.interpretaties.QuartairStratigrafieSearch
-            Instance of QuartairStratigrafieSearch used for searching.
+        pydov.search.interpretaties.QuartaireStratigrafieSearch
+            Instance of QuartaireStratigrafieSearch used for searching.
 
         """
-        return QuartairStratigrafieSearch()
+        return QuartaireStratigrafieSearch()
 
     def get_type(self):
         """Get the class reference for this datatype.
 
         Returns
         -------
-        pydov.types.interpretaties.QuartairStratigrafie
-            Class reference for the QuartairStratigrafie class.
+        pydov.types.interpretaties.QuartaireStratigrafie
+            Class reference for the QuartaireStratigrafie class.
 
         """
-        return QuartairStratigrafie
+        return QuartaireStratigrafie
 
     def get_valid_query_single(self):
         """Get a valid query returning a single feature.
@@ -147,34 +147,6 @@ class TestQuartairStratigrafieSearch(AbstractTestSearch):
                 'diepte_laag_van', 'diepte_laag_tot',
                 'lid1', 'relatie_lid1_lid2', 'lid2']
 
-    def test_search_nan(self, mp_wfs, mp_remote_describefeaturetype,
-                        mp_remote_md, mp_remote_fc, mp_remote_wfs_feature,
-                        mp_dov_xml):
-        """Test the search method with only the query parameter.
-
-        Test whether the result is correct.
-
-        Parameters
-        ----------
-        mp_wfs : pytest.fixture
-            Monkeypatch the call to the remote GetCapabilities request.
-        mp_remote_describefeaturetype : pytest.fixture
-            Monkeypatch the call to a remote DescribeFeatureType.
-        mp_remote_md : pytest.fixture
-            Monkeypatch the call to get the remote metadata.
-        mp_remote_fc : pytest.fixture
-            Monkeypatch the call to get the remote feature catalogue.
-        mp_remote_wfs_feature : pytest.fixture
-            Monkeypatch the call to get WFS features.
-        mp_dov_xml : pytest.fixture
-            Monkeypatch the call to get the remote XML data.
-
-        """
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single())
-
-        assert df.pkey_boring.hasnans
-
     def test_search_customreturnfields(self, mp_remote_describefeaturetype,
                                        mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with custom return fields.
@@ -200,9 +172,6 @@ class TestQuartairStratigrafieSearch(AbstractTestSearch):
 
         assert list(df) == ['pkey_interpretatie', 'pkey_boring',
                             ]
-
-        # assert not pd.isnull(df.pkey_sondering[0])
-        assert np.isnan(df.pkey_boring[0])
 
     def test_search_xml_resolve(self, mp_remote_describefeaturetype,
                                 mp_remote_wfs_feature, mp_dov_xml):

@@ -1,9 +1,9 @@
 """Module grouping tests for the
-pydov.types.interpretaties.QuartairStratigrafie class."""
-from pydov.types.interpretaties import QuartairStratigrafie
+pydov.types.interpretaties.QuartaireStratigrafie class."""
+from pydov.types.interpretaties import QuartaireStratigrafie
 from tests.abstract import AbstractTestTypes
 
-from tests.test_search_itp_quartairstratigrafie import (
+from tests.test_search_itp_quartairestratigrafie import (
     wfs_feature,
     wfs_getfeature,
     mp_dov_xml,
@@ -13,19 +13,19 @@ from tests.test_search_itp_quartairstratigrafie import (
 )
 
 
-class TestQuartairStratigrafie(AbstractTestTypes):
+class TestQuartaireStratigrafie(AbstractTestTypes):
     """Class grouping tests for the
-    pydov.types.interpretaties.QuartairStratigrafie class."""
+    pydov.types.interpretaties.QuartaireStratigrafie class."""
     def get_type(self):
         """Get the class reference for this datatype.
 
         Returns
         -------
-        pydov.types.interpretaties.QuartairStratigrafie
-            Class reference for the QuartairStratigrafie class.
+        pydov.types.interpretaties.QuartaireStratigrafie
+            Class reference for the QuartaireStratigrafie class.
 
         """
-        return QuartairStratigrafie
+        return QuartaireStratigrafie
 
     def get_namespace(self):
         """Get the WFS namespace associated with this datatype.

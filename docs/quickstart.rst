@@ -14,6 +14,7 @@ Currently, we support the following datasets:
 
     Dataset,Dataset (Dutch),Search object
     Boreholes,Boringen,pydov.search.boring.BoringSearch
+    CPT measurements,Sonderingen,pydov.search.sondering.SonderingSearch
     Groundwater screens,Grondwater filters,pydov.search.grondwaterfilter.GrondwaterFilterSearch
     Informal stratigraphy,Informele stratigrafie,pydov.search.interpretaties.InformeleStratigrafieSearch
     Hydrogeological stratigraphy,Hydrogeologische stratigrafie,pydov.search.interpretaties.HydrogeologischeStratigrafieSearch

@@ -24,10 +24,10 @@ Introduction
 
 The pydov package is a community effort and everyone is welcome to contribute. It
 is hosted on `GitHub <https://github.com/DOV-Vlaanderen/pydov>`_ and development is
-coordinated by `Databank Ondergrond Vlaanderen (DOV) <https://dov.vlaanderen.be/dovweb/html/index.html>`_. DOV
+coordinated by `Databank Ondergrond Vlaanderen (DOV) <https://www.dov.vlaanderen.be>`_. DOV
 aggregates data about soil, subsoil and groundwater of Flanders and makes them publicly
 available. Interactive and human-readable extraction and querying of the data is provided
-by a `web application <https://www.dov.vlaanderen.be/portaal/?module=verkenner#ModulePage>`_\ , whereas
+by a `web application <https://www.dov.vlaanderen.be/portaal/?module=verkenner>`_\ , whereas
 the focus of this package is to support **machine-based** extraction and conversion of
 the data. The pacakge aims to support a set of complementary use cases, for example:
 

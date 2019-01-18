@@ -228,7 +228,7 @@ class AbstractTestSearch(object):
             assert 'type' in f
             assert type(f['type']) in (str, unicode)
             assert f['type'] in ['string', 'float', 'integer', 'date',
-                                 'boolean']
+                                 'datetime', 'boolean']
 
             assert 'notnull' in f
             assert type(f['notnull']) is bool
@@ -736,7 +736,7 @@ class AbstractTestTypes(object):
             assert 'type' in field
             assert type(field['type']) in (str, unicode)
             assert field['type'] in ['string', 'float', 'integer', 'date',
-                                     'boolean']
+                                     'datetime', 'boolean']
 
             if field['source'] == 'wfs':
                 if 'wfs_injected' in field.keys():

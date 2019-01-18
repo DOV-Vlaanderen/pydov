@@ -670,9 +670,4 @@ class QuartairStratigrafie(AbstractCommonInterpretatie):
         'source': 'wfs',
         'sourcefield': 'Y_mL72',
         'type': 'float'
-    }, {
-        'name': 'diepte_tot_m',
-        'source': 'wfs',
-        'sourcefield': 'diepte_tot_m',
-        'type': 'float'
-    }]
+    },]

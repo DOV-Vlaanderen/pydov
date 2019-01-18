@@ -60,6 +60,14 @@ class Meetdata(AbstractDovSubType):
                       'graden.',
         'type': 'float',
         'notnull': False
+    }, {
+        'name': 'rf',
+        'source': 'xml',
+        'sourcefield': '/rf',
+        'definition': 'Opgemeten waarde van de inclinatie, uitgedrukt in '
+                      'graden.',
+        'type': 'float',
+        'notnull': False
     }]
 
 

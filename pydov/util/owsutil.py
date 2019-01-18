@@ -36,6 +36,11 @@ from .errors import (
     FeatureCatalogueNotFoundError,
 )
 
+# Global requests session object. This increases performance as using a
+# session object allows connection pooling and TCP connection reuse.
+session = requests.Session()
+session.headers.update({'user-agent': 'pydov/%s' % pydov.__version__})
+
 
 def __get_namespaces():
     """Get default namespaces from OWSLib, extended with the 'gfc' namespace
@@ -565,9 +570,8 @@ def wfs_get_feature(baseurl, get_feature_request):
 
     """
     data = etree.tostring(get_feature_request)
-    headers = {'user-agent': 'PyDOV/%s' % pydov.__version__}
 
-    request = requests.post(baseurl, data, headers=headers, timeout=60)
+    request = session.post(baseurl, data, timeout=60)
     request.encoding = 'utf-8'
     return request.text.encode('utf8')
 
@@ -586,8 +590,6 @@ def get_url(url):
         Response containing the result of the GET request.
 
     """
-    headers = {'user-agent': 'PyDOV/%s' % pydov.__version__}
-
-    request = requests.get(url, headers=headers, timeout=60)
+    request = session.get(url, timeout=60)
     request.encoding = 'utf-8'
     return request.text.encode('utf8')

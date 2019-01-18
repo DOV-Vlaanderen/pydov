@@ -29,7 +29,7 @@ def get_dov_xml(url):
     global session
     if not session:
         session = requests.Session()
-        session.headers.update({'user-agent': 'PyDOV/%s' % pydov.__version__})
+        session.headers.update({'user-agent': 'pydov/%s' % pydov.__version__})
 
     request = session.get(url, timeout=60)
     request.encoding = 'utf-8'

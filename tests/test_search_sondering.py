@@ -169,7 +169,7 @@ class TestSonderingSearch(AbstractTestSearch):
                 'start_sondering_mtaw', 'diepte_sondering_van',
                 'diepte_sondering_tot', 'datum_aanvang', 'uitvoerder',
                 'sondeermethode', 'apparaat', 'datum_gw_meting',
-                'gw_meting', 'z', 'qc', 'Qt', 'fs', 'u', 'i']
+                'diepte_gw_m', 'z', 'qc', 'Qt', 'fs', 'u', 'i']
 
     def test_search_date(self, mp_wfs, mp_remote_describefeaturetype,
                          mp_remote_md, mp_remote_fc, mp_remote_wfs_feature,
@@ -251,6 +251,6 @@ class TestSonderingSearch(AbstractTestSearch):
         """
         df = self.get_search_object().search(
             query=self.get_valid_query_single(),
-            return_fields=('pkey_sondering', 'sondeernummer', 'gw_meting'))
+            return_fields=('pkey_sondering', 'sondeernummer', 'diepte_gw_m'))
 
-        assert df.gw_meting[0] == 3.60
+        assert df.diepte_gw_m[0] == 3.60

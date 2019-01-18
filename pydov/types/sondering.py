@@ -133,7 +133,7 @@ class Sondering(AbstractDovType):
         'type': 'datetime',
         'notnull': False
     }, {
-        'name': 'gw_meting',
+        'name': 'diepte_gw_m',
         'source': 'xml',
         'sourcefield': '/sondering/visueelonderzoek/grondwaterstand',
         'definition': 'Diepte water in meter ten opzicht van het '

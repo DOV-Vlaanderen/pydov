@@ -62,7 +62,7 @@ class TestSondering(AbstractTestTypes):
                 'start_sondering_mtaw', 'diepte_sondering_van',
                 'diepte_sondering_tot', 'datum_aanvang', 'uitvoerder',
                 'sondeermethode', 'apparaat', 'datum_gw_meting',
-                'gw_meting', 'z', 'qc', 'Qt', 'fs', 'u', 'i']
+                'diepte_gw_m', 'z', 'qc', 'Qt', 'fs', 'u', 'i']
 
     def get_field_names_subtypes(self):
         """Get the field names of this type that originate from subtypes only.
@@ -89,7 +89,7 @@ class TestSondering(AbstractTestTypes):
                 'start_sondering_mtaw', 'diepte_sondering_van',
                 'diepte_sondering_tot', 'datum_aanvang', 'uitvoerder',
                 'sondeermethode', 'apparaat', 'datum_gw_meting',
-                'gw_meting']
+                'diepte_gw_m']
 
     def get_valid_returnfields(self):
         """Get a list of valid return fields from the main type.

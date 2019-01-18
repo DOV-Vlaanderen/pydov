@@ -334,3 +334,46 @@ if __name__ == '__main__':
     update_file('util/owsutil/wfscapabilities.xml',
                 'https://www.dov.vlaanderen.be/geoserver/wfs?request'
                 '=getcapabilities&service=wfs&version=1.1.0')
+
+    # types/interpretaties/quartair_stratigrafie
+
+    update_file('types/interpretaties/quartair_stratigrafie'
+                '/quartair_stratigrafie.xml',
+                'https://www.dov.vlaanderen.be/data/interpretatie/'
+                '1999-057087.xml')
+
+    update_file('types/interpretaties/quartair_stratigrafie'
+                '/wfsgetfeature.xml',
+                'https://www.dov.vlaanderen.be/geoserver/ows?service=WFS'
+                '&version=1.1.0&request=GetFeature&typeName=interpretaties'
+                ':quartair_stratigrafie&maxFeatures=1&CQL_Filter'
+                '=Interpretatiefiche=%27https://www.dov.vlaanderen.be/data'
+                '/interpretatie/1999-057087%27')
+
+    update_file('types/interpretaties/quartair_stratigrafie/feature.xml',
+                'https://www.dov.vlaanderen.be/geoserver/ows?service=WFS'
+                '&version=1.1.0&request=GetFeature&typeName=interpretaties'
+                ':1999-057087_stratigrafie&maxFeatures=1&CQL_Filter'
+                '=Interpretatiefiche=%27https://www.dov.vlaanderen.be/data'
+                '/interpretatie/1999-057087%27',
+                get_first_featuremember)
+
+    update_file(
+        'types/interpretaties/quartair_stratigrafie/fc_featurecatalogue.xml',
+        'https://www.dov.vlaanderen.be/geonetwork/srv/dut/csw'
+        '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+        '&outputSchema=http://www.isotc211.org/2005/gmd'
+        '&elementSetName=full&id=d40ef884-3278-45db-ad69-2c2a8c3981c3')
+
+    update_file('types/interpretaties/quartair_stratigrafie/md_metadata.xml',
+                'https://www.dov.vlaanderen.be/geonetwork/srv/dut/csw'
+                '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+                '&outputSchema=http://www.isotc211.org/2005/gmd'
+                '&elementSetName=full&id=c9128330-1124-4c46-9d37-77796e10df71')
+
+    update_file(
+        'types/interpretaties/quartair_stratigrafie/wfsdescribefeaturetype'
+        '.xml',
+        'https://www.dov.vlaanderen.be/geoserver/interpretaties'
+        '/quartair_stratigrafie/ows?service=wfs&version=1.1.0&request'
+        '=DescribeFeatureType')

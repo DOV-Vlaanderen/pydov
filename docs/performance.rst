@@ -18,8 +18,6 @@ You can get an overview of the available fields for a dataset using its search o
 Default dataframe columns
 *************************
 
-Below the default dataframe fields for each dataset are listed:
-
 Boreholes (boringen)
 --------------------
   .. csv-table:: Boreholes (boringen)
@@ -41,6 +39,31 @@ Boreholes (boringen)
     diepte_methode_van,10,float,0.00
     diepte_methode_tot,10,float,19.00
     boormethode,10,string,droge boring
+
+CPT measurements (sonderingen)
+------------------------------
+  .. csv-table:: CPT measurements (sonderingen)
+    :header-rows: 1
+
+    Field,Cost,Datatype,Example
+    pkey_sondering,1,string,https://www.dov.vlaanderen.be/data/sondering/2002-010317
+    x,1,float,142767
+    y,1,float,221907
+    start_sondering_mtaw,1,float,2.39
+    diepte_sondering_van,1,float,0
+    diepte_sondering_tot,1,float,16
+    datum_aanvang,1,date,2002-07-04
+    uitvoerder,1,string,MVG - Afdeling Geotechniek
+    sondeermethode,1,string,continu elektrisch
+    apparaat,1,string,200kN - RUPS
+    datum_gw_meting,10,datetime,2002-07-04 13:50:00
+    gw_meting,10,float,1.2
+    z,10,float,1.2
+    qc,10,float,0.68
+    Qt,10,float,NaN
+    fs,10,float,10
+    u,10,float,7
+    i,10,float,0.1
 
 Groundwater screens (grondwaterfilters)
 ---------------------------------------

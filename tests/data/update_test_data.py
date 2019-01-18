@@ -346,14 +346,14 @@ if __name__ == '__main__':
                 '/wfsgetfeature.xml',
                 'https://www.dov.vlaanderen.be/geoserver/ows?service=WFS'
                 '&version=1.1.0&request=GetFeature&typeName=interpretaties'
-                ':quartair_stratigrafie&maxFeatures=1&CQL_Filter'
+                ':quartaire_stratigrafie&maxFeatures=1&CQL_Filter'
                 '=Interpretatiefiche=%27https://www.dov.vlaanderen.be/data'
                 '/interpretatie/1999-057087%27')
 
     update_file('types/interpretaties/quartair_stratigrafie/feature.xml',
                 'https://www.dov.vlaanderen.be/geoserver/ows?service=WFS'
                 '&version=1.1.0&request=GetFeature&typeName=interpretaties'
-                ':1999-057087_stratigrafie&maxFeatures=1&CQL_Filter'
+                ':quartaire_stratigrafie&maxFeatures=1&CQL_Filter'
                 '=Interpretatiefiche=%27https://www.dov.vlaanderen.be/data'
                 '/interpretatie/1999-057087%27',
                 get_first_featuremember)
@@ -375,5 +375,5 @@ if __name__ == '__main__':
         'types/interpretaties/quartair_stratigrafie/wfsdescribefeaturetype'
         '.xml',
         'https://www.dov.vlaanderen.be/geoserver/interpretaties'
-        '/quartair_stratigrafie/ows?service=wfs&version=1.1.0&request'
+        '/quartaire_stratigrafie/ows?service=wfs&version=1.1.0&request'
         '=DescribeFeatureType')

@@ -582,7 +582,7 @@ class GecodeerdeLithologie(AbstractBoringInterpretatie):
 class QuartairStratigrafieLaag(AbstractDovSubType):
 
     _name = 'quartair_stratigrafie_laag'
-    _rootpath = './/quartairstratigrafie/laag'
+    _rootpath = './/quartaire_stratigrafie/laag'
 
     _fields = [{
         'name': 'diepte_laag_van',

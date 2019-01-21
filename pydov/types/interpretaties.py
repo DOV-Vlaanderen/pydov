@@ -577,3 +577,148 @@ class GecodeerdeLithologie(AbstractBoringInterpretatie):
         'sourcefield': 'Y_mL72',
         'type': 'float'
     }]
+
+
+class GeotechnischeCoderingLaag(AbstractDovSubType):
+
+    _name = 'geotechnische_codering_laag'
+    _rootpath = './/geotechnischecodering/laag'
+
+    _fields = [{
+        'name': 'diepte_laag_van',
+        'source': 'xml',
+        'sourcefield': '/van',
+        'definition': 'diepte van de bovenkant van de laag geotechnische '
+                      'codering in meter',
+        'type': 'float',
+        'notnull': False
+    }, {
+        'name': 'diepte_laag_tot',
+        'source': 'xml',
+        'sourcefield': '/tot',
+        'definition': 'Diepte van de onderkant van de laag geotechnische'
+                      ' codering in meter.',
+        'type': 'float',
+        'notnull': False
+    }, {
+        'name': 'hoofdnaam1_grondsoort',
+        'source': 'xml',
+        'sourcefield': '/hoofdnaam[1]/grondsoort',
+        'definition': 'hoofdnaam (als code) van de laag '
+                      'geotechnische codering',
+        'type': 'string',
+        'notnull': False
+    }, {
+        'name': 'hoofdnaam2_grondsoort',
+        'source': 'xml',
+        'sourcefield': '/hoofdnaam[2]/grondsoort',
+        'definition': 'Secundaire grondsoort (als code) van de laag '
+                      'geotechnische codering',
+        'type': 'string',
+        'notnull': False
+    }, {
+        'name': 'bijmenging1_plaatselijk',
+        'source': 'xml',
+        'sourcefield': '/bijmenging[1]/plaatselijk',
+        'definition': 'plaatselijk of niet-plaatselijk',
+        'type': 'boolean',
+        'notnull': False
+    }, {
+        'name': 'bijmenging1_hoeveelheid',
+        'source': 'xml',
+        'sourcefield': '/bijmenging[1]/hoeveelheid',
+        'definition': 'aanduiding van de hoeveelheid bijmenging',
+        'type': 'string',
+        'notnull': False
+    }, {
+        'name': 'bijmenging1_grondsoort',
+        'source': 'xml',
+        'sourcefield': '/bijmenging[1]/grondsoort',
+        'definition': 'type grondsoort (als code) van de laag '
+                      'geotechnische codering',
+        'type': 'string',
+        'notnull': False
+    }, {
+        'name': 'bijmenging2_plaatselijk',
+        'source': 'xml',
+        'sourcefield': '/bijmenging[2]/plaatselijk',
+        'definition': 'plaatselijk of niet-plaatselijk',
+        'type': 'boolean',
+        'notnull': False
+    }, {
+        'name': 'bijmenging2_hoeveelheid',
+        'source': 'xml',
+        'sourcefield': '/bijmenging[2]/hoeveelheid',
+        'definition': 'aanduiding van de hoeveelheid bijmenging',
+        'type': 'string',
+        'notnull': False
+    }, {
+        'name': 'bijmenging2_grondsoort',
+        'source': 'xml',
+        'sourcefield': '/bijmenging[2]/grondsoort',
+        'definition': 'type grondsoort (als code) van de laag '
+                      'geotechnische codering',
+        'type': 'string',
+        'notnull': False
+    }, {
+        'name': 'bijmenging3_plaatselijk',
+        'source': 'xml',
+        'sourcefield': '/bijmenging[3]/plaatselijk',
+        'definition': 'plaatselijk of niet-plaatselijk',
+        'type': 'boolean',
+        'notnull': False
+    }, {
+        'name': 'bijmenging3_hoeveelheid',
+        'source': 'xml',
+        'sourcefield': '/bijmenging[3]/hoeveelheid',
+        'definition': 'aanduiding van de hoeveelheid bijmenging',
+        'type': 'string',
+        'notnull': False
+    }, {
+        'name': 'bijmenging3_grondsoort',
+        'source': 'xml',
+        'sourcefield': '/bijmenging[3]/grondsoort',
+        'definition': 'type grondsoort (als code) van de laag '
+                      'geotechnische codering',
+        'type': 'string',
+        'notnull': False
+    }]
+
+
+class GeotechnischeCodering(AbstractBoringInterpretatie):
+    """Class representing the DOV data type for 'geotechnische
+    codering' interpretations.
+
+    In Dutch: Een geotechnische codering van een boring is een
+    codering opgesteld vanuit geotechnisch oogpunt,
+    rekening houdend met informatie uit de lithologie,
+    laboproeven en bijhorende sondering(en)."""
+
+    _subtypes = [GeotechnischeCoderingLaag]
+
+    _fields = [{
+        'name': 'pkey_interpretatie',
+        'source': 'wfs',
+        'sourcefield': 'Interpretatiefiche',
+        'type': 'string'
+    }, {
+        'name': 'pkey_boring',
+        'source': 'wfs',
+        'type': 'string',
+        'sourcefield': 'Proeffiche',
+    }, {
+        'name': 'betrouwbaarheid_interpretatie',
+        'source': 'wfs',
+        'sourcefield': 'Betrouwbaarheid',
+        'type': 'string'
+    },  {
+        'name': 'x',
+        'source': 'wfs',
+        'sourcefield': 'X_mL72',
+        'type': 'float'
+    }, {
+        'name': 'y',
+        'source': 'wfs',
+        'sourcefield': 'Y_mL72',
+        'type': 'float'
+    }]

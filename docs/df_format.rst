@@ -114,7 +114,7 @@ interpreted data.
 
 |
 
-  .. csv-table:: Gecodeerde lithologie
+  .. csv-table:: Gecodeerde lithologie and Geotechnische codering
     :header-rows: 1
 
     source,field,new_name,data_type,example

@@ -92,6 +92,24 @@ Groundwater screens (grondwaterfilters)
     betrouwbaarheid,10,string,goed
     methode,10,string,NaN
 
+Formal stratigraphy (Formele stratigrafie)
+------------------------------------------
+  .. csv-table:: Formal stratigraphy (Formele stratigrafie)
+    :header-rows: 1
+
+    Field,Cost,Datatype,Example
+    pkey_interpretatie,1,string,https://www.dov.vlaanderen.be/data/interpretatie/2002-227082
+    pkey_boring,1,string,NaN
+    pkey_sondering,1,string,https://www.dov.vlaanderen.be/data/sondering/1989-068788
+    betrouwbaarheid_interpretatie,1,string,goed
+    x,1,float,108455
+    y,1,float,194565
+    diepte_laag_van,10,float,0
+    diepte_laag_tot,10,float,13
+    lid1,10,string,Q
+    relatie_lid1_lid2,10,string,T
+    lid2,10,string,Q
+
 Informal stratigraphy (Informele stratigrafie)
 ----------------------------------------------
   .. csv-table:: Informal stratigraphy (Informele stratigrafie)
@@ -141,6 +159,31 @@ Coded lithology (Gecodeerde lithologie)
     bijmenging1_plaatselijk,10,boolean,False
     bijmenging1_hoeveelheid,10,string,N
     bijmenging1_grondsoort,10,string,SC
+    bijmenging2_plaatselijk,10,boolean,NaN
+    bijmenging2_hoeveelheid,10,string,NaN
+    bijmenging2_grondsoort,10,string,NaN
+    bijmenging3_plaatselijk,10,boolean,NaN
+    bijmenging3_hoeveelheid,10,string,NaN
+    bijmenging3_grondsoort,10,string,NaN
+
+Geotechnical encoding (Geotechnische codering)
+----------------------------------------------
+  .. csv-table:: Geotechnical encoding (Geotechnische codering)
+    :header-rows: 1
+
+    Field,Cost,Datatype,Example
+    pkey_interpretatie,1,string,https://www.dov.vlaanderen.be/data/interpretatie/2014-184535
+    pkey_boring,1,string,https://www.dov.vlaanderen.be/data/boring/1957-033538
+    betrouwbaarheid_interpretatie,1,string,goed
+    x,1,float,108851
+    y,1,float,196510
+    diepte_laag_van,10,float,1
+    diepte_laag_tot,10,float,1.5
+    hoofdnaam1_grondsoort,10,string,XZ
+    hoofdnaam2_grondsoort,10,string,NaN
+    bijmenging1_plaatselijk,10,boolean,NaN
+    bijmenging1_hoeveelheid,10,string,NaN
+    bijmenging1_grondsoort,10,string,NaN
     bijmenging2_plaatselijk,10,boolean,NaN
     bijmenging2_hoeveelheid,10,string,NaN
     bijmenging2_grondsoort,10,string,NaN

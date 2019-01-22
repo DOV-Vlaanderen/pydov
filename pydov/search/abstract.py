@@ -148,9 +148,9 @@ class AbstractSearch(object):
         wfs_layer = self._get_layer()
         return owsutil.get_remote_metadata(wfs_layer)
 
-    def _get_remote_xsd_enums(self):
+    def _get_remote_xsd_schemas(self):
         return [etree.fromstring(get_dov_xml(i)) for i in
-                self._type.get_xsd_enums()]
+                self._type.get_xsd_schemas()]
 
     def _get_csw_base_url(self):
         """Get the CSW base url for the remote metadata associated with the
@@ -167,11 +167,11 @@ class AbstractSearch(object):
         return owsutil.get_csw_base_url(wfs_layer)
 
     @staticmethod
-    def _get_xsd_values(xsd_enums, xml_field):
+    def _get_xsd_enum_values(xsd_schemas, xml_field):
         values = None
         if xml_field.get('xsd_type', None):
             values = {}
-            for schema in xsd_enums:
+            for schema in xsd_schemas:
                 tree_values = schema.findall(
                     './/{http://www.w3.org/2001/XMLSchema}simpleType[@'
                     'name="%s"]/{http://www.w3.org/2001/XMLSchema}restriction/'
@@ -183,7 +183,31 @@ class AbstractSearch(object):
                         'http://www.w3.org/2001/XMLSchema}documentation').text
         return values
 
-    def _build_fields(self, wfs_schema, feature_catalogue, xsd_enums):
+    @staticmethod
+    def _get_xsd_element_definition(xsd_schemas, xml_field):
+        if xml_field.get('xsd_element', None):
+            complex_type, element = xml_field.get('xsd_element').split('/')
+
+            for schema in xsd_schemas:
+                el_complextype = schema.find(
+                    './/{http://www.w3.org/2001/XMLSchema}complexType['
+                    '@name="%s"]' % complex_type)
+                if el_complextype is None:
+                    continue
+
+                el_element = el_complextype.find(
+                    './/{http://www.w3.org/2001/XMLSchema}element['
+                    '@name="%s"]' % element)
+                if el_element is None:
+                    continue
+
+                definition = el_element.find(
+                    './/{http://www.w3.org/2001/XMLSchema}annotation/'
+                    '{http://www.w3.org/2001/XMLSchema}documentation')
+                if definition is not None:
+                    return definition.text
+
+    def _build_fields(self, wfs_schema, feature_catalogue, xsd_schemas):
         """Build the dictionary containing the metadata about the available
         fields.
 
@@ -264,15 +288,17 @@ class AbstractSearch(object):
             field = {
                 'name': xml_field['name'],
                 'type': xml_field['type'],
-                'definition': xml_field['definition'],
                 'notnull': xml_field['notnull'],
                 'query': False,
                 'cost': 10
             }
 
-            vocab = self._get_xsd_values(xsd_enums, xml_field)
+            vocab = self._get_xsd_enum_values(xsd_schemas, xml_field)
             if vocab is not None:
                 field['vocabulary'] = vocab
+
+            field['definition'] = self._get_xsd_element_definition(
+                xsd_schemas, xml_field)
 
             fields[field['name']] = field
 

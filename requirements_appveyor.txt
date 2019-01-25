@@ -1,4 +1,6 @@
 owslib
+pandas
+numpy
 requests
 pip
 bumpversion

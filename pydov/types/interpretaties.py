@@ -452,21 +452,24 @@ class GecodeerdeLithologieLaag(AbstractDovSubType):
         'name': 'diepte_laag_van',
         'source': 'xml',
         'sourcefield': '/van',
-        'xsd_element': 'GecodeerdeLithologieLaagType/van',
+        'definition': 'Diepte van de bovenkant van de laag gecodeerde'
+                      ' lithologie in meter.',
         'type': 'float',
         'notnull': False
     }, {
         'name': 'diepte_laag_tot',
         'source': 'xml',
         'sourcefield': '/tot',
-        'xsd_element': 'GecodeerdeLithologieLaagType/tot',
+        'definition': 'Diepte van de onderkant van de laag gecodeerde'
+                      ' lithologie in meter.',
         'type': 'float',
         'notnull': False
     }, {
         'name': 'hoofdnaam1_grondsoort',
         'source': 'xml',
         'sourcefield': '/hoofdnaam[1]/grondsoort',
-        'xsd_element': 'GecodeerdHoofdnaamType/grondsoort',
+        'definition': 'Primaire grondsoort (als code) van de laag '
+                      'gecodeerde lithologie',
         'xsd_type': 'GecodeerdHoofdnaamCodesEnumType',
         'type': 'string',
         'notnull': False
@@ -474,7 +477,8 @@ class GecodeerdeLithologieLaag(AbstractDovSubType):
         'name': 'hoofdnaam2_grondsoort',
         'source': 'xml',
         'sourcefield': '/hoofdnaam[2]/grondsoort',
-        'xsd_element': 'GecodeerdHoofdnaamType/grondsoort',
+        'definition': 'Secundaire grondsoort (als code) van de laag '
+                      'gecodeerde lithologie',
         'xsd_type': 'GecodeerdHoofdnaamCodesEnumType',
         'type': 'string',
         'notnull': False
@@ -482,14 +486,14 @@ class GecodeerdeLithologieLaag(AbstractDovSubType):
         'name': 'bijmenging1_plaatselijk',
         'source': 'xml',
         'sourcefield': '/bijmenging[1]/plaatselijk',
-        'xsd_element': 'GecodeerdBijnaamType/plaatselijk',
+        'definition': 'plaatselijk of niet-plaatselijk',
         'type': 'boolean',
         'notnull': False
     }, {
         'name': 'bijmenging1_hoeveelheid',
         'source': 'xml',
         'sourcefield': '/bijmenging[1]/hoeveelheid',
-        'xsd_element': 'GecodeerdBijnaamType/hoeveelheid',
+        'definition': 'aanduiding van de hoeveelheid bijmenging',
         'xsd_type': 'GecodeerdBijmengingHoeveelheidEnumType',
         'type': 'string',
         'notnull': False
@@ -497,7 +501,9 @@ class GecodeerdeLithologieLaag(AbstractDovSubType):
         'name': 'bijmenging1_grondsoort',
         'source': 'xml',
         'sourcefield': '/bijmenging[1]/grondsoort',
-        'xsd_element': 'GecodeerdBijnaamType/grondsoort',
+        'definition': 'type grondsoort (als code) van de laag '
+                      'gecodeerde lithologie of geotechnische '
+                      'codering',
         'xsd_type': 'GecodeerdHoofdnaamCodesEnumType',
         'type': 'string',
         'notnull': False
@@ -505,14 +511,14 @@ class GecodeerdeLithologieLaag(AbstractDovSubType):
         'name': 'bijmenging2_plaatselijk',
         'source': 'xml',
         'sourcefield': '/bijmenging[2]/plaatselijk',
-        'xsd_element': 'GecodeerdBijnaamType/plaatselijk',
+        'definition': 'plaatselijk of niet-plaatselijk',
         'type': 'boolean',
         'notnull': False
     }, {
         'name': 'bijmenging2_hoeveelheid',
         'source': 'xml',
         'sourcefield': '/bijmenging[2]/hoeveelheid',
-        'xsd_element': 'GecodeerdBijnaamType/hoeveelheid',
+        'definition': 'aanduiding van de hoeveelheid bijmenging',
         'xsd_type': 'GecodeerdBijmengingHoeveelheidEnumType',
         'type': 'string',
         'notnull': False
@@ -520,7 +526,9 @@ class GecodeerdeLithologieLaag(AbstractDovSubType):
         'name': 'bijmenging2_grondsoort',
         'source': 'xml',
         'sourcefield': '/bijmenging[2]/grondsoort',
-        'xsd_element': 'GecodeerdBijnaamType/grondsoort',
+        'definition': 'type grondsoort (als code) van de laag '
+                      'gecodeerde lithologie of geotechnische '
+                      'codering',
         'xsd_type': 'GecodeerdHoofdnaamCodesEnumType',
         'type': 'string',
         'notnull': False
@@ -528,14 +536,14 @@ class GecodeerdeLithologieLaag(AbstractDovSubType):
         'name': 'bijmenging3_plaatselijk',
         'source': 'xml',
         'sourcefield': '/bijmenging[3]/plaatselijk',
-        'xsd_element': 'GecodeerdBijnaamType/plaatselijk',
+        'definition': 'plaatselijk of niet-plaatselijk',
         'type': 'boolean',
         'notnull': False
     }, {
         'name': 'bijmenging3_hoeveelheid',
         'source': 'xml',
         'sourcefield': '/bijmenging[3]/hoeveelheid',
-        'xsd_element': 'GecodeerdBijnaamType/hoeveelheid',
+        'definition': 'aanduiding van de hoeveelheid bijmenging',
         'xsd_type': 'GecodeerdBijmengingHoeveelheidEnumType',
         'type': 'string',
         'notnull': False
@@ -543,7 +551,9 @@ class GecodeerdeLithologieLaag(AbstractDovSubType):
         'name': 'bijmenging3_grondsoort',
         'source': 'xml',
         'sourcefield': '/bijmenging[3]/grondsoort',
-        'xsd_element': 'GecodeerdBijnaamType/grondsoort',
+        'definition': 'type grondsoort (als code) van de laag '
+                      'gecodeerde lithologie of geotechnische '
+                      'codering',
         'xsd_type': 'GecodeerdHoofdnaamCodesEnumType',
         'type': 'string',
         'notnull': False

@@ -443,8 +443,6 @@ class GecodeerdeLithologieLaag(AbstractDovSubType):
 
     _xsd_schemas = [
         'https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/'
-        'interpretatie/GecodeerdeLithologieDataTypes.xsd',
-        'https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/'
         'interpretatie/GecodeerdeLithologieDataCodes.xsd'
     ]
 

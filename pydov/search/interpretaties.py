@@ -17,6 +17,7 @@ class InformeleStratigrafieSearch(AbstractSearch):
     __wfs_namespace = None
     __md_metadata = None
     __fc_featurecatalogue = None
+    __xsd_schemas = None
 
     def __init__(self):
         """Initialisation."""
@@ -47,9 +48,14 @@ class InformeleStratigrafieSearch(AbstractSearch):
                 InformeleStratigrafieSearch.__fc_featurecatalogue = \
                     owsutil.get_remote_featurecatalogue(csw_url, fc_uuid)
 
+            if InformeleStratigrafieSearch.__xsd_schemas is None:
+                InformeleStratigrafieSearch.__xsd_schemas = \
+                    self._get_remote_xsd_schemas()
+
             fields = self._build_fields(
                 InformeleStratigrafieSearch.__wfs_schema,
-                InformeleStratigrafieSearch.__fc_featurecatalogue)
+                InformeleStratigrafieSearch.__fc_featurecatalogue,
+                InformeleStratigrafieSearch.__xsd_schemas)
 
             for field in fields.values():
                 if field['name'] not in self._type.get_field_names(
@@ -64,7 +70,8 @@ class InformeleStratigrafieSearch(AbstractSearch):
 
             self._fields = self._build_fields(
                 InformeleStratigrafieSearch.__wfs_schema,
-                InformeleStratigrafieSearch.__fc_featurecatalogue)
+                InformeleStratigrafieSearch.__fc_featurecatalogue,
+                InformeleStratigrafieSearch.__xsd_schemas)
 
     def search(self, location=None, query=None, return_fields=None):
         """Search for boreholes (Boring). Provide either `location` or `query`.
@@ -397,6 +404,7 @@ class LithologischeBeschrijvingenSearch(AbstractSearch):
     __wfs_namespace = None
     __md_metadata = None
     __fc_featurecatalogue = None
+    __xsd_schemas = None
 
     def __init__(self):
         """Initialisation."""
@@ -431,9 +439,14 @@ class LithologischeBeschrijvingenSearch(AbstractSearch):
                 LithologischeBeschrijvingenSearch.__fc_featurecatalogue = \
                     owsutil.get_remote_featurecatalogue(csw_url, fc_uuid)
 
+            if LithologischeBeschrijvingenSearch.__xsd_schemas is None:
+                LithologischeBeschrijvingenSearch.__xsd_schemas = \
+                    self._get_remote_xsd_schemas()
+
             fields = self._build_fields(
                 LithologischeBeschrijvingenSearch.__wfs_schema,
-                LithologischeBeschrijvingenSearch.__fc_featurecatalogue)
+                LithologischeBeschrijvingenSearch.__fc_featurecatalogue,
+                LithologischeBeschrijvingenSearch.__xsd_schemas)
 
             for field in fields.values():
                 if field['name'] not in self._type.get_field_names(
@@ -448,7 +461,8 @@ class LithologischeBeschrijvingenSearch(AbstractSearch):
 
             self._fields = self._build_fields(
                 LithologischeBeschrijvingenSearch.__wfs_schema,
-                LithologischeBeschrijvingenSearch.__fc_featurecatalogue)
+                LithologischeBeschrijvingenSearch.__fc_featurecatalogue,
+                LithologischeBeschrijvingenSearch.__xsd_schemas)
 
     def search(self, location=None, query=None, return_fields=None):
         """Search for 'lithologische beschrijvingen'. Provide either

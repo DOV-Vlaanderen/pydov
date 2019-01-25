@@ -219,6 +219,13 @@ class FormeleStratigrafieLaag(AbstractDovSubType):
     _name = 'formele_stratigrafie_laag'
     _rootpath = './/formelestratigrafie/laag'
 
+    _xsd_schemas = [
+        'https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/'
+        'interpretatie/InterpretatieDataCodes.xsd',
+        'https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/'
+        'interpretatie/FormeleStratigrafieDataCodes.xsd'
+    ]
+
     _fields = [{
         'name': 'diepte_laag_van',
         'source': 'xml',
@@ -239,21 +246,27 @@ class FormeleStratigrafieLaag(AbstractDovSubType):
         'name': 'lid1',
         'source': 'xml',
         'sourcefield': '/lid1',
-        'definition': '',
+        'xsd_type': 'FormeleStratigrafieLedenEnumType',
+        'definition': 'eerste eenheid van de laag formele stratigrafie',
         'type': 'string',
         'notnull': False
     }, {
         'name': 'relatie_lid1_lid2',
         'source': 'xml',
         'sourcefield': '/relatie_lid1_lid2',
-        'definition': '',
+        'xsd_type': 'RelatieLedenEnumType',
+        'definition': 'verbinding/relatie tussen lid1 en lid2 van de laag '
+                      'formele stratigrafie',
         'type': 'string',
         'notnull': False
     }, {
         'name': 'lid2',
         'source': 'xml',
         'sourcefield': '/lid2',
-        'definition': '',
+        'xsd_type': 'FormeleStratigrafieLedenEnumType',
+        'definition': 'tweede eenheid van de laag formele stratigrafie. '
+                      'Indien niet ingevuld wordt default de waarde van lid1 '
+                      'ingevuld',
         'type': 'string',
         'notnull': False
     }]
@@ -309,6 +322,11 @@ class HydrogeologischeStratigrafieLaag(AbstractDovSubType):
     _name = 'hydrogeologische_stratigrafie_laag'
     _rootpath = './/hydrogeologischeinterpretatie/laag'
 
+    _xsd_schemas = [
+        'https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/'
+        'interpretatie/HydrogeologischeStratigrafieDataCodes.xsd'
+    ]
+
     _fields = [{
         'name': 'diepte_laag_van',
         'source': 'xml',
@@ -329,6 +347,7 @@ class HydrogeologischeStratigrafieLaag(AbstractDovSubType):
         'name': 'aquifer',
         'source': 'xml',
         'sourcefield': '/aquifer',
+        'xsd_type': 'AquiferEnumType',
         'definition': 'code van de watervoerende laag waarin de laag '
                       'Hydrogeologische stratigrafie zich bevindt.',
         'type': 'string',
@@ -597,6 +616,11 @@ class GeotechnischeCoderingLaag(AbstractDovSubType):
     _name = 'geotechnische_codering_laag'
     _rootpath = './/geotechnischecodering/laag'
 
+    _xsd_schemas = [
+        'https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/'
+        'interpretatie/GeotechnischeCoderingDataCodes.xsd'
+    ]
+
     _fields = [{
         'name': 'diepte_laag_van',
         'source': 'xml',
@@ -617,6 +641,7 @@ class GeotechnischeCoderingLaag(AbstractDovSubType):
         'name': 'hoofdnaam1_grondsoort',
         'source': 'xml',
         'sourcefield': '/hoofdnaam[1]/grondsoort',
+        'xsd_type': 'GeotechnischeCoderingHoofdnaamCodesEnumType',
         'definition': 'hoofdnaam (als code) van de laag '
                       'geotechnische codering',
         'type': 'string',
@@ -625,6 +650,7 @@ class GeotechnischeCoderingLaag(AbstractDovSubType):
         'name': 'hoofdnaam2_grondsoort',
         'source': 'xml',
         'sourcefield': '/hoofdnaam[2]/grondsoort',
+        'xsd_type': 'GeotechnischeCoderingHoofdnaamCodesEnumType',
         'definition': 'Secundaire grondsoort (als code) van de laag '
                       'geotechnische codering',
         'type': 'string',
@@ -640,6 +666,7 @@ class GeotechnischeCoderingLaag(AbstractDovSubType):
         'name': 'bijmenging1_hoeveelheid',
         'source': 'xml',
         'sourcefield': '/bijmenging[1]/hoeveelheid',
+        'xsd_type': 'GeotechnischeCoderingBijmengingHoeveelheidEnumType',
         'definition': 'aanduiding van de hoeveelheid bijmenging',
         'type': 'string',
         'notnull': False
@@ -647,6 +674,7 @@ class GeotechnischeCoderingLaag(AbstractDovSubType):
         'name': 'bijmenging1_grondsoort',
         'source': 'xml',
         'sourcefield': '/bijmenging[1]/grondsoort',
+        'xsd_type': 'GeotechnischeCoderingHoofdnaamCodesEnumType',
         'definition': 'type grondsoort (als code) van de laag '
                       'geotechnische codering',
         'type': 'string',
@@ -662,6 +690,7 @@ class GeotechnischeCoderingLaag(AbstractDovSubType):
         'name': 'bijmenging2_hoeveelheid',
         'source': 'xml',
         'sourcefield': '/bijmenging[2]/hoeveelheid',
+        'xsd_type': 'GeotechnischeCoderingBijmengingHoeveelheidEnumType',
         'definition': 'aanduiding van de hoeveelheid bijmenging',
         'type': 'string',
         'notnull': False
@@ -669,6 +698,7 @@ class GeotechnischeCoderingLaag(AbstractDovSubType):
         'name': 'bijmenging2_grondsoort',
         'source': 'xml',
         'sourcefield': '/bijmenging[2]/grondsoort',
+        'xsd_type': 'GeotechnischeCoderingHoofdnaamCodesEnumType',
         'definition': 'type grondsoort (als code) van de laag '
                       'geotechnische codering',
         'type': 'string',
@@ -684,6 +714,7 @@ class GeotechnischeCoderingLaag(AbstractDovSubType):
         'name': 'bijmenging3_hoeveelheid',
         'source': 'xml',
         'sourcefield': '/bijmenging[3]/hoeveelheid',
+        'xsd_type': 'GeotechnischeCoderingBijmengingHoeveelheidEnumType',
         'definition': 'aanduiding van de hoeveelheid bijmenging',
         'type': 'string',
         'notnull': False
@@ -691,6 +722,7 @@ class GeotechnischeCoderingLaag(AbstractDovSubType):
         'name': 'bijmenging3_grondsoort',
         'source': 'xml',
         'sourcefield': '/bijmenging[3]/grondsoort',
+        'xsd_type': 'GeotechnischeCoderingHoofdnaamCodesEnumType',
         'definition': 'type grondsoort (als code) van de laag '
                       'geotechnische codering',
         'type': 'string',

@@ -572,6 +572,7 @@ class AbstractSearch(object):
         return self._fields
 
     def replace_df_codes(self, df):
+        # todo: debug formele stratigrafie
         df = df.copy()
         fields = self.get_fields()
         for f in fields.values():

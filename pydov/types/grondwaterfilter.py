@@ -57,6 +57,13 @@ class GrondwaterFilter(AbstractDovType):
 
     _subtypes = [Peilmeting]
 
+    _xsd_schemas = [
+        'https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/'
+        'gwmeetnet/FilterDataCodes.xsd',
+        'https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/'
+        'interpretatie/HydrogeologischeStratigrafieDataCodes.xsd'
+    ]
+
     _fields = [{
         'name': 'pkey_filter',
         'source': 'wfs',
@@ -106,6 +113,7 @@ class GrondwaterFilter(AbstractDovType):
         'name': 'meetnet_code',
         'source': 'xml',
         'sourcefield': '/filter/meetnet',
+        'xsd_type': 'MeetnetEnumType',
         'definition': 'Tot welk meetnet behoort deze filter.',
         'type': 'integer',
         'notnull': False
@@ -113,6 +121,7 @@ class GrondwaterFilter(AbstractDovType):
         'name': 'aquifer_code',
         'source': 'xml',
         'sourcefield': '/filter/ligging/aquifer',
+        'xsd_type': 'AquiferEnumType',
         'definition': 'In welke watervoerende laag hangt de filter (code).',
         'type': 'string',
         'notnull': False
@@ -120,6 +129,7 @@ class GrondwaterFilter(AbstractDovType):
         'name': 'grondwaterlichaam_code',
         'source': 'xml',
         'sourcefield': '/filter/ligging/grondwaterlichaam',
+        'xsd_type': 'GrondwaterlichaamEnumType',
         'definition': '',
         'type': 'string',
         'notnull': False

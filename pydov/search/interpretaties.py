@@ -138,6 +138,7 @@ class FormeleStratigrafieSearch(AbstractSearch):
     __wfs_namespace = None
     __md_metadata = None
     __fc_featurecatalogue = None
+    __xsd_schemas = None
 
     def __init__(self):
         """Initialisation."""
@@ -168,9 +169,14 @@ class FormeleStratigrafieSearch(AbstractSearch):
                 FormeleStratigrafieSearch.__fc_featurecatalogue = \
                     owsutil.get_remote_featurecatalogue(csw_url, fc_uuid)
 
+            if FormeleStratigrafieSearch.__xsd_schemas is None:
+                FormeleStratigrafieSearch.__xsd_schemas = \
+                    self._get_remote_xsd_schemas()
+
             fields = self._build_fields(
                 FormeleStratigrafieSearch.__wfs_schema,
-                FormeleStratigrafieSearch.__fc_featurecatalogue)
+                FormeleStratigrafieSearch.__fc_featurecatalogue,
+                FormeleStratigrafieSearch.__xsd_schemas)
 
             for field in fields.values():
                 if field['name'] not in self._type.get_field_names(
@@ -185,7 +191,8 @@ class FormeleStratigrafieSearch(AbstractSearch):
 
             self._fields = self._build_fields(
                 FormeleStratigrafieSearch.__wfs_schema,
-                FormeleStratigrafieSearch.__fc_featurecatalogue)
+                FormeleStratigrafieSearch.__fc_featurecatalogue,
+                FormeleStratigrafieSearch.__xsd_schemas)
 
     def search(self, location=None, query=None, return_fields=None):
         """Search for boreholes (Boring). Provide either `location` or `query`.
@@ -258,6 +265,7 @@ class HydrogeologischeStratigrafieSearch(AbstractSearch):
     __wfs_namespace = None
     __md_metadata = None
     __fc_featurecatalogue = None
+    __xsd_schemas = None
 
     def __init__(self):
         """Initialisation."""
@@ -292,9 +300,14 @@ class HydrogeologischeStratigrafieSearch(AbstractSearch):
                 HydrogeologischeStratigrafieSearch.__fc_featurecatalogue = \
                     owsutil.get_remote_featurecatalogue(csw_url, fc_uuid)
 
+            if HydrogeologischeStratigrafieSearch.__xsd_schemas is None:
+                HydrogeologischeStratigrafieSearch.__xsd_schemas = \
+                    self._get_remote_xsd_schemas()
+
             fields = self._build_fields(
                 HydrogeologischeStratigrafieSearch.__wfs_schema,
-                HydrogeologischeStratigrafieSearch.__fc_featurecatalogue)
+                HydrogeologischeStratigrafieSearch.__fc_featurecatalogue,
+                HydrogeologischeStratigrafieSearch.__xsd_schemas)
 
             for field in fields.values():
                 if field['name'] not in self._type.get_field_names(
@@ -309,7 +322,8 @@ class HydrogeologischeStratigrafieSearch(AbstractSearch):
 
             self._fields = self._build_fields(
                 HydrogeologischeStratigrafieSearch.__wfs_schema,
-                HydrogeologischeStratigrafieSearch.__fc_featurecatalogue)
+                HydrogeologischeStratigrafieSearch.__fc_featurecatalogue,
+                HydrogeologischeStratigrafieSearch.__xsd_schemas)
 
     def search(self, location=None, query=None, return_fields=None):
         """Search for hydrogeological interpretations. Provide either
@@ -640,6 +654,7 @@ class GeotechnischeCoderingSearch(AbstractSearch):
     __wfs_namespace = None
     __md_metadata = None
     __fc_featurecatalogue = None
+    __xsd_schemas = None
 
     def __init__(self):
         """Initialisation."""
@@ -674,9 +689,14 @@ class GeotechnischeCoderingSearch(AbstractSearch):
                 GeotechnischeCoderingSearch.__fc_featurecatalogue = \
                     owsutil.get_remote_featurecatalogue(csw_url, fc_uuid)
 
+            if GeotechnischeCoderingSearch.__xsd_schemas is None:
+                GeotechnischeCoderingSearch.__xsd_schemas = \
+                    self._get_remote_xsd_schemas()
+
             fields = self._build_fields(
                 GeotechnischeCoderingSearch.__wfs_schema,
-                GeotechnischeCoderingSearch.__fc_featurecatalogue)
+                GeotechnischeCoderingSearch.__fc_featurecatalogue,
+                GeotechnischeCoderingSearch.__xsd_schemas)
 
             for field in fields.values():
                 if field['name'] not in self._type.get_field_names(
@@ -691,7 +711,8 @@ class GeotechnischeCoderingSearch(AbstractSearch):
 
             self._fields = self._build_fields(
                 GeotechnischeCoderingSearch.__wfs_schema,
-                GeotechnischeCoderingSearch.__fc_featurecatalogue)
+                GeotechnischeCoderingSearch.__fc_featurecatalogue,
+                GeotechnischeCoderingSearch.__xsd_schemas)
 
     def search(self, location=None, query=None, return_fields=None):
         """Search for 'geotechnische_codering'. Provide either

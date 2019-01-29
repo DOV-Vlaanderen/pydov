@@ -244,7 +244,13 @@ class AbstractTestSearch(object):
                 assert sorted(f.keys()) == [
                     'cost', 'definition', 'name', 'notnull', 'query', 'type',
                     'values']
-                for v in f['values']:
+
+                assert type(f['values']) is dict
+
+                for v in f['values'].keys():
+                    assert type(f['values'][v]) in (str, unicode) or f[
+                        'values'][v] is None
+
                     if f['type'] == 'string':
                         assert type(v) in (str, unicode)
                     elif f['type'] == 'float':
@@ -753,9 +759,14 @@ class AbstractTestTypes(object):
                 assert 'notnull' in field
                 assert type(field['notnull']) is bool
 
-                assert sorted(field.keys()) == [
-                    'definition', 'name', 'notnull', 'source', 'sourcefield',
-                    'type']
+                if 'xsd_type' in field:
+                    assert sorted(field.keys()) == [
+                        'definition', 'name', 'notnull', 'source',
+                        'sourcefield', 'type', 'xsd_type']
+                else:
+                    assert sorted(field.keys()) == [
+                        'definition', 'name', 'notnull', 'source',
+                        'sourcefield', 'type']
 
     def test_get_fields_nosubtypes(self):
         """Test the get_fields method not including subtypes.

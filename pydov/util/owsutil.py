@@ -297,11 +297,8 @@ def get_remote_featurecatalogue(csw_url, fc_uuid):
             multiplicity_upper = 'Inf'
 
         values = {}
-        vocabulary = {}
         for lv in a.findall(nspath_eval('gfc:listedValue/gfc:FC_ListedValue',
                                         __namespaces)):
-            code = lv.findtext(nspath_eval('gfc:code/gco:CharacterString',
-                                            __namespaces))
             label = lv.findtext(nspath_eval('gfc:label/gco:CharacterString',
                                             __namespaces))
             definition = lv.findtext(nspath_eval(
@@ -313,14 +310,7 @@ def get_remote_featurecatalogue(csw_url, fc_uuid):
                     values[label] = definition.strip() if \
                         definition.strip() != '' else None
 
-            if code is not None:
-                code = code.strip()
-                if code != '':
-                    vocabulary[code] = label.strip() if \
-                        label.strip() != '' else None
-
         attr['values'] = values if len(values) > 0 else None
-        attr['vocabulary'] = vocabulary if len(vocabulary) > 0 else None
 
         attr['multiplicity'] = (multiplicity_lower, multiplicity_upper)
         attributes[name] = attr

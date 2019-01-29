@@ -254,9 +254,6 @@ class AbstractSearch(object):
                 if fc_field['values'] is not None:
                     field['values'] = fc_field['values']
 
-                if fc_field['vocabulary'] is not None:
-                    field['vocabulary'] = fc_field['vocabulary']
-
                 fields[name] = field
 
         for xml_field in self._type.get_fields(source=['xml']).values():
@@ -270,9 +267,9 @@ class AbstractSearch(object):
                 'cost': 10
             }
 
-            vocab = self._get_xsd_enum_values(xsd_schemas, xml_field)
-            if vocab is not None:
-                field['vocabulary'] = vocab
+            values = self._get_xsd_enum_values(xsd_schemas, xml_field)
+            if values is not None:
+                field['values'] = values
 
             fields[field['name']] = field
 
@@ -570,17 +567,6 @@ class AbstractSearch(object):
         """
         self._init_fields()
         return self._fields
-
-    def replace_df_codes(self, df):
-        # todo: debug formele stratigrafie
-        df = df.copy()
-        fields = self.get_fields()
-        for f in fields.values():
-            if f.get('vocabulary', None) is not None and f['name'] in list(df):
-                vocabulary = f['vocabulary']
-                df[df[f['name']].notnull()] = df[
-                    df[f['name']].notnull()].replace(vocabulary)
-        return df
 
     def search(self, location=None, query=None, return_fields=None):
         """Search for objects of this type. Provide `location` and/or `query`.

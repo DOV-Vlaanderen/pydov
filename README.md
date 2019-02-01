@@ -6,7 +6,7 @@ pydov is a Python package to query and download data from [Databank Ondergrond V
 
 To get started, see the documentation at https://pydov.readthedocs.io.
 
-Please note that DOV data downloaded with pydov is susceptible to the same [disclaimer](https://www.dov.vlaanderen.be/page/disclaimer) that applies to the other DOV services. Be sure to consult it when using DOV data with pydov.
+Please note that downloading DOV data with pydov is governed by the same [disclaimer](https://www.dov.vlaanderen.be/page/disclaimer) that applies to the other DOV services. Be sure to consult it when using DOV data with pydov.
 
 ## Meta
 

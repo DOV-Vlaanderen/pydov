@@ -41,6 +41,8 @@ of DOV data processing is of interest to the variety of users, we believe that a
 community-based effort to develop and maintain these functionalities as an open source
 package provides the optimal development traject.
 
+Please note that downloading DOV data with pydov is governed by the same `disclaimer <https://www.dov.vlaanderen.be/page/disclaimer>`_ that applies to the other DOV services. Be sure to consult it when using DOV data with pydov.
+
 Getting started
 ---------------
 

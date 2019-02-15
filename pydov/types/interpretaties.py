@@ -815,4 +815,4 @@ class QuartaireStratigrafie(AbstractCommonInterpretatie):
         'source': 'wfs',
         'sourcefield': 'Y_mL72',
         'type': 'float'
-    },]
+    }]

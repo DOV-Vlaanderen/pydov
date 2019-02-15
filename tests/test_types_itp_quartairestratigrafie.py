@@ -99,7 +99,7 @@ class TestQuartaireStratigrafie(AbstractTestTypes):
             A tuple containing only valid return fields.
 
         """
-        return ('pkey_interpretatie')
+        return ('pkey_interpretatie', 'pkey_boring')
 
     def get_valid_returnfields_subtype(self):
         """Get a list of valid return fields, including fields from a subtype.

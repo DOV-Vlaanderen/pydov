@@ -869,5 +869,3 @@ class QuartaireStratigrafieSearch(AbstractSearch):
                 interpretaties, return_fields),
             columns=QuartaireStratigrafie.get_field_names(return_fields))
         return df
-
-

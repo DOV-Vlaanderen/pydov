@@ -17,8 +17,10 @@ Currently, we support the following datasets:
     CPT measurements,Sonderingen,pydov.search.sondering.SonderingSearch
     Groundwater screens,Grondwater filters,pydov.search.grondwaterfilter.GrondwaterFilterSearch
     Informal stratigraphy,Informele stratigrafie,pydov.search.interpretaties.InformeleStratigrafieSearch
+    Formal stratigraphy,Formele stratigrafie,pydov.search.interpretaties.FormeleStratigrafieSearch
     Hydrogeological stratigraphy,Hydrogeologische stratigrafie,pydov.search.interpretaties.HydrogeologischeStratigrafieSearch
     Coded lithology,Gecodeerde lithologie,pydov.search.interpretaties.GecodeerdeLithologieSearch
+    Geotechnical encoding,Geotechnische codering,pydov.search.interpretaties.GeotechnischeCoderingSearch
     Lithological descriptions,Lithologische beschrijvingen,pydov.search.interpretaties.LithologischeBeschrijvingenSearch
 
 Each of the datasets can be queried using a search object for this dataset. While the search objects are different, the workflow is the same for each dataset. Relevant classes can be imported from the pydov.search package, for example if we'd like to query the boreholes dataset:

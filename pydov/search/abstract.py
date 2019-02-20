@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """Module containing the abstract search classes to retrieve DOV data."""
+import datetime
+from distutils.util import strtobool
 
 import owslib
 import pydov
@@ -20,7 +22,61 @@ from pydov.util.errors import (
 from ..util.owsutil import get_remote_schema
 
 
-class AbstractSearch(object):
+class AbstractCommon(object):
+    """Class grouping methods common to AbstractSearch and
+    AbstractTypeCommon."""
+
+    @classmethod
+    def _typeconvert(cls, text, returntype):
+        """Parse the text to the given returntype.
+
+        Parameters
+        ----------
+        text : str
+           Text to convert
+        returntype : str
+            Parse the text to this output datatype. One of
+            `string`, `float`, `integer`, `date`, `datetime`, `boolean`.
+
+        Returns
+        -------
+        str or float or int or bool or datetime.date or datetime.datetime
+            Returns the parsed text converted to the type described by
+            `returntype`.
+
+        """
+        if returntype == 'string':
+            def typeconvert(x):
+                return x.strip()
+        elif returntype == 'integer':
+            def typeconvert(x):
+                return int(x)
+        elif returntype == 'float':
+            def typeconvert(x):
+                return float(x)
+        elif returntype == 'date':
+            def typeconvert(x):
+                # Patch for Zulu-time issue of geoserver for WFS 1.1.0
+                if x.endswith('Z'):
+                    return datetime.datetime.strptime(x, '%Y-%m-%dZ').date() \
+                           + datetime.timedelta(days=1)
+                else:
+                    return datetime.datetime.strptime(x, '%Y-%m-%d').date()
+        elif returntype == 'datetime':
+            def typeconvert(x):
+                return datetime.datetime.strptime(
+                    x.split('.')[0], '%Y-%m-%dT%H:%M:%S')
+        elif returntype == 'boolean':
+            def typeconvert(x):
+                return strtobool(x) == 1
+        else:
+            def typeconvert(x):
+                return x
+
+        return typeconvert(text)
+
+
+class AbstractSearch(AbstractCommon):
     """Abstract search class grouping methods common to all DOV search
     classes. Not to be instantiated or used directly."""
 
@@ -166,8 +222,8 @@ class AbstractSearch(object):
         wfs_layer = self._get_layer()
         return owsutil.get_csw_base_url(wfs_layer)
 
-    @staticmethod
-    def _get_xsd_enum_values(xsd_schemas, xml_field):
+    @classmethod
+    def _get_xsd_enum_values(cls, xsd_schemas, xml_field):
         values = None
         if xml_field.get('xsd_type', None):
             values = {}
@@ -178,9 +234,11 @@ class AbstractSearch(object):
                     '{http://www.w3.org/2001/XMLSchema}enumeration' %
                     xml_field.get('xsd_type'))
                 for e in tree_values:
-                    values[e.get('value')] = e.find(
+                    value = cls._typeconvert(
+                        e.get('value'), xml_field.get('type'))
+                    values[value] = e.findtext(
                         './{http://www.w3.org/2001/XMLSchema}annotation/{'
-                        'http://www.w3.org/2001/XMLSchema}documentation').text
+                        'http://www.w3.org/2001/XMLSchema}documentation')
         return values
 
     def _build_fields(self, wfs_schema, feature_catalogue, xsd_schemas):
@@ -257,7 +315,6 @@ class AbstractSearch(object):
                 fields[name] = field
 
         for xml_field in self._type.get_fields(source=['xml']).values():
-
             field = {
                 'name': xml_field['name'],
                 'type': xml_field['type'],

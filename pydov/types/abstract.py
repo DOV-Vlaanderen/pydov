@@ -62,6 +62,7 @@ class AbstractTypeCommon(AbstractCommon):
 
         return cls._typeconvert(text, returntype)
 
+
 class AbstractDovSubType(AbstractTypeCommon):
 
     _name = None

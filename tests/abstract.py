@@ -515,6 +515,28 @@ class AbstractTestSearch(object):
             query=self.get_valid_query_single(),
             return_fields=self.get_valid_returnfields_extra())
 
+    def test_get_fields_xsd_values(self, mp_remote_xsd):
+        """Test the result of get_fields when the XML field has an XSD type.
+
+        Test whether the output from get_fields() returns the values from
+        the XSD.
+
+        Parameters
+        ----------
+        mp_remote_xsd : pytest.fixture
+            Monkeypatch the call to get XSD schemas.
+
+        """
+        xsd_schemas = self.get_type().get_xsd_schemas()
+
+        if len(xsd_schemas) > 0:
+            xml_fields = self.get_type().get_fields(source='xml')
+            fields = self.get_search_object().get_fields()
+            for f in xml_fields.values():
+                if 'xsd_type' in f:
+                    assert 'values' in fields[f['name']]
+                    assert type(fields[f['name']]['values']) is dict
+
 
 class AbstractTestTypes(object):
     """Class grouping common test code for datatype classes."""

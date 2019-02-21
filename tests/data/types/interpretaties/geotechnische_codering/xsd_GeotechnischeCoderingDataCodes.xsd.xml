@@ -1,0 +1,983 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://interpretatie.kern.schemas.dov.vlaanderen.be" targetNamespace="http://interpretatie.kern.schemas.dov.vlaanderen.be" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.00">
+	<xs:simpleType name="GeotechnischeCoderingHoofdnaamCodesEnumType">
+		<xs:annotation>
+			<xs:documentation>de mogelijke waarden voor de hoofdnaam van de geotechnische codering (codes)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AA">
+				<xs:annotation>
+					<xs:documentation>amfiboliet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AB">
+				<xs:annotation>
+					<xs:documentation>andesiet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AC">
+				<xs:annotation>
+					<xs:documentation>anhydriet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AD">
+				<xs:annotation>
+					<xs:documentation>ankeriet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AE">
+				<xs:annotation>
+					<xs:documentation>arkose</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AF">
+				<xs:annotation>
+					<xs:documentation>afval</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AG">
+				<xs:annotation>
+					<xs:documentation>as</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AN">
+				<xs:annotation>
+					<xs:documentation>ant. n. vloeistofd.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AR">
+				<xs:annotation>
+					<xs:documentation>areniet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AT">
+				<xs:annotation>
+					<xs:documentation>asfalt</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AV">
+				<xs:annotation>
+					<xs:documentation>ant. vloeistofdicht</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AW">
+				<xs:annotation>
+					<xs:documentation>ant. w. vloeistofd.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BA">
+				<xs:annotation>
+					<xs:documentation>basalt</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BB">
+				<xs:annotation>
+					<xs:documentation>bauxiet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BC">
+				<xs:annotation>
+					<xs:documentation>bentoniet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BK">
+				<xs:annotation>
+					<xs:documentation>baksteen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BS">
+				<xs:annotation>
+					<xs:documentation>blauwshist</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CA">
+				<xs:annotation>
+					<xs:documentation>carbonaatfragmenten</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CB">
+				<xs:annotation>
+					<xs:documentation>conglomeraat/breccie</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CO">
+				<xs:annotation>
+					<xs:documentation>steenkool</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CT">
+				<xs:annotation>
+					<xs:documentation>chert (gebande)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DA">
+				<xs:annotation>
+					<xs:documentation>daciet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DB">
+				<xs:annotation>
+					<xs:documentation>diatomiet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DC">
+				<xs:annotation>
+					<xs:documentation>dioriet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DD">
+				<xs:annotation>
+					<xs:documentation>dolerriet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DE">
+				<xs:annotation>
+					<xs:documentation>duniet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DK">
+				<xs:annotation>
+					<xs:documentation>dolom kalksteen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DL">
+				<xs:annotation>
+					<xs:documentation>dolomiet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="EA">
+				<xs:annotation>
+					<xs:documentation>evaporiet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="EC">
+				<xs:annotation>
+					<xs:documentation>eclogiet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FA">
+				<xs:annotation>
+					<xs:documentation>fosforiet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FE">
+				<xs:annotation>
+					<xs:documentation>ijzer</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FG">
+				<xs:annotation>
+					<xs:documentation>fijn grind</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FO">
+				<xs:annotation>
+					<xs:documentation>fossielen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FY">
+				<xs:annotation>
+					<xs:documentation>fylliet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FZ">
+				<xs:annotation>
+					<xs:documentation>fijn zand</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GA">
+				<xs:annotation>
+					<xs:documentation>geroerd / gestoord</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GB">
+				<xs:annotation>
+					<xs:documentation>gabbro</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GC">
+				<xs:annotation>
+					<xs:documentation>gips</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GD">
+				<xs:annotation>
+					<xs:documentation>gneiss</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GE">
+				<xs:annotation>
+					<xs:documentation>graniet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GF">
+				<xs:annotation>
+					<xs:documentation>granodioriet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GG">
+				<xs:annotation>
+					<xs:documentation>grof grind</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GH">
+				<xs:annotation>
+					<xs:documentation>groenshist</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GI">
+				<xs:annotation>
+					<xs:documentation>glimmers</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GL">
+				<xs:annotation>
+					<xs:documentation>glauconiet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GM">
+				<xs:annotation>
+					<xs:documentation>gespleten metamorf</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GS">
+				<xs:annotation>
+					<xs:documentation>groensteen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GZ">
+				<xs:annotation>
+					<xs:documentation>grof zand</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HA">
+				<xs:annotation>
+					<xs:documentation>haliet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HB">
+				<xs:annotation>
+					<xs:documentation>hematiet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HC">
+				<xs:annotation>
+					<xs:documentation>houtskool</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HD">
+				<xs:annotation>
+					<xs:documentation>hornfels</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HT">
+				<xs:annotation>
+					<xs:documentation>houtresten</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HU">
+				<xs:annotation>
+					<xs:documentation>humus</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IA">
+				<xs:annotation>
+					<xs:documentation>ijzerooliet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IN">
+				<xs:annotation>
+					<xs:documentation>intrusief gesteente</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KA">
+				<xs:annotation>
+					<xs:documentation>kalk</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KB">
+				<xs:annotation>
+					<xs:documentation>kalksteenbreccie</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KC">
+				<xs:annotation>
+					<xs:documentation>kalkschiefer</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KL">
+				<xs:annotation>
+					<xs:documentation>klei</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KO">
+				<xs:annotation>
+					<xs:documentation>komatiet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KR">
+				<xs:annotation>
+					<xs:documentation>krijt</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KS">
+				<xs:annotation>
+					<xs:documentation>kalksteen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KT">
+				<xs:annotation>
+					<xs:documentation>kleisteen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KW">
+				<xs:annotation>
+					<xs:documentation>kwartsiet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LA">
+				<xs:annotation>
+					<xs:documentation>lateriet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LE">
+				<xs:annotation>
+					<xs:documentation>leem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LG">
+				<xs:annotation>
+					<xs:documentation>ligniet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LI">
+				<xs:annotation>
+					<xs:documentation>limoniet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LS">
+				<xs:annotation>
+					<xs:documentation>leisteen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MA">
+				<xs:annotation>
+					<xs:documentation>marmer</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MB">
+				<xs:annotation>
+					<xs:documentation>micashist</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ME">
+				<xs:annotation>
+					<xs:documentation>mergel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MG">
+				<xs:annotation>
+					<xs:documentation>middelmatig grind</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MI">
+				<xs:annotation>
+					<xs:documentation>migmatiet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MM">
+				<xs:annotation>
+					<xs:documentation>metamorf gesteente</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MS">
+				<xs:annotation>
+					<xs:documentation>schiefer</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MY">
+				<xs:annotation>
+					<xs:documentation>myloniet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MZ">
+				<xs:annotation>
+					<xs:documentation>middelmatig zand</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NN">
+				<xs:annotation>
+					<xs:documentation>nummulieten</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="OK">
+				<xs:annotation>
+					<xs:documentation>oölitische kalksteen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="OM">
+				<xs:annotation>
+					<xs:documentation>organisch materiaal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PA">
+				<xs:annotation>
+					<xs:documentation>pegmatiet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PB">
+				<xs:annotation>
+					<xs:documentation>peridodiet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PC">
+				<xs:annotation>
+					<xs:documentation>poederkool</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PD">
+				<xs:annotation>
+					<xs:documentation>pyroxeniet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PL">
+				<xs:annotation>
+					<xs:documentation>plantenresten</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PM">
+				<xs:annotation>
+					<xs:documentation>puimsteen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PS">
+				<xs:annotation>
+					<xs:documentation>psammiet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PU">
+				<xs:annotation>
+					<xs:documentation>puin</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PY">
+				<xs:annotation>
+					<xs:documentation>pyriet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="QU">
+				<xs:annotation>
+					<xs:documentation>kwarts</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RA">
+				<xs:annotation>
+					<xs:documentation>radiolariet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RB">
+				<xs:annotation>
+					<xs:documentation>rhyoliet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RO">
+				<xs:annotation>
+					<xs:documentation>rots</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RV">
+				<xs:annotation>
+					<xs:documentation>verweerde rots</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SA">
+				<xs:annotation>
+					<xs:documentation>sideriet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SC">
+				<xs:annotation>
+					<xs:documentation>schelpen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SE">
+				<xs:annotation>
+					<xs:documentation>sedimentair</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SF">
+				<xs:annotation>
+					<xs:documentation>schelpfragmenten</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SG">
+				<xs:annotation>
+					<xs:documentation>schelpgruis</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SH">
+				<xs:annotation>
+					<xs:documentation>schalie</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SI">
+				<xs:annotation>
+					<xs:documentation>silt</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SK">
+				<xs:annotation>
+					<xs:documentation>schieferige kalkst.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SL">
+				<xs:annotation>
+					<xs:documentation>slib</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SN">
+				<xs:annotation>
+					<xs:documentation>steenfragmenten</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SO">
+				<xs:annotation>
+					<xs:documentation>scoria</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SP">
+				<xs:annotation>
+					<xs:documentation>serpentiniet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SS">
+				<xs:annotation>
+					<xs:documentation>siltsteen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ST">
+				<xs:annotation>
+					<xs:documentation>stenen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SX">
+				<xs:annotation>
+					<xs:documentation>silex</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SY">
+				<xs:annotation>
+					<xs:documentation>shist</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TA">
+				<xs:annotation>
+					<xs:documentation>teelaarde</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TB">
+				<xs:annotation>
+					<xs:documentation>tuff</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TS">
+				<xs:annotation>
+					<xs:documentation>tufsteen (tuffeau)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VA">
+				<xs:annotation>
+					<xs:documentation>vulkanisch gesteente</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VE">
+				<xs:annotation>
+					<xs:documentation>veen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VS">
+				<xs:annotation>
+					<xs:documentation>vuursteen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="WA">
+				<xs:annotation>
+					<xs:documentation>wacksteen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="XG">
+				<xs:annotation>
+					<xs:documentation>grind</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="XX">
+				<xs:annotation>
+					<xs:documentation>onbekend</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="XZ">
+				<xs:annotation>
+					<xs:documentation>zand</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ZE">
+				<xs:annotation>
+					<xs:documentation>zeepsteen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ZK">
+				<xs:annotation>
+					<xs:documentation>kalkzandsteen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ZL">
+				<xs:annotation>
+					<xs:documentation>zandleem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ZS">
+				<xs:annotation>
+					<xs:documentation>zandsteen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="GeotechnischeCoderingBijmengingHoeveelheidEnumType">
+		<xs:annotation>
+			<xs:documentation>de mogelijke waarden voor de bijmenging van de geotechnische codering (codes)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Z">
+				<xs:annotation>
+					<xs:documentation>weinig Xhoudend</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="M">
+				<xs:annotation>
+					<xs:documentation>Xhoudend</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="S">
+				<xs:annotation>
+					<xs:documentation>sterk Xhoudend</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="W">
+				<xs:annotation>
+					<xs:documentation>weinig X</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="V">
+				<xs:annotation>
+					<xs:documentation>veel X</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="N">
+				<xs:annotation>
+					<xs:documentation>geen aanduiding van de hoeveelheid</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="GeotechnischeCoderingKleurEnumType">
+		<xs:annotation>
+			<xs:documentation>lijst van kleuren van een boring</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="onbekend"/>
+			<xs:enumeration value="beige"/>
+			<xs:enumeration value="zwart"/>
+			<xs:enumeration value="lichtbeige"/>
+			<xs:enumeration value="lichtblauw"/>
+			<xs:enumeration value="lichtbruin"/>
+			<xs:enumeration value="lichtgeel"/>
+			<xs:enumeration value="lichtgrijs"/>
+			<xs:enumeration value="lichtgroen"/>
+			<xs:enumeration value="lichtroest"/>
+			<xs:enumeration value="lichtrood"/>
+			<xs:enumeration value="beigebruin"/>
+			<xs:enumeration value="blauwgrijs"/>
+			<xs:enumeration value="lichtmauve"/>
+			<xs:enumeration value="blauwgroen"/>
+			<xs:enumeration value="lichtkaki"/>
+			<xs:enumeration value="lichtroos"/>
+			<xs:enumeration value="lichtoker"/>
+			<xs:enumeration value="lichtolijfgroen"/>
+			<xs:enumeration value="lichtoranje"/>
+			<xs:enumeration value="bruingeel"/>
+			<xs:enumeration value="bruingrijs"/>
+			<xs:enumeration value="bruingroen"/>
+			<xs:enumeration value="bruinrood"/>
+			<xs:enumeration value="geelgrijs"/>
+			<xs:enumeration value="geelgroen"/>
+			<xs:enumeration value="blauw"/>
+			<xs:enumeration value="grijsgroen"/>
+			<xs:enumeration value="donkerbeige"/>
+			<xs:enumeration value="donkerblauw"/>
+			<xs:enumeration value="donkerbruin"/>
+			<xs:enumeration value="donkergeel"/>
+			<xs:enumeration value="donkergroen"/>
+			<xs:enumeration value="donkerroest"/>
+			<xs:enumeration value="donkerrood"/>
+			<xs:enumeration value="grijsroest"/>
+			<xs:enumeration value="bontgekleurd"/>
+			<xs:enumeration value="donkermauve"/>
+			<xs:enumeration value="mauve"/>
+			<xs:enumeration value="donkerkaki"/>
+			<xs:enumeration value="donkerroos"/>
+			<xs:enumeration value="donkeroker"/>
+			<xs:enumeration value="donkerolijfgroen"/>
+			<xs:enumeration value="donkeroranje"/>
+			<xs:enumeration value="geelbruin"/>
+			<xs:enumeration value="grijsgeel"/>
+			<xs:enumeration value="onbepaald"/>
+			<xs:enumeration value="donkergrijs"/>
+			<xs:enumeration value="bleek / ontkleurd"/>
+			<xs:enumeration value="roodbruin"/>
+			<xs:enumeration value="bruin"/>
+			<xs:enumeration value="kaki"/>
+			<xs:enumeration value="blauwgeel"/>
+			<xs:enumeration value="blauwkaki"/>
+			<xs:enumeration value="blauwmauve"/>
+			<xs:enumeration value="blauwoker"/>
+			<xs:enumeration value="blauwolijfgroen"/>
+			<xs:enumeration value="blauworanje"/>
+			<xs:enumeration value="blauwroest"/>
+			<xs:enumeration value="blauwrood"/>
+			<xs:enumeration value="blauwroos"/>
+			<xs:enumeration value="roos"/>
+			<xs:enumeration value="bruinblauw"/>
+			<xs:enumeration value="bruinbeige"/>
+			<xs:enumeration value="bruinkaki"/>
+			<xs:enumeration value="bruinmauve"/>
+			<xs:enumeration value="bruinoker"/>
+			<xs:enumeration value="bruinolijfgroen"/>
+			<xs:enumeration value="bruinoranje"/>
+			<xs:enumeration value="bruinroest"/>
+			<xs:enumeration value="bruinroos"/>
+			<xs:enumeration value="mauvebeige"/>
+			<xs:enumeration value="oker"/>
+			<xs:enumeration value="mauveblauw"/>
+			<xs:enumeration value="mauvebruin"/>
+			<xs:enumeration value="mauvegeel"/>
+			<xs:enumeration value="mauvegrijs"/>
+			<xs:enumeration value="mauvegroen"/>
+			<xs:enumeration value="mauvekaki"/>
+			<xs:enumeration value="mauveoker"/>
+			<xs:enumeration value="mauveolijfgroen"/>
+			<xs:enumeration value="mauveoranje"/>
+			<xs:enumeration value="mauveroest"/>
+			<xs:enumeration value="olijfgroen"/>
+			<xs:enumeration value="mauverood"/>
+			<xs:enumeration value="mauveroos"/>
+			<xs:enumeration value="okerbeige"/>
+			<xs:enumeration value="okerblauw"/>
+			<xs:enumeration value="okerbruin"/>
+			<xs:enumeration value="okergeel"/>
+			<xs:enumeration value="okergrijs"/>
+			<xs:enumeration value="okergroen"/>
+			<xs:enumeration value="okerkaki"/>
+			<xs:enumeration value="okermauve"/>
+			<xs:enumeration value="oranje"/>
+			<xs:enumeration value="okerolijfgroen"/>
+			<xs:enumeration value="okeroranje"/>
+			<xs:enumeration value="okerroest"/>
+			<xs:enumeration value="okerrood"/>
+			<xs:enumeration value="okerroos"/>
+			<xs:enumeration value="olijfgroenbeige"/>
+			<xs:enumeration value="olijfgroenblauw"/>
+			<xs:enumeration value="olijfgroenbruin"/>
+			<xs:enumeration value="olijfgroengeel"/>
+			<xs:enumeration value="olijfgroengrijs"/>
+			<xs:enumeration value="olijfgroengroen"/>
+			<xs:enumeration value="olijfgroenkaki"/>
+			<xs:enumeration value="olijfgroenmauve"/>
+			<xs:enumeration value="olijfgroenoker"/>
+			<xs:enumeration value="olijfgroenoranje"/>
+			<xs:enumeration value="olijfgroenroest"/>
+			<xs:enumeration value="olijfgroenrood"/>
+			<xs:enumeration value="olijfgroenroos"/>
+			<xs:enumeration value="oranjebeige"/>
+			<xs:enumeration value="oranjeblauw"/>
+			<xs:enumeration value="oranjebruin"/>
+			<xs:enumeration value="oranjegeel"/>
+			<xs:enumeration value="oranjegrijs"/>
+			<xs:enumeration value="oranjegroen"/>
+			<xs:enumeration value="oranjekaki"/>
+			<xs:enumeration value="oranjemauve"/>
+			<xs:enumeration value="oranjeoker"/>
+			<xs:enumeration value="oranjeolijfgroen"/>
+			<xs:enumeration value="oranjeoranje"/>
+			<xs:enumeration value="oranjeroest"/>
+			<xs:enumeration value="oranjerood"/>
+			<xs:enumeration value="oranjeroos"/>
+			<xs:enumeration value="roestbeige"/>
+			<xs:enumeration value="roestblauw"/>
+			<xs:enumeration value="roestbruin"/>
+			<xs:enumeration value="roestgeel"/>
+			<xs:enumeration value="roestgrijs"/>
+			<xs:enumeration value="roestgroen"/>
+			<xs:enumeration value="roestkaki"/>
+			<xs:enumeration value="roestmauve"/>
+			<xs:enumeration value="roestoker"/>
+			<xs:enumeration value="roestolijfgroen"/>
+			<xs:enumeration value="roestoranje"/>
+			<xs:enumeration value="roestroest"/>
+			<xs:enumeration value="roestrood"/>
+			<xs:enumeration value="roestroos"/>
+			<xs:enumeration value="roodbeige"/>
+			<xs:enumeration value="roodblauw"/>
+			<xs:enumeration value="roodgeel"/>
+			<xs:enumeration value="roodgrijs"/>
+			<xs:enumeration value="roodgroen"/>
+			<xs:enumeration value="roodkaki"/>
+			<xs:enumeration value="roodmauve"/>
+			<xs:enumeration value="roodoker"/>
+			<xs:enumeration value="roodolijfgroen"/>
+			<xs:enumeration value="roodoranje"/>
+			<xs:enumeration value="roodroest"/>
+			<xs:enumeration value="roodroos"/>
+			<xs:enumeration value="geel"/>
+			<xs:enumeration value="geelroos"/>
+			<xs:enumeration value="roosbeige"/>
+			<xs:enumeration value="roosblauw"/>
+			<xs:enumeration value="roosbruin"/>
+			<xs:enumeration value="roosgeel"/>
+			<xs:enumeration value="roosgrijs"/>
+			<xs:enumeration value="roosgroen"/>
+			<xs:enumeration value="rooskaki"/>
+			<xs:enumeration value="roosmauve"/>
+			<xs:enumeration value="roosoker"/>
+			<xs:enumeration value="roosolijfgroen"/>
+			<xs:enumeration value="geelbeige"/>
+			<xs:enumeration value="roosoranje"/>
+			<xs:enumeration value="roosroest"/>
+			<xs:enumeration value="roosrood"/>
+			<xs:enumeration value="beigewit"/>
+			<xs:enumeration value="blauwwit"/>
+			<xs:enumeration value="bruinwit"/>
+			<xs:enumeration value="geelwit"/>
+			<xs:enumeration value="grijswit"/>
+			<xs:enumeration value="groenwit"/>
+			<xs:enumeration value="kakiwit"/>
+			<xs:enumeration value="geelblauw"/>
+			<xs:enumeration value="mauvewit"/>
+			<xs:enumeration value="okerwit"/>
+			<xs:enumeration value="olijfgroenwit"/>
+			<xs:enumeration value="oranjewit"/>
+			<xs:enumeration value="roestwit"/>
+			<xs:enumeration value="roodwit"/>
+			<xs:enumeration value="rooswit"/>
+			<xs:enumeration value="beigezwart"/>
+			<xs:enumeration value="blauwzwart"/>
+			<xs:enumeration value="bruinzwart"/>
+			<xs:enumeration value="geelkaki"/>
+			<xs:enumeration value="geelzwart"/>
+			<xs:enumeration value="grijszwart"/>
+			<xs:enumeration value="groenzwart"/>
+			<xs:enumeration value="kakizwart"/>
+			<xs:enumeration value="mauvezwart"/>
+			<xs:enumeration value="okerzwart"/>
+			<xs:enumeration value="olijfgroenzwart"/>
+			<xs:enumeration value="roestzwart"/>
+			<xs:enumeration value="roodzwart"/>
+			<xs:enumeration value="rooszwart"/>
+			<xs:enumeration value="geelmauve"/>
+			<xs:enumeration value="lichtzwart"/>
+			<xs:enumeration value="lichtwit"/>
+			<xs:enumeration value="donkerzwart"/>
+			<xs:enumeration value="donkerwit"/>
+			<xs:enumeration value="witbeige"/>
+			<xs:enumeration value="witblauw"/>
+			<xs:enumeration value="witbruin"/>
+			<xs:enumeration value="witgeel"/>
+			<xs:enumeration value="witgrijs"/>
+			<xs:enumeration value="witgroen"/>
+			<xs:enumeration value="geeloker"/>
+			<xs:enumeration value="witkaki"/>
+			<xs:enumeration value="witmauve"/>
+			<xs:enumeration value="witoker"/>
+			<xs:enumeration value="witolijfgroen"/>
+			<xs:enumeration value="witoranje"/>
+			<xs:enumeration value="witroest"/>
+			<xs:enumeration value="witrood"/>
+			<xs:enumeration value="witroos"/>
+			<xs:enumeration value="zwartbeige"/>
+			<xs:enumeration value="zwartblauw"/>
+			<xs:enumeration value="geelolijfgroen"/>
+			<xs:enumeration value="zwartbruin"/>
+			<xs:enumeration value="zwartgeel"/>
+			<xs:enumeration value="zwartgrijs"/>
+			<xs:enumeration value="zwartgroen"/>
+			<xs:enumeration value="zwartkaki"/>
+			<xs:enumeration value="zwartmauve"/>
+			<xs:enumeration value="zwartoker"/>
+			<xs:enumeration value="zwartolijfgroen"/>
+			<xs:enumeration value="zwartoranje"/>
+			<xs:enumeration value="zwartroest"/>
+			<xs:enumeration value="geeloranje"/>
+			<xs:enumeration value="zwartrood"/>
+			<xs:enumeration value="zwartroos"/>
+			<xs:enumeration value="paarsbruin"/>
+			<xs:enumeration value="lichtrood / roos"/>
+			<xs:enumeration value="zwartwit"/>
+			<xs:enumeration value="geelroest"/>
+			<xs:enumeration value="geelrood"/>
+			<xs:enumeration value="grijs"/>
+			<xs:enumeration value="grijsbeige"/>
+			<xs:enumeration value="grijsblauw"/>
+			<xs:enumeration value="grijsbruin"/>
+			<xs:enumeration value="grijskaki"/>
+			<xs:enumeration value="grijsmauve"/>
+			<xs:enumeration value="grijsoker"/>
+			<xs:enumeration value="grijsolijfgroen"/>
+			<xs:enumeration value="grijsoranje"/>
+			<xs:enumeration value="grijsrood"/>
+			<xs:enumeration value="grijsroos"/>
+			<xs:enumeration value="groen"/>
+			<xs:enumeration value="groenbeige"/>
+			<xs:enumeration value="groenblauw"/>
+			<xs:enumeration value="groenbruin"/>
+			<xs:enumeration value="groengeel"/>
+			<xs:enumeration value="groengrijs"/>
+			<xs:enumeration value="groenkaki"/>
+			<xs:enumeration value="groenmauve"/>
+			<xs:enumeration value="groenoker"/>
+			<xs:enumeration value="groenolijfgroen"/>
+			<xs:enumeration value="groenoranje"/>
+			<xs:enumeration value="roest"/>
+			<xs:enumeration value="groenroest"/>
+			<xs:enumeration value="groenrood"/>
+			<xs:enumeration value="groenroos"/>
+			<xs:enumeration value="kakibeige"/>
+			<xs:enumeration value="kakiblauw"/>
+			<xs:enumeration value="kakibruin"/>
+			<xs:enumeration value="kakigeel"/>
+			<xs:enumeration value="kakigrijs"/>
+			<xs:enumeration value="kakigroen"/>
+			<xs:enumeration value="kakimauve"/>
+			<xs:enumeration value="rood"/>
+			<xs:enumeration value="kakioker"/>
+			<xs:enumeration value="kakiolijfgroen"/>
+			<xs:enumeration value="kakioranje"/>
+			<xs:enumeration value="kakiroest"/>
+			<xs:enumeration value="kakirood"/>
+			<xs:enumeration value="kakiroos"/>
+			<xs:enumeration value="beigeblauw"/>
+			<xs:enumeration value="beigegeel"/>
+			<xs:enumeration value="beigegrijs"/>
+			<xs:enumeration value="beigegroen"/>
+			<xs:enumeration value="wit"/>
+			<xs:enumeration value="beigekaki"/>
+			<xs:enumeration value="beigemauve"/>
+			<xs:enumeration value="beigeoker"/>
+			<xs:enumeration value="beigeolijfgroen"/>
+			<xs:enumeration value="beigeoranje"/>
+			<xs:enumeration value="beigeroest"/>
+			<xs:enumeration value="beigerood"/>
+			<xs:enumeration value="beigeroos"/>
+			<xs:enumeration value="blauwbeige"/>
+			<xs:enumeration value="blauwbruin"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

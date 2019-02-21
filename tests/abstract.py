@@ -190,7 +190,7 @@ class AbstractTestSearch(object):
         raise NotImplementedError
 
     def test_get_fields(self, mp_wfs, mp_remote_describefeaturetype,
-                        mp_remote_md, mp_remote_fc):
+                        mp_remote_md, mp_remote_fc, mp_remote_xsd):
         """Test the get_fields method.
 
         Test whether the returned fields match the format specified

@@ -10,11 +10,11 @@
     <gmx:versionNumber>
       <gco:CharacterString>1</gco:CharacterString>
     </gmx:versionNumber>
-    <gmx:versionDate>
-      <gco:DateTime>2018-03-01T10:12:44</gco:DateTime>
+    <gmx:versionDate xmlns:gml="http://www.opengis.net/gml">
+      <gco:DateTime>2019-02-07T13:49:01</gco:DateTime>
     </gmx:versionDate>
     <gfc:producer>
-      <gmd:CI_ResponsibleParty>
+      <gmd:CI_ResponsibleParty xmlns:gml="http://www.opengis.net/gml">
         <gmd:organisationName>
           <gco:CharacterString>Databank Ondergrond Vlaanderen (DOV)</gco:CharacterString>
         </gmd:organisationName>
@@ -30,10 +30,10 @@
             <gmd:address>
               <gmd:CI_Address>
                 <gmd:deliveryPoint>
-                  <gco:CharacterString>Technologiepark Gebouw 905</gco:CharacterString>
+                  <gco:CharacterString>Technologiepark-Zwijnaarde 68</gco:CharacterString>
                 </gmd:deliveryPoint>
                 <gmd:city>
-                  <gco:CharacterString>Zwijnaarde</gco:CharacterString>
+                  <gco:CharacterString>Gent</gco:CharacterString>
                 </gmd:city>
                 <gmd:postalCode>
                   <gco:CharacterString>9052</gco:CharacterString>

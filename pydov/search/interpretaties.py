@@ -748,7 +748,7 @@ class GeotechnischeCoderingSearch(AbstractSearch):
         return df
 
 
-class QuartaireStratigrafieSearch(AbstractSearch):
+class QuartairStratigrafieSearch(AbstractSearch):
     """Search class to retrieve the interpretation for Quartair
     stratigrafie"""
 

@@ -11,7 +11,9 @@ from owslib.fes import (
 )
 from owslib.wfs import WebFeatureService
 from pydov.util import owsutil
-from pydov.util.dovutil import get_dov_xml
+from pydov.util.dovutil import (
+    get_xsd_schema,
+)
 from pydov.util.errors import (
     LayerNotFoundError,
     InvalidSearchParameterError,
@@ -205,7 +207,15 @@ class AbstractSearch(AbstractCommon):
         return owsutil.get_remote_metadata(wfs_layer)
 
     def _get_remote_xsd_schemas(self):
-        return [etree.fromstring(get_dov_xml(i)) for i in
+        """Request and parse the remote XSD schemas associated with this type.
+
+        Returns
+        -------
+        list of etree.ElementTree
+            List of parsed XSD schemas associated with this type.
+
+        """
+        return [etree.fromstring(get_xsd_schema(i)) for i in
                 self._type.get_xsd_schemas()]
 
     def _get_csw_base_url(self):
@@ -224,6 +234,26 @@ class AbstractSearch(AbstractCommon):
 
     @classmethod
     def _get_xsd_enum_values(cls, xsd_schemas, xml_field):
+        """Get the distinct enum values from XSD schemas for a given XML field.
+
+        Depending of the 'xsd_type' of the XML field, retrieve the distinct
+        enum values and definitions from the XSD schemas.
+
+        Parameters
+        ----------
+        xsd_schemas : list of etree.ElementTree
+            List of parsed XSD schemas.
+        xml_field : dict
+            Dictionary describing the XML field, including a 'xsd_type' key
+            linking the type to the enum type in (one of) the XSD schemas.
+
+        Returns
+        -------
+        values : dict
+            Dictionary containing the enum values as keys (in the datatype
+            of the XML field) and the definitions as values.
+
+        """
         values = None
         if xml_field.get('xsd_type', None):
             values = {}

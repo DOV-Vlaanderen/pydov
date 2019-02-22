@@ -468,6 +468,15 @@ class AbstractDovType(AbstractTypeCommon):
 
     @classmethod
     def get_xsd_schemas(cls):
+        """Get a set of distinct XSD schema URLs for this type and its
+        subtypes.
+
+        Returns
+        -------
+        set of str
+            A set of XSD schema URLs.
+
+        """
         xsd_schemas = set()
         for s in cls._xsd_schemas:
             xsd_schemas.add(s)

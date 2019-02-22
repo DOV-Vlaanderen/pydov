@@ -7,7 +7,7 @@ from pydov.types.interpretaties import HydrogeologischeStratigrafie
 from pydov.types.interpretaties import LithologischeBeschrijvingen
 from pydov.types.interpretaties import GecodeerdeLithologie
 from pydov.types.interpretaties import GeotechnischeCodering
-from pydov.types.interpretaties import QuartaireStratigrafie
+from pydov.types.interpretaties import QuartairStratigrafie
 from pydov.util import owsutil
 
 

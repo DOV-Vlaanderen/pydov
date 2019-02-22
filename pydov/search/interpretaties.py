@@ -760,7 +760,7 @@ class QuartaireStratigrafieSearch(AbstractSearch):
     def __init__(self):
         """Initialisation."""
         super(QuartaireStratigrafieSearch, self).__init__(
-            'interpretaties:quartaire_stratigrafie', QuartaireStratigrafie)
+            'interpretaties:quartaire_stratigrafie', QuartairStratigrafie)
 
     def _init_namespace(self):
         """Initialise the WFS namespace associated with the layer."""

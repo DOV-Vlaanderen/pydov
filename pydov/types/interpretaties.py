@@ -724,7 +724,7 @@ class GeotechnischeCodering(AbstractBoringInterpretatie):
     }]
 
 
-class QuartaireStratigrafieLaag(AbstractDovSubType):
+class QuartairStratigrafieLaag(AbstractDovSubType):
 
     _name = 'quartaire_stratigrafie_laag'
     _rootpath = './/quartairstratigrafie/laag'

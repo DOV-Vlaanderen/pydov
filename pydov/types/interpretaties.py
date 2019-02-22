@@ -772,7 +772,7 @@ class QuartairStratigrafieLaag(AbstractDovSubType):
     }]
 
 
-class QuartaireStratigrafie(AbstractCommonInterpretatie):
+class QuartairStratigrafie(AbstractBoringInterpretatie):
     """Class representing the DOV data type for 'Quartair stratigrafie'
     interpretations.
 

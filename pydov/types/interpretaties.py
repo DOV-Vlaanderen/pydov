@@ -785,7 +785,7 @@ class QuartairStratigrafie(AbstractBoringInterpretatie):
     ipv lithostratigrafie
     """
 
-    _subtypes = [QuartaireStratigrafieLaag]
+    _subtypes = [QuartairStratigrafieLaag]
 
     _fields = [{
         'name': 'pkey_interpretatie',

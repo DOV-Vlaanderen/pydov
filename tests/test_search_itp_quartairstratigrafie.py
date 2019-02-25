@@ -6,8 +6,8 @@ from pandas import DataFrame
 
 import pydov
 from owslib.fes import PropertyIsEqualTo
-from pydov.search.interpretaties import QuartaireStratigrafieSearch
-from pydov.types.interpretaties import QuartaireStratigrafie
+from pydov.search.interpretaties import QuartairStratigrafieSearch
+from pydov.types.interpretaties import QuartairStratigrafie
 from tests.abstract import (
     AbstractTestSearch,
 )
@@ -39,28 +39,28 @@ location_dov_xml = \
     'tests/data/types/interpretaties/quartaire_stratigrafie/quartaire_stratigrafie.xml'
 
 
-class TestQuartaireStratigrafieSearch(AbstractTestSearch):
+class TestQuartairStratigrafieSearch(AbstractTestSearch):
     def get_search_object(self):
         """Get an instance of the search object for this type.
 
         Returns
         -------
-        pydov.search.interpretaties.QuartaireStratigrafieSearch
-            Instance of QuartaireStratigrafieSearch used for searching.
+        pydov.search.interpretaties.QuartairStratigrafieSearch
+            Instance of QuartairStratigrafieSearch used for searching.
 
         """
-        return QuartaireStratigrafieSearch()
+        return QuartairStratigrafieSearch()
 
     def get_type(self):
         """Get the class reference for this datatype.
 
         Returns
         -------
-        pydov.types.interpretaties.QuartaireStratigrafie
-            Class reference for the QuartaireStratigrafie class.
+        pydov.types.interpretaties.QuartairStratigrafie
+            Class reference for the QuartairStratigrafie class.
 
         """
-        return QuartaireStratigrafie
+        return QuartairStratigrafie
 
     def get_valid_query_single(self):
         """Get a valid query returning a single feature.

@@ -726,8 +726,8 @@ class GeotechnischeCodering(AbstractBoringInterpretatie):
 
 class QuartairStratigrafieLaag(AbstractDovSubType):
 
-    _name = 'quartairstratigrafie_laag'
-    _rootpath = './/quartairstratigrafie/laag'
+    _name = 'quartairestratigrafie_laag'
+    _rootpath = './/quartairestratigrafie/laag'
 
     _fields = [{
         'name': 'diepte_laag_van',
@@ -773,10 +773,10 @@ class QuartairStratigrafieLaag(AbstractDovSubType):
 
 
 class QuartairStratigrafie(AbstractBoringInterpretatie):
-    """Class representing the DOV data type for 'Quartair stratigrafie'
+    """Class representing the DOV data type for 'Quartairstratigrafie'
     interpretations.
 
-    In Dutch: Afgeleid type van interpretatie, specifiek voor de quartaire
+    In Dutch: Afgeleid type van interpretatie, specifiek voor de quartair-
     stratigrafie. Een Quartair interpretatie omvat een discrete formele
     interpretatie van het materiaal in de ondergrond, al dan niet aan
     de hand van monsters, op basis van een door DOV gestandaardiseerde

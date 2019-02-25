@@ -45,9 +45,9 @@ type
     Example: 'string'
 
 values
-    (Optional) In case the field has a list of possible values, they are listed here.
+    (Optional) In case the field has a list of possible values, they are listed here as a dictionary mapping the values to a definition (if available).
 
-    Example: ['avegaarboring', 'droge boring', 'edelmanboring', '...']
+    Example: {'Aa': 'Formatie van Aalter', 'AaBe': 'Lid van Beernem (Formatie van Aalter)', 'AaOe': 'Lid van Oedelem (Formatie van Aalter)'}
 
 Example
 -------
@@ -116,7 +116,7 @@ Some fields additionally have a list of possible values (`values`):
 
 ::
 
-    fields['methode']['values']
+    fields['methode']['values'].keys()
 
 ::
 

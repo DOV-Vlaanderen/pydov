@@ -537,6 +537,35 @@ class AbstractTestSearch(object):
                     assert 'values' in fields[f['name']]
                     assert type(fields[f['name']]['values']) is dict
 
+    def test_get_fields_no_xsd(self):
+        """Test whether no XML fields have an XSD type when no XSD schemas
+        are available."""
+        xsd_schemas = self.get_type().get_xsd_schemas()
+
+        if len(xsd_schemas) == 0:
+            xml_fields = self.get_type().get_fields(source='xml')
+            for f in xml_fields.values():
+                assert 'xsd_type' not in f
+
+    def test_get_fields_xsd_enums(self):
+        """Test whether at least one XML field has an XSD type when there
+        are XSD schemas available.
+
+        Make sure XSD schemas are only listed (and downloaded) when they are
+        needed.
+
+        """
+        xsd_schemas = self.get_type().get_xsd_schemas()
+
+        xsd_type_count = 0
+
+        if len(xsd_schemas) > 0:
+            xml_fields = self.get_type().get_fields(source='xml')
+            for f in xml_fields.values():
+                if 'xsd_type' in f:
+                    xsd_type_count += 1
+            assert xsd_type_count > 0
+
 
 class AbstractTestTypes(object):
     """Class grouping common test code for datatype classes."""

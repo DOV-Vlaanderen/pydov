@@ -80,8 +80,8 @@ class TestEncoding(object):
 
         Parameters
         ----------
-        cache : pytest.fixture providing  pydov.util.caching.TransparentCache
-            TransparentCache using a temporary directory and a maximum age
+        cache : pytest.fixture providing pydov.util.caching.PlainTextFileCache
+            PlainTextFileCache using a temporary directory and a maximum age
             of 1 second.
 
         """
@@ -116,8 +116,8 @@ class TestEncoding(object):
 
         Parameters
         ----------
-        cache : pytest.fixture providing  pydov.util.caching.TransparentCache
-            TransparentCache using a temporary directory and a maximum age
+        cache : pytest.fixture providing pydov.util.caching.PlainTextFileCache
+            PlainTextFileCache using a temporary directory and a maximum age
             of 1 second.
 
         """
@@ -153,8 +153,8 @@ class TestEncoding(object):
 
         Parameters
         ----------
-        cache : pytest.fixture providing  pydov.util.caching.TransparentCache
-            TransparentCache using a temporary directory and a maximum age
+        cache : pytest.fixture providing pydov.util.caching.PlainTextFileCache
+            PlainTextFileCache using a temporary directory and a maximum age
             of 1 second.
 
         """
@@ -185,8 +185,8 @@ class TestEncoding(object):
 
         Parameters
         ----------
-        cache : pytest.fixture providing  pydov.util.caching.TransparentCache
-            TransparentCache using a temporary directory and a maximum age
+        cache : pytest.fixture providing pydov.util.caching.PlainTextFileCache
+            PlainTextFileCache using a temporary directory and a maximum age
             of 1 second.
 
         """

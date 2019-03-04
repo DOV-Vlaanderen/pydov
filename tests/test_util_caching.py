@@ -9,7 +9,7 @@ import time
 import pytest
 
 import pydov
-from pydov.util.caching import TransparentCache
+from pydov.util.caching import PlainTextFileCache
 
 
 @pytest.fixture
@@ -30,7 +30,7 @@ def mp_remote_xml(monkeypatch):
                 data = data.encode('utf-8')
         return data
 
-    monkeypatch.setattr(pydov.util.caching.TransparentCache,
+    monkeypatch.setattr(pydov.util.caching.PlainTextFileCache,
                         '_get_remote', _get_remote_data)
 
 
@@ -54,14 +54,14 @@ def cache(request):
     else:
         max_age = request.param[0]
 
-    transparent_cache = TransparentCache(
+    plaintext_cache = PlainTextFileCache(
         cachedir=os.path.join(tempfile.gettempdir(), 'pydov_tests'),
         max_age=max_age)
-    pydov.cache = transparent_cache
+    pydov.cache = plaintext_cache
 
-    yield transparent_cache
+    yield plaintext_cache
 
-    transparent_cache.remove()
+    plaintext_cache.remove()
     pydov.cache = orig_cache
 
 
@@ -74,8 +74,8 @@ def nocache():
     pydov.cache = orig_cache
 
 
-class TestTransparentCache(object):
-    """Class grouping tests for the pydov.util.caching.TransparentCache
+class TestPlainTextFileCacheCache(object):
+    """Class grouping tests for the pydov.util.caching.PlainTextFileCache
     class."""
 
     @pytest.mark.parametrize('cache', [[]], indirect=['cache'])
@@ -87,8 +87,8 @@ class TestTransparentCache(object):
 
         Parameters
         ----------
-        cache : pytest.fixture providing  pydov.util.caching.TransparentCache
-            TransparentCache using a temporary directory and a maximum age
+        cache : pytest.fixture providing pydov.util.caching.PlainTextFileCache
+            PlainTextFileCache using a temporary directory and a maximum age
             of 1 second.
         mp_remote_xml : pytest.fixture
             Monkeypatch the call to the remote DOV service returning an XML
@@ -119,8 +119,8 @@ class TestTransparentCache(object):
 
         Parameters
         ----------
-        cache : pytest.fixture providing  pydov.util.caching.TransparentCache
-            TransparentCache using a temporary directory and a maximum age
+        cache : pytest.fixture providing pydov.util.caching.PlainTextFileCache
+            PlainTextFileCache using a temporary directory and a maximum age
             of 1 second.
         mp_remote_xml : pytest.fixture
             Monkeypatch the call to the remote DOV service returning an XML
@@ -145,8 +145,8 @@ class TestTransparentCache(object):
 
         Parameters
         ----------
-        cache : pytest.fixture providing  pydov.util.caching.TransparentCache
-            TransparentCache using a temporary directory and a maximum age
+        cache : pytest.fixture providing pydov.util.caching.PlainTextFileCache
+            PlainTextFileCache using a temporary directory and a maximum age
             of 1 second.
         mp_remote_xml : pytest.fixture
             Monkeypatch the call to the remote DOV service returning an XML
@@ -171,8 +171,8 @@ class TestTransparentCache(object):
 
         Parameters
         ----------
-        cache : pytest.fixture providing  pydov.util.caching.TransparentCache
-            TransparentCache using a temporary directory and a maximum age
+        cache : pytest.fixture providing pydov.util.caching.PlainTextFileCache
+            PlainTextFileCache using a temporary directory and a maximum age
             of 1 second.
         mp_remote_xml : pytest.fixture
             Monkeypatch the call to the remote DOV service returning an XML
@@ -204,8 +204,8 @@ class TestTransparentCache(object):
 
         Parameters
         ----------
-        cache : pytest.fixture providing  pydov.util.caching.TransparentCache
-            TransparentCache using a temporary directory and a maximum age
+        cache : pytest.fixture providing pydov.util.caching.PlainTextFileCache
+            PlainTextFileCache using a temporary directory and a maximum age
             of 1 second.
         mp_remote_xml : pytest.fixture
             Monkeypatch the call to the remote DOV service returning an XML
@@ -237,8 +237,8 @@ class TestTransparentCache(object):
 
         Parameters
         ----------
-        cache : pytest.fixture providing  pydov.util.caching.TransparentCache
-            TransparentCache using a temporary directory and a maximum age
+        cache : pytest.fixture providing pydov.util.caching.PlainTextFileCache
+            PlainTextFileCache using a temporary directory and a maximum age
             of 1 second.
         mp_remote_xml : pytest.fixture
             Monkeypatch the call to the remote DOV service returning an XML
@@ -272,8 +272,8 @@ class TestTransparentCache(object):
 
         Parameters
         ----------
-        cache : pytest.fixture providing  pydov.util.caching.TransparentCache
-            TransparentCache using a temporary directory and a maximum age
+        cache : pytest.fixture providing pydov.util.caching.PlainTextFileCache
+            PlainTextFileCache using a temporary directory and a maximum age
             of 1 second.
         mp_remote_xml : pytest.fixture
             Monkeypatch the call to the remote DOV service returning an XML
@@ -306,8 +306,8 @@ class TestTransparentCache(object):
 
         Parameters
         ----------
-        cache : pytest.fixture providing  pydov.util.caching.TransparentCache
-            TransparentCache using a temporary directory and a maximum age
+        cache : pytest.fixture providing pydov.util.caching.PlainTextFileCache
+            PlainTextFileCache using a temporary directory and a maximum age
             of 1 second.
         mp_remote_xml : pytest.fixture
             Monkeypatch the call to the remote DOV service returning an XML

@@ -297,8 +297,8 @@ class AbstractFileCache(AbstractCache):
             shutil.rmtree(self.cachedir)
 
 
-class TransparentCache(AbstractFileCache):
-    """Class for transparent caching of downloaded XML files from DOV."""
+class PlainTextFileCache(AbstractFileCache):
+    """Class for plain text caching of downloaded XML files from DOV."""
 
     def _get_filepath(self, datatype, key):
         """Get the location on disk where the object with given datatype and

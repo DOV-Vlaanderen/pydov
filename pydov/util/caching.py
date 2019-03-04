@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Module implementing a local cache for downloaded XML files."""
 import datetime
+import gzip
 import os
 import re
 import shutil
@@ -219,7 +220,7 @@ class AbstractFileCache(AbstractCache):
             Datatype of the DOV object to save.
         key : str
             Unique and permanent object key of the DOV object to save.
-        content : : bytes
+        content : bytes
             The raw XML data of this DOV object as bytes.
 
         """
@@ -349,7 +350,7 @@ class PlainTextFileCache(AbstractFileCache):
             Datatype of the DOV object to save.
         key : str
             Unique and permanent object key of the DOV object to save.
-        content : : bytes
+        content : bytes
             The raw XML data of this DOV object as bytes.
 
         """
@@ -379,3 +380,87 @@ class PlainTextFileCache(AbstractFileCache):
         filepath = self._get_filepath(datatype, key)
         with open(filepath, 'r', encoding='utf-8') as f:
             return f.read()
+
+
+class GzipTextFileCache(AbstractFileCache):
+    """Class for GZipped text caching of downloaded XML files from DOV."""
+
+    def _get_filepath(self, datatype, key):
+        """Get the location on disk where the object with given datatype and
+        key is to be saved.
+
+        Parameters
+        ----------
+        datatype : str
+            Datatype of the DOV object.
+        key : str
+            Unique and permanent object key of the DOV object.
+
+        Returns
+        -------
+        str
+            Full absolute path on disk where the object is to be saved.
+
+        """
+        return os.path.join(self.cachedir, datatype, key + '.xml.gz')
+
+    def _get_type_key_from_path(self, path):
+        """Parse a filepath and return the datatype and object key.
+
+        Parameters
+        ----------
+        path : str
+            Full, absolute, path to a cached file.
+
+        Returns
+        -------
+        datatype : str
+            Datatype of the DOV object referred to by the URL.
+        key : str
+            Unique and permanent key of the instance of the DOV object
+            referred to by the URL.
+
+        """
+        key = os.path.basename(path).rstrip('.xml.gz')
+        datatype = os.path.dirname(path).split()[-1]
+        return datatype, key
+
+    def _save(self, datatype, key, content):
+        """Save the given content in the cache.
+
+        Parameters
+        ----------
+        datatype : str
+            Datatype of the DOV object to save.
+        key : str
+            Unique and permanent object key of the DOV object to save.
+        content : bytes
+            The raw XML data of this DOV object as bytes.
+
+        """
+        filepath = self._get_filepath(datatype, key)
+        folder = os.path.dirname(filepath)
+
+        if not os.path.exists(folder):
+            os.makedirs(folder)
+
+        with gzip.open(filepath, 'wb') as f:
+            f.write(content)
+
+    def _load(self, datatype, key):
+        """Read a cached version from disk.
+
+        datatype : str
+            Datatype of the DOV object.
+        key : str
+            Unique and permanent object key of the DOV object.
+
+        Returns
+        -------
+        str (xml)
+            XML string of the DOV object, loaded from the cache.
+
+        """
+        filepath = self._get_filepath(datatype, key)
+        with gzip.open(filepath, 'rb') as f:
+            return f.read().decode('utf-8')

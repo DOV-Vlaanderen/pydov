@@ -11,8 +11,44 @@ import pydov
 from pydov.util.dovutil import get_dov_xml
 
 
-class TransparentCache(object):
-    """Class for transparent caching of downloaded XML files from DOV."""
+class AbstractCache(object):
+    def get(self, url):
+        """Get the XML data for the DOV object referenced by the given URL.
+
+        If a valid version exists in the cache, it will be loaded and
+        returned. If no valid version exists, the XML will be downloaded
+        from the DOV webservice, saved in the cache and returned.
+
+        Parameters
+        ----------
+        url : str
+            Permanent URL to a DOV object.
+
+        Returns
+        -------
+        xml : bytes
+            The raw XML data of this DOV object as bytes.
+
+        """
+        raise NotImplementedError
+
+    def clean(self):
+        """Clean the cache by removing old records from the cache.
+
+        Since during normal use the cache only grows by adding new objects and
+        overwriting existing ones with a new version, you can use this
+        function to clean the cache. It will remove all records older than
+        the maximum age from the cache.
+
+        """
+        raise NotImplementedError
+
+    def remove(self):
+        """Remove the entire cache."""
+        raise NotImplementedError
+
+
+class AbstractFileCache(AbstractCache):
     def __init__(self, max_age=datetime.timedelta(weeks=2), cachedir=None):
         """Initialisation.
 
@@ -47,7 +83,26 @@ class TransparentCache(object):
         except Exception:
             pass
 
-    def _get_type_key(self, url):
+    def _get_filepath(self, datatype, key):
+        """Get the location on disk where the object with given datatype and
+        key is to be saved.
+
+        Parameters
+        ----------
+        datatype : str
+            Datatype of the DOV object.
+        key : str
+            Unique and permanent object key of the DOV object.
+
+        Returns
+        -------
+        str
+            Full absolute path on disk where the object is to be saved.
+
+        """
+        raise NotImplementedError
+
+    def _get_type_key_from_url(self, url):
         """Parse a DOV permalink and return the datatype and object key.
 
         Parameters
@@ -68,29 +123,45 @@ class TransparentCache(object):
         if datatype and len(datatype.groups()) > 1:
             return datatype.group(1), datatype.group(2)
 
-    def _save(self, datatype, key, content):
-        """Save the given content in the cache.
+    def _get_type_key_from_path(self, path):
+        """Parse a filepath and return the datatype and object key.
 
         Parameters
         ----------
+        path : str
+            Full, absolute, path to a cached file.
+
+        Returns
+        -------
         datatype : str
-            Datatype of the DOV object to save.
+            Datatype of the DOV object referred to by the URL.
         key : str
-            Unique and permanent object key of the DOV object to save.
-        content : : bytes
+            Unique and permanent key of the instance of the DOV object
+            referred to by the URL.
+
+        """
+        raise NotImplementedError
+
+    def _get_remote(self, url):
+        """Get the XML data by requesting it from the given URL.
+
+        Parameters
+        ----------
+        url : str
+            Permanent URL to a DOV object.
+
+        Returns
+        -------
+        xml : bytes
             The raw XML data of this DOV object as bytes.
 
         """
-        folder = os.path.join(self.cachedir, datatype)
+        xml = get_dov_xml(url)
+        for hook in pydov.hooks:
+            hook.xml_downloaded(url.rstrip('.xml'))
+        return xml
 
-        if not os.path.exists(folder):
-            os.makedirs(folder)
-
-        filepath = os.path.join(folder, key + '.xml')
-        with open(filepath, 'w', encoding='utf-8') as f:
-            f.write(content.decode('utf-8'))
-
-    def _valid(self, datatype, key):
+    def _is_valid(self, datatype, key):
         """Check if a valid version of the given DOV object exists in the
         cache.
 
@@ -110,7 +181,7 @@ class TransparentCache(object):
             True if a valid cached version exists, False otherwise.
 
         """
-        filepath = os.path.join(self.cachedir, datatype, key + '.xml')
+        filepath = self._get_filepath(datatype, key)
         if not os.path.exists(filepath):
             return False
 
@@ -137,28 +208,22 @@ class TransparentCache(object):
             XML string of the DOV object, loaded from the cache.
 
         """
-        filepath = os.path.join(self.cachedir, datatype, key + '.xml')
-        with open(filepath, 'r', encoding='utf-8') as f:
-            return f.read()
+        raise NotImplementedError
 
-    def _get_remote(self, url):
-        """Get the XML data by requesting it from the given URL.
+    def _save(self, datatype, key, content):
+        """Save the given content in the cache.
 
         Parameters
         ----------
-        url : str
-            Permanent URL to a DOV object.
-
-        Returns
-        -------
-        xml : bytes
+        datatype : str
+            Datatype of the DOV object to save.
+        key : str
+            Unique and permanent object key of the DOV object to save.
+        content : : bytes
             The raw XML data of this DOV object as bytes.
 
         """
-        xml = get_dov_xml(url)
-        for hook in pydov.hooks:
-            hook.xml_downloaded(url.rstrip('.xml'))
-        return xml
+        raise NotImplementedError
 
     def get(self, url):
         """Get the XML data for the DOV object referenced by the given URL.
@@ -178,9 +243,9 @@ class TransparentCache(object):
             The raw XML data of this DOV object as bytes.
 
         """
-        datatype, key = self._get_type_key(url)
+        datatype, key = self._get_type_key_from_url(url)
 
-        if self._valid(datatype, key):
+        if self._is_valid(datatype, key):
             try:
                 for hook in pydov.hooks:
                     hook.xml_cache_hit(url.rstrip('.xml'))
@@ -211,8 +276,11 @@ class TransparentCache(object):
         if os.path.exists(self.cachedir):
             for type in os.listdir(self.cachedir):
                 for object in os.listdir(os.path.join(self.cachedir, type)):
-                    if not self._valid(type, object.rstrip('.xml')):
-                        os.remove(os.path.join(self.cachedir, type, object))
+                    datatype, key = self._get_type_key_from_path(
+                        os.path.join(self.cachedir, type, object))
+                    if not self._is_valid(datatype, key):
+                        os.remove(
+                            os.path.join(self.cachedir, datatype, object))
 
     def remove(self):
         """Remove the entire cache directory.
@@ -227,3 +295,87 @@ class TransparentCache(object):
         """
         if os.path.exists(self.cachedir):
             shutil.rmtree(self.cachedir)
+
+
+class TransparentCache(AbstractFileCache):
+    """Class for transparent caching of downloaded XML files from DOV."""
+
+    def _get_filepath(self, datatype, key):
+        """Get the location on disk where the object with given datatype and
+        key is to be saved.
+
+        Parameters
+        ----------
+        datatype : str
+            Datatype of the DOV object.
+        key : str
+            Unique and permanent object key of the DOV object.
+
+        Returns
+        -------
+        str
+            Full absolute path on disk where the object is to be saved.
+
+        """
+        return os.path.join(self.cachedir, datatype, key + '.xml')
+
+    def _get_type_key_from_path(self, path):
+        """Parse a filepath and return the datatype and object key.
+
+        Parameters
+        ----------
+        path : str
+            Full, absolute, path to a cached file.
+
+        Returns
+        -------
+        datatype : str
+            Datatype of the DOV object referred to by the URL.
+        key : str
+            Unique and permanent key of the instance of the DOV object
+            referred to by the URL.
+
+        """
+        key = os.path.basename(path).rstrip('.xml')
+        datatype = os.path.dirname(path).split()[-1]
+        return datatype, key
+
+    def _save(self, datatype, key, content):
+        """Save the given content in the cache.
+
+        Parameters
+        ----------
+        datatype : str
+            Datatype of the DOV object to save.
+        key : str
+            Unique and permanent object key of the DOV object to save.
+        content : : bytes
+            The raw XML data of this DOV object as bytes.
+
+        """
+        filepath = self._get_filepath(datatype, key)
+        folder = os.path.dirname(filepath)
+
+        if not os.path.exists(folder):
+            os.makedirs(folder)
+
+        with open(filepath, 'w', encoding='utf-8') as f:
+            f.write(content.decode('utf-8'))
+
+    def _load(self, datatype, key):
+        """Read a cached version from disk.
+
+        datatype : str
+            Datatype of the DOV object.
+        key : str
+            Unique and permanent object key of the DOV object.
+
+        Returns
+        -------
+        str (xml)
+            XML string of the DOV object, loaded from the cache.
+
+        """
+        filepath = self._get_filepath(datatype, key)
+        with open(filepath, 'r', encoding='utf-8') as f:
+            return f.read()

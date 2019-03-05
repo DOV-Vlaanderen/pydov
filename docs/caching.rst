@@ -47,18 +47,18 @@ your own cache, as follows::
 
     import pydov.util.caching
 
-    pydov.cache = pydov.util.caching.TransparentCache(
+    pydov.cache = pydov.util.caching.GzipTextFileCache(
         cachedir=r'C:\temp\pydov'
     )
 
 Besides controlling the cache's location, this also allows using a different
 cache in different scripts or projects.
 
-Mind that xmls are stored by search type because permalinks are not unique
+Mind that xmls are stored by search type because object keys are not unique
 across types. Therefore, the dir structure of the cache will look like, e.g.::
 
-    ...\pydov\boring\filename.xml
-    ...\pydov\filter\filename.xml
+    ...\pydov\boring\filename.xml.gz
+    ...\pydov\filter\filename.xml.gz
 
 
 Changing the maximum age of cached data
@@ -71,7 +71,7 @@ be considered valid for the current runtime::
     import pydov.util.caching
     import datetime
 
-    pydov.cache = pydov.util.caching.TransparentCache(
+    pydov.cache = pydov.util.caching.GzipTextFileCache(
         max_age=datetime.timedelta(days=1)
     )
 

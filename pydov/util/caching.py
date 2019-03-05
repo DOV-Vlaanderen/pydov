@@ -13,6 +13,37 @@ from pydov.util.dovutil import get_dov_xml
 
 
 class AbstractCache(object):
+    def _get_remote(self, url):
+        """Get the XML data by requesting it from the given URL.
+
+        Parameters
+        ----------
+        url : str
+            Permanent URL to a DOV object.
+
+        Returns
+        -------
+        xml : bytes
+            The raw XML data of this DOV object as bytes.
+
+        """
+        xml = get_dov_xml(url)
+        for hook in pydov.hooks:
+            hook.xml_downloaded(url.rstrip('.xml'))
+        return xml
+
+    def _emit_cache_hit(self, url):
+        """Emit the XML cache hit event for all registered hooks.
+
+        Parameters
+        ----------
+        url : str
+            Permanent URL to a DOV object.
+
+        """
+        for hook in pydov.hooks:
+            hook.xml_cache_hit(url.rstrip('.xml'))
+
     def get(self, url):
         """Get the XML data for the DOV object referenced by the given URL.
 
@@ -143,25 +174,6 @@ class AbstractFileCache(AbstractCache):
         """
         raise NotImplementedError
 
-    def _get_remote(self, url):
-        """Get the XML data by requesting it from the given URL.
-
-        Parameters
-        ----------
-        url : str
-            Permanent URL to a DOV object.
-
-        Returns
-        -------
-        xml : bytes
-            The raw XML data of this DOV object as bytes.
-
-        """
-        xml = get_dov_xml(url)
-        for hook in pydov.hooks:
-            hook.xml_downloaded(url.rstrip('.xml'))
-        return xml
-
     def _is_valid(self, datatype, key):
         """Check if a valid version of the given DOV object exists in the
         cache.
@@ -248,8 +260,7 @@ class AbstractFileCache(AbstractCache):
 
         if self._is_valid(datatype, key):
             try:
-                for hook in pydov.hooks:
-                    hook.xml_cache_hit(url.rstrip('.xml'))
+                self._emit_cache_hit(url)
                 return self._load(datatype, key).encode('utf-8')
             except Exception:
                 pass

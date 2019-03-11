@@ -32,7 +32,7 @@ install:
     - cmd: call %CONDA_INSTALL_LOCN%\Scripts\activate.bat
     - cmd: conda.exe update -y -q conda
     - cmd: conda.exe config --add channels conda-forge
-    - cmd: conda.exe install -y -q numpy pandas
+    - cmd: conda.exe install -y -q numpy pandas pyproj
     - cmd: call %CONDA_INSTALL_LOCN%\python.exe -m pip install --ignore-installed --no-cache-dir -r requirements_appveyor.txt
     - ps: if($env:PY_INSTALL) { & ($env:CONDA_INSTALL_LOCN + "\Scripts\conda.exe") install -y -q $env:PY_INSTALL }
 

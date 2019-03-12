@@ -47,8 +47,6 @@ type
 values
     (Optional) In case the field has a list of possible values, they are listed here as a dictionary mapping the values to a definition (if available).
 
-    Sometimes the definition can be used as a (human readable) label for the (machine readable) code in the dataframe. This allows creating an extra column with the mapped labels: ``df['lid1_label'] = df['lid1'].map(fields['lid1']['values'])``
-
     Example: ``{'Aa': 'Formatie van Aalter', 'AaBe': 'Lid van Beernem (Formatie van Aalter)', 'AaOe': 'Lid van Oedelem (Formatie van Aalter)'}``
 
 Example
@@ -149,6 +147,41 @@ Some fields additionally have a list of possible values (`values`):
      'trilboring',
      'voorput',
      'zuigboring']
+
+Sometimes the definition can be used as a (human readable) label for the (machine readable) code in the dataframe. This allows creating an extra column with the mapped labels:
+
+::
+
+    from pydov.search.interpretaties import FormeleStratigrafieSearch
+    itp = FormeleStratigrafieSearch()
+
+    fields['lid1']
+    # {'cost': 10,
+    #  'definition': 'eerste eenheid van de laag formele stratigrafie',
+    #  'name': 'lid1',
+    #  'notnull': False,
+    #  'query': False,
+    #  'type': 'string',
+    #  'values': {'Aa': 'Formatie van Aalter',
+    #   'AaBe': 'Lid van Beernem (Formatie van Aalter)',
+    #   'AaOe': 'Lid van Oedelem (Formatie van Aalter)',
+    #   'Bb': 'Formatie van Bolderberg',
+    #   'BbGe': 'Lid van Genk (Formatie van Bolderberg)',
+    #   'BbHo': 'Lid van Houthalen (Formatie van Bolderberg)',
+    #   'BbOp': 'Lid van Opitter (Formatie van Bolderberg)',
+    #   'Bc': 'Formatie van Berchem',
+    #   ..}
+    # }
+
+    df['lid1_label'] = df['lid1'].map(fields['lid1']['values'])
+    df['lid2_label'] = df['lid2'].map(fields['lid2']['values'])
+
+    print(df[['diepte_laag_van', 'diepte_laag_tot', 'lid1',
+         'lid1_label', 'relatie_lid1_lid2', 'lid2', 'lid2_label']].to_string())
+    #    diepte_laag_van  diepte_laag_tot lid1           lid1_label relatie_lid1_lid2 lid2            lid2_label
+    # 0              0.0             3.00    Q  Quartaire afzetting                 T    Q   Quartaire afzetting
+    # 1              3.0            14.05    U             Onbekend                 T   Bc  Formatie van Berchem
+
 
 Using OGC filter expressions
 ****************************

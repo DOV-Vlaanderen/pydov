@@ -17,37 +17,39 @@ For each field, the following information is available:
 name
     The name of the field.
 
-    Example: 'methode'
+    Example: ``'methode'``
 
 definition
     The definition of the field.
 
-    Example: 'De methode waarmee de boring uitgevoerd werd. Heeft als waarde 'onbekend' indien de methode niet gekend is.'
+    Example: ``'De methode waarmee de boring uitgevoerd werd. Heeft als waarde 'onbekend' indien de methode niet gekend is.'``
 
 cost
     The resource cost (in time) to request this field as part of the return fields. Is either '1' (no additional cost) or '10' (cost of an implicit XML download per result feature).
 
-    Example: 1
+    Example: ``1``
 
 notnull
     Whether the field is mandatory (True) or optional (False).
 
-    Example: True
+    Example: ``True``
 
 query
     Whether the field can be used in an attribute query.
 
-    Example: True
+    Example: ``True``
 
 type
     The datatype of the values of this field.
 
-    Example: 'string'
+    Example: ``'string'``
 
 values
     (Optional) In case the field has a list of possible values, they are listed here as a dictionary mapping the values to a definition (if available).
 
-    Example: {'Aa': 'Formatie van Aalter', 'AaBe': 'Lid van Beernem (Formatie van Aalter)', 'AaOe': 'Lid van Oedelem (Formatie van Aalter)'}
+    Sometimes the definition can be used as a (human readable) label for the (machine readable) code in the dataframe. This allows creating an extra column with the mapped labels: ``df['lid1_label'] = df['lid1'].map(fields['lid1']['values'])``
+
+    Example: ``{'Aa': 'Formatie van Aalter', 'AaBe': 'Lid van Beernem (Formatie van Aalter)', 'AaOe': 'Lid van Oedelem (Formatie van Aalter)'}``
 
 Example
 -------

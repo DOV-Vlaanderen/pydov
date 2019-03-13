@@ -419,5 +419,13 @@
             <betrouwbaarheid>goed</betrouwbaarheid>
             <bron>freatisch 2017 voorjaar</bron>
         </peilmeting>
+        <waarneming>
+            <datum>2017-09-27</datum>
+            <waarnemingtype>-910</waarnemingtype>
+            <opmeter>
+                <naam>Labo</naam>
+            </opmeter>
+            <bron>freatisch 2017 najaar</bron>
+        </waarneming>
     </filtermeting>
 </ns3:dov-schema>

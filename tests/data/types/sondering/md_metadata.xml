@@ -17,7 +17,7 @@
       <gmd:MD_ScopeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ScopeCode" codeListValue="dataset" />
     </gmd:hierarchyLevel>
     <gmd:contact>
-      <gmd:CI_ResponsibleParty>
+      <gmd:CI_ResponsibleParty xmlns:gfc="http://www.isotc211.org/2005/gfc" xmlns:gmx="http://www.isotc211.org/2005/gmx">
         <gmd:organisationName>
           <gco:CharacterString>Departement Mobiliteit en Openbare Werken (MOW) - Afdeling Geotechniek</gco:CharacterString>
         </gmd:organisationName>
@@ -36,10 +36,10 @@
             <gmd:address>
               <gmd:CI_Address>
                 <gmd:deliveryPoint>
-                  <gco:CharacterString>Technologiepark Gebouw 905</gco:CharacterString>
+                  <gco:CharacterString>Technologiepark-Zwijnaarde 68</gco:CharacterString>
                 </gmd:deliveryPoint>
                 <gmd:city>
-                  <gco:CharacterString>Zwijnaarde</gco:CharacterString>
+                  <gco:CharacterString>Gent</gco:CharacterString>
                 </gmd:city>
                 <gmd:postalCode>
                   <gco:CharacterString>9052</gco:CharacterString>
@@ -66,8 +66,8 @@
         </gmd:role>
       </gmd:CI_ResponsibleParty>
     </gmd:contact>
-    <gmd:dateStamp>
-      <gco:DateTime>2019-01-30T12:06:39</gco:DateTime>
+    <gmd:dateStamp xmlns:gfc="http://www.isotc211.org/2005/gfc" xmlns:gmx="http://www.isotc211.org/2005/gmx">
+      <gco:DateTime>2019-02-07T13:49:01</gco:DateTime>
     </gmd:dateStamp>
     <gmd:metadataStandardName>
       <gco:CharacterString>ISO 19115/2003/Cor.1:2006</gco:CharacterString>
@@ -163,7 +163,7 @@ Sonderingen laten toe op een snelle en efficiënte manier en tegen een behoorlij
           <gmd:MD_ProgressCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ProgressCode" codeListValue="onGoing" />
         </gmd:status>
         <gmd:pointOfContact>
-          <gmd:CI_ResponsibleParty>
+          <gmd:CI_ResponsibleParty xmlns:gfc="http://www.isotc211.org/2005/gfc" xmlns:gmx="http://www.isotc211.org/2005/gmx">
             <gmd:organisationName>
               <gco:CharacterString>Departement Mobiliteit en Openbare Werken (MOW) - Afdeling Geotechniek</gco:CharacterString>
             </gmd:organisationName>
@@ -182,10 +182,10 @@ Sonderingen laten toe op een snelle en efficiënte manier en tegen een behoorlij
                 <gmd:address>
                   <gmd:CI_Address>
                     <gmd:deliveryPoint>
-                      <gco:CharacterString>Technologiepark Gebouw 905</gco:CharacterString>
+                      <gco:CharacterString>Technologiepark-Zwijnaarde 68</gco:CharacterString>
                     </gmd:deliveryPoint>
                     <gmd:city>
-                      <gco:CharacterString>Zwijnaarde</gco:CharacterString>
+                      <gco:CharacterString>Gent</gco:CharacterString>
                     </gmd:city>
                     <gmd:postalCode>
                       <gco:CharacterString>9052</gco:CharacterString>
@@ -253,7 +253,7 @@ Sonderingen laten toe op een snelle en efficiënte manier en tegen een behoorlij
           </gmd:CI_ResponsibleParty>
         </gmd:pointOfContact>
         <gmd:pointOfContact>
-          <gmd:CI_ResponsibleParty>
+          <gmd:CI_ResponsibleParty xmlns:gfc="http://www.isotc211.org/2005/gfc" xmlns:gmx="http://www.isotc211.org/2005/gmx">
             <gmd:organisationName>
               <gco:CharacterString>Databank Ondergrond Vlaanderen (DOV)</gco:CharacterString>
             </gmd:organisationName>
@@ -269,10 +269,10 @@ Sonderingen laten toe op een snelle en efficiënte manier en tegen een behoorlij
                 <gmd:address>
                   <gmd:CI_Address>
                     <gmd:deliveryPoint>
-                      <gco:CharacterString>Technologiepark Gebouw 905</gco:CharacterString>
+                      <gco:CharacterString>Technologiepark-Zwijnaarde 68</gco:CharacterString>
                     </gmd:deliveryPoint>
                     <gmd:city>
-                      <gco:CharacterString>Zwijnaarde</gco:CharacterString>
+                      <gco:CharacterString>Gent</gco:CharacterString>
                     </gmd:city>
                     <gmd:postalCode>
                       <gco:CharacterString>9052</gco:CharacterString>
@@ -300,7 +300,7 @@ Sonderingen laten toe op een snelle en efficiënte manier en tegen een behoorlij
           </gmd:CI_ResponsibleParty>
         </gmd:pointOfContact>
         <gmd:pointOfContact>
-          <gmd:CI_ResponsibleParty>
+          <gmd:CI_ResponsibleParty xmlns:gfc="http://www.isotc211.org/2005/gfc" xmlns:gmx="http://www.isotc211.org/2005/gmx">
             <gmd:organisationName>
               <gco:CharacterString>Ondersteunend Centrum Databank Ondergrond Vlaanderen</gco:CharacterString>
             </gmd:organisationName>
@@ -316,10 +316,10 @@ Sonderingen laten toe op een snelle en efficiënte manier en tegen een behoorlij
                 <gmd:address>
                   <gmd:CI_Address>
                     <gmd:deliveryPoint>
-                      <gco:CharacterString>Technologiepark Gebouw 905</gco:CharacterString>
+                      <gco:CharacterString>Technologiepark-Zwijnaarde 68</gco:CharacterString>
                     </gmd:deliveryPoint>
                     <gmd:city>
-                      <gco:CharacterString>Zwijnaarde</gco:CharacterString>
+                      <gco:CharacterString>Gent</gco:CharacterString>
                     </gmd:city>
                     <gmd:postalCode>
                       <gco:CharacterString>9052</gco:CharacterString>
@@ -761,7 +761,7 @@ Bij gebruik van de data moet met de nodige kennis van zaken geoordeeld worden ov
         <gmd:distributor>
           <gmd:MD_Distributor>
             <gmd:distributorContact>
-              <gmd:CI_ResponsibleParty>
+              <gmd:CI_ResponsibleParty xmlns:gfc="http://www.isotc211.org/2005/gfc" xmlns:gmx="http://www.isotc211.org/2005/gmx">
                 <gmd:organisationName>
                   <gco:CharacterString>Databank Ondergrond Vlaanderen (DOV)</gco:CharacterString>
                 </gmd:organisationName>
@@ -777,10 +777,10 @@ Bij gebruik van de data moet met de nodige kennis van zaken geoordeeld worden ov
                     <gmd:address>
                       <gmd:CI_Address>
                         <gmd:deliveryPoint>
-                          <gco:CharacterString>Technologiepark Gebouw 905</gco:CharacterString>
+                          <gco:CharacterString>Technologiepark-Zwijnaarde 68</gco:CharacterString>
                         </gmd:deliveryPoint>
                         <gmd:city>
-                          <gco:CharacterString>Zwijnaarde</gco:CharacterString>
+                          <gco:CharacterString>Gent</gco:CharacterString>
                         </gmd:city>
                         <gmd:postalCode>
                           <gco:CharacterString>9052</gco:CharacterString>

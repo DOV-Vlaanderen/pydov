@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://interpretatie.kern.schemas.dov.vlaanderen.be" targetNamespace="http://interpretatie.kern.schemas.dov.vlaanderen.be" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.00">
+	<xs:simpleType name="RelatieLedenEnumType">
+		<xs:annotation>
+			<xs:documentation>lijst van relaties tussen lid 1 en lid 2</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="T">
+				<xs:annotation>
+					<xs:documentation>tot, wordt gebruikt om een pakket eenheden aan te duiden van Lid1 tot Lid2</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="O">
+				<xs:annotation>
+					<xs:documentation>of, wordt gebruikt bij twijfel tussen 2 eenheden in Lid1 en Lid2</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="E">
+				<xs:annotation>
+					<xs:documentation>en, wordt gebruikt om aan te duiden dat er 2 eenheden geïdentificeerd kunnen worden</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

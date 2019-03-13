@@ -190,11 +190,16 @@ class TestOwsutil(object):
                 assert type(attr['definition']) in (str, unicode)
 
                 assert 'values' in attr
-                assert type(attr['values']) is list
-                if len(attr['values']) > 0:
-                    for v in attr['values']:
+
+                if attr['values'] is not None:
+                    assert type(attr['values']) is dict
+
+                    for v in attr['values'].keys():
                         assert type(v) in (str, unicode)
-                    assert len(attr['values']) == len(set(attr['values']))
+                        assert type(attr['values'][v]) in (str, unicode) or \
+                               attr['values'][v] is None
+                    assert len(attr['values'].keys()) == len(
+                        set(attr['values'].keys()))
 
                 assert 'multiplicity' in attr
                 mp = attr['multiplicity']

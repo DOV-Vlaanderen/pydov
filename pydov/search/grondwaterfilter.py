@@ -16,6 +16,7 @@ class GrondwaterFilterSearch(AbstractSearch):
     __wfs_namespace = None
     __md_metadata = None
     __fc_featurecatalogue = None
+    __xsd_schemas = None
 
     def __init__(self):
         """Initialisation."""
@@ -46,9 +47,14 @@ class GrondwaterFilterSearch(AbstractSearch):
                 GrondwaterFilterSearch.__fc_featurecatalogue = \
                     owsutil.get_remote_featurecatalogue(csw_url, fc_uuid)
 
+            if GrondwaterFilterSearch.__xsd_schemas is None:
+                GrondwaterFilterSearch.__xsd_schemas = \
+                    self._get_remote_xsd_schemas()
+
             fields = self._build_fields(
                 GrondwaterFilterSearch.__wfs_schema,
-                GrondwaterFilterSearch.__fc_featurecatalogue)
+                GrondwaterFilterSearch.__fc_featurecatalogue,
+                GrondwaterFilterSearch.__xsd_schemas)
 
             for field in fields.values():
                 if field['name'] not in self._type.get_field_names(
@@ -63,7 +69,8 @@ class GrondwaterFilterSearch(AbstractSearch):
 
             self._fields = self._build_fields(
                 GrondwaterFilterSearch.__wfs_schema,
-                GrondwaterFilterSearch.__fc_featurecatalogue)
+                GrondwaterFilterSearch.__fc_featurecatalogue,
+                GrondwaterFilterSearch.__xsd_schemas)
 
     def search(self, location=None, query=None, return_fields=None):
         """Search for groundwater screens (GrondwaterFilter). Provide

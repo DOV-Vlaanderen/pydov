@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """Module containing the abstract search classes to retrieve DOV data."""
+import datetime
+from distutils.util import strtobool
 
 import owslib
 import pydov
@@ -9,6 +11,9 @@ from owslib.fes import (
 )
 from owslib.wfs import WebFeatureService
 from pydov.util import owsutil
+from pydov.util.dovutil import (
+    get_xsd_schema,
+)
 from pydov.util.errors import (
     LayerNotFoundError,
     InvalidSearchParameterError,
@@ -19,7 +24,61 @@ from pydov.util.errors import (
 from ..util.owsutil import get_remote_schema
 
 
-class AbstractSearch(object):
+class AbstractCommon(object):
+    """Class grouping methods common to AbstractSearch and
+    AbstractTypeCommon."""
+
+    @classmethod
+    def _typeconvert(cls, text, returntype):
+        """Parse the text to the given returntype.
+
+        Parameters
+        ----------
+        text : str
+           Text to convert
+        returntype : str
+            Parse the text to this output datatype. One of
+            `string`, `float`, `integer`, `date`, `datetime`, `boolean`.
+
+        Returns
+        -------
+        str or float or int or bool or datetime.date or datetime.datetime
+            Returns the parsed text converted to the type described by
+            `returntype`.
+
+        """
+        if returntype == 'string':
+            def typeconvert(x):
+                return x.strip()
+        elif returntype == 'integer':
+            def typeconvert(x):
+                return int(x)
+        elif returntype == 'float':
+            def typeconvert(x):
+                return float(x)
+        elif returntype == 'date':
+            def typeconvert(x):
+                # Patch for Zulu-time issue of geoserver for WFS 1.1.0
+                if x.endswith('Z'):
+                    return datetime.datetime.strptime(x, '%Y-%m-%dZ').date() \
+                           + datetime.timedelta(days=1)
+                else:
+                    return datetime.datetime.strptime(x, '%Y-%m-%d').date()
+        elif returntype == 'datetime':
+            def typeconvert(x):
+                return datetime.datetime.strptime(
+                    x.split('.')[0], '%Y-%m-%dT%H:%M:%S')
+        elif returntype == 'boolean':
+            def typeconvert(x):
+                return strtobool(x) == 1
+        else:
+            def typeconvert(x):
+                return x
+
+        return typeconvert(text)
+
+
+class AbstractSearch(AbstractCommon):
     """Abstract search class grouping methods common to all DOV search
     classes. Not to be instantiated or used directly."""
 
@@ -147,6 +206,18 @@ class AbstractSearch(object):
         wfs_layer = self._get_layer()
         return owsutil.get_remote_metadata(wfs_layer)
 
+    def _get_remote_xsd_schemas(self):
+        """Request and parse the remote XSD schemas associated with this type.
+
+        Returns
+        -------
+        list of etree.ElementTree
+            List of parsed XSD schemas associated with this type.
+
+        """
+        return [etree.fromstring(get_xsd_schema(i)) for i in
+                self._type.get_xsd_schemas()]
+
     def _get_csw_base_url(self):
         """Get the CSW base url for the remote metadata associated with the
         layer.
@@ -161,7 +232,46 @@ class AbstractSearch(object):
         wfs_layer = self._get_layer()
         return owsutil.get_csw_base_url(wfs_layer)
 
-    def _build_fields(self, wfs_schema, feature_catalogue):
+    @classmethod
+    def _get_xsd_enum_values(cls, xsd_schemas, xml_field):
+        """Get the distinct enum values from XSD schemas for a given XML field.
+
+        Depending of the 'xsd_type' of the XML field, retrieve the distinct
+        enum values and definitions from the XSD schemas.
+
+        Parameters
+        ----------
+        xsd_schemas : list of etree.ElementTree
+            List of parsed XSD schemas.
+        xml_field : dict
+            Dictionary describing the XML field, including a 'xsd_type' key
+            linking the type to the enum type in (one of) the XSD schemas.
+
+        Returns
+        -------
+        values : dict
+            Dictionary containing the enum values as keys (in the datatype
+            of the XML field) and the definitions as values.
+
+        """
+        values = None
+        if xml_field.get('xsd_type', None):
+            values = {}
+            for schema in xsd_schemas:
+                tree_values = schema.findall(
+                    './/{http://www.w3.org/2001/XMLSchema}simpleType[@'
+                    'name="%s"]/{http://www.w3.org/2001/XMLSchema}restriction/'
+                    '{http://www.w3.org/2001/XMLSchema}enumeration' %
+                    xml_field.get('xsd_type'))
+                for e in tree_values:
+                    value = cls._typeconvert(
+                        e.get('value'), xml_field.get('type'))
+                    values[value] = e.findtext(
+                        './{http://www.w3.org/2001/XMLSchema}annotation/{'
+                        'http://www.w3.org/2001/XMLSchema}documentation')
+        return values
+
+    def _build_fields(self, wfs_schema, feature_catalogue, xsd_schemas):
         """Build the dictionary containing the metadata about the available
         fields.
 
@@ -230,10 +340,8 @@ class AbstractSearch(object):
                 }
 
                 if fc_field['values'] is not None:
-                    stripped_values = [v.strip() for v in fc_field['values']
-                                       if len(v.strip()) > 0]
-                    if len(stripped_values) > 0:
-                        field['values'] = stripped_values
+                    field['values'] = fc_field['values']
+
                 fields[name] = field
 
         for xml_field in self._type.get_fields(source=['xml']).values():
@@ -245,6 +353,11 @@ class AbstractSearch(object):
                 'query': False,
                 'cost': 10
             }
+
+            values = self._get_xsd_enum_values(xsd_schemas, xml_field)
+            if values is not None:
+                field['values'] = values
+
             fields[field['name']] = field
 
         for custom_field in self._type.get_fields(source=['custom']).values():

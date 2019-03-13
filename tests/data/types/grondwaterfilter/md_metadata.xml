@@ -59,8 +59,8 @@
         </gmd:role>
       </gmd:CI_ResponsibleParty>
     </gmd:contact>
-    <gmd:dateStamp>
-      <gco:DateTime>2019-01-30T12:06:39</gco:DateTime>
+    <gmd:dateStamp xmlns:gfc="http://www.isotc211.org/2005/gfc" xmlns:gmx="http://www.isotc211.org/2005/gmx">
+      <gco:DateTime>2019-02-07T13:49:01</gco:DateTime>
     </gmd:dateStamp>
     <gmd:metadataStandardName>
       <gco:CharacterString>ISO 19115/2003/Cor.1:2006</gco:CharacterString>
@@ -209,7 +209,7 @@
           </gmd:CI_ResponsibleParty>
         </gmd:pointOfContact>
         <gmd:pointOfContact>
-          <gmd:CI_ResponsibleParty>
+          <gmd:CI_ResponsibleParty xmlns:gfc="http://www.isotc211.org/2005/gfc" xmlns:gmx="http://www.isotc211.org/2005/gmx">
             <gmd:organisationName>
               <gco:CharacterString>Databank Ondergrond Vlaanderen (DOV)</gco:CharacterString>
             </gmd:organisationName>
@@ -225,10 +225,10 @@
                 <gmd:address>
                   <gmd:CI_Address>
                     <gmd:deliveryPoint>
-                      <gco:CharacterString>Technologiepark Gebouw 905</gco:CharacterString>
+                      <gco:CharacterString>Technologiepark-Zwijnaarde 68</gco:CharacterString>
                     </gmd:deliveryPoint>
                     <gmd:city>
-                      <gco:CharacterString>Zwijnaarde</gco:CharacterString>
+                      <gco:CharacterString>Gent</gco:CharacterString>
                     </gmd:city>
                     <gmd:postalCode>
                       <gco:CharacterString>9052</gco:CharacterString>
@@ -256,7 +256,7 @@
           </gmd:CI_ResponsibleParty>
         </gmd:pointOfContact>
         <gmd:pointOfContact>
-          <gmd:CI_ResponsibleParty>
+          <gmd:CI_ResponsibleParty xmlns:gfc="http://www.isotc211.org/2005/gfc" xmlns:gmx="http://www.isotc211.org/2005/gmx">
             <gmd:organisationName>
               <gco:CharacterString>Ondersteunend Centrum Databank Ondergrond Vlaanderen</gco:CharacterString>
             </gmd:organisationName>
@@ -272,10 +272,10 @@
                 <gmd:address>
                   <gmd:CI_Address>
                     <gmd:deliveryPoint>
-                      <gco:CharacterString>Technologiepark Gebouw 905</gco:CharacterString>
+                      <gco:CharacterString>Technologiepark-Zwijnaarde 68</gco:CharacterString>
                     </gmd:deliveryPoint>
                     <gmd:city>
-                      <gco:CharacterString>Zwijnaarde</gco:CharacterString>
+                      <gco:CharacterString>Gent</gco:CharacterString>
                     </gmd:city>
                     <gmd:postalCode>
                       <gco:CharacterString>9052</gco:CharacterString>
@@ -637,7 +637,7 @@
         <gmd:distributor>
           <gmd:MD_Distributor>
             <gmd:distributorContact>
-              <gmd:CI_ResponsibleParty>
+              <gmd:CI_ResponsibleParty xmlns:gfc="http://www.isotc211.org/2005/gfc" xmlns:gmx="http://www.isotc211.org/2005/gmx">
                 <gmd:organisationName>
                   <gco:CharacterString>Databank Ondergrond Vlaanderen (DOV)</gco:CharacterString>
                 </gmd:organisationName>
@@ -653,10 +653,10 @@
                     <gmd:address>
                       <gmd:CI_Address>
                         <gmd:deliveryPoint>
-                          <gco:CharacterString>Technologiepark Gebouw 905</gco:CharacterString>
+                          <gco:CharacterString>Technologiepark-Zwijnaarde 68</gco:CharacterString>
                         </gmd:deliveryPoint>
                         <gmd:city>
-                          <gco:CharacterString>Zwijnaarde</gco:CharacterString>
+                          <gco:CharacterString>Gent</gco:CharacterString>
                         </gmd:city>
                         <gmd:postalCode>
                           <gco:CharacterString>9052</gco:CharacterString>

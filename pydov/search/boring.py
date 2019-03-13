@@ -14,6 +14,7 @@ class BoringSearch(AbstractSearch):
     __wfs_namespace = None
     __md_metadata = None
     __fc_featurecatalogue = None
+    __xsd_schemas = None
 
     def __init__(self):
         """Initialisation."""
@@ -42,8 +43,14 @@ class BoringSearch(AbstractSearch):
                 BoringSearch.__fc_featurecatalogue = \
                     owsutil.get_remote_featurecatalogue(csw_url, fc_uuid)
 
+            if BoringSearch.__xsd_schemas is None:
+                BoringSearch.__xsd_schemas = \
+                    self._get_remote_xsd_schemas()
+
             fields = self._build_fields(
-                BoringSearch.__wfs_schema, BoringSearch.__fc_featurecatalogue)
+                BoringSearch.__wfs_schema,
+                BoringSearch.__fc_featurecatalogue,
+                BoringSearch.__xsd_schemas)
 
             for field in fields.values():
                 if field['name'] not in self._type.get_field_names(
@@ -57,7 +64,9 @@ class BoringSearch(AbstractSearch):
                     })
 
             self._fields = self._build_fields(
-                BoringSearch.__wfs_schema, BoringSearch.__fc_featurecatalogue)
+                BoringSearch.__wfs_schema,
+                BoringSearch.__fc_featurecatalogue,
+                BoringSearch.__xsd_schemas)
 
     def search(self, location=None, query=None, return_fields=None):
         """Search for boreholes (Boring). Provide `location` and/or `query`.

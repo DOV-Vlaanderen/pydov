@@ -15,6 +15,7 @@ class SonderingSearch(AbstractSearch):
     __wfs_namespace = None
     __md_metadata = None
     __fc_featurecatalogue = None
+    __xsd_schemas = None
 
     def __init__(self):
         """Initialisation."""
@@ -43,9 +44,14 @@ class SonderingSearch(AbstractSearch):
                 SonderingSearch.__fc_featurecatalogue = \
                     owsutil.get_remote_featurecatalogue(csw_url, fc_uuid)
 
+            if SonderingSearch.__xsd_schemas is None:
+                SonderingSearch.__xsd_schemas = \
+                    self._get_remote_xsd_schemas()
+
             fields = self._build_fields(
                 SonderingSearch.__wfs_schema,
-                SonderingSearch.__fc_featurecatalogue)
+                SonderingSearch.__fc_featurecatalogue,
+                SonderingSearch.__xsd_schemas)
 
             for field in fields.values():
                 if field['name'] not in self._type.get_field_names(
@@ -60,7 +66,8 @@ class SonderingSearch(AbstractSearch):
 
             self._fields = self._build_fields(
                 SonderingSearch.__wfs_schema,
-                SonderingSearch.__fc_featurecatalogue)
+                SonderingSearch.__fc_featurecatalogue,
+                SonderingSearch.__xsd_schemas)
 
     def search(self, location=None, query=None, return_fields=None):
         """Search for CPT measurements (Sondering). Provide `location` and/or

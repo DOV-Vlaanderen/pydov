@@ -19,6 +19,7 @@ from tests.test_search import (
     mp_remote_fc,
     mp_remote_describefeaturetype,
     mp_remote_wfs_feature,
+    mp_remote_xsd,
     mp_dov_xml,
     mp_dov_xml_broken,
     wfs_getfeature,
@@ -38,6 +39,8 @@ location_wfs_feature = \
 location_dov_xml = \
     'tests/data/types/interpretaties/formele_stratigrafie' \
     '/formele_stratigrafie.xml'
+location_xsd_base = \
+    'tests/data/types/interpretaties/formele_stratigrafie/xsd_*.xml'
 
 
 class TestFormeleStratigrafieSearch(AbstractTestSearch):

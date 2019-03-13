@@ -190,7 +190,7 @@ class AbstractTestSearch(object):
         raise NotImplementedError
 
     def test_get_fields(self, mp_wfs, mp_remote_describefeaturetype,
-                        mp_remote_md, mp_remote_fc):
+                        mp_remote_md, mp_remote_fc, mp_remote_xsd):
         """Test the get_fields method.
 
         Test whether the returned fields match the format specified
@@ -244,7 +244,13 @@ class AbstractTestSearch(object):
                 assert sorted(f.keys()) == [
                     'cost', 'definition', 'name', 'notnull', 'query', 'type',
                     'values']
-                for v in f['values']:
+
+                assert type(f['values']) is dict
+
+                for v in f['values'].keys():
+                    assert type(f['values'][v]) in (str, unicode) or f[
+                        'values'][v] is None
+
                     if f['type'] == 'string':
                         assert type(v) in (str, unicode)
                     elif f['type'] == 'float':
@@ -509,6 +515,57 @@ class AbstractTestSearch(object):
             query=self.get_valid_query_single(),
             return_fields=self.get_valid_returnfields_extra())
 
+    def test_get_fields_xsd_values(self, mp_remote_xsd):
+        """Test the result of get_fields when the XML field has an XSD type.
+
+        Test whether the output from get_fields() returns the values from
+        the XSD.
+
+        Parameters
+        ----------
+        mp_remote_xsd : pytest.fixture
+            Monkeypatch the call to get XSD schemas.
+
+        """
+        xsd_schemas = self.get_type().get_xsd_schemas()
+
+        if len(xsd_schemas) > 0:
+            xml_fields = self.get_type().get_fields(source='xml')
+            fields = self.get_search_object().get_fields()
+            for f in xml_fields.values():
+                if 'xsd_type' in f:
+                    assert 'values' in fields[f['name']]
+                    assert type(fields[f['name']]['values']) is dict
+
+    def test_get_fields_no_xsd(self):
+        """Test whether no XML fields have an XSD type when no XSD schemas
+        are available."""
+        xsd_schemas = self.get_type().get_xsd_schemas()
+
+        if len(xsd_schemas) == 0:
+            xml_fields = self.get_type().get_fields(source='xml')
+            for f in xml_fields.values():
+                assert 'xsd_type' not in f
+
+    def test_get_fields_xsd_enums(self):
+        """Test whether at least one XML field has an XSD type when there
+        are XSD schemas available.
+
+        Make sure XSD schemas are only listed (and downloaded) when they are
+        needed.
+
+        """
+        xsd_schemas = self.get_type().get_xsd_schemas()
+
+        xsd_type_count = 0
+
+        if len(xsd_schemas) > 0:
+            xml_fields = self.get_type().get_fields(source='xml')
+            for f in xml_fields.values():
+                if 'xsd_type' in f:
+                    xsd_type_count += 1
+            assert xsd_type_count > 0
+
 
 class AbstractTestTypes(object):
     """Class grouping common test code for datatype classes."""
@@ -753,9 +810,14 @@ class AbstractTestTypes(object):
                 assert 'notnull' in field
                 assert type(field['notnull']) is bool
 
-                assert sorted(field.keys()) == [
-                    'definition', 'name', 'notnull', 'source', 'sourcefield',
-                    'type']
+                if 'xsd_type' in field:
+                    assert sorted(field.keys()) == [
+                        'definition', 'name', 'notnull', 'source',
+                        'sourcefield', 'type', 'xsd_type']
+                else:
+                    assert sorted(field.keys()) == [
+                        'definition', 'name', 'notnull', 'source',
+                        'sourcefield', 'type']
 
     def test_get_fields_nosubtypes(self):
         """Test the get_fields method not including subtypes.

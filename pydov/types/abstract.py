@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
 """Module containing the base DOV data types."""
 
-import datetime
 import types
 import warnings
 from collections import OrderedDict
-from distutils.util import strtobool
 
 import pydov
 import numpy as np
 
 from owslib.etree import etree
+from pydov.search.abstract import AbstractCommon
 from pydov.util.dovutil import (
     get_dov_xml,
     parse_dov_xml,
@@ -23,7 +22,7 @@ from ..util.errors import (
 )
 
 
-class AbstractCommon(object):
+class AbstractTypeCommon(AbstractCommon):
     """Class grouping methods common to AbstractDovType and
     AbstractDovSubType."""
 
@@ -52,34 +51,6 @@ class AbstractCommon(object):
             `xpath`, converted to the type described by `returntype`.
 
         """
-        if returntype == 'string':
-            def typeconvert(x):
-                return x.strip()
-        elif returntype == 'integer':
-            def typeconvert(x):
-                return int(x)
-        elif returntype == 'float':
-            def typeconvert(x):
-                return float(x)
-        elif returntype == 'date':
-            def typeconvert(x):
-                # Patch for Zulu-time issue of geoserver for WFS 1.1.0
-                if x.endswith('Z'):
-                    return datetime.datetime.strptime(x, '%Y-%m-%dZ').date() \
-                           + datetime.timedelta(days=1)
-                else:
-                    return datetime.datetime.strptime(x, '%Y-%m-%d').date()
-        elif returntype == 'datetime':
-            def typeconvert(x):
-                return datetime.datetime.strptime(
-                    x.split('.')[0], '%Y-%m-%dT%H:%M:%S')
-        elif returntype == 'boolean':
-            def typeconvert(x):
-                return strtobool(x) == 1
-        else:
-            def typeconvert(x):
-                return x
-
         if namespace is not None:
             ns = '{%s}' % namespace
             text = func('./' + ns + ('/' + ns).join(xpath.split('/')))
@@ -88,16 +59,19 @@ class AbstractCommon(object):
 
         if text is None:
             return np.nan
-        return typeconvert(text)
+
+        return cls._typeconvert(text, returntype)
 
 
-class AbstractDovSubType(AbstractCommon):
+class AbstractDovSubType(AbstractTypeCommon):
 
     _name = None
     _rootpath = None
 
     _UNRESOLVED = "{UNRESOLVED}"
     _fields = []
+
+    _xsd_schemas = []
 
     def __init__(self):
         """Initialisation.
@@ -242,7 +216,7 @@ class AbstractDovSubType(AbstractCommon):
         return cls._rootpath
 
 
-class AbstractDovType(AbstractCommon):
+class AbstractDovType(AbstractTypeCommon):
     """Abstract DOV type grouping fields and methods common to all DOV
     object types. Not to be instantiated or used directly."""
 
@@ -250,6 +224,8 @@ class AbstractDovType(AbstractCommon):
 
     _UNRESOLVED = "{UNRESOLVED}"
     _fields = []
+
+    _xsd_schemas = []
 
     def __init__(self, typename, pkey):
         """Initialisation.
@@ -489,6 +465,27 @@ class AbstractDovType(AbstractCommon):
                 fields.update(st.get_fields())
 
         return fields
+
+    @classmethod
+    def get_xsd_schemas(cls):
+        """Get a set of distinct XSD schema URLs for this type and its
+        subtypes.
+
+        Returns
+        -------
+        set of str
+            A set of XSD schema URLs.
+
+        """
+        xsd_schemas = set()
+        for s in cls._xsd_schemas:
+            xsd_schemas.add(s)
+
+        for st in cls._subtypes:
+            for s in st._xsd_schemas:
+                xsd_schemas.add(s)
+
+        return xsd_schemas
 
     @classmethod
     def to_df_array(cls, iterable, return_fields=None):

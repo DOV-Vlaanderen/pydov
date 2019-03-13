@@ -1,4 +1,5 @@
 """Module grouping tests for the boring search module."""
+import glob
 
 import pytest
 
@@ -297,6 +298,39 @@ def mp_dov_xml_broken(monkeypatch):
 
     monkeypatch.setattr(pydov.types.abstract.AbstractDovType,
                         '_get_xml_data', _get_xml_data)
+
+
+@pytest.fixture()
+def mp_remote_xsd(monkeymodule, request):
+    """Monkeypatch the call to get the remote XSD schemas.
+
+    This monkeypatch requires a module variable ``location_xsd_base``
+    with a glob expression to the XSD file(s) on disk.
+
+    Parameters
+    ----------
+    monkeymodule : pytest.fixture
+        PyTest monkeypatch fixture with module scope.
+    request : pytest.fixtue
+        PyTest fixture providing request context.
+
+    """
+
+    def _get_remote_xsd(*args, **kwargs):
+        xsd_base_path = getattr(request.module, "location_xsd_base")
+        schemas = []
+
+        for xsd_file in glob.glob(xsd_base_path):
+            with open(xsd_file, 'r') as f:
+                data = f.read()
+                if type(data) is not bytes:
+                    data = data.encode('utf-8')
+                schemas.append(etree.fromstring(data))
+
+        return schemas
+
+    monkeymodule.setattr(pydov.search.abstract.AbstractSearch,
+                         '_get_remote_xsd_schemas', _get_remote_xsd)
 
 
 @pytest.mark.parametrize("objectsearch", search_objects)

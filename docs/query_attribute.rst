@@ -353,4 +353,15 @@ The following example gets borehole information based on a search for groundwate
     filters = fs.search(location=WithinDistance(Point(96540, 186900), 10, 'km'),
                         return_fields=('pkey_filter', 'boringfiche'))
 
+    print(filters.head())
+    #                                              pkey_filter                                            boringfiche
+    # 0  https://www.dov.vlaanderen.be/data/filter/1989-000092  https://www.dov.vlaanderen.be/data/boring/1989-021283
+    # 1  https://www.dov.vlaanderen.be/data/filter/2003-007671                                                    NaN
+    # 2  https://www.dov.vlaanderen.be/data/filter/1989-001026  https://www.dov.vlaanderen.be/data/boring/1989-065942
+
     boringen = bs.search(query=Join(filters, on='pkey_boring', using='boringfiche'))
+
+    print(boringen.head())
+    #                                              pkey_boring      ...     boormethode
+    # 0  https://www.dov.vlaanderen.be/data/boring/1989-021283      ...        onbekend
+    # 1  https://www.dov.vlaanderen.be/data/boring/1989-065942      ...        onbekend

@@ -139,6 +139,9 @@ subclassing AbstractCache and implementing its abstract methods ``get``,
 ``_get_remote`` to request data from the DOV webservices and
 ``_emit_cache_hit`` to notify hooks a file has been retrieved from the cache.
 
+Note that the ``get`` method will be called from multiple threads
+simultaneously, so implementations must be threadsafe or use locking.
+
 A (naive) implementation for an in-memory cache would be something like::
 
     from pydov.util.caching import AbstractCache

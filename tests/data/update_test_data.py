@@ -4,6 +4,18 @@ import sys
 from owslib.etree import etree
 from owslib.util import openURL
 
+from pydov.types.boring import Boring
+from pydov.types.grondwaterfilter import GrondwaterFilter
+from pydov.types.interpretaties import (
+    GeotechnischeCodering,
+    GecodeerdeLithologie,
+    LithologischeBeschrijvingen,
+    HydrogeologischeStratigrafie,
+    FormeleStratigrafie,
+    InformeleStratigrafie,
+)
+from pydov.types.sondering import Sondering
+
 
 def get_first_featuremember(wfs_response):
     tree = etree.fromstring(wfs_response.encode('utf-8'))
@@ -68,6 +80,11 @@ if __name__ == '__main__':
                 'https://www.dov.vlaanderen.be/geoserver/dov-pub/Boringen'
                 '/ows?service=wfs&version=1.1.0&request=DescribeFeatureType')
 
+    for xsd_schema in Boring.get_xsd_schemas():
+        update_file(
+            'types/boring/xsd_%s.xml' % xsd_schema.split('/')[-1],
+            xsd_schema)
+
     # types/sondering
 
     update_file('types/sondering/sondering.xml',
@@ -101,6 +118,11 @@ if __name__ == '__main__':
     update_file('types/sondering/wfsdescribefeaturetype.xml',
                 'https://www.dov.vlaanderen.be/geoserver/dov-pub/Sonderingen'
                 '/ows?service=wfs&version=1.1.0&request=DescribeFeatureType')
+
+    for xsd_schema in Sondering.get_xsd_schemas():
+        update_file(
+            'types/sondering/xsd_%s.xml' % xsd_schema.split('/')[-1],
+            xsd_schema)
 
     # types/interpretaties/informele_stratigrafie
 
@@ -145,6 +167,12 @@ if __name__ == '__main__':
         '/informele_stratigrafie/ows?service=wfs&version=1.1.0&request'
         '=DescribeFeatureType')
 
+    for xsd_schema in InformeleStratigrafie.get_xsd_schemas():
+        update_file(
+            'types/interpretaties/informele_stratigrafie/xsd_%s.xml' %
+            xsd_schema.split('/')[-1],
+            xsd_schema)
+
     # types/interpretaties/formele_stratigrafie
 
     update_file('types/interpretaties/formele_stratigrafie'
@@ -187,6 +215,12 @@ if __name__ == '__main__':
         'https://www.dov.vlaanderen.be/geoserver/interpretaties'
         '/formele_stratigrafie/ows?service=wfs&version=1.1.0&request'
         '=DescribeFeatureType')
+
+    for xsd_schema in FormeleStratigrafie.get_xsd_schemas():
+        update_file(
+            'types/interpretaties/formele_stratigrafie/xsd_%s.xml' %
+            xsd_schema.split('/')[-1],
+            xsd_schema)
 
     # types/interpretaties/hydrogeologische_stratigrafie
 
@@ -234,6 +268,12 @@ if __name__ == '__main__':
         '/hydrogeologische_stratigrafie/ows?service=wfs&version=1.1.0&request'
         '=DescribeFeatureType')
 
+    for xsd_schema in HydrogeologischeStratigrafie.get_xsd_schemas():
+        update_file(
+            'types/interpretaties/hydrogeologische_stratigrafie/xsd_%s.xml' %
+            xsd_schema.split('/')[-1],
+            xsd_schema)
+
     # types/interpretaties/lithologische_beschrijvingen
 
     update_file('types/interpretaties/lithologische_beschrijvingen'
@@ -276,6 +316,12 @@ if __name__ == '__main__':
         'https://www.dov.vlaanderen.be/geoserver/interpretaties'
         '/lithologische_beschrijvingen/ows?service=wfs&version=1.1.0&request'
         '=DescribeFeatureType')
+
+    for xsd_schema in LithologischeBeschrijvingen.get_xsd_schemas():
+        update_file(
+            'types/interpretaties/lithologische_beschrijvingen/xsd_%s.xml' %
+            xsd_schema.split('/')[-1],
+            xsd_schema)
 
     # types/interpretaties/gecodeerde_lithologie
 
@@ -320,6 +366,12 @@ if __name__ == '__main__':
         '/gecodeerde_lithologie/ows?service=wfs&version=1.1.0&request'
         '=DescribeFeatureType')
 
+    for xsd_schema in GecodeerdeLithologie.get_xsd_schemas():
+        update_file(
+            'types/interpretaties/gecodeerde_lithologie/xsd_%s.xml' %
+            xsd_schema.split('/')[-1],
+            xsd_schema)
+
     # types/interpretaties/geotechnische_codering
 
     update_file('types/interpretaties/geotechnische_codering'
@@ -363,7 +415,13 @@ if __name__ == '__main__':
         '/geotechnische_coderingen/ows?service=wfs&version=1.1.0&request'
         '=DescribeFeatureType')
 
-    # types/filter
+    for xsd_schema in GeotechnischeCodering.get_xsd_schemas():
+        update_file(
+            'types/interpretaties/geotechnische_codering/xsd_%s.xml' %
+            xsd_schema.split('/')[-1],
+            xsd_schema)
+
+    # types/grondwaterfilter
 
     update_file('types/grondwaterfilter/grondwaterfilter.xml',
                 'https://www.dov.vlaanderen.be/data/filter/2003-004471.xml')
@@ -399,6 +457,11 @@ if __name__ == '__main__':
                 'https://www.dov.vlaanderen.be/geoserver/gw_meetnetten/'
                 'meetnetten/ows?service=wfs&version=1.1.0&'
                 'request=DescribeFeatureType')
+
+    for xsd_schema in GrondwaterFilter.get_xsd_schemas():
+        update_file(
+            'types/grondwaterfilter/xsd_%s.xml' % xsd_schema.split('/')[-1],
+            xsd_schema)
 
     # util/owsutil
 

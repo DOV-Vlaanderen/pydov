@@ -47,18 +47,18 @@ your own cache, as follows::
 
     import pydov.util.caching
 
-    pydov.cache = pydov.util.caching.TransparentCache(
+    pydov.cache = pydov.util.caching.GzipTextFileCache(
         cachedir=r'C:\temp\pydov'
     )
 
 Besides controlling the cache's location, this also allows using a different
 cache in different scripts or projects.
 
-Mind that xmls are stored by search type because permalinks are not unique
+Mind that xmls are stored by search type because object keys are not unique
 across types. Therefore, the dir structure of the cache will look like, e.g.::
 
-    ...\pydov\boring\filename.xml
-    ...\pydov\filter\filename.xml
+    ...\pydov\boring\filename.xml.gz
+    ...\pydov\filter\filename.xml.gz
 
 
 Changing the maximum age of cached data
@@ -71,7 +71,7 @@ be considered valid for the current runtime::
     import pydov.util.caching
     import datetime
 
-    pydov.cache = pydov.util.caching.TransparentCache(
+    pydov.cache = pydov.util.caching.GzipTextFileCache(
         max_age=datetime.timedelta(days=1)
     )
 
@@ -112,3 +112,52 @@ by issuing::
 
 This will erase the entire cache, not only the records older than the
 maximum age.
+
+Custom caching
+**************
+
+Using plain text caching
+........................
+
+By default, pydov caches files on disk as gzipped XML documents. Should you
+for any reason want to use plain text XML documents instead, you can do so by
+using the PlainTextFileCache instead of the GzipTextFileCache.
+
+Mind that this can increase the disk usage of the cache by 10x.::
+
+    import pydov.util.caching
+
+    pydov.cache = pydov.util.caching.PlainTextFileCache()
+
+
+Implementing custom caching
+...........................
+
+Should you want to implement your own caching mechanism, you can do so by
+subclassing AbstractCache and implementing its abstract methods ``get``,
+``clean`` and ``remove``. Hereby you can use the available methods
+``_get_remote`` to request data from the DOV webservices and
+``_emit_cache_hit`` to notify hooks a file has been retrieved from the cache.
+
+A (naive) implementation for an in-memory cache would be something like::
+
+    from pydov.util.caching import AbstractCache
+
+    class MemoryCache(AbstractCache):
+        def __init__(self):
+            self.cache = {}
+
+        def get(self, url):
+            if url not in self.cache:
+                self.cache[url] = self._get_remote(url)
+            else:
+                self._emit_cache_hit(url)
+            return self.cache[url]
+
+        def clean(self):
+            self.cache = {}
+
+        def remove(self):
+            self.cache = {}
+
+    pydov.cache = MemoryCache()

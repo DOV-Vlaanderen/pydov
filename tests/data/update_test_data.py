@@ -458,6 +458,25 @@ if __name__ == '__main__':
                 'meetnetten/ows?service=wfs&version=1.1.0&'
                 'request=DescribeFeatureType')
 
+    # without Peilmeting
+    update_file('types/grondwaterfilter/grondwaterfilter_geenpeilmeting.xml',
+                'https://www.dov.vlaanderen.be/data/filter/2007-011302.xml')
+
+    update_file('types/grondwaterfilter/wfsgetfeature_geenpeilmeting.xml',
+                'https://www.dov.vlaanderen.be/geoserver/ows?service=WFS'
+                '&version=1.1.0&request=GetFeature&typeName='
+                'gw_meetnetten:meetnetten&maxFeatures=1&'
+                'CQL_Filter=filterfiche=%27https://www.dov'
+                '.vlaanderen.be/data/filter/2007-011302%27')
+
+    update_file('types/grondwaterfilter/feature_geenpeilmeting.xml',
+                'https://www.dov.vlaanderen.be/geoserver/ows?service=WFS'
+                '&version=1.1.0&request=GetFeature&typeName='
+                'gw_meetnetten:meetnetten&maxFeatures=1&'
+                'CQL_Filter=filterfiche=%27https://www.dov'
+                '.vlaanderen.be/data/filter/2007-011302%27',
+                get_first_featuremember)
+
     for xsd_schema in GrondwaterFilter.get_xsd_schemas():
         update_file(
             'types/grondwaterfilter/xsd_%s.xml' % xsd_schema.split('/')[-1],

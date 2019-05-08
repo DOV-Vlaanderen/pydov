@@ -985,3 +985,12 @@ class AbstractTestTypes(object):
 
         for feature in features:
             assert type(feature) is self.get_type()
+
+    def test_missing_pkey(self):
+        """Test initialising an object type with a pkey of 'None'.
+
+        Test whether a ValueError is raised.
+
+        """
+        with pytest.raises(ValueError):
+            instance = self.get_type()(None)

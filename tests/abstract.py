@@ -977,14 +977,16 @@ class AbstractTestTypes(object):
 
         """
         tree = etree.fromstring(wfs_getfeature.encode('utf8'))
-        feature_members = tree.findall('.//{http://www.opengis.net/gml}'
-                                       'featureMembers')
+        feature_members = tree.find('.//{http://www.opengis.net/gml}'
+                                    'featureMembers')
 
-        features = self.get_type().from_wfs(feature_members,
-                                            self.get_namespace())
+        if feature_members is not None:
+            fts = [ft for ft in feature_members]
 
-        for feature in features:
-            assert type(feature) is self.get_type()
+            features = self.get_type().from_wfs(fts, self.get_namespace())
+
+            for feature in features:
+                assert type(feature) is self.get_type()
 
     def test_missing_pkey(self):
         """Test initialising an object type with a pkey of 'None'.

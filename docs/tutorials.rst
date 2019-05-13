@@ -30,4 +30,5 @@ To run these interactively online without installation, use the following binder
    notebooks/search_lithologische_beschrijvingen.ipynb
    notebooks/search_gecodeerde_lithologie.ipynb
    notebooks/search_geotechnische_coderingen.ipynb
+   notebooks/search_quartaire_stratigrafie.ipynb
    notebooks/caching.ipynb

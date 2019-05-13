@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns3:dov-schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns3="http://kern.schemas.dov.vlaanderen.be" xsi:schemaLocation="http://kern.schemas.dov.vlaanderen.be https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/dov.xsd">
+    <filter>
+        <identificatie>1</identificatie>
+        <filtertype>peilfilter</filtertype>
+        <grondwaterlocatie>WAHP300</grondwaterlocatie>
+        <meetnet>9</meetnet>
+        <datum_ingebruikname>2007-10-31</datum_ingebruikname>
+        <monsternameMogelijk>false</monsternameMogelijk>
+        <ligging>
+            <aquifer>0000</aquifer>
+            <regime>onbekend</regime>
+        </ligging>
+        <meetfrequentie>
+            <aantal_peilmetingen>20</aantal_peilmetingen>
+        </meetfrequentie>
+        <opbouw>
+            <onderdeel>
+                <van>-0.61</van>
+                <tot>1.18</tot>
+                <filterelement>stijgbuis</filterelement>
+                <binnendiameter>50</binnendiameter>
+            </onderdeel>
+            <onderdeel>
+                <van>1.18</van>
+                <tot>2.11</tot>
+                <filterelement>filter</filterelement>
+                <binnendiameter>50</binnendiameter>
+            </onderdeel>
+        </opbouw>
+        <status>publiek</status>
+    </filter>
+    <filtermeting>
+        <grondwaterlocatie>WAHP300</grondwaterlocatie>
+        <filter>
+            <identificatie>1</identificatie>
+            <filtertype>peilfilter</filtertype>
+        </filter>
+    </filtermeting>
+</ns3:dov-schema>

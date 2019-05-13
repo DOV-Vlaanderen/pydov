@@ -774,6 +774,13 @@ class QuartairStratigrafieLaag(AbstractDovSubType):
     _name = 'quartairestratigrafie_laag'
     _rootpath = './/quartairstratigrafie/laag'
 
+    _xsd_schemas = [
+        'https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/'
+        'interpretatie/InterpretatieDataCodes.xsd',
+        'https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/'
+        'interpretatie/QuartairStratigrafieDataCodes.xsd'
+    ]
+
     _fields = [{
         'name': 'diepte_laag_van',
         'source': 'xml',
@@ -794,6 +801,7 @@ class QuartairStratigrafieLaag(AbstractDovSubType):
         'name': 'lid1',
         'source': 'xml',
         'sourcefield': '/lid1',
+        'xsd_type': 'QuartairStratigrafieLedenEnumType',
         'definition': 'eerste eenheid van de laag quartairstratigrafie',
         'type': 'string',
         'notnull': False
@@ -801,6 +809,7 @@ class QuartairStratigrafieLaag(AbstractDovSubType):
         'name': 'relatie_lid1_lid2',
         'source': 'xml',
         'sourcefield': '/relatie_lid1_lid2',
+        'xsd_type': 'RelatieLedenEnumType',
         'definition': 'verbinding of relatie tussen lid1 en lid2 van de '
                       'laag quartairstratigrafie',
         'type': 'string',
@@ -809,6 +818,7 @@ class QuartairStratigrafieLaag(AbstractDovSubType):
         'name': 'lid2',
         'source': 'xml',
         'sourcefield': '/lid2',
+        'xsd_type': 'QuartairStratigrafieLedenEnumType',
         'definition': 'tweede eenheid van de laag quartairstratigrafie. '
                       'Indien niet ingevuld wordt default dezelfde waarde '
                       'als voor Lid1 ingevuld',

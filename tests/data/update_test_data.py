@@ -13,6 +13,7 @@ from pydov.types.interpretaties import (
     HydrogeologischeStratigrafie,
     FormeleStratigrafie,
     InformeleStratigrafie,
+    QuartairStratigrafie,
 )
 from pydov.types.sondering import Sondering
 
@@ -517,3 +518,8 @@ if __name__ == '__main__':
         'https://www.dov.vlaanderen.be/geoserver/interpretaties'
         '/quartaire_stratigrafie/ows?service=wfs&version=1.1.0&request'
         '=DescribeFeatureType')
+
+    for xsd_schema in QuartairStratigrafie.get_xsd_schemas():
+        update_file(
+            'types/interpretaties/quartaire_stratigrafie/xsd_%s.xml' %
+            xsd_schema.split('/')[-1], xsd_schema)

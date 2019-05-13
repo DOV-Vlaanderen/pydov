@@ -798,6 +798,7 @@ class QuartairStratigrafieSearch(AbstractSearch):
     __wfs_namespace = None
     __md_metadata = None
     __fc_featurecatalogue = None
+    __xsd_schemas = None
 
     def __init__(self):
         """Initialisation."""
@@ -828,9 +829,14 @@ class QuartairStratigrafieSearch(AbstractSearch):
                 QuartairStratigrafieSearch.__fc_featurecatalogue = \
                     owsutil.get_remote_featurecatalogue(csw_url, fc_uuid)
 
+            if QuartairStratigrafieSearch.__xsd_schemas is None:
+                QuartairStratigrafieSearch.__xsd_schemas = \
+                    self._get_remote_xsd_schemas()
+
             fields = self._build_fields(
                 QuartairStratigrafieSearch.__wfs_schema,
-                QuartairStratigrafieSearch.__fc_featurecatalogue)
+                QuartairStratigrafieSearch.__fc_featurecatalogue,
+                QuartairStratigrafieSearch.__xsd_schemas)
 
             for field in fields.values():
                 if field['name'] not in self._type.get_field_names(
@@ -845,7 +851,8 @@ class QuartairStratigrafieSearch(AbstractSearch):
 
             self._fields = self._build_fields(
                 QuartairStratigrafieSearch.__wfs_schema,
-                QuartairStratigrafieSearch.__fc_featurecatalogue)
+                QuartairStratigrafieSearch.__fc_featurecatalogue,
+                QuartairStratigrafieSearch.__xsd_schemas)
 
     def search(self, location=None, query=None, return_fields=None):
         """Search for interpretations of Quartair stratigrafie.

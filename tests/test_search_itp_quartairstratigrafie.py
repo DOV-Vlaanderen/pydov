@@ -21,6 +21,7 @@ from tests.test_search import (
     mp_remote_wfs_feature,
     mp_dov_xml,
     mp_dov_xml_broken,
+    mp_remote_xsd,
     wfs_getfeature,
     wfs_feature,
 )
@@ -37,6 +38,8 @@ location_wfs_feature = \
     'tests/data/types/interpretaties/quartaire_stratigrafie/feature.xml'
 location_dov_xml = \
     'tests/data/types/interpretaties/quartaire_stratigrafie/quartaire_stratigrafie.xml'
+location_xsd_base = \
+    'tests/data/types/interpretaties/quartaire_stratigrafie/xsd_*.xml'
 
 
 class TestQuartairStratigrafieSearch(AbstractTestSearch):

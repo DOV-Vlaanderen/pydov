@@ -900,8 +900,7 @@ class QuartairStratigrafieSearch(AbstractSearch):
 
         """
         fts = self._search(location=location, query=query,
-                           return_fields=return_fields,
-                           extra_wfs_fields=['Type_proef', 'Proeffiche'])
+                           return_fields=return_fields)
 
         interpretaties = QuartairStratigrafie.from_wfs(
             fts, self.__wfs_namespace)

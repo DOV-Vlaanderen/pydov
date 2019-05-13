@@ -610,11 +610,14 @@ class AbstractDovType(AbstractTypeCommon):
             datadicts.append(self.data)
         else:
             for subtype in self.subdata:
-                for subdata in self.subdata[subtype]:
-                    datadict = {}
-                    datadict.update(self.data)
-                    datadict.update(subdata.data)
-                    datadicts.append(datadict)
+                if len(self.subdata[subtype]) == 0:
+                    datadicts.append(self.data)
+                else:
+                    for subdata in self.subdata[subtype]:
+                        datadict = {}
+                        datadict.update(self.data)
+                        datadict.update(subdata.data)
+                        datadicts.append(datadict)
 
         for d in datadicts:
             datarecords.append([d.get(field, np.nan) for field in fields])

@@ -327,13 +327,6 @@
             <zoet>N</zoet>
             <betrouwbaarheid>goed</betrouwbaarheid>
             <bron>freatisch 2014 voorjaar</bron>
-            <opmerking>
-                <tekst>gemeten diepte put 2,66 meter</tekst>
-                <auteur>
-                    <naam>DOV Beheerder</naam>
-                </auteur>
-                <datum>2014-03-31</datum>
-            </opmerking>
         </peilmeting>
         <peilmeting>
             <datum>2014-10-09</datum>
@@ -427,5 +420,19 @@
             </opmeter>
             <bron>freatisch 2017 najaar</bron>
         </waarneming>
+        <peilmeting>
+            <datum>2018-03-07</datum>
+            <diepte_tov_referentiepunt>0.66</diepte_tov_referentiepunt>
+            <peil_mtaw>8.43</peil_mtaw>
+            <methode>peillint</methode>
+            <filtertoestand>1</filtertoestand>
+            <filterstatus>in rust</filterstatus>
+            <opmeter>
+                <naam>Labo</naam>
+            </opmeter>
+            <zoet>N</zoet>
+            <betrouwbaarheid>goed</betrouwbaarheid>
+            <bron>freatisch 2018 voorjaar</bron>
+        </peilmeting>
     </filtermeting>
 </ns3:dov-schema>

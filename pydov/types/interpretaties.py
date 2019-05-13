@@ -727,7 +727,7 @@ class GeotechnischeCodering(AbstractBoringInterpretatie):
 class QuartairStratigrafieLaag(AbstractDovSubType):
 
     _name = 'quartairestratigrafie_laag'
-    _rootpath = './/quartairestratigrafie/laag'
+    _rootpath = './/quartairstratigrafie/laag'
 
     _fields = [{
         'name': 'diepte_laag_van',
@@ -794,12 +794,9 @@ class QuartairStratigrafie(AbstractBoringInterpretatie):
         'type': 'string'
     }, {
         'name': 'pkey_boring',
-        'source': 'custom',
+        'source': 'wfs',
+        'sourcefield': 'Proeffiche',
         'type': 'string',
-        'definition': 'URL die verwijst naar de gegevens van de boring '
-                      'waaraan deze quartair stratigrafie gekoppeld is ('
-                      'indien gekoppeld aan een boring).',
-        'notnull': False
     }, {
         'name': 'betrouwbaarheid_interpretatie',
         'source': 'wfs',

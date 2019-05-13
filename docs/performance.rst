@@ -206,6 +206,23 @@ Lithological descriptions (Lithologische beschrijvingen)
     diepte_laag_tot,10,float,1
     beschrijving,10,string,klei/zand
 
+Quaternary stratigraphy (Quartaire stratigrafie)
+--------------------------------------------------------
+  .. csv-table:: Quaternary stratigraphy (Quartaire stratigrafie)
+    :header-rows: 1
+
+    Field,Cost,Datatype,Example
+    pkey_interpretatie,1,string,https://www.dov.vlaanderen.be/data/interpretatie/1999-057087
+    pkey_boring,1,string,https://www.dov.vlaanderen.be/data/boring/1941-000322
+    betrouwbaarheid_interpretatie,1,string,onbekend
+    x,1,float,128277
+    y,1,float,178987
+    diepte_laag_van,10,float,0
+    diepte_laag_tot,10,float,8
+    lid1,10,string,F1
+    relatie_lid1_lid2,10,string,T
+    lid2,10,string,F1
+
 .. _performance:
 
 ===========

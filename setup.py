@@ -5,10 +5,10 @@
 
 from setuptools import setup, find_packages
 
-with open('README.md') as readme_file:
+with open('README.md', encoding='utf-8') as readme_file:
     readme = readme_file.read()
 
-with open('HISTORY.rst') as history_file:
+with open('HISTORY.rst', encoding='utf-8') as history_file:
     history = history_file.read()
 
 with open('requirements.txt') as f:
@@ -22,7 +22,8 @@ setup(
     name='pydov',
     version='0.1.0',
     description="A Python package to download data from Databank Ondergrond Vlaanderen (DOV).",
-    long_description=readme + '\n\n' + history,
+    long_description=readme,
+    long_description_content_type='text/markdown',
     author="DOV-Vlaanderen",
     author_email='dov@vlaanderen.be',
     url='https://github.com/DOV-Vlaanderen/pydov',

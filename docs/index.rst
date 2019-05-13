@@ -4,7 +4,7 @@ Welcome to pydov's documentation!
 .. image:: https://travis-ci.org/DOV-Vlaanderen/pydov.svg?branch=master
     :target: https://travis-ci.org/DOV-Vlaanderen/pydov
 
-.. image:: https://ci.appveyor.com/api/projects/status/4ljy2a0p661v3d9k?svg=true
+.. image:: https://ci.appveyor.com/api/projects/status/4ljy2a0p661v3d9k/branch/master?svg=true
     :target: https://ci.appveyor.com/project/Roel/pydov
 
 .. image:: https://readthedocs.org/projects/pydov/badge/?version=latest
@@ -40,6 +40,8 @@ researchers, consultants, modelers, and students. As performant and proper funct
 of DOV data processing is of interest to the variety of users, we believe that a
 community-based effort to develop and maintain these functionalities as an open source
 package provides the optimal development traject.
+
+Please note that downloading DOV data with pydov is governed by the same `disclaimer <https://www.dov.vlaanderen.be/page/disclaimer>`_ that applies to the other DOV services. Be sure to consult it when using DOV data with pydov.
 
 Getting started
 ---------------

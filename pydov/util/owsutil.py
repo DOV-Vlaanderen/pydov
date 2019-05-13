@@ -296,14 +296,22 @@ def get_remote_featurecatalogue(csw_url, fc_uuid):
         if upper.get('isInfinite', 'false').lower() == 'true':
             multiplicity_upper = 'Inf'
 
-        values = []
+        values = {}
         for lv in a.findall(nspath_eval('gfc:listedValue/gfc:FC_ListedValue',
                                         __namespaces)):
-            value = lv.findtext(nspath_eval('gfc:label/gco:CharacterString',
+            label = lv.findtext(nspath_eval('gfc:label/gco:CharacterString',
                                             __namespaces))
-            if value is not None:
-                values.append(value)
-        attr['values'] = values
+            definition = lv.findtext(nspath_eval(
+                'gfc:definition/gco:CharacterString', __namespaces))
+
+            if label is not None:
+                label = label.strip()
+                if label != '':
+                    values[label] = definition.strip() if \
+                        definition.strip() != '' else None
+
+        attr['values'] = values if len(values) > 0 else None
+
         attr['multiplicity'] = (multiplicity_lower, multiplicity_upper)
         attributes[name] = attr
 

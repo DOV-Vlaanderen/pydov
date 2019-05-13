@@ -59,13 +59,13 @@ class TestGrondwaterFilter(AbstractTestTypes):
             List of field names.
 
         """
-        return  ['pkey_filter', 'pkey_grondwaterlocatie', 'gw_id',
-                 'filternummer', 'filtertype', 'x', 'y', 'mv_mtaw',
-                 'gemeente', 'meetnet_code', 'aquifer_code',
-                 'grondwaterlichaam_code', 'regime',
-                 'diepte_onderkant_filter', 'lengte_filter',
-                 'datum', 'tijdstip', 'peil_mtaw',
-                 'betrouwbaarheid', 'methode']
+        return ['pkey_filter', 'pkey_grondwaterlocatie', 'gw_id',
+                'filternummer', 'filtertype', 'x', 'y', 'mv_mtaw',
+                'gemeente', 'meetnet_code', 'aquifer_code',
+                'grondwaterlichaam_code', 'regime',
+                'diepte_onderkant_filter', 'lengte_filter',
+                'datum', 'tijdstip', 'peil_mtaw',
+                'betrouwbaarheid', 'methode']
 
     def get_field_names_subtypes(self):
         """Get the field names of this type that originate from subtypes only.

@@ -5,7 +5,7 @@ from pydov.util.hooks import SimpleStatusHook
 __author__ = """DOV-Vlaanderen"""
 __version__ = '0.1.0'
 
-cache = pydov.util.caching.TransparentCache()
+cache = pydov.util.caching.GzipTextFileCache()
 
 hooks = [
     SimpleStatusHook(),

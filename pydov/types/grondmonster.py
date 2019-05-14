@@ -126,6 +126,46 @@ class Grondmonster(AbstractDovType):
         'xsd_type': 'ParameterEnumType',
         'definition': 'Grondsoort BGGG',
         'type': 'string'
+    }, {
+        'name': 'humusgehalte',
+        'source': 'xml',
+        'sourcefield': '/grondmonster/observatieData/observatie['
+                       'parameter="HUMUSGEHALTE"]/waarde_numeriek',
+        'xsd_type': 'ParameterEnumType',
+        'definition': 'Humusgehalte',
+        'type': 'float'
+    }, {
+        'name': 'kalkgehalte',
+        'source': 'xml',
+        'sourcefield': '/grondmonster/observatieData/observatie['
+                       'parameter="KALKGEHALTE"]/waarde_numeriek',
+        'xsd_type': 'ParameterEnumType',
+        'definition': 'Kalkgehalte',
+        'type': 'float'
+    }, {
+        'name': 'uitrolgrens',
+        'source': 'xml',
+        'sourcefield': '/grondmonster/observatieData/observatie['
+                       'parameter="UITROLGRENS"]/waarde_numeriek',
+        'xsd_type': 'ParameterEnumType',
+        'definition': 'Uitrolgrens',
+        'type': 'float'
+    }, {
+        'name': 'vloeigrens',
+        'source': 'xml',
+        'sourcefield': '/grondmonster/observatieData/observatie['
+                       'parameter="VLOEIGRENS"]/waarde_numeriek',
+        'xsd_type': 'ParameterEnumType',
+        'definition': 'Vloeigrens',
+        'type': 'float'
+    }, {
+        'name': 'glauconiet',
+        'source': 'xml',
+        'sourcefield': '/grondmonster/observatieData/observatie['
+                       'parameter="GLAUCONIET_TOTAAL"]/waarde_numeriek',
+        'xsd_type': 'ParameterEnumType',
+        'definition': 'Glauconiet totaal',
+        'type': 'float'
     }]
 
     def __init__(self, pkey):
@@ -134,15 +174,15 @@ class Grondmonster(AbstractDovType):
         Parameters
         ----------
         pkey : str
-            Permanent key of the Filter (screen), being a URI of the form
-            `https://www.dov.vlaanderen.be/data/boring/<id>`.
+            Permanent key of the Grondmonster, being a URI of the form
+            `https://www.dov.vlaanderen.be/data/grondmonster/<id>`.
 
         """
         super(Grondmonster, self).__init__('grondmonster', pkey)
 
     @classmethod
     def from_wfs_element(cls, feature, namespace):
-        """Build `GrondwaterFilter` instance from a WFS feature element.
+        """Build `Grondmonster` instance from a WFS feature element.
 
         Parameters
         ----------
@@ -153,7 +193,7 @@ class Grondmonster(AbstractDovType):
 
         Returns
         -------
-        filter : GrondwaterFilter
+        grondmonster : Grondmonster
             An instance of this class populated with the data from the WFS
             element.
 

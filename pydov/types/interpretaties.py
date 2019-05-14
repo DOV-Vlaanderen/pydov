@@ -868,3 +868,69 @@ class QuartairStratigrafie(AbstractBoringInterpretatie):
         'sourcefield': 'Y_mL72',
         'type': 'float'
     }]
+
+
+class InformeleHydrogeologischeStratigrafieLaag(AbstractDovSubType):
+
+    _name = 'informele_hydrogeologische_stratigrafie_laag'
+    _rootpath = './/informelehydrostratigrafie/laag'
+
+    _fields = [{
+        'name': 'diepte_laag_van',
+        'source': 'xml',
+        'sourcefield': '/van',
+        'definition': 'Diepte van de bovenkant van de laag informele '
+                      'hydrogeologische stratigrafie in meter.',
+        'type': 'float',
+        'notnull': False
+    }, {
+        'name': 'diepte_laag_tot',
+        'source': 'xml',
+        'sourcefield': '/tot',
+        'definition': 'Diepte van de onderkant van de laag informele '
+                      'hydrogeologische stratigrafie in meter.',
+        'type': 'float',
+        'notnull': False
+    }, {
+        'name': 'beschrijving',
+        'source': 'xml',
+        'sourcefield': '/beschrijving',
+        'definition': 'Benoeming van de eenheid van de laag informele '
+                      'hydrogeologische stratigrafie in vrije tekst.',
+        'type': 'string',
+        'notnull': False
+    }]
+
+
+class InformeleHydrogeologischeStratigrafie(AbstractBoringInterpretatie):
+    """Class representing the DOV data type for 'informele stratigrafie'
+    interpretations."""
+
+    _subtypes = [InformeleHydrogeologischeStratigrafieLaag]
+
+    _fields = [{
+        'name': 'pkey_interpretatie',
+        'source': 'wfs',
+        'sourcefield': 'Interpretatiefiche',
+        'type': 'string'
+    }, {
+        'name': 'pkey_boring',
+        'source': 'wfs',
+        'sourcefield': 'Proeffiche',
+        'type': 'string'
+    }, {
+        'name': 'betrouwbaarheid_interpretatie',
+        'source': 'wfs',
+        'sourcefield': 'Betrouwbaarheid',
+        'type': 'string'
+    }, {
+        'name': 'x',
+        'source': 'wfs',
+        'sourcefield': 'X_mL72',
+        'type': 'float'
+    }, {
+        'name': 'y',
+        'source': 'wfs',
+        'sourcefield': 'Y_mL72',
+        'type': 'float'
+    }]

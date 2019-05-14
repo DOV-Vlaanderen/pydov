@@ -22,6 +22,7 @@ Currently, we support the following datasets:
     Coded lithology,Gecodeerde lithologie,pydov.search.interpretaties.GecodeerdeLithologieSearch
     Geotechnical encoding,Geotechnische codering,pydov.search.interpretaties.GeotechnischeCoderingSearch
     Lithological descriptions,Lithologische beschrijvingen,pydov.search.interpretaties.LithologischeBeschrijvingenSearch
+    Quaternary stratigraphy,Quartair stratigrafie,pydov.search.interpretaties.QuartairStratigrafieSearch
 
 Each of the datasets can be queried using a search object for this dataset. While the search objects are different, the workflow is the same for each dataset. Relevant classes can be imported from the pydov.search package, for example if we'd like to query the boreholes dataset:
 

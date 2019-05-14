@@ -5,6 +5,7 @@ import warnings
 import requests
 
 import pydov
+
 from owslib.feature.schema import (
     _get_describefeaturetype_url,
     _get_elements,
@@ -35,11 +36,6 @@ from .errors import (
     MetadataNotFoundError,
     FeatureCatalogueNotFoundError,
 )
-
-# Global requests session object. This increases performance as using a
-# session object allows connection pooling and TCP connection reuse.
-session = requests.Session()
-session.headers.update({'user-agent': 'pydov/%s' % pydov.__version__})
 
 
 def __get_namespaces():
@@ -579,7 +575,7 @@ def wfs_get_feature(baseurl, get_feature_request):
     """
     data = etree.tostring(get_feature_request)
 
-    request = session.post(baseurl, data, timeout=60)
+    request = pydov.session.post(baseurl, data, timeout=60)
     request.encoding = 'utf-8'
     return request.text.encode('utf8')
 
@@ -598,6 +594,7 @@ def get_url(url):
         Response containing the result of the GET request.
 
     """
-    request = session.get(url, timeout=60)
+
+    request = pydov.session.get(url, timeout=60)
     request.encoding = 'utf-8'
     return request.text.encode('utf8')

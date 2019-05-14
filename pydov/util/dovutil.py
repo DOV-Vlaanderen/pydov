@@ -1,15 +1,9 @@
 # -*- coding: utf-8 -*-
 """Module grouping utility functions for DOV XML services."""
-import requests
 
-import pydov
 from owslib.etree import etree
 from pydov.util.errors import XmlParseError
-
-# Global requests session object. This increases performance as using a
-# session object allows connection pooling and TCP connection reuse. It is
-# initialised upon first usage by get_dov_xml().
-session = None
+import pydov
 
 
 def get_remote_url(url):
@@ -26,12 +20,8 @@ def get_remote_url(url):
         The raw XML data as bytes.
 
     """
-    global session
-    if not session:
-        session = requests.Session()
-        session.headers.update({'user-agent': 'pydov/%s' % pydov.__version__})
 
-    request = session.get(url, timeout=60)
+    request = pydov.session.get(url, timeout=60)
     request.encoding = 'utf-8'
     return request.text.encode('utf8')
 

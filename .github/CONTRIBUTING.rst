@@ -286,13 +286,28 @@ to the notebook(!) metadata:
   }
 
 
-Release version handling
-^^^^^^^^^^^^^^^^^^^^^^^^
+Release new version
+^^^^^^^^^^^^^^^^^^^
 
-The repo uses the `bumpversion` package to keep track of the package version. use the following commands to switch the version:
+In order to create a new release, the following steps need to be done ( on ``master`` branch):
 
-#. ``bumpversion patch`` to increase version from 1.0.0 to 1.0.1.
-#. ``bumpversion minor`` to increase version from 1.0.0 to 1.1.0.
-#. ``bumpversion major`` to increase version from 1.0.0 to 2.0.0.
+1. Update the :ref:`history` file with the changes compared to the previous version. You could take
+into account the following sections: ``New features``, ``Minor improvements``,
+``Major improvements``, ``Documentation fixes``. Commit the edits (``git commit``).
 
-and push these tags to Github: `git push --tags` to create the release.
+2. Adjust the version of the code. The repo uses the `bumpversion` package to keep track
+of the package version. use the following commands to switch the version:
+
+    #. ``bumpversion patch`` to increase version from 1.0.0 to 1.0.1.
+    #. ``bumpversion minor`` to increase version from 1.0.0 to 1.1.0.
+    #. ``bumpversion major`` to increase version from 1.0.0 to 2.0.0.
+
+3. Push the code to GitHub, `git push origin master`
+4. Push the tags to GitHub, ``git push --tags`` to create the release in Github
+5. `Travis.ci`_ is used to push the distribution archives to pypi_. Make sure to have a look at the pypi_
+page to verify this. If not, check the `packaging instructions`_ to do it manually,
+it basically boils down to ``python3 setup.py sdist bdist_wheel`` and ``twine upload dist/*``.
+
+.. _Travis.ci: https://travis-ci.org/DOV-Vlaanderen/pydov
+.. _pypi: https://pypi.org/project/pydov/
+.. _packaging instructions: https://packaging.python.org/tutorials/packaging-projects/

@@ -18,7 +18,7 @@ class GrondmonsterSearch(AbstractSearch):
     def __init__(self):
         """Initialisation."""
         super(GrondmonsterSearch, self).__init__(
-            'grondmonster', Grondmonster)
+            'boringen:grondmonsters', Grondmonster)
 
     def _init_namespace(self):
         """Initialise the WFS namespace associated with the layer."""

@@ -21,7 +21,7 @@ def get_remote_url(url):
 
     """
 
-    request = pydov.session.get(url, timeout=60)
+    request = pydov.session.get(url)
     request.encoding = 'utf-8'
     return request.text.encode('utf8')
 

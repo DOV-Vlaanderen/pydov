@@ -15,5 +15,5 @@ hooks = [
 
 # Package wide requests session object. This increases performance as using a
 # session object allows connection pooling and TCP connection reuse.
-session = requests.Session()
+session = requests.Session(timeout=60)
 session.headers.update({'user-agent': 'pydov/%s' % pydov.__version__})

@@ -575,7 +575,7 @@ def wfs_get_feature(baseurl, get_feature_request):
     """
     data = etree.tostring(get_feature_request)
 
-    request = pydov.session.post(baseurl, data, timeout=60)
+    request = pydov.session.post(baseurl, data)
     request.encoding = 'utf-8'
     return request.text.encode('utf8')
 
@@ -595,6 +595,6 @@ def get_url(url):
 
     """
 
-    request = pydov.session.get(url, timeout=60)
+    request = pydov.session.get(url)
     request.encoding = 'utf-8'
     return request.text.encode('utf8')

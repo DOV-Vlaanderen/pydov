@@ -2,6 +2,11 @@
 """Module containing the search classes to retrieve DOV borehole data."""
 import pandas as pd
 
+from owslib.fes import (
+    Not,
+    PropertyIsNull,
+    And,
+)
 from .abstract import AbstractSearch
 from ..types.grondwaterfilter import GrondwaterFilter
 from ..util import owsutil
@@ -77,6 +82,9 @@ class GrondwaterFilterSearch(AbstractSearch):
         `location` and/or `query`. When `return_fields` is None,
         all fields are returned.
 
+        Excludes 'empty' filters (i.e. Putten without Filters) by extending
+        the `query` with a not-null check on pkey_filter.
+
         Parameters
         ----------
         location : pydov.util.location.AbstractLocationFilter or \
@@ -123,6 +131,14 @@ class GrondwaterFilterSearch(AbstractSearch):
             tuple or set.
 
         """
+        exclude_empty_filters = Not([PropertyIsNull(
+                                     propertyname='pkey_filter')])
+
+        if query is not None:
+            query = And([query, exclude_empty_filters])
+        else:
+            query = exclude_empty_filters
+
         fts = self._search(location=location, query=query,
                            return_fields=return_fields)
 

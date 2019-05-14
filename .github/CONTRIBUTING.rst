@@ -305,8 +305,10 @@ of the package version. use the following commands to switch the version:
 3. Push the code to GitHub, `git push origin master`
 4. Push the tags to GitHub, ``git push --tags`` to create the release in Github
 5. `Travis.ci`_ is used to push the distribution archives to pypi_. Make sure to have a look at the pypi_
-page to verify this. If not, check the `packaging instructions`_ to do it manually,
+pydov page to verify this. If not, check the `packaging instructions`_ to do it manually,
 it basically boils down to ``python3 setup.py sdist bdist_wheel`` and ``twine upload dist/*``.
+
+The new release can be installed using ``pip``, ``pip install --upgrade pydov``.
 
 .. _Travis.ci: https://travis-ci.org/DOV-Vlaanderen/pydov
 .. _pypi: https://pypi.org/project/pydov/

@@ -239,6 +239,12 @@ class AbstractDovType(AbstractTypeCommon):
             `https://www.dov.vlaanderen.be/data/typename/id`.
 
         """
+        if typename is None or pkey is None:
+            raise ValueError(
+                "Failed to instantiate object of class %s with typename '%s' "
+                "and permkey '%s'. Typename and pkey must not be None." % (
+                    self.__class__.__name__, typename, pkey))
+
         self.typename = typename
         self.pkey = pkey
 

@@ -2,8 +2,6 @@
 """Module grouping utility functions for OWS services."""
 import warnings
 
-import requests
-
 import pydov
 
 from owslib.feature.schema import (

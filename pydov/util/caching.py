@@ -47,6 +47,10 @@ class AbstractCache(object):
     def get(self, url):
         """Get the XML data for the DOV object referenced by the given URL.
 
+        Because of parallel processing, this method will be called
+        simultaneously from multiple threads. Make sure your implementation is
+        threadsafe or uses locking.
+
         If a valid version exists in the cache, it will be loaded and
         returned. If no valid version exists, the XML will be downloaded
         from the DOV webservice, saved in the cache and returned.

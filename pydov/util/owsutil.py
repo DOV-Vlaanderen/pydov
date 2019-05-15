@@ -2,9 +2,8 @@
 """Module grouping utility functions for OWS services."""
 import warnings
 
-import requests
-
 import pydov
+
 from owslib.feature.schema import (
     _get_describefeaturetype_url,
     _get_elements,
@@ -573,9 +572,8 @@ def wfs_get_feature(baseurl, get_feature_request):
 
     """
     data = etree.tostring(get_feature_request)
-    headers = {'user-agent': 'PyDOV/%s' % pydov.__version__}
 
-    request = requests.post(baseurl, data, headers=headers, timeout=60)
+    request = pydov.session.post(baseurl, data, timeout=pydov.request_timeout)
     request.encoding = 'utf-8'
     return request.text.encode('utf8')
 
@@ -594,8 +592,7 @@ def get_url(url):
         Response containing the result of the GET request.
 
     """
-    headers = {'user-agent': 'PyDOV/%s' % pydov.__version__}
 
-    request = requests.get(url, headers=headers, timeout=60)
+    request = pydov.session.get(url, timeout=pydov.request_timeout)
     request.encoding = 'utf-8'
     return request.text.encode('utf8')

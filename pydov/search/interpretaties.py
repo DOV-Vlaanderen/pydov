@@ -976,7 +976,7 @@ class InformeleHydrogeologischeStratigrafieSearch(AbstractSearch):
             fields = self._build_fields(
                 InformeleHydrogeologischeStratigrafieSearch.__wfs_schema,
                 InformeleHydrogeologischeStratigrafieSearch.
-                    __fc_featurecatalogue,
+                __fc_featurecatalogue,
                 InformeleHydrogeologischeStratigrafieSearch.__xsd_schemas)
 
             for field in fields.values():
@@ -993,7 +993,7 @@ class InformeleHydrogeologischeStratigrafieSearch(AbstractSearch):
             self._fields = self._build_fields(
                 InformeleHydrogeologischeStratigrafieSearch.__wfs_schema,
                 InformeleHydrogeologischeStratigrafieSearch.
-                    __fc_featurecatalogue,
+                __fc_featurecatalogue,
                 InformeleHydrogeologischeStratigrafieSearch.__xsd_schemas)
 
     def search(self, location=None, query=None, return_fields=None):

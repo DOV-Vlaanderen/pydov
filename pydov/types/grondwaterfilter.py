@@ -45,7 +45,8 @@ class Peilmeting(AbstractDovSubType):
     }, {
         'name': 'methode',
         'source': 'xml',
-        'sourcefield': '/peilmeting/methode',
+        'sourcefield': '/methode',
+        'xsd_type': 'PeilmetingMethodeEnumType',
         'definition': 'Methode waarop de peilmeting uitgevoerd werd.',
         'type': 'string',
         'notnull': False

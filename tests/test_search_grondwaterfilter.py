@@ -143,7 +143,7 @@ class TestGrondwaterfilterSearch(AbstractTestSearch):
                 'grondwaterlichaam_code', 'regime',
                 'diepte_onderkant_filter', 'lengte_filter',
                 'datum', 'tijdstip', 'peil_mtaw',
-                'betrouwbaarheid', 'methode']
+                'betrouwbaarheid', 'methode', 'filterstatus', 'filtertoestand']
 
     def test_search_date(self, mp_wfs, mp_remote_describefeaturetype,
                          mp_remote_md, mp_remote_fc, mp_remote_wfs_feature,

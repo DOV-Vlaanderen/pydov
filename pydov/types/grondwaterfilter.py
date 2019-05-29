@@ -50,6 +50,24 @@ class Peilmeting(AbstractDovSubType):
         'definition': 'Methode waarop de peilmeting uitgevoerd werd.',
         'type': 'string',
         'notnull': False
+    }, {
+        'name': 'filterstatus',
+        'source': 'xml',
+        'sourcefield': '/filterstatus',
+        'xsd_type': 'FilterstatusEnumType',
+        'definition': 'Status van de filter tijdens de peilmeting (in rust - '
+                      'werking).',
+        'type': 'string',
+        'notnull': False
+    }, {
+        'name': 'filtertoestand',
+        'source': 'xml',
+        'sourcefield': '/filtertoestand',
+        'xsd_type': 'FiltertoestandEnumType',
+        'definition':  "Filtertoestand bij de peilmeting. Standaardwaarde is "
+                       "'1' = Normaal.",
+        'type': 'integer',
+        'notnull': False
     }]
 
 

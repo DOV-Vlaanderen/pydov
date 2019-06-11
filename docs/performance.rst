@@ -90,7 +90,9 @@ Groundwater screens (grondwaterfilters)
     tijdstip,10,string,NaN
     peil_mtaw,10,float,4.6
     betrouwbaarheid,10,string,goed
-    methode,10,string,NaN
+    methode,10,string,peillint
+    filterstatus,10,string,1
+    filtertoestand,10,string,in rust
 
 Formal stratigraphy (Formele stratigrafie)
 ------------------------------------------

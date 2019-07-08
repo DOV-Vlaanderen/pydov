@@ -66,8 +66,13 @@ class AbstractCommon(object):
                     return datetime.datetime.strptime(x, '%Y-%m-%d').date()
         elif returntype == 'datetime':
             def typeconvert(x):
-                return datetime.datetime.strptime(
-                    x.split('.')[0], '%Y-%m-%dT%H:%M:%S')
+                if x.endswith('Z'):
+                    return datetime.datetime.strptime(
+                            x, '%Y-%m-%dT%H:%M:%SZ').date() \
+                           + datetime.timedelta(days=1)
+                else:
+                    return datetime.datetime.strptime(
+                        x.split('.')[0], '%Y-%m-%dT%H:%M:%S')
         elif returntype == 'boolean':
             def typeconvert(x):
                 return strtobool(x) == 1

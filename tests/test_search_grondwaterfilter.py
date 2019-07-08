@@ -125,7 +125,7 @@ class TestGrondwaterfilterSearch(AbstractTestSearch):
             from WFS, not present in the default dataframe.
 
         """
-        return ('pkey_filter', 'oxidatie_reductie')
+        return ('pkey_filter', 'beheerder')
 
     def get_df_default_columns(self):
         """Get a list of the column names (and order) from the default

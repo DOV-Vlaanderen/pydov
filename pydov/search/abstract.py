@@ -313,7 +313,8 @@ class AbstractSearch(AbstractCommon):
         _map_wfs_datatypes = {
             'int': 'integer',
             'decimal': 'float',
-            'double': 'float'
+            'double': 'float',
+            'dateTime': 'datetime'
         }
 
         df_wfs_fields = self._type.get_fields(source=('wfs',)).values()

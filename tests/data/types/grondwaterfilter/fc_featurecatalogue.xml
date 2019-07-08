@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <csw:GetRecordByIdResponse xmlns:csw="http://www.opengis.net/cat/csw/2.0.2">
-  <gfc:FC_FeatureCatalogue xmlns:gfc="http://www.isotc211.org/2005/gfc" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:geonet="http://www.fao.org/geonetwork" uuid="b142965f-b2aa-429e-86ff-a7cb0e065d48" xsi:schemaLocation="http://www.isotc211.org/2005/gfc http://www.isotc211.org/2005/gfc/gfc.xsd">
+  <gfc:FC_FeatureCatalogue xmlns:gfc="http://www.isotc211.org/2005/gfc" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:geonet="http://www.fao.org/geonetwork" uuid="b142965f-b2aa-429e-86ff-a7cb0e065d48" xsi:schemaLocation="http://www.isotc211.org/2005/gfc http://www.isotc211.org/2005/gfc/gfc.xsd">
     <gmx:name>
       <gco:CharacterString>Grondwatermeetnetten (objectencatalogus)</gco:CharacterString>
     </gmx:name>
@@ -11,7 +11,7 @@
       <gco:CharacterString>1</gco:CharacterString>
     </gmx:versionNumber>
     <gmx:versionDate xmlns:gml="http://www.opengis.net/gml">
-      <gco:DateTime>2019-02-07T13:49:01</gco:DateTime>
+      <gco:DateTime>2019-07-08T15:28:03</gco:DateTime>
     </gmx:versionDate>
     <gfc:producer>
       <gmd:CI_ResponsibleParty xmlns:gml="http://www.opengis.net/gml">
@@ -63,10 +63,10 @@
     <gfc:featureType>
       <gfc:FC_FeatureType uuid="generate-uniq-5508-4b5d-ac0e86394c4e" id="ID1">
         <gfc:typeName>
-          <gco:LocalName>meetnettenType</gco:LocalName>
+          <gco:LocalName>grondwatermeetnettenType</gco:LocalName>
         </gfc:typeName>
         <gfc:definition>
-          <gco:CharacterString />
+          <gco:CharacterString>Een grondwaterlocatie bundelt een aantal gegevens van één of meerdere filters die betrekking hebben tot de ligging (XY). Er zijn meerdere types filters bij de grondwaterlocaties: pompfilters, peilfilters, natuurlijke filters, infiltratiefilter, omkeerbare filter (infiltratie/onttrekking) en putten zonder filter</gco:CharacterString>
         </gfc:definition>
         <gfc:isAbstract>
           <gco:Boolean>false</gco:Boolean>
@@ -109,38 +109,7 @@
               <gco:LocalName>GW_ID</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>Identificatie van de grondwaterlocatie. Alle grondwaterlocaties in deze kaartlaag zijn van het type 'put'. Dit veld was vroeger bekend als 'putnummer'.</gco:CharacterString>
-            </gfc:definition>
-            <gfc:cardinality>
-              <gco:Multiplicity>
-                <gco:range>
-                  <gco:MultiplicityRange>
-                    <gco:lower>
-                      <gco:Integer>1</gco:Integer>
-                    </gco:lower>
-                    <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
-                    </gco:upper>
-                  </gco:MultiplicityRange>
-                </gco:range>
-              </gco:Multiplicity>
-            </gfc:cardinality>
-            <gfc:valueType>
-              <gco:TypeName>
-                <gco:aName>
-                  <gco:CharacterString>Tekst</gco:CharacterString>
-                </gco:aName>
-              </gco:TypeName>
-            </gfc:valueType>
-          </gfc:FC_FeatureAttribute>
-        </gfc:carrierOfCharacteristics>
-        <gfc:carrierOfCharacteristics>
-          <gfc:FC_FeatureAttribute>
-            <gfc:memberName>
-              <gco:LocalName>putfiche</gco:LocalName>
-            </gfc:memberName>
-            <gfc:definition>
-              <gco:CharacterString>URL die verwijst naar de gegevens van de put op de website. Voeg '.xml' toe om een XML voorstelling van deze gegevens te verkrijgen.</gco:CharacterString>
+              <gco:CharacterString>Identificatie van de grondwaterlocatie. Dit veld was vroeger bekend als 'putnummer'.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>
@@ -166,15 +135,75 @@
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
+            <gfc:listedValue>
+              <gfc:FC_ListedValue>
+                <gfc:label>
+                  <gco:CharacterString />
+                </gfc:label>
+                <gfc:code>
+                  <gco:CharacterString />
+                </gfc:code>
+                <gfc:definition>
+                  <gco:CharacterString />
+                </gfc:definition>
+              </gfc:FC_ListedValue>
+            </gfc:listedValue>
           </gfc:FC_FeatureAttribute>
         </gfc:carrierOfCharacteristics>
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName>filternr</gco:LocalName>
+              <gco:LocalName>putfiche</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>Het filternummer van de filter. Wanneer dit veld leeg is betreft dit record een put zonder filters.</gco:CharacterString>
+              <gco:CharacterString>URL die verwijst naar de gegevens van de grondwaterlocatie op de website. Voeg '.xml' toe om een XML voorstelling van deze gegevens te verkrijgen</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity>
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>1</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:code>
+              <gco:CharacterString />
+            </gfc:code>
+            <gfc:valueType>
+              <gco:TypeName>
+                <gco:aName>
+                  <gco:CharacterString>Tekst</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+            <gfc:listedValue>
+              <gfc:FC_ListedValue>
+                <gfc:label>
+                  <gco:CharacterString />
+                </gfc:label>
+                <gfc:code>
+                  <gco:CharacterString />
+                </gfc:code>
+                <gfc:definition>
+                  <gco:CharacterString />
+                </gfc:definition>
+              </gfc:FC_ListedValue>
+            </gfc:listedValue>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName>filternummer</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString>Het filternummer van de filter.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>
@@ -265,10 +294,57 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
+              <gco:LocalName>namen</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString>Andere namen voor deze grondwaterlocatie</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity>
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>0</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:code>
+              <gco:CharacterString />
+            </gfc:code>
+            <gfc:valueType>
+              <gco:TypeName>
+                <gco:aName>
+                  <gco:CharacterString>Tekst</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+            <gfc:listedValue>
+              <gfc:FC_ListedValue>
+                <gfc:label>
+                  <gco:CharacterString />
+                </gfc:label>
+                <gfc:code>
+                  <gco:CharacterString />
+                </gfc:code>
+                <gfc:definition>
+                  <gco:CharacterString />
+                </gfc:definition>
+              </gfc:FC_ListedValue>
+            </gfc:listedValue>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
               <gco:LocalName>filtergrafiek</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>URL die verwijst naar een interactieve grafiek van de filter op de website. Wanneer dit veld leeg is betreft dit record een put zonder filters.</gco:CharacterString>
+              <gco:CharacterString>URL die verwijst naar een interactieve grafiek van de filter op de website. Wanneer dit veld leeg is betreft dit record een grondwaterlocatie zonder filters</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>
@@ -315,7 +391,7 @@
               <gco:LocalName>putgrafiek</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>URL die verwijst naar een interactieve grafiek van alle filters van de put op de website.</gco:CharacterString>
+              <gco:CharacterString>URL die verwijst naar een interactieve grafiek van alle filters van de grondwaterlocatie op de website.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>
@@ -337,7 +413,7 @@
             <gfc:valueType>
               <gco:TypeName>
                 <gco:aName>
-                  <gco:CharacterString>Tekst</gco:CharacterString>
+                  <gco:CharacterString>Tekst (&lt;n&gt;)</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
@@ -359,10 +435,57 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName>namen_grondwaterlocatie</gco:LocalName>
+              <gco:LocalName>aquifer</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>Alternatieve benamingen voor de grondwaterlocatie. Bijvoorbeeld het putnummer zoals gebruikt door de exploitant.</gco:CharacterString>
+              <gco:CharacterString>De aquifer waarin de filter hangt. Als tekst, opgebouwd uit de HCOV code (vier karakters) en de naam gescheiden door " - "</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity>
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>1</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:code>
+              <gco:CharacterString />
+            </gfc:code>
+            <gfc:valueType>
+              <gco:TypeName>
+                <gco:aName>
+                  <gco:CharacterString>Tekst (&lt;n&gt;)</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+            <gfc:listedValue>
+              <gfc:FC_ListedValue>
+                <gfc:label>
+                  <gco:CharacterString />
+                </gfc:label>
+                <gfc:code>
+                  <gco:CharacterString />
+                </gfc:code>
+                <gfc:definition>
+                  <gco:CharacterString />
+                </gfc:definition>
+              </gfc:FC_ListedValue>
+            </gfc:listedValue>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName>onderkant_filter_m</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString>De diepte van de onderkant van de filter (in meter, positief onder maaiveld gegeven in attribuut Z_mTAW)</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>
@@ -384,7 +507,7 @@
             <gfc:valueType>
               <gco:TypeName>
                 <gco:aName>
-                  <gco:CharacterString>Tekst</gco:CharacterString>
+                  <gco:CharacterString>Getal (&lt;5&gt;,&lt;2&gt;)</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
@@ -392,6 +515,256 @@
               <gfc:FC_ListedValue>
                 <gfc:label>
                   <gco:CharacterString />
+                </gfc:label>
+                <gfc:code>
+                  <gco:CharacterString />
+                </gfc:code>
+                <gfc:definition>
+                  <gco:CharacterString />
+                </gfc:definition>
+              </gfc:FC_ListedValue>
+            </gfc:listedValue>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName>lengte_filter_m</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString>De lengte van de filter (in meter).</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity>
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>0</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:code>
+              <gco:CharacterString />
+            </gfc:code>
+            <gfc:valueType>
+              <gco:TypeName>
+                <gco:aName>
+                  <gco:CharacterString>Getal (&lt;5&gt;,&lt;2&gt;)</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+            <gfc:listedValue>
+              <gfc:FC_ListedValue>
+                <gfc:label>
+                  <gco:CharacterString />
+                </gfc:label>
+                <gfc:code>
+                  <gco:CharacterString />
+                </gfc:code>
+                <gfc:definition>
+                  <gco:CharacterString />
+                </gfc:definition>
+              </gfc:FC_ListedValue>
+            </gfc:listedValue>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName>putsoort</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString>de soort grondwaterlocatie</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity>
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>1</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:code>
+              <gco:CharacterString />
+            </gfc:code>
+            <gfc:valueType>
+              <gco:TypeName>
+                <gco:aName>
+                  <gco:CharacterString>Tekst (&lt;n&gt;)</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+            <gfc:listedValue>
+              <gfc:FC_ListedValue>
+                <gfc:label>
+                  <gco:CharacterString>batterijput</gco:CharacterString>
+                </gfc:label>
+                <gfc:code>
+                  <gco:CharacterString />
+                </gfc:code>
+                <gfc:definition>
+                  <gco:CharacterString />
+                </gfc:definition>
+              </gfc:FC_ListedValue>
+            </gfc:listedValue>
+            <gfc:listedValue>
+              <gfc:FC_ListedValue>
+                <gfc:label>
+                  <gco:CharacterString>bodemlus</gco:CharacterString>
+                </gfc:label>
+                <gfc:code>
+                  <gco:CharacterString />
+                </gfc:code>
+                <gfc:definition>
+                  <gco:CharacterString />
+                </gfc:definition>
+              </gfc:FC_ListedValue>
+            </gfc:listedValue>
+            <gfc:listedValue>
+              <gfc:FC_ListedValue>
+                <gfc:label>
+                  <gco:CharacterString>bronbemaling</gco:CharacterString>
+                </gfc:label>
+                <gfc:code>
+                  <gco:CharacterString />
+                </gfc:code>
+                <gfc:definition>
+                  <gco:CharacterString />
+                </gfc:definition>
+              </gfc:FC_ListedValue>
+            </gfc:listedValue>
+            <gfc:listedValue>
+              <gfc:FC_ListedValue>
+                <gfc:label>
+                  <gco:CharacterString>bron, natuurlijke holte</gco:CharacterString>
+                </gfc:label>
+                <gfc:code>
+                  <gco:CharacterString />
+                </gfc:code>
+                <gfc:definition>
+                  <gco:CharacterString />
+                </gfc:definition>
+              </gfc:FC_ListedValue>
+            </gfc:listedValue>
+            <gfc:listedValue>
+              <gfc:FC_ListedValue>
+                <gfc:label>
+                  <gco:CharacterString>draineringsinrichting</gco:CharacterString>
+                </gfc:label>
+                <gfc:code>
+                  <gco:CharacterString />
+                </gfc:code>
+                <gfc:definition>
+                  <gco:CharacterString />
+                </gfc:definition>
+              </gfc:FC_ListedValue>
+            </gfc:listedValue>
+            <gfc:listedValue>
+              <gfc:FC_ListedValue>
+                <gfc:label>
+                  <gco:CharacterString>galerij</gco:CharacterString>
+                </gfc:label>
+                <gfc:code>
+                  <gco:CharacterString />
+                </gfc:code>
+                <gfc:definition>
+                  <gco:CharacterString />
+                </gfc:definition>
+              </gfc:FC_ListedValue>
+            </gfc:listedValue>
+            <gfc:listedValue>
+              <gfc:FC_ListedValue>
+                <gfc:label>
+                  <gco:CharacterString>graverij, mijn, groeve</gco:CharacterString>
+                </gfc:label>
+                <gfc:code>
+                  <gco:CharacterString />
+                </gfc:code>
+                <gfc:definition>
+                  <gco:CharacterString />
+                </gfc:definition>
+              </gfc:FC_ListedValue>
+            </gfc:listedValue>
+            <gfc:listedValue>
+              <gfc:FC_ListedValue>
+                <gfc:label>
+                  <gco:CharacterString>installatie</gco:CharacterString>
+                </gfc:label>
+                <gfc:code>
+                  <gco:CharacterString />
+                </gfc:code>
+                <gfc:definition>
+                  <gco:CharacterString />
+                </gfc:definition>
+              </gfc:FC_ListedValue>
+            </gfc:listedValue>
+            <gfc:listedValue>
+              <gfc:FC_ListedValue>
+                <gfc:label>
+                  <gco:CharacterString>niet-verbuisde boorput</gco:CharacterString>
+                </gfc:label>
+                <gfc:code>
+                  <gco:CharacterString />
+                </gfc:code>
+                <gfc:definition>
+                  <gco:CharacterString />
+                </gfc:definition>
+              </gfc:FC_ListedValue>
+            </gfc:listedValue>
+            <gfc:listedValue>
+              <gfc:FC_ListedValue>
+                <gfc:label>
+                  <gco:CharacterString>onbekend</gco:CharacterString>
+                </gfc:label>
+                <gfc:code>
+                  <gco:CharacterString />
+                </gfc:code>
+                <gfc:definition>
+                  <gco:CharacterString />
+                </gfc:definition>
+              </gfc:FC_ListedValue>
+            </gfc:listedValue>
+            <gfc:listedValue>
+              <gfc:FC_ListedValue>
+                <gfc:label>
+                  <gco:CharacterString>ring- of steenput</gco:CharacterString>
+                </gfc:label>
+                <gfc:code>
+                  <gco:CharacterString />
+                </gfc:code>
+                <gfc:definition>
+                  <gco:CharacterString />
+                </gfc:definition>
+              </gfc:FC_ListedValue>
+            </gfc:listedValue>
+            <gfc:listedValue>
+              <gfc:FC_ListedValue>
+                <gfc:label>
+                  <gco:CharacterString>verbuisde boorput</gco:CharacterString>
+                </gfc:label>
+                <gfc:code>
+                  <gco:CharacterString />
+                </gfc:code>
+                <gfc:definition>
+                  <gco:CharacterString />
+                </gfc:definition>
+              </gfc:FC_ListedValue>
+            </gfc:listedValue>
+            <gfc:listedValue>
+              <gfc:FC_ListedValue>
+                <gfc:label>
+                  <gco:CharacterString>vijver</gco:CharacterString>
                 </gfc:label>
                 <gfc:code>
                   <gco:CharacterString />
@@ -431,7 +804,7 @@
             <gfc:valueType>
               <gco:TypeName>
                 <gco:aName>
-                  <gco:CharacterString>Tekst</gco:CharacterString>
+                  <gco:CharacterString>Tekst (&lt;n&gt;)</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
@@ -461,44 +834,10 @@
                 </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
-          </gfc:FC_FeatureAttribute>
-        </gfc:carrierOfCharacteristics>
-        <gfc:carrierOfCharacteristics>
-          <gfc:FC_FeatureAttribute>
-            <gfc:memberName>
-              <gco:LocalName>stijghoogte</gco:LocalName>
-            </gfc:memberName>
-            <gfc:definition>
-              <gco:CharacterString>URL die verwijst naar het stijghoogterapport van de put in PDF formaat.</gco:CharacterString>
-            </gfc:definition>
-            <gfc:cardinality>
-              <gco:Multiplicity>
-                <gco:range>
-                  <gco:MultiplicityRange>
-                    <gco:lower>
-                      <gco:Integer>1</gco:Integer>
-                    </gco:lower>
-                    <gco:upper>
-                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
-                    </gco:upper>
-                  </gco:MultiplicityRange>
-                </gco:range>
-              </gco:Multiplicity>
-            </gfc:cardinality>
-            <gfc:code>
-              <gco:CharacterString />
-            </gfc:code>
-            <gfc:valueType>
-              <gco:TypeName>
-                <gco:aName>
-                  <gco:CharacterString>Tekst</gco:CharacterString>
-                </gco:aName>
-              </gco:TypeName>
-            </gfc:valueType>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString />
+                  <gco:CharacterString>infiltratiefilter</gco:CharacterString>
                 </gfc:label>
                 <gfc:code>
                   <gco:CharacterString />
@@ -508,44 +847,10 @@
                 </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
-          </gfc:FC_FeatureAttribute>
-        </gfc:carrierOfCharacteristics>
-        <gfc:carrierOfCharacteristics>
-          <gfc:FC_FeatureAttribute>
-            <gfc:memberName>
-              <gco:LocalName>analyse</gco:LocalName>
-            </gfc:memberName>
-            <gfc:definition>
-              <gco:CharacterString>URL die verwijst naar het analyserapport van de put in PDF formaat.</gco:CharacterString>
-            </gfc:definition>
-            <gfc:cardinality>
-              <gco:Multiplicity>
-                <gco:range>
-                  <gco:MultiplicityRange>
-                    <gco:lower>
-                      <gco:Integer>1</gco:Integer>
-                    </gco:lower>
-                    <gco:upper>
-                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
-                    </gco:upper>
-                  </gco:MultiplicityRange>
-                </gco:range>
-              </gco:Multiplicity>
-            </gfc:cardinality>
-            <gfc:code>
-              <gco:CharacterString />
-            </gfc:code>
-            <gfc:valueType>
-              <gco:TypeName>
-                <gco:aName>
-                  <gco:CharacterString>Tekst</gco:CharacterString>
-                </gco:aName>
-              </gco:TypeName>
-            </gfc:valueType>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString />
+                  <gco:CharacterString>omkeerbare pomp/infiltratiefilter</gco:CharacterString>
                 </gfc:label>
                 <gfc:code>
                   <gco:CharacterString />
@@ -555,232 +860,10 @@
                 </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
-          </gfc:FC_FeatureAttribute>
-        </gfc:carrierOfCharacteristics>
-        <gfc:carrierOfCharacteristics>
-          <gfc:FC_FeatureAttribute>
-            <gfc:memberName>
-              <gco:LocalName>X_mL72</gco:LocalName>
-            </gfc:memberName>
-            <gfc:definition>
-              <gco:CharacterString>De x-coördinaat van de put in het Lambert72 coördinaatsysteem (in meter, EPSG:31370).</gco:CharacterString>
-            </gfc:definition>
-            <gfc:cardinality>
-              <gco:Multiplicity>
-                <gco:range>
-                  <gco:MultiplicityRange>
-                    <gco:lower>
-                      <gco:Integer>1</gco:Integer>
-                    </gco:lower>
-                    <gco:upper>
-                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
-                    </gco:upper>
-                  </gco:MultiplicityRange>
-                </gco:range>
-              </gco:Multiplicity>
-            </gfc:cardinality>
-            <gfc:code>
-              <gco:CharacterString />
-            </gfc:code>
-            <gfc:valueType>
-              <gco:TypeName>
-                <gco:aName>
-                  <gco:CharacterString>Getal (7,1)</gco:CharacterString>
-                </gco:aName>
-              </gco:TypeName>
-            </gfc:valueType>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString />
-                </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
-              </gfc:FC_ListedValue>
-            </gfc:listedValue>
-          </gfc:FC_FeatureAttribute>
-        </gfc:carrierOfCharacteristics>
-        <gfc:carrierOfCharacteristics>
-          <gfc:FC_FeatureAttribute>
-            <gfc:memberName>
-              <gco:LocalName>Y_mL72</gco:LocalName>
-            </gfc:memberName>
-            <gfc:definition>
-              <gco:CharacterString>De y-coördinaat van de put in het Lambert72 coördinaatsysteem (in meter, EPSG:31370).</gco:CharacterString>
-            </gfc:definition>
-            <gfc:cardinality>
-              <gco:Multiplicity>
-                <gco:range>
-                  <gco:MultiplicityRange>
-                    <gco:lower>
-                      <gco:Integer>1</gco:Integer>
-                    </gco:lower>
-                    <gco:upper>
-                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
-                    </gco:upper>
-                  </gco:MultiplicityRange>
-                </gco:range>
-              </gco:Multiplicity>
-            </gfc:cardinality>
-            <gfc:code>
-              <gco:CharacterString />
-            </gfc:code>
-            <gfc:valueType>
-              <gco:TypeName>
-                <gco:aName>
-                  <gco:CharacterString>Getal (7,1)</gco:CharacterString>
-                </gco:aName>
-              </gco:TypeName>
-            </gfc:valueType>
-            <gfc:listedValue>
-              <gfc:FC_ListedValue>
-                <gfc:label>
-                  <gco:CharacterString />
-                </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
-              </gfc:FC_ListedValue>
-            </gfc:listedValue>
-          </gfc:FC_FeatureAttribute>
-        </gfc:carrierOfCharacteristics>
-        <gfc:carrierOfCharacteristics>
-          <gfc:FC_FeatureAttribute>
-            <gfc:memberName>
-              <gco:LocalName>Z_mTAW</gco:LocalName>
-            </gfc:memberName>
-            <gfc:definition>
-              <gco:CharacterString>De hoogte van het maaiveld op de coördinaten (X_mL72, Y_mL72) in het TAW stelsel (in meter).</gco:CharacterString>
-            </gfc:definition>
-            <gfc:cardinality>
-              <gco:Multiplicity>
-                <gco:range>
-                  <gco:MultiplicityRange>
-                    <gco:lower>
-                      <gco:Integer>1</gco:Integer>
-                    </gco:lower>
-                    <gco:upper>
-                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
-                    </gco:upper>
-                  </gco:MultiplicityRange>
-                </gco:range>
-              </gco:Multiplicity>
-            </gfc:cardinality>
-            <gfc:code>
-              <gco:CharacterString />
-            </gfc:code>
-            <gfc:valueType>
-              <gco:TypeName>
-                <gco:aName>
-                  <gco:CharacterString>Getal (5,2)</gco:CharacterString>
-                </gco:aName>
-              </gco:TypeName>
-            </gfc:valueType>
-            <gfc:listedValue>
-              <gfc:FC_ListedValue>
-                <gfc:label>
-                  <gco:CharacterString />
-                </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
-              </gfc:FC_ListedValue>
-            </gfc:listedValue>
-          </gfc:FC_FeatureAttribute>
-        </gfc:carrierOfCharacteristics>
-        <gfc:carrierOfCharacteristics>
-          <gfc:FC_FeatureAttribute>
-            <gfc:memberName>
-              <gco:LocalName>gemeente</gco:LocalName>
-            </gfc:memberName>
-            <gfc:definition>
-              <gco:CharacterString>De gemeente waarin de put gelegen is.</gco:CharacterString>
-            </gfc:definition>
-            <gfc:cardinality>
-              <gco:Multiplicity>
-                <gco:range>
-                  <gco:MultiplicityRange>
-                    <gco:lower>
-                      <gco:Integer>0</gco:Integer>
-                    </gco:lower>
-                    <gco:upper>
-                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
-                    </gco:upper>
-                  </gco:MultiplicityRange>
-                </gco:range>
-              </gco:Multiplicity>
-            </gfc:cardinality>
-            <gfc:code>
-              <gco:CharacterString />
-            </gfc:code>
-            <gfc:valueType>
-              <gco:TypeName>
-                <gco:aName>
-                  <gco:CharacterString>Tekst</gco:CharacterString>
-                </gco:aName>
-              </gco:TypeName>
-            </gfc:valueType>
-            <gfc:listedValue>
-              <gfc:FC_ListedValue>
-                <gfc:label>
-                  <gco:CharacterString />
-                </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
-              </gfc:FC_ListedValue>
-            </gfc:listedValue>
-          </gfc:FC_FeatureAttribute>
-        </gfc:carrierOfCharacteristics>
-        <gfc:carrierOfCharacteristics>
-          <gfc:FC_FeatureAttribute>
-            <gfc:memberName>
-              <gco:LocalName>deelgemeente</gco:LocalName>
-            </gfc:memberName>
-            <gfc:definition>
-              <gco:CharacterString>De deelgemeente waarin de put gelegen is.</gco:CharacterString>
-            </gfc:definition>
-            <gfc:cardinality>
-              <gco:Multiplicity>
-                <gco:range>
-                  <gco:MultiplicityRange>
-                    <gco:lower>
-                      <gco:Integer>0</gco:Integer>
-                    </gco:lower>
-                    <gco:upper>
-                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
-                    </gco:upper>
-                  </gco:MultiplicityRange>
-                </gco:range>
-              </gco:Multiplicity>
-            </gfc:cardinality>
-            <gfc:code>
-              <gco:CharacterString />
-            </gfc:code>
-            <gfc:valueType>
-              <gco:TypeName>
-                <gco:aName>
-                  <gco:CharacterString>Tekst</gco:CharacterString>
-                </gco:aName>
-              </gco:TypeName>
-            </gfc:valueType>
-            <gfc:listedValue>
-              <gfc:FC_ListedValue>
-                <gfc:label>
-                  <gco:CharacterString />
+                  <gco:CharacterString>natuurlijke filter</gco:CharacterString>
                 </gfc:label>
                 <gfc:code>
                   <gco:CharacterString />
@@ -798,7 +881,7 @@
               <gco:LocalName>meetnet</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>Het meetnet waartoe de filter behoort. Wanneer dit veld leeg is betreft dit record een put zonder filters.</gco:CharacterString>
+              <gco:CharacterString>Het meetnet waartoe de filter behoort.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>
@@ -820,7 +903,7 @@
             <gfc:valueType>
               <gco:TypeName>
                 <gco:aName>
-                  <gco:CharacterString>Tekst</gco:CharacterString>
+                  <gco:CharacterString>Tekst (&lt;n&gt;)</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
@@ -879,6 +962,45 @@
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
+                  <gco:CharacterString>meetnet 5 - peilputten drinkwatermaatschappijen</gco:CharacterString>
+                </gfc:label>
+                <gfc:code>
+                  <gco:CharacterString />
+                </gfc:code>
+                <gfc:definition>
+                  <gco:CharacterString />
+                </gfc:definition>
+              </gfc:FC_ListedValue>
+            </gfc:listedValue>
+            <gfc:listedValue>
+              <gfc:FC_ListedValue>
+                <gfc:label>
+                  <gco:CharacterString>meetnet 6 - peilputten individuele bedrijven</gco:CharacterString>
+                </gfc:label>
+                <gfc:code>
+                  <gco:CharacterString />
+                </gfc:code>
+                <gfc:definition>
+                  <gco:CharacterString />
+                </gfc:definition>
+              </gfc:FC_ListedValue>
+            </gfc:listedValue>
+            <gfc:listedValue>
+              <gfc:FC_ListedValue>
+                <gfc:label>
+                  <gco:CharacterString>meetnet 7 - winningsputten</gco:CharacterString>
+                </gfc:label>
+                <gfc:code>
+                  <gco:CharacterString />
+                </gfc:code>
+                <gfc:definition>
+                  <gco:CharacterString />
+                </gfc:definition>
+              </gfc:FC_ListedValue>
+            </gfc:listedValue>
+            <gfc:listedValue>
+              <gfc:FC_ListedValue>
+                <gfc:label>
                   <gco:CharacterString>meetnet 8 - freatisch meetnet - afdeling water</gco:CharacterString>
                 </gfc:label>
                 <gfc:code>
@@ -893,6 +1015,32 @@
               <gfc:FC_ListedValue>
                 <gfc:label>
                   <gco:CharacterString>meetnet 9 - peilputten INBO en natuurorganisaties</gco:CharacterString>
+                </gfc:label>
+                <gfc:code>
+                  <gco:CharacterString />
+                </gfc:code>
+                <gfc:definition>
+                  <gco:CharacterString />
+                </gfc:definition>
+              </gfc:FC_ListedValue>
+            </gfc:listedValue>
+            <gfc:listedValue>
+              <gfc:FC_ListedValue>
+                <gfc:label>
+                  <gco:CharacterString>meetnet 10 - rubriek 55 (verticale boringen)</gco:CharacterString>
+                </gfc:label>
+                <gfc:code>
+                  <gco:CharacterString />
+                </gfc:code>
+                <gfc:definition>
+                  <gco:CharacterString />
+                </gfc:definition>
+              </gfc:FC_ListedValue>
+            </gfc:listedValue>
+            <gfc:listedValue>
+              <gfc:FC_ListedValue>
+                <gfc:label>
+                  <gco:CharacterString>meetnet 11 - rubriek 53.6 (koude-warmtepompen)</gco:CharacterString>
                 </gfc:label>
                 <gfc:code>
                   <gco:CharacterString />
@@ -920,10 +1068,151 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName>aquifer</gco:LocalName>
+              <gco:LocalName>X_mL72</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>De aquifer waarin de filter hangt. Als tekst, opgebouwd uit de HCOV code (vier karakters) en de naam gescheiden door " - ".</gco:CharacterString>
+              <gco:CharacterString>De x-coördinaat van de put in het Lambert72 coördinaatsysteem (in meter, EPSG:31370).</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity>
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>1</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:code>
+              <gco:CharacterString />
+            </gfc:code>
+            <gfc:valueType>
+              <gco:TypeName>
+                <gco:aName>
+                  <gco:CharacterString>Getal (&lt;7&gt;,&lt;1&gt;)</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+            <gfc:listedValue>
+              <gfc:FC_ListedValue>
+                <gfc:label>
+                  <gco:CharacterString />
+                </gfc:label>
+                <gfc:code>
+                  <gco:CharacterString />
+                </gfc:code>
+                <gfc:definition>
+                  <gco:CharacterString />
+                </gfc:definition>
+              </gfc:FC_ListedValue>
+            </gfc:listedValue>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName>Y_mL72</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString>De y-coördinaat van de put in het Lambert72 coördinaatsysteem (in meter, EPSG:31370).</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity>
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>1</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:code>
+              <gco:CharacterString />
+            </gfc:code>
+            <gfc:valueType>
+              <gco:TypeName>
+                <gco:aName>
+                  <gco:CharacterString>Getal (&lt;7&gt;,&lt;1&gt;)</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+            <gfc:listedValue>
+              <gfc:FC_ListedValue>
+                <gfc:label>
+                  <gco:CharacterString />
+                </gfc:label>
+                <gfc:code>
+                  <gco:CharacterString />
+                </gfc:code>
+                <gfc:definition>
+                  <gco:CharacterString />
+                </gfc:definition>
+              </gfc:FC_ListedValue>
+            </gfc:listedValue>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName>Z_mTAW</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString>De hoogte van het maaiveld op de coördinaten (X_mL72, Y_mL72) in het TAW stelsel (in meter).</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity>
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>1</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:code>
+              <gco:CharacterString />
+            </gfc:code>
+            <gfc:valueType>
+              <gco:TypeName>
+                <gco:aName>
+                  <gco:CharacterString>Getal (&lt;5&gt;,&lt;2&gt;)</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+            <gfc:listedValue>
+              <gfc:FC_ListedValue>
+                <gfc:label>
+                  <gco:CharacterString />
+                </gfc:label>
+                <gfc:code>
+                  <gco:CharacterString />
+                </gfc:code>
+                <gfc:definition>
+                  <gco:CharacterString />
+                </gfc:definition>
+              </gfc:FC_ListedValue>
+            </gfc:listedValue>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName>gemeente</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString>De gemeente waarin de put gelegen is</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>
@@ -945,7 +1234,7 @@
             <gfc:valueType>
               <gco:TypeName>
                 <gco:aName>
-                  <gco:CharacterString>Tekst</gco:CharacterString>
+                  <gco:CharacterString>Tekst (&lt;n&gt;)</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
@@ -970,7 +1259,7 @@
               <gco:LocalName>grondwaterlichaam</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>Het grondwaterlichaam waarin de filter hangt. Als tekst, opgebouwd uit de afkorting en de naam gescheiden door " - ".</gco:CharacterString>
+              <gco:CharacterString>Het grondwaterlichaam waarin de filter hangt. Als tekst, opgebouwd uit de afkorting en de naam gescheiden door " - "</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>
@@ -992,7 +1281,7 @@
             <gfc:valueType>
               <gco:TypeName>
                 <gco:aName>
-                  <gco:CharacterString>Tekst</gco:CharacterString>
+                  <gco:CharacterString>Tekst (&lt;n&gt;)</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
@@ -1014,10 +1303,10 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName>onderkant_filter_m</gco:LocalName>
+              <gco:LocalName>regime</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>De diepte van de onderkant van de filter (in meter, positief onder maaiveld gegeven in attribuut Z_mTAW).</gco:CharacterString>
+              <gco:CharacterString>Het regime van de watervoerende laag waarin de filter van de grondwaterlocatie zit</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>
@@ -1039,7 +1328,7 @@
             <gfc:valueType>
               <gco:TypeName>
                 <gco:aName>
-                  <gco:CharacterString>Getal (5,2)</gco:CharacterString>
+                  <gco:CharacterString>Tekst (&lt;n&gt;)</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
@@ -1061,17 +1350,17 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName>lengte_filter_m</gco:LocalName>
+              <gco:LocalName>datum_in_filter</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>De lengte van de filter (in meter).</gco:CharacterString>
+              <gco:CharacterString>De datum wanneer de filter in gebruik genomen is</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>
                 <gco:range>
                   <gco:MultiplicityRange>
                     <gco:lower>
-                      <gco:Integer>0</gco:Integer>
+                      <gco:Integer>1</gco:Integer>
                     </gco:lower>
                     <gco:upper>
                       <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
@@ -1086,7 +1375,7 @@
             <gfc:valueType>
               <gco:TypeName>
                 <gco:aName>
-                  <gco:CharacterString>Getal(5,2)</gco:CharacterString>
+                  <gco:CharacterString>Datum</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
@@ -1108,57 +1397,10 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName>beschrijving_ligging</gco:LocalName>
+              <gco:LocalName>datum_uit_filter</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>Een beschrijving van de ligging van de put.</gco:CharacterString>
-            </gfc:definition>
-            <gfc:cardinality>
-              <gco:Multiplicity>
-                <gco:range>
-                  <gco:MultiplicityRange>
-                    <gco:lower>
-                      <gco:Integer>0</gco:Integer>
-                    </gco:lower>
-                    <gco:upper>
-                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
-                    </gco:upper>
-                  </gco:MultiplicityRange>
-                </gco:range>
-              </gco:Multiplicity>
-            </gfc:cardinality>
-            <gfc:code>
-              <gco:CharacterString />
-            </gfc:code>
-            <gfc:valueType>
-              <gco:TypeName>
-                <gco:aName>
-                  <gco:CharacterString>Tekst</gco:CharacterString>
-                </gco:aName>
-              </gco:TypeName>
-            </gfc:valueType>
-            <gfc:listedValue>
-              <gfc:FC_ListedValue>
-                <gfc:label>
-                  <gco:CharacterString />
-                </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
-              </gfc:FC_ListedValue>
-            </gfc:listedValue>
-          </gfc:FC_FeatureAttribute>
-        </gfc:carrierOfCharacteristics>
-        <gfc:carrierOfCharacteristics>
-          <gfc:FC_FeatureAttribute>
-            <gfc:memberName>
-              <gco:LocalName>peilmetingen_van</gco:LocalName>
-            </gfc:memberName>
-            <gfc:definition>
-              <gco:CharacterString>De datum van de eerste peilmeting van de filter. Wanneer dit veld leeg is betreft dit record een put zonder filters of een filter zonder peilmetingen.</gco:CharacterString>
+              <gco:CharacterString>De datum wanneer de filter uit gebruik genomen is</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>
@@ -1202,17 +1444,17 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName>peilmetingen_tot</gco:LocalName>
+              <gco:LocalName>stijghoogterapport</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>De datum van de laatste peilmeting van de filter. Wanneer dit veld leeg is betreft dit record een put zonder filters of een filter zonder peilmetingen.</gco:CharacterString>
+              <gco:CharacterString>URL die verwijst naar het stijghoogterapport van de grondwaterlocatie in PDF formaat.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>
                 <gco:range>
                   <gco:MultiplicityRange>
                     <gco:lower>
-                      <gco:Integer>0</gco:Integer>
+                      <gco:Integer>1</gco:Integer>
                     </gco:lower>
                     <gco:upper>
                       <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
@@ -1227,7 +1469,54 @@
             <gfc:valueType>
               <gco:TypeName>
                 <gco:aName>
-                  <gco:CharacterString>Datum</gco:CharacterString>
+                  <gco:CharacterString>Tekst (&lt;n&gt;)</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+            <gfc:listedValue>
+              <gfc:FC_ListedValue>
+                <gfc:label>
+                  <gco:CharacterString />
+                </gfc:label>
+                <gfc:code>
+                  <gco:CharacterString />
+                </gfc:code>
+                <gfc:definition>
+                  <gco:CharacterString />
+                </gfc:definition>
+              </gfc:FC_ListedValue>
+            </gfc:listedValue>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName>analyserapport</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString>URL die verwijst naar het analyserapport van de grondwaterlocatie in PDF formaat.</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity>
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>1</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:code>
+              <gco:CharacterString />
+            </gfc:code>
+            <gfc:valueType>
+              <gco:TypeName>
+                <gco:aName>
+                  <gco:CharacterString>Tekst (&lt;n&gt;)</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
@@ -1252,7 +1541,7 @@
               <gco:LocalName>boornummer</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>Het boornummer van de boring waaraan de put gekoppeld is. Wanneer dit veld leeg is is de put niet gekoppeld aan een boring.</gco:CharacterString>
+              <gco:CharacterString>Het boornummer (ook gekend als proefnummer) van de boring.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>
@@ -1299,7 +1588,7 @@
               <gco:LocalName>boringfiche</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>URL die verwijst naar de gegevens van de boring op de website. Voeg '.xml' toe om een XML voorstelling van deze gegevens te verkrijgen. Wanneer dit veld leeg is is de put niet gekoppeld aan een boring.</gco:CharacterString>
+              <gco:CharacterString>Permanente URL die verwijst naar de gegevens van de boring op de website. Voeg '.xml' toe om een XML voorstelling van deze gegevens te verkrijgen.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>
@@ -1343,10 +1632,104 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName>oxidatie_reductie</gco:LocalName>
+              <gco:LocalName>peilmetingen_van</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
+              <gco:CharacterString>Datum waarop de eerste peilmeting werd uitgevoerd.</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity>
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>0</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:code>
               <gco:CharacterString />
+            </gfc:code>
+            <gfc:valueType>
+              <gco:TypeName>
+                <gco:aName>
+                  <gco:CharacterString>Datum</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+            <gfc:listedValue>
+              <gfc:FC_ListedValue>
+                <gfc:label>
+                  <gco:CharacterString />
+                </gfc:label>
+                <gfc:code>
+                  <gco:CharacterString />
+                </gfc:code>
+                <gfc:definition>
+                  <gco:CharacterString />
+                </gfc:definition>
+              </gfc:FC_ListedValue>
+            </gfc:listedValue>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName>peilmetingen_tot</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString>Datum waarop de laatste peilmeting werd uitgevoerd.</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity>
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>0</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:code>
+              <gco:CharacterString />
+            </gfc:code>
+            <gfc:valueType>
+              <gco:TypeName>
+                <gco:aName>
+                  <gco:CharacterString>Datum</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+            <gfc:listedValue>
+              <gfc:FC_ListedValue>
+                <gfc:label>
+                  <gco:CharacterString />
+                </gfc:label>
+                <gfc:code>
+                  <gco:CharacterString />
+                </gfc:code>
+                <gfc:definition>
+                  <gco:CharacterString />
+                </gfc:definition>
+              </gfc:FC_ListedValue>
+            </gfc:listedValue>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName>kwaliteitsmetingen_van</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString>Datum waarop het eerste grondwaterstaal op deze filter werd genomen</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>
@@ -1375,7 +1758,7 @@
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>oxidatie</gco:CharacterString>
+                  <gco:CharacterString />
                 </gfc:label>
                 <gfc:code>
                   <gco:CharacterString />
@@ -1385,10 +1768,44 @@
                 </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName>kwaliteitsmetingen_tot</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString>Datum waarop het laatste grondwaterstaal op deze filter werd genomen.</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity>
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>0</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:code>
+              <gco:CharacterString />
+            </gfc:code>
+            <gfc:valueType>
+              <gco:TypeName>
+                <gco:aName>
+                  <gco:CharacterString>Tekst</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>reductie</gco:CharacterString>
+                  <gco:CharacterString />
                 </gfc:label>
                 <gfc:code>
                   <gco:CharacterString />
@@ -1398,10 +1815,44 @@
                 </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName>recentste_exploitant</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString>De recentste exploitant van een grondwaterlocatie (installatieput)</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity>
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>1</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:code>
+              <gco:CharacterString />
+            </gfc:code>
+            <gfc:valueType>
+              <gco:TypeName>
+                <gco:aName>
+                  <gco:CharacterString>Tekst (&lt;n&gt;)</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>mengzone</gco:CharacterString>
+                  <gco:CharacterString />
                 </gfc:label>
                 <gfc:code>
                   <gco:CharacterString />
@@ -1411,10 +1862,44 @@
                 </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName>beheerder</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString>De huidige beheerder van een grondwaterlocatie (meetnetput)</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity>
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>1</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:code>
+              <gco:CharacterString />
+            </gfc:code>
+            <gfc:valueType>
+              <gco:TypeName>
+                <gco:aName>
+                  <gco:CharacterString>Tekst (&lt;n&gt;)</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>onbekend</gco:CharacterString>
+                  <gco:CharacterString />
                 </gfc:label>
                 <gfc:code>
                   <gco:CharacterString />
@@ -1432,7 +1917,7 @@
               <gco:LocalName>geom</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>De geometrie van de put (punt). Dit komt overeen met het punt beschreven door de coördinaten "X_mL72", "Y_mL72".</gco:CharacterString>
+              <gco:CharacterString>De geometrie van de gronwaterlocatie (punt). Dit komt overeen met het punt beschreven door de coördinaten "X_mL72", "Y_mL72".</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity>

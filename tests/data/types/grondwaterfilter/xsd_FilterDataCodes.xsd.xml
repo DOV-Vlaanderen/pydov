@@ -6,24 +6,8 @@
 <!--
 Dit bestand bevat de typische codetabellen gebruikt bij datatypes voor filter of zijn ondergeschikte ellementen: referentiepunen en peilmetingen.
 Alles ivm kwaliteitsmetingen zit vervat in het deelschema 'observaties'.
--->        
-    <xs:simpleType name="FilterEnumType">
-        <xs:annotation>
-            <xs:documentation>lijst van mogelijke types van filter</xs:documentation>
-        </xs:annotation>
-        <xs:restriction base="xs:string">
-            <xs:enumeration value="peilfilter">
-                <xs:annotation>
-                    <xs:documentation>type peilfilter</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="pompfilter">
-                <xs:annotation>
-                    <xs:documentation>type pompfilter</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
-        </xs:restriction>
-    </xs:simpleType>
+-->
+
 <!--    
 select '<xs:enumeration value="'||beschrijving||'"/>' from grondwater.lut_meetnet order by beschrijving
 -->

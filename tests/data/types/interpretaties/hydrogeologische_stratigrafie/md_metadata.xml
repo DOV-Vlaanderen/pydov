@@ -20,7 +20,7 @@
       <gco:CharacterString>dataset</gco:CharacterString>
     </gmd:hierarchyLevelName>
     <gmd:contact>
-      <gmd:CI_ResponsibleParty xmlns:gfc="http://www.isotc211.org/2005/gfc" xmlns:gmx="http://www.isotc211.org/2005/gmx">
+      <gmd:CI_ResponsibleParty xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gfc="http://www.isotc211.org/2005/gfc">
         <gmd:organisationName>
           <gco:CharacterString>Databank Ondergrond Vlaanderen (DOV)</gco:CharacterString>
         </gmd:organisationName>
@@ -66,8 +66,8 @@
         </gmd:role>
       </gmd:CI_ResponsibleParty>
     </gmd:contact>
-    <gmd:dateStamp xmlns:gfc="http://www.isotc211.org/2005/gfc" xmlns:gmx="http://www.isotc211.org/2005/gmx">
-      <gco:DateTime>2019-02-07T13:49:01</gco:DateTime>
+    <gmd:dateStamp xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gfc="http://www.isotc211.org/2005/gfc">
+      <gco:DateTime>2019-06-06T18:19:47</gco:DateTime>
     </gmd:dateStamp>
     <gmd:metadataStandardName>
       <gco:CharacterString>ISO 19115/2003/Cor.1:2006</gco:CharacterString>
@@ -156,7 +156,54 @@
           <gmd:MD_ProgressCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_ProgressCode" codeListValue="onGoing" />
         </gmd:status>
         <gmd:pointOfContact>
-          <gmd:CI_ResponsibleParty xmlns:gfc="http://www.isotc211.org/2005/gfc" xmlns:gmx="http://www.isotc211.org/2005/gmx">
+          <gmd:CI_ResponsibleParty xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gfc="http://www.isotc211.org/2005/gfc">
+            <gmd:organisationName>
+              <gco:CharacterString>Ondersteunend Centrum Databank Ondergrond Vlaanderen</gco:CharacterString>
+            </gmd:organisationName>
+            <gmd:contactInfo>
+              <gmd:CI_Contact>
+                <gmd:phone>
+                  <gmd:CI_Telephone>
+                    <gmd:voice>
+                      <gco:CharacterString>+32 9 240 75 93</gco:CharacterString>
+                    </gmd:voice>
+                  </gmd:CI_Telephone>
+                </gmd:phone>
+                <gmd:address>
+                  <gmd:CI_Address>
+                    <gmd:deliveryPoint>
+                      <gco:CharacterString>Technologiepark-Zwijnaarde 68</gco:CharacterString>
+                    </gmd:deliveryPoint>
+                    <gmd:city>
+                      <gco:CharacterString>Gent</gco:CharacterString>
+                    </gmd:city>
+                    <gmd:postalCode>
+                      <gco:CharacterString>9052</gco:CharacterString>
+                    </gmd:postalCode>
+                    <gmd:country>
+                      <gco:CharacterString>België</gco:CharacterString>
+                    </gmd:country>
+                    <gmd:electronicMailAddress>
+                      <gco:CharacterString>dov@vlaanderen.be</gco:CharacterString>
+                    </gmd:electronicMailAddress>
+                  </gmd:CI_Address>
+                </gmd:address>
+                <gmd:onlineResource>
+                  <gmd:CI_OnlineResource>
+                    <gmd:linkage>
+                      <gmd:URL>https://www.dov.vlaanderen.be</gmd:URL>
+                    </gmd:linkage>
+                  </gmd:CI_OnlineResource>
+                </gmd:onlineResource>
+              </gmd:CI_Contact>
+            </gmd:contactInfo>
+            <gmd:role>
+              <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_RoleCode" codeListValue="custodian" />
+            </gmd:role>
+          </gmd:CI_ResponsibleParty>
+        </gmd:pointOfContact>
+        <gmd:pointOfContact>
+          <gmd:CI_ResponsibleParty xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gfc="http://www.isotc211.org/2005/gfc">
             <gmd:organisationName>
               <gco:CharacterString>Databank Ondergrond Vlaanderen (DOV)</gco:CharacterString>
             </gmd:organisationName>
@@ -203,47 +250,7 @@
           </gmd:CI_ResponsibleParty>
         </gmd:pointOfContact>
         <gmd:pointOfContact>
-          <gmd:CI_ResponsibleParty>
-            <gmd:organisationName>
-              <gco:CharacterString>Vlaamse overheid - Vlaamse MilieuMaatschappij - Afdeling Operationeel Waterbeheer</gco:CharacterString>
-            </gmd:organisationName>
-            <gmd:contactInfo>
-              <gmd:CI_Contact>
-                <gmd:address>
-                  <gmd:CI_Address>
-                    <gmd:deliveryPoint>
-                      <gco:CharacterString>Koning Albert II-laan 20 bus 16</gco:CharacterString>
-                    </gmd:deliveryPoint>
-                    <gmd:city>
-                      <gco:CharacterString>Brussel</gco:CharacterString>
-                    </gmd:city>
-                    <gmd:postalCode>
-                      <gco:CharacterString>1000</gco:CharacterString>
-                    </gmd:postalCode>
-                    <gmd:country>
-                      <gco:CharacterString>België</gco:CharacterString>
-                    </gmd:country>
-                    <gmd:electronicMailAddress>
-                      <gco:CharacterString>info@vmm.be</gco:CharacterString>
-                    </gmd:electronicMailAddress>
-                  </gmd:CI_Address>
-                </gmd:address>
-                <gmd:onlineResource>
-                  <gmd:CI_OnlineResource>
-                    <gmd:linkage>
-                      <gmd:URL>https://www.vmm.be</gmd:URL>
-                    </gmd:linkage>
-                  </gmd:CI_OnlineResource>
-                </gmd:onlineResource>
-              </gmd:CI_Contact>
-            </gmd:contactInfo>
-            <gmd:role>
-              <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_RoleCode" codeListValue="custodian" />
-            </gmd:role>
-          </gmd:CI_ResponsibleParty>
-        </gmd:pointOfContact>
-        <gmd:pointOfContact>
-          <gmd:CI_ResponsibleParty xmlns:gfc="http://www.isotc211.org/2005/gfc" xmlns:gmx="http://www.isotc211.org/2005/gmx">
+          <gmd:CI_ResponsibleParty xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gfc="http://www.isotc211.org/2005/gfc">
             <gmd:organisationName>
               <gco:CharacterString>Ondersteunend Centrum Databank Ondergrond Vlaanderen</gco:CharacterString>
             </gmd:organisationName>
@@ -661,7 +668,7 @@ Deze vormen o.a. de basis van hydrogeologische modelleringen, studies, rapporter
         <gmd:distributor>
           <gmd:MD_Distributor>
             <gmd:distributorContact>
-              <gmd:CI_ResponsibleParty xmlns:gfc="http://www.isotc211.org/2005/gfc" xmlns:gmx="http://www.isotc211.org/2005/gmx">
+              <gmd:CI_ResponsibleParty xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gfc="http://www.isotc211.org/2005/gfc">
                 <gmd:organisationName>
                   <gco:CharacterString>Databank Ondergrond Vlaanderen (DOV)</gco:CharacterString>
                 </gmd:organisationName>

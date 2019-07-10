@@ -101,7 +101,7 @@ class GrondwaterFilter(AbstractDovType):
     }, {
         'name': 'filternummer',
         'source': 'wfs',
-        'sourcefield': 'filternr',
+        'sourcefield': 'filternummer',
         'type': 'string'
     }, {
         'name': 'filtertype',

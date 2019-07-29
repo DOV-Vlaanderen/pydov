@@ -268,7 +268,7 @@ class AbstractSearch(AbstractCommon):
                     '@name="{}"]/'
                     '{{http://www.w3.org/2001/XMLSchema}}restriction/'
                     '{{http://www.w3.org/2001/XMLSchema}}enumeration'.format(
-                    xml_field.get('xsd_type')))
+                        xml_field.get('xsd_type')))
                 for e in tree_values:
                     value = cls._typeconvert(
                         e.get('value'), xml_field.get('type'))
@@ -602,7 +602,7 @@ class AbstractSearch(AbstractCommon):
         if tree.get('numberOfFeatures') is None:
             raise WfsGetFeatureError(
                 'Error retrieving features from DOV WFS server:\n{}'.format(
-                etree.tostring(tree).decode('utf8')))
+                    etree.tostring(tree).decode('utf8')))
 
         if int(tree.get('numberOfFeatures')) == 10000:
             raise FeatureOverflowError(

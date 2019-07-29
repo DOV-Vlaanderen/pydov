@@ -45,7 +45,7 @@ class AbstractCommonInterpretatie(AbstractDovType):
 
         """
         instance = cls(
-            feature.findtext('./{%s}Interpretatiefiche' % namespace))
+            feature.findtext('./{{{}}}Interpretatiefiche'.format(namespace)))
 
         typeproef = cls._parse(
             func=feature.findtext,
@@ -124,7 +124,7 @@ class AbstractBoringInterpretatie(AbstractDovType):
 
         """
         instance = cls(
-            feature.findtext('./{%s}Interpretatiefiche' % namespace))
+            feature.findtext('./{{{}}}Interpretatiefiche'.format(namespace)))
 
         for field in cls.get_fields(source=('wfs',)).values():
             instance.data[field['name']] = cls._parse(

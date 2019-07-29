@@ -30,13 +30,13 @@ def get_first_featuremember(wfs_response):
 
 
 def update_file(filepath, url, process_fn=None):
-    sys.stdout.write('Updating %s ...' % filepath)
+    sys.stdout.write('Updating {} ...'.format(filepath))
     try:
         data = openURL(url).read()
         if type(data) is bytes:
             data = data.decode('utf-8')
     except Exception as e:
-        sys.stdout.write(' FAILED:\n   %s.\n' % e)
+        sys.stdout.write(' FAILED:\n   {}.\n'.format(e))
         return
     else:
         with open(filepath, 'wb') as f:
@@ -83,7 +83,7 @@ if __name__ == '__main__':
 
     for xsd_schema in Boring.get_xsd_schemas():
         update_file(
-            'types/boring/xsd_%s.xml' % xsd_schema.split('/')[-1],
+            'types/boring/xsd_{}.xml'.format(xsd_schema.split('/')[-1]),
             xsd_schema)
 
     # types/sondering
@@ -122,7 +122,7 @@ if __name__ == '__main__':
 
     for xsd_schema in Sondering.get_xsd_schemas():
         update_file(
-            'types/sondering/xsd_%s.xml' % xsd_schema.split('/')[-1],
+            'types/sondering/xsd_{}.xml'.format(xsd_schema.split('/')[-1]),
             xsd_schema)
 
     # types/interpretaties/informele_stratigrafie

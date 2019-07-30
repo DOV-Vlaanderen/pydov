@@ -16,9 +16,18 @@ class BoringSearch(AbstractSearch):
     __fc_featurecatalogue = None
     __xsd_schemas = None
 
-    def __init__(self):
-        """Initialisation."""
-        super(BoringSearch, self).__init__('dov-pub:Boringen', Boring)
+    def __init__(self, objecttype=Boring):
+        """Initialisation.
+
+        Parameters
+        ----------
+        objecttype : subclass of pydov.types.abstract.AbstractDovType
+            Reference to a class representing the Boring type.
+            Optional: defaults to the Boring type containing the fields
+            described in the documentation.
+
+        """
+        super(BoringSearch, self).__init__('dov-pub:Boringen', objecttype)
 
     def _init_namespace(self):
         """Initialise the WFS namespace associated with the layer."""
@@ -121,8 +130,9 @@ class BoringSearch(AbstractSearch):
         fts = self._search(location=location, query=query,
                            return_fields=return_fields)
 
-        boringen = Boring.from_wfs(fts, self.__wfs_namespace)
+        boringen = self._type.from_wfs(fts, self.__wfs_namespace)
 
-        df = pd.DataFrame(data=Boring.to_df_array(boringen, return_fields),
-                          columns=Boring.get_field_names(return_fields))
+        df = pd.DataFrame(
+            data=self._type.to_df_array(boringen, return_fields),
+            columns=self._type.get_field_names(return_fields))
         return df

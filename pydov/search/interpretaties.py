@@ -20,10 +20,19 @@ class InformeleStratigrafieSearch(AbstractSearch):
     __fc_featurecatalogue = None
     __xsd_schemas = None
 
-    def __init__(self):
-        """Initialisation."""
+    def __init__(self, objecttype=InformeleStratigrafie):
+        """Initialisation.
+
+        Parameters
+        ----------
+        objecttype : subclass of pydov.types.abstract.AbstractDovType
+            Reference to a class representing the InformeleStratigrafie type.
+            Optional: defaults to the InformeleStratigrafie type
+            containing the fields described in the documentation.
+
+        """
         super(InformeleStratigrafieSearch, self).__init__(
-            'interpretaties:informele_stratigrafie', InformeleStratigrafie)
+            'interpretaties:informele_stratigrafie', objecttype)
 
     def _init_namespace(self):
         """Initialise the WFS namespace associated with the layer."""
@@ -128,13 +137,12 @@ class InformeleStratigrafieSearch(AbstractSearch):
                            return_fields=return_fields,
                            extra_wfs_fields=['Type_proef', 'Proeffiche'])
 
-        interpretaties = InformeleStratigrafie.from_wfs(
+        interpretaties = self._type.from_wfs(
             fts, self.__wfs_namespace)
 
         df = pd.DataFrame(
-            data=InformeleStratigrafie.to_df_array(
-                interpretaties, return_fields),
-            columns=InformeleStratigrafie.get_field_names(return_fields))
+            data=self._type.to_df_array(interpretaties, return_fields),
+            columns=self._type.get_field_names(return_fields))
         return df
 
 
@@ -148,10 +156,19 @@ class FormeleStratigrafieSearch(AbstractSearch):
     __fc_featurecatalogue = None
     __xsd_schemas = None
 
-    def __init__(self):
-        """Initialisation."""
+    def __init__(self, objecttype=FormeleStratigrafie):
+        """Initialisation.
+
+        Parameters
+        ----------
+        objecttype : subclass of pydov.types.abstract.AbstractDovType
+            Reference to a class representing the FormeleStratigrafie type.
+            Optional: defaults to the FormeleStratigrafie type containing the
+            fields described in the documentation.
+
+        """
         super(FormeleStratigrafieSearch, self).__init__(
-            'interpretaties:formele_stratigrafie', FormeleStratigrafie)
+            'interpretaties:formele_stratigrafie', objecttype)
 
     def _init_namespace(self):
         """Initialise the WFS namespace associated with the layer."""
@@ -256,13 +273,12 @@ class FormeleStratigrafieSearch(AbstractSearch):
                            return_fields=return_fields,
                            extra_wfs_fields=['Type_proef', 'Proeffiche'])
 
-        interpretaties = FormeleStratigrafie.from_wfs(
+        interpretaties = self._type.from_wfs(
             fts, self.__wfs_namespace)
 
         df = pd.DataFrame(
-            data=FormeleStratigrafie.to_df_array(
-                interpretaties, return_fields),
-            columns=FormeleStratigrafie.get_field_names(return_fields))
+            data=self._type.to_df_array(interpretaties, return_fields),
+            columns=self._type.get_field_names(return_fields))
         return df
 
 
@@ -275,11 +291,20 @@ class HydrogeologischeStratigrafieSearch(AbstractSearch):
     __fc_featurecatalogue = None
     __xsd_schemas = None
 
-    def __init__(self):
-        """Initialisation."""
+    def __init__(self, objecttype=HydrogeologischeStratigrafie):
+        """Initialisation.
+
+        Parameters
+        ----------
+        objecttype : subclass of pydov.types.abstract.AbstractDovType
+            Reference to a class representing the HydrogeologischeStratigrafie
+            type. Optional: defaults to the HydrogeologischeStratigrafie type
+            containing the fields described in the documentation.
+
+        """
         super(HydrogeologischeStratigrafieSearch, self).__init__(
             'interpretaties:hydrogeologische_stratigrafie',
-            HydrogeologischeStratigrafie)
+            objecttype)
 
     def _init_namespace(self):
         """Initialise the WFS namespace associated with the layer."""
@@ -387,14 +412,12 @@ class HydrogeologischeStratigrafieSearch(AbstractSearch):
         fts = self._search(location=location, query=query,
                            return_fields=return_fields)
 
-        interpretaties = HydrogeologischeStratigrafie.from_wfs(
+        interpretaties = self._type.from_wfs(
             fts, self.__wfs_namespace)
 
         df = pd.DataFrame(
-            data=HydrogeologischeStratigrafie.to_df_array(
-                interpretaties, return_fields),
-            columns=HydrogeologischeStratigrafie.get_field_names(
-                return_fields))
+            data=self._type.to_df_array(interpretaties, return_fields),
+            columns=self._type.get_field_names(return_fields))
         return df
 
 
@@ -407,11 +430,20 @@ class LithologischeBeschrijvingenSearch(AbstractSearch):
     __fc_featurecatalogue = None
     __xsd_schemas = None
 
-    def __init__(self):
-        """Initialisation."""
+    def __init__(self, objecttype=LithologischeBeschrijvingen):
+        """Initialisation.
+
+        Parameters
+        ----------
+        objecttype : subclass of pydov.types.abstract.AbstractDovType
+            Reference to a class representing the LithologischeBeschrijvingen
+            type. Optional: defaults to the LithologischeBeschrijvingen type
+            containing the fields described in the documentation.
+
+        """
         super(LithologischeBeschrijvingenSearch, self).__init__(
             'interpretaties:lithologische_beschrijvingen',
-            LithologischeBeschrijvingen)
+            objecttype)
 
     def _init_namespace(self):
         """Initialise the WFS namespace associated with the layer."""
@@ -519,14 +551,12 @@ class LithologischeBeschrijvingenSearch(AbstractSearch):
         fts = self._search(location=location, query=query,
                            return_fields=return_fields)
 
-        interpretaties = LithologischeBeschrijvingen.from_wfs(
+        interpretaties = self._type.from_wfs(
             fts, self.__wfs_namespace)
 
         df = pd.DataFrame(
-            data=LithologischeBeschrijvingen.to_df_array(
-                interpretaties, return_fields),
-            columns=LithologischeBeschrijvingen.get_field_names(
-                return_fields))
+            data=self._type.to_df_array(interpretaties, return_fields),
+            columns=self._type.get_field_names(return_fields))
         return df
 
 
@@ -539,11 +569,20 @@ class GecodeerdeLithologieSearch(AbstractSearch):
     __fc_featurecatalogue = None
     __xsd_schemas = None
 
-    def __init__(self):
-        """Initialisation."""
+    def __init__(self, objecttype=GecodeerdeLithologie):
+        """Initialisation.
+
+        Parameters
+        ----------
+        objecttype : subclass of pydov.types.abstract.AbstractDovType
+            Reference to a class representing the GecodeerdeLithologie type.
+            Optional: defaults to the GecodeerdeLithologie type containing
+            the fields described in the documentation.
+
+        """
         super(GecodeerdeLithologieSearch, self).__init__(
             'interpretaties:gecodeerde_lithologie',
-            GecodeerdeLithologie)
+            objecttype)
 
     def _init_namespace(self):
         """Initialise the WFS namespace associated with the layer."""
@@ -651,14 +690,12 @@ class GecodeerdeLithologieSearch(AbstractSearch):
         fts = self._search(location=location, query=query,
                            return_fields=return_fields)
 
-        interpretaties = GecodeerdeLithologie.from_wfs(
+        interpretaties = self._type.from_wfs(
             fts, self.__wfs_namespace)
 
         df = pd.DataFrame(
-            data=GecodeerdeLithologie.to_df_array(
-                interpretaties, return_fields),
-            columns=GecodeerdeLithologie.get_field_names(
-                return_fields))
+            data=self._type.to_df_array(interpretaties, return_fields),
+            columns=self._type.get_field_names(return_fields))
         return df
 
 
@@ -671,11 +708,20 @@ class GeotechnischeCoderingSearch(AbstractSearch):
     __fc_featurecatalogue = None
     __xsd_schemas = None
 
-    def __init__(self):
-        """Initialisation."""
+    def __init__(self, objecttype=GeotechnischeCodering):
+        """Initialisation.
+
+        Parameters
+        ----------
+        objecttype : subclass of pydov.types.abstract.AbstractDovType
+            Reference to a class representing the GeotechnischeCodering type.
+            Optional: defaults to the GeotechnischeCodering type containing
+            the fields described in the documentation.
+
+        """
         super(GeotechnischeCoderingSearch, self).__init__(
             'interpretaties:geotechnische_coderingen',
-            GeotechnischeCodering)
+            objecttype)
 
     def _init_namespace(self):
         """Initialise the WFS namespace associated with the layer."""
@@ -779,14 +825,12 @@ class GeotechnischeCoderingSearch(AbstractSearch):
         fts = self._search(location=location, query=query,
                            return_fields=return_fields)
 
-        interpretaties = GeotechnischeCodering.from_wfs(
+        interpretaties = self._type.from_wfs(
             fts, self.__wfs_namespace)
 
         df = pd.DataFrame(
-            data=GeotechnischeCodering.to_df_array(
-                interpretaties, return_fields),
-            columns=GeotechnischeCodering.get_field_names(
-                return_fields))
+            data=self._type.to_df_array(interpretaties, return_fields),
+            columns=self._type.get_field_names(return_fields))
         return df
 
 
@@ -800,10 +844,19 @@ class QuartairStratigrafieSearch(AbstractSearch):
     __fc_featurecatalogue = None
     __xsd_schemas = None
 
-    def __init__(self):
-        """Initialisation."""
+    def __init__(self, objecttype=QuartairStratigrafie):
+        """Initialisation.
+
+        Parameters
+        ----------
+        objecttype : subclass of pydov.types.abstract.AbstractDovType
+            Reference to a class representing the QuartairStratigrafie type.
+            Optional: defaults to the QuartairStratigrafie type containing
+            the fields described in the documentation.
+
+        """
         super(QuartairStratigrafieSearch, self).__init__(
-            'interpretaties:quartaire_stratigrafie', QuartairStratigrafie)
+            'interpretaties:quartaire_stratigrafie', objecttype)
 
     def _init_namespace(self):
         """Initialise the WFS namespace associated with the layer."""
@@ -909,11 +962,9 @@ class QuartairStratigrafieSearch(AbstractSearch):
         fts = self._search(location=location, query=query,
                            return_fields=return_fields)
 
-        interpretaties = QuartairStratigrafie.from_wfs(
-            fts, self.__wfs_namespace)
+        interpretaties = self._type.from_wfs(fts, self.__wfs_namespace)
 
         df = pd.DataFrame(
-            data=QuartairStratigrafie.to_df_array(
-                interpretaties, return_fields),
-            columns=QuartairStratigrafie.get_field_names(return_fields))
+            data=self._type.to_df_array(interpretaties, return_fields),
+            columns=self._type.get_field_names(return_fields))
         return df

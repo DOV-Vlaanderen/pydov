@@ -143,7 +143,7 @@ class Boring(AbstractDovType):
             element.
 
         """
-        b = Boring(feature.findtext('./{%s}fiche' % namespace))
+        b = cls(feature.findtext('./{%s}fiche' % namespace))
 
         for field in cls.get_fields(source=('wfs',)).values():
             b.data[field['name']] = cls._parse(

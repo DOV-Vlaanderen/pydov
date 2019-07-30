@@ -17,9 +17,19 @@ class SonderingSearch(AbstractSearch):
     __fc_featurecatalogue = None
     __xsd_schemas = None
 
-    def __init__(self):
-        """Initialisation."""
-        super(SonderingSearch, self).__init__('dov-pub:Sonderingen', Sondering)
+    def __init__(self, objecttype=Sondering):
+        """Initialisation.
+
+        Parameters
+        ----------
+        objecttype : subclass of pydov.types.abstract.AbstractDovType
+            Reference to a class representing the Sondering type.
+            Optional: defaults to the Sondering type containing
+            the fields described in the documentation.
+
+        """
+        super(SonderingSearch, self).__init__(
+            'dov-pub:Sonderingen', objecttype)
 
     def _init_namespace(self):
         """Initialise the WFS namespace associated with the layer."""
@@ -122,9 +132,9 @@ class SonderingSearch(AbstractSearch):
         fts = self._search(location=location, query=query,
                            return_fields=return_fields)
 
-        sonderingen = Sondering.from_wfs(fts, self.__wfs_namespace)
+        sonderingen = self._type.from_wfs(fts, self.__wfs_namespace)
 
         df = pd.DataFrame(
-            data=Sondering.to_df_array(sonderingen, return_fields),
-            columns=Sondering.get_field_names(return_fields))
+            data=self._type.to_df_array(sonderingen, return_fields),
+            columns=self._type.get_field_names(return_fields))
         return df

@@ -172,7 +172,7 @@ class Sondering(AbstractDovType):
             element.
 
         """
-        s = Sondering(feature.findtext('./{%s}fiche' % namespace))
+        s = cls(feature.findtext('./{%s}fiche' % namespace))
 
         for field in cls.get_fields(source=('wfs',)).values():
             s.data[field['name']] = cls._parse(

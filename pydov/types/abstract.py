@@ -23,6 +23,84 @@ from ..util.errors import (
 )
 
 
+class XsdType(object):
+    def __init__(self, xsd_schema, typename):
+        """Initialise a XSD type reference.
+
+        Parameters
+        ----------
+        xsd_schema : str
+            URL of XSD schema record containing the specified typename.
+        typename : str
+            Name of the type.
+
+        """
+        self.xsd_schema = xsd_schema
+        self.typename = typename
+
+
+class AbstractField(object):
+    def __init__(self, name, source):
+        """ Initialise a field.
+
+        Parameters
+        ----------
+        name : str
+            Name of this field in the return dataframe.
+        source: one of 'wfs', 'xml'
+            Source of this field.
+
+        """
+        self.name = name
+        self.source = source
+
+
+class WfsField(AbstractField):
+    def __init__(self, name, source_field):
+        """ Initialse a WFS field.
+
+        Parameters
+        ----------
+        name : str
+            Name of this field in the return dataframe.
+        source_field : str
+            Name of this field in the source WFS service.
+        """
+        super(WfsField, self).__init__(name, 'wfs')
+        self.source_field = source_field
+
+
+class XmlField(AbstractField):
+    def __init__(self, name, source_xpath, definition, datatype, notnull,
+                 xsd_type=None):
+        """Initialise an XML field.
+
+        Parameters
+        ----------
+        name : str
+            Name of this field in the return dataframe.
+        source_xpath : str
+            XPath expression of the values of this field in the source XML
+            document.
+        definition : str
+            Definition of this field.
+        datatype : one of 'string', 'integer', 'float', 'date', 'datetime'
+                or 'boolean'
+            Datatype of the values of this field in the return dataframe.
+        notnull : bool
+            True if this field is always present (mandatory), False otherwise.
+        xsd_type : pydov.types.abstract.XsdType, optional
+            XSD type associated with this field.
+
+        """
+        super(XmlField, self).__init__(name, 'xml')
+        self.source_xpath = source_xpath
+        self.definition = definition
+        self.datatype = datatype
+        self.notnull = notnull
+        self.xsd_type = xsd_type
+
+
 class AbstractTypeCommon(AbstractCommon):
     """Class grouping methods common to AbstractDovType and
     AbstractDovSubType."""

@@ -96,9 +96,17 @@ class AbstractTypeCommon(AbstractCommon):
 
 class AbstractDovSubType(AbstractTypeCommon):
     """Abstract DOV type grouping fields and methods common to all DOV
-    subtypes. Not to be instantiated or used directly."""
+    subtypes. Not to be instantiated or used directly.
 
-    _rootpath = None
+    Attributes
+    ----------
+    rootpath : str
+        XPath expression of the root element of this subtype. Should return
+        all elements of this subtype.
+
+    """
+
+    rootpath = None
 
     _UNRESOLVED = "{UNRESOLVED}"
 
@@ -136,7 +144,7 @@ class AbstractDovSubType(AbstractTypeCommon):
         """
         try:
             tree = parse_dov_xml(xml_data)
-            for element in tree.findall(cls._rootpath):
+            for element in tree.findall(cls.rootpath):
                 yield cls.from_xml_element(element)
         except XmlParseError:
             # Ignore XmlParseError here in subtypes, assuming it will be
@@ -233,18 +241,6 @@ class AbstractDovSubType(AbstractTypeCommon):
 
         """
         return cls.__name__
-
-    @classmethod
-    def get_root_path(cls):
-        """Return the root XPath of the XML element of this subtype.
-
-        Returns
-        -------
-        xpath : str
-            The XPath of the XML root element of this subtype.
-
-        """
-        return cls._rootpath
 
 
 class AbstractDovType(AbstractTypeCommon):

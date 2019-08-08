@@ -139,7 +139,7 @@ class AbstractBoringInterpretatie(AbstractDovType):
 
 class InformeleStratigrafieLaag(AbstractDovSubType):
 
-    _rootpath = './/informelestratigrafie/laag'
+    rootpath = './/informelestratigrafie/laag'
 
     fields = [{
         'name': 'diepte_laag_van',
@@ -215,7 +215,7 @@ class InformeleStratigrafie(AbstractCommonInterpretatie):
 
 class FormeleStratigrafieLaag(AbstractDovSubType):
 
-    _rootpath = './/formelestratigrafie/laag'
+    rootpath = './/formelestratigrafie/laag'
 
     _xsd_schemas = [
         'https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/'
@@ -317,7 +317,7 @@ class FormeleStratigrafie(AbstractCommonInterpretatie):
 
 class HydrogeologischeStratigrafieLaag(AbstractDovSubType):
 
-    _rootpath = './/hydrogeologischeinterpretatie/laag'
+    rootpath = './/hydrogeologischeinterpretatie/laag'
 
     _xsd_schemas = [
         'https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/'
@@ -388,7 +388,7 @@ class HydrogeologischeStratigrafie(AbstractBoringInterpretatie):
 
 class LithologischeBeschrijvingLaag(AbstractDovSubType):
 
-    _rootpath = './/lithologischebeschrijving/laag'
+    rootpath = './/lithologischebeschrijving/laag'
 
     fields = [{
         'name': 'diepte_laag_van',
@@ -453,7 +453,7 @@ class LithologischeBeschrijvingen(AbstractBoringInterpretatie):
 
 class GecodeerdeLithologieLaag(AbstractDovSubType):
 
-    _rootpath = './/gecodeerdelithologie/laag'
+    rootpath = './/gecodeerdelithologie/laag'
 
     _xsd_schemas = [
         'https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/'
@@ -608,7 +608,7 @@ class GecodeerdeLithologie(AbstractBoringInterpretatie):
 
 class GeotechnischeCoderingLaag(AbstractDovSubType):
 
-    _rootpath = './/geotechnischecodering/laag'
+    rootpath = './/geotechnischecodering/laag'
 
     _xsd_schemas = [
         'https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/'
@@ -765,7 +765,7 @@ class GeotechnischeCodering(AbstractBoringInterpretatie):
 
 class QuartairStratigrafieLaag(AbstractDovSubType):
 
-    _rootpath = './/quartairstratigrafie/laag'
+    rootpath = './/quartairstratigrafie/laag'
 
     _xsd_schemas = [
         'https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/'

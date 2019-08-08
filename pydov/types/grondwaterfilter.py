@@ -10,7 +10,7 @@ from .abstract import (
 
 class Peilmeting(AbstractDovSubType):
 
-    _rootpath = './/filtermeting/peilmeting'
+    rootpath = './/filtermeting/peilmeting'
 
     fields = [{
         'name': 'datum',

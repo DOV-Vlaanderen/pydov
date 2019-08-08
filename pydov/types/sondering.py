@@ -9,10 +9,9 @@ from pydov.types.abstract import (
 
 class Meetdata(AbstractDovSubType):
 
-    _name = 'penetratietest'
-    _rootpath = './/sondering/sondeonderzoek/penetratietest/meetdata'
+    rootpath = './/sondering/sondeonderzoek/penetratietest/meetdata'
 
-    _fields = [{
+    fields = [{
         'name': 'z',
         'source': 'xml',
         'sourcefield': '/sondeerdiepte',
@@ -66,9 +65,9 @@ class Meetdata(AbstractDovSubType):
 class Sondering(AbstractDovType):
     """Class representing the DOV data type for CPT measurements."""
 
-    _subtypes = [Meetdata]
+    subtypes = [Meetdata]
 
-    _fields = [{
+    fields = [{
         'name': 'pkey_sondering',
         'source': 'wfs',
         'sourcefield': 'fiche',

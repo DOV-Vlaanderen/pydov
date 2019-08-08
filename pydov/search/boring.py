@@ -64,7 +64,7 @@ class BoringSearch(AbstractSearch):
             for field in fields.values():
                 if field['name'] not in self._type.get_field_names(
                         include_wfs_injected=True):
-                    self._type._fields.append({
+                    self._type.fields.append({
                         'name': field['name'],
                         'source': 'wfs',
                         'sourcefield': field['name'],

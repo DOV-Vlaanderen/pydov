@@ -10,10 +10,9 @@ from .abstract import (
 
 class Peilmeting(AbstractDovSubType):
 
-    _name = 'peilmeting'
-    _rootpath = './/filtermeting/peilmeting'
+    rootpath = './/filtermeting/peilmeting'
 
-    _fields = [{
+    fields = [{
         'name': 'datum',
         'source': 'xml',
         'sourcefield': '/datum',
@@ -74,7 +73,7 @@ class Peilmeting(AbstractDovSubType):
 class GrondwaterFilter(AbstractDovType):
     """Class representing the DOV data type for Groundwater screens."""
 
-    _subtypes = [Peilmeting]
+    subtypes = [Peilmeting]
 
     _xsd_schemas = [
         'https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/'
@@ -83,7 +82,7 @@ class GrondwaterFilter(AbstractDovType):
         'interpretatie/HydrogeologischeStratigrafieDataCodes.xsd'
     ]
 
-    _fields = [{
+    fields = [{
         'name': 'pkey_filter',
         'source': 'wfs',
         'sourcefield': 'filterfiche',

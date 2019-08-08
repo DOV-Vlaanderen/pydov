@@ -70,7 +70,7 @@ class InformeleStratigrafieSearch(AbstractSearch):
             for field in fields.values():
                 if field['name'] not in self._type.get_field_names(
                         include_wfs_injected=True):
-                    self._type._fields.append({
+                    self._type.fields.append({
                         'name': field['name'],
                         'source': 'wfs',
                         'sourcefield': field['name'],
@@ -206,7 +206,7 @@ class FormeleStratigrafieSearch(AbstractSearch):
             for field in fields.values():
                 if field['name'] not in self._type.get_field_names(
                         include_wfs_injected=True):
-                    self._type._fields.append({
+                    self._type.fields.append({
                         'name': field['name'],
                         'source': 'wfs',
                         'sourcefield': field['name'],
@@ -345,7 +345,7 @@ class HydrogeologischeStratigrafieSearch(AbstractSearch):
             for field in fields.values():
                 if field['name'] not in self._type.get_field_names(
                         include_wfs_injected=True):
-                    self._type._fields.append({
+                    self._type.fields.append({
                         'name': field['name'],
                         'source': 'wfs',
                         'sourcefield': field['name'],
@@ -484,7 +484,7 @@ class LithologischeBeschrijvingenSearch(AbstractSearch):
             for field in fields.values():
                 if field['name'] not in self._type.get_field_names(
                         include_wfs_injected=True):
-                    self._type._fields.append({
+                    self._type.fields.append({
                         'name': field['name'],
                         'source': 'wfs',
                         'sourcefield': field['name'],
@@ -623,7 +623,7 @@ class GecodeerdeLithologieSearch(AbstractSearch):
             for field in fields.values():
                 if field['name'] not in self._type.get_field_names(
                         include_wfs_injected=True):
-                    self._type._fields.append({
+                    self._type.fields.append({
                         'name': field['name'],
                         'source': 'wfs',
                         'sourcefield': field['name'],
@@ -762,7 +762,7 @@ class GeotechnischeCoderingSearch(AbstractSearch):
             for field in fields.values():
                 if field['name'] not in self._type.get_field_names(
                         include_wfs_injected=True):
-                    self._type._fields.append({
+                    self._type.fields.append({
                         'name': field['name'],
                         'source': 'wfs',
                         'sourcefield': field['name'],
@@ -894,7 +894,7 @@ class QuartairStratigrafieSearch(AbstractSearch):
             for field in fields.values():
                 if field['name'] not in self._type.get_field_names(
                         include_wfs_injected=True):
-                    self._type._fields.append({
+                    self._type.fields.append({
                         'name': field['name'],
                         'source': 'wfs',
                         'sourcefield': field['name'],

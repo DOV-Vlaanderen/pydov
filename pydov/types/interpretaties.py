@@ -142,7 +142,7 @@ class InformeleStratigrafieLaag(AbstractDovSubType):
     _name = 'informele_stratigrafie_laag'
     _rootpath = './/informelestratigrafie/laag'
 
-    _fields = [{
+    fields = [{
         'name': 'diepte_laag_van',
         'source': 'xml',
         'sourcefield': '/van',
@@ -173,9 +173,9 @@ class InformeleStratigrafie(AbstractCommonInterpretatie):
     """Class representing the DOV data type for 'informele stratigrafie'
     interpretations."""
 
-    _subtypes = [InformeleStratigrafieLaag]
+    subtypes = [InformeleStratigrafieLaag]
 
-    _fields = [{
+    fields = [{
         'name': 'pkey_interpretatie',
         'source': 'wfs',
         'sourcefield': 'Interpretatiefiche',
@@ -226,7 +226,7 @@ class FormeleStratigrafieLaag(AbstractDovSubType):
         'interpretatie/FormeleStratigrafieDataCodes.xsd'
     ]
 
-    _fields = [{
+    fields = [{
         'name': 'diepte_laag_van',
         'source': 'xml',
         'sourcefield': '/van',
@@ -276,9 +276,9 @@ class FormeleStratigrafie(AbstractCommonInterpretatie):
     """Class representing the DOV data type for 'Formele stratigrafie'
     interpretations."""
 
-    _subtypes = [FormeleStratigrafieLaag]
+    subtypes = [FormeleStratigrafieLaag]
 
-    _fields = [{
+    fields = [{
         'name': 'pkey_interpretatie',
         'source': 'wfs',
         'sourcefield': 'Interpretatiefiche',
@@ -327,7 +327,7 @@ class HydrogeologischeStratigrafieLaag(AbstractDovSubType):
         'interpretatie/HydrogeologischeStratigrafieDataCodes.xsd'
     ]
 
-    _fields = [{
+    fields = [{
         'name': 'diepte_laag_van',
         'source': 'xml',
         'sourcefield': '/van',
@@ -359,9 +359,9 @@ class HydrogeologischeStratigrafie(AbstractBoringInterpretatie):
     """Class representing the DOV data type for 'hydrogeologische
     stratigrafie' interpretations."""
 
-    _subtypes = [HydrogeologischeStratigrafieLaag]
+    subtypes = [HydrogeologischeStratigrafieLaag]
 
-    _fields = [{
+    fields = [{
         'name': 'pkey_interpretatie',
         'source': 'wfs',
         'sourcefield': 'Interpretatiefiche',
@@ -394,7 +394,7 @@ class LithologischeBeschrijvingLaag(AbstractDovSubType):
     _name = 'lithologische_beschrijving_laag'
     _rootpath = './/lithologischebeschrijving/laag'
 
-    _fields = [{
+    fields = [{
         'name': 'diepte_laag_van',
         'source': 'xml',
         'sourcefield': '/van',
@@ -425,9 +425,9 @@ class LithologischeBeschrijvingen(AbstractBoringInterpretatie):
     """Class representing the DOV data type for 'lithologische
     beschrijvingen' interpretations."""
 
-    _subtypes = [LithologischeBeschrijvingLaag]
+    subtypes = [LithologischeBeschrijvingLaag]
 
-    _fields = [{
+    fields = [{
         'name': 'pkey_interpretatie',
         'source': 'wfs',
         'sourcefield': 'Interpretatiefiche',
@@ -465,7 +465,7 @@ class GecodeerdeLithologieLaag(AbstractDovSubType):
         'interpretatie/GecodeerdeLithologieDataCodes.xsd'
     ]
 
-    _fields = [{
+    fields = [{
         'name': 'diepte_laag_van',
         'source': 'xml',
         'sourcefield': '/van',
@@ -581,9 +581,9 @@ class GecodeerdeLithologie(AbstractBoringInterpretatie):
     """Class representing the DOV data type for 'gecodeerde
     lithologie' interpretations."""
 
-    _subtypes = [GecodeerdeLithologieLaag]
+    subtypes = [GecodeerdeLithologieLaag]
 
-    _fields = [{
+    fields = [{
         'name': 'pkey_interpretatie',
         'source': 'wfs',
         'sourcefield': 'Interpretatiefiche',
@@ -621,7 +621,7 @@ class GeotechnischeCoderingLaag(AbstractDovSubType):
         'interpretatie/GeotechnischeCoderingDataCodes.xsd'
     ]
 
-    _fields = [{
+    fields = [{
         'name': 'diepte_laag_van',
         'source': 'xml',
         'sourcefield': '/van',
@@ -739,9 +739,9 @@ class GeotechnischeCodering(AbstractBoringInterpretatie):
     rekening houdend met informatie uit de lithologie,
     laboproeven en bijhorende sondering(en)."""
 
-    _subtypes = [GeotechnischeCoderingLaag]
+    subtypes = [GeotechnischeCoderingLaag]
 
-    _fields = [{
+    fields = [{
         'name': 'pkey_interpretatie',
         'source': 'wfs',
         'sourcefield': 'Interpretatiefiche',
@@ -781,7 +781,7 @@ class QuartairStratigrafieLaag(AbstractDovSubType):
         'interpretatie/QuartairStratigrafieDataCodes.xsd'
     ]
 
-    _fields = [{
+    fields = [{
         'name': 'diepte_laag_van',
         'source': 'xml',
         'sourcefield': '/van',
@@ -840,9 +840,9 @@ class QuartairStratigrafie(AbstractBoringInterpretatie):
     ipv lithostratigrafie
     """
 
-    _subtypes = [QuartairStratigrafieLaag]
+    subtypes = [QuartairStratigrafieLaag]
 
-    _fields = [{
+    fields = [{
         'name': 'pkey_interpretatie',
         'source': 'wfs',
         'sourcefield': 'Interpretatiefiche',

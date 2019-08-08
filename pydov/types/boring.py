@@ -13,7 +13,7 @@ class BoorMethode(AbstractDovSubType):
     _name = 'boormethode'
     _rootpath = './/boring/details/boormethode'
 
-    _fields = [{
+    fields = [{
         'name': 'diepte_methode_van',
         'source': 'xml',
         'sourcefield': '/van',
@@ -42,9 +42,9 @@ class BoorMethode(AbstractDovSubType):
 class Boring(AbstractDovType):
     """Class representing the DOV data type for boreholes."""
 
-    _subtypes = [BoorMethode]
+    subtypes = [BoorMethode]
 
-    _fields = [{
+    fields = [{
         'name': 'pkey_boring',
         'source': 'wfs',
         'sourcefield': 'fiche',

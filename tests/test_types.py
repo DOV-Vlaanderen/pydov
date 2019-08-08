@@ -4,17 +4,27 @@ import pytest
 
 from pydov.types.boring import Boring
 from pydov.types.grondwaterfilter import GrondwaterFilter
-from pydov.types.interpretaties import InformeleStratigrafie
-from pydov.search.interpretaties import HydrogeologischeStratigrafie
-from pydov.search.interpretaties import GecodeerdeLithologie
-from pydov.search.interpretaties import LithologischeBeschrijvingen
+from pydov.types.interpretaties import (
+    GecodeerdeLithologie,
+    HydrogeologischeStratigrafie,
+    InformeleStratigrafie,
+    LithologischeBeschrijvingen,
+    FormeleStratigrafie,
+    GeotechnischeCodering,
+    QuartairStratigrafie,
+)
+from pydov.types.sondering import Sondering
 
 type_objects = [Boring,
+                Sondering,
                 GrondwaterFilter,
                 InformeleStratigrafie,
+                FormeleStratigrafie,
                 HydrogeologischeStratigrafie,
                 GecodeerdeLithologie,
-                LithologischeBeschrijvingen,]
+                LithologischeBeschrijvingen,
+                GeotechnischeCodering,
+                QuartairStratigrafie,]
 
 
 @pytest.mark.parametrize("objecttype", type_objects)

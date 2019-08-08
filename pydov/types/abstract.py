@@ -89,7 +89,7 @@ class AbstractTypeCommon(AbstractCommon):
             extra fields supplied in extra_fields.
 
         """
-        fields = cls.fields.copy()
+        fields = list(cls.fields)
         fields.extend(extra_fields)
         return fields
 

@@ -139,7 +139,6 @@ class AbstractBoringInterpretatie(AbstractDovType):
 
 class InformeleStratigrafieLaag(AbstractDovSubType):
 
-    _name = 'informele_stratigrafie_laag'
     _rootpath = './/informelestratigrafie/laag'
 
     fields = [{
@@ -216,7 +215,6 @@ class InformeleStratigrafie(AbstractCommonInterpretatie):
 
 class FormeleStratigrafieLaag(AbstractDovSubType):
 
-    _name = 'formele_stratigrafie_laag'
     _rootpath = './/formelestratigrafie/laag'
 
     _xsd_schemas = [
@@ -319,7 +317,6 @@ class FormeleStratigrafie(AbstractCommonInterpretatie):
 
 class HydrogeologischeStratigrafieLaag(AbstractDovSubType):
 
-    _name = 'hydrogeologische_stratigrafie_laag'
     _rootpath = './/hydrogeologischeinterpretatie/laag'
 
     _xsd_schemas = [
@@ -391,7 +388,6 @@ class HydrogeologischeStratigrafie(AbstractBoringInterpretatie):
 
 class LithologischeBeschrijvingLaag(AbstractDovSubType):
 
-    _name = 'lithologische_beschrijving_laag'
     _rootpath = './/lithologischebeschrijving/laag'
 
     fields = [{
@@ -457,7 +453,6 @@ class LithologischeBeschrijvingen(AbstractBoringInterpretatie):
 
 class GecodeerdeLithologieLaag(AbstractDovSubType):
 
-    _name = 'gecodeerde_lithologie_laag'
     _rootpath = './/gecodeerdelithologie/laag'
 
     _xsd_schemas = [
@@ -613,7 +608,6 @@ class GecodeerdeLithologie(AbstractBoringInterpretatie):
 
 class GeotechnischeCoderingLaag(AbstractDovSubType):
 
-    _name = 'geotechnische_codering_laag'
     _rootpath = './/geotechnischecodering/laag'
 
     _xsd_schemas = [
@@ -771,7 +765,6 @@ class GeotechnischeCodering(AbstractBoringInterpretatie):
 
 class QuartairStratigrafieLaag(AbstractDovSubType):
 
-    _name = 'quartairestratigrafie_laag'
     _rootpath = './/quartairstratigrafie/laag'
 
     _xsd_schemas = [

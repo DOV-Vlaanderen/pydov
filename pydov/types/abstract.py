@@ -98,7 +98,6 @@ class AbstractDovSubType(AbstractTypeCommon):
     """Abstract DOV type grouping fields and methods common to all DOV
     subtypes. Not to be instantiated or used directly."""
 
-    _name = None
     _rootpath = None
 
     _UNRESOLVED = "{UNRESOLVED}"
@@ -233,7 +232,7 @@ class AbstractDovSubType(AbstractTypeCommon):
             The name associated with this subtype.
 
         """
-        return cls._name
+        return cls.__name__
 
     @classmethod
     def get_root_path(cls):

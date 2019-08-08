@@ -9,7 +9,6 @@ from pydov.types.abstract import (
 
 class Meetdata(AbstractDovSubType):
 
-    _name = 'penetratietest'
     _rootpath = './/sondering/sondeonderzoek/penetratietest/meetdata'
 
     fields = [{

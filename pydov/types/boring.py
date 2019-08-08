@@ -10,7 +10,6 @@ from .abstract import (
 
 class BoorMethode(AbstractDovSubType):
 
-    _name = 'boormethode'
     _rootpath = './/boring/details/boormethode'
 
     fields = [{

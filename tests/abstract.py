@@ -191,6 +191,13 @@ class AbstractTestSearch(object):
         """
         raise NotImplementedError
 
+    def test_pluggable_type(self):
+        """Test whether the search object can be initialised by explicitly
+        giving the objecttype.
+        """
+        datatype = self.get_type()
+        self.get_search_object().__class__(objecttype=datatype)
+
     def test_get_fields(self, mp_wfs, mp_remote_describefeaturetype,
                         mp_remote_md, mp_remote_fc, mp_remote_xsd):
         """Test the get_fields method.

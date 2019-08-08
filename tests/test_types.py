@@ -49,3 +49,41 @@ def test_get_fields_sourcexml(objecttype):
     fields = objecttype.get_fields(source=('xml',))
     for field in fields.values():
         assert field['source'] == 'xml'
+
+
+@pytest.mark.parametrize("objecttype", type_objects)
+def test_extend_fields_no_extra(objecttype):
+    """Test the extend_fields method for empty extra_fields.
+
+    Test whether the returned fields match the existing fields.
+    Test whether the returned fields are not the same fields as the original
+    fields.
+
+    """
+    fields = objecttype.extend_fields([])
+    assert fields == objecttype.fields
+    assert fields is not objecttype.fields
+
+
+@pytest.mark.parametrize("objecttype", type_objects)
+def test_extend_fields_with_extra(objecttype):
+    """Test the extend_fields method with extra_fields.
+
+    Test whether the extra field is included.
+
+    """
+    extra_fields = [
+        {'name': 'grondwatersysteem',
+         'source': 'xml',
+         'sourcefield': '/filter/ligging/grondwatersysteem',
+         'definition': 'Grondwatersysteem waarin de filter hangt.',
+         'type': 'string',
+         'notnull': False
+         }
+    ]
+
+    fields = objecttype.extend_fields(extra_fields)
+
+    assert len(fields) == len(objecttype.fields) + len(extra_fields)
+
+    assert fields[-1] == extra_fields[-1]

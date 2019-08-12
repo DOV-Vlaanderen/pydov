@@ -321,17 +321,17 @@ class AbstractSearch(AbstractCommon):
         self._geometry_column = wfs_schema.get('geometry_column', None)
 
         for f in self._type.get_fields(include_subtypes=False).values():
-            if not isinstance(f, pydov.types.abstract.AbstractField):
+            if not isinstance(f, pydov.types.fields.AbstractField):
                 raise RuntimeError(
                     "Type '{}' fields should be instances of "
-                    "pydov.types.abstract.AbstractField, found {}.".format(
+                    "pydov.types.fields.AbstractField, found {}.".format(
                         self._type.__name__, str(type(f))))
 
         for f in self._type.get_fields(include_subtypes=True).values():
-            if not isinstance(f, pydov.types.abstract.AbstractField):
+            if not isinstance(f, pydov.types.fields.AbstractField):
                 raise RuntimeError(
                     "Fields of subtype of '{}' should be instances of "
-                    "pydov.types.abstract.AbstractField, found {}.".format(
+                    "pydov.types.fields.AbstractField, found {}.".format(
                         self._type.__name__, str(type(f))))
 
         _map_wfs_datatypes = {

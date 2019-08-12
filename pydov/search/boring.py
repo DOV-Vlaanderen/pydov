@@ -2,7 +2,7 @@
 """Module containing the search classes to retrieve DOV borehole data."""
 import pandas as pd
 
-from pydov.types.abstract import WfsInjectedField
+from pydov.types.fields import WfsInjectedField
 from .abstract import AbstractSearch
 from ..types.boring import Boring
 from ..util import owsutil

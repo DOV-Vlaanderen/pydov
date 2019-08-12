@@ -4,8 +4,8 @@ from owslib.fes import PropertyIsEqualTo
 from pydov.search.grondwaterfilter import GrondwaterFilterSearch
 from pydov.types.abstract import (
     AbstractDovSubType,
-    XmlField,
 )
+from pydov.types.fields import XmlField
 from pydov.types.grondwaterfilter import GrondwaterFilter
 
 from tests.test_search import (

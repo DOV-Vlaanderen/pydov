@@ -1,7 +1,7 @@
 import pandas as pd
 
 from pydov.search.abstract import AbstractSearch
-from pydov.types.abstract import WfsInjectedField
+from pydov.types.fields import WfsInjectedField
 from pydov.types.interpretaties import FormeleStratigrafie
 from pydov.types.interpretaties import InformeleStratigrafie
 from pydov.types.interpretaties import HydrogeologischeStratigrafie

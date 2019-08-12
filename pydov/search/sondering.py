@@ -3,7 +3,7 @@
 import pandas as pd
 
 from pydov.search.abstract import AbstractSearch
-from pydov.types.abstract import WfsInjectedField
+from pydov.types.fields import WfsInjectedField
 from pydov.types.sondering import Sondering
 from pydov.util import owsutil
 

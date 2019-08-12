@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 """Module containing the DOV data type for screens (Filter), including
 subtypes."""
-
-from .abstract import (
-    AbstractDovType,
-    AbstractDovSubType,
+from pydov.types.fields import (
     XmlField,
     XsdType,
     WfsField,
+)
+from .abstract import (
+    AbstractDovType,
+    AbstractDovSubType,
 )
 
 

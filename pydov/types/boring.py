@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 """Module containing the DOV data type for boreholes (Boring), including
 subtypes."""
-
+from pydov.types.fields import (
+    XmlField,
+    WfsField,
+)
 from .abstract import (
     AbstractDovType,
     AbstractDovSubType,
-    WfsField,
-    XmlField,
 )
 
 

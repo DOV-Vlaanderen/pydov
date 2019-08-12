@@ -4,6 +4,8 @@ including subtypes."""
 from pydov.types.abstract import (
     AbstractDovType,
     AbstractDovSubType,
+)
+from pydov.types.fields import (
     XmlField,
     WfsField,
 )

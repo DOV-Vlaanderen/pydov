@@ -7,7 +7,7 @@ from owslib.fes import (
     PropertyIsNull,
     And,
 )
-from pydov.types.abstract import WfsInjectedField
+from pydov.types.fields import WfsInjectedField
 from .abstract import AbstractSearch
 from ..types.grondwaterfilter import GrondwaterFilter
 from ..util import owsutil

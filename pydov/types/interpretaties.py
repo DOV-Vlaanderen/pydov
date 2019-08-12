@@ -6,9 +6,11 @@ import numpy as np
 from pydov.types.abstract import (
     AbstractDovType,
     AbstractDovSubType,
-    XmlField,
+)
+from pydov.types.fields import (
     WfsField,
     CustomField,
+    XmlField,
     XsdType,
 )
 

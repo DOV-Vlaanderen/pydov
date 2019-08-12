@@ -161,7 +161,7 @@ class AbstractTypeCommon(AbstractCommon):
 
     Attributes
     ----------
-    fields : list of dict
+    fields : list of pydov.types.abstract.AbstractField
         List of fields of this type.
 
     """
@@ -211,12 +211,12 @@ class AbstractTypeCommon(AbstractCommon):
 
         Parameters
         ----------
-        extra_fields : list of dict
+        extra_fields : list of pydov.types.abstract.AbstractField
             Extra fields to be appended to the existing fields of this type.
 
         Returns
         -------
-        list of dict
+        list of pydov.types.abstract.AbstractField
             List of the existing fields of this type, extended with the
             extra fields supplied in extra_fields.
 
@@ -399,8 +399,6 @@ class AbstractDovType(AbstractTypeCommon):
     subtypes = []
 
     _UNRESOLVED = "{UNRESOLVED}"
-
-    _xsd_schemas = []
 
     def __init__(self, typename, pkey):
         """Initialisation.

@@ -240,8 +240,8 @@ class FormeleStratigrafieLaag(AbstractDovSubType):
                      typename='FormeleStratigrafieLedenEnumType')),
         XmlField(name='relatie_lid1_lid2',
                  source_xpath='/relatie_lid1_lid2',
-                 definition='verbinding/relatie tussen lid1 en lid2 van de laag '
-                            'formele stratigrafie',
+                 definition='verbinding/relatie tussen lid1 en lid2 van de '
+                            'laag formele stratigrafie',
                  datatype='string',
                  notnull=False,
                  xsd_type=XsdType(
@@ -460,7 +460,7 @@ class GeotechnischeCoderingLaag(AbstractDovSubType):
         typename='GeotechnischeCoderingHoofdnaamCodesEnumType'
     )
 
-    __geotechnischeCoderingBijmengingHoeveelheidEnumType = XsdType(
+    __gtCoderingBijmengingHoeveelheidEnumType = XsdType(
         xsd_schema='https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/'
                    'kern/interpretatie/GeotechnischeCoderingDataCodes.xsd',
         typename='GeotechnischeCoderingBijmengingHoeveelheidEnumType'
@@ -503,7 +503,7 @@ class GeotechnischeCoderingLaag(AbstractDovSubType):
                  definition='aanduiding van de hoeveelheid bijmenging',
                  datatype='string',
                  notnull=False,
-                 xsd_type=__geotechnischeCoderingBijmengingHoeveelheidEnumType),
+                 xsd_type=__gtCoderingBijmengingHoeveelheidEnumType),
         XmlField(name='bijmenging1_grondsoort',
                  source_xpath='/bijmenging[1]/grondsoort',
                  definition='type grondsoort (als code) van de laag '
@@ -521,7 +521,7 @@ class GeotechnischeCoderingLaag(AbstractDovSubType):
                  definition='aanduiding van de hoeveelheid bijmenging',
                  datatype='string',
                  notnull=False,
-                 xsd_type=__geotechnischeCoderingBijmengingHoeveelheidEnumType),
+                 xsd_type=__gtCoderingBijmengingHoeveelheidEnumType),
         XmlField(name='bijmenging2_grondsoort',
                  source_xpath='/bijmenging[2]/grondsoort',
                  definition='type grondsoort (als code) van de laag '
@@ -539,7 +539,7 @@ class GeotechnischeCoderingLaag(AbstractDovSubType):
                  definition='aanduiding van de hoeveelheid bijmenging',
                  datatype='string',
                  notnull=False,
-                 xsd_type=__geotechnischeCoderingBijmengingHoeveelheidEnumType),
+                 xsd_type=__gtCoderingBijmengingHoeveelheidEnumType),
         XmlField(name='bijmenging3_grondsoort',
                  source_xpath='/bijmenging[3]/grondsoort',
                  definition='type grondsoort (als code) van de laag '

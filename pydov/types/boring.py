@@ -41,7 +41,7 @@ class Boring(AbstractDovType):
     subtypes = [BoorMethode]
 
     fields = [
-        WfsField(name='pkey_boring',source_field='fiche', datatype='string'),
+        WfsField(name='pkey_boring', source_field='fiche', datatype='string'),
         WfsField(name='boornummer', source_field='boornummer',
                  datatype='string'),
         WfsField(name='x', source_field='X_mL72', datatype='float'),

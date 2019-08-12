@@ -60,8 +60,8 @@ class Peilmeting(AbstractDovSubType):
                      typename='FilterstatusEnumType')),
         XmlField(name='filtertoestand',
                  source_xpath='/filtertoestand',
-                 definition="Filtertoestand bij de peilmeting. Standaardwaarde "
-                            "is '1' = Normaal.",
+                 definition="Filtertoestand bij de peilmeting. "
+                            "Standaardwaarde is '1' = Normaal.",
                  datatype='integer',
                  notnull=False,
                  xsd_type=XsdType(

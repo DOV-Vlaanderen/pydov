@@ -9,7 +9,7 @@ from pydov.types.abstract import (
 )
 from pydov.types.fields import (
     WfsField,
-    CustomField,
+    _CustomField,
     XmlField,
     XsdType,
 )
@@ -22,20 +22,20 @@ class AbstractCommonInterpretatie(AbstractDovType):
     fields = [
         WfsField(name='pkey_interpretatie',
                  source_field='Interpretatiefiche', datatype='string'),
-        CustomField(name='pkey_boring',
-                    definition='URL die verwijst naar de gegevens van de '
-                               'boring waaraan deze informele stratigrafie '
-                               'gekoppeld is (indien gekoppeld aan een '
-                               'boring).',
-                    datatype='string',
-                    notnull=False),
-        CustomField(name='pkey_sondering',
-                    definition='URL die verwijst naar de gegevens van de '
-                               'sondering waaraan deze informele stratigrafie '
-                               'gekoppeld is (indien gekoppeld aan een '
-                               'sondering).',
-                    datatype='string',
-                    notnull=False),
+        _CustomField(name='pkey_boring',
+                     definition='URL die verwijst naar de gegevens van de '
+                                'boring waaraan deze informele stratigrafie '
+                                'gekoppeld is (indien gekoppeld aan een '
+                                'boring).',
+                     datatype='string',
+                     notnull=False),
+        _CustomField(name='pkey_sondering',
+                     definition='URL die verwijst naar de gegevens van de '
+                                'sondering waaraan deze informele '
+                                'stratigrafie gekoppeld is (indien gekoppeld '
+                                'aan een sondering).',
+                     datatype='string',
+                     notnull=False),
         WfsField(name='betrouwbaarheid_interpretatie',
                  source_field='Betrouwbaarheid', datatype='string'),
         WfsField(name='x', source_field='X_mL72', datatype='float'),

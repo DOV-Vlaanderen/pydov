@@ -2,7 +2,7 @@
 """Module containing the search classes to retrieve DOV borehole data."""
 import pandas as pd
 
-from pydov.types.fields import WfsInjectedField
+from pydov.types.fields import _WfsInjectedField
 from .abstract import AbstractSearch
 from ..types.boring import Boring
 from ..util import owsutil
@@ -66,8 +66,8 @@ class BoringSearch(AbstractSearch):
                 if field['name'] not in self._type.get_field_names(
                         include_wfs_injected=True):
                     self._type.fields.append(
-                        WfsInjectedField(name=field['name'],
-                                         datatype=field['type']))
+                        _WfsInjectedField(name=field['name'],
+                                          datatype=field['type']))
 
             self._fields = self._build_fields(
                 BoringSearch.__wfs_schema,

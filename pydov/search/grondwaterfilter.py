@@ -7,7 +7,7 @@ from owslib.fes import (
     PropertyIsNull,
     And,
 )
-from pydov.types.fields import WfsInjectedField
+from pydov.types.fields import _WfsInjectedField
 from .abstract import AbstractSearch
 from ..types.grondwaterfilter import GrondwaterFilter
 from ..util import owsutil
@@ -75,8 +75,8 @@ class GrondwaterFilterSearch(AbstractSearch):
                 if field['name'] not in self._type.get_field_names(
                         include_wfs_injected=True):
                     self._type.fields.append(
-                        WfsInjectedField(name=field['name'],
-                                         datatype=field['type']))
+                        _WfsInjectedField(name=field['name'],
+                                          datatype=field['type']))
 
             self._fields = self._build_fields(
                 GrondwaterFilterSearch.__wfs_schema,

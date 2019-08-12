@@ -1,7 +1,7 @@
 import pandas as pd
 
 from pydov.search.abstract import AbstractSearch
-from pydov.types.fields import WfsInjectedField
+from pydov.types.fields import _WfsInjectedField
 from pydov.types.interpretaties import FormeleStratigrafie
 from pydov.types.interpretaties import InformeleStratigrafie
 from pydov.types.interpretaties import HydrogeologischeStratigrafie
@@ -72,8 +72,8 @@ class InformeleStratigrafieSearch(AbstractSearch):
                 if field['name'] not in self._type.get_field_names(
                         include_wfs_injected=True):
                     self._type.fields.append(
-                        WfsInjectedField(name=field['name'],
-                                         datatype=field['type']))
+                        _WfsInjectedField(name=field['name'],
+                                          datatype=field['type']))
 
             self._fields = self._build_fields(
                 InformeleStratigrafieSearch.__wfs_schema,
@@ -204,8 +204,8 @@ class FormeleStratigrafieSearch(AbstractSearch):
                 if field['name'] not in self._type.get_field_names(
                         include_wfs_injected=True):
                     self._type.fields.append(
-                        WfsInjectedField(name=field['name'],
-                                         datatype=field['type']))
+                        _WfsInjectedField(name=field['name'],
+                                          datatype=field['type']))
 
             self._fields = self._build_fields(
                 FormeleStratigrafieSearch.__wfs_schema,
@@ -339,8 +339,8 @@ class HydrogeologischeStratigrafieSearch(AbstractSearch):
                 if field['name'] not in self._type.get_field_names(
                         include_wfs_injected=True):
                     self._type.fields.append(
-                        WfsInjectedField(name=field['name'],
-                                         datatype=field['type']))
+                        _WfsInjectedField(name=field['name'],
+                                          datatype=field['type']))
 
             self._fields = self._build_fields(
                 HydrogeologischeStratigrafieSearch.__wfs_schema,
@@ -474,8 +474,8 @@ class LithologischeBeschrijvingenSearch(AbstractSearch):
                 if field['name'] not in self._type.get_field_names(
                         include_wfs_injected=True):
                     self._type.fields.append(
-                        WfsInjectedField(name=field['name'],
-                                         datatype=field['type']))
+                        _WfsInjectedField(name=field['name'],
+                                          datatype=field['type']))
 
             self._fields = self._build_fields(
                 LithologischeBeschrijvingenSearch.__wfs_schema,
@@ -609,8 +609,8 @@ class GecodeerdeLithologieSearch(AbstractSearch):
                 if field['name'] not in self._type.get_field_names(
                         include_wfs_injected=True):
                     self._type.fields.append(
-                        WfsInjectedField(name=field['name'],
-                                         datatype=field['type']))
+                        _WfsInjectedField(name=field['name'],
+                                          datatype=field['type']))
 
             self._fields = self._build_fields(
                 GecodeerdeLithologieSearch.__wfs_schema,
@@ -744,8 +744,8 @@ class GeotechnischeCoderingSearch(AbstractSearch):
                 if field['name'] not in self._type.get_field_names(
                         include_wfs_injected=True):
                     self._type.fields.append(
-                        WfsInjectedField(name=field['name'],
-                                         datatype=field['type']))
+                        _WfsInjectedField(name=field['name'],
+                                          datatype=field['type']))
 
             self._fields = self._build_fields(
                 GeotechnischeCoderingSearch.__wfs_schema,
@@ -872,8 +872,8 @@ class QuartairStratigrafieSearch(AbstractSearch):
                 if field['name'] not in self._type.get_field_names(
                         include_wfs_injected=True):
                     self._type.fields.append(
-                        WfsInjectedField(name=field['name'],
-                                         datatype=field['type']))
+                        _WfsInjectedField(name=field['name'],
+                                          datatype=field['type']))
 
             self._fields = self._build_fields(
                 QuartairStratigrafieSearch.__wfs_schema,

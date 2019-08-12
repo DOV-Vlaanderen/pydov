@@ -3,7 +3,7 @@
 import pandas as pd
 
 from pydov.search.abstract import AbstractSearch
-from pydov.types.fields import WfsInjectedField
+from pydov.types.fields import _WfsInjectedField
 from pydov.types.sondering import Sondering
 from pydov.util import owsutil
 
@@ -68,8 +68,8 @@ class SonderingSearch(AbstractSearch):
                 if field['name'] not in self._type.get_field_names(
                         include_wfs_injected=True):
                     self._type.fields.append(
-                        WfsInjectedField(name=field['name'],
-                                         datatype=field['type']))
+                        _WfsInjectedField(name=field['name'],
+                                          datatype=field['type']))
 
             self._fields = self._build_fields(
                 SonderingSearch.__wfs_schema,

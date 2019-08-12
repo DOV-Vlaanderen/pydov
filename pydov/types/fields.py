@@ -2,6 +2,9 @@
 
 
 class XsdType(object):
+    """Class for specifying an XSD type from an XSD schema. This will be
+    resolved at runtime in a list of possible values and their definitions."""
+
     def __init__(self, xsd_schema, typename):
         """Initialise a XSD type reference.
 
@@ -18,6 +21,9 @@ class XsdType(object):
 
 
 class AbstractField(dict):
+    """Abstract base class for pydov field definitions. Not to be
+    instantiated directly."""
+
     def __init__(self, name, source, datatype, **kwargs):
         """Initialise a field.
 
@@ -39,6 +45,8 @@ class AbstractField(dict):
 
 
 class WfsField(AbstractField):
+    """Class for a field available in the WFS service."""
+
     def __init__(self, name, source_field, datatype):
         """Initialse a WFS field.
 
@@ -57,7 +65,10 @@ class WfsField(AbstractField):
         self.__setitem__('sourcefield', source_field)
 
 
-class WfsInjectedField(WfsField):
+class _WfsInjectedField(WfsField):
+    """Class for a field avaible in the WFS service, but not included in the
+    default dataframe output."""
+
     def __init__(self, name, datatype):
         """Initialise a WFS injected field.
 
@@ -73,11 +84,13 @@ class WfsInjectedField(WfsField):
             Datatype of the values of this field in the return dataframe.
 
         """
-        super(WfsInjectedField, self).__init__(name, name, datatype)
+        super(_WfsInjectedField, self).__init__(name, name, datatype)
         self.__setitem__('wfs_injected', True)
 
 
 class XmlField(AbstractField):
+    """Class for a field available in the XML document."""
+
     def __init__(self, name, source_xpath, definition, datatype, notnull,
                  xsd_type=None):
         """Initialise an XML field.
@@ -111,7 +124,9 @@ class XmlField(AbstractField):
             self.__setitem__('xsd_type', xsd_type.typename)
 
 
-class CustomField(AbstractField):
+class _CustomField(AbstractField):
+    """Class for a custom field, created explicitly in pydov."""
+
     def __init__(self, name, definition, datatype, notnull):
         """Initialise a custom field.
 
@@ -128,6 +143,6 @@ class CustomField(AbstractField):
             True if this field is always present (mandatory), False otherwise.
 
         """
-        super(CustomField, self).__init__(name, 'custom', datatype)
+        super(_CustomField, self).__init__(name, 'custom', datatype)
         self.__setitem__('definition', definition)
         self.__setitem__('notnull', notnull)

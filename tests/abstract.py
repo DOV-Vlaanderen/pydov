@@ -823,7 +823,7 @@ class AbstractTestTypes(object):
                 if 'xsd_type' in field:
                     assert sorted(field.keys()) == [
                         'definition', 'name', 'notnull', 'source',
-                        'sourcefield', 'type', 'xsd_type']
+                        'sourcefield', 'type', 'xsd_schema', 'xsd_type']
                 else:
                     assert sorted(field.keys()) == [
                         'definition', 'name', 'notnull', 'source',

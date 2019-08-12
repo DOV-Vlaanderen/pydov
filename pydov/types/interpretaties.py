@@ -215,13 +215,6 @@ class FormeleStratigrafieLaag(AbstractDovSubType):
 
     rootpath = './/formelestratigrafie/laag'
 
-    _xsd_schemas = [
-        'https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/'
-        'interpretatie/InterpretatieDataCodes.xsd',
-        'https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/'
-        'interpretatie/FormeleStratigrafieDataCodes.xsd'
-    ]
-
     fields = [
         XmlField(name='diepte_laag_van',
                  source_xpath='/van',
@@ -281,11 +274,6 @@ class FormeleStratigrafie(AbstractCommonInterpretatie):
 class HydrogeologischeStratigrafieLaag(AbstractDovSubType):
 
     rootpath = './/hydrogeologischeinterpretatie/laag'
-
-    _xsd_schemas = [
-        'https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/'
-        'interpretatie/HydrogeologischeStratigrafieDataCodes.xsd'
-    ]
 
     fields = [
         XmlField(name='diepte_laag_van',
@@ -358,11 +346,6 @@ class LithologischeBeschrijvingen(AbstractBoringInterpretatie):
 class GecodeerdeLithologieLaag(AbstractDovSubType):
 
     rootpath = './/gecodeerdelithologie/laag'
-
-    _xsd_schemas = [
-        'https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/'
-        'interpretatie/GecodeerdeLithologieDataCodes.xsd'
-    ]
 
     __gecodeerdHoofdnaamCodesEnumType = XsdType(
         xsd_schema='https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/'
@@ -470,11 +453,6 @@ class GecodeerdeLithologie(AbstractBoringInterpretatie):
 class GeotechnischeCoderingLaag(AbstractDovSubType):
 
     rootpath = './/geotechnischecodering/laag'
-
-    _xsd_schemas = [
-        'https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/'
-        'interpretatie/GeotechnischeCoderingDataCodes.xsd'
-    ]
 
     __geotechnischeCoderingHoofdnaamCodesEnumType = XsdType(
         xsd_schema='https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/'
@@ -587,13 +565,6 @@ class GeotechnischeCodering(AbstractBoringInterpretatie):
 class QuartairStratigrafieLaag(AbstractDovSubType):
 
     rootpath = './/quartairstratigrafie/laag'
-
-    _xsd_schemas = [
-        'https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/'
-        'interpretatie/InterpretatieDataCodes.xsd',
-        'https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/'
-        'interpretatie/QuartairStratigrafieDataCodes.xsd'
-    ]
 
     fields = [
         XmlField(name='diepte_laag_van',

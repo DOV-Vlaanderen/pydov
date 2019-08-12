@@ -129,6 +129,7 @@ class XmlField(AbstractField):
         self.__setitem__('notnull', notnull)
 
         if xsd_type is not None:
+            self.__setitem__('xsd_schema', xsd_type.xsd_schema)
             self.__setitem__('xsd_type', xsd_type.typename)
 
 
@@ -240,8 +241,6 @@ class AbstractDovSubType(AbstractTypeCommon):
     rootpath = None
 
     _UNRESOLVED = "{UNRESOLVED}"
-
-    _xsd_schemas = []
 
     def __init__(self):
         """Initialisation.
@@ -648,12 +647,12 @@ class AbstractDovType(AbstractTypeCommon):
 
         """
         xsd_schemas = set()
-        for s in cls._xsd_schemas:
-            xsd_schemas.add(s)
 
-        for st in cls.subtypes:
-            for s in st._xsd_schemas:
-                xsd_schemas.add(s)
+        fields = cls.get_fields(source='xml', include_subtypes=True)
+
+        for f in fields.values():
+            if 'xsd_type' in f:
+                xsd_schemas.add(f['xsd_schema'])
 
         return xsd_schemas
 

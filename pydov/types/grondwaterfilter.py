@@ -77,13 +77,6 @@ class GrondwaterFilter(AbstractDovType):
 
     subtypes = [Peilmeting]
 
-    _xsd_schemas = [
-        'https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/'
-        'gwmeetnet/FilterDataCodes.xsd',
-        'https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/'
-        'interpretatie/HydrogeologischeStratigrafieDataCodes.xsd'
-    ]
-
     fields = [
         WfsField(name='pkey_filter', source_field='filterfiche',
                  datatype='string'),

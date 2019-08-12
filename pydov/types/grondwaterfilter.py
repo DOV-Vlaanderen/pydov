@@ -5,6 +5,9 @@ subtypes."""
 from .abstract import (
     AbstractDovType,
     AbstractDovSubType,
+    XmlField,
+    XsdType,
+    WfsField,
 )
 
 
@@ -12,62 +15,61 @@ class Peilmeting(AbstractDovSubType):
 
     rootpath = './/filtermeting/peilmeting'
 
-    fields = [{
-        'name': 'datum',
-        'source': 'xml',
-        'sourcefield': '/datum',
-        'definition': 'Datum van opmeten.',
-        'type': 'date',
-        'notnull': True
-    }, {
-        'name': 'tijdstip',
-        'source': 'xml',
-        'sourcefield': '/tijdstip',
-        'definition': 'Tijdstip van opmeten (optioneel).',
-        'type': 'string',
-        'notnull': False
-    }, {
-        'name': 'peil_mtaw',
-        'source': 'xml',
-        'sourcefield': '/peil_mtaw',
-        'definition': 'Diepte van de peilmeting, uitgedrukt in mTAW.',
-        'type': 'float',
-        'notnull': False
-    }, {
-        'name': 'betrouwbaarheid',
-        'source': 'xml',
-        'sourcefield': '/betrouwbaarheid',
-        'definition': 'Lijst van betrouwbaarheden (goed, onbekend of'
-                      'twijfelachtig).',
-        'type': 'string',
-        'notnull': False
-    }, {
-        'name': 'methode',
-        'source': 'xml',
-        'sourcefield': '/methode',
-        'xsd_type': 'PeilmetingMethodeEnumType',
-        'definition': 'Methode waarop de peilmeting uitgevoerd werd.',
-        'type': 'string',
-        'notnull': False
-    }, {
-        'name': 'filterstatus',
-        'source': 'xml',
-        'sourcefield': '/filterstatus',
-        'xsd_type': 'FilterstatusEnumType',
-        'definition': 'Status van de filter tijdens de peilmeting (in rust - '
-                      'werking).',
-        'type': 'string',
-        'notnull': False
-    }, {
-        'name': 'filtertoestand',
-        'source': 'xml',
-        'sourcefield': '/filtertoestand',
-        'xsd_type': 'FiltertoestandEnumType',
-        'definition':  "Filtertoestand bij de peilmeting. Standaardwaarde is "
-                       "'1' = Normaal.",
-        'type': 'integer',
-        'notnull': False
-    }]
+    fields = [
+        XmlField(name='datum',
+                 source_xpath='/datum',
+                 definition='Datum van opmeten.',
+                 datatype='date',
+                 notnull=True),
+        XmlField(name='tijdstip',
+                 source_xpath='/tijdstip',
+                 definition='Tijdstip van opmeten (optioneel).',
+                 datatype='string',
+                 notnull=False),
+        XmlField(name='peil_mtaw',
+                 source_xpath='/peil_mtaw',
+                 definition='Diepte van de peilmeting, uitgedrukt in mTAW.',
+                 datatype='float',
+                 notnull=False),
+        XmlField(name='betrouwbaarheid',
+                 source_xpath='/betrouwbaarheid',
+                 definition='Lijst van betrouwbaarheden (goed, onbekend of'
+                            'twijfelachtig).',
+                 datatype='string',
+                 notnull=False),
+        XmlField(name='methode',
+                 source_xpath='/methode',
+                 definition='Methode waarop de peilmeting uitgevoerd werd.',
+                 datatype='string',
+                 notnull=False,
+                 xsd_type=XsdType(
+                     xsd_schema='https://www.dov.vlaanderen.be/xdov/schema/'
+                                'latest/xsd/kern/gwmeetnet/'
+                                'FilterDataCodes.xsd',
+                     typename='PeilmetingMethodeEnumType')),
+        XmlField(name='filterstatus',
+                 source_xpath='/filterstatus',
+                 definition='Status van de filter tijdens de peilmeting (in '
+                            'rust - werking).',
+                 datatype='string',
+                 notnull=False,
+                 xsd_type=XsdType(
+                     xsd_schema='https://www.dov.vlaanderen.be/xdov/schema/'
+                                'latest/xsd/kern/gwmeetnet/'
+                                'FilterDataCodes.xsd',
+                     typename='FilterstatusEnumType')),
+        XmlField(name='filtertoestand',
+                 source_xpath='/filtertoestand',
+                 definition="Filtertoestand bij de peilmeting. Standaardwaarde "
+                            "is '1' = Normaal.",
+                 datatype='integer',
+                 notnull=False,
+                 xsd_type=XsdType(
+                     xsd_schema='https://www.dov.vlaanderen.be/xdov/schema/'
+                                'latest/xsd/kern/gwmeetnet/'
+                                'FilterDataCodes.xsd',
+                     typename='FiltertoestandEnumType'))
+    ]
 
 
 class GrondwaterFilter(AbstractDovType):
@@ -82,93 +84,61 @@ class GrondwaterFilter(AbstractDovType):
         'interpretatie/HydrogeologischeStratigrafieDataCodes.xsd'
     ]
 
-    fields = [{
-        'name': 'pkey_filter',
-        'source': 'wfs',
-        'sourcefield': 'filterfiche',
-        'type': 'string'
-    }, {
-        'name': 'pkey_grondwaterlocatie',
-        'source': 'wfs',
-        'sourcefield': 'putfiche',
-        'type': 'string'
-    }, {
-        'name': 'gw_id',
-        'source': 'wfs',
-        'sourcefield': 'GW_ID',
-        'type': 'string'
-    }, {
-        'name': 'filternummer',
-        'source': 'wfs',
-        'sourcefield': 'filternummer',
-        'type': 'string'
-    }, {
-        'name': 'filtertype',
-        'source': 'wfs',
-        'sourcefield': 'filtertype',
-        'type': 'string'
-    }, {
-        'name': 'x',
-        'source': 'wfs',
-        'sourcefield': 'X_mL72',
-        'type': 'float'
-    }, {
-        'name': 'y',
-        'source': 'wfs',
-        'sourcefield': 'Y_mL72',
-        'type': 'float'
-    }, {
-        'name': 'mv_mtaw',
-        'source': 'wfs',
-        'sourcefield': 'Z_mTAW',
-        'type': 'float'
-    }, {
-        'name': 'gemeente',
-        'source': 'wfs',
-        'sourcefield': 'gemeente',
-        'type': 'string'
-    }, {
-        'name': 'meetnet_code',
-        'source': 'xml',
-        'sourcefield': '/filter/meetnet',
-        'xsd_type': 'MeetnetEnumType',
-        'definition': 'Tot welk meetnet behoort deze filter.',
-        'type': 'integer',
-        'notnull': False
-    }, {
-        'name': 'aquifer_code',
-        'source': 'xml',
-        'sourcefield': '/filter/ligging/aquifer',
-        'xsd_type': 'AquiferEnumType',
-        'definition': 'In welke watervoerende laag hangt de filter (code).',
-        'type': 'string',
-        'notnull': False
-    }, {
-        'name': 'grondwaterlichaam_code',
-        'source': 'xml',
-        'sourcefield': '/filter/ligging/grondwaterlichaam',
-        'xsd_type': 'GrondwaterlichaamEnumType',
-        'definition': '',
-        'type': 'string',
-        'notnull': False
-    }, {
-        'name': 'regime',
-        'source': 'xml',
-        'sourcefield': '/filter/ligging/regime',
-        'definition': '',
-        'type': 'string',
-        'notnull': False
-    }, {
-        'name': 'diepte_onderkant_filter',
-        'source': 'wfs',
-        'sourcefield': 'onderkant_filter_m',
-        'type': 'float'
-    }, {
-        'name': 'lengte_filter',
-        'source': 'wfs',
-        'sourcefield': 'lengte_filter_m',
-        'type': 'float'
-    }]
+    fields = [
+        WfsField(name='pkey_filter', source_field='filterfiche',
+                 datatype='string'),
+        WfsField(name='pkey_grondwaterlocatie', source_field='putfiche',
+                 datatype='string'),
+        WfsField(name='gw_id', source_field='GW_ID', datatype='string'),
+        WfsField(name='filternummer', source_field='filternummer',
+                 datatype='string'),
+        WfsField(name='filtertype', source_field='filtertype',
+                 datatype='string'),
+        WfsField(name='x', source_field='X_mL72', datatype='float'),
+        WfsField(name='y', source_field='Y_mL72', datatype='float'),
+        WfsField(name='mv_mtaw', source_field='Z_mTAW', datatype='float'),
+        WfsField(name='gemeente', source_field='gemeente', datatype='string'),
+        XmlField(name='meetnet_code',
+                 source_xpath='/filter/meetnet',
+                 definition='Tot welk meetnet behoort deze filter.',
+                 datatype='integer',
+                 notnull=False,
+                 xsd_type=XsdType(
+                     xsd_schema='https://www.dov.vlaanderen.be/xdov/schema/'
+                                'latest/xsd/kern/gwmeetnet/'
+                                'FilterDataCodes.xsd',
+                     typename='MeetnetEnumType')),
+        XmlField(name='aquifer_code',
+                 source_xpath='/filter/ligging/aquifer',
+                 definition='In welke watervoerende laag hangt de filter '
+                            '(code).',
+                 datatype='string',
+                 notnull=False,
+                 xsd_type=XsdType(
+                     xsd_schema='https://www.dov.vlaanderen.be/xdov/schema/'
+                                'latest/xsd/kern/interpretatie/'
+                                'HydrogeologischeStratigrafieDataCodes.xsd',
+                     typename='AquiferEnumType')),
+        XmlField(name='grondwaterlichaam_code',
+                 source_xpath='/filter/ligging/grondwaterlichaam',
+                 definition='',
+                 datatype='string',
+                 notnull=False,
+                 xsd_type=XsdType(
+                     xsd_schema='https://www.dov.vlaanderen.be/xdov/schema/'
+                                'latest/xsd/kern/gwmeetnet/'
+                                'FilterDataCodes.xsd',
+                     typename='GrondwaterlichaamEnumType')),
+        XmlField(name='regime',
+                 source_xpath='/filter/ligging/regime',
+                 definition='',
+                 datatype='string',
+                 notnull=False),
+        WfsField(name='diepte_onderkant_filter',
+                 source_field='onderkant_filter_m', datatype='float'),
+        WfsField(name='lengte_filter', source_field='lengte_filter_m',
+                 datatype='float')
+    ]
 
     def __init__(self, pkey):
         """Initialisation.

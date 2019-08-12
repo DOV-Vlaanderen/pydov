@@ -18,6 +18,7 @@ from pandas.api.types import (
 
 from owslib.fes import PropertyIsEqualTo
 from owslib.etree import etree
+from pydov.types.abstract import AbstractField
 from pydov.util.errors import InvalidFieldError
 from pydov.util.location import (
     Within,
@@ -786,7 +787,7 @@ class AbstractTestTypes(object):
             assert type(f) in (str, unicode)
 
             field = fields[f]
-            assert type(field) is dict
+            assert isinstance(field, AbstractField)
 
             assert 'name' in field
             assert type(field['name']) in (str, unicode)

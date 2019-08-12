@@ -1,6 +1,7 @@
 import pandas as pd
 
 from pydov.search.abstract import AbstractSearch
+from pydov.types.abstract import WfsInjectedField
 from pydov.types.interpretaties import FormeleStratigrafie
 from pydov.types.interpretaties import InformeleStratigrafie
 from pydov.types.interpretaties import HydrogeologischeStratigrafie
@@ -70,13 +71,9 @@ class InformeleStratigrafieSearch(AbstractSearch):
             for field in fields.values():
                 if field['name'] not in self._type.get_field_names(
                         include_wfs_injected=True):
-                    self._type.fields.append({
-                        'name': field['name'],
-                        'source': 'wfs',
-                        'sourcefield': field['name'],
-                        'type': field['type'],
-                        'wfs_injected': True
-                    })
+                    self._type.fields.append(
+                        WfsInjectedField(name=field['name'],
+                                         datatype=field['type']))
 
             self._fields = self._build_fields(
                 InformeleStratigrafieSearch.__wfs_schema,
@@ -206,13 +203,9 @@ class FormeleStratigrafieSearch(AbstractSearch):
             for field in fields.values():
                 if field['name'] not in self._type.get_field_names(
                         include_wfs_injected=True):
-                    self._type.fields.append({
-                        'name': field['name'],
-                        'source': 'wfs',
-                        'sourcefield': field['name'],
-                        'type': field['type'],
-                        'wfs_injected': True
-                    })
+                    self._type.fields.append(
+                        WfsInjectedField(name=field['name'],
+                                         datatype=field['type']))
 
             self._fields = self._build_fields(
                 FormeleStratigrafieSearch.__wfs_schema,
@@ -345,13 +338,9 @@ class HydrogeologischeStratigrafieSearch(AbstractSearch):
             for field in fields.values():
                 if field['name'] not in self._type.get_field_names(
                         include_wfs_injected=True):
-                    self._type.fields.append({
-                        'name': field['name'],
-                        'source': 'wfs',
-                        'sourcefield': field['name'],
-                        'type': field['type'],
-                        'wfs_injected': True
-                    })
+                    self._type.fields.append(
+                        WfsInjectedField(name=field['name'],
+                                         datatype=field['type']))
 
             self._fields = self._build_fields(
                 HydrogeologischeStratigrafieSearch.__wfs_schema,
@@ -484,13 +473,9 @@ class LithologischeBeschrijvingenSearch(AbstractSearch):
             for field in fields.values():
                 if field['name'] not in self._type.get_field_names(
                         include_wfs_injected=True):
-                    self._type.fields.append({
-                        'name': field['name'],
-                        'source': 'wfs',
-                        'sourcefield': field['name'],
-                        'type': field['type'],
-                        'wfs_injected': True
-                    })
+                    self._type.fields.append(
+                        WfsInjectedField(name=field['name'],
+                                         datatype=field['type']))
 
             self._fields = self._build_fields(
                 LithologischeBeschrijvingenSearch.__wfs_schema,
@@ -623,13 +608,9 @@ class GecodeerdeLithologieSearch(AbstractSearch):
             for field in fields.values():
                 if field['name'] not in self._type.get_field_names(
                         include_wfs_injected=True):
-                    self._type.fields.append({
-                        'name': field['name'],
-                        'source': 'wfs',
-                        'sourcefield': field['name'],
-                        'type': field['type'],
-                        'wfs_injected': True
-                    })
+                    self._type.fields.append(
+                        WfsInjectedField(name=field['name'],
+                                         datatype=field['type']))
 
             self._fields = self._build_fields(
                 GecodeerdeLithologieSearch.__wfs_schema,
@@ -762,13 +743,9 @@ class GeotechnischeCoderingSearch(AbstractSearch):
             for field in fields.values():
                 if field['name'] not in self._type.get_field_names(
                         include_wfs_injected=True):
-                    self._type.fields.append({
-                        'name': field['name'],
-                        'source': 'wfs',
-                        'sourcefield': field['name'],
-                        'type': field['type'],
-                        'wfs_injected': True
-                    })
+                    self._type.fields.append(
+                        WfsInjectedField(name=field['name'],
+                                         datatype=field['type']))
 
             self._fields = self._build_fields(
                 GeotechnischeCoderingSearch.__wfs_schema,
@@ -894,13 +871,9 @@ class QuartairStratigrafieSearch(AbstractSearch):
             for field in fields.values():
                 if field['name'] not in self._type.get_field_names(
                         include_wfs_injected=True):
-                    self._type.fields.append({
-                        'name': field['name'],
-                        'source': 'wfs',
-                        'sourcefield': field['name'],
-                        'type': field['type'],
-                        'wfs_injected': True
-                    })
+                    self._type.fields.append(
+                        WfsInjectedField(name=field['name'],
+                                         datatype=field['type']))
 
             self._fields = self._build_fields(
                 QuartairStratigrafieSearch.__wfs_schema,

@@ -4,6 +4,8 @@ including subtypes."""
 from pydov.types.abstract import (
     AbstractDovType,
     AbstractDovSubType,
+    XmlField,
+    WfsField,
 )
 
 
@@ -11,55 +13,45 @@ class Meetdata(AbstractDovSubType):
 
     rootpath = './/sondering/sondeonderzoek/penetratietest/meetdata'
 
-    fields = [{
-        'name': 'z',
-        'source': 'xml',
-        'sourcefield': '/sondeerdiepte',
-        'definition': 'Diepte waarop sondeerparameters geregistreerd werden, '
-                      'uitgedrukt in meter ten opzicht van het aanvangspeil.',
-        'type': 'float',
-        'notnull': False
-    }, {
-        'name': 'qc',
-        'source': 'xml',
-        'sourcefield': '/qc',
-        'definition': 'Opgemeten waarde van de conusweerstand, uitgedrukt in '
-                      'MPa.',
-        'type': 'float',
-        'notnull': False
-    }, {
-        'name': 'Qt',
-        'source': 'xml',
-        'sourcefield': '/Qt',
-        'definition': 'Opgemeten waarde van de totale weerstand, uitgedrukt '
-                      'in kN.',
-        'type': 'string',
-        'notnull': False
-    }, {
-        'name': 'fs',
-        'source': 'xml',
-        'sourcefield': '/fs',
-        'definition': 'Opgemeten waarde van de plaatelijke kleefweerstand, '
-                      'uitgedrukt in kPa.',
-        'type': 'float',
-        'notnull': False
-    }, {
-        'name': 'u',
-        'source': 'xml',
-        'sourcefield': '/u',
-        'definition': 'Opgemeten waarde van de porienwaterspanning, '
-                      'uitgedrukt in kPa.',
-        'type': 'float',
-        'notnull': False
-    }, {
-        'name': 'i',
-        'source': 'xml',
-        'sourcefield': '/i',
-        'definition': 'Opgemeten waarde van de inclinatie, uitgedrukt in '
-                      'graden.',
-        'type': 'float',
-        'notnull': False
-    }]
+    fields = [
+        XmlField(name='z',
+                 source_xpath='/sondeerdiepte',
+                 definition='Diepte waarop sondeerparameters geregistreerd '
+                            'werden, uitgedrukt in meter ten opzicht van het '
+                            'aanvangspeil.',
+                 datatype='float',
+                 notnull=False),
+        XmlField(name='qc',
+                 source_xpath='/qc',
+                 definition='Opgemeten waarde van de conusweerstand, '
+                            'uitgedrukt in MPa.',
+                 datatype='float',
+                 notnull=False),
+        XmlField(name='Qt',
+                 source_xpath='/Qt',
+                 definition='Opgemeten waarde van de totale weerstand, '
+                            'uitgedrukt in kN.',
+                 datatype='float',
+                 notnull=False),
+        XmlField(name='fs',
+                 source_xpath='/fs',
+                 definition='Opgemeten waarde van de plaatelijke '
+                            'kleefweerstand, uitgedrukt in kPa.',
+                 datatype='float',
+                 notnull=False),
+        XmlField(name='u',
+                 source_xpath='/u',
+                 definition='Opgemeten waarde van de porienwaterspanning, '
+                            'uitgedrukt in kPa.',
+                 datatype='float',
+                 notnull=False),
+        XmlField(name='i',
+                 source_xpath='/i',
+                 definition='Opgemeten waarde van de inclinatie, uitgedrukt '
+                            'in graden.',
+                 datatype='float',
+                 notnull=False)
+    ]
 
 
 class Sondering(AbstractDovType):
@@ -67,79 +59,41 @@ class Sondering(AbstractDovType):
 
     subtypes = [Meetdata]
 
-    fields = [{
-        'name': 'pkey_sondering',
-        'source': 'wfs',
-        'sourcefield': 'fiche',
-        'type': 'string'
-    }, {
-        'name': 'sondeernummer',
-        'source': 'wfs',
-        'sourcefield': 'sondeernummer',
-        'type': 'string'
-    }, {
-        'name': 'x',
-        'source': 'wfs',
-        'sourcefield': 'X_mL72',
-        'type': 'float'
-    }, {
-        'name': 'y',
-        'source': 'wfs',
-        'sourcefield': 'Y_mL72',
-        'type': 'float'
-    }, {
-        'name': 'start_sondering_mtaw',
-        'source': 'wfs',
-        'sourcefield': 'Z_mTAW',
-        'type': 'float'
-    }, {
-        'name': 'diepte_sondering_van',
-        'source': 'wfs',
-        'sourcefield': 'diepte_van_m',
-        'type': 'float'
-    }, {
-        'name': 'diepte_sondering_tot',
-        'source': 'wfs',
-        'sourcefield': 'diepte_tot_m',
-        'type': 'float'
-    }, {
-        'name': 'datum_aanvang',
-        'source': 'wfs',
-        'sourcefield': 'datum_aanvang',
-        'type': 'date'
-    }, {
-        'name': 'uitvoerder',
-        'source': 'wfs',
-        'sourcefield': 'uitvoerder',
-        'type': 'string'
-    }, {
-        'name': 'sondeermethode',
-        'source': 'wfs',
-        'sourcefield': 'sondeermethode',
-        'type': 'string'
-    }, {
-        'name': 'apparaat',
-        'source': 'wfs',
-        'sourcefield': 'apparaat_type',
-        'type': 'string'
-    }, {
-        'name': 'datum_gw_meting',
-        'source': 'xml',
-        'sourcefield': '/sondering/visueelonderzoek/'
-                       'datumtijd_waarneming_grondwaterstand',
-        'definition': 'Datum en tijdstip van waarneming van de '
-                      'grondwaterstand.',
-        'type': 'datetime',
-        'notnull': False
-    }, {
-        'name': 'diepte_gw_m',
-        'source': 'xml',
-        'sourcefield': '/sondering/visueelonderzoek/grondwaterstand',
-        'definition': 'Diepte water in meter ten opzicht van het '
-                      'aanvangspeil.',
-        'type': 'float',
-        'notnull': False
-    }]
+    fields = [
+        WfsField(name='pkey_sondering', source_field='fiche',
+                 datatype='string'),
+        WfsField(name='sondeernummer', source_field='sondeernummer',
+                 datatype='string'),
+        WfsField(name='x', source_field='X_mL72', datatype='float'),
+        WfsField(name='y', source_field='Y_mL72', datatype='float'),
+        WfsField(name='start_sondering_mtaw', source_field='Z_mTAW',
+                 datatype='float'),
+        WfsField(name='diepte_sondering_van', source_field='diepte_van_m',
+                 datatype='float'),
+        WfsField(name='diepte_sondering_tot', source_field='diepte_tot_m',
+                 datatype='float'),
+        WfsField(name='datum_aanvang', source_field='datum_aanvang',
+                 datatype='date'),
+        WfsField(name='uitvoerder', source_field='uitvoerder',
+                 datatype='string'),
+        WfsField(name='sondeermethode', source_field='sondeermethode',
+                 datatype='string'),
+        WfsField(name='apparaat', source_field='apparaat_type',
+                 datatype='string'),
+        XmlField(name='datum_gw_meting',
+                 source_xpath='/sondering/visueelonderzoek/'
+                              'datumtijd_waarneming_grondwaterstand',
+                 definition='Datum en tijdstip van waarneming van de '
+                            'grondwaterstand.',
+                 datatype='datetime',
+                 notnull=False),
+        XmlField(name='diepte_gw_m',
+                 source_xpath='/sondering/visueelonderzoek/grondwaterstand',
+                 definition='Diepte water in meter ten opzicht van het '
+                            'aanvangspeil.',
+                 datatype='float',
+                 notnull=False)
+    ]
 
     def __init__(self, pkey):
         """Initialisation.

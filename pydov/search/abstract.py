@@ -310,10 +310,22 @@ class AbstractSearch(AbstractCommon):
                 The cost associated with the request of this field in the
                 output dataframe.
 
+        Raises
+        ------
+        RuntimeError
+            When the defined fields of this type are invalid.
+
         """
         fields = {}
         self._wfs_fields = []
         self._geometry_column = wfs_schema.get('geometry_column', None)
+
+        for f in self._type.get_fields().values():
+            if not isinstance(f, pydov.types.abstract.AbstractField):
+                raise RuntimeError(
+                    "Type '{}' fields should be instances of "
+                    "pydov.types.abstract.AbstractField, found {}.".format(
+                        self.__class__.__name__, str(type(f))))
 
         _map_wfs_datatypes = {
             'int': 'integer',

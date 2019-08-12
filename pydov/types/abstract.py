@@ -236,6 +236,11 @@ class AbstractDovSubType(AbstractTypeCommon):
         XPath expression of the root element of this subtype. Should return
         all elements of this subtype.
 
+    Raises
+    ------
+    RuntimeError
+        When the defined fields of this type are invalid.
+
     """
 
     rootpath = None
@@ -251,6 +256,13 @@ class AbstractDovSubType(AbstractTypeCommon):
             The name associated with this subtype.
 
         """
+        for f in self.fields:
+            if not isinstance(f, AbstractField):
+                raise RuntimeError(
+                    "Subtype '{}' fields should be instances of "
+                    "pydov.types.abstract.AbstractField, found {}.".format(
+                        self.__class__.__name__, str(type(f))))
+
         self.data = dict(
             zip(self.get_field_names(),
                 [AbstractDovSubType._UNRESOLVED] * len(self.get_field_names()))
@@ -401,6 +413,11 @@ class AbstractDovType(AbstractTypeCommon):
             Permanent key of this DOV object, being a URI of the form
             `https://www.dov.vlaanderen.be/data/typename/id`.
 
+        Raises
+        ------
+        RuntimeError
+            When the defined fields of this type are invalid.
+
         """
         if typename is None or pkey is None:
             raise ValueError(
@@ -410,6 +427,13 @@ class AbstractDovType(AbstractTypeCommon):
 
         self.typename = typename
         self.pkey = pkey
+
+        for f in self.fields:
+            if not isinstance(f, AbstractField):
+                raise RuntimeError(
+                    "Type '{}' fields should be instances of "
+                    "pydov.types.abstract.AbstractField, found {}.".format(
+                        self.__class__.__name__, str(type(f))))
 
         self.data = dict(
             zip(self.get_field_names(include_subtypes=False),

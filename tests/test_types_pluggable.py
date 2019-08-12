@@ -1,6 +1,11 @@
+import pytest
+
 from owslib.fes import PropertyIsEqualTo
 from pydov.search.grondwaterfilter import GrondwaterFilterSearch
-from pydov.types.abstract import AbstractDovSubType
+from pydov.types.abstract import (
+    AbstractDovSubType,
+    XmlField,
+)
 from pydov.types.grondwaterfilter import GrondwaterFilter
 
 from tests.test_search import (
@@ -31,6 +36,17 @@ location_xsd_base = 'tests/data/types/grondwaterfilter/xsd_*.xml'
 class MyGrondwaterFilter(GrondwaterFilter):
 
     fields = GrondwaterFilter.extend_fields([
+        XmlField(name='grondwatersysteem',
+                 source_xpath='/filter/ligging/grondwatersysteem',
+                 definition='Grondwatersysteem waarin de filter hangt.',
+                 datatype='string',
+                 notnull=False)
+    ])
+
+
+class MyWrongGrondwaterFilter(GrondwaterFilter):
+
+    fields = GrondwaterFilter.extend_fields([
         {'name': 'grondwatersysteem',
          'source': 'xml',
          'sourcefield': '/filter/ligging/grondwatersysteem',
@@ -46,33 +62,72 @@ class MyFilterOpbouw(AbstractDovSubType):
     rootpath = './/filter/opbouw/onderdeel'
 
     fields = [
-        {'name': 'opbouw_van',
-         'source': 'xml',
-         'sourcefield': '/van',
-         'definition': 'Opbouw van',
-         'type': 'float',
-         'notnull': False
-         },
-        {'name': 'opbouw_tot',
-         'source': 'xml',
-         'sourcefield': '/tot',
-         'definition': 'Opbouw tot',
-         'type': 'float',
-         'notnull': False
-         },
-        {'name': 'opbouw_element',
-         'source': 'xml',
-         'sourcefield': '/filterelement',
-         'definition': 'Opbouw element',
-         'type': 'string',
-         'notnull': False
-         }
+        XmlField(name='opbouw_van',
+                 source_xpath='/van',
+                 definition='Opbouw van',
+                 datatype='float',
+                 notnull=False),
+        XmlField(name='opbouw_tot',
+                 source_xpath='/tot',
+                 definition='Opbouw tot',
+                 datatype='float',
+                 notnull=False),
+        XmlField(name='opbouw_element',
+                 source_xpath='/filterelement',
+                 definition='Opbouw element',
+                 datatype='string',
+                 notnull=False)
     ]
 
 
 class MyGrondwaterFilterOpbouw(GrondwaterFilter):
 
     subtypes = [MyFilterOpbouw]
+
+
+class TestMyWrongGrondwaterFilter(object):
+    """Class grouping tests for the MyWrongGrondwaterFilter custom type."""
+    def test_get_fields(self):
+        """Test the get_fields method.
+
+        Test whether a RuntimeError is raised.
+
+        """
+        fs = GrondwaterFilterSearch(objecttype=MyWrongGrondwaterFilter)
+
+        with pytest.raises(RuntimeError):
+            fs.get_fields()
+
+    def test_search(self, mp_wfs, mp_remote_describefeaturetype,
+                    mp_remote_md, mp_remote_fc, mp_remote_wfs_feature,
+                    mp_dov_xml):
+        """Test the search method.
+
+        Test whether a RuntimeError is raised.
+
+        Parameters
+        ----------
+        mp_wfs : pytest.fixture
+            Monkeypatch the call to the remote GetCapabilities request.
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType.
+        mp_remote_md : pytest.fixture
+            Monkeypatch the call to get the remote metadata.
+        mp_remote_fc : pytest.fixture
+            Monkeypatch the call to get the remote feature catalogue.
+        mp_remote_wfs_feature : pytest.fixture
+            Monkeypatch the call to get WFS features.
+        mp_dov_xml : pytest.fixture
+            Monkeypatch the call to get the remote XML data.
+
+        """
+        fs = GrondwaterFilterSearch(objecttype=MyWrongGrondwaterFilter)
+
+        with pytest.raises(RuntimeError):
+            fs.search(query=PropertyIsEqualTo(
+                propertyname='filterfiche',
+                literal='https://www.dov.vlaanderen.be/data/'
+                        'filter/2003-004471'))
 
 
 class TestMyGrondwaterFilter(object):

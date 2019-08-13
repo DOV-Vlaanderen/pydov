@@ -39,8 +39,7 @@ class MyGrondwaterFilter(GrondwaterFilter):
         XmlField(name='grondwatersysteem',
                  source_xpath='/filter/ligging/grondwatersysteem',
                  definition='Grondwatersysteem waarin de filter hangt.',
-                 datatype='string',
-                 notnull=False)
+                 datatype='string')
     ])
 
 
@@ -65,13 +64,11 @@ class MyFilterOpbouw(AbstractDovSubType):
         XmlField(name='opbouw_van',
                  source_xpath='/van',
                  definition='Opbouw van',
-                 datatype='float',
-                 notnull=False),
+                 datatype='float'),
         XmlField(name='opbouw_tot',
                  source_xpath='/tot',
                  definition='Opbouw tot',
-                 datatype='float',
-                 notnull=False),
+                 datatype='float'),
         XmlField(name='opbouw_element',
                  source_xpath='/filterelement',
                  definition='Opbouw element',

@@ -21,38 +21,32 @@ class Meetdata(AbstractDovSubType):
                  definition='Diepte waarop sondeerparameters geregistreerd '
                             'werden, uitgedrukt in meter ten opzicht van het '
                             'aanvangspeil.',
-                 datatype='float',
-                 notnull=False),
+                 datatype='float'),
         XmlField(name='qc',
                  source_xpath='/qc',
                  definition='Opgemeten waarde van de conusweerstand, '
                             'uitgedrukt in MPa.',
-                 datatype='float',
-                 notnull=False),
+                 datatype='float'),
         XmlField(name='Qt',
                  source_xpath='/Qt',
                  definition='Opgemeten waarde van de totale weerstand, '
                             'uitgedrukt in kN.',
-                 datatype='float',
-                 notnull=False),
+                 datatype='float'),
         XmlField(name='fs',
                  source_xpath='/fs',
                  definition='Opgemeten waarde van de plaatelijke '
                             'kleefweerstand, uitgedrukt in kPa.',
-                 datatype='float',
-                 notnull=False),
+                 datatype='float'),
         XmlField(name='u',
                  source_xpath='/u',
                  definition='Opgemeten waarde van de porienwaterspanning, '
                             'uitgedrukt in kPa.',
-                 datatype='float',
-                 notnull=False),
+                 datatype='float'),
         XmlField(name='i',
                  source_xpath='/i',
                  definition='Opgemeten waarde van de inclinatie, uitgedrukt '
                             'in graden.',
-                 datatype='float',
-                 notnull=False)
+                 datatype='float')
     ]
 
 
@@ -87,14 +81,12 @@ class Sondering(AbstractDovType):
                               'datumtijd_waarneming_grondwaterstand',
                  definition='Datum en tijdstip van waarneming van de '
                             'grondwaterstand.',
-                 datatype='datetime',
-                 notnull=False),
+                 datatype='datetime'),
         XmlField(name='diepte_gw_m',
                  source_xpath='/sondering/visueelonderzoek/grondwaterstand',
                  definition='Diepte water in meter ten opzicht van het '
                             'aanvangspeil.',
-                 datatype='float',
-                 notnull=False)
+                 datatype='float')
     ]
 
     def __init__(self, pkey):

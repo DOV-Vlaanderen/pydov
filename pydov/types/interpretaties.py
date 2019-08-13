@@ -27,15 +27,13 @@ class AbstractCommonInterpretatie(AbstractDovType):
                                 'boring waaraan deze informele stratigrafie '
                                 'gekoppeld is (indien gekoppeld aan een '
                                 'boring).',
-                     datatype='string',
-                     notnull=False),
+                     datatype='string'),
         _CustomField(name='pkey_sondering',
                      definition='URL die verwijst naar de gegevens van de '
                                 'sondering waaraan deze informele '
                                 'stratigrafie gekoppeld is (indien gekoppeld '
                                 'aan een sondering).',
-                     datatype='string',
-                     notnull=False),
+                     datatype='string'),
         WfsField(name='betrouwbaarheid_interpretatie',
                  source_field='Betrouwbaarheid', datatype='string'),
         WfsField(name='x', source_field='X_mL72', datatype='float'),
@@ -188,21 +186,18 @@ class InformeleStratigrafieLaag(AbstractDovSubType):
                  source_xpath='/van',
                  definition='Diepte van de bovenkant van de laag informele '
                             'stratigrafie in meter.',
-                 datatype='float',
-                 notnull=False),
+                 datatype='float'),
         XmlField(name='diepte_laag_tot',
                  source_xpath='/tot',
                  definition='Diepte van de onderkant van de laag informele '
                             'stratigrafie in meter.',
-                 datatype='float',
-                 notnull=False),
+                 datatype='float'),
         XmlField(name='beschrijving',
                  source_xpath='/beschrijving',
                  definition='Benoeming van de eenheid van de laag informele '
                             'stratigrafie in vrije tekst (onbeperkt in '
                             'lengte).',
-                 datatype='string',
-                 notnull=False)
+                 datatype='string')
     ]
 
 
@@ -222,19 +217,16 @@ class FormeleStratigrafieLaag(AbstractDovSubType):
                  source_xpath='/van',
                  definition='Diepte van de bovenkant van de laag Formele '
                             'stratigrafie in meter.',
-                 datatype='float',
-                 notnull=False),
+                 datatype='float'),
         XmlField(name='diepte_laag_tot',
                  source_xpath='/tot',
                  definition='Diepte van de onderkant van de laag Formele '
                             'stratigrafie in meter.',
-                 datatype='float',
-                 notnull=False),
+                 datatype='float'),
         XmlField(name='lid1',
                  source_xpath='/lid1',
                  definition='eerste eenheid van de laag formele stratigrafie',
                  datatype='string',
-                 notnull=False,
                  xsd_type=XsdType(
                      xsd_schema='https://www.dov.vlaanderen.be/xdov/schema/'
                                 'latest/xsd/kern/interpretatie/'
@@ -245,7 +237,6 @@ class FormeleStratigrafieLaag(AbstractDovSubType):
                  definition='verbinding/relatie tussen lid1 en lid2 van de '
                             'laag formele stratigrafie',
                  datatype='string',
-                 notnull=False,
                  xsd_type=XsdType(
                      xsd_schema='https://www.dov.vlaanderen.be/xdov/schema/'
                                 'latest/xsd/kern/interpretatie/'
@@ -257,7 +248,6 @@ class FormeleStratigrafieLaag(AbstractDovSubType):
                       'Indien niet ingevuld wordt default de waarde van lid1 '
                       'ingevuld',
                  datatype='string',
-                 notnull=False,
                  xsd_type=XsdType(
                      xsd_schema='https://www.dov.vlaanderen.be/xdov/schema/'
                                 'latest/xsd/kern/interpretatie/'
@@ -282,20 +272,17 @@ class HydrogeologischeStratigrafieLaag(AbstractDovSubType):
                  source_xpath='/van',
                  definition='Diepte van de bovenkant van de laag '
                             'hydrogeologische stratigrafie in meter.',
-                 datatype='float',
-                 notnull=False),
+                 datatype='float'),
         XmlField(name='diepte_laag_tot',
                  source_xpath='/tot',
                  definition='Diepte van de onderkant van de laag '
                             'hydrogeologische stratigrafie in meter.',
-                 datatype='float',
-                 notnull=False),
+                 datatype='float'),
         XmlField(name='aquifer',
                  source_xpath='/aquifer',
                  definition='code van de watervoerende laag waarin de laag '
                             'Hydrogeologische stratigrafie zich bevindt.',
                  datatype='string',
-                 notnull=False,
                  xsd_type=XsdType(
                      xsd_schema='https://www.dov.vlaanderen.be/xdov/schema/'
                                 'latest/xsd/kern/interpretatie/'
@@ -321,20 +308,17 @@ class LithologischeBeschrijvingLaag(AbstractDovSubType):
                  source_xpath='/van',
                  definition='Diepte van de bovenkant van de laag '
                             'lithologische beschrijving in meter.',
-                 datatype='float',
-                 notnull=False),
+                 datatype='float'),
         XmlField(name='diepte_laag_tot',
                  source_xpath='/tot',
                  definition='Diepte van de onderkant van de laag '
                             'lithologische beschrijving in meter.',
-                 datatype='float',
-                 notnull=False),
+                 datatype='float'),
         XmlField(name='beschrijving',
                  source_xpath='/beschrijving',
                  definition='Lithologische beschrijving van de laag in vrije '
                             'tekst (onbeperkt in lengte)',
-                 datatype='string',
-                 notnull=False)
+                 datatype='string')
     ]
 
 
@@ -366,81 +350,68 @@ class GecodeerdeLithologieLaag(AbstractDovSubType):
                  source_xpath='/van',
                  definition='Diepte van de bovenkant van de laag '
                             'gecodeerde lithologie in meter.',
-                 datatype='float',
-                 notnull=False),
+                 datatype='float'),
         XmlField(name='diepte_laag_tot',
                  source_xpath='/tot',
                  definition='Diepte van de onderkant van de laag '
                             'gecodeerde lithologie in meter.',
-                 datatype='float',
-                 notnull=False),
+                 datatype='float'),
         XmlField(name='hoofdnaam1_grondsoort',
                  source_xpath='/hoofdnaam[1]/grondsoort',
                  definition='Primaire grondsoort (als code) van de laag '
                             'gecodeerde lithologie',
                  datatype='string',
-                 notnull=False,
                  xsd_type=__gecodeerdHoofdnaamCodesEnumType),
         XmlField(name='hoofdnaam2_grondsoort',
                  source_xpath='/hoofdnaam[2]/grondsoort',
                  definition='Secundaire grondsoort (als code) van de laag '
                             'gecodeerde lithologie',
                  datatype='string',
-                 notnull=False,
                  xsd_type=__gecodeerdHoofdnaamCodesEnumType),
         XmlField(name='bijmenging1_plaatselijk',
                  source_xpath='/bijmenging[1]/plaatselijk',
                  definition='plaatselijk of niet-plaatselijk',
-                 datatype='boolean',
-                 notnull=False),
+                 datatype='boolean'),
         XmlField(name='bijmenging1_hoeveelheid',
                  source_xpath='/bijmenging[1]/hoeveelheid',
                  definition='aanduiding van de hoeveelheid bijmenging',
                  datatype='string',
-                 notnull=False,
                  xsd_type=__gecodeerdBijmengingHoeveelheidEnumType),
         XmlField(name='bijmenging1_grondsoort',
                  source_xpath='/bijmenging[1]/grondsoort',
                  definition='type grondsoort (als code) van de laag '
                             'gecodeerde lithologie of geotechnische codering',
                  datatype='string',
-                 notnull=False,
                  xsd_type=__gecodeerdHoofdnaamCodesEnumType),
         XmlField(name='bijmenging2_plaatselijk',
                  source_xpath='/bijmenging[2]/plaatselijk',
                  definition='plaatselijk of niet-plaatselijk',
-                 datatype='boolean',
-                 notnull=False),
+                 datatype='boolean'),
         XmlField(name='bijmenging2_hoeveelheid',
                  source_xpath='/bijmenging[2]/hoeveelheid',
                  definition='aanduiding van de hoeveelheid bijmenging',
                  datatype='string',
-                 notnull=False,
                  xsd_type=__gecodeerdBijmengingHoeveelheidEnumType),
         XmlField(name='bijmenging2_grondsoort',
                  source_xpath='/bijmenging[2]/grondsoort',
                  definition='type grondsoort (als code) van de laag '
                             'gecodeerde lithologie of geotechnische codering',
                  datatype='string',
-                 notnull=False,
                  xsd_type=__gecodeerdHoofdnaamCodesEnumType),
         XmlField(name='bijmenging3_plaatselijk',
                  source_xpath='/bijmenging[3]/plaatselijk',
                  definition='plaatselijk of niet-plaatselijk',
-                 datatype='boolean',
-                 notnull=False),
+                 datatype='boolean'),
         XmlField(name='bijmenging3_hoeveelheid',
                  source_xpath='/bijmenging[3]/hoeveelheid',
                  definition='aanduiding van de hoeveelheid bijmenging',
                  datatype='string',
-                 notnull=False,
                  xsd_type=__gecodeerdBijmengingHoeveelheidEnumType),
         XmlField(name='bijmenging3_grondsoort',
                  source_xpath='/bijmenging[3]/grondsoort',
                  definition='type grondsoort (als code) van de laag '
                             'gecodeerde lithologie of geotechnische codering',
                  datatype='string',
-                 notnull=False,
                  xsd_type=__gecodeerdHoofdnaamCodesEnumType)
     ]
 
@@ -473,81 +444,68 @@ class GeotechnischeCoderingLaag(AbstractDovSubType):
                  source_xpath='/van',
                  definition='Diepte van de bovenkant van de laag '
                             'geotechnische codering in meter.',
-                 datatype='float',
-                 notnull=False),
+                 datatype='float'),
         XmlField(name='diepte_laag_tot',
                  source_xpath='/tot',
                  definition='Diepte van de onderkant van de laag '
                             'geotechnische codering in meter.',
-                 datatype='float',
-                 notnull=False),
+                 datatype='float'),
         XmlField(name='hoofdnaam1_grondsoort',
                  source_xpath='/hoofdnaam[1]/grondsoort',
                  definition='hoofdnaam (als code) van de laag geotechnische '
                             'codering',
                  datatype='string',
-                 notnull=False,
                  xsd_type=__geotechnischeCoderingHoofdnaamCodesEnumType),
         XmlField(name='hoofdnaam2_grondsoort',
                  source_xpath='/hoofdnaam[2]/grondsoort',
                  definition='Secundaire grondsoort (als code) van de laag '
                             'geotechnische codering',
                  datatype='string',
-                 notnull=False,
                  xsd_type=__geotechnischeCoderingHoofdnaamCodesEnumType),
         XmlField(name='bijmenging1_plaatselijk',
                  source_xpath='/bijmenging[1]/plaatselijk',
                  definition='plaatselijk of niet-plaatselijk',
-                 datatype='boolean',
-                 notnull=False),
+                 datatype='boolean'),
         XmlField(name='bijmenging1_hoeveelheid',
                  source_xpath='/bijmenging[1]/hoeveelheid',
                  definition='aanduiding van de hoeveelheid bijmenging',
                  datatype='string',
-                 notnull=False,
                  xsd_type=__gtCoderingBijmengingHoeveelheidEnumType),
         XmlField(name='bijmenging1_grondsoort',
                  source_xpath='/bijmenging[1]/grondsoort',
                  definition='type grondsoort (als code) van de laag '
                             'geotechnische codering',
                  datatype='string',
-                 notnull=False,
                  xsd_type=__geotechnischeCoderingHoofdnaamCodesEnumType),
         XmlField(name='bijmenging2_plaatselijk',
                  source_xpath='/bijmenging[2]/plaatselijk',
                  definition='plaatselijk of niet-plaatselijk',
-                 datatype='boolean',
-                 notnull=False),
+                 datatype='boolean'),
         XmlField(name='bijmenging2_hoeveelheid',
                  source_xpath='/bijmenging[2]/hoeveelheid',
                  definition='aanduiding van de hoeveelheid bijmenging',
                  datatype='string',
-                 notnull=False,
                  xsd_type=__gtCoderingBijmengingHoeveelheidEnumType),
         XmlField(name='bijmenging2_grondsoort',
                  source_xpath='/bijmenging[2]/grondsoort',
                  definition='type grondsoort (als code) van de laag '
                             'geotechnische codering',
                  datatype='string',
-                 notnull=False,
                  xsd_type=__geotechnischeCoderingHoofdnaamCodesEnumType),
         XmlField(name='bijmenging3_plaatselijk',
                  source_xpath='/bijmenging[3]/plaatselijk',
                  definition='plaatselijk of niet-plaatselijk',
-                 datatype='boolean',
-                 notnull=False),
+                 datatype='boolean'),
         XmlField(name='bijmenging3_hoeveelheid',
                  source_xpath='/bijmenging[3]/hoeveelheid',
                  definition='aanduiding van de hoeveelheid bijmenging',
                  datatype='string',
-                 notnull=False,
                  xsd_type=__gtCoderingBijmengingHoeveelheidEnumType),
         XmlField(name='bijmenging3_grondsoort',
                  source_xpath='/bijmenging[3]/grondsoort',
                  definition='type grondsoort (als code) van de laag '
                             'geotechnische codering',
                  datatype='string',
-                 notnull=False,
                  xsd_type=__geotechnischeCoderingHoofdnaamCodesEnumType)
     ]
 
@@ -573,19 +531,16 @@ class QuartairStratigrafieLaag(AbstractDovSubType):
                  source_xpath='/van',
                  definition='diepte van de bovenkant van de laag '
                             'quartairstratigrafie in meter',
-                 datatype='float',
-                 notnull=False),
+                 datatype='float'),
         XmlField(name='diepte_laag_tot',
                  source_xpath='/tot',
                  definition='diepte van de onderkant van de laag '
                             'quartairstratigrafie in meter',
-                 datatype='float',
-                 notnull=False),
+                 datatype='float'),
         XmlField(name='lid1',
                  source_xpath='/lid1',
                  definition='eerste eenheid van de laag quartairstratigrafie',
                  datatype='string',
-                 notnull=False,
                  xsd_type=XsdType(
                      xsd_schema='https://www.dov.vlaanderen.be/xdov/schema/'
                                 'latest/xsd/kern/interpretatie/'
@@ -596,7 +551,6 @@ class QuartairStratigrafieLaag(AbstractDovSubType):
                  definition='verbinding of relatie tussen lid1 en lid2 van de '
                             'laag quartairstratigrafie',
                  datatype='string',
-                 notnull=False,
                  xsd_type=XsdType(
                      xsd_schema='https://www.dov.vlaanderen.be/xdov/schema/'
                                 'latest/xsd/kern/interpretatie/'
@@ -608,7 +562,6 @@ class QuartairStratigrafieLaag(AbstractDovSubType):
                       'Indien niet ingevuld wordt default dezelfde waarde '
                       'als voor Lid1 ingevuld',
                  datatype='string',
-                 notnull=False,
                  xsd_type=XsdType(
                      xsd_schema='https://www.dov.vlaanderen.be/xdov/schema/'
                                 'latest/xsd/kern/interpretatie/'

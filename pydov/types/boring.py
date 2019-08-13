@@ -20,19 +20,16 @@ class BoorMethode(AbstractDovSubType):
                  source_xpath='/van',
                  definition='Bovenkant van de laag die met een bepaalde '
                             'methode aangeboord werd, in meter.',
-                 datatype='float',
-                 notnull=False),
+                 datatype='float'),
         XmlField(name='diepte_methode_tot',
                  source_xpath='/tot',
                  definition='Onderkant van de laag die met een bepaalde '
                             'methode aangeboord werd, in meter.',
-                 datatype='float',
-                 notnull=False),
+                 datatype='float'),
         XmlField(name='boormethode',
                  source_xpath='/methode',
                  definition='Boormethode voor het diepte-interval.',
-                 datatype='string',
-                 notnull=False)
+                 datatype='string')
     ]
 
 
@@ -51,8 +48,7 @@ class Boring(AbstractDovType):
                  source_xpath='/boring/oorspronkelijk_maaiveld/waarde',
                  definition='Maaiveldhoogte in mTAW op dag dat de boring '
                             'uitgevoerd werd.',
-                 datatype='float',
-                 notnull=False),
+                 datatype='float'),
         WfsField(name='start_boring_mtaw', source_field='Z_mTAW',
                  datatype='float'),
         WfsField(name='gemeente', source_field='gemeente', datatype='string'),
@@ -70,8 +66,7 @@ class Boring(AbstractDovType):
         XmlField(name='boorgatmeting',
                  source_xpath='/boring/boorgatmeting/uitgevoerd',
                  definition='Is er een boorgatmeting uitgevoerd (ja/nee).',
-                 datatype='boolean',
-                 notnull=False)
+                 datatype='boolean')
     ]
 
     def __init__(self, pkey):

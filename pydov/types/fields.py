@@ -31,7 +31,7 @@ class AbstractField(dict):
         ----------
         name : str
             Name of this field in the return dataframe.
-        source: one of 'wfs', 'xml'
+        source: one of 'wfs', 'xml', 'custom'
             Source of this field.
         datatype : one of 'string', 'integer', 'float', 'date', 'datetime'
                 or 'boolean'
@@ -48,7 +48,7 @@ class WfsField(AbstractField):
     """Class for a field available in the WFS service."""
 
     def __init__(self, name, source_field, datatype):
-        """Initialse a WFS field.
+        """Initialise a WFS field.
 
         Parameters
         ----------
@@ -91,8 +91,8 @@ class _WfsInjectedField(WfsField):
 class XmlField(AbstractField):
     """Class for a field available in the XML document."""
 
-    def __init__(self, name, source_xpath, definition, datatype, notnull,
-                 xsd_type=None):
+    def __init__(self, name, source_xpath, datatype, definition='',
+                 notnull=False, xsd_type=None):
         """Initialise an XML field.
 
         Parameters
@@ -102,12 +102,12 @@ class XmlField(AbstractField):
         source_xpath : str
             XPath expression of the values of this field in the source XML
             document.
-        definition : str
-            Definition of this field.
         datatype : one of 'string', 'integer', 'float', 'date', 'datetime'
                 or 'boolean'
             Datatype of the values of this field in the return dataframe.
-        notnull : bool
+        definition : str, optional
+            Definition of this field.
+        notnull : bool, optional, defaults to False
             True if this field is always present (mandatory), False otherwise.
         xsd_type : pydov.types.abstract.XsdType, optional
             XSD type associated with this field.
@@ -127,19 +127,19 @@ class XmlField(AbstractField):
 class _CustomField(AbstractField):
     """Class for a custom field, created explicitly in pydov."""
 
-    def __init__(self, name, definition, datatype, notnull):
+    def __init__(self, name, datatype, definition='', notnull=False):
         """Initialise a custom field.
 
         Parameters
         ----------
         name : str
             Name of this field in the return dataframe.
-        definition : str
-            Definition of this field.
         datatype : one of 'string', 'integer', 'float', 'date', 'datetime'
                 or 'boolean'
             Datatype of the values of this field in the return dataframe.
-        notnull : bool
+        definition : str, optional
+            Definition of this field.
+        notnull : bool, optional, defaults to False
             True if this field is always present (mandatory), False otherwise.
 
         """

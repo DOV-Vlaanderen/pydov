@@ -11,6 +11,9 @@ from .abstract import (
     AbstractDovSubType,
 )
 
+_filterDataCodes_xsd = 'https://www.dov.vlaanderen.be/xdov/schema/' \
+                       'latest/xsd/kern/gwmeetnet/FilterDataCodes.xsd'
+
 
 class Peilmeting(AbstractDovSubType):
 
@@ -25,50 +28,38 @@ class Peilmeting(AbstractDovSubType):
         XmlField(name='tijdstip',
                  source_xpath='/tijdstip',
                  definition='Tijdstip van opmeten (optioneel).',
-                 datatype='string',
-                 notnull=False),
+                 datatype='string'),
         XmlField(name='peil_mtaw',
                  source_xpath='/peil_mtaw',
                  definition='Diepte van de peilmeting, uitgedrukt in mTAW.',
-                 datatype='float',
-                 notnull=False),
+                 datatype='float'),
         XmlField(name='betrouwbaarheid',
                  source_xpath='/betrouwbaarheid',
                  definition='Lijst van betrouwbaarheden (goed, onbekend of'
                             'twijfelachtig).',
-                 datatype='string',
-                 notnull=False),
+                 datatype='string'),
         XmlField(name='methode',
                  source_xpath='/methode',
                  definition='Methode waarop de peilmeting uitgevoerd werd.',
                  datatype='string',
-                 notnull=False,
                  xsd_type=XsdType(
-                     xsd_schema='https://www.dov.vlaanderen.be/xdov/schema/'
-                                'latest/xsd/kern/gwmeetnet/'
-                                'FilterDataCodes.xsd',
+                     xsd_schema=_filterDataCodes_xsd,
                      typename='PeilmetingMethodeEnumType')),
         XmlField(name='filterstatus',
                  source_xpath='/filterstatus',
                  definition='Status van de filter tijdens de peilmeting (in '
                             'rust - werking).',
                  datatype='string',
-                 notnull=False,
                  xsd_type=XsdType(
-                     xsd_schema='https://www.dov.vlaanderen.be/xdov/schema/'
-                                'latest/xsd/kern/gwmeetnet/'
-                                'FilterDataCodes.xsd',
+                     xsd_schema=_filterDataCodes_xsd,
                      typename='FilterstatusEnumType')),
         XmlField(name='filtertoestand',
                  source_xpath='/filtertoestand',
                  definition="Filtertoestand bij de peilmeting. "
                             "Standaardwaarde is '1' = Normaal.",
                  datatype='integer',
-                 notnull=False,
                  xsd_type=XsdType(
-                     xsd_schema='https://www.dov.vlaanderen.be/xdov/schema/'
-                                'latest/xsd/kern/gwmeetnet/'
-                                'FilterDataCodes.xsd',
+                     xsd_schema=_filterDataCodes_xsd,
                      typename='FiltertoestandEnumType'))
     ]
 
@@ -96,18 +87,14 @@ class GrondwaterFilter(AbstractDovType):
                  source_xpath='/filter/meetnet',
                  definition='Tot welk meetnet behoort deze filter.',
                  datatype='integer',
-                 notnull=False,
                  xsd_type=XsdType(
-                     xsd_schema='https://www.dov.vlaanderen.be/xdov/schema/'
-                                'latest/xsd/kern/gwmeetnet/'
-                                'FilterDataCodes.xsd',
+                     xsd_schema=_filterDataCodes_xsd,
                      typename='MeetnetEnumType')),
         XmlField(name='aquifer_code',
                  source_xpath='/filter/ligging/aquifer',
                  definition='In welke watervoerende laag hangt de filter '
                             '(code).',
                  datatype='string',
-                 notnull=False,
                  xsd_type=XsdType(
                      xsd_schema='https://www.dov.vlaanderen.be/xdov/schema/'
                                 'latest/xsd/kern/interpretatie/'
@@ -117,17 +104,13 @@ class GrondwaterFilter(AbstractDovType):
                  source_xpath='/filter/ligging/grondwaterlichaam',
                  definition='',
                  datatype='string',
-                 notnull=False,
                  xsd_type=XsdType(
-                     xsd_schema='https://www.dov.vlaanderen.be/xdov/schema/'
-                                'latest/xsd/kern/gwmeetnet/'
-                                'FilterDataCodes.xsd',
+                     xsd_schema=_filterDataCodes_xsd,
                      typename='GrondwaterlichaamEnumType')),
         XmlField(name='regime',
                  source_xpath='/filter/ligging/regime',
                  definition='',
-                 datatype='string',
-                 notnull=False),
+                 datatype='string'),
         WfsField(name='diepte_onderkant_filter',
                  source_field='onderkant_filter_m', datatype='float'),
         WfsField(name='lengte_filter', source_field='lengte_filter_m',

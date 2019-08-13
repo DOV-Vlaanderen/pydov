@@ -40,9 +40,15 @@ You can get an overview of the available fields for a dataset using its search o
 Defining custom object types
 ****************************
 
-Should you want to make the returned dataframe fields more permanent or, more importantly, add extra XML fields to an existing dataframe, you can define your own object types and subtypes.
+Should you want to make the returned dataframe fields more permanent or, more importantly, add extra XML fields to an existing object type, you can define your own object types and subtypes.
 
 pydov works internally with *search classes* (in pydov.search) and object *types* and *subtypes* (in pydov.types). The former define the WFS services to be queried while the latter define which fields to retrieve from the WFS and XML services for inclusion in the resulting dataframe.
+
+An object main type (derived from pydov.types.abstract.AbstractDovType, f.ex. GrondwaterFilter) can contain fields from both the WFS service as well as from the XML document, noting that there will be a single instance of the main type per WFS record. On the contrary, an object subtype (derived from pydov.types.abstract.AbstractDovSubType, f.ex. Peilmeting) can list only fields from the XML document and can have a many-to-one relation with the main type: i.e. there can be multiple instances of the subtype for a given instance of the main type (f.ex. a single GrondwaterFilter can have multiple Peilmetingen). In the resulting output both will be combined in a single, flattened, dataframe whereby there will be as many rows as instances from the subtype, repeating the values of the main type for each one.
+
+Search classes and object types are loosely coupled, each search class being linked to the default object type of the corresponding DOV object, allowing users to retrieve the default dataframe output when performing a search. However, to enable advanced customization of dataframe output columns at runtime, pydov allows for specifying an alternative object type upon creating an instance of the search classes. This system of 'pluggable types' enables users to extend the default type or subtype fields, or in fact rewrite them completely for their use-case.
+
+The three most common reasons to define custom types are listed below: adding an extra XML field to a main type, a subtype or defining a new custom subtype altogether.
 
 
 Adding an XML field to a main type

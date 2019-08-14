@@ -3,6 +3,7 @@
 import pytest
 
 from pydov.types.boring import Boring
+from pydov.types.fields import XmlField
 from pydov.types.grondwaterfilter import GrondwaterFilter
 from pydov.types.interpretaties import (
     GecodeerdeLithologie,
@@ -73,13 +74,11 @@ def test_extend_fields_with_extra(objecttype):
 
     """
     extra_fields = [
-        {'name': 'grondwatersysteem',
-         'source': 'xml',
-         'sourcefield': '/filter/ligging/grondwatersysteem',
-         'definition': 'Grondwatersysteem waarin de filter hangt.',
-         'type': 'string',
-         'notnull': False
-         }
+        XmlField(name='grondwatersysteem',
+                 source_xpath='/filter/ligging/grondwatersysteem',
+                 definition='Grondwatersysteem waarin de filter hangt.',
+                 datatype='string',
+                 notnull=False)
     ]
 
     fields = objecttype.extend_fields(extra_fields)

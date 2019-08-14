@@ -124,7 +124,7 @@ class GrondwaterFilter(AbstractDovType):
         ----------
         pkey : str
             Permanent key of the Filter (screen), being a URI of the form
-            `https://www.dov.vlaanderen.be/data/boring/<id>`.
+            `https://www.dov.vlaanderen.be/data/filter/<id>`.
 
         """
         super(GrondwaterFilter, self).__init__('filter', pkey)

@@ -42,9 +42,15 @@ Defining custom object types
 
 Should you want to make the returned dataframe fields more permanent or, more importantly, add extra XML fields to an existing object type, you can define your own object types and subtypes.
 
-pydov works internally with *search classes* (in pydov.search) and object *types* and *subtypes* (in pydov.types). The former define the WFS services to be queried while the latter define which fields to retrieve from the WFS and XML services for inclusion in the resulting dataframe.
+pydov works internally with *search classes* (in pydov.search) and object *types* and *subtypes* (in pydov.types). The former are derived from :class:`pydov.search.abstract.AbstractSearch` and define the WFS services to be queried while the latter define which fields to retrieve from the WFS and XML services for inclusion in the resulting dataframe.
 
-An object main type (derived from pydov.types.abstract.AbstractDovType, f.ex. GrondwaterFilter) can contain fields from both the WFS service as well as from the XML document, noting that there will be a single instance of the main type per WFS record. On the contrary, an object subtype (derived from pydov.types.abstract.AbstractDovSubType, f.ex. Peilmeting) can list only fields from the XML document and can have a many-to-one relation with the main type: i.e. there can be multiple instances of the subtype for a given instance of the main type (f.ex. a single GrondwaterFilter can have multiple Peilmetingen). In the resulting output both will be combined in a single, flattened, dataframe whereby there will be as many rows as instances from the subtype, repeating the values of the main type for each one.
+An object main type (derived from :class:`pydov.types.abstract.AbstractDovType`, f.ex. GrondwaterFilter) can contain fields from both the WFS service as well as from the XML document, noting that there will be a single instance of the main type per WFS record. On the contrary, an object subtype (derived from :class:`pydov.types.abstract.AbstractDovSubType`, f.ex. Peilmeting) can list only fields from the XML document and can have a many-to-one relation with the main type: i.e. there can be multiple instances of the subtype for a given instance of the main type (f.ex. a single GrondwaterFilter can have multiple Peilmetingen). In the resulting output both will be combined in a single, flattened, dataframe whereby there will be as many rows as instances from the subtype, repeating the values of the main type for each one.
+
+.. figure:: objecttypes.svg
+   :alt: UML schema of search classes, object types and subtypes
+   :align: center
+
+   UML schema of search classes, object types and subtypes
 
 Search classes and object types are loosely coupled, each search class being linked to the default object type of the corresponding DOV object, allowing users to retrieve the default dataframe output when performing a search. However, to enable advanced customization of dataframe output columns at runtime, pydov allows for specifying an alternative object type upon creating an instance of the search classes. This system of 'pluggable types' enables users to extend the default type or subtype fields, or in fact rewrite them completely for their use-case.
 
@@ -55,6 +61,8 @@ Adding an XML field to a main type
 ----------------------------------
 
 To add an extra XML field to an existing main type, you have to create a subclass and extend the base type's fields.
+
+To extend the field list of the basetype, use its ``extend_fields`` class method, allowing the base object type to be unaffected by your changes. It takes a new list as its argument, containing the fields to be added. These should all be instances of :class:`pydov.types.fields.XmlField`. While it is possible to add instances of :class:`pydov.types.fields.WfsField` as well, this is generally not necessary as those can be used in the return_fields argument without being explicitly defined in the object type.
 
 For example, to add the field 'methode_xy' to the Boring datatype, you'd write::
 
@@ -77,6 +85,10 @@ Adding an XML field to a subtype
 --------------------------------
 
 To add an extra XML field to an existing subtype, you have to create a subclass of the subtype and extend its fields. You also have to subclass the main type in order to register your new subtype.
+
+To extend the field list of the subtype, use its ``extend_fields`` class method, allowing the base subtype to be unaffected by your changes. It takes a new list as its argument, containing the fields to be added. These should all be instances of :class:`pydov.types.fields.XmlField`. The source_xpath will be interpreted relative to the base subtypes rootpath.
+
+To register your new subtype in a custom main type, subclass the existing main type and overwrite its ``subtypes`` field with a new list containing your new subtype.
 
 For example, to add the field 'opmeter' to the Peilmeting subtype, you'd write::
 
@@ -101,7 +113,11 @@ For example, to add the field 'opmeter' to the Peilmeting subtype, you'd write::
 Adding a new subtype to a main type
 -----------------------------------
 
-To add a new subtype to an existing main type or, perhaps more likely, to replace the existing subtype of a main type, you have to specify the *root path* of the subtype and all of its fields. You also have to subclass the existing main type to register your subtype.
+To add a new subtype to an existing main type or, perhaps more likely, to replace the existing subtype of a main type, you have to specify the of the subtype and all of its fields. You also have to subclass the existing main type to register your subtype.
+
+Your new subtype should be a direct subclass of :class:`pydov.types.abstract.AbstractDovSubType` and should implement both the ``rootpath`` as well as the ``fields`` variables. The rootpath is the XPath expression of the root instances of this subtype in the XML document and should always start with ``.//``. There will be one instance of this subtype (and, consequently, one row in the output dataframe) for each element matched by this XPath expression.
+
+The fields should contain all the fields (or: columns in the output dataframe) of this new subtype. These should all be instances of :class:`pydov.types.fields.XmlField`. The source_xpath will be interpreted relative to the subtypes rootpath.
 
 Suppose you are not interested in the actual measurements from the CPT data but are instead interested in the different techniques applied while measuring. To get a dataframe with the different techniques per CPT location, you'd create a new subtype and register it in your own CPT type::
 

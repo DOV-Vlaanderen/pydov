@@ -202,7 +202,7 @@ class GrondwaterFilter(AbstractDovType):
 
         """
         gwfilter = GrondwaterFilter(
-            feature.findtext('./{%s}filterfiche' % namespace))
+            feature.findtext('./{{{}}}filterfiche'.format(namespace)))
 
         for field in cls.get_fields(source=('wfs',)).values():
             gwfilter.data[field['name']] = cls._parse(

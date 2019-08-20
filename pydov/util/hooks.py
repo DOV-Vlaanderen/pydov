@@ -115,8 +115,8 @@ class SimpleStatusHook(AbstractHook):
 
         """
         if self.prog_counter == 0:
-            sys.stdout.write('[%03i/%03i] ' % (self.prog_counter,
-                                               self.result_count))
+            sys.stdout.write('[{:03d}/{:03d}] '.format(
+                self.prog_counter, self.result_count))
             sys.stdout.flush()
         elif self.prog_counter % 50 == 0:
             time_elapsed = time.time() - self.init_time
@@ -125,11 +125,11 @@ class SimpleStatusHook(AbstractHook):
                 self.result_count-self.prog_counter))/60)
             if remaining_mins > 1 and remaining_mins != \
                     self.previous_remaining:
-                remaining = " (%i min. left)" % remaining_mins
+                remaining = " ({:d} min. left)".format(remaining_mins)
                 self.previous_remaining = remaining_mins
             else:
                 remaining = ""
-            sys.stdout.write('%s\n[%03i/%03i] ' % (
+            sys.stdout.write('{}\n[{:03d}/{:03d}] '.format(
                 remaining, self.prog_counter, self.result_count))
             sys.stdout.flush()
 

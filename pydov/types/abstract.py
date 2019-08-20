@@ -63,7 +63,7 @@ class AbstractTypeCommon(AbstractCommon):
 
         """
         if namespace is not None:
-            ns = '{%s}' % namespace
+            ns = '{{{}}}'.format(namespace)
             text = func('./' + ns + ('/' + ns).join(xpath.split('/')))
         else:
             text = func('./' + xpath.lstrip('/'))
@@ -288,8 +288,8 @@ class AbstractDovType(AbstractTypeCommon):
         """
         if typename is None or pkey is None:
             raise ValueError(
-                "Failed to instantiate object of class %s with typename '%s' "
-                "and permkey '%s'. Typename and pkey must not be None." % (
+                "Failed to instantiate object of class {} with typename '{}' "
+                "and permkey '{}'. Typename and pkey must not be None.".format(
                     self.__class__.__name__, typename, pkey))
 
         self.typename = typename
@@ -312,7 +312,7 @@ class AbstractDovType(AbstractTypeCommon):
                 [] * len(self.subtypes))
         )
 
-        self.data['pkey_%s' % self.typename] = self.pkey
+        self.data['pkey_{}'.format(self.typename)] = self.pkey
 
     def _parse_xml_data(self):
         """Get remote XML data for this DOV object, parse the raw XML and
@@ -341,8 +341,8 @@ class AbstractDovType(AbstractTypeCommon):
 
             self._parse_subtypes(xml)
         except XmlParseError:
-            warnings.warn(("Failed to parse XML for object '%s'. Resulting "
-                          "dataframe will be incomplete.") % self.pkey,
+            warnings.warn(("Failed to parse XML for object '{}'. Resulting "
+                          "dataframe will be incomplete.").format(self.pkey),
                           XmlParseWarning)
 
     @classmethod
@@ -464,7 +464,8 @@ class AbstractDovType(AbstractTypeCommon):
                                    return_fields])
             for rf in return_fields:
                 if rf not in fields:
-                    raise InvalidFieldError("Unknown return field: '%s'" % rf)
+                    raise InvalidFieldError(
+                        "Unknown return field: '{}'".format(rf))
         return fields
 
     @classmethod

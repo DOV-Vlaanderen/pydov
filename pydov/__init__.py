@@ -17,4 +17,4 @@ hooks = [
 # session object allows connection pooling and TCP connection reuse.
 request_timeout = 60
 session = requests.Session()
-session.headers.update({'user-agent': 'pydov/%s' % pydov.__version__})
+session.headers.update({'user-agent': 'pydov/{}'.format(pydov.__version__)})

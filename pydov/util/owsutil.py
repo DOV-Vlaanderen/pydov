@@ -250,7 +250,7 @@ def get_remote_featurecatalogue(csw_url, fc_uuid):
 
     """
     fc_url = csw_url + '?Service=CSW&Request=GetRecordById&Version=2.0.2' \
-                       '&outputSchema=http://www.isotc211.org/2005/gmd' \
+                       '&outputSchema=http://www.isotc211.org/2005/gfc' \
                        '&elementSetName=full&id=' + fc_uuid
 
     content = __get_remote_fc(fc_url)
@@ -306,8 +306,11 @@ def get_remote_featurecatalogue(csw_url, fc_uuid):
             if label is not None:
                 label = label.strip()
                 if label != '':
-                    values[label] = definition.strip() if \
-                        definition.strip() != '' else None
+                    if definition is not None:
+                        values[label] = definition.strip() if \
+                            definition.strip() != '' else None
+                    else:
+                        values[label] = None
 
         attr['values'] = values if len(values) > 0 else None
 

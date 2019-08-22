@@ -41,7 +41,8 @@ def mp_wfs(monkeymodule):
 
     """
     def read(*args, **kwargs):
-        with open('tests/data/util/owsutil/wfscapabilities.xml', 'r') as f:
+        with open('tests/data/util/owsutil/wfscapabilities.xml', 'r',
+                  encoding='utf-8') as f:
             data = f.read()
             if type(data) is not bytes:
                 data = data.encode('utf-8')

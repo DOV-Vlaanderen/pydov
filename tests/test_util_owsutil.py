@@ -55,7 +55,7 @@ class TestOwsutil(object):
         """
         contentmetadata = wfs.contents['dov-pub:Boringen']
         assert owsutil.get_csw_base_url(contentmetadata) == \
-               'https://www.dov.vlaanderen.be/geonetwork/srv/nl/csw'
+               'https://www.dov.vlaanderen.be/geonetwork/srv/dut/csw'
 
     def test_get_csw_base_url_nometadataurls(self, wfs):
         """Test the owsutil.get_csw_base_url method for a layer without

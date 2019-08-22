@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:gml="http://www.opengis.net/gml" xmlns:gw_meetnetten="http://dov.vlaanderen.be/grondwater/gw_meetnetten" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://dov.vlaanderen.be/grondwater/gw_meetnetten">
-  <xsd:import namespace="http://www.opengis.net/gml" schemaLocation="https://www.dov.vlaanderen.be:443/geoserver/schemas/gml/3.1.1/base/gml.xsd"/>
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml" xmlns:gw_meetnetten="http://dov.vlaanderen.be/grondwater/gw_meetnetten" elementFormDefault="qualified" targetNamespace="http://dov.vlaanderen.be/grondwater/gw_meetnetten">
+  <xsd:import namespace="http://www.opengis.net/gml" schemaLocation="https://www.dov.vlaanderen.be/geoserver/schemas/gml/3.1.1/base/gml.xsd"/>
   <xsd:complexType name="meetnettenType">
     <xsd:complexContent>
       <xsd:extension base="gml:AbstractFeatureType">

@@ -4,6 +4,13 @@
 History
 =======
 
+v0.2.1
+------
+
+* Fixes and improvements
+
+  * Fix download of Feature Catalogues from the new DOV Geonetwork 3.6 instance.
+
 v0.2.0
 ------
 

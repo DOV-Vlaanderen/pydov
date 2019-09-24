@@ -45,9 +45,28 @@ class Peilmeting(AbstractDovSubType):
     }, {
         'name': 'methode',
         'source': 'xml',
-        'sourcefield': '/peilmeting/methode',
+        'sourcefield': '/methode',
+        'xsd_type': 'PeilmetingMethodeEnumType',
         'definition': 'Methode waarop de peilmeting uitgevoerd werd.',
         'type': 'string',
+        'notnull': False
+    }, {
+        'name': 'filterstatus',
+        'source': 'xml',
+        'sourcefield': '/filterstatus',
+        'xsd_type': 'FilterstatusEnumType',
+        'definition': 'Status van de filter tijdens de peilmeting (in rust - '
+                      'werking).',
+        'type': 'string',
+        'notnull': False
+    }, {
+        'name': 'filtertoestand',
+        'source': 'xml',
+        'sourcefield': '/filtertoestand',
+        'xsd_type': 'FiltertoestandEnumType',
+        'definition':  "Filtertoestand bij de peilmeting. Standaardwaarde is "
+                       "'1' = Normaal.",
+        'type': 'integer',
         'notnull': False
     }]
 
@@ -82,7 +101,7 @@ class GrondwaterFilter(AbstractDovType):
     }, {
         'name': 'filternummer',
         'source': 'wfs',
-        'sourcefield': 'filternr',
+        'sourcefield': 'filternummer',
         'type': 'string'
     }, {
         'name': 'filtertype',
@@ -183,7 +202,7 @@ class GrondwaterFilter(AbstractDovType):
 
         """
         gwfilter = GrondwaterFilter(
-            feature.findtext('./{%s}filterfiche' % namespace))
+            feature.findtext('./{{{}}}filterfiche'.format(namespace)))
 
         for field in cls.get_fields(source=('wfs',)).values():
             gwfilter.data[field['name']] = cls._parse(

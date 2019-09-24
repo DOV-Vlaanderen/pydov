@@ -66,8 +66,13 @@ class AbstractCommon(object):
                     return datetime.datetime.strptime(x, '%Y-%m-%d').date()
         elif returntype == 'datetime':
             def typeconvert(x):
-                return datetime.datetime.strptime(
-                    x.split('.')[0], '%Y-%m-%dT%H:%M:%S')
+                if x.endswith('Z'):
+                    return datetime.datetime.strptime(
+                            x, '%Y-%m-%dT%H:%M:%SZ').date() \
+                           + datetime.timedelta(days=1)
+                else:
+                    return datetime.datetime.strptime(
+                        x.split('.')[0], '%Y-%m-%dT%H:%M:%S')
         elif returntype == 'boolean':
             def typeconvert(x):
                 return strtobool(x) == 1
@@ -158,8 +163,8 @@ class AbstractSearch(AbstractCommon):
         self._init_wfs()
 
         if self._layer not in self.__wfs.contents:
-            raise LayerNotFoundError('Layer %s could not be found' %
-                                     self._layer)
+            raise LayerNotFoundError(
+                'Layer {} could not be found'.format(self._layer))
         else:
             return self.__wfs.contents[self._layer]
 
@@ -259,10 +264,11 @@ class AbstractSearch(AbstractCommon):
             values = {}
             for schema in xsd_schemas:
                 tree_values = schema.findall(
-                    './/{http://www.w3.org/2001/XMLSchema}simpleType[@'
-                    'name="%s"]/{http://www.w3.org/2001/XMLSchema}restriction/'
-                    '{http://www.w3.org/2001/XMLSchema}enumeration' %
-                    xml_field.get('xsd_type'))
+                    './/{{http://www.w3.org/2001/XMLSchema}}simpleType['
+                    '@name="{}"]/'
+                    '{{http://www.w3.org/2001/XMLSchema}}restriction/'
+                    '{{http://www.w3.org/2001/XMLSchema}}enumeration'.format(
+                        xml_field.get('xsd_type')))
                 for e in tree_values:
                     value = cls._typeconvert(
                         e.get('value'), xml_field.get('type'))
@@ -313,7 +319,8 @@ class AbstractSearch(AbstractCommon):
         _map_wfs_datatypes = {
             'int': 'integer',
             'decimal': 'float',
-            'double': 'float'
+            'double': 'float',
+            'dateTime': 'datetime'
         }
 
         df_wfs_fields = self._type.get_fields(source=('wfs',)).values()
@@ -423,10 +430,10 @@ class AbstractSearch(AbstractCommon):
                         and name not in self._wfs_fields:
                     if name in self._fields:
                         raise InvalidFieldError(
-                            "Cannot use return field '%s' in query." % name
-                        )
+                            "Cannot use return field '{}' in query.".format(
+                                name))
                     raise InvalidFieldError(
-                        "Unknown query parameter: '%s'" % name)
+                        "Unknown query parameter: '{}'".format(name))
 
         if location is not None:
             self._init_fields()
@@ -441,17 +448,18 @@ class AbstractSearch(AbstractCommon):
                 if rf not in self._fields:
                     if rf in self._map_wfs_source_df:
                         raise InvalidFieldError(
-                            "Unknown return field: '%s'. Did you mean '%s'?"
-                            % (rf, self._map_wfs_source_df[rf]))
+                            "Unknown return field: "
+                            "'{}'. Did you mean '{}'?".format(
+                                rf, self._map_wfs_source_df[rf]))
                     if rf.lower() in [i.lower() for i in
                                       self._map_wfs_source_df.keys()]:
                         sugg = [i for i in self._map_wfs_source_df.keys() if
                                 i.lower() == rf.lower()][0]
                         raise InvalidFieldError(
-                            "Unknown return field: '%s'. Did you mean '%s'?"
-                            % (rf, sugg))
+                            "Unknown return field: "
+                            "'{}'. Did you mean '{}'?".format(rf, sugg))
                     raise InvalidFieldError(
-                        "Unknown return field: '%s'" % rf)
+                        "Unknown return field: '{}'".format(rf))
 
     @staticmethod
     def _get_remote_wfs_feature(wfs, typename, location, filter, propertyname,
@@ -593,13 +601,13 @@ class AbstractSearch(AbstractCommon):
 
         if tree.get('numberOfFeatures') is None:
             raise WfsGetFeatureError(
-                'Error retrieving features from DOV WFS server:\n%s' %
-                etree.tostring(tree).decode('utf8'))
+                'Error retrieving features from DOV WFS server:\n{}'.format(
+                    etree.tostring(tree).decode('utf8')))
 
         if int(tree.get('numberOfFeatures')) == 10000:
             raise FeatureOverflowError(
-                'Reached the limit of %i returned features. Please split up '
-                'the query to ensure getting all results.' % 10000)
+                'Reached the limit of {:d} returned features. Please split up '
+                'the query to ensure getting all results.'.format(10000))
 
         for hook in pydov.hooks:
             hook.wfs_search_result(int(tree.get('numberOfFeatures')))

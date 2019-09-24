@@ -25,33 +25,35 @@ from pydov.util.location import (
 )
 
 
-def service_ok(url='https://www.dov.vlaanderen.be/geoserver', timeout=5):
-    """Check whether the given URL is accessible.
+def service_ok(timeout=5):
+    """Check whether DOV services are accessible.
 
     Used to skip online tests when the service is unavailable or unreachable.
 
     Parameters
     ----------
-    url : str, optional
-        The URL to test. Defaults to the DOV Geoserver.
     timeout : int, optional
         Timeout in seconds. Defaults to 5.
 
     Returns
     -------
     bool
-        True if the service is reachable, False otherwise.
+        True if the DOV services are reachable, False otherwise.
 
     """
-    try:
-        ok = requests.get(url, timeout=timeout).ok
-    except requests.exceptions.ReadTimeout:
-        ok = False
-    except requests.exceptions.ConnectTimeout:
-        ok = False
-    except Exception:
-        ok = False
-    return ok
+    def check_url(url, timeout):
+        try:
+            ok = requests.get(url, timeout=timeout).ok
+        except requests.exceptions.ReadTimeout:
+            ok = False
+        except requests.exceptions.ConnectTimeout:
+            ok = False
+        except Exception:
+            ok = False
+        return ok
+
+    return check_url('https://www.dov.vlaanderen.be/geoserver', timeout) and\
+        check_url('https://www.dov.vlaanderen.be/geonetwork', timeout)
 
 
 def clean_xml(xml):
@@ -977,11 +979,22 @@ class AbstractTestTypes(object):
 
         """
         tree = etree.fromstring(wfs_getfeature.encode('utf8'))
-        feature_members = tree.findall('.//{http://www.opengis.net/gml}'
-                                       'featureMembers')
+        feature_members = tree.find('.//{http://www.opengis.net/gml}'
+                                    'featureMembers')
 
-        features = self.get_type().from_wfs(feature_members,
-                                            self.get_namespace())
+        if feature_members is not None:
+            fts = [ft for ft in feature_members]
 
-        for feature in features:
-            assert type(feature) is self.get_type()
+            features = self.get_type().from_wfs(fts, self.get_namespace())
+
+            for feature in features:
+                assert type(feature) is self.get_type()
+
+    def test_missing_pkey(self):
+        """Test initialising an object type with a pkey of 'None'.
+
+        Test whether a ValueError is raised.
+
+        """
+        with pytest.raises(ValueError):
+            instance = self.get_type()(None)

@@ -7,7 +7,7 @@ from pydov.types.interpretaties import HydrogeologischeStratigrafie
 from pydov.types.interpretaties import LithologischeBeschrijvingen
 from pydov.types.interpretaties import GecodeerdeLithologie
 from pydov.types.interpretaties import GeotechnischeCodering
-from pydov.types.interpretaties import QuartaireStratigrafie
+from pydov.types.interpretaties import QuartairStratigrafie
 from pydov.util import owsutil
 
 
@@ -790,7 +790,7 @@ class GeotechnischeCoderingSearch(AbstractSearch):
         return df
 
 
-class QuartaireStratigrafieSearch(AbstractSearch):
+class QuartairStratigrafieSearch(AbstractSearch):
     """Search class to retrieve the interpretation for Quartair
     stratigrafie"""
 
@@ -798,39 +798,45 @@ class QuartaireStratigrafieSearch(AbstractSearch):
     __wfs_namespace = None
     __md_metadata = None
     __fc_featurecatalogue = None
+    __xsd_schemas = None
 
     def __init__(self):
         """Initialisation."""
-        super(QuartaireStratigrafieSearch, self).__init__(
-            'interpretaties:quartaire_stratigrafie', QuartaireStratigrafie)
+        super(QuartairStratigrafieSearch, self).__init__(
+            'interpretaties:quartaire_stratigrafie', QuartairStratigrafie)
 
     def _init_namespace(self):
         """Initialise the WFS namespace associated with the layer."""
-        if QuartaireStratigrafieSearch.__wfs_namespace is None:
-            QuartaireStratigrafieSearch.__wfs_namespace = self._get_namespace()
+        if QuartairStratigrafieSearch.__wfs_namespace is None:
+            QuartairStratigrafieSearch.__wfs_namespace = self._get_namespace()
 
     def _init_fields(self):
         """Initialise the fields and their metadata available in this search
         class."""
         if self._fields is None:
-            if QuartaireStratigrafieSearch.__wfs_schema is None:
-                QuartaireStratigrafieSearch.__wfs_schema = self._get_schema()
+            if QuartairStratigrafieSearch.__wfs_schema is None:
+                QuartairStratigrafieSearch.__wfs_schema = self._get_schema()
 
-            if QuartaireStratigrafieSearch.__md_metadata is None:
-                QuartaireStratigrafieSearch.__md_metadata = \
+            if QuartairStratigrafieSearch.__md_metadata is None:
+                QuartairStratigrafieSearch.__md_metadata = \
                     self._get_remote_metadata()
 
-            if QuartaireStratigrafieSearch.__fc_featurecatalogue is None:
+            if QuartairStratigrafieSearch.__fc_featurecatalogue is None:
                 csw_url = self._get_csw_base_url()
                 fc_uuid = owsutil.get_featurecatalogue_uuid(
-                    QuartaireStratigrafieSearch.__md_metadata)
+                    QuartairStratigrafieSearch.__md_metadata)
 
-                QuartaireStratigrafieSearch.__fc_featurecatalogue = \
+                QuartairStratigrafieSearch.__fc_featurecatalogue = \
                     owsutil.get_remote_featurecatalogue(csw_url, fc_uuid)
 
+            if QuartairStratigrafieSearch.__xsd_schemas is None:
+                QuartairStratigrafieSearch.__xsd_schemas = \
+                    self._get_remote_xsd_schemas()
+
             fields = self._build_fields(
-                QuartaireStratigrafieSearch.__wfs_schema,
-                QuartaireStratigrafieSearch.__fc_featurecatalogue)
+                QuartairStratigrafieSearch.__wfs_schema,
+                QuartairStratigrafieSearch.__fc_featurecatalogue,
+                QuartairStratigrafieSearch.__xsd_schemas)
 
             for field in fields.values():
                 if field['name'] not in self._type.get_field_names(
@@ -844,8 +850,9 @@ class QuartaireStratigrafieSearch(AbstractSearch):
                     })
 
             self._fields = self._build_fields(
-                QuartaireStratigrafieSearch.__wfs_schema,
-                QuartaireStratigrafieSearch.__fc_featurecatalogue)
+                QuartairStratigrafieSearch.__wfs_schema,
+                QuartairStratigrafieSearch.__fc_featurecatalogue,
+                QuartairStratigrafieSearch.__xsd_schemas)
 
     def search(self, location=None, query=None, return_fields=None):
         """Search for interpretations of Quartair stratigrafie.
@@ -900,16 +907,13 @@ class QuartaireStratigrafieSearch(AbstractSearch):
 
         """
         fts = self._search(location=location, query=query,
-                           return_fields=return_fields,
-                           extra_wfs_fields=['Type_proef', 'Proeffiche'])
+                           return_fields=return_fields)
 
-        interpretaties = QuartaireStratigrafie.from_wfs(
+        interpretaties = QuartairStratigrafie.from_wfs(
             fts, self.__wfs_namespace)
 
         df = pd.DataFrame(
-            data=QuartaireStratigrafie.to_df_array(
+            data=QuartairStratigrafie.to_df_array(
                 interpretaties, return_fields),
-            columns=QuartaireStratigrafie.get_field_names(return_fields))
+            columns=QuartairStratigrafie.get_field_names(return_fields))
         return df
-
-

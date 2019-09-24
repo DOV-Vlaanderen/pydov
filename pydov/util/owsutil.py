@@ -2,9 +2,8 @@
 """Module grouping utility functions for OWS services."""
 import warnings
 
-import requests
-
 import pydov
+
 from owslib.feature.schema import (
     _get_describefeaturetype_url,
     _get_elements,
@@ -251,7 +250,7 @@ def get_remote_featurecatalogue(csw_url, fc_uuid):
 
     """
     fc_url = csw_url + '?Service=CSW&Request=GetRecordById&Version=2.0.2' \
-                       '&outputSchema=http://www.isotc211.org/2005/gmd' \
+                       '&outputSchema=http://www.isotc211.org/2005/gfc' \
                        '&elementSetName=full&id=' + fc_uuid
 
     content = __get_remote_fc(fc_url)
@@ -307,8 +306,11 @@ def get_remote_featurecatalogue(csw_url, fc_uuid):
             if label is not None:
                 label = label.strip()
                 if label != '':
-                    values[label] = definition.strip() if \
-                        definition.strip() != '' else None
+                    if definition is not None:
+                        values[label] = definition.strip() if \
+                            definition.strip() != '' else None
+                    else:
+                        values[label] = None
 
         attr['values'] = values if len(values) > 0 else None
 
@@ -437,7 +439,7 @@ def get_remote_schema(url, typename, version='1.0.0'):
 
     if ':' in typename:
         typename = typename.split(':')[1]
-    type_element = findall(root, '{%s}element' % XS_NAMESPACE,
+    type_element = findall(root, '{{{}}}element'.format(XS_NAMESPACE),
                            attribute_name='name', attribute_value=typename)[0]
     complex_type = type_element.attrib['type'].split(":")[1]
     elements = _get_elements(complex_type, root)
@@ -489,9 +491,9 @@ def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
         Typename to query.
     geometry_column : str, optional
         Name of the geometry column to use in the spatial filter.
-        Required if the ``bbox`` parameter is supplied.
-    bbox : tuple<minx,miny,maxx,maxy>, optional
-        The bounding box limiting the features to retrieve.
+        Required if the ``location`` parameter is supplied.
+    location : pydov.util.location.AbstractLocationFilter
+        Location filter limiting the features to retrieve.
         Requires ``geometry_column`` to be supplied as well.
     filter : owslib.fes.FilterRequest, optional
         Filter request to search on attribute values.
@@ -521,7 +523,7 @@ def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
 
     xml.set('{http://www.w3.org/2001/XMLSchema-instance}schemaLocation',
             'http://www.opengis.net/wfs '
-            'http://schemas.opengis.net/wfs/%s/wfs.xsd' % version)
+            'http://schemas.opengis.net/wfs/{}/wfs.xsd'.format(version))
 
     query = etree.Element('{http://www.opengis.net/wfs}Query')
     query.set('typeName', typename)
@@ -573,9 +575,8 @@ def wfs_get_feature(baseurl, get_feature_request):
 
     """
     data = etree.tostring(get_feature_request)
-    headers = {'user-agent': 'PyDOV/%s' % pydov.__version__}
 
-    request = requests.post(baseurl, data, headers=headers, timeout=60)
+    request = pydov.session.post(baseurl, data, timeout=pydov.request_timeout)
     request.encoding = 'utf-8'
     return request.text.encode('utf8')
 
@@ -594,8 +595,7 @@ def get_url(url):
         Response containing the result of the GET request.
 
     """
-    headers = {'user-agent': 'PyDOV/%s' % pydov.__version__}
 
-    request = requests.get(url, headers=headers, timeout=60)
+    request = pydov.session.get(url, timeout=pydov.request_timeout)
     request.encoding = 'utf-8'
     return request.text.encode('utf8')

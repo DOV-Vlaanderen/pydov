@@ -4,6 +4,7 @@
 import types
 import warnings
 from collections import OrderedDict
+from multiprocessing.dummy import Pool
 
 import pydov
 import numpy as np
@@ -52,7 +53,7 @@ class AbstractTypeCommon(AbstractCommon):
 
         """
         if namespace is not None:
-            ns = '{%s}' % namespace
+            ns = '{{{}}}'.format(namespace)
             text = func('./' + ns + ('/' + ns).join(xpath.split('/')))
         else:
             text = func('./' + xpath.lstrip('/'))
@@ -239,6 +240,12 @@ class AbstractDovType(AbstractTypeCommon):
             `https://www.dov.vlaanderen.be/data/typename/id`.
 
         """
+        if typename is None or pkey is None:
+            raise ValueError(
+                "Failed to instantiate object of class {} with typename '{}' "
+                "and permkey '{}'. Typename and pkey must not be None.".format(
+                    self.__class__.__name__, typename, pkey))
+
         self.typename = typename
         self.pkey = pkey
 
@@ -252,7 +259,7 @@ class AbstractDovType(AbstractTypeCommon):
                 [] * len(self._subtypes))
         )
 
-        self.data['pkey_%s' % self.typename] = self.pkey
+        self.data['pkey_{}'.format(self.typename)] = self.pkey
 
     def _parse_xml_data(self):
         """Get remote XML data for this DOV object, parse the raw XML and
@@ -281,8 +288,8 @@ class AbstractDovType(AbstractTypeCommon):
 
             self._parse_subtypes(xml)
         except XmlParseError:
-            warnings.warn(("Failed to parse XML for object '%s'. Resulting "
-                          "dataframe will be incomplete.") % self.pkey,
+            warnings.warn(("Failed to parse XML for object '{}'. Resulting "
+                          "dataframe will be incomplete.").format(self.pkey),
                           XmlParseWarning)
 
     @classmethod
@@ -404,7 +411,8 @@ class AbstractDovType(AbstractTypeCommon):
                                    return_fields])
             for rf in return_fields:
                 if rf not in fields:
-                    raise InvalidFieldError("Unknown return field: '%s'" % rf)
+                    raise InvalidFieldError(
+                        "Unknown return field: '{}'".format(rf))
         return fields
 
     @classmethod
@@ -489,8 +497,10 @@ class AbstractDovType(AbstractTypeCommon):
 
     @classmethod
     def to_df_array(cls, iterable, return_fields=None):
-        """Yield one or more dataframe arrays for each instance in the given
-        iterable.
+        """Returns a dataframe array with one or more arrays (rows) for each
+        instance in the given iterable.
+
+        Uses parallel processing to speed up IO operations.
 
         Parameters
         ----------
@@ -501,22 +511,40 @@ class AbstractDovType(AbstractTypeCommon):
             ignored, the default order of the fields of the datatype is used
             instead. Defaults to None, which will include all fields.
 
-        Yields
-        ------
-        list
-            List of the values of the instance in the same order as the
-            field/column names, for inclusion in the result dataframe of a
-            search operation.
+        Returns
+        -------
+        list of list
+            Dataframe contents in the format of a twodimensional list (rows)
+            of lists (columns). The values in the second list are in the
+            same order as the field/column names, for inclusion in the
+            resulting Pandas dataframe of a search operation.
 
         """
-        for item in iterable:
-            result = item.get_df_array(return_fields)
+        def unnest_result(result, df_result):
+            """Unnest the result into multiple rows (lists) if necessary. Rows
+            are appended to the df_result list."""
             if len(result) > 0:
                 if isinstance(result[0], list):
                     for r in result:
-                        yield r
+                        df_result.append(r)
                 else:
-                    yield result
+                    df_result.append(result)
+
+        pool = Pool(4)
+        result_obj = []
+
+        for item in iterable:
+            res = pool.apply_async(item.get_df_array, (return_fields,))
+            result_obj.append(res)
+
+        pool.close()
+        pool.join()
+
+        df_result = []
+        for res in result_obj:
+            unnest_result(res.get(), df_result)
+
+        return df_result
 
     def _get_xml_data(self):
         """Return the raw XML data for this DOV object.

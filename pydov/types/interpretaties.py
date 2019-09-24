@@ -45,7 +45,7 @@ class AbstractCommonInterpretatie(AbstractDovType):
 
         """
         instance = cls(
-            feature.findtext('./{%s}Interpretatiefiche' % namespace))
+            feature.findtext('./{{{}}}Interpretatiefiche'.format(namespace)))
 
         typeproef = cls._parse(
             func=feature.findtext,
@@ -124,7 +124,7 @@ class AbstractBoringInterpretatie(AbstractDovType):
 
         """
         instance = cls(
-            feature.findtext('./{%s}Interpretatiefiche' % namespace))
+            feature.findtext('./{{{}}}Interpretatiefiche'.format(namespace)))
 
         for field in cls.get_fields(source=('wfs',)).values():
             instance.data[field['name']] = cls._parse(
@@ -769,10 +769,17 @@ class GeotechnischeCodering(AbstractBoringInterpretatie):
     }]
 
 
-class QuartaireStratigrafieLaag(AbstractDovSubType):
+class QuartairStratigrafieLaag(AbstractDovSubType):
 
-    _name = 'quartaire_stratigrafie_laag'
+    _name = 'quartairestratigrafie_laag'
     _rootpath = './/quartairstratigrafie/laag'
+
+    _xsd_schemas = [
+        'https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/'
+        'interpretatie/InterpretatieDataCodes.xsd',
+        'https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/'
+        'interpretatie/QuartairStratigrafieDataCodes.xsd'
+    ]
 
     _fields = [{
         'name': 'diepte_laag_van',
@@ -794,6 +801,7 @@ class QuartaireStratigrafieLaag(AbstractDovSubType):
         'name': 'lid1',
         'source': 'xml',
         'sourcefield': '/lid1',
+        'xsd_type': 'QuartairStratigrafieLedenEnumType',
         'definition': 'eerste eenheid van de laag quartairstratigrafie',
         'type': 'string',
         'notnull': False
@@ -801,6 +809,7 @@ class QuartaireStratigrafieLaag(AbstractDovSubType):
         'name': 'relatie_lid1_lid2',
         'source': 'xml',
         'sourcefield': '/relatie_lid1_lid2',
+        'xsd_type': 'RelatieLedenEnumType',
         'definition': 'verbinding of relatie tussen lid1 en lid2 van de '
                       'laag quartairstratigrafie',
         'type': 'string',
@@ -809,6 +818,7 @@ class QuartaireStratigrafieLaag(AbstractDovSubType):
         'name': 'lid2',
         'source': 'xml',
         'sourcefield': '/lid2',
+        'xsd_type': 'QuartairStratigrafieLedenEnumType',
         'definition': 'tweede eenheid van de laag quartairstratigrafie. '
                       'Indien niet ingevuld wordt default dezelfde waarde '
                       'als voor Lid1 ingevuld',
@@ -817,11 +827,11 @@ class QuartaireStratigrafieLaag(AbstractDovSubType):
     }]
 
 
-class QuartaireStratigrafie(AbstractCommonInterpretatie):
-    """Class representing the DOV data type for 'Quartair stratigrafie'
+class QuartairStratigrafie(AbstractBoringInterpretatie):
+    """Class representing the DOV data type for 'Quartairstratigrafie'
     interpretations.
 
-    In Dutch: Afgeleid type van interpretatie, specifiek voor de quartaire
+    In Dutch: Afgeleid type van interpretatie, specifiek voor de quartair-
     stratigrafie. Een Quartair interpretatie omvat een discrete formele
     interpretatie van het materiaal in de ondergrond, al dan niet aan
     de hand van monsters, op basis van een door DOV gestandaardiseerde
@@ -830,7 +840,7 @@ class QuartaireStratigrafie(AbstractCommonInterpretatie):
     ipv lithostratigrafie
     """
 
-    _subtypes = [QuartaireStratigrafieLaag]
+    _subtypes = [QuartairStratigrafieLaag]
 
     _fields = [{
         'name': 'pkey_interpretatie',
@@ -839,12 +849,9 @@ class QuartaireStratigrafie(AbstractCommonInterpretatie):
         'type': 'string'
     }, {
         'name': 'pkey_boring',
-        'source': 'custom',
+        'source': 'wfs',
+        'sourcefield': 'Proeffiche',
         'type': 'string',
-        'definition': 'URL die verwijst naar de gegevens van de boring '
-                      'waaraan deze quartair stratigrafie gekoppeld is ('
-                      'indien gekoppeld aan een boring).',
-        'notnull': False
     }, {
         'name': 'betrouwbaarheid_interpretatie',
         'source': 'wfs',
@@ -860,4 +867,4 @@ class QuartaireStratigrafie(AbstractCommonInterpretatie):
         'source': 'wfs',
         'sourcefield': 'Y_mL72',
         'type': 'float'
-    },]
+    }]

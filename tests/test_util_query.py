@@ -227,3 +227,72 @@ class TestJoin(object):
             })
 
             Join(df, 'pkey_boring')
+
+    def test_on(self):
+        """Test the Join expression with a standard dataframe and 'on'.
+
+        Test whether the generated query is correct.
+
+        """
+        l = ['https://www.dov.vlaanderen.be/data/boring/1986-068853',
+             'https://www.dov.vlaanderen.be/data/boring/1986-068843',
+             'https://www.dov.vlaanderen.be/data/boring/1980-068861']
+
+        df = pd.DataFrame({
+            'pkey_boring': pd.Series(l),
+            'diepte_tot_m': pd.Series([10, 20, 30])
+        })
+
+        query = Join(df, on='pkey_boring')
+        xml = query.toXML()
+
+        assert xml.tag == '{http://www.opengis.net/ogc}Or'
+        assert len(list(xml)) == 3
+
+        for f in xml:
+            assert f.tag == '{http://www.opengis.net/ogc}PropertyIsEqualTo'
+
+            propertyname = f.find('./{http://www.opengis.net/ogc}PropertyName')
+            assert propertyname.text == 'pkey_boring'
+
+            literal = f.find('./{http://www.opengis.net/ogc}Literal')
+            assert literal.text in l
+
+            l.remove(literal.text)
+
+        assert len(l) == 0
+
+    def test_using(self):
+        """Test the Join expression with a standard dataframe and 'on' and
+        'using'.
+
+        Test whether the generated query is correct.
+
+        """
+        l = ['https://www.dov.vlaanderen.be/data/boring/1986-068853',
+             'https://www.dov.vlaanderen.be/data/boring/1986-068843',
+             'https://www.dov.vlaanderen.be/data/boring/1980-068861']
+
+        df = pd.DataFrame({
+            'boringfiche': pd.Series(l),
+            'diepte_tot_m': pd.Series([10, 20, 30])
+        })
+
+        query = Join(df, on='pkey_boring', using='boringfiche')
+        xml = query.toXML()
+
+        assert xml.tag == '{http://www.opengis.net/ogc}Or'
+        assert len(list(xml)) == 3
+
+        for f in xml:
+            assert f.tag == '{http://www.opengis.net/ogc}PropertyIsEqualTo'
+
+            propertyname = f.find('./{http://www.opengis.net/ogc}PropertyName')
+            assert propertyname.text == 'pkey_boring'
+
+            literal = f.find('./{http://www.opengis.net/ogc}Literal')
+            assert literal.text in l
+
+            l.remove(literal.text)
+
+        assert len(l) == 0

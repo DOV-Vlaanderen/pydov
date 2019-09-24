@@ -110,7 +110,8 @@ class AbstractBinarySpatialFilter(AbstractLocationFilter):
         self.location = location
         self.geom_column = ''
 
-        self.element = etree.Element('{http://www.opengis.net/ogc}%s' % type)
+        self.element = etree.Element(
+            '{{http://www.opengis.net/ogc}}{}'.format(type))
 
         geom = etree.Element('{http://www.opengis.net/ogc}PropertyName')
         geom.text = self.geom_column
@@ -197,15 +198,16 @@ class Box(AbstractLocation):
 
         self.element = etree.Element('{http://www.opengis.net/gml}Envelope')
         self.element.set('srsDimension', '2')
-        self.element.set('srsName',
-                         'http://www.opengis.net/gml/srs/epsg.xml#%i' % epsg)
+        self.element.set(
+            'srsName',
+            'http://www.opengis.net/gml/srs/epsg.xml#{:d}'.format(epsg))
 
         lower_corner = etree.Element('{http://www.opengis.net/gml}lowerCorner')
-        lower_corner.text = '%0.6f %0.6f' % (self.minx, self.miny)
+        lower_corner.text = '{:.06f} {:.06f}'.format(self.minx, self.miny)
         self.element.append(lower_corner)
 
         upper_corner = etree.Element('{http://www.opengis.net/gml}upperCorner')
-        upper_corner.text = '%0.6f %0.6f' % (self.maxx, self.maxy)
+        upper_corner.text = '{:.06f} {:.06f}'.format(self.maxx, self.maxy)
         self.element.append(upper_corner)
 
     def get_element(self):
@@ -245,11 +247,12 @@ class Point(AbstractLocation):
 
         self.element = etree.Element('{http://www.opengis.net/gml}Point')
         self.element.set('srsDimension', '2')
-        self.element.set('srsName',
-                         'http://www.opengis.net/gml/srs/epsg.xml#%i' % epsg)
+        self.element.set(
+            'srsName',
+            'http://www.opengis.net/gml/srs/epsg.xml#{:d}'.format(epsg))
 
         coordinates = etree.Element('{http://www.opengis.net/gml}pos')
-        coordinates.text = '%0.6f %0.6f' % (self.x, self.y)
+        coordinates.text = '{:.06f} {:.06f}'.format(self.x, self.y)
         self.element.append(coordinates)
 
     def get_element(self):
@@ -433,7 +436,7 @@ class WithinDistance(AbstractLocationFilter):
 
         distance = etree.Element('{http://www.opengis.net/ogc}Distance')
         distance.set('units', self.distance_unit)
-        distance.text = '%0.6f' % self.distance
+        distance.text = '{:.06f}'.format(self.distance)
 
         self.element.append(geom)
         self.element.append(location.get_element())

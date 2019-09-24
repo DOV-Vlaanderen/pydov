@@ -1,5 +1,6 @@
 """Module grouping tests for the boring search module."""
 import glob
+from io import open
 
 import pytest
 
@@ -40,7 +41,8 @@ def mp_wfs(monkeymodule):
 
     """
     def read(*args, **kwargs):
-        with open('tests/data/util/owsutil/wfscapabilities.xml', 'r') as f:
+        with open('tests/data/util/owsutil/wfscapabilities.xml', 'r',
+                  encoding='utf-8') as f:
             data = f.read()
             if type(data) is not bytes:
                 data = data.encode('utf-8')
@@ -272,7 +274,7 @@ def mp_dov_xml(monkeymodule, request):
 
     def _get_xml_data(*args, **kwargs):
         file_path = getattr(request.module, "location_dov_xml")
-        with open(file_path, 'r') as f:
+        with open(file_path, 'r', encoding="utf-8") as f:
             data = f.read()
             if type(data) is not bytes:
                 data = data.encode('utf-8')
@@ -321,7 +323,7 @@ def mp_remote_xsd(monkeymodule, request):
         schemas = []
 
         for xsd_file in glob.glob(xsd_base_path):
-            with open(xsd_file, 'r') as f:
+            with open(xsd_file, 'r', encoding="utf-8") as f:
                 data = f.read()
                 if type(data) is not bytes:
                     data = data.encode('utf-8')

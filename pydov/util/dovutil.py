@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 """Module grouping utility functions for DOV XML services."""
-import requests
 
-import pydov
 from owslib.etree import etree
 from pydov.util.errors import XmlParseError
+import pydov
 
 
 def get_remote_url(url):
@@ -21,9 +20,8 @@ def get_remote_url(url):
         The raw XML data as bytes.
 
     """
-    headers = {'user-agent': 'PyDOV/%s' % pydov.__version__}
 
-    request = requests.get(url, headers=headers, timeout=60)
+    request = pydov.session.get(url, timeout=pydov.request_timeout)
     request.encoding = 'utf-8'
     return request.text.encode('utf8')
 

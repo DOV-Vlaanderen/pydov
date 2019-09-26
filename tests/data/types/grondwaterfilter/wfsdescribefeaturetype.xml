@@ -4,7 +4,6 @@
     <xsd:complexContent>
       <xsd:extension base="gml:AbstractFeatureType">
         <xsd:sequence>
-          <xsd:element maxOccurs="1" minOccurs="0" name="generated_id" nillable="true" type="xsd:int"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="GW_ID" nillable="true" type="xsd:string"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="putfiche" nillable="true" type="xsd:string"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="filternummer" nillable="true" type="xsd:string"/>

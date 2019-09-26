@@ -1,6 +1,6 @@
 """Module grouping tests for the pydov.types.boring module."""
 
-from pydov.types.boring import Boring
+from pydov.types.grondmonster import Grondmonster
 from tests.abstract import AbstractTestTypes
 
 from tests.test_search_boring import (

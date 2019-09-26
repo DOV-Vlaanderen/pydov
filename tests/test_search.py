@@ -17,6 +17,7 @@ from pydov.search.interpretaties import InformeleStratigrafieSearch
 from pydov.search.interpretaties import HydrogeologischeStratigrafieSearch
 from pydov.search.interpretaties import GecodeerdeLithologieSearch
 from pydov.search.interpretaties import LithologischeBeschrijvingenSearch
+from pydov.search.grondmonster import GrondmonsterSearch
 from pydov.util.errors import (
     InvalidSearchParameterError,
 )
@@ -27,7 +28,8 @@ search_objects = [BoringSearch(),
                   InformeleStratigrafieSearch(),
                   HydrogeologischeStratigrafieSearch(),
                   GecodeerdeLithologieSearch(),
-                  LithologischeBeschrijvingenSearch(),]
+                  LithologischeBeschrijvingenSearch(),
+                  GrondmonsterSearch()]
 
 
 @pytest.fixture(scope='module')

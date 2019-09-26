@@ -275,6 +275,25 @@ class TestOwsutil(object):
             'xmlns:ogc="http://www.opengis.net/ogc"/></wfs:Query></wfs'
             ':GetFeature>')
 
+    def test_wfs_build_getfeature_maxfeatures(self):
+        """Test the owsutil.wfs_build_getfeature_request method with a
+        limited set of features defined
+
+        Test whether the XML of the WFS GetFeature call is generated correctly.
+
+        """
+        xml = owsutil.wfs_build_getfeature_request('dov-pub:Boringen',
+                                                   max_features=3)
+        assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
+            '<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs" '
+            'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
+            'maxFeatures="3" service="WFS" version="1.1.0" '
+            'xsi:schemaLocation="http://www.opengis.net/wfs '
+            'http://schemas.opengis.net/wfs/1.1.0/wfs.xsd"><wfs:Query '
+            'typeName="dov-pub:Boringen"><ogc:Filter '
+            'xmlns:ogc="http://www.opengis.net/ogc"/></wfs:Query></wfs'
+            ':GetFeature>')
+
     def test_wfs_build_getfeature_request_bbox_nogeometrycolumn(self):
         """Test the owsutil.wfs_build_getfeature_request method with a location
         argument but without the geometry_column argument.

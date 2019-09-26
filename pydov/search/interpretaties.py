@@ -80,7 +80,8 @@ class InformeleStratigrafieSearch(AbstractSearch):
                 InformeleStratigrafieSearch.__fc_featurecatalogue,
                 InformeleStratigrafieSearch.__xsd_schemas)
 
-    def search(self, location=None, query=None, return_fields=None):
+    def search(self, location=None, query=None, sort_by=None,
+               return_fields=None):
         """Search for boreholes (Boring). Provide either `location` or `query`.
         When `return_fields` is None, all fields are returned.
 
@@ -97,6 +98,8 @@ class InformeleStratigrafieSearch(AbstractSearch):
             combination of filter elements defined in owslib.fes. The query
             should use the fields provided in `get_fields()`. Note that not
             all fields are currently supported as a search parameter.
+        sort_by : owslib.fes.SortBy, optional
+            List of properties to sort by.
         return_fields : list<str> or tuple<str> or set<str>
             A list of fields to be returned in the output data. This should
             be a subset of the fields provided in `get_fields()`. Note that
@@ -130,7 +133,7 @@ class InformeleStratigrafieSearch(AbstractSearch):
             tuple or set.
 
         """
-        fts = self._search(location=location, query=query,
+        fts = self._search(location=location, query=query, sort_by=sort_by,
                            return_fields=return_fields,
                            extra_wfs_fields=['Type_proef', 'Proeffiche'])
 
@@ -212,7 +215,8 @@ class FormeleStratigrafieSearch(AbstractSearch):
                 FormeleStratigrafieSearch.__fc_featurecatalogue,
                 FormeleStratigrafieSearch.__xsd_schemas)
 
-    def search(self, location=None, query=None, return_fields=None):
+    def search(self, location=None, query=None,
+               sort_by=None, return_fields=None):
         """Search for boreholes (Boring). Provide either `location` or `query`.
         When `return_fields` is None, all fields are returned.
 
@@ -229,6 +233,8 @@ class FormeleStratigrafieSearch(AbstractSearch):
             combination of filter elements defined in owslib.fes. The query
             should use the fields provided in `get_fields()`. Note that not
             all fields are currently supported as a search parameter.
+        sort_by : owslib.fes.SortBy, optional
+            List of properties to sort by.
         return_fields : list<str> or tuple<str> or set<str>
             A list of fields to be returned in the output data. This should
             be a subset of the fields provided in `get_fields()`. Note that
@@ -262,7 +268,7 @@ class FormeleStratigrafieSearch(AbstractSearch):
             tuple or set.
 
         """
-        fts = self._search(location=location, query=query,
+        fts = self._search(location=location, query=query, sort_by=sort_by,
                            return_fields=return_fields,
                            extra_wfs_fields=['Type_proef', 'Proeffiche'])
 
@@ -347,7 +353,8 @@ class HydrogeologischeStratigrafieSearch(AbstractSearch):
                 HydrogeologischeStratigrafieSearch.__fc_featurecatalogue,
                 HydrogeologischeStratigrafieSearch.__xsd_schemas)
 
-    def search(self, location=None, query=None, return_fields=None):
+    def search(self, location=None, query=None,
+               sort_by=None, return_fields=None):
         """Search for hydrogeological interpretations. Provide either
         `location` or `query`. When `return_fields` is None, all fields
         are returned.
@@ -365,6 +372,8 @@ class HydrogeologischeStratigrafieSearch(AbstractSearch):
             combination of filter elements defined in owslib.fes. The query
             should use the fields provided in `get_fields()`. Note that not
             all fields are currently supported as a search parameter.
+        sort_by : owslib.fes.SortBy, optional
+            List of properties to sort by.
         return_fields : list<str> or tuple<str> or set<str>
             A list of fields to be returned in the output data. This should
             be a subset of the fields provided in `get_fields()`. Note that
@@ -398,7 +407,7 @@ class HydrogeologischeStratigrafieSearch(AbstractSearch):
             tuple or set.
 
         """
-        fts = self._search(location=location, query=query,
+        fts = self._search(location=location, query=query, sort_by=sort_by,
                            return_fields=return_fields)
 
         interpretaties = self._type.from_wfs(
@@ -482,7 +491,8 @@ class LithologischeBeschrijvingenSearch(AbstractSearch):
                 LithologischeBeschrijvingenSearch.__fc_featurecatalogue,
                 LithologischeBeschrijvingenSearch.__xsd_schemas)
 
-    def search(self, location=None, query=None, return_fields=None):
+    def search(self, location=None, query=None,
+               sort_by=None, return_fields=None):
         """Search for 'lithologische beschrijvingen'. Provide either
         `location` or `query`. When `return_fields` is None, all fields
         are returned.
@@ -500,6 +510,8 @@ class LithologischeBeschrijvingenSearch(AbstractSearch):
             combination of filter elements defined in owslib.fes. The query
             should use the fields provided in `get_fields()`. Note that not
             all fields are currently supported as a search parameter.
+        sort_by : owslib.fes.SortBy, optional
+            List of properties to sort by.
         return_fields : list<str> or tuple<str> or set<str>
             A list of fields to be returned in the output data. This should
             be a subset of the fields provided in `get_fields()`. Note that
@@ -533,7 +545,7 @@ class LithologischeBeschrijvingenSearch(AbstractSearch):
             tuple or set.
 
         """
-        fts = self._search(location=location, query=query,
+        fts = self._search(location=location, query=query, sort_by=sort_by,
                            return_fields=return_fields)
 
         interpretaties = self._type.from_wfs(
@@ -617,7 +629,8 @@ class GecodeerdeLithologieSearch(AbstractSearch):
                 GecodeerdeLithologieSearch.__fc_featurecatalogue,
                 GecodeerdeLithologieSearch.__xsd_schemas)
 
-    def search(self, location=None, query=None, return_fields=None):
+    def search(self, location=None, query=None,
+               sort_by=None, return_fields=None):
         """Search for 'gecodeerde lithologie'. Provide either
         `location` or `query`. When `return_fields` is None, all fields
         are returned.
@@ -635,6 +648,8 @@ class GecodeerdeLithologieSearch(AbstractSearch):
             combination of filter elements defined in owslib.fes. The query
             should use the fields provided in `get_fields()`. Note that not
             all fields are currently supported as a search parameter.
+        sort_by : owslib.fes.SortBy, optional
+            List of properties to sort by.
         return_fields : list<str> or tuple<str> or set<str>
             A list of fields to be returned in the output data. This should
             be a subset of the fields provided in `get_fields()`. Note that
@@ -668,7 +683,7 @@ class GecodeerdeLithologieSearch(AbstractSearch):
             tuple or set.
 
         """
-        fts = self._search(location=location, query=query,
+        fts = self._search(location=location, query=query, sort_by=sort_by,
                            return_fields=return_fields)
 
         interpretaties = self._type.from_wfs(
@@ -752,7 +767,8 @@ class GeotechnischeCoderingSearch(AbstractSearch):
                 GeotechnischeCoderingSearch.__fc_featurecatalogue,
                 GeotechnischeCoderingSearch.__xsd_schemas)
 
-    def search(self, location=None, query=None, return_fields=None):
+    def search(self, location=None, query=None,
+               sort_by=None, return_fields=None):
         """Search for 'geotechnische_codering'. Provide either
         `location` or `query`. When `return_fields` is None, all fields
         are returned.
@@ -766,6 +782,8 @@ class GeotechnischeCoderingSearch(AbstractSearch):
             combination of filter elements defined in owslib.fes. The query
             should use the fields provided in `get_fields()`. Note that not
             all fields are currently supported as a search parameter.
+        sort_by : owslib.fes.SortBy, optional
+            List of properties to sort by.
         return_fields : list<str> or tuple<str> or set<str>
             A list of fields to be returned in the output data. This should
             be a subset of the fields provided in `get_fields()`. Note that
@@ -799,7 +817,7 @@ class GeotechnischeCoderingSearch(AbstractSearch):
             tuple or set.
 
         """
-        fts = self._search(location=location, query=query,
+        fts = self._search(location=location, query=query, sort_by=sort_by,
                            return_fields=return_fields)
 
         interpretaties = self._type.from_wfs(
@@ -880,7 +898,8 @@ class QuartairStratigrafieSearch(AbstractSearch):
                 QuartairStratigrafieSearch.__fc_featurecatalogue,
                 QuartairStratigrafieSearch.__xsd_schemas)
 
-    def search(self, location=None, query=None, return_fields=None):
+    def search(self, location=None, query=None,
+               sort_by=None, return_fields=None):
         """Search for interpretations of Quartair stratigrafie.
 
         Provide either `location` or `query`.
@@ -899,6 +918,8 @@ class QuartairStratigrafieSearch(AbstractSearch):
             combination of filter elements defined in owslib.fes. The query
             should use the fields provided in `get_fields()`. Note that not
             all fields are currently supported as a search parameter.
+        sort_by : owslib.fes.SortBy, optional
+            List of properties to sort by.
         return_fields : list<str> or tuple<str> or set<str>
             A list of fields to be returned in the output data. This should
             be a subset of the fields provided in `get_fields()`. Note that
@@ -932,7 +953,7 @@ class QuartairStratigrafieSearch(AbstractSearch):
             tuple or set.
 
         """
-        fts = self._search(location=location, query=query,
+        fts = self._search(location=location, query=query, sort_by=sort_by,
                            return_fields=return_fields)
 
         interpretaties = self._type.from_wfs(fts, self.__wfs_namespace)

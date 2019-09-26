@@ -8,6 +8,8 @@ from owslib.etree import etree
 from owslib.fes import (
     PropertyIsEqualTo,
     FilterRequest,
+    SortBy,
+    SortProperty,
 )
 from owslib.iso import MD_Metadata
 from owslib.util import nspath_eval
@@ -453,3 +455,33 @@ class TestOwsutil(object):
             '<gml:upperCorner>151750.000000 214775.000000</gml:upperCorner> '
             '</gml:Envelope> </ogc:Within> </ogc:And> </ogc:Filter> '
             '</wfs:Query> </wfs:GetFeature>')
+
+    def test_wfs_build_getfeature_request_sortby(self):
+        """Test the owsutil.wfs_build_getfeature_request method with a sortby.
+
+        Test whether the XML of the WFS GetFeature call is generated correctly.
+
+        """
+        sort_by = SortBy([SortProperty('diepte_tot_m', 'DESC')])
+
+        try:
+            sort_by = etree.tostring(sort_by.toXML(), encoding='unicode')
+        except LookupError:
+            # Python2.7 without lxml uses 'utf-8' instead.
+            sort_by = etree.tostring(sort_by.toXML(), encoding='utf-8')
+
+        xml = owsutil.wfs_build_getfeature_request(
+            'dov-pub:Boringen', propertyname=['fiche', 'diepte_tot_m'],
+            sort_by=sort_by)
+        assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
+            '<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs" '
+            'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
+            'service="WFS" version="1.1.0" '
+            'xsi:schemaLocation="http://www.opengis.net/wfs '
+            'http://schemas.opengis.net/wfs/1.1.0/wfs.xsd"><wfs:Query '
+            'typeName="dov-pub:Boringen"><wfs:PropertyName>fiche</wfs'
+            ':PropertyName><wfs:PropertyName>diepte_tot_m</wfs:PropertyName'
+            '><ogc:Filter/><ogc:SortBy><ogc:SortProperty><ogc:PropertyName'
+            '>diepte_tot_m</ogc:PropertyName><ogc:SortOrder>DESC</ogc'
+            ':SortOrder></ogc:SortProperty></ogc:SortBy></wfs:Query></wfs'
+            ':GetFeature>')

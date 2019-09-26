@@ -1107,7 +1107,6 @@ class InformeleHydrogeologischeStratigrafieSearch(AbstractSearch):
         """
         fts = self._search(location=location, query=query,
                            return_fields=return_fields,
-                           extra_wfs_fields=['Type_proef', 'Proeffiche'],
                            max_features=max_features)
 
         interpretaties = InformeleHydrogeologischeStratigrafie.from_wfs(

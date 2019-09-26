@@ -49,14 +49,14 @@ class Grondmonster(AbstractDovType):
     )
 
     fields = [
-        WfsField(name='pkey_boring',
-                 source_field='boringfiche',
+        WfsField(name='pkey_grondmonster',
+                 source_field='grondmonsterfiche',
                  datatype='string'),
         WfsField(name='naam',
                  source_field='naam',
                  datatype='string'),
         WfsField(name='boornummer',
-                 source_field='wfs',
+                 source_field='boornummer',
                  datatype='string'),
         WfsField(name='x',
                  source_field='X_mL72',
@@ -151,8 +151,8 @@ class Grondmonster(AbstractDovType):
             element.
 
         """
-        grondmonster = Grondmonster(
-            feature.findtext('./{%s}grondmonster' % namespace))
+        grondmonster = cls(feature.findtext(
+            './{{{}}}grondmonsterfiche'.format(namespace)))
 
         for field in cls.get_fields(source=('wfs',)).values():
             grondmonster.data[field['name']] = cls._parse(

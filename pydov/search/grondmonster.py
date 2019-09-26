@@ -1,6 +1,9 @@
+# -*- coding: utf-8 -*-
+"""Module containing the search classes to retrieve DOV borehole data."""
 import pandas as pd
 
 from pydov.search.abstract import AbstractSearch
+from pydov.types.fields import _WfsInjectedField
 from pydov.types.grondmonster import Grondmonster
 from pydov.util import owsutil
 
@@ -15,10 +18,19 @@ class GrondmonsterSearch(AbstractSearch):
     __fc_featurecatalogue = None
     __xsd_schemas = None
 
-    def __init__(self):
-        """Initialisation."""
-        super(GrondmonsterSearch, self).__init__(
-            'grondmonster', Grondmonster)
+    def __init__(self, objecttype=Grondmonster):
+        """Initialisation.
+
+        Parameters
+        ----------
+        objecttype : subclass of pydov.types.abstract.AbstractDovType
+            Reference to a class representing the Grondmonster type.
+            Optional: defaults to the Grondmonster type containing the fields
+            described in the documentation.
+
+        """
+        super(GrondmonsterSearch, self).\
+            __init__('boringen:grondmonsters', objecttype)
 
     def _init_namespace(self):
         """Initialise the WFS namespace associated with the layer."""
@@ -56,13 +68,9 @@ class GrondmonsterSearch(AbstractSearch):
             for field in fields.values():
                 if field['name'] not in self._type.get_field_names(
                         include_wfs_injected=True):
-                    self._type._fields.append({
-                        'name': field['name'],
-                        'source': 'wfs',
-                        'sourcefield': field['name'],
-                        'type': field['type'],
-                        'wfs_injected': True
-                    })
+                    self._type.fields.append(
+                        _WfsInjectedField(name=field['name'],
+                                          datatype=field['type']))
 
             self._fields = self._build_fields(
                 GrondmonsterSearch.__wfs_schema,
@@ -123,11 +131,10 @@ class GrondmonsterSearch(AbstractSearch):
         fts = self._search(location=location, query=query,
                            return_fields=return_fields,)
 
-        grondmonster = Grondmonster.from_wfs(
-            fts, self.__wfs_namespace)
+        grondmonster = self._type.from_wfs(fts,
+                                           self.__wfs_namespace)
 
         df = pd.DataFrame(
-            data=Grondmonster.to_df_array(
-                grondmonster, return_fields),
-            columns=Grondmonster.get_field_names(return_fields))
+            data=self._type.to_df_array(grondmonster, return_fields),
+            columns=self._type.get_field_names(return_fields))
         return df

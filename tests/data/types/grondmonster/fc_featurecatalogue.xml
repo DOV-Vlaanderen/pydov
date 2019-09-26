@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ows:ExceptionReport xmlns:ows="http://www.opengis.net/ows" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2.0" xsi:schemaLocation="http://www.opengis.net/ows http://schemas.opengis.net/ows/1.0.0/owsExceptionReport.xsd">
+  <ows:Exception exceptionCode="NoApplicableCode">
+    <ows:ExceptionText>org.fao.geonet.csw.common.exceptions.InvalidParameterValueEx: code=InvalidParameterValue, locator=OutputSchema, message=OutputSchema 'gmd' not supported for metadata with '584' (iso19110).
+Corresponding XSL transformation 'gmd-full.xsl' does not exist for this schema.
+The record will not be returned in response.</ows:ExceptionText>
+  </ows:Exception>
+</ows:ExceptionReport>
+

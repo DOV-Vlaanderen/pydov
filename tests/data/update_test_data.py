@@ -535,14 +535,14 @@ if __name__ == '__main__':
     update_file('types/grondmonster/wfsgetfeature.xml',
                 'https://www.dov.vlaanderen.be/geoserver/ows?service=WFS'
                 '&version=1.1.0&request=GetFeature&typeName='
-                'grondmonster&maxFeatures=1&CQL_Filter'
+                'boringen:grondmonsters&maxFeatures=1&CQL_Filter'
                 '=grondmonsterfiche=%27https://www.dov.vlaanderen.be/data'
                 '/grondmonster/2017-168758%27')
 
     update_file('types/grondmonster/feature.xml',
                 'https://www.dov.vlaanderen.be/geoserver/ows?service=WFS'
                 '&version=1.1.0&request=GetFeature&typeName='
-                'grondmonster&maxFeatures=1&CQL_Filter'
+                'boringen:grondmonsters&maxFeatures=1&CQL_Filter'
                 '=grondmonsterfiche=%27https://www.dov.vlaanderen.be/data'
                 '/grondmonster/2017-168758%27',
                 get_first_featuremember)
@@ -563,8 +563,8 @@ if __name__ == '__main__':
     update_file(
         'types/grondmonster/wfsdescribefeaturetype'
         '.xml',
-        'https://www.dov.vlaanderen.be/geoserver/data'
-        '/grondmonster/ows?service=wfs&version=1.1.0&request'
+        'https://www.dov.vlaanderen.be/geoserver/boringen'
+        '/grondmonsters/ows?service=wfs&version=1.1.0&request'
         '=DescribeFeatureType')
 
     for xsd_schema in Grondmonster.get_xsd_schemas():

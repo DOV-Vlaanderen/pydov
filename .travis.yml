@@ -30,10 +30,6 @@ matrix:
     env: TOXENV=py37-nolxml
   - python: 3.7
     env: TOXENV=py37-lxml
-  - python: 3.8
-    env: TOXENV=py38-nolxml
-  - python: 3.8
-    env: TOXENV=py38-lxml
   - python: 3.7
     env: TOXENV=docs
   - env: TOXENV=flake8

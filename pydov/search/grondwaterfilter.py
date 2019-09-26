@@ -83,7 +83,8 @@ class GrondwaterFilterSearch(AbstractSearch):
                 GrondwaterFilterSearch.__fc_featurecatalogue,
                 GrondwaterFilterSearch.__xsd_schemas)
 
-    def search(self, location=None, query=None, return_fields=None):
+    def search(self, location=None, query=None, return_fields=None,
+               max_features=None):
         """Search for groundwater screens (GrondwaterFilter). Provide
         `location` and/or `query`. When `return_fields` is None,
         all fields are returned.
@@ -108,6 +109,8 @@ class GrondwaterFilterSearch(AbstractSearch):
             A list of fields to be returned in the output data. This should
             be a subset of the fields provided in `get_fields()`. Note that
             not all fields are currently supported as return fields.
+        max_features : int
+            Limit the maximum number of features to request.
 
         Returns
         -------
@@ -148,7 +151,8 @@ class GrondwaterFilterSearch(AbstractSearch):
             query = exclude_empty_filters
 
         fts = self._search(location=location, query=query,
-                           return_fields=return_fields)
+                           return_fields=return_fields,
+                           max_features=max_features)
 
         gw_filters = self._type.from_wfs(fts, self.__wfs_namespace)
 

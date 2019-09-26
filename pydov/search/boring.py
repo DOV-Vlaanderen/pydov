@@ -74,7 +74,8 @@ class BoringSearch(AbstractSearch):
                 BoringSearch.__fc_featurecatalogue,
                 BoringSearch.__xsd_schemas)
 
-    def search(self, location=None, query=None, return_fields=None):
+    def search(self, location=None, query=None, return_fields=None,
+               max_features=None):
         """Search for boreholes (Boring). Provide `location` and/or `query`.
         When `return_fields` is None, all fields are returned.
 
@@ -95,6 +96,8 @@ class BoringSearch(AbstractSearch):
             A list of fields to be returned in the output data. This should
             be a subset of the fields provided in `get_fields()`. Note that
             not all fields are currently supported as return fields.
+        max_features : int
+            Limit the maximum number of features to request.
 
         Returns
         -------
@@ -125,7 +128,8 @@ class BoringSearch(AbstractSearch):
 
         """
         fts = self._search(location=location, query=query,
-                           return_fields=return_fields)
+                           return_fields=return_fields,
+                           max_features=max_features)
 
         boringen = self._type.from_wfs(fts, self.__wfs_namespace)
 

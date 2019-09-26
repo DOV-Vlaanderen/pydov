@@ -47,11 +47,6 @@ class Grondmonster(AbstractDovType):
                    'xsd/kern/grondmonster/GrondmonsterDataCodes.xsd',
         typename='MonsterEnumType'
     )
-    __grondmonsterParameterEnumType = XsdType(
-        xsd_schema='https://www.dov.vlaanderen.be/xdov/schema/latest/'
-                   'xsd/kern/grondmonster/GrondmonsterDataTypes.xsd',
-        typename='ParameterEnumType'
-    )
 
     fields = [
         WfsField(name='pkey_boring',
@@ -92,43 +87,36 @@ class Grondmonster(AbstractDovType):
         XmlField(name='astm_naam',
                  source_xpath='/grondmonster/observatieData/observatie['
                        'parameter="ASTM_NAAM"]/waarde_text',
-                 xsd_type=__grondmonsterParameterEnumType,
                  definition='ASTM_naam',
                  datatype='string'),
         XmlField(name='grondsoort_bggg',
                  source_xpath='/grondmonster/observatieData/observatie['
                        'parameter="BGGG"]/waarde_text',
-                 xsd_type=__grondmonsterParameterEnumType,
                  definition='Grondsoort BGGG',
                  datatype='string'),
         XmlField(name='humusgehalte',
                  source_xpath='/grondmonster/observatieData/observatie['
                        'parameter="HUMUSGEHALTE"]/waarde_numeriek',
-                 xsd_type=__grondmonsterParameterEnumType,
                  definition='Humusgehalte',
                  datatype='float'),
         XmlField(name='kalkgehalte',
                  source_xpath='/grondmonster/observatieData/observatie['
                        'parameter="KALKGEHALTE"]/waarde_numeriek',
-                 xsd_type=__grondmonsterParameterEnumType,
                  definition='Kalkgehalte',
                  datatype='float'),
         XmlField(name='uitrolgrens',
                  source_xpath='/grondmonster/observatieData/observatie['
                        'parameter="UITROLGRENS"]/waarde_numeriek',
-                 xsd_type=__grondmonsterParameterEnumType,
                  definition='Uitrolgrens',
                  datatype='float'),
         XmlField(name='vloeigrens',
                  source_xpath='/grondmonster/observatieData/observatie['
                        'parameter="VLOEIGRENS"]/waarde_numeriek',
-                 xsd_type=__grondmonsterParameterEnumType,
                  definition='Vloeigrens',
                  datatype='float'),
         XmlField(name='glauconiet',
                  source_xpath='/grondmonster/observatieData/observatie['
                        'parameter="GLAUCONIET_TOTAAL"]/waarde_numeriek',
-                 xsd_type=__grondmonsterParameterEnumType,
                  definition='Glauconiet totaal',
                  datatype='float'),
     ]

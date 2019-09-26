@@ -20,7 +20,7 @@ with open('requirements_doc.txt') as f:
 
 setup(
     name='pydov',
-    version='0.1.3',
+    version='0.2.1',
     description="A Python package to download data from Databank Ondergrond Vlaanderen (DOV).",
     long_description=readme,
     long_description_content_type='text/markdown',

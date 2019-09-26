@@ -4,7 +4,7 @@ API reference
 Search classes
 --------------
 
-.. .. automodule:: pydov.search.abstract
+.. automodule:: pydov.search.abstract
     :members:
 
 Boring
@@ -34,7 +34,7 @@ Interpretaties
 Object types
 ------------
 
-.. .. automodule:: pydov.types.abstract
+.. automodule:: pydov.types.abstract
     :members:
 
 Boring
@@ -64,6 +64,14 @@ Interpretaties
 .. automodule:: pydov.types.interpretaties
     :members:
     :show-inheritance:
+
+Fields
+------
+
+.. automodule:: pydov.types.fields
+    :members:
+    :show-inheritance:
+
 
 Search utilities
 ----------------

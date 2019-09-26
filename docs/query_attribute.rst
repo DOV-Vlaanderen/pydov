@@ -324,9 +324,16 @@ Join different searches
 The `Join` expression allows you to join multiple searches together. This allows combining results from different datasets to get the results you're looking for.
 
 Join
-    Join searches together using a common attribute. Instead of a propertyname and a literal (or a list of literals), this expression takes a Pandas dataframe and a join column. The join column should be a column that exists in the dataframe and is one of the attributes of the type that is being searched.
+    Join searches together using a common attribute. Instead of a propertyname and a literal (or a list of literals), this expression takes a Pandas dataframe and one or two join columns.
 
-    Example: ``Join(dataframe=df_boringen, join_column='pkey_boring')``
+    You can either specify a single column (in the `on` parameter) which should exist both in the provided dataframe as in the datatype being searched.
+    Alternatively, you can specify both the `on` column (which should exist in the queried datatype) as well as the `using` column (which should exists in the provided dataframe).
+
+    Example: ``Join(df_boringen, 'pkey_boring')``
+
+    Example: ``Join(df_boringen, on='pkey_boring')``
+
+    Example: ``Join(df_boringen, on='pkey_boring', using='boringfiche')``
 
 The following example returns all the lithological descriptions of boreholes that are at least 20 meters deep (note that this is different from 'lithological descriptions with a depth of at least 20m'):
 
@@ -365,3 +372,31 @@ The following example returns all the lithological descriptions of boreholes tha
 
     lithologische_beschrijvingen = ls.search(query=And([Join(boringen, 'pkey_boring'),
                                                         PropertyIsEqualTo('betrouwbaarheid_interpretatie', 'goed')]))
+
+The following example gets borehole information based on a search for groundwater filters:
+
+::
+
+    from pydov.util.query import Join
+
+    from pydov.search.boring import BoringSearch
+    from pydov.search.grondwaterfilter import GrondwaterFilterSearch
+
+    fs = GrondwaterFilterSearch()
+    bs = BoringSearch()
+
+    filters = fs.search(location=WithinDistance(Point(96540, 186900), 10, 'km'),
+                        return_fields=('pkey_filter', 'boringfiche'))
+
+    print(filters.head())
+    #                                              pkey_filter                                            boringfiche
+    # 0  https://www.dov.vlaanderen.be/data/filter/1989-000092  https://www.dov.vlaanderen.be/data/boring/1989-021283
+    # 1  https://www.dov.vlaanderen.be/data/filter/2003-007671                                                    NaN
+    # 2  https://www.dov.vlaanderen.be/data/filter/1989-001026  https://www.dov.vlaanderen.be/data/boring/1989-065942
+
+    boringen = bs.search(query=Join(filters, on='pkey_boring', using='boringfiche'))
+
+    print(boringen.head())
+    #                                              pkey_boring      ...     boormethode
+    # 0  https://www.dov.vlaanderen.be/data/boring/1989-021283      ...        onbekend
+    # 1  https://www.dov.vlaanderen.be/data/boring/1989-065942      ...        onbekend

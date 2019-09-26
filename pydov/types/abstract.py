@@ -4,12 +4,14 @@
 import types
 import warnings
 from collections import OrderedDict
+from multiprocessing.dummy import Pool
 
 import pydov
 import numpy as np
 
 from owslib.etree import etree
 from pydov.search.abstract import AbstractCommon
+from pydov.types.fields import AbstractField
 from pydov.util.dovutil import (
     get_dov_xml,
     parse_dov_xml,
@@ -24,7 +26,16 @@ from ..util.errors import (
 
 class AbstractTypeCommon(AbstractCommon):
     """Class grouping methods common to AbstractDovType and
-    AbstractDovSubType."""
+    AbstractDovSubType.
+
+    Attributes
+    ----------
+    fields : list of pydov.types.fields.AbstractField
+        List of fields of this type.
+
+    """
+
+    fields = []
 
     @classmethod
     def _parse(cls, func, xpath, namespace, returntype):
@@ -52,7 +63,7 @@ class AbstractTypeCommon(AbstractCommon):
 
         """
         if namespace is not None:
-            ns = '{%s}' % namespace
+            ns = '{{{}}}'.format(namespace)
             text = func('./' + ns + ('/' + ns).join(xpath.split('/')))
         else:
             text = func('./' + xpath.lstrip('/'))
@@ -62,16 +73,48 @@ class AbstractTypeCommon(AbstractCommon):
 
         return cls._typeconvert(text, returntype)
 
+    @classmethod
+    def extend_fields(cls, extra_fields):
+        """Extend the fields of this type with given extra fields and return
+        the new fieldset.
+
+        Parameters
+        ----------
+        extra_fields : list of pydov.types.fields.AbstractField
+            Extra fields to be appended to the existing fields of this type.
+
+        Returns
+        -------
+        list of pydov.types.fields.AbstractField
+            List of the existing fields of this type, extended with the
+            extra fields supplied in extra_fields.
+
+        """
+        fields = list(cls.fields)
+        fields.extend(extra_fields)
+        return fields
+
 
 class AbstractDovSubType(AbstractTypeCommon):
+    """Abstract DOV type grouping fields and methods common to all DOV
+    subtypes. Not to be instantiated or used directly.
 
-    _name = None
-    _rootpath = None
+    Attributes
+    ----------
+    rootpath : str
+        XPath expression of the root element of this subtype. Should return
+        all elements of this subtype.
+
+    Raises
+    ------
+    RuntimeError
+        When the defined fields of this type are invalid.
+
+    """
+
+    rootpath = None
 
     _UNRESOLVED = "{UNRESOLVED}"
-    _fields = []
-
-    _xsd_schemas = []
 
     def __init__(self):
         """Initialisation.
@@ -82,6 +125,13 @@ class AbstractDovSubType(AbstractTypeCommon):
             The name associated with this subtype.
 
         """
+        for f in self.fields:
+            if not isinstance(f, AbstractField):
+                raise RuntimeError(
+                    "Subtype '{}' fields should be instances of "
+                    "pydov.types.fields.AbstractField, found {}.".format(
+                        self.__class__.__name__, str(type(f))))
+
         self.data = dict(
             zip(self.get_field_names(),
                 [AbstractDovSubType._UNRESOLVED] * len(self.get_field_names()))
@@ -105,7 +155,7 @@ class AbstractDovSubType(AbstractTypeCommon):
         """
         try:
             tree = parse_dov_xml(xml_data)
-            for element in tree.findall(cls._rootpath):
+            for element in tree.findall(cls.rootpath):
                 yield cls.from_xml_element(element)
         except XmlParseError:
             # Ignore XmlParseError here in subtypes, assuming it will be
@@ -152,7 +202,7 @@ class AbstractDovSubType(AbstractTypeCommon):
             the names of the columns in the output dataframe for this type.
 
         """
-        return [f['name'] for f in cls._fields]
+        return [f['name'] for f in cls.fields]
 
     @classmethod
     def get_fields(cls):
@@ -188,8 +238,8 @@ class AbstractDovSubType(AbstractTypeCommon):
 
         """
         return OrderedDict(
-            zip([f['name'] for f in cls._fields],
-                [f for f in cls._fields]))
+            zip([f['name'] for f in cls.fields],
+                [f for f in cls.fields]))
 
     @classmethod
     def get_name(cls):
@@ -201,31 +251,23 @@ class AbstractDovSubType(AbstractTypeCommon):
             The name associated with this subtype.
 
         """
-        return cls._name
-
-    @classmethod
-    def get_root_path(cls):
-        """Return the root XPath of the XML element of this subtype.
-
-        Returns
-        -------
-        xpath : str
-            The XPath of the XML root element of this subtype.
-
-        """
-        return cls._rootpath
+        return cls.__name__
 
 
 class AbstractDovType(AbstractTypeCommon):
     """Abstract DOV type grouping fields and methods common to all DOV
-    object types. Not to be instantiated or used directly."""
+    object types. Not to be instantiated or used directly.
 
-    _subtypes = []
+    Attributes
+    ----------
+    subtypes : list of subclass of pydov.types.abstract.AbstractDovSubType
+        List of subtypes of this type.
+
+    """
+
+    subtypes = []
 
     _UNRESOLVED = "{UNRESOLVED}"
-    _fields = []
-
-    _xsd_schemas = []
 
     def __init__(self, typename, pkey):
         """Initialisation.
@@ -238,9 +280,27 @@ class AbstractDovType(AbstractTypeCommon):
             Permanent key of this DOV object, being a URI of the form
             `https://www.dov.vlaanderen.be/data/typename/id`.
 
+        Raises
+        ------
+        RuntimeError
+            When the defined fields of this type are invalid.
+
         """
+        if typename is None or pkey is None:
+            raise ValueError(
+                "Failed to instantiate object of class {} with typename '{}' "
+                "and permkey '{}'. Typename and pkey must not be None.".format(
+                    self.__class__.__name__, typename, pkey))
+
         self.typename = typename
         self.pkey = pkey
+
+        for f in self.fields:
+            if not isinstance(f, AbstractField):
+                raise RuntimeError(
+                    "Type '{}' fields should be instances of "
+                    "pydov.types.fields.AbstractField, found {}.".format(
+                        self.__class__.__name__, str(type(f))))
 
         self.data = dict(
             zip(self.get_field_names(include_subtypes=False),
@@ -248,11 +308,11 @@ class AbstractDovType(AbstractTypeCommon):
         )
 
         self.subdata = dict(
-            zip([st.get_name() for st in self._subtypes],
-                [] * len(self._subtypes))
+            zip([st.get_name() for st in self.subtypes],
+                [] * len(self.subtypes))
         )
 
-        self.data['pkey_%s' % self.typename] = self.pkey
+        self.data['pkey_{}'.format(self.typename)] = self.pkey
 
     def _parse_xml_data(self):
         """Get remote XML data for this DOV object, parse the raw XML and
@@ -281,8 +341,8 @@ class AbstractDovType(AbstractTypeCommon):
 
             self._parse_subtypes(xml)
         except XmlParseError:
-            warnings.warn(("Failed to parse XML for object '%s'. Resulting "
-                          "dataframe will be incomplete.") % self.pkey,
+            warnings.warn(("Failed to parse XML for object '{}'. Resulting "
+                          "dataframe will be incomplete.").format(self.pkey),
                           XmlParseWarning)
 
     @classmethod
@@ -385,26 +445,27 @@ class AbstractDovType(AbstractTypeCommon):
         """
         if return_fields is None:
             if include_wfs_injected:
-                fields = [f['name'] for f in cls._fields]
+                fields = [f['name'] for f in cls.fields]
             else:
-                fields = [f['name'] for f in cls._fields if not f.get(
+                fields = [f['name'] for f in cls.fields if not f.get(
                     'wfs_injected', False)]
             if include_subtypes:
-                for st in cls._subtypes:
+                for st in cls.subtypes:
                     fields.extend(st.get_field_names())
         elif type(return_fields) not in (list, tuple, set):
             raise AttributeError(
                 'return_fields should be a list, tuple or set')
         else:
-            fields = [f['name'] for f in cls._fields if f['name'] in
+            fields = [f['name'] for f in cls.fields if f['name'] in
                       return_fields]
             if include_subtypes:
-                for st in cls._subtypes:
+                for st in cls.subtypes:
                     fields.extend([f for f in st.get_field_names() if f in
                                    return_fields])
             for rf in return_fields:
                 if rf not in fields:
-                    raise InvalidFieldError("Unknown return field: '%s'" % rf)
+                    raise InvalidFieldError(
+                        "Unknown return field: '{}'".format(rf))
         return fields
 
     @classmethod
@@ -457,11 +518,11 @@ class AbstractDovType(AbstractTypeCommon):
 
         """
         fields = OrderedDict(
-            zip([f['name'] for f in cls._fields if f['source'] in source],
-                [f for f in cls._fields if f['source'] in source]))
+            zip([f['name'] for f in cls.fields if f['source'] in source],
+                [f for f in cls.fields if f['source'] in source]))
 
         if include_subtypes and 'xml' in source:
-            for st in cls._subtypes:
+            for st in cls.subtypes:
                 fields.update(st.get_fields())
 
         return fields
@@ -478,19 +539,21 @@ class AbstractDovType(AbstractTypeCommon):
 
         """
         xsd_schemas = set()
-        for s in cls._xsd_schemas:
-            xsd_schemas.add(s)
 
-        for st in cls._subtypes:
-            for s in st._xsd_schemas:
-                xsd_schemas.add(s)
+        fields = cls.get_fields(source='xml', include_subtypes=True)
+
+        for f in fields.values():
+            if 'xsd_type' in f:
+                xsd_schemas.add(f['xsd_schema'])
 
         return xsd_schemas
 
     @classmethod
     def to_df_array(cls, iterable, return_fields=None):
-        """Yield one or more dataframe arrays for each instance in the given
-        iterable.
+        """Returns a dataframe array with one or more arrays (rows) for each
+        instance in the given iterable.
+
+        Uses parallel processing to speed up IO operations.
 
         Parameters
         ----------
@@ -501,22 +564,40 @@ class AbstractDovType(AbstractTypeCommon):
             ignored, the default order of the fields of the datatype is used
             instead. Defaults to None, which will include all fields.
 
-        Yields
-        ------
-        list
-            List of the values of the instance in the same order as the
-            field/column names, for inclusion in the result dataframe of a
-            search operation.
+        Returns
+        -------
+        list of list
+            Dataframe contents in the format of a twodimensional list (rows)
+            of lists (columns). The values in the second list are in the
+            same order as the field/column names, for inclusion in the
+            resulting Pandas dataframe of a search operation.
 
         """
-        for item in iterable:
-            result = item.get_df_array(return_fields)
+        def unnest_result(result, df_result):
+            """Unnest the result into multiple rows (lists) if necessary. Rows
+            are appended to the df_result list."""
             if len(result) > 0:
                 if isinstance(result[0], list):
                     for r in result:
-                        yield r
+                        df_result.append(r)
                 else:
-                    yield result
+                    df_result.append(result)
+
+        pool = Pool(4)
+        result_obj = []
+
+        for item in iterable:
+            res = pool.apply_async(item.get_df_array, (return_fields,))
+            result_obj.append(res)
+
+        pool.close()
+        pool.join()
+
+        df_result = []
+        for res in result_obj:
+            unnest_result(res.get(), df_result)
+
+        return df_result
 
     def _get_xml_data(self):
         """Return the raw XML data for this DOV object.
@@ -547,7 +628,7 @@ class AbstractDovType(AbstractTypeCommon):
             The raw XML data of the DOV object as bytes.
 
         """
-        for subtype in self._subtypes:
+        for subtype in self.subtypes:
             st_name = subtype.get_name()
             if st_name not in self.subdata:
                 self.subdata[st_name] = []

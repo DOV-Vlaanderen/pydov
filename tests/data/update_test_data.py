@@ -31,13 +31,13 @@ def get_first_featuremember(wfs_response):
 
 
 def update_file(filepath, url, process_fn=None):
-    sys.stdout.write('Updating %s ...' % filepath)
+    sys.stdout.write('Updating {} ...'.format(filepath))
     try:
         data = openURL(url).read()
         if type(data) is bytes:
             data = data.decode('utf-8')
     except Exception as e:
-        sys.stdout.write(' FAILED:\n   %s.\n' % e)
+        sys.stdout.write(' FAILED:\n   {}.\n'.format(e))
         return
     else:
         with open(filepath, 'wb') as f:
@@ -69,7 +69,7 @@ if __name__ == '__main__':
     update_file('types/boring/fc_featurecatalogue.xml',
                 'https://www.dov.vlaanderen.be/geonetwork/srv/dut/csw'
                 '?Service=CSW&Request=GetRecordById&Version=2.0.2'
-                '&outputSchema=http://www.isotc211.org/2005/gmd'
+                '&outputSchema=http://www.isotc211.org/2005/gfc'
                 '&elementSetName=full&id=c0cbd397-520f-4ee1-aca7-d70e271eeed6')
 
     update_file('types/boring/md_metadata.xml',
@@ -84,7 +84,7 @@ if __name__ == '__main__':
 
     for xsd_schema in Boring.get_xsd_schemas():
         update_file(
-            'types/boring/xsd_%s.xml' % xsd_schema.split('/')[-1],
+            'types/boring/xsd_{}.xml'.format(xsd_schema.split('/')[-1]),
             xsd_schema)
 
     # types/sondering
@@ -108,7 +108,7 @@ if __name__ == '__main__':
     update_file('types/sondering/fc_featurecatalogue.xml',
                 'https://www.dov.vlaanderen.be/geonetwork/srv/dut/csw'
                 '?Service=CSW&Request=GetRecordById&Version=2.0.2'
-                '&outputSchema=http://www.isotc211.org/2005/gmd'
+                '&outputSchema=http://www.isotc211.org/2005/gfc'
                 '&elementSetName=full&id=bd539ba5-5f4d-4c43-9662-51c16caea351')
 
     update_file('types/sondering/md_metadata.xml',
@@ -123,7 +123,7 @@ if __name__ == '__main__':
 
     for xsd_schema in Sondering.get_xsd_schemas():
         update_file(
-            'types/sondering/xsd_%s.xml' % xsd_schema.split('/')[-1],
+            'types/sondering/xsd_{}.xml'.format(xsd_schema.split('/')[-1]),
             xsd_schema)
 
     # types/interpretaties/informele_stratigrafie
@@ -153,7 +153,7 @@ if __name__ == '__main__':
         'types/interpretaties/informele_stratigrafie/fc_featurecatalogue.xml',
         'https://www.dov.vlaanderen.be/geonetwork/srv/dut/csw'
         '?Service=CSW&Request=GetRecordById&Version=2.0.2'
-        '&outputSchema=http://www.isotc211.org/2005/gmd'
+        '&outputSchema=http://www.isotc211.org/2005/gfc'
         '&elementSetName=full&id=b6c651f9-5972-4252-ae10-ad69ad08e78d')
 
     update_file('types/interpretaties/informele_stratigrafie/md_metadata.xml',
@@ -202,7 +202,7 @@ if __name__ == '__main__':
         'types/interpretaties/formele_stratigrafie/fc_featurecatalogue.xml',
         'https://www.dov.vlaanderen.be/geonetwork/srv/dut/csw'
         '?Service=CSW&Request=GetRecordById&Version=2.0.2'
-        '&outputSchema=http://www.isotc211.org/2005/gmd'
+        '&outputSchema=http://www.isotc211.org/2005/gfc'
         '&elementSetName=full&id=68405b5d-51e6-44d0-b634-b580bc2f9eb6')
 
     update_file('types/interpretaties/formele_stratigrafie/md_metadata.xml',
@@ -253,7 +253,7 @@ if __name__ == '__main__':
         'fc_featurecatalogue.xml',
         'https://www.dov.vlaanderen.be/geonetwork/srv/dut/csw'
         '?Service=CSW&Request=GetRecordById&Version=2.0.2'
-        '&outputSchema=http://www.isotc211.org/2005/gmd'
+        '&outputSchema=http://www.isotc211.org/2005/gfc'
         '&elementSetName=full&id=b89e72de-35a9-4bca-8d0b-712d1e881ea6')
 
     update_file('types/interpretaties/hydrogeologische_stratigrafie/'
@@ -303,7 +303,7 @@ if __name__ == '__main__':
         'types/interpretaties/lithologische_beschrijvingen/fc_featurecatalogue.xml',
         'https://www.dov.vlaanderen.be/geonetwork/srv/dut/csw'
         '?Service=CSW&Request=GetRecordById&Version=2.0.2'
-        '&outputSchema=http://www.isotc211.org/2005/gmd'
+        '&outputSchema=http://www.isotc211.org/2005/gfc'
         '&elementSetName=full&id=2450d592-29bc-4970-a89f-a7b14bd38dc2')
 
     update_file('types/interpretaties/lithologische_beschrijvingen/md_metadata.xml',
@@ -352,7 +352,7 @@ if __name__ == '__main__':
         'types/interpretaties/gecodeerde_lithologie/fc_featurecatalogue.xml',
         'https://www.dov.vlaanderen.be/geonetwork/srv/dut/csw'
         '?Service=CSW&Request=GetRecordById&Version=2.0.2'
-        '&outputSchema=http://www.isotc211.org/2005/gmd'
+        '&outputSchema=http://www.isotc211.org/2005/gfc'
         '&elementSetName=full&id=0032241d-8920-415e-b1d8-fa0a48154904')
 
     update_file('types/interpretaties/gecodeerde_lithologie/md_metadata.xml',
@@ -401,7 +401,7 @@ if __name__ == '__main__':
         'types/interpretaties/geotechnische_codering/fc_featurecatalogue.xml',
         'https://www.dov.vlaanderen.be/geonetwork/srv/dut/csw'
         '?Service=CSW&Request=GetRecordById&Version=2.0.2'
-        '&outputSchema=http://www.isotc211.org/2005/gmd'
+        '&outputSchema=http://www.isotc211.org/2005/gfc'
         '&elementSetName=full&id=85404aa6-2d88-46f6-ae5a-575aece71efd')
 
     update_file('types/interpretaties/geotechnische_codering/md_metadata.xml',
@@ -446,7 +446,7 @@ if __name__ == '__main__':
     update_file('types/grondwaterfilter/fc_featurecatalogue.xml',
                 'https://www.dov.vlaanderen.be/geonetwork/srv/dut/csw'
                 '?Service=CSW&Request=GetRecordById&Version=2.0.2'
-                '&outputSchema=http://www.isotc211.org/2005/gmd'
+                '&outputSchema=http://www.isotc211.org/2005/gfc'
                 '&elementSetName=full&id=b142965f-b2aa-429e-86ff-a7cb0e065d48')
 
     update_file('types/grondwaterfilter/md_metadata.xml',
@@ -470,7 +470,7 @@ if __name__ == '__main__':
     update_file('util/owsutil/fc_featurecatalogue_notfound.xml',
                 'https://www.dov.vlaanderen.be/geonetwork/srv/dut/csw'
                 '?Service=CSW&Request=GetRecordById&Version=2.0.2'
-                '&outputSchema=http://www.isotc211.org/2005/gmd'
+                '&outputSchema=http://www.isotc211.org/2005/gfc'
                 '&elementSetName=full&id=badfc000-0000-0000-0000-badfc00badfc')
 
     update_file('util/owsutil/wfscapabilities.xml',
@@ -504,7 +504,7 @@ if __name__ == '__main__':
         'types/interpretaties/quartaire_stratigrafie/fc_featurecatalogue.xml',
         'https://www.dov.vlaanderen.be/geonetwork/srv/dut/csw'
         '?Service=CSW&Request=GetRecordById&Version=2.0.2'
-        '&outputSchema=http://www.isotc211.org/2005/gmd'
+        '&outputSchema=http://www.isotc211.org/2005/gfc'
         '&elementSetName=full&id=d40ef884-3278-45db-ad69-2c2a8c3981c3')
 
     update_file('types/interpretaties/quartaire_stratigrafie/md_metadata.xml',

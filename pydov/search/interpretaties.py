@@ -946,7 +946,17 @@ class QuartairStratigrafieSearch(AbstractSearch):
 
 class InformeleHydrogeologischeStratigrafieSearch(AbstractSearch):
     """Search class to retrieve information about informele
-    hydrogeologische stratigrafie."""
+    hydrogeologische stratigrafie.
+
+    Parameters
+    ----------
+    objecttype : subclass of pydov.types.abstract.AbstractDovType
+        Reference to a class representing the
+        InformeleHydrogeologischeStratigrafie type.
+        Optional: defaults to the InformeleHydrogeologischeStratigrafie type
+        containing the fields described in the documentation.
+
+    """
 
     __wfs_schema = None
     __wfs_namespace = None
@@ -954,7 +964,7 @@ class InformeleHydrogeologischeStratigrafieSearch(AbstractSearch):
     __fc_featurecatalogue = None
     __xsd_schemas = None
 
-    def __init__(self):
+    def __init__(self, objecttype=InformeleHydrogeologischeStratigrafie):
         """Initialisation."""
         super(InformeleHydrogeologischeStratigrafieSearch, self).__init__(
             'interpretaties:informele_hydrogeologische_stratigrafie',
@@ -1004,7 +1014,7 @@ class InformeleHydrogeologischeStratigrafieSearch(AbstractSearch):
             for field in fields.values():
                 if field['name'] not in self._type.get_field_names(
                         include_wfs_injected=True):
-                    self._type._fields.append({
+                    self._type.fields.append({
                         'name': field['name'],
                         'source': 'wfs',
                         'sourcefield': field['name'],

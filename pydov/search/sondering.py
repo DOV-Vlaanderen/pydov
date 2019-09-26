@@ -3,6 +3,7 @@
 import pandas as pd
 
 from pydov.search.abstract import AbstractSearch
+from pydov.types.fields import _WfsInjectedField
 from pydov.types.sondering import Sondering
 from pydov.util import owsutil
 
@@ -17,9 +18,19 @@ class SonderingSearch(AbstractSearch):
     __fc_featurecatalogue = None
     __xsd_schemas = None
 
-    def __init__(self):
-        """Initialisation."""
-        super(SonderingSearch, self).__init__('dov-pub:Sonderingen', Sondering)
+    def __init__(self, objecttype=Sondering):
+        """Initialisation.
+
+        Parameters
+        ----------
+        objecttype : subclass of pydov.types.abstract.AbstractDovType
+            Reference to a class representing the Sondering type.
+            Optional: defaults to the Sondering type containing
+            the fields described in the documentation.
+
+        """
+        super(SonderingSearch, self).__init__(
+            'dov-pub:Sonderingen', objecttype)
 
     def _init_namespace(self):
         """Initialise the WFS namespace associated with the layer."""
@@ -56,13 +67,9 @@ class SonderingSearch(AbstractSearch):
             for field in fields.values():
                 if field['name'] not in self._type.get_field_names(
                         include_wfs_injected=True):
-                    self._type._fields.append({
-                        'name': field['name'],
-                        'source': 'wfs',
-                        'sourcefield': field['name'],
-                        'type': field['type'],
-                        'wfs_injected': True
-                    })
+                    self._type.fields.append(
+                        _WfsInjectedField(name=field['name'],
+                                          datatype=field['type']))
 
             self._fields = self._build_fields(
                 SonderingSearch.__wfs_schema,
@@ -122,9 +129,9 @@ class SonderingSearch(AbstractSearch):
         fts = self._search(location=location, query=query,
                            return_fields=return_fields)
 
-        sonderingen = Sondering.from_wfs(fts, self.__wfs_namespace)
+        sonderingen = self._type.from_wfs(fts, self.__wfs_namespace)
 
         df = pd.DataFrame(
-            data=Sondering.to_df_array(sonderingen, return_fields),
-            columns=Sondering.get_field_names(return_fields))
+            data=self._type.to_df_array(sonderingen, return_fields),
+            columns=self._type.get_field_names(return_fields))
         return df

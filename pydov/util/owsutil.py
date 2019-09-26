@@ -480,8 +480,8 @@ def set_geometry_column(location, geometry_column):
 
 
 def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
-                                 filter=None, propertyname=None, max_features=None,
-                                 version='1.1.0'):
+                                 filter=None, propertyname=None,
+                                 max_features=None, version='1.1.0'):
     """Build a WFS GetFeature request in XML to be used as payload in a WFS
     GetFeature request using POST.
 

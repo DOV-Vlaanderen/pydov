@@ -216,7 +216,8 @@ class FormeleStratigrafieSearch(AbstractSearch):
                 FormeleStratigrafieSearch.__fc_featurecatalogue,
                 FormeleStratigrafieSearch.__xsd_schemas)
 
-    def search(self, location=None, query=None, return_fields=None):
+    def search(self, location=None, query=None, return_fields=None,
+               max_features=None):
         """Search for boreholes (Boring). Provide either `location` or `query`.
         When `return_fields` is None, all fields are returned.
 
@@ -237,6 +238,8 @@ class FormeleStratigrafieSearch(AbstractSearch):
             A list of fields to be returned in the output data. This should
             be a subset of the fields provided in `get_fields()`. Note that
             not all fields are currently supported as return fields.
+        max_features : int
+            Limit the maximum number of features to request.
 
         Returns
         -------
@@ -268,7 +271,8 @@ class FormeleStratigrafieSearch(AbstractSearch):
         """
         fts = self._search(location=location, query=query,
                            return_fields=return_fields,
-                           extra_wfs_fields=['Type_proef', 'Proeffiche'])
+                           extra_wfs_fields=['Type_proef', 'Proeffiche'],
+                           max_features=max_features)
 
         interpretaties = self._type.from_wfs(
             fts, self.__wfs_namespace)
@@ -351,7 +355,8 @@ class HydrogeologischeStratigrafieSearch(AbstractSearch):
                 HydrogeologischeStratigrafieSearch.__fc_featurecatalogue,
                 HydrogeologischeStratigrafieSearch.__xsd_schemas)
 
-    def search(self, location=None, query=None, return_fields=None):
+    def search(self, location=None, query=None, return_fields=None,
+               max_features=None):
         """Search for hydrogeological interpretations. Provide either
         `location` or `query`. When `return_fields` is None, all fields
         are returned.
@@ -373,6 +378,8 @@ class HydrogeologischeStratigrafieSearch(AbstractSearch):
             A list of fields to be returned in the output data. This should
             be a subset of the fields provided in `get_fields()`. Note that
             not all fields are currently supported as return fields.
+        max_features : int
+            Limit the maximum number of features to request.
 
         Returns
         -------
@@ -403,7 +410,8 @@ class HydrogeologischeStratigrafieSearch(AbstractSearch):
 
         """
         fts = self._search(location=location, query=query,
-                           return_fields=return_fields)
+                           return_fields=return_fields,
+                           max_features=max_features)
 
         interpretaties = self._type.from_wfs(
             fts, self.__wfs_namespace)
@@ -486,7 +494,8 @@ class LithologischeBeschrijvingenSearch(AbstractSearch):
                 LithologischeBeschrijvingenSearch.__fc_featurecatalogue,
                 LithologischeBeschrijvingenSearch.__xsd_schemas)
 
-    def search(self, location=None, query=None, return_fields=None):
+    def search(self, location=None, query=None, return_fields=None,
+               max_features=None):
         """Search for 'lithologische beschrijvingen'. Provide either
         `location` or `query`. When `return_fields` is None, all fields
         are returned.
@@ -508,6 +517,8 @@ class LithologischeBeschrijvingenSearch(AbstractSearch):
             A list of fields to be returned in the output data. This should
             be a subset of the fields provided in `get_fields()`. Note that
             not all fields are currently supported as return fields.
+        max_features : int
+            Limit the maximum number of features to request.
 
         Returns
         -------
@@ -538,7 +549,8 @@ class LithologischeBeschrijvingenSearch(AbstractSearch):
 
         """
         fts = self._search(location=location, query=query,
-                           return_fields=return_fields)
+                           return_fields=return_fields,
+                           max_features=max_features)
 
         interpretaties = self._type.from_wfs(
             fts, self.__wfs_namespace)
@@ -621,7 +633,8 @@ class GecodeerdeLithologieSearch(AbstractSearch):
                 GecodeerdeLithologieSearch.__fc_featurecatalogue,
                 GecodeerdeLithologieSearch.__xsd_schemas)
 
-    def search(self, location=None, query=None, return_fields=None):
+    def search(self, location=None, query=None, return_fields=None,
+               max_features=None):
         """Search for 'gecodeerde lithologie'. Provide either
         `location` or `query`. When `return_fields` is None, all fields
         are returned.
@@ -643,6 +656,8 @@ class GecodeerdeLithologieSearch(AbstractSearch):
             A list of fields to be returned in the output data. This should
             be a subset of the fields provided in `get_fields()`. Note that
             not all fields are currently supported as return fields.
+        max_features : int
+            Limit the maximum number of features to request.
 
         Returns
         -------
@@ -673,7 +688,8 @@ class GecodeerdeLithologieSearch(AbstractSearch):
 
         """
         fts = self._search(location=location, query=query,
-                           return_fields=return_fields)
+                           return_fields=return_fields,
+                           max_features=max_features)
 
         interpretaties = self._type.from_wfs(
             fts, self.__wfs_namespace)
@@ -756,7 +772,8 @@ class GeotechnischeCoderingSearch(AbstractSearch):
                 GeotechnischeCoderingSearch.__fc_featurecatalogue,
                 GeotechnischeCoderingSearch.__xsd_schemas)
 
-    def search(self, location=None, query=None, return_fields=None):
+    def search(self, location=None, query=None, return_fields=None,
+               max_features=None):
         """Search for 'geotechnische_codering'. Provide either
         `location` or `query`. When `return_fields` is None, all fields
         are returned.
@@ -774,6 +791,8 @@ class GeotechnischeCoderingSearch(AbstractSearch):
             A list of fields to be returned in the output data. This should
             be a subset of the fields provided in `get_fields()`. Note that
             not all fields are currently supported as return fields.
+        max_features : int
+            Limit the maximum number of features to request.
 
         Returns
         -------
@@ -804,7 +823,8 @@ class GeotechnischeCoderingSearch(AbstractSearch):
 
         """
         fts = self._search(location=location, query=query,
-                           return_fields=return_fields)
+                           return_fields=return_fields,
+                           max_features=max_features)
 
         interpretaties = self._type.from_wfs(
             fts, self.__wfs_namespace)
@@ -884,7 +904,8 @@ class QuartairStratigrafieSearch(AbstractSearch):
                 QuartairStratigrafieSearch.__fc_featurecatalogue,
                 QuartairStratigrafieSearch.__xsd_schemas)
 
-    def search(self, location=None, query=None, return_fields=None):
+    def search(self, location=None, query=None, return_fields=None,
+               max_features=None):
         """Search for interpretations of Quartair stratigrafie.
 
         Provide either `location` or `query`.
@@ -907,6 +928,8 @@ class QuartairStratigrafieSearch(AbstractSearch):
             A list of fields to be returned in the output data. This should
             be a subset of the fields provided in `get_fields()`. Note that
             not all fields are currently supported as return fields.
+        max_features : int
+            Limit the maximum number of features to request.
 
         Returns
         -------
@@ -937,7 +960,8 @@ class QuartairStratigrafieSearch(AbstractSearch):
 
         """
         fts = self._search(location=location, query=query,
-                           return_fields=return_fields)
+                           return_fields=return_fields,
+                           max_features=max_features)
 
         interpretaties = self._type.from_wfs(fts, self.__wfs_namespace)
 

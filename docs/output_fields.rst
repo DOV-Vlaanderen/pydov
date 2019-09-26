@@ -36,6 +36,30 @@ You can get an overview of the available fields for a dataset using its search o
 
     For instance, in the examples above only fields with a cost of 1 are selected, allowing the results to be retrieved almost instantly. By selecting only fields available in the WFS service (i.e. fields with a cost of 1), pydov only needs a single WFS query to obtain the results and doesn't need to download any additional XML documents.
 
+Limit number of WFS features
+****************************
+
+Within the search method, the `max_features` parameter can be used to limit the number of WFS features you want to
+be returned. This is mainly useful when exploring the data and returned data. The following example
+limits the number of features to 2 within the search for grondwaterfilter. The application is similar
+for the search for other objects.
+
+::
+
+    from pydov.search.grondwaterfilter import GrondwaterFilterSearch
+    from pydov.util.location import Within, Box
+
+    gwfilter = GrondwaterFilterSearch()
+    df = gwfilter.search(location=Within(Box(93378, 168009, 94246, 169873)),
+                         return_fields=('pkey_filter', 'x', 'y',
+                                        'meetnet', 'pkey_grondwaterlocatie'),
+                         max_features=2)
+
+.. note::
+
+    The amount of features requested does not equal the number of lines in the resulting DataFrame. For example in the case
+    of `grondwaterfilter` multiple water levels can be available for each feature, resulting in multiple rows.
+
 
 Defining custom object types
 ****************************

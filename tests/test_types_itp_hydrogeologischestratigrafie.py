@@ -1,6 +1,7 @@
 """Module grouping tests for the
 pydov.types.interpretaties.InformeleStratigrafie class."""
 from pydov.types.interpretaties import HydrogeologischeStratigrafie
+from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes
 
 from tests.test_search_itp_hydrogeologischestratigrafie import (
@@ -48,7 +49,7 @@ class TestHydrogeologischeStratigrafie(AbstractTestTypes):
             "https://www.dov.vlaanderen.be/data/boring/"
 
         """
-        return 'https://www.dov.vlaanderen.be/data/interpretatie/'
+        return build_dov_url('data/interpretatie/')
 
     def get_field_names(self):
         """Get the field names for this type as listed in the documentation in

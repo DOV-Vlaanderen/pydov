@@ -13,6 +13,7 @@ from owslib.wfs import WebFeatureService
 from pydov.util import owsutil
 from pydov.util.dovutil import (
     get_xsd_schema,
+    build_dov_url,
 )
 from pydov.util.errors import (
     LayerNotFoundError,
@@ -117,8 +118,7 @@ class AbstractSearch(AbstractCommon):
         """
         if AbstractSearch.__wfs is None:
             AbstractSearch.__wfs = WebFeatureService(
-                url="https://www.dov.vlaanderen.be/geoserver/wfs",
-                version="1.1.0")
+                url=build_dov_url('geoserver/wfs'), version="1.1.0")
 
     def _init_namespace(self):
         """Initialise the WFS namespace associated with the layer.
@@ -182,7 +182,7 @@ class AbstractSearch(AbstractCommon):
         layername = self._layer.split(':')[1] if ':' in self._layer else \
             self._layer
         return get_remote_schema(
-            'https://www.dov.vlaanderen.be/geoserver/wfs', layername, '1.1.0')
+            build_dov_url('geoserver/wfs'), layername, '1.1.0')
 
     def _get_namespace(self):
         """Get the WFS namespace of the layer.

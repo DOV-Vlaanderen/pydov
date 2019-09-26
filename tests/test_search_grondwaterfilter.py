@@ -4,6 +4,7 @@ import datetime
 from owslib.fes import PropertyIsEqualTo
 from pydov.search.grondwaterfilter import GrondwaterFilterSearch
 from pydov.types.grondwaterfilter import GrondwaterFilter
+from pydov.util.dovutil import build_dov_url
 from tests.abstract import (
     AbstractTestSearch,
 )
@@ -66,8 +67,8 @@ class TestGrondwaterfilterSearch(AbstractTestSearch):
 
         """
         return PropertyIsEqualTo(propertyname='filterfiche',
-                                 literal='https://www.dov.vlaanderen.be/'
-                                         'data/filter/2003-004471')
+                                 literal=build_dov_url(
+                                     'data/filter/2003-004471'))
 
     def get_inexistent_field(self):
         """Get the name of a field that doesn't exist.

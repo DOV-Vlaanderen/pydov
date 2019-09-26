@@ -6,6 +6,19 @@ from pydov.util.errors import XmlParseError
 import pydov
 
 
+def build_dov_url(path):
+    """Build the DOV url consisting of the fixed DOV base url, appended with
+    the given path.
+
+    Returns
+    -------
+    str
+        The absolute DOV url.
+
+    """
+    return 'https://oefen.dov.vlaanderen.be/' + path.lstrip('/')
+
+
 def get_remote_url(url):
     """Request the URL from the remote service and return its contents.
 

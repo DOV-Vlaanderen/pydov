@@ -111,7 +111,8 @@ class AbstractFileCache(AbstractCache):
         self.max_age = max_age
 
         self._re_type_key = re.compile(
-            r'https?://www\.dov\.vlaanderen\.be/data/([^ /]+)/([^.]+)')
+            r'https?://(www|oefen|ontwikkel)\.dov\.vlaanderen\.be/'
+            r'data/([^ /]+)/([^.]+)')
 
         try:
             if not os.path.exists(self.cachedir):

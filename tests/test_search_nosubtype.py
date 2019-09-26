@@ -2,6 +2,7 @@
 
 from owslib.fes import PropertyIsEqualTo
 from pydov.search.grondwaterfilter import GrondwaterFilterSearch
+from pydov.util.dovutil import build_dov_url
 
 from tests.test_search import (
     mp_wfs,
@@ -61,7 +62,8 @@ class TestSearchNoSubtype(object):
         df = GrondwaterFilterSearch().search(
             query=PropertyIsEqualTo(
                 'pkey_filter',
-                'https://www.dov.vlaanderen.be/data/filter/2007-011302.xml')
+                build_dov_url('data/filter/2007-011302.xml')
+            )
         )
 
         assert len(df.pkey_filter) == 1

@@ -13,6 +13,7 @@ from pydov.types.fields import (
     XmlField,
     XsdType,
 )
+from pydov.util.dovutil import build_dov_url
 
 
 class AbstractCommonInterpretatie(AbstractDovType):
@@ -228,9 +229,9 @@ class FormeleStratigrafieLaag(AbstractDovSubType):
                  definition='eerste eenheid van de laag formele stratigrafie',
                  datatype='string',
                  xsd_type=XsdType(
-                     xsd_schema='https://www.dov.vlaanderen.be/xdov/schema/'
-                                'latest/xsd/kern/interpretatie/'
-                                'FormeleStratigrafieDataCodes.xsd',
+                     xsd_schema=build_dov_url(
+                         'xdov/schema/latest/xsd/kern/interpretatie/'
+                         'FormeleStratigrafieDataCodes.xsd'),
                      typename='FormeleStratigrafieLedenEnumType')),
         XmlField(name='relatie_lid1_lid2',
                  source_xpath='/relatie_lid1_lid2',
@@ -238,9 +239,9 @@ class FormeleStratigrafieLaag(AbstractDovSubType):
                             'laag formele stratigrafie',
                  datatype='string',
                  xsd_type=XsdType(
-                     xsd_schema='https://www.dov.vlaanderen.be/xdov/schema/'
-                                'latest/xsd/kern/interpretatie/'
-                                'InterpretatieDataCodes.xsd',
+                     xsd_schema=build_dov_url(
+                         'xdov/schema/latest/xsd/kern/interpretatie/'
+                         'InterpretatieDataCodes.xsd'),
                      typename='RelatieLedenEnumType')),
         XmlField(name='lid2',
                  source_xpath='/lid2',
@@ -249,9 +250,9 @@ class FormeleStratigrafieLaag(AbstractDovSubType):
                       'ingevuld',
                  datatype='string',
                  xsd_type=XsdType(
-                     xsd_schema='https://www.dov.vlaanderen.be/xdov/schema/'
-                                'latest/xsd/kern/interpretatie/'
-                                'FormeleStratigrafieDataCodes.xsd',
+                     xsd_schema=build_dov_url(
+                         'xdov/schema/latest/xsd/kern/interpretatie/'
+                         'FormeleStratigrafieDataCodes.xsd'),
                      typename='FormeleStratigrafieLedenEnumType'))
     ]
 
@@ -284,9 +285,9 @@ class HydrogeologischeStratigrafieLaag(AbstractDovSubType):
                             'Hydrogeologische stratigrafie zich bevindt.',
                  datatype='string',
                  xsd_type=XsdType(
-                     xsd_schema='https://www.dov.vlaanderen.be/xdov/schema/'
-                                'latest/xsd/kern/interpretatie/'
-                                'HydrogeologischeStratigrafieDataCodes.xsd',
+                     xsd_schema=build_dov_url(
+                         'xdov/schema/latest/xsd/kern/interpretatie/'
+                         'HydrogeologischeStratigrafieDataCodes.xsd'),
                      typename='AquiferEnumType'
                  ))
     ]
@@ -334,14 +335,15 @@ class GecodeerdeLithologieLaag(AbstractDovSubType):
     rootpath = './/gecodeerdelithologie/laag'
 
     __gecodeerdHoofdnaamCodesEnumType = XsdType(
-        xsd_schema='https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/'
-                   'kern/interpretatie/GecodeerdeLithologieDataCodes.xsd',
+        xsd_schema=build_dov_url('xdov/schema/latest/xsd/kern/interpretatie/'
+                                 'GecodeerdeLithologieDataCodes.xsd'),
         typename='GecodeerdHoofdnaamCodesEnumType'
     )
 
     __gecodeerdBijmengingHoeveelheidEnumType = XsdType(
-        xsd_schema='https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/'
-                   'kern/interpretatie/GecodeerdeLithologieDataCodes.xsd',
+        xsd_schema=build_dov_url(
+            'xdov/schema/latest/xsd/kern/interpretatie/'
+            'GecodeerdeLithologieDataCodes.xsd'),
         typename='GecodeerdBijmengingHoeveelheidEnumType'
     )
 
@@ -428,14 +430,16 @@ class GeotechnischeCoderingLaag(AbstractDovSubType):
     rootpath = './/geotechnischecodering/laag'
 
     __geotechnischeCoderingHoofdnaamCodesEnumType = XsdType(
-        xsd_schema='https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/'
-                   'kern/interpretatie/GeotechnischeCoderingDataCodes.xsd',
+        xsd_schema=build_dov_url(
+            'xdov/schema/latest/xsd/kern/interpretatie/'
+            'GeotechnischeCoderingDataCodes.xsd'),
         typename='GeotechnischeCoderingHoofdnaamCodesEnumType'
     )
 
     __gtCoderingBijmengingHoeveelheidEnumType = XsdType(
-        xsd_schema='https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/'
-                   'kern/interpretatie/GeotechnischeCoderingDataCodes.xsd',
+        xsd_schema=build_dov_url(
+            'xdov/schema/latest/xsd/kern/interpretatie/'
+            'GeotechnischeCoderingDataCodes.xsd'),
         typename='GeotechnischeCoderingBijmengingHoeveelheidEnumType'
     )
 
@@ -542,9 +546,9 @@ class QuartairStratigrafieLaag(AbstractDovSubType):
                  definition='eerste eenheid van de laag quartairstratigrafie',
                  datatype='string',
                  xsd_type=XsdType(
-                     xsd_schema='https://www.dov.vlaanderen.be/xdov/schema/'
-                                'latest/xsd/kern/interpretatie/'
-                                'QuartairStratigrafieDataCodes.xsd',
+                     xsd_schema=build_dov_url(
+                         'xdov/schema/latest/xsd/kern/interpretatie/'
+                         'QuartairStratigrafieDataCodes.xsd'),
                      typename='QuartairStratigrafieLedenEnumType')),
         XmlField(name='relatie_lid1_lid2',
                  source_xpath='/relatie_lid1_lid2',
@@ -552,9 +556,9 @@ class QuartairStratigrafieLaag(AbstractDovSubType):
                             'laag quartairstratigrafie',
                  datatype='string',
                  xsd_type=XsdType(
-                     xsd_schema='https://www.dov.vlaanderen.be/xdov/schema/'
-                                'latest/xsd/kern/interpretatie/'
-                                'InterpretatieDataCodes.xsd',
+                     xsd_schema=build_dov_url(
+                         'xdov/schema/latest/xsd/kern/interpretatie/'
+                         'InterpretatieDataCodes.xsd'),
                      typename='RelatieLedenEnumType')),
         XmlField(name='lid2',
                  source_xpath='/lid2',
@@ -563,9 +567,9 @@ class QuartairStratigrafieLaag(AbstractDovSubType):
                       'als voor Lid1 ingevuld',
                  datatype='string',
                  xsd_type=XsdType(
-                     xsd_schema='https://www.dov.vlaanderen.be/xdov/schema/'
-                                'latest/xsd/kern/interpretatie/'
-                                'QuartairStratigrafieDataCodes.xsd',
+                     xsd_schema=build_dov_url(
+                         'xdov/schema/latest/xsd/kern/interpretatie/'
+                         'QuartairStratigrafieDataCodes.xsd'),
                      typename='QuartairStratigrafieLedenEnumType'))
     ]
 

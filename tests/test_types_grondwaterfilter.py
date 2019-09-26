@@ -65,7 +65,7 @@ class TestGrondwaterFilter(AbstractTestTypes):
                 'grondwaterlichaam_code', 'regime',
                 'diepte_onderkant_filter', 'lengte_filter',
                 'datum', 'tijdstip', 'peil_mtaw',
-                'betrouwbaarheid', 'methode']
+                'betrouwbaarheid', 'methode', 'filterstatus', 'filtertoestand']
 
     def get_field_names_subtypes(self):
         """Get the field names of this type that originate from subtypes only.

@@ -7,6 +7,7 @@ from owslib.fes import (
     PropertyIsNull,
     And,
 )
+from pydov.types.fields import _WfsInjectedField
 from .abstract import AbstractSearch
 from ..types.grondwaterfilter import GrondwaterFilter
 from ..util import owsutil
@@ -23,10 +24,19 @@ class GrondwaterFilterSearch(AbstractSearch):
     __fc_featurecatalogue = None
     __xsd_schemas = None
 
-    def __init__(self):
-        """Initialisation."""
+    def __init__(self, objecttype=GrondwaterFilter):
+        """Initialisation.
+
+        Parameters
+        ----------
+        objecttype : subclass of pydov.types.abstract.AbstractDovType
+            Reference to a class representing the GrondwaterFilter type.
+            Optional: defaults to the GrondwaterFilter type containing the
+            fields described in the documentation.
+
+        """
         super(GrondwaterFilterSearch,
-              self).__init__('gw_meetnetten:meetnetten', GrondwaterFilter)
+              self).__init__('gw_meetnetten:meetnetten', objecttype)
 
     def _init_namespace(self):
         """Initialise the WFS namespace associated with the layer."""
@@ -64,13 +74,9 @@ class GrondwaterFilterSearch(AbstractSearch):
             for field in fields.values():
                 if field['name'] not in self._type.get_field_names(
                         include_wfs_injected=True):
-                    self._type._fields.append({
-                        'name': field['name'],
-                        'source': 'wfs',
-                        'sourcefield': field['name'],
-                        'type': field['type'],
-                        'wfs_injected': True
-                    })
+                    self._type.fields.append(
+                        _WfsInjectedField(name=field['name'],
+                                          datatype=field['type']))
 
             self._fields = self._build_fields(
                 GrondwaterFilterSearch.__wfs_schema,
@@ -144,10 +150,10 @@ class GrondwaterFilterSearch(AbstractSearch):
         fts = self._search(location=location, query=query,
                            return_fields=return_fields)
 
-        gw_filters = GrondwaterFilter.from_wfs(fts, self.__wfs_namespace)
+        gw_filters = self._type.from_wfs(fts, self.__wfs_namespace)
 
-        df = pd.DataFrame(data=GrondwaterFilter.to_df_array(gw_filters,
-                                                            return_fields),
-                          columns=GrondwaterFilter.get_field_names(
-                              return_fields))
+        df = pd.DataFrame(
+            data=self._type.to_df_array(gw_filters, return_fields),
+            columns=self._type.get_field_names(return_fields))
+
         return df

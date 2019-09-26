@@ -125,7 +125,7 @@ class TestGrondwaterfilterSearch(AbstractTestSearch):
             from WFS, not present in the default dataframe.
 
         """
-        return ('pkey_filter', 'oxidatie_reductie')
+        return ('pkey_filter', 'beheerder')
 
     def get_df_default_columns(self):
         """Get a list of the column names (and order) from the default
@@ -143,7 +143,7 @@ class TestGrondwaterfilterSearch(AbstractTestSearch):
                 'grondwaterlichaam_code', 'regime',
                 'diepte_onderkant_filter', 'lengte_filter',
                 'datum', 'tijdstip', 'peil_mtaw',
-                'betrouwbaarheid', 'methode']
+                'betrouwbaarheid', 'methode', 'filterstatus', 'filtertoestand']
 
     def test_search_date(self, mp_wfs, mp_remote_describefeaturetype,
                          mp_remote_md, mp_remote_fc, mp_remote_wfs_feature,

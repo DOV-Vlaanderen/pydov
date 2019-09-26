@@ -82,8 +82,8 @@ Contents:
 
    query_attribute
    query_location
+   output_fields
    performance
-   df_format
    caching
    hooks
 
@@ -97,6 +97,7 @@ Contents:
    history
    authors
    conduct
+   df_format
 
 Indices and tables
 ==================

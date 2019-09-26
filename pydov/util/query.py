@@ -93,12 +93,13 @@ class Join(PropertyInList):
 
         if using not in list(dataframe):
             raise ValueError(
-                "column '%s' should be present in the dataframe." % using)
+                "column '{}' should be present in the dataframe.".format(
+                    using))
 
         value_list = list(dataframe[using].dropna().unique())
 
         if len(set(value_list)) < 2:
             raise ValueError("dataframe should contain at least two "
-                             "different values in column '%s'." % using)
+                             "different values in column '{}'.".format(using))
 
         super(Join, self).__init__(on, value_list)

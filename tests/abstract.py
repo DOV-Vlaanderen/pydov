@@ -18,6 +18,7 @@ from pandas.api.types import (
 
 from owslib.fes import PropertyIsEqualTo
 from owslib.etree import etree
+from pydov.types.abstract import AbstractField
 from pydov.util.errors import InvalidFieldError
 from pydov.util.location import (
     Within,
@@ -190,6 +191,13 @@ class AbstractTestSearch(object):
 
         """
         raise NotImplementedError
+
+    def test_pluggable_type(self):
+        """Test whether the search object can be initialised by explicitly
+        giving the objecttype.
+        """
+        datatype = self.get_type()
+        self.get_search_object().__class__(objecttype=datatype)
 
     def test_get_fields(self, mp_wfs, mp_remote_describefeaturetype,
                         mp_remote_md, mp_remote_fc, mp_remote_xsd):
@@ -779,7 +787,7 @@ class AbstractTestTypes(object):
             assert type(f) in (str, unicode)
 
             field = fields[f]
-            assert type(field) is dict
+            assert isinstance(field, AbstractField)
 
             assert 'name' in field
             assert type(field['name']) in (str, unicode)
@@ -815,7 +823,7 @@ class AbstractTestTypes(object):
                 if 'xsd_type' in field:
                     assert sorted(field.keys()) == [
                         'definition', 'name', 'notnull', 'source',
-                        'sourcefield', 'type', 'xsd_type']
+                        'sourcefield', 'type', 'xsd_schema', 'xsd_type']
                 else:
                     assert sorted(field.keys()) == [
                         'definition', 'name', 'notnull', 'source',

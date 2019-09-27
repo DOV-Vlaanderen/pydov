@@ -142,7 +142,8 @@ class GrondwaterFilterSearch(AbstractSearch):
             tuple or set.
 
         """
-        self._pre_search_validation(location, query, sort_by, return_fields)
+        self._pre_search_validation(location, query, sort_by, return_fields,
+                                    max_features)
 
         exclude_empty_filters = Not([PropertyIsNull(
                                      propertyname='pkey_filter')])

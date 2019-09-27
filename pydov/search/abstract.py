@@ -399,8 +399,8 @@ class AbstractSearch(AbstractCommon):
 
         return fields
 
-    def _pre_search_validation(self, location=None, query=None, sort_by=None,
-                               return_fields=None):
+    def _pre_search_validation(self, location, query, sort_by,
+                               return_fields, max_features):
         """Perform validation on the parameters of the search query.
 
         Parameters
@@ -417,6 +417,8 @@ class AbstractSearch(AbstractCommon):
         return_fields : list<str> or tuple<str> or set<str>
             A list of fields to be returned in the output data. This should
             be a subset of the fields provided in `get_fields()`.
+        max_features : int
+            Limit the maximum number of features to request.
 
         Raises
         ------
@@ -430,9 +432,10 @@ class AbstractSearch(AbstractCommon):
             a query parameter.
 
         """
-        if location is None and query is None:
+        if location is None and query is None and max_features is None:
             raise InvalidSearchParameterError(
-                'Provide either the location or the query parameter.'
+                'Provide either the location or the query parameter or the '
+                'max_features parameter.'
             )
 
         if query is not None:
@@ -600,7 +603,8 @@ class AbstractSearch(AbstractCommon):
             maxFeatures limit of the WFS server.
 
         """
-        self._pre_search_validation(location, query, sort_by, return_fields)
+        self._pre_search_validation(location, query, sort_by, return_fields,
+                                    max_features)
         self._init_namespace()
         self._init_wfs()
 

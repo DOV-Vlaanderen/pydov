@@ -55,7 +55,7 @@ class GrondwaterMonster(AbstractDovType):
     subtypes = [Observatie]
 
     fields = [
-        WfsField(name='pkey_monster', source_field='grondwatermonsterfiche',
+        WfsField(name='pkey_grondwatermonster', source_field='grondwatermonsterfiche',
                  datatype='string'),
         WfsField(name='grondwatermonsternummer', source_field='grondwatermonsternummer',
                  datatype='string'),

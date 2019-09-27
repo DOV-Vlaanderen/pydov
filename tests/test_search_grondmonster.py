@@ -145,35 +145,6 @@ class TestGrondmonsterSearch(AbstractTestSearch):
                 'vloeigrens', 'glauconiet', 'diameter',
                 'fractie', 'methode']
 
-    def test_search_date(self, mp_wfs, mp_remote_describefeaturetype,
-                         mp_remote_md, mp_remote_fc, mp_remote_wfs_feature,
-                         mp_dov_xml):
-        """Test the search method with only the query parameter.
-
-        Test whether the result is correct.
-
-        Parameters
-        ----------
-        mp_wfs : pytest.fixture
-            Monkeypatch the call to the remote GetCapabilities request.
-        mp_remote_describefeaturetype : pytest.fixture
-            Monkeypatch the call to a remote DescribeFeatureType.
-        mp_remote_md : pytest.fixture
-            Monkeypatch the call to get the remote metadata.
-        mp_remote_fc : pytest.fixture
-            Monkeypatch the call to get the remote feature catalogue.
-        mp_remote_wfs_feature : pytest.fixture
-            Monkeypatch the call to get WFS features.
-        mp_dov_xml : pytest.fixture
-            Monkeypatch the call to get the remote XML data.
-
-        """
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single())
-
-        # specific test for the Zulu time wfs 1.1.0 issue
-        assert df.datum.sort_values()[0] == datetime.date(2004, 4, 7)
-
     def test_search_xmlresolving(self, mp_remote_describefeaturetype,
                                  mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with return fields from XML but not from a

@@ -378,7 +378,7 @@ def test_get_description(mp_wfs, objectsearch):
 @pytest.mark.online
 @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
 @pytest.mark.parametrize("objectsearch", search_objects)
-def test_search_location(mp_wfs, objectsearch):
+def test_search_location(objectsearch):
     """Test the get_description method.
 
     Test whether the method returns a non-empty string.
@@ -395,6 +395,8 @@ def test_search_location(mp_wfs, objectsearch):
     objectsearch.search(location=WithinDistance(Point(100000, 100000), 100))
 
 
+@pytest.mark.online
+@pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
 @pytest.mark.parametrize("objectsearch", search_objects)
 def test_search_maxfeatures(objectsearch):
     """Test the search method with a max_features parameter.
@@ -412,6 +414,8 @@ def test_search_maxfeatures(objectsearch):
                         max_features=10)
 
 
+@pytest.mark.online
+@pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
 @pytest.mark.parametrize("objectsearch", search_objects)
 def test_search_maxfeatures_only(objectsearch):
     """Test the search method with only the max_features parameter.

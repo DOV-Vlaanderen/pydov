@@ -14,8 +14,8 @@ Welcome to pydov's documentation!
 .. image:: https://coveralls.io/repos/github/DOV-Vlaanderen/pydov/badge.svg?branch=master
     :target: https://coveralls.io/github/DOV-Vlaanderen/pydov?branch=master
 
-.. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.2788681.svg
-   :target: https://doi.org/10.5281/zenodo.2788681
+.. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.2788680.svg
+   :target: https://doi.org/10.5281/zenodo.2788680
 
 A Python package to query and download data from Databank Ondergrond Vlaanderen (DOV).
 

@@ -482,7 +482,7 @@ class AbstractSearch(AbstractCommon):
 
     @staticmethod
     def _get_remote_wfs_feature(wfs, typename, location, filter, propertyname,
-                                geometry_column):
+                                max_features, geometry_column):
         """Perform the WFS GetFeature call to get features from the remote
         service.
 
@@ -494,6 +494,8 @@ class AbstractSearch(AbstractCommon):
             Location filter limiting the features to retrieve.
         filter : owslib.fes.FilterRequest
             Filter request to search on attribute values.
+        max_features : int
+            Limit the maximum number of features to request.
         propertyname : list<str>
             List of properties to return.
         geometry_column : str
@@ -511,6 +513,7 @@ class AbstractSearch(AbstractCommon):
             typename=typename,
             location=location,
             filter=filter,
+            max_features=max_features,
             propertyname=propertyname
         )
 
@@ -523,7 +526,7 @@ class AbstractSearch(AbstractCommon):
         )
 
     def _search(self, location=None, query=None, return_fields=None,
-                extra_wfs_fields=[]):
+                max_features=None, extra_wfs_fields=[]):
         """Perform the WFS search by issuing a GetFeature request.
 
         Parameters
@@ -539,6 +542,8 @@ class AbstractSearch(AbstractCommon):
             A list of fields to be returned in the output data. This should
             be a subset of the fields provided in `get_fields()`. Note that
             not all fields are currently supported as return fields.
+        max_features : int
+            Limit the maximum number of features to request.
         extra_wfs_fields: list<str>
             A list of extra fields to be included in the WFS requests,
             regardless whether they're needed as return field. Optional,
@@ -613,6 +618,7 @@ class AbstractSearch(AbstractCommon):
             typename=self._layer,
             location=location,
             filter=filter_request,
+            max_features=max_features,
             propertyname=wfs_property_names,
             geometry_column=self._geometry_column)
 

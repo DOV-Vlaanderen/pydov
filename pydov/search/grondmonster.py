@@ -130,7 +130,8 @@ class GrondmonsterSearch(AbstractSearch):
 
         """
         fts = self._search(location=location, query=query,
-                           return_fields=return_fields,)
+                           return_fields=return_fields,
+                           max_features=max_features)
 
         grondmonster = self._type.from_wfs(fts,
                                            self.__wfs_namespace)

@@ -112,7 +112,7 @@ class TestGrondwaterfilterSearch(AbstractTestSearch):
             subtype.
 
         """
-        return ('pkey_grondwatermonster', 'eenheid', 'datum_monstername')
+        return ('pkey_grondwatermonster', 'datum_monstername', 'eenheid')
 
     def get_valid_returnfields_extra(self):
         """Get a list of valid return fields, including extra WFS only
@@ -182,28 +182,5 @@ class TestGrondwaterfilterSearch(AbstractTestSearch):
             query=self.get_valid_query_single())
 
         # specific test for the Zulu time wfs 1.1.0 issue
-        assert df.datum.sort_values()[0] == datetime.date(2004, 4, 7)
+        assert df.datum_monstername.sort_values()[0] == datetime.date(2006, 5, 19)
 
-    def test_search_xmlresolving(self, mp_remote_describefeaturetype,
-                                 mp_remote_wfs_feature, mp_dov_xml):
-        """Test the search method with return fields from XML but not from a
-        subtype.
-
-        Test whether the output dataframe contains the resolved XML data.
-
-        Parameters
-        ----------
-        mp_remote_describefeaturetype : pytest.fixture
-            Monkeypatch the call to a remote DescribeFeatureType.
-        mp_remote_wfs_feature : pytest.fixture
-            Monkeypatch the call to get WFS features.
-        mp_dov_xml : pytest.fixture
-            Monkeypatch the call to get the remote XML data.
-
-        """
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single(),
-            return_fields=('pkey_grondwatermonster', 'parameter', 'waarde',
-                           'eenheid'))
-
-        assert df.meetnet_code[0] == 8

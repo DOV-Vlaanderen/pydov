@@ -2,7 +2,7 @@
 from pydov.types.grondwatermonster import GrondwaterMonster
 from tests.abstract import AbstractTestTypes
 
-from tests.test_search_grondwaterfilter import (
+from tests.test_search_grondwatermonster import (
     wfs_getfeature,
     wfs_feature,
     mp_dov_xml,
@@ -129,7 +129,7 @@ class TestGrondwaterMonster(AbstractTestTypes):
             A tuple containing only valid return fields.
 
         """
-        return ('gemeente', 'y')
+        return ('y', 'gemeente')
 
     def get_valid_returnfields_subtype(self):
         """Get a list of valid return fields, including fields from a subtype.

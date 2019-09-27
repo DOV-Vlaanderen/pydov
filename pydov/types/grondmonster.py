@@ -117,6 +117,21 @@ class Grondmonster(AbstractDovType):
                        'parameter="GLAUCONIET_TOTAAL"]/waarde_numeriek',
                  definition='Glauconiet totaal',
                  datatype='float'),
+        XmlField(name='korrelvolumemassa',
+                 source_xpath='/grondmonster/observatieData/observatie['
+                        'parameter="korrelvolumemassa"]/waarde_numeriek',
+                 definition='',
+                 datatype='float'),
+        XmlField(name='volumemassa',
+                 source_xpath='/grondmonster/observatieData/observatie['
+                        'parameter="volumemassa"]/waarde_numeriek',
+                 definition='',
+                 datatype='float'),
+        XmlField(name='watergehalte',
+                 source_xpath='/grondmonster/observatieData/observatie['
+                        'parameter="watergehalte"]/waarde_numeriek',
+                 definition='',
+                 datatype='float')
     ]
 
     def __init__(self, pkey):

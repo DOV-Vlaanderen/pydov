@@ -136,14 +136,13 @@ class TestGrondmonsterSearch(AbstractTestSearch):
             A list of the column names of the default dataframe.
 
         """
-        return ['pkey_grondmonster', 'naam', 'boornummer',
-                'datum', 'x', 'y',
-                'gemeente', 'diepte_van_m', 'diepte_tot_m',
-                'peil_tot_mtaw', 'monstertype',
-                'astm_naam', 'grondsoort_bggg',
-                'humusgehalte', 'kalkgehalte', 'uitrolgrens',
-                'vloeigrens', 'glauconiet', 'diameter',
-                'fractie', 'methode']
+        return ['pkey_grondmonster', 'naam', 'boornummer', 'datum',
+                'x', 'y', 'gemeente', 'diepte_van_m', 'diepte_tot_m',
+                'peil_tot_mtaw', 'monstertype', 'astm_naam',
+                'grondsoort_bggg', 'humusgehalte', 'kalkgehalte',
+                'uitrolgrens', 'vloeigrens', 'glauconiet',
+                'korrelvolumemassa', 'volumemassa', 'watergehalte',
+                'diameter', 'fractie', 'methode']
 
     def test_search_xmlresolving(self, mp_remote_describefeaturetype,
                                  mp_remote_wfs_feature, mp_dov_xml):

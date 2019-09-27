@@ -58,14 +58,13 @@ class TestGrondmonster(AbstractTestTypes):
             List of field names.
 
         """
-        return ['pkey_grondmonster', 'naam', 'boornummer',
-                'datum', 'x', 'y',
-                'gemeente', 'diepte_van_m', 'diepte_tot_m',
-                'peil_tot_mtaw', 'monstertype',
-                'astm_naam', 'grondsoort_bggg',
-                'humusgehalte', 'kalkgehalte', 'uitrolgrens',
-                'vloeigrens', 'glauconiet', 'diameter',
-                'fractie', 'methode']
+        return ['pkey_grondmonster', 'naam', 'boornummer', 'datum',
+                'x', 'y', 'gemeente', 'diepte_van_m', 'diepte_tot_m',
+                'peil_tot_mtaw', 'monstertype', 'astm_naam',
+                'grondsoort_bggg', 'humusgehalte', 'kalkgehalte',
+                'uitrolgrens', 'vloeigrens', 'glauconiet',
+                'korrelvolumemassa', 'volumemassa', 'watergehalte',
+                'diameter', 'fractie', 'methode']
 
     def get_field_names_subtypes(self):
         """Get the field names of this type that originate from subtypes only.
@@ -88,13 +87,12 @@ class TestGrondmonster(AbstractTestTypes):
             List of field names.
 
         """
-        return ['pkey_grondmonster', 'naam', 'boornummer',
-                'datum', 'x', 'y',
-                'gemeente', 'diepte_van_m', 'diepte_tot_m',
-                'peil_tot_mtaw', 'monstertype',
-                'astm_naam', 'grondsoort_bggg',
-                'humusgehalte', 'kalkgehalte', 'uitrolgrens',
-                'vloeigrens', 'glauconiet',]
+        return ['pkey_grondmonster', 'naam', 'boornummer', 'datum',
+                'x', 'y', 'gemeente', 'diepte_van_m', 'diepte_tot_m',
+                'peil_tot_mtaw', 'monstertype', 'astm_naam',
+                'grondsoort_bggg', 'humusgehalte', 'kalkgehalte',
+                'uitrolgrens', 'vloeigrens', 'glauconiet',
+                'korrelvolumemassa', 'volumemassa', 'watergehalte']
 
     def get_valid_returnfields(self):
         """Get a list of valid return fields from the main type.

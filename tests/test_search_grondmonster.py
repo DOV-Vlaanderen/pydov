@@ -138,7 +138,7 @@ class TestGrondmonsterSearch(AbstractTestSearch):
         """
         return ['pkey_grondmonster', 'naam', 'boornummer', 'datum',
                 'x', 'y', 'gemeente', 'diepte_van_m', 'diepte_tot_m',
-                'peil_tot_mtaw', 'monstertype', 'astm_naam',
+                'peil_van_mtaw', 'peil_tot_mtaw', 'monstertype', 'astm_naam',
                 'grondsoort_bggg', 'humusgehalte', 'kalkgehalte',
                 'uitrolgrens', 'vloeigrens', 'glauconiet',
                 'korrelvolumemassa', 'volumemassa', 'watergehalte',

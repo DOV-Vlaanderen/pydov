@@ -481,7 +481,7 @@ def set_geometry_column(location, geometry_column):
 
 def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
                                  filter=None, propertyname=None,
-                                 version='1.1.0'):
+                                 max_features=None, version='1.1.0'):
     """Build a WFS GetFeature request in XML to be used as payload in a WFS
     GetFeature request using POST.
 
@@ -499,6 +499,8 @@ def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
         Filter request to search on attribute values.
     propertyname : list<str>, optional
         List of properties to return. Defaults to all properties.
+    max_features : int
+        Limit the maximum number of features to request.
     version : str, optional
         WFS version to use. Defaults to 1.1.0
 
@@ -520,6 +522,11 @@ def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
     xml = etree.Element('{http://www.opengis.net/wfs}GetFeature')
     xml.set('service', 'WFS')
     xml.set('version', version)
+
+    if max_features is not None:
+        if (not isinstance(max_features, int)) | (max_features <= 0):
+            raise AttributeError('max_features should be a positive integer')
+        xml.set('maxFeatures', str(max_features))
 
     xml.set('{http://www.w3.org/2001/XMLSchema-instance}schemaLocation',
             'http://www.opengis.net/wfs '

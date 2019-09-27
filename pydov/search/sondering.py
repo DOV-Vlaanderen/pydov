@@ -111,7 +111,7 @@ class SonderingSearch(AbstractSearch):
         Raises
         ------
         pydov.util.errors.InvalidSearchParameterError
-            When not one of `location` or `query` is provided.
+            When not one of `location`, `query` or `max_features` is provided.
 
         pydov.util.errors.InvalidFieldError
             When at least one of the fields in `return_fields` is unknown.

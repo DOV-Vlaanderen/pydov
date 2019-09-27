@@ -115,7 +115,7 @@ class InformeleStratigrafieSearch(AbstractSearch):
         Raises
         ------
         pydov.util.errors.InvalidSearchParameterError
-            When not one of `location` or `query` is provided.
+            When not one of `location`, `query` or `max_features` is provided.
 
         pydov.util.errors.InvalidFieldError
             When at least one of the fields in `return_fields` is unknown.
@@ -253,7 +253,7 @@ class FormeleStratigrafieSearch(AbstractSearch):
         Raises
         ------
         pydov.util.errors.InvalidSearchParameterError
-            When not one of `location` or `query` is provided.
+            When not one of `location`, `query` or `max_features` is provided.
 
         pydov.util.errors.InvalidFieldError
             When at least one of the fields in `return_fields` is unknown.
@@ -395,7 +395,7 @@ class HydrogeologischeStratigrafieSearch(AbstractSearch):
         Raises
         ------
         pydov.util.errors.InvalidSearchParameterError
-            When not one of `location` or `query` is provided.
+            When not one of `location`, `query` or `max_features` is provided.
 
         pydov.util.errors.InvalidFieldError
             When at least one of the fields in `return_fields` is unknown.
@@ -536,7 +536,7 @@ class LithologischeBeschrijvingenSearch(AbstractSearch):
         Raises
         ------
         pydov.util.errors.InvalidSearchParameterError
-            When not one of `location` or `query` is provided.
+            When not one of `location`, `query` or `max_features` is provided.
 
         pydov.util.errors.InvalidFieldError
             When at least one of the fields in `return_fields` is unknown.
@@ -677,7 +677,7 @@ class GecodeerdeLithologieSearch(AbstractSearch):
         Raises
         ------
         pydov.util.errors.InvalidSearchParameterError
-            When not one of `location` or `query` is provided.
+            When not one of `location`, `query` or `max_features` is provided.
 
         pydov.util.errors.InvalidFieldError
             When at least one of the fields in `return_fields` is unknown.
@@ -814,7 +814,7 @@ class GeotechnischeCoderingSearch(AbstractSearch):
         Raises
         ------
         pydov.util.errors.InvalidSearchParameterError
-            When not one of `location` or `query` is provided.
+            When not one of `location`, `query` or `max_features` is provided.
 
         pydov.util.errors.InvalidFieldError
             When at least one of the fields in `return_fields` is unknown.
@@ -954,7 +954,7 @@ class QuartairStratigrafieSearch(AbstractSearch):
         Raises
         ------
         pydov.util.errors.InvalidSearchParameterError
-            When not one of `location` or `query` is provided.
+            When not one of `location`, `query` or `max_features` is provided.
 
         pydov.util.errors.InvalidFieldError
             When at least one of the fields in `return_fields` is unknown.

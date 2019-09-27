@@ -4,6 +4,8 @@
 Sorting and using limit
 =======================
 
+To find data based on the ordering of one or more of its attributes, we can use the sort_by and max_features parameters of the search objects.
+
 Sorting
 *******
 

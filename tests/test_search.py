@@ -35,10 +35,7 @@ from pydov.util.location import (
     WithinDistance,
     Point,
 )
-<<<<<<< HEAD
 from tests.abstract import service_ok
-=======
->>>>>>> master
 
 search_objects = [BoringSearch(),
                   SonderingSearch(),

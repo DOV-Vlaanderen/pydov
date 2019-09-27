@@ -468,7 +468,7 @@ if __name__ == '__main__':
     # types/grondwatermonster
 
     update_file('types/grondwatermonster/grondwatermonster.xml',
-                'https://www.dov.vlaanderen.be/data/monster/2006-115684.xml')
+                'https://www.dov.vlaanderen.be/data/watermonster/2006-115684.xml')
 
     update_file('types/grondwatermonster/wfsgetfeature.xml',
                 'https://www.dov.vlaanderen.be/geoserver/ows?service=WFS'
@@ -495,7 +495,7 @@ if __name__ == '__main__':
                 'https://www.dov.vlaanderen.be/geonetwork/srv/dut/csw'
                 '?Service=CSW&Request=GetRecordById&Version=2.0.2'
                 '&outputSchema=http://www.isotc211.org/2005/gmd'
-                '&elementSetName=full&id=639c9612-4bbb-4826-86fd-fec9afd49bf75')
+                '&elementSetName=full&id=0b378716-39fb-4151-96c5-2021672f4762')
 
     update_file('types/grondwatermonster/wfsdescribefeaturetype.xml',
                 'https://www.dov.vlaanderen.be/geoserver/gw_meetnetten/'

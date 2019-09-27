@@ -14,7 +14,7 @@ from pydov.util import owsutil
 
 
 class InformeleStratigrafieSearch(AbstractSearch):
-    """Search class to retrieve information about boreholes (Boring)."""
+    """Search class to retrieve information about 'informele stratigrafie'."""
 
     __wfs_schema = None
     __wfs_namespace = None
@@ -83,7 +83,7 @@ class InformeleStratigrafieSearch(AbstractSearch):
 
     def search(self, location=None, query=None, return_fields=None,
                max_features=None):
-        """Search for boreholes (Boring). Provide either `location` or `query`.
+        """Search for 'informele stratigrafie'. Provide either `location` or `query`.
         When `return_fields` is None, all fields are returned.
 
         Parameters
@@ -219,8 +219,8 @@ class FormeleStratigrafieSearch(AbstractSearch):
 
     def search(self, location=None, query=None, return_fields=None,
                max_features=None):
-        """Search for boreholes (Boring). Provide either `location` or `query`.
-        When `return_fields` is None, all fields are returned.
+        """Search for 'formele stratigrafie'. Provide either `location` or
+        `query`. When `return_fields` is None, all fields are returned.
 
         Parameters
         ----------

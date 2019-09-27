@@ -55,6 +55,26 @@ def test_get_fields_sourcexml(objecttype):
 
 
 @pytest.mark.parametrize("objecttype", type_objects)
+def test_get_fields_subtypes_notnull(objecttype):
+    """Test the get_fields method for fields of the subtype.
+
+    Test whether all returned fields have 'notnull' = False.
+
+    Fields of a subtype cannot be mandatory since the subtype itself is not
+    compulsory.
+
+    """
+    allfields = objecttype.get_field_names()
+    ownfields = objecttype.get_field_names(include_subtypes=False)
+    subfields = [f for f in allfields if f not in ownfields]
+
+    fields = objecttype.get_fields(source=('xml',))
+    for field in fields.values():
+        if field['name'] in subfields:
+            assert field['notnull'] is False
+
+
+@pytest.mark.parametrize("objecttype", type_objects)
 def test_extend_fields_no_extra(objecttype):
     """Test the extend_fields method for empty extra_fields.
 

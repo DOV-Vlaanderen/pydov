@@ -16,7 +16,11 @@ from pandas.api.types import (
     is_int64_dtype, is_object_dtype,
     is_bool_dtype, is_float_dtype)
 
-from owslib.fes import PropertyIsEqualTo
+from owslib.fes import (
+    PropertyIsEqualTo,
+    SortBy,
+    SortProperty,
+)
 from owslib.etree import etree
 from pydov.types.abstract import AbstractField
 from pydov.util.errors import InvalidFieldError
@@ -504,6 +508,53 @@ class AbstractTestSearch(object):
         assert type(df) is DataFrame
 
         assert list(df) == list(self.get_valid_returnfields_extra())
+
+    def test_search_sortby_valid(self, mp_remote_describefeaturetype,
+                                 mp_remote_wfs_feature, mp_dov_xml):
+        """Test the search method with the query parameter and the sort_by
+        parameter with a valid sort field.
+
+        Test whether a dataframe is returned.
+
+        Parameters
+        ----------
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType.
+        mp_remote_wfs_feature : pytest.fixture
+            Monkeypatch the call to get WFS features.
+        mp_dov_xml : pytest.fixture
+            Monkeypatch the call to get the remote XML data.
+
+        """
+        df = self.get_search_object().search(
+            query=self.get_valid_query_single(),
+            sort_by=SortBy([SortProperty(
+                self.get_valid_returnfields_extra()[0])]))
+
+        assert type(df) is DataFrame
+
+    def test_search_sortby_invalid(self, mp_remote_describefeaturetype,
+                                   mp_remote_wfs_feature, mp_dov_xml):
+        """Test the search method with the query parameter and the sort_by
+        parameter with an invalid sort field.
+
+        Test whether an InvalidFieldError is raised.
+
+        Parameters
+        ----------
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType.
+        mp_remote_wfs_feature : pytest.fixture
+            Monkeypatch the call to get WFS features.
+        mp_dov_xml : pytest.fixture
+            Monkeypatch the call to get the remote XML data.
+
+        """
+        with pytest.raises(InvalidFieldError):
+            df = self.get_search_object().search(
+                query=self.get_valid_query_single(),
+                sort_by=SortBy([SortProperty(
+                    self.get_xml_field())]))
 
     def test_search_xml_noresolve(self, mp_remote_describefeaturetype,
                                   mp_remote_wfs_feature, mp_dov_xml_broken):

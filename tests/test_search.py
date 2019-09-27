@@ -413,6 +413,22 @@ def test_search_maxfeatures(objectsearch):
 
 
 @pytest.mark.parametrize("objectsearch", search_objects)
+def test_search_maxfeatures_only(objectsearch):
+    """Test the search method with only the max_features parameter.
+
+    Test whether no error is raised.
+
+    Parameters
+    ----------
+    objectsearch : pytest.fixture
+        An instance of a subclass of AbstractTestSearch to perform search
+        operations on the corresponding DOV type.
+
+    """
+    objectsearch.search(max_features=1)
+
+
+@pytest.mark.parametrize("objectsearch", search_objects)
 def test_search_nolocation_noquery(objectsearch):
     """Test the search method without providing a location or a query.
 

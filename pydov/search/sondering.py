@@ -131,7 +131,7 @@ class SonderingSearch(AbstractSearch):
             tuple or set.
 
         """
-        fts = self._search(location=location, query=query, sort_by=None,
+        fts = self._search(location=location, query=query, sort_by=sort_by,
                            return_fields=return_fields,
                            max_features=max_features)
 

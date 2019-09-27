@@ -506,8 +506,8 @@ class LithologischeBeschrijvingenSearch(AbstractSearch):
     def search(self, location=None, query=None, sort_by=None,
                return_fields=None, max_features=None):
         """Search for 'lithologische beschrijvingen'. Provide either
-        `location` and/or `query` and/or `max_features`. When `return_fields` is None, all fields
-        are returned.
+        `location` and/or `query` and/or `max_features`.
+        When `return_fields` is None, all fields are returned.
 
         Parameters
         ----------
@@ -647,8 +647,8 @@ class GecodeerdeLithologieSearch(AbstractSearch):
     def search(self, location=None, query=None, sort_by=None,
                return_fields=None, max_features=None):
         """Search for 'gecodeerde lithologie'. Provide either `location`
-        and/or `query` and/or `max_features`. When `return_fields` is None, all fields
-        are returned.
+        and/or `query` and/or `max_features`.
+        When `return_fields` is None, all fields are returned.
 
         Parameters
         ----------
@@ -788,8 +788,8 @@ class GeotechnischeCoderingSearch(AbstractSearch):
     def search(self, location=None, query=None, sort_by=None,
                return_fields=None, max_features=None):
         """Search for 'geotechnische_codering'. Provide either `location`
-        and/or `query` and/or `max_features`. When `return_fields` is None, all fields
-        are returned.
+        and/or `query` and/or `max_features`.
+        When `return_fields` is None, all fields are returned.
 
         Parameters
         ----------

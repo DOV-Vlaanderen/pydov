@@ -551,7 +551,7 @@ if __name__ == '__main__':
         'types/grondmonster/fc_featurecatalogue.xml',
         'https://www.dov.vlaanderen.be/geonetwork/srv/dut/csw'
         '?Service=CSW&Request=GetRecordById&Version=2.0.2'
-        '&outputSchema=http://www.isotc211.org/2005/gmd'
+        '&outputSchema=http://www.isotc211.org/2005/gfc'
         '&elementSetName=full&id=b9338fb5-fc9c-4229-858b-06a5fa3ee49d')
 
     update_file('types/grondmonster/md_metadata.xml',

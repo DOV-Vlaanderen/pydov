@@ -1,9 +1,9 @@
-"""Module grouping tests for the pydov.types.boring module."""
+"""Module grouping tests for the pydov.types.grondmonster module."""
 
 from pydov.types.grondmonster import Grondmonster
 from tests.abstract import AbstractTestTypes
 
-from tests.test_search_boring import (
+from tests.test_search_grondmonster import (
     wfs_getfeature,
     wfs_feature,
     mp_dov_xml,
@@ -23,7 +23,7 @@ class TestGrondmonster(AbstractTestTypes):
             Class reference for the Grondmonster class.
 
         """
-        return Boring
+        return Grondmonster
 
     def get_namespace(self):
         """Get the WFS namespace associated with this datatype.
@@ -43,7 +43,7 @@ class TestGrondmonster(AbstractTestTypes):
         -------
         str
             Base URL for the permanent keys of this datatype. For example
-            "https://www.dov.vlaanderen.be/data/boring/"
+            "https://www.dov.vlaanderen.be/data/grondmonster/"
 
         """
         return 'https://www.dov.vlaanderen.be/data/grondmonster/'
@@ -64,7 +64,8 @@ class TestGrondmonster(AbstractTestTypes):
                 'peil_tot_mtaw', 'monstertype',
                 'astm_naam', 'grondsoort_bggg',
                 'humusgehalte', 'kalkgehalte', 'uitrolgrens',
-                'vloeigrens', 'glauconiet',]
+                'vloeigrens', 'glauconiet', 'diameter',
+                'fractie', 'methode']
 
     def get_field_names_subtypes(self):
         """Get the field names of this type that originate from subtypes only.
@@ -87,10 +88,13 @@ class TestGrondmonster(AbstractTestTypes):
             List of field names.
 
         """
-        return ['pkey_boring', 'boornummer', 'x', 'y', 'mv_mtaw',
-                'start_boring_mtaw', 'gemeente', 'diepte_boring_van',
-                'diepte_boring_tot', 'datum_aanvang', 'uitvoerder',
-                'boorgatmeting']
+        return ['pkey_grondmonster', 'naam', 'boornummer',
+                'x', 'y', 'z_mtaw',
+                'gemeente', 'diepte_van_m', 'diepte_tot_m',
+                'peil_tot_mtaw', 'monstertype',
+                'astm_naam', 'grondsoort_bggg',
+                'humusgehalte', 'kalkgehalte', 'uitrolgrens',
+                'vloeigrens', 'glauconiet',]
 
     def get_valid_returnfields(self):
         """Get a list of valid return fields from the main type.
@@ -101,7 +105,7 @@ class TestGrondmonster(AbstractTestTypes):
             A tuple containing only valid return fields.
 
         """
-        return ('pkey_boring', 'diepte_boring_tot')
+        return ('pkey_grondmonster', 'diepte_tot_m')
 
     def get_valid_returnfields_subtype(self):
         """Get a list of valid return fields, including fields from a subtype.

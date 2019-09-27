@@ -1,4 +1,4 @@
-"""Module grouping tests for the search grondwaterfilter module."""
+"""Module grouping tests for the search grondmonster module."""
 import datetime
 
 from owslib.fes import PropertyIsEqualTo
@@ -29,7 +29,7 @@ location_wfs_describefeaturetype = \
     'tests/data/types/grondmonster/wfsdescribefeaturetype.xml'
 location_wfs_getfeature = 'tests/data/types/grondmonster/wfsgetfeature.xml'
 location_wfs_feature = 'tests/data/types/grondmonster/feature.xml'
-location_dov_xml = 'tests/data/types/grondmonster/grondwaterfilter.xml'
+location_dov_xml = 'tests/data/types/grondmonster/grondmonster.xml'
 location_xsd_base = 'tests/data/types/grondmonster/xsd_*.xml'
 
 
@@ -142,7 +142,8 @@ class TestGrondmonsterSearch(AbstractTestSearch):
                 'peil_tot_mtaw', 'monstertype',
                 'astm_naam', 'grondsoort_bggg',
                 'humusgehalte', 'kalkgehalte', 'uitrolgrens',
-                'vloeigrens', 'glauconiet',]
+                'vloeigrens', 'glauconiet', 'diameter',
+                'fractie', 'methode']
 
     def test_search_date(self, mp_wfs, mp_remote_describefeaturetype,
                          mp_remote_md, mp_remote_fc, mp_remote_wfs_feature,
@@ -192,8 +193,7 @@ class TestGrondmonsterSearch(AbstractTestSearch):
         """
         df = self.get_search_object().search(
             query=self.get_valid_query_single(),
-            return_fields=('pkey_filter', 'gw_id', 'filternummer',
-                           'meetnet_code'))
+            return_fields=('pkey_grondmonster', 'boornummer'))
 
         assert df.humusgehalte[0] == 15.6
         assert df.methode[142] == 'AREOMETER'

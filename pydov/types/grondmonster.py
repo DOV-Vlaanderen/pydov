@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Module containing the DOV data type for screens (Filter), including
+"""Module containing the DOV data type for grondmonster, including
 subtypes."""
 from .abstract import (
     AbstractDovType,

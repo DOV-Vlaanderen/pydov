@@ -10,15 +10,15 @@
         </diepte>
         <observatieData>
             <observatie>
-                <parameter>ASTM_NAAM</parameter>
-                <waarde_text>Organic silt</waarde_text>
+                <parameter>ASTM_CODE</parameter>
+                <waarde_text>OH</waarde_text>
                 <eenheid>-</eenheid>
                 <methode>Onbekend</methode>
                 <veld_labo>LABO</veld_labo>
             </observatie>
             <observatie>
-                <parameter>ASTM_CODE</parameter>
-                <waarde_text>OH</waarde_text>
+                <parameter>ASTM_NAAM</parameter>
+                <waarde_text>Organic silt</waarde_text>
                 <eenheid>-</eenheid>
                 <methode>Onbekend</methode>
                 <veld_labo>LABO</veld_labo>
@@ -31,8 +31,8 @@
                 <veld_labo>LABO</veld_labo>
             </observatie>
             <observatie>
-                <parameter>VLOEIGRENS</parameter>
-                <waarde_numeriek>86.4</waarde_numeriek>
+                <parameter>HUMUSGEHALTE</parameter>
+                <waarde_numeriek>15.6</waarde_numeriek>
                 <eenheid>%</eenheid>
                 <methode>Onbekend</methode>
                 <veld_labo>LABO</veld_labo>
@@ -45,15 +45,15 @@
                 <veld_labo>LABO</veld_labo>
             </observatie>
             <observatie>
-                <parameter>HUMUSGEHALTE</parameter>
-                <waarde_numeriek>15.6</waarde_numeriek>
+                <parameter>UITROLGRENS</parameter>
+                <waarde_numeriek>50.4</waarde_numeriek>
                 <eenheid>%</eenheid>
                 <methode>Onbekend</methode>
                 <veld_labo>LABO</veld_labo>
             </observatie>
             <observatie>
-                <parameter>UITROLGRENS</parameter>
-                <waarde_numeriek>50.4</waarde_numeriek>
+                <parameter>VLOEIGRENS</parameter>
+                <waarde_numeriek>86.4</waarde_numeriek>
                 <eenheid>%</eenheid>
                 <methode>Onbekend</methode>
                 <veld_labo>LABO</veld_labo>

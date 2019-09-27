@@ -34,6 +34,10 @@ class Observatie(AbstractDovSubType):
                  xsd_type=XsdType(
                      xsd_schema=_observatieDataCodes_xsd,
                      typename='MeeteenheidEnumType')),
+        XmlField(name='detectie',
+                 source_xpath='/detectieconditie',
+                 definition='boven/onder detectielimiet',
+                 datatype='string'),
         XmlField(name='waarde',
                  source_xpath='/waarde_numeriek',
                  definition='waarde (numeriek) van de parameter',

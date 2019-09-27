@@ -7,7 +7,6 @@ from .abstract import (
 )
 from pydov.types.fields import (
     WfsField,
-    _CustomField,
     XmlField,
     XsdType,
 )
@@ -18,7 +17,7 @@ class Korrelverdeling(AbstractDovSubType):
     rootpath = './/grondmonster/observatieReeksData/' \
                 'korrelverdeling_reeks/korrelverdeling'
 
-    fields =[
+    fields = [
         XmlField(name='diameter',
                  source_xpath='/diameter',
                  definition='.',
@@ -84,52 +83,52 @@ class Grondmonster(AbstractDovType):
                  datatype='string'),
         XmlField(name='astm_naam',
                  source_xpath='/grondmonster/observatieData/observatie['
-                       'parameter="ASTM_NAAM"]/waarde_text',
+                              'parameter="ASTM_NAAM"]/waarde_text',
                  definition='ASTM_naam',
                  datatype='string'),
         XmlField(name='grondsoort_bggg',
                  source_xpath='/grondmonster/observatieData/observatie['
-                       'parameter="BGGG"]/waarde_text',
+                              'parameter="BGGG"]/waarde_text',
                  definition='Grondsoort BGGG',
                  datatype='string'),
         XmlField(name='humusgehalte',
                  source_xpath='/grondmonster/observatieData/observatie['
-                       'parameter="HUMUSGEHALTE"]/waarde_numeriek',
+                              'parameter="HUMUSGEHALTE"]/waarde_numeriek',
                  definition='Humusgehalte',
                  datatype='float'),
         XmlField(name='kalkgehalte',
                  source_xpath='/grondmonster/observatieData/observatie['
-                       'parameter="KALKGEHALTE"]/waarde_numeriek',
+                              'parameter="KALKGEHALTE"]/waarde_numeriek',
                  definition='Kalkgehalte',
                  datatype='float'),
         XmlField(name='uitrolgrens',
                  source_xpath='/grondmonster/observatieData/observatie['
-                       'parameter="UITROLGRENS"]/waarde_numeriek',
+                              'parameter="UITROLGRENS"]/waarde_numeriek',
                  definition='Uitrolgrens',
                  datatype='float'),
         XmlField(name='vloeigrens',
                  source_xpath='/grondmonster/observatieData/observatie['
-                       'parameter="VLOEIGRENS"]/waarde_numeriek',
+                              'parameter="VLOEIGRENS"]/waarde_numeriek',
                  definition='Vloeigrens',
                  datatype='float'),
         XmlField(name='glauconiet',
                  source_xpath='/grondmonster/observatieData/observatie['
-                       'parameter="GLAUCONIET_TOTAAL"]/waarde_numeriek',
+                              'parameter="GLAUCONIET_TOTAAL"]/waarde_numeriek',
                  definition='Glauconiet totaal',
                  datatype='float'),
         XmlField(name='korrelvolumemassa',
                  source_xpath='/grondmonster/observatieData/observatie['
-                        'parameter="korrelvolumemassa"]/waarde_numeriek',
+                              'parameter="korrelvolumemassa"]/waarde_numeriek',
                  definition='',
                  datatype='float'),
         XmlField(name='volumemassa',
                  source_xpath='/grondmonster/observatieData/observatie['
-                        'parameter="volumemassa"]/waarde_numeriek',
+                              'parameter="volumemassa"]/waarde_numeriek',
                  definition='',
                  datatype='float'),
         XmlField(name='watergehalte',
                  source_xpath='/grondmonster/observatieData/observatie['
-                        'parameter="watergehalte"]/waarde_numeriek',
+                              'parameter="watergehalte"]/waarde_numeriek',
                  definition='',
                  datatype='float')
     ]

@@ -383,6 +383,9 @@ Borehole samples (grondmonsters)
     uitrolgrens,10,float,50.4
     vloeigrens,10,float,86.4
     glauconiet,10,float,nan
+    korrelvolumemassa,10,float,2.65
+    volumemassa,10,float,2.036
+    watergehalte,10,float,19.3
     diameter,10,float,10.
     fractie,10,float,0.
     methode,10,string,zeefproef

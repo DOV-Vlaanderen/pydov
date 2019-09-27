@@ -502,7 +502,8 @@ class AbstractSearch(AbstractCommon):
 
     @staticmethod
     def _get_remote_wfs_feature(wfs, typename, location, filter,
-                                sort_by, propertyname, geometry_column):
+                                sort_by, propertyname, max_features,
+                                geometry_column):
         """Perform the WFS GetFeature call to get features from the remote
         service.
 
@@ -518,6 +519,8 @@ class AbstractSearch(AbstractCommon):
             List of properties to sort by.
         propertyname : list<str>
             List of properties to return.
+        max_features : int
+            Limit the maximum number of features to request.
         geometry_column : str
             Name of the geometry column to use in the spatial filter.
 
@@ -534,6 +537,7 @@ class AbstractSearch(AbstractCommon):
             location=location,
             filter=filter,
             sort_by=sort_by,
+            max_features=max_features,
             propertyname=propertyname
         )
 
@@ -546,7 +550,7 @@ class AbstractSearch(AbstractCommon):
         )
 
     def _search(self, location=None, query=None, return_fields=None,
-                sort_by=None, extra_wfs_fields=[]):
+                sort_by=None, max_features=None, extra_wfs_fields=[]):
         """Perform the WFS search by issuing a GetFeature request.
 
         Parameters
@@ -564,6 +568,8 @@ class AbstractSearch(AbstractCommon):
             not all fields are currently supported as return fields.
         sort_by : owslib.fes.SortBy, optional
             List of properties to sort by.
+        max_features : int
+            Limit the maximum number of features to request.
         extra_wfs_fields: list<str>
             A list of extra fields to be included in the WFS requests,
             regardless whether they're needed as return field. Optional,
@@ -652,6 +658,7 @@ class AbstractSearch(AbstractCommon):
             location=location,
             filter=filter_request,
             sort_by=sort_by,
+            max_features=max_features,
             propertyname=wfs_property_names,
             geometry_column=self._geometry_column)
 
@@ -721,7 +728,8 @@ class AbstractSearch(AbstractCommon):
         self._init_fields()
         return self._fields
 
-    def search(self, location=None, query=None, return_fields=None):
+    def search(self, location=None, query=None,
+               sort_by=None, return_fields=None, max_features=None):
         """Search for objects of this type. Provide `location` and/or `query`.
         When `return_fields` is None, all fields are returned.
 
@@ -738,10 +746,14 @@ class AbstractSearch(AbstractCommon):
             combination of filter elements defined in owslib.fes. The query
             should use the fields provided in `get_fields()`. Note that not
             all fields are currently supported as a search parameter.
+        sort_by : owslib.fes.SortBy, optional
+            List of properties to sort by.
         return_fields : list<str> or tuple<str> or set<str>
             A list of fields to be returned in the output data. This should
             be a subset of the fields provided in `get_fields()`. Note that
             not all fields are currently supported as return fields.
+        max_features : int
+            Limit the maximum number of features to request.
 
         Returns
         -------

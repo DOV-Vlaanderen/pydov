@@ -18,10 +18,16 @@ from pydov.search.grondwaterfilter import GrondwaterFilterSearch
 
 from numpy.compat import unicode
 
-from pydov.search.interpretaties import InformeleStratigrafieSearch
+from pydov.search.interpretaties import (
+    InformeleStratigrafieSearch,
+    FormeleStratigrafieSearch,
+    GeotechnischeCoderingSearch,
+    QuartairStratigrafieSearch,
+)
 from pydov.search.interpretaties import HydrogeologischeStratigrafieSearch
 from pydov.search.interpretaties import GecodeerdeLithologieSearch
 from pydov.search.interpretaties import LithologischeBeschrijvingenSearch
+from pydov.search.sondering import SonderingSearch
 from pydov.util.errors import (
     InvalidSearchParameterError,
 )
@@ -29,10 +35,17 @@ from pydov.util.location import (
     WithinDistance,
     Point,
 )
+<<<<<<< HEAD
 from tests.abstract import service_ok
+=======
+>>>>>>> master
 
 search_objects = [BoringSearch(),
+                  SonderingSearch(),
                   GrondwaterFilterSearch(),
+                  FormeleStratigrafieSearch(),
+                  GeotechnischeCoderingSearch(),
+                  QuartairStratigrafieSearch(),
                   InformeleStratigrafieSearch(),
                   HydrogeologischeStratigrafieSearch(),
                   GecodeerdeLithologieSearch(),
@@ -383,6 +396,23 @@ def test_search_location(mp_wfs, objectsearch):
 
     """
     objectsearch.search(location=WithinDistance(Point(100000, 100000), 100))
+
+
+@pytest.mark.parametrize("objectsearch", search_objects)
+def test_search_maxfeatures(objectsearch):
+    """Test the search method with a max_features parameter.
+
+    Test whether no error is raised.
+
+    Parameters
+    ----------
+    objectsearch : pytest.fixture
+        An instance of a subclass of AbstractTestSearch to perform search
+        operations on the corresponding DOV type.
+
+    """
+    objectsearch.search(location=WithinDistance(Point(100000, 100000), 100),
+                        max_features=10)
 
 
 @pytest.mark.parametrize("objectsearch", search_objects)

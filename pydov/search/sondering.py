@@ -79,7 +79,8 @@ class SonderingSearch(AbstractSearch):
     def search(self, location=None, query=None, sort_by=None,
                return_fields=None, max_features=None):
         """Search for CPT measurements (Sondering). Provide `location` and/or
-        `query`. When `return_fields` is None, all fields are returned.
+        `query` and/or `max_features`.
+        When `return_fields` is None, all fields are returned.
 
         Parameters
         ----------

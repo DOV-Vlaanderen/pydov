@@ -76,7 +76,8 @@ class BoringSearch(AbstractSearch):
 
     def search(self, location=None, query=None,
                sort_by=None, return_fields=None, max_features=None):
-        """Search for boreholes (Boring). Provide `location` and/or `query`.
+        """Search for boreholes (Boring). Provide `location` and/or `query`
+        and/or `max_features`.
         When `return_fields` is None, all fields are returned.
 
         Parameters

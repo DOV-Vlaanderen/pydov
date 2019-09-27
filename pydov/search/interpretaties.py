@@ -82,7 +82,8 @@ class InformeleStratigrafieSearch(AbstractSearch):
 
     def search(self, location=None, query=None, sort_by=None,
                return_fields=None, max_features=None):
-        """Search for boreholes (Boring). Provide either `location` or `query`.
+        """Search for boreholes (Boring). Provide either `location` and/or
+        `query` and/or `max_features`.
         When `return_fields` is None, all fields are returned.
 
         Parameters
@@ -220,7 +221,8 @@ class FormeleStratigrafieSearch(AbstractSearch):
 
     def search(self, location=None, query=None, sort_by=None,
                return_fields=None, max_features=None):
-        """Search for boreholes (Boring). Provide either `location` or `query`.
+        """Search for boreholes (Boring). Provide either `location` and/or
+        `query` and/or `max_features`.
         When `return_fields` is None, all fields are returned.
 
         Parameters
@@ -362,7 +364,8 @@ class HydrogeologischeStratigrafieSearch(AbstractSearch):
     def search(self, location=None, query=None, sort_by=None,
                return_fields=None, max_features=None):
         """Search for hydrogeological interpretations. Provide either
-        `location` or `query`. When `return_fields` is None, all fields
+        `location` and/or `query` and/or `max_features`. When
+        `return_fields` is None, all fields
         are returned.
 
         Parameters
@@ -503,7 +506,7 @@ class LithologischeBeschrijvingenSearch(AbstractSearch):
     def search(self, location=None, query=None, sort_by=None,
                return_fields=None, max_features=None):
         """Search for 'lithologische beschrijvingen'. Provide either
-        `location` or `query`. When `return_fields` is None, all fields
+        `location` and/or `query` and/or `max_features`. When `return_fields` is None, all fields
         are returned.
 
         Parameters
@@ -643,8 +646,8 @@ class GecodeerdeLithologieSearch(AbstractSearch):
 
     def search(self, location=None, query=None, sort_by=None,
                return_fields=None, max_features=None):
-        """Search for 'gecodeerde lithologie'. Provide either
-        `location` or `query`. When `return_fields` is None, all fields
+        """Search for 'gecodeerde lithologie'. Provide either `location`
+        and/or `query` and/or `max_features`. When `return_fields` is None, all fields
         are returned.
 
         Parameters
@@ -784,8 +787,8 @@ class GeotechnischeCoderingSearch(AbstractSearch):
 
     def search(self, location=None, query=None, sort_by=None,
                return_fields=None, max_features=None):
-        """Search for 'geotechnische_codering'. Provide either
-        `location` or `query`. When `return_fields` is None, all fields
+        """Search for 'geotechnische_codering'. Provide either `location`
+        and/or `query` and/or `max_features`. When `return_fields` is None, all fields
         are returned.
 
         Parameters
@@ -921,7 +924,7 @@ class QuartairStratigrafieSearch(AbstractSearch):
                max_features=None):
         """Search for interpretations of Quartair stratigrafie.
 
-        Provide either `location` or `query`.
+        Provide either `location` and/or `query` and/or `max_features`.
         When `return_fields` is None, all fields are returned.
 
         Parameters

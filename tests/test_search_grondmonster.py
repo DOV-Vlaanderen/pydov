@@ -88,7 +88,7 @@ class TestGrondmonsterSearch(AbstractTestSearch):
             The name of the XML field.
 
         """
-        return 'monstertype'
+        return 'astm_naam'
 
     def get_valid_returnfields(self):
         """Get a list of valid return fields from the main type.
@@ -137,7 +137,7 @@ class TestGrondmonsterSearch(AbstractTestSearch):
 
         """
         return ['pkey_grondmonster', 'naam', 'boornummer',
-                'x', 'y', 'z_mtaw',
+                'datum', 'x', 'y', 'z_mtaw',
                 'gemeente', 'diepte_van_m', 'diepte_tot_m',
                 'peil_tot_mtaw', 'monstertype',
                 'astm_naam', 'grondsoort_bggg',
@@ -193,7 +193,8 @@ class TestGrondmonsterSearch(AbstractTestSearch):
         """
         df = self.get_search_object().search(
             query=self.get_valid_query_single(),
-            return_fields=('pkey_grondmonster', 'boornummer'))
+            return_fields=('pkey_grondmonster', 'boornummer', 'humusgehalte',
+                           'methode'))
 
         assert df.humusgehalte[0] == 15.6
-        assert df.methode[142] == 'AREOMETER'
+        assert df.methode[22] == 'AREOMETER'

@@ -59,7 +59,7 @@ class TestGrondmonster(AbstractTestTypes):
 
         """
         return ['pkey_grondmonster', 'naam', 'boornummer',
-                'x', 'y', 'z_mtaw',
+                'datum', 'x', 'y', 'z_mtaw',
                 'gemeente', 'diepte_van_m', 'diepte_tot_m',
                 'peil_tot_mtaw', 'monstertype',
                 'astm_naam', 'grondsoort_bggg',
@@ -89,7 +89,7 @@ class TestGrondmonster(AbstractTestTypes):
 
         """
         return ['pkey_grondmonster', 'naam', 'boornummer',
-                'x', 'y', 'z_mtaw',
+                'datum', 'x', 'y', 'z_mtaw',
                 'gemeente', 'diepte_van_m', 'diepte_tot_m',
                 'peil_tot_mtaw', 'monstertype',
                 'astm_naam', 'grondsoort_bggg',

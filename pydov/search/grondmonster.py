@@ -77,7 +77,8 @@ class GrondmonsterSearch(AbstractSearch):
                 GrondmonsterSearch.__fc_featurecatalogue,
                 GrondmonsterSearch.__xsd_schemas)
 
-    def search(self, location=None, query=None, return_fields=None):
+    def search(self, location=None, query=None, return_fields=None,
+               max_features=None):
         """Search for ground samples (Grondmonster). Provide either
         `location` or `query`. When `return_fields` is None,
         all fields are returned.

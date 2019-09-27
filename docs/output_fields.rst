@@ -358,3 +358,32 @@ Quaternary stratigraphy (Quartaire stratigrafie)
     lid1,10,string,F1
     relatie_lid1_lid2,10,string,T
     lid2,10,string,F1
+
+Borehole samples (grondmonsters)
+--------------------------------
+  .. csv-table:: Borehole samples (grondmonsters)
+    :header-rows: 1
+
+    Field,Cost,Datatype,Example
+    pkey_grondmonster,1,string,https://www.dov.vlaanderen.be/data/grondmonster/2017-16875
+    naam,1,string,N3A
+    boornummer,1,string,GEO-04/024-B6
+    gemeente,1,string,Wichelen
+    datum,1,date,nan
+    x,1,float,123280
+    y,1,float,188129
+    diepte_van_m,1,float,1.5
+    diepte_tot_m,1,float,2.0
+    peil_tot_mtaw,1,float,4.16
+    monstertype,10,string,ongeroerd
+    astm_naam,10,string,Organic silt
+    grondsoort_bggg,10,string,humus klei
+    humusgehalte,10,float,15.6
+    kalkgehalte,10,float,4.4
+    uitrolgrens,10,float,50.4
+    vloeigrens,10,float,86.4
+    glauconiet,10,float,nan
+    diameter,10,float,10.
+    fractie,10,float,0.
+    methode,10,string,zeefproef
+

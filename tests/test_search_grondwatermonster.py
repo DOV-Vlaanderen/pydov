@@ -1,4 +1,4 @@
-"""Module grouping tests for the search grondwaterfilter module."""
+"""Module grouping tests for the search grondwatermonster module."""
 import datetime
 
 from owslib.fes import PropertyIsEqualTo
@@ -33,7 +33,7 @@ location_dov_xml = 'tests/data/types/grondwatermonster/grondwatermonster.xml'
 location_xsd_base = 'tests/data/types/grondwatermonster/xsd_*.xml'
 
 
-class TestGrondwaterfilterSearch(AbstractTestSearch):
+class TestGrondwaterMonsterSearch(AbstractTestSearch):
     def get_search_object(self):
         """Get an instance of the search object for this type.
 
@@ -50,8 +50,8 @@ class TestGrondwaterfilterSearch(AbstractTestSearch):
 
         Returns
         -------
-        pydov.types.grondwaterfilter.GrondwaterFilter
-            Class reference for the GrondwaterFilter class.
+        pydov.types.grondwatermonster.GrondwaterMonster
+            Class reference for the GrondwaterMonster class.
 
         """
         return GrondwaterMonster
@@ -65,7 +65,7 @@ class TestGrondwaterfilterSearch(AbstractTestSearch):
             OGC expression of the query.
 
         """
-        return PropertyIsEqualTo(propertyname='filterfiche',
+        return PropertyIsEqualTo(propertyname='grondwatermonsterfiche',
                                  literal='https://www.dov.vlaanderen.be/data/'
                                          'watermonster/2006-115684')
 

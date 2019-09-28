@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-"""Module containing the DOV data type for groundwater samples (GrondwaterMonsters), including
-subtypes."""
+"""Module containing the DOV data type for groundwater samples
+(GrondwaterMonsters), including subtypes."""
 from pydov.types.fields import (
     XmlField,
     XsdType,
@@ -59,11 +59,14 @@ class GrondwaterMonster(AbstractDovType):
     subtypes = [Observatie]
 
     fields = [
-        WfsField(name='pkey_grondwatermonster', source_field='grondwatermonsterfiche',
+        WfsField(name='pkey_grondwatermonster',
+                 source_field='grondwatermonsterfiche',
                  datatype='string'),
-        WfsField(name='grondwatermonsternummer', source_field='grondwatermonsternummer',
+        WfsField(name='grondwatermonsternummer',
+                 source_field='grondwatermonsternummer',
                  datatype='string'),
-        WfsField(name='pkey_grondwaterlocatie', source_field='grondwaterlocatiefiche',
+        WfsField(name='pkey_grondwaterlocatie',
+                 source_field='grondwaterlocatiefiche',
                  datatype='string'),
         WfsField(name='pkey_filter', source_field='filterfiche',
                  datatype='string'),
@@ -74,7 +77,8 @@ class GrondwaterMonster(AbstractDovType):
         WfsField(name='y', source_field='Y_mL72', datatype='float'),
         WfsField(name='mv_mtaw', source_field='Z_mTAW', datatype='float'),
         WfsField(name='gemeente', source_field='gemeente', datatype='string'),
-        WfsField(name='datum_monstername', source_field='datum_monstername', datatype='date'),
+        WfsField(name='datum_monstername', source_field='datum_monstername',
+                 datatype='date'),
     ]
 
     def __init__(self, pkey):
@@ -83,7 +87,8 @@ class GrondwaterMonster(AbstractDovType):
         Parameters
         ----------
         pkey : str
-            Permanent key of the GrondwaterMonster (groundwater sample), being a URI of the form
+            Permanent key of the GrondwaterMonster (groundwater sample), being
+            a URI of the form
             `https://www.dov.vlaanderen.be/data/watermonster/<id>`.
 
         """
@@ -108,7 +113,8 @@ class GrondwaterMonster(AbstractDovType):
 
         """
         gwmonster = cls(
-            feature.findtext('./{{{}}}grondwatermonsterfiche'.format(namespace)))
+            feature.findtext(
+                './{{{}}}grondwatermonsterfiche'.format(namespace)))
 
         for field in cls.get_fields(source=('wfs',)).values():
             gwmonster.data[field['name']] = cls._parse(

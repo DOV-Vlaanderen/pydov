@@ -1,5 +1,6 @@
 import datetime
 import re
+import sys
 
 import numpy as np
 from collections import OrderedDict
@@ -349,6 +350,14 @@ class AbstractTestSearch(object):
         for field in list(df):
             field_datatype = fields[field]['type']
             datatypes = set((type(i) for i in df[field].dropna()))
+
+
+            if sys.version_info[0] == 2 and field_datatype == 'string':
+                # for Python 2 - unicode and str are considered separate types
+                # both might occur together, eg in parameter: EH
+                assert all([isinstance(i, basestring) for i in df[field] ])
+                return
+
             assert len(datatypes) <= 1
 
             if len(datatypes) > 0:

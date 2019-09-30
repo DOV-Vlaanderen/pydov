@@ -389,8 +389,9 @@ Borehole samples (grondmonsters)
     :header-rows: 1
 
     Field,Cost,Datatype,Example
-    pkey_grondmonster,1,string,https://www.dov.vlaanderen.be/data/grondmonster/2017-16875
+    pkey_grondmonster,1,string,https://www.dov.vlaanderen.be/data/grondmonster/2017-168758
     naam,1,string,N3A
+    pkey_boring,1,string,https://www.dov.vlaanderen.be/data/boring/2005-003015
     boornummer,1,string,GEO-04/024-B6
     gemeente,1,string,Wichelen
     datum,1,date,nan

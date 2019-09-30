@@ -58,8 +58,8 @@ class TestGrondmonster(AbstractTestTypes):
             List of field names.
 
         """
-        return ['pkey_grondmonster', 'naam', 'boornummer', 'datum',
-                'x', 'y', 'gemeente', 'diepte_van_m', 'diepte_tot_m',
+        return ['pkey_grondmonster', 'naam', 'pkey_boring', 'boornummer',
+                'datum', 'x', 'y', 'gemeente', 'diepte_van_m', 'diepte_tot_m',
                 'peil_van_mtaw', 'peil_tot_mtaw', 'monstertype', 'astm_naam',
                 'grondsoort_bggg', 'humusgehalte', 'kalkgehalte',
                 'uitrolgrens', 'vloeigrens', 'glauconiet',
@@ -87,8 +87,8 @@ class TestGrondmonster(AbstractTestTypes):
             List of field names.
 
         """
-        return ['pkey_grondmonster', 'naam', 'boornummer', 'datum',
-                'x', 'y', 'gemeente', 'diepte_van_m', 'diepte_tot_m',
+        return ['pkey_grondmonster', 'naam', 'pkey_boring', 'boornummer',
+                'datum', 'x', 'y', 'gemeente', 'diepte_van_m', 'diepte_tot_m',
                 'peil_van_mtaw', 'peil_tot_mtaw', 'monstertype', 'astm_naam',
                 'grondsoort_bggg', 'humusgehalte', 'kalkgehalte',
                 'uitrolgrens', 'vloeigrens', 'glauconiet',

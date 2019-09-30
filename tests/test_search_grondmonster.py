@@ -136,8 +136,8 @@ class TestGrondmonsterSearch(AbstractTestSearch):
             A list of the column names of the default dataframe.
 
         """
-        return ['pkey_grondmonster', 'naam', 'boornummer', 'datum',
-                'x', 'y', 'gemeente', 'diepte_van_m', 'diepte_tot_m',
+        return ['pkey_grondmonster', 'naam', 'pkey_boring', 'boornummer',
+                'datum', 'x', 'y', 'gemeente', 'diepte_van_m', 'diepte_tot_m',
                 'peil_van_mtaw', 'peil_tot_mtaw', 'monstertype', 'astm_naam',
                 'grondsoort_bggg', 'humusgehalte', 'kalkgehalte',
                 'uitrolgrens', 'vloeigrens', 'glauconiet',

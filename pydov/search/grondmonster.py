@@ -100,6 +100,8 @@ class GrondmonsterSearch(AbstractSearch):
             A list of fields to be returned in the output data. This should
             be a subset of the fields provided in `get_fields()`. Note that
             not all fields are currently supported as return fields.
+        max_features : int
+            Limit the maximum number of features to request.
 
         Returns
         -------

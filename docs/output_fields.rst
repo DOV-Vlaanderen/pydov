@@ -223,6 +223,24 @@ CPT measurements (sonderingen)
     u,10,float,7
     i,10,float,0.1
 
+Groundwater locations (grondwaterlocaties)
+------------------------------------------
+
+  .. csv-table:: Groundwater screens (grondwaterfilters)
+    :header-rows: 1
+
+    Field,Cost,Datatype,Example
+    pkey_grondwaterlocatie,1,string,https://www.dov.vlaanderen.be/data/put/2017-001859
+    gw_id,1,string,700/73/1
+    x,1,float,149008
+    y,1,float,157710
+    mv_mtaw,10,float,121.01
+    start_grondwaterlocatie_mtaw,1,float,121.01
+    gemeente,1,string,Sint-Genesius-Rode
+    beheerder_vanaf,10,date,2003-09-17
+    beheerder_tot,10,date,NaN
+    beheerder,10,string,VMM - AFDELING WATER
+
 Groundwater screens (grondwaterfilters)
 ---------------------------------------
   .. csv-table:: Groundwater screens (grondwaterfilters)
@@ -236,7 +254,7 @@ Groundwater screens (grondwaterfilters)
     filtertype,1,string,peilfilter
     x,1,float,110490
     y,1,float,194090
-    mv_mtaw,10,float,NaN
+    start_grondwaterlocatie_mtaw,10,float,NaN
     gemeente,1,string,Destelbergen
     meetnet_code,10,integer,1
     aquifer_code,10,string,0100

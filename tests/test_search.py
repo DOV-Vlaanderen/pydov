@@ -13,6 +13,7 @@ from pydov.search.grondwaterfilter import GrondwaterFilterSearch
 
 from numpy.compat import unicode
 
+from pydov.search.grondwaterlocatie import GrondwaterLocatieSearch
 from pydov.search.interpretaties import (
     InformeleStratigrafieSearch,
     FormeleStratigrafieSearch,
@@ -33,6 +34,7 @@ from pydov.util.location import (
 
 search_objects = [BoringSearch(),
                   SonderingSearch(),
+                  GrondwaterLocatieSearch(),
                   GrondwaterFilterSearch(),
                   FormeleStratigrafieSearch(),
                   GeotechnischeCoderingSearch(),

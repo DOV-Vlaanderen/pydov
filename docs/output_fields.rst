@@ -252,6 +252,29 @@ Groundwater screens (grondwaterfilters)
     filterstatus,10,string,1
     filtertoestand,10,string,in rust
 
+Groundwater samples (grondwatermonsters)
+----------------------------------------
+  .. csv-table:: Groundwater screens (grondwaterfilters)
+    :header-rows: 1
+
+    Field,Cost,Datatype,Example
+    pkey_grondwatermonster,1,string,https://www.dov.vlaanderen.be/data/watermonster/2010-001344
+    grondwatermonsternummer,1,string,2-0114/M2010
+    pkey_grondwaterlocatie,1,string,https://www.dov.vlaanderen.be/data/put/2017-000096
+    gw_id,1,string,2-0114
+    pkey_filter,1,string,https://www.dov.vlaanderen.be/data/filter/1996-001085
+    filternummer,1,string,1
+    x,1,float,153030
+    y,1,float,158805
+    start_grondwaterlocatie_mtaw,1,float,129.88
+    gemeente,1,string,Sint-Genesius-Rode
+    parametergroep,10,string,Zware metalen
+    parameter,10,string,Hg
+    detectie,10,string,<
+    waarde,10,float,0.5
+    eenheid,10,string,µg/l
+    veld_labo,10,string,LABO
+
 Formal stratigraphy (Formele stratigrafie)
 ------------------------------------------
   .. csv-table:: Formal stratigraphy (Formele stratigrafie)

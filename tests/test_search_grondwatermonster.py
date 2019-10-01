@@ -137,23 +137,11 @@ class TestGrondwaterMonsterSearch(AbstractTestSearch):
             A list of the column names of the default dataframe.
 
         """
-        return ['pkey_grondwatermonster',
-            'grondwatermonsternummer',
-            'pkey_grondwaterlocatie',
-            'pkey_filter',
-            'gw_id',
-            'filternummer',
-            'x',
-            'y',
-            'mv_mtaw',
-            'gemeente',
-            'datum_monstername',
-            'parameter',
-            'eenheid',
-            'detectie',
-            'waarde',
-            'parametergroep',
-            'veld_labo']
+        return ['pkey_grondwatermonster', 'grondwatermonsternummer',
+                'pkey_grondwaterlocatie', 'gw_id', 'pkey_filter',
+                'filternummer', 'x', 'y', 'mv_mtaw', 'gemeente',
+                'datum_monstername', 'parametergroep', 'parameter', 'detectie',
+                'waarde', 'eenheid', 'veld_labo']
 
     def test_search_date(self, mp_wfs, mp_remote_describefeaturetype,
                          mp_remote_md, mp_remote_fc, mp_remote_wfs_feature,

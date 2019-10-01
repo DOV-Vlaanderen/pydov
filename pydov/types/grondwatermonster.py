@@ -20,6 +20,10 @@ class Observatie(AbstractDovSubType):
     rootpath = './/filtermeting/watermonster/observatie'
 
     fields = [
+        XmlField(name='parametergroep',
+                 source_xpath='/parametergroep',
+                 definition='Parametergroep',
+                 datatype='string'),
         XmlField(name='parameter',
                  source_xpath='/parameter',
                  definition='Parameter',
@@ -27,13 +31,6 @@ class Observatie(AbstractDovSubType):
                  xsd_type=XsdType(
                      xsd_schema=_observatieDataCodes_xsd,
                      typename='ParameterEnumType')),
-        XmlField(name='eenheid',
-                 source_xpath='/eenheid',
-                 definition='Eenheid',
-                 datatype='string',
-                 xsd_type=XsdType(
-                     xsd_schema=_observatieDataCodes_xsd,
-                     typename='MeeteenheidEnumType')),
         XmlField(name='detectie',
                  source_xpath='/detectieconditie',
                  definition='boven/onder detectielimiet',
@@ -42,10 +39,13 @@ class Observatie(AbstractDovSubType):
                  source_xpath='/waarde_numeriek',
                  definition='waarde (numeriek) van de parameter',
                  datatype='float'),
-        XmlField(name='parametergroep',
-                 source_xpath='/parametergroep',
-                 definition='Parametergroep',
-                 datatype='string'),
+        XmlField(name='eenheid',
+                 source_xpath='/eenheid',
+                 definition='Eenheid',
+                 datatype='string',
+                 xsd_type=XsdType(
+                     xsd_schema=_observatieDataCodes_xsd,
+                     typename='MeeteenheidEnumType')),
         XmlField(name='veld_labo',
                  source_xpath='/veld_labo',
                  definition='observatie in het LABO of op het VELD',
@@ -68,9 +68,9 @@ class GrondwaterMonster(AbstractDovType):
         WfsField(name='pkey_grondwaterlocatie',
                  source_field='grondwaterlocatiefiche',
                  datatype='string'),
+        WfsField(name='gw_id', source_field='GW_ID', datatype='string'),
         WfsField(name='pkey_filter', source_field='filterfiche',
                  datatype='string'),
-        WfsField(name='gw_id', source_field='GW_ID', datatype='string'),
         WfsField(name='filternummer', source_field='filternr',
                  datatype='string'),
         WfsField(name='x', source_field='X_mL72', datatype='float'),

@@ -60,9 +60,9 @@ class TestGrondwaterMonster(AbstractTestTypes):
         """
         return ['pkey_grondwatermonster', 'grondwatermonsternummer',
                 'pkey_grondwaterlocatie', 'gw_id', 'pkey_filter',
-                'filternummer', 'x', 'y', 'mv_mtaw', 'gemeente',
-                'datum_monstername', 'parametergroep', 'parameter', 'detectie',
-                'waarde', 'eenheid', 'veld_labo']
+                'filternummer', 'x', 'y', 'start_grondwaterlocatie_mtaw',
+                'gemeente', 'datum_monstername', 'parametergroep',
+                'parameter', 'detectie', 'waarde', 'eenheid', 'veld_labo']
 
     def get_field_names_subtypes(self):
         """Get the field names of this type that originate from subtypes only.
@@ -88,8 +88,8 @@ class TestGrondwaterMonster(AbstractTestTypes):
         """
         return ['pkey_grondwatermonster', 'grondwatermonsternummer',
                 'pkey_grondwaterlocatie', 'gw_id', 'pkey_filter',
-                'filternummer', 'x', 'y', 'mv_mtaw', 'gemeente',
-                'datum_monstername']
+                'filternummer', 'x', 'y', 'start_grondwaterlocatie_mtaw',
+                'gemeente', 'datum_monstername']
 
     def get_valid_returnfields(self):
         """Get a list of valid return fields from the main type.

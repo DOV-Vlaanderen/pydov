@@ -139,9 +139,9 @@ class TestGrondwaterMonsterSearch(AbstractTestSearch):
         """
         return ['pkey_grondwatermonster', 'grondwatermonsternummer',
                 'pkey_grondwaterlocatie', 'gw_id', 'pkey_filter',
-                'filternummer', 'x', 'y', 'mv_mtaw', 'gemeente',
-                'datum_monstername', 'parametergroep', 'parameter', 'detectie',
-                'waarde', 'eenheid', 'veld_labo']
+                'filternummer', 'x', 'y', 'start_grondwaterlocatie_mtaw',
+                'gemeente', 'datum_monstername', 'parametergroep',
+                'parameter', 'detectie', 'waarde', 'eenheid', 'veld_labo']
 
     def test_search_date(self, mp_wfs, mp_remote_describefeaturetype,
                          mp_remote_md, mp_remote_fc, mp_remote_wfs_feature,

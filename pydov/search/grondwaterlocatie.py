@@ -3,11 +3,6 @@
  data."""
 import pandas as pd
 
-from owslib.fes import (
-    Not,
-    PropertyIsNull,
-    And,
-)
 from pydov.types.fields import _WfsInjectedField
 from pydov.types.grondwaterlocatie import GrondwaterLocatie
 from .abstract import AbstractSearch

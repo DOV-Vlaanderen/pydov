@@ -6,6 +6,7 @@ from owslib.util import openURL
 
 from pydov.types.boring import Boring
 from pydov.types.grondwaterfilter import GrondwaterFilter
+from pydov.types.grondwaterlocatie import GrondwaterLocatie
 from pydov.types.interpretaties import (
     GeotechnischeCodering,
     GecodeerdeLithologie,
@@ -462,6 +463,48 @@ if __name__ == '__main__':
     for xsd_schema in GrondwaterFilter.get_xsd_schemas():
         update_file(
             'types/grondwaterfilter/xsd_%s.xml' % xsd_schema.split('/')[-1],
+            xsd_schema)
+
+    # types/grondwaterlocaties
+
+    update_file('types/grondwaterlocatie/grondwaterlocatie.xml',
+                'https://www.dov.vlaanderen.be/data/put/2019-019725.xml')
+
+    update_file('types/grondwaterlocatie/wfsgetfeature.xml',
+                'https://www.dov.vlaanderen.be/geoserver/ows?service=WFS'
+                '&version=1.1.0&request=GetFeature&typeName='
+                'gw_meetnetten:meetnetten&maxFeatures=1&'
+                'CQL_Filter=putfiche=%27https://www.dov'
+                '.vlaanderen.be/data/put/2019-019725%27')
+
+    update_file('types/grondwaterlocatie/feature.xml',
+                'https://www.dov.vlaanderen.be/geoserver/ows?service=WFS'
+                '&version=1.1.0&request=GetFeature&typeName='
+                'gw_meetnetten:meetnetten&maxFeatures=1&'
+                'CQL_Filter=putfiche=%27https://www.dov'
+                '.vlaanderen.be/data/put/2019-019725%27',
+                get_first_featuremember)
+
+    update_file('types/grondwaterlocatie/fc_featurecatalogue.xml',
+                'https://www.dov.vlaanderen.be/geonetwork/srv/dut/csw'
+                '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+                '&outputSchema=http://www.isotc211.org/2005/gfc'
+                '&elementSetName=full&id=b142965f-b2aa-429e-86ff-a7cb0e065d48')
+
+    update_file('types/grondwaterlocatie/md_metadata.xml',
+                'https://www.dov.vlaanderen.be/geonetwork/srv/dut/csw'
+                '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+                '&outputSchema=http://www.isotc211.org/2005/gmd'
+                '&elementSetName=full&id=6c39d716-aecc-4fbc-bac8-4f05a49a78d5')
+
+    update_file('types/grondwaterlocatie/wfsdescribefeaturetype.xml',
+                'https://www.dov.vlaanderen.be/geoserver/gw_meetnetten/'
+                'meetnetten/ows?service=wfs&version=1.1.0&'
+                'request=DescribeFeatureType')
+
+    for xsd_schema in GrondwaterLocatie.get_xsd_schemas():
+        update_file(
+            'types/grondwaterlocatie/xsd_%s.xml' % xsd_schema.split('/')[-1],
             xsd_schema)
 
     # util/owsutil

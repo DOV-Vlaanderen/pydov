@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns3:dov-schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns3="http://kern.schemas.dov.vlaanderen.be" xsi:schemaLocation="http://kern.schemas.dov.vlaanderen.be https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/dov.xsd">
+    <grondwaterlocatie>
+        <identificatie>4-004674</identificatie>
+        <grondwaterlocatieType>PUT</grondwaterlocatieType>
+        <puntligging>
+            <xy>
+                <x>93400.00</x>
+                <y>168556.00</y>
+                <betrouwbaarheid>goed</betrouwbaarheid>
+                <methode_opmeten>gedigitaliseerd op topokaart</methode_opmeten>
+                <origine_opmeten>
+                    <naam>VMM - Afdeling Operationeel Waterbeheer</naam>
+                </origine_opmeten>
+            </xy>
+            <beschrijving_locatie></beschrijving_locatie>
+            <gemeente>45061</gemeente>
+            <oorspronkelijk_maaiveld>
+                <waarde>11.82</waarde>
+                <betrouwbaarheid>goed</betrouwbaarheid>
+                <methode_opmeten>afgeleid van topokaart</methode_opmeten>
+                <origine_opmeten>
+                    <naam>VMM - Afdeling Operationeel Waterbeheer</naam>
+                </origine_opmeten>
+            </oorspronkelijk_maaiveld>
+            <start_tov_maaiveld>
+                <gestart_op>MAAIVELD</gestart_op>
+            </start_tov_maaiveld>
+        </puntligging>
+        <diepte>18.00</diepte>
+        <datum_ingebruikname>1995-01-01</datum_ingebruikname>
+        <putsoort>verbuisde boorput</putsoort>
+        <afwerking>
+            <beschermbuis/>
+        </afwerking>
+        <status>publiek</status>
+    </grondwaterlocatie>
+</ns3:dov-schema>

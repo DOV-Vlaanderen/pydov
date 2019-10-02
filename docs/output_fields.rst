@@ -393,25 +393,26 @@ Borehole samples (grondmonsters)
     naam,1,string,N3A
     pkey_boring,1,string,https://www.dov.vlaanderen.be/data/boring/2005-003015
     boornummer,1,string,GEO-04/024-B6
-    gemeente,1,string,Wichelen
     datum,1,date,nan
     x,1,float,123280
     y,1,float,188129
-    diepte_van_m,1,float,1.5
-    diepte_tot_m,1,float,2.0
-    peil_tot_mtaw,1,float,4.16
+    gemeente,1,string,Wichelen
+    diepte_van_m,1,float,5.9
+    diepte_tot_m,1,float,6.05
+    peil_van_mtaw,1,float,0.26
+    peil_tot_mtaw,1,float,0.11
     monstertype,10,string,ongeroerd
     astm_naam,10,string,Organic silt
-    grondsoort_bggg,10,string,humus klei
+    grondsoort_bggg,10,string,humush. klei
     humusgehalte,10,float,15.6
     kalkgehalte,10,float,4.4
     uitrolgrens,10,float,50.4
     vloeigrens,10,float,86.4
-    glauconiet,10,float,nan
-    korrelvolumemassa,10,float,2.65
-    volumemassa,10,float,2.036
-    watergehalte,10,float,19.3
-    diameter,10,float,10.
-    fractie,10,float,0.
-    methode,10,string,zeefproef
+    glauconiet,10,float,NaN
+    korrelvolumemassa,10,float,NaN
+    volumemassa,10,float,NaN
+    watergehalte,10,float,NaN
+    diameter,10,float,10
+    fractie,10,float,0
+    methode,10,string,ZEEFPROEF
 

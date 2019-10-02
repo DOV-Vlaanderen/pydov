@@ -526,7 +526,7 @@ def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
     xml.set('version', version)
 
     if max_features is not None:
-        if (not isinstance(max_features, int)) | (max_features <= 0):
+        if (not isinstance(max_features, int)) or (max_features <= 0):
             raise AttributeError('max_features should be a positive integer')
         xml.set('maxFeatures', str(max_features))
 

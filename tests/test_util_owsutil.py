@@ -279,15 +279,60 @@ class TestOwsutil(object):
 
     def test_wfs_build_getfeature_maxfeatures(self):
         """Test the owsutil.wfs_build_getfeature_request method with a
-        limited set of features defined
+        limited set of features defined.
 
         Test whether the XML of the WFS GetFeature call is generated correctly.
 
         """
-        xml = owsutil.wfs_build_getfeature_request('dov-pub:Boringen',
-                                                   max_features=3)
+        xml = owsutil.wfs_build_getfeature_request(
+            'dov-pub:Boringen', max_features=3)
+
         assert "maxFeatures" in xml.attrib.keys()
         assert xml.attrib["maxFeatures"] == "3"
+
+    def test_wfs_build_getfeature_maxfeatures_negative(self):
+        """Test the owsutil.wfs_build_getfeature_request method with a
+        a negative maxfeature value.
+
+        Test whether an AttributeError is raised.
+
+        """
+        with pytest.raises(AttributeError):
+            owsutil.wfs_build_getfeature_request(
+                'dov-pub:Boringen', max_features=-5)
+
+    def test_wfs_build_getfeature_maxfeatures_float(self):
+        """Test the owsutil.wfs_build_getfeature_request method with a
+        a floating point maxfeature value.
+
+        Test whether an AttributeError is raised.
+
+        """
+        with pytest.raises(AttributeError):
+            owsutil.wfs_build_getfeature_request(
+                'dov-pub:Boringen', max_features=1.5)
+
+    def test_wfs_build_getfeature_maxfeatures_zero(self):
+        """Test the owsutil.wfs_build_getfeature_request method with a
+        a maxfeature value of 0.
+
+        Test whether an AttributeError is raised.
+
+        """
+        with pytest.raises(AttributeError):
+            owsutil.wfs_build_getfeature_request(
+                'dov-pub:Boringen', max_features=0)
+
+    def test_wfs_build_getfeature_maxfeatures_string(self):
+        """Test the owsutil.wfs_build_getfeature_request method with a
+        an non-integer maxfeature value.
+
+        Test whether an AttributeError is raised.
+
+        """
+        with pytest.raises(AttributeError):
+            owsutil.wfs_build_getfeature_request(
+                'dov-pub:Boringen', max_features="0")
 
     def test_wfs_build_getfeature_request_bbox_nogeometrycolumn(self):
         """Test the owsutil.wfs_build_getfeature_request method with a location

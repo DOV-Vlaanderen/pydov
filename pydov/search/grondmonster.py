@@ -77,8 +77,8 @@ class GrondmonsterSearch(AbstractSearch):
                 GrondmonsterSearch.__fc_featurecatalogue,
                 GrondmonsterSearch.__xsd_schemas)
 
-    def search(self, location=None, query=None, return_fields=None,
-               max_features=None):
+    def search(self, location=None, query=None, sort_by=None,
+               return_fields=None, max_features=None):
         """Search for ground samples (Grondmonster). Provide either
         `location` or `query`. When `return_fields` is None,
         all fields are returned.
@@ -96,6 +96,8 @@ class GrondmonsterSearch(AbstractSearch):
             combination of filter elements defined in owslib.fes. The query
             should use the fields provided in `get_fields()`. Note that not
             all fields are currently supported as a search parameter.
+        sort_by : owslib.fes.SortBy, optional
+            List of properties to sort by.
         return_fields : list<str> or tuple<str> or set<str>
             A list of fields to be returned in the output data. This should
             be a subset of the fields provided in `get_fields()`. Note that
@@ -111,7 +113,7 @@ class GrondmonsterSearch(AbstractSearch):
         Raises
         ------
         pydov.util.errors.InvalidSearchParameterError
-            When not one of `location` or `query` is provided.
+            When not one of `location`, `query` or `max_features` is provided.
 
         pydov.util.errors.InvalidFieldError
             When at least one of the fields in `return_fields` is unknown.
@@ -131,12 +133,14 @@ class GrondmonsterSearch(AbstractSearch):
             tuple or set.
 
         """
-        fts = self._search(location=location, query=query,
+        self._pre_search_validation(location, query, sort_by, return_fields,
+                                    max_features)
+
+        fts = self._search(location=location, query=query, sort_by=sort_by,
                            return_fields=return_fields,
                            max_features=max_features)
 
-        grondmonster = self._type.from_wfs(fts,
-                                           self.__wfs_namespace)
+        grondmonster = self._type.from_wfs(fts, self.__wfs_namespace)
 
         df = pd.DataFrame(
             data=self._type.to_df_array(grondmonster, return_fields),

@@ -6,6 +6,7 @@ from owslib.util import openURL
 
 from pydov.types.boring import Boring
 from pydov.types.grondwaterfilter import GrondwaterFilter
+from pydov.types.grondmonster import Grondmonster
 from pydov.types.interpretaties import (
     GeotechnischeCodering,
     GecodeerdeLithologie,
@@ -522,4 +523,51 @@ if __name__ == '__main__':
     for xsd_schema in QuartairStratigrafie.get_xsd_schemas():
         update_file(
             'types/interpretaties/quartaire_stratigrafie/xsd_%s.xml' %
+            xsd_schema.split('/')[-1], xsd_schema)
+
+
+    # types/grondmonster
+
+    update_file('types/grondmonster/grondmonster.xml',
+                'https://www.dov.vlaanderen.be/data/grondmonster/'
+                '2017-168758.xml')
+
+    update_file('types/grondmonster/wfsgetfeature.xml',
+                'https://www.dov.vlaanderen.be/geoserver/ows?service=WFS'
+                '&version=1.1.0&request=GetFeature&typeName='
+                'boringen:grondmonsters&maxFeatures=1&CQL_Filter'
+                '=grondmonsterfiche=%27https://www.dov.vlaanderen.be/data'
+                '/grondmonster/2017-168758%27')
+
+    update_file('types/grondmonster/feature.xml',
+                'https://www.dov.vlaanderen.be/geoserver/ows?service=WFS'
+                '&version=1.1.0&request=GetFeature&typeName='
+                'boringen:grondmonsters&maxFeatures=1&CQL_Filter'
+                '=grondmonsterfiche=%27https://www.dov.vlaanderen.be/data'
+                '/grondmonster/2017-168758%27',
+                get_first_featuremember)
+
+    update_file(
+        'types/grondmonster/fc_featurecatalogue.xml',
+        'https://www.dov.vlaanderen.be/geonetwork/srv/dut/csw'
+        '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+        '&outputSchema=http://www.isotc211.org/2005/gfc'
+        '&elementSetName=full&id=b9338fb5-fc9c-4229-858b-06a5fa3ee49d')
+
+    update_file('types/grondmonster/md_metadata.xml',
+                'https://www.dov.vlaanderen.be/geonetwork/srv/dut/csw'
+                '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+                '&outputSchema=http://www.isotc211.org/2005/gmd'
+                '&elementSetName=full&id=6edeab46-2cfc-4aa2-ae03-307d772f34ae')
+
+    update_file(
+        'types/grondmonster/wfsdescribefeaturetype'
+        '.xml',
+        'https://www.dov.vlaanderen.be/geoserver/boringen'
+        '/grondmonsters/ows?service=wfs&version=1.1.0&request'
+        '=DescribeFeatureType')
+
+    for xsd_schema in Grondmonster.get_xsd_schemas():
+        update_file(
+            'types/grondmonster/xsd_%s.xml' %
             xsd_schema.split('/')[-1], xsd_schema)

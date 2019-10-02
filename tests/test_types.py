@@ -5,6 +5,7 @@ import pytest
 from pydov.types.boring import Boring
 from pydov.types.fields import XmlField
 from pydov.types.grondwaterfilter import GrondwaterFilter
+from pydov.types.grondmonster import Grondmonster
 from pydov.types.interpretaties import (
     GecodeerdeLithologie,
     HydrogeologischeStratigrafie,
@@ -25,7 +26,8 @@ type_objects = [Boring,
                 GecodeerdeLithologie,
                 LithologischeBeschrijvingen,
                 GeotechnischeCodering,
-                QuartairStratigrafie,]
+                QuartairStratigrafie,
+                Grondmonster]
 
 
 @pytest.mark.parametrize("objecttype", type_objects)

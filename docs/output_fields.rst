@@ -301,6 +301,21 @@ Hydrogeological stratigraphy (Hydrogeologische stratigrafie)
     diepte_laag_tot,10,float,8
     aquifer,10,string,0110
 
+Informal hydrogeological stratigraphy (Informele hydrogeologische stratigrafie)
+-------------------------------------------------------------------------------
+  .. csv-table:: Informal hydrogeological stratigraphy (Informele hydrogeologische stratigrafie)
+    :header-rows: 1
+
+    Field,Cost,Datatype,Example
+    pkey_interpretatie,1,string,https://www.dov.vlaanderen.be/data/interpretatie/2003-297769
+    pkey_boring,1,string,https://www.dov.vlaanderen.be/data/boring/2003-147935
+    betrouwbaarheid_interpretatie,1,string,goed
+    x,1,float,208607
+    y,1,float,210792
+    diepte_laag_van,10,float,0
+    diepte_laag_tot,10,float,1.5
+    beschrijving,10,string,Quartair
+
 Coded lithology (Gecodeerde lithologie)
 ---------------------------------------
   .. csv-table:: Coded lithology (Gecodeerde lithologie)

@@ -31,8 +31,8 @@
                 <veld_labo>LABO</veld_labo>
             </observatie>
             <observatie>
-                <parameter>HUMUSGEHALTE</parameter>
-                <waarde_numeriek>15.6</waarde_numeriek>
+                <parameter>UITROLGRENS</parameter>
+                <waarde_numeriek>50.4</waarde_numeriek>
                 <eenheid>%</eenheid>
                 <methode>Onbekend</methode>
                 <veld_labo>LABO</veld_labo>
@@ -45,13 +45,6 @@
                 <veld_labo>LABO</veld_labo>
             </observatie>
             <observatie>
-                <parameter>UITROLGRENS</parameter>
-                <waarde_numeriek>50.4</waarde_numeriek>
-                <eenheid>%</eenheid>
-                <methode>Onbekend</methode>
-                <veld_labo>LABO</veld_labo>
-            </observatie>
-            <observatie>
                 <parameter>VLOEIGRENS</parameter>
                 <waarde_numeriek>86.4</waarde_numeriek>
                 <eenheid>%</eenheid>
@@ -59,7 +52,14 @@
                 <veld_labo>LABO</veld_labo>
             </observatie>
             <observatie>
-                <parameter>ZEEFPROEF</parameter>
+                <parameter>HUMUSGEHALTE</parameter>
+                <waarde_numeriek>15.6</waarde_numeriek>
+                <eenheid>%</eenheid>
+                <methode>Onbekend</methode>
+                <veld_labo>LABO</veld_labo>
+            </observatie>
+            <observatie>
+                <parameter>AREOMETER</parameter>
                 <waarde_text></waarde_text>
                 <eenheid>-</eenheid>
                 <methode>Onbekend</methode>
@@ -67,7 +67,7 @@
                 <opmerking>uitgevoerd</opmerking>
             </observatie>
             <observatie>
-                <parameter>AREOMETER</parameter>
+                <parameter>ZEEFPROEF</parameter>
                 <waarde_text></waarde_text>
                 <eenheid>-</eenheid>
                 <methode>Onbekend</methode>

@@ -37,6 +37,12 @@ Interpretaties
 .. automodule:: pydov.search.interpretaties
     :members:
 
+Grondmonster
+************
+
+.. automodule:: pydov.search.grondmonster
+    :members:
+
 Object types
 ------------
 
@@ -75,6 +81,13 @@ Interpretaties
 **************
 
 .. automodule:: pydov.types.interpretaties
+    :members:
+    :show-inheritance:
+
+Grondmonster
+************
+
+.. automodule:: pydov.types.grondmonster
     :members:
     :show-inheritance:
 

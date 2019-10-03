@@ -1,9 +1,19 @@
-"""Module grouping tests for the search grondwaterfilter module."""
-import datetime
+"""Module grouping tests for the interpretaties search module."""
+import pandas as pd
+import numpy as np
+import pytest
+from pandas import DataFrame
 
+import pydov
 from owslib.fes import PropertyIsEqualTo
-from pydov.search.grondwaterfilter import GrondwaterFilterSearch
-from pydov.types.grondwaterfilter import GrondwaterFilter
+from pydov.search.interpretaties import (
+    FormeleStratigrafieSearch,
+    InformeleHydrogeologischeStratigrafieSearch,
+)
+from pydov.types.interpretaties import (
+    FormeleStratigrafie,
+    InformeleHydrogeologischeStratigrafie,
+)
 from tests.abstract import (
     AbstractTestSearch,
 )
@@ -22,39 +32,53 @@ from tests.test_search import (
     wfs_feature,
 )
 
-location_md_metadata = 'tests/data/types/grondwaterfilter/md_metadata.xml'
+location_md_metadata = \
+    'tests/data/types/interpretaties/informele_hydrogeologische_stratigrafie' \
+    '/md_metadata.xml'
 location_fc_featurecatalogue = \
-    'tests/data/types/grondwaterfilter/fc_featurecatalogue.xml'
+    'tests/data/types/interpretaties/' \
+    'informele_hydrogeologische_stratigrafie/fc_featurecatalogue.xml'
 location_wfs_describefeaturetype = \
-    'tests/data/types/grondwaterfilter/wfsdescribefeaturetype.xml'
-location_wfs_getfeature = 'tests/data/types/grondwaterfilter/wfsgetfeature.xml'
-location_wfs_feature = 'tests/data/types/grondwaterfilter/feature.xml'
-location_dov_xml = 'tests/data/types/grondwaterfilter/grondwaterfilter.xml'
-location_xsd_base = 'tests/data/types/grondwaterfilter/xsd_*.xml'
+    'tests/data/types/interpretaties/' \
+    'informele_hydrogeologische_stratigrafie/wfsdescribefeaturetype.xml'
+location_wfs_getfeature = \
+    'tests/data/types/interpretaties/' \
+    'informele_hydrogeologische_stratigrafie/wfsgetfeature.xml'
+location_wfs_feature = \
+    'tests/data/types/interpretaties/' \
+    'informele_hydrogeologische_stratigrafie/feature.xml'
+location_dov_xml = \
+    'tests/data/types/interpretaties/' \
+    'informele_hydrogeologische_stratigrafie' \
+    '/informele_hydrogeologische_stratigrafie.xml'
+location_xsd_base = \
+    'tests/data/types/interpretaties/' \
+    'informele_hydrogeologische_stratigrafie/xsd_*.xml'
 
 
-class TestGrondwaterfilterSearch(AbstractTestSearch):
+class TestInformeleHydrogeologischeStratigrafieSearch(AbstractTestSearch):
     def get_search_object(self):
         """Get an instance of the search object for this type.
 
         Returns
         -------
-        pydov.search.grondwaterfilter.GrondwaterFilterSearch
-            Instance of GrondwaterFilterSearch used for searching.
+        pydov.search.interpretaties.InformeleHydrogeologischeStratigrafieSearch
+            Instance of InformeleHydrogeologischeStratigrafieSearch used for
+            searching.
 
         """
-        return GrondwaterFilterSearch()
+        return InformeleHydrogeologischeStratigrafieSearch()
 
     def get_type(self):
         """Get the class reference for this datatype.
 
         Returns
         -------
-        pydov.types.grondwaterfilter.GrondwaterFilter
-            Class reference for the GrondwaterFilter class.
+        pydov.types.interpretaties.FormeleStratigrafie
+            Class reference for the FormeleStratigrafie class.
 
         """
-        return GrondwaterFilter
+        return InformeleHydrogeologischeStratigrafie
 
     def get_valid_query_single(self):
         """Get a valid query returning a single feature.
@@ -65,9 +89,8 @@ class TestGrondwaterfilterSearch(AbstractTestSearch):
             OGC expression of the query.
 
         """
-        return PropertyIsEqualTo(propertyname='filterfiche',
-                                 literal='https://www.dov.vlaanderen.be/'
-                                         'data/filter/2003-004471')
+        return PropertyIsEqualTo(propertyname='Proefnummer',
+                                 literal='B/7-0528')
 
     def get_inexistent_field(self):
         """Get the name of a field that doesn't exist.
@@ -89,7 +112,7 @@ class TestGrondwaterfilterSearch(AbstractTestSearch):
             The name of the XML field.
 
         """
-        return 'peil_mtaw'
+        return 'diepte_laag_van'
 
     def get_valid_returnfields(self):
         """Get a list of valid return fields from the main type.
@@ -100,7 +123,7 @@ class TestGrondwaterfilterSearch(AbstractTestSearch):
             A tuple containing only valid return fields.
 
         """
-        return ('pkey_filter', 'filternummer')
+        return ('pkey_interpretatie', 'betrouwbaarheid_interpretatie')
 
     def get_valid_returnfields_subtype(self):
         """Get a list of valid return fields, including fields from a subtype.
@@ -112,7 +135,7 @@ class TestGrondwaterfilterSearch(AbstractTestSearch):
             subtype.
 
         """
-        return ('pkey_filter', 'filternummer', 'peil_mtaw')
+        return ('pkey_interpretatie', 'diepte_laag_van', 'diepte_laag_tot')
 
     def get_valid_returnfields_extra(self):
         """Get a list of valid return fields, including extra WFS only
@@ -125,7 +148,7 @@ class TestGrondwaterfilterSearch(AbstractTestSearch):
             from WFS, not present in the default dataframe.
 
         """
-        return ('pkey_filter', 'beheerder')
+        return ('pkey_interpretatie', 'gemeente')
 
     def get_df_default_columns(self):
         """Get a list of the column names (and order) from the default
@@ -137,32 +160,21 @@ class TestGrondwaterfilterSearch(AbstractTestSearch):
             A list of the column names of the default dataframe.
 
         """
-        return ['pkey_filter', 'pkey_grondwaterlocatie', 'gw_id',
-                'filternummer', 'filtertype', 'x', 'y',
-                'start_grondwaterlocatie_mtaw',
-                'gemeente', 'meetnet_code', 'aquifer_code',
-                'grondwaterlichaam_code', 'regime',
-                'diepte_onderkant_filter', 'lengte_filter',
-                'datum', 'tijdstip', 'peil_mtaw',
-                'betrouwbaarheid', 'methode', 'filterstatus', 'filtertoestand']
+        return ['pkey_interpretatie', 'pkey_boring',
+                'betrouwbaarheid_interpretatie', 'x', 'y',
+                'diepte_laag_van', 'diepte_laag_tot',
+                'beschrijving']
 
-    def test_search_date(self, mp_wfs, mp_remote_describefeaturetype,
-                         mp_remote_md, mp_remote_fc, mp_remote_wfs_feature,
-                         mp_dov_xml):
-        """Test the search method with only the query parameter.
+    def test_search_customreturnfields(self, mp_remote_describefeaturetype,
+                                       mp_remote_wfs_feature, mp_dov_xml):
+        """Test the search method with custom return fields.
 
-        Test whether the result is correct.
+        Test whether the output dataframe is correct.
 
         Parameters
         ----------
-        mp_wfs : pytest.fixture
-            Monkeypatch the call to the remote GetCapabilities request.
         mp_remote_describefeaturetype : pytest.fixture
-            Monkeypatch the call to a remote DescribeFeatureType.
-        mp_remote_md : pytest.fixture
-            Monkeypatch the call to get the remote metadata.
-        mp_remote_fc : pytest.fixture
-            Monkeypatch the call to get the remote feature catalogue.
+            Monkeypatch the call to a remote DescribeFeatureType .
         mp_remote_wfs_feature : pytest.fixture
             Monkeypatch the call to get WFS features.
         mp_dov_xml : pytest.fixture
@@ -170,13 +182,19 @@ class TestGrondwaterfilterSearch(AbstractTestSearch):
 
         """
         df = self.get_search_object().search(
-            query=self.get_valid_query_single())
+            query=self.get_valid_query_single(),
+            return_fields=('pkey_interpretatie', 'pkey_boring',
+                           'gemeente'))
 
-        # specific test for the Zulu time wfs 1.1.0 issue
-        assert df.datum.sort_values()[0] == datetime.date(2004, 4, 7)
+        assert type(df) is DataFrame
 
-    def test_search_xmlresolving(self, mp_remote_describefeaturetype,
-                                 mp_remote_wfs_feature, mp_dov_xml):
+        assert list(df) == ['pkey_interpretatie', 'pkey_boring',
+                            'gemeente']
+
+        assert not pd.isnull(df.pkey_boring[0])
+
+    def test_search_xml_resolve(self, mp_remote_describefeaturetype,
+                                mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with return fields from XML but not from a
         subtype.
 
@@ -194,7 +212,6 @@ class TestGrondwaterfilterSearch(AbstractTestSearch):
         """
         df = self.get_search_object().search(
             query=self.get_valid_query_single(),
-            return_fields=('pkey_filter', 'gw_id', 'filternummer',
-                           'meetnet_code'))
+            return_fields=('pkey_interpretatie', 'diepte_laag_tot'))
 
-        assert df.meetnet_code[0] == 8
+        assert df.diepte_laag_tot[0] == 1.0

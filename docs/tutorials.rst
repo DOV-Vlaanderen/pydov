@@ -27,9 +27,11 @@ To run these interactively online without installation, use the following binder
    notebooks/search_formele_stratigrafie.ipynb
    notebooks/search_informele_stratigrafie.ipynb
    notebooks/search_hydrogeologische_stratigrafie.ipynb
+   notebooks/search_informele_hydrostratigrafie.ipynb
    notebooks/search_lithologische_beschrijvingen.ipynb
    notebooks/search_gecodeerde_lithologie.ipynb
    notebooks/search_geotechnische_codering.ipynb
    notebooks/search_quartaire_stratigrafie.ipynb
+   notebooks/search_grondmonsters.ipynb
    notebooks/customizing_object_types.ipynb
    notebooks/caching.ipynb

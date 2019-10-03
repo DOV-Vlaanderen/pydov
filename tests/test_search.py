@@ -17,6 +17,7 @@ from pydov.search.grondwatermonster import GrondwaterMonsterSearch
 from pydov.search.interpretaties import (
     InformeleStratigrafieSearch,
     FormeleStratigrafieSearch,
+    InformeleHydrogeologischeStratigrafieSearch,
     GeotechnischeCoderingSearch,
     QuartairStratigrafieSearch,
 )
@@ -24,6 +25,7 @@ from pydov.search.interpretaties import HydrogeologischeStratigrafieSearch
 from pydov.search.interpretaties import GecodeerdeLithologieSearch
 from pydov.search.interpretaties import LithologischeBeschrijvingenSearch
 from pydov.search.sondering import SonderingSearch
+from pydov.search.grondmonster import GrondmonsterSearch
 from pydov.util.errors import (
     InvalidSearchParameterError,
 )
@@ -37,12 +39,14 @@ search_objects = [BoringSearch(),
                   GrondwaterFilterSearch(),
                   GrondwaterMonsterSearch(),
                   FormeleStratigrafieSearch(),
+                  InformeleHydrogeologischeStratigrafieSearch(),
                   GeotechnischeCoderingSearch(),
                   QuartairStratigrafieSearch(),
                   InformeleStratigrafieSearch(),
                   HydrogeologischeStratigrafieSearch(),
                   GecodeerdeLithologieSearch(),
-                  LithologischeBeschrijvingenSearch(),]
+                  LithologischeBeschrijvingenSearch(),
+                  GrondmonsterSearch()]
 
 
 @pytest.fixture(scope='module')

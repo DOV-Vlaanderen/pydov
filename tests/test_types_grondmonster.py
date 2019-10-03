@@ -1,8 +1,9 @@
-"""Module grouping tests for the pydov.types.boring module."""
-from pydov.types.grondwaterfilter import GrondwaterFilter
+"""Module grouping tests for the pydov.types.grondmonster module."""
+
+from pydov.types.grondmonster import Grondmonster
 from tests.abstract import AbstractTestTypes
 
-from tests.test_search_grondwaterfilter import (
+from tests.test_search_grondmonster import (
     wfs_getfeature,
     wfs_feature,
     mp_dov_xml,
@@ -11,20 +12,18 @@ from tests.test_search_grondwaterfilter import (
     location_dov_xml,
 )
 
-
-class TestGrondwaterFilter(AbstractTestTypes):
-    """Class grouping tests for the
-    pydov.types.grondwaterfilter.GrondwaterFilter class."""
+class TestGrondmonster(AbstractTestTypes):
+    """Class grouping tests for the pydov.types.grondmonster.Grondmonster class."""
     def get_type(self):
         """Get the class reference for this datatype.
 
         Returns
         -------
-        pydov.types.grondwaterfilter.GrondwaterFilter
-            Class reference for the GrondwaterFilter class.
+        pydov.types.grondmonster.Grondmonster
+            Class reference for the Grondmonster class.
 
         """
-        return GrondwaterFilter
+        return Grondmonster
 
     def get_namespace(self):
         """Get the WFS namespace associated with this datatype.
@@ -35,7 +34,7 @@ class TestGrondwaterFilter(AbstractTestTypes):
             WFS namespace for this type.
 
         """
-        return 'http://dov.vlaanderen.be/grondwater/gw_meetnetten'
+        return 'http://dov.vlaanderen.be/ocdov/boringen'
 
     def get_pkey_base(self):
         """Get the base URL for the permanent keys of this datatype.
@@ -44,10 +43,10 @@ class TestGrondwaterFilter(AbstractTestTypes):
         -------
         str
             Base URL for the permanent keys of this datatype. For example
-            "https://www.dov.vlaanderen.be/data/boring/"
+            "https://www.dov.vlaanderen.be/data/grondmonster/"
 
         """
-        return 'https://www.dov.vlaanderen.be/data/filter/'
+        return 'https://www.dov.vlaanderen.be/data/grondmonster/'
 
     def get_field_names(self):
         """Get the field names for this type as listed in the documentation in
@@ -59,14 +58,13 @@ class TestGrondwaterFilter(AbstractTestTypes):
             List of field names.
 
         """
-        return ['pkey_filter', 'pkey_grondwaterlocatie', 'gw_id',
-                'filternummer', 'filtertype', 'x', 'y',
-                'start_grondwaterlocatie_mtaw',
-                'gemeente', 'meetnet_code', 'aquifer_code',
-                'grondwaterlichaam_code', 'regime',
-                'diepte_onderkant_filter', 'lengte_filter',
-                'datum', 'tijdstip', 'peil_mtaw',
-                'betrouwbaarheid', 'methode', 'filterstatus', 'filtertoestand']
+        return ['pkey_grondmonster', 'naam', 'pkey_boring', 'boornummer',
+                'datum', 'x', 'y', 'gemeente', 'diepte_van_m', 'diepte_tot_m',
+                'peil_van_mtaw', 'peil_tot_mtaw', 'monstertype', 'astm_naam',
+                'grondsoort_bggg', 'humusgehalte', 'kalkgehalte',
+                'uitrolgrens', 'vloeigrens', 'glauconiet',
+                'korrelvolumemassa', 'volumemassa', 'watergehalte',
+                'diameter', 'fractie', 'methode']
 
     def get_field_names_subtypes(self):
         """Get the field names of this type that originate from subtypes only.
@@ -77,8 +75,7 @@ class TestGrondwaterFilter(AbstractTestTypes):
             List of field names from subtypes.
 
         """
-        return ['datum', 'tijdstip', 'peil_mtaw', 'betrouwbaarheid',
-                'methode']
+        return ['diepte_methode_van', 'diepte_methode_tot', 'boormethode']
 
     def get_field_names_nosubtypes(self):
         """Get the field names for this type, without including fields from
@@ -90,12 +87,12 @@ class TestGrondwaterFilter(AbstractTestTypes):
             List of field names.
 
         """
-        return ['pkey_filter', 'pkey_grondwaterlocatie', 'gw_id',
-                'filternummer', 'filtertype', 'x', 'y',
-                'start_grondwaterlocatie_mtaw',
-                'gemeente', 'meetnet_code', 'aquifer_code',
-                'grondwaterlichaam_code', 'regime',
-                'diepte_onderkant_filter', 'lengte_filter']
+        return ['pkey_grondmonster', 'naam', 'pkey_boring', 'boornummer',
+                'datum', 'x', 'y', 'gemeente', 'diepte_van_m', 'diepte_tot_m',
+                'peil_van_mtaw', 'peil_tot_mtaw', 'monstertype', 'astm_naam',
+                'grondsoort_bggg', 'humusgehalte', 'kalkgehalte',
+                'uitrolgrens', 'vloeigrens', 'glauconiet',
+                'korrelvolumemassa', 'volumemassa', 'watergehalte']
 
     def get_valid_returnfields(self):
         """Get a list of valid return fields from the main type.
@@ -106,7 +103,7 @@ class TestGrondwaterFilter(AbstractTestTypes):
             A tuple containing only valid return fields.
 
         """
-        return ('pkey_filter', 'meetnet_code')
+        return ('pkey_grondmonster', 'diepte_tot_m')
 
     def get_valid_returnfields_subtype(self):
         """Get a list of valid return fields, including fields from a subtype.
@@ -118,7 +115,7 @@ class TestGrondwaterFilter(AbstractTestTypes):
             subtype.
 
         """
-        return ('pkey_filter', 'peil_mtaw')
+        return ('diameter', 'fractie', 'methode')
 
     def get_inexistent_field(self):
         """Get the name of a field that doesn't exist.
@@ -130,3 +127,4 @@ class TestGrondwaterFilter(AbstractTestTypes):
 
         """
         return 'onbestaand'
+

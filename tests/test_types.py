@@ -6,6 +6,7 @@ from pydov.types.boring import Boring
 from pydov.types.fields import XmlField
 from pydov.types.grondwaterfilter import GrondwaterFilter
 from pydov.types.grondwatermonster import GrondwaterMonster
+from pydov.types.grondmonster import Grondmonster
 from pydov.types.interpretaties import (
     GecodeerdeLithologie,
     HydrogeologischeStratigrafie,
@@ -14,6 +15,7 @@ from pydov.types.interpretaties import (
     FormeleStratigrafie,
     GeotechnischeCodering,
     QuartairStratigrafie,
+    InformeleHydrogeologischeStratigrafie,
 )
 from pydov.types.sondering import Sondering
 
@@ -24,10 +26,12 @@ type_objects = [Boring,
                 InformeleStratigrafie,
                 FormeleStratigrafie,
                 HydrogeologischeStratigrafie,
+                InformeleHydrogeologischeStratigrafie,
                 GecodeerdeLithologie,
                 LithologischeBeschrijvingen,
                 GeotechnischeCodering,
-                QuartairStratigrafie,]
+                QuartairStratigrafie,
+                Grondmonster]
 
 
 @pytest.mark.parametrize("objecttype", type_objects)
@@ -52,6 +56,26 @@ def test_get_fields_sourcexml(objecttype):
     fields = objecttype.get_fields(source=('xml',))
     for field in fields.values():
         assert field['source'] == 'xml'
+
+
+@pytest.mark.parametrize("objecttype", type_objects)
+def test_get_fields_subtypes_notnull(objecttype):
+    """Test the get_fields method for fields of the subtype.
+
+    Test whether all returned fields have 'notnull' = False.
+
+    Fields of a subtype cannot be mandatory since the subtype itself is not
+    compulsory.
+
+    """
+    allfields = objecttype.get_field_names()
+    ownfields = objecttype.get_field_names(include_subtypes=False)
+    subfields = [f for f in allfields if f not in ownfields]
+
+    fields = objecttype.get_fields(source=('xml',))
+    for field in fields.values():
+        if field['name'] in subfields:
+            assert field['notnull'] is False
 
 
 @pytest.mark.parametrize("objecttype", type_objects)

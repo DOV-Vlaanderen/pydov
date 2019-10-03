@@ -236,7 +236,7 @@ Groundwater screens (grondwaterfilters)
     filtertype,1,string,peilfilter
     x,1,float,110490
     y,1,float,194090
-    mv_mtaw,10,float,NaN
+    start_grondwaterlocatie_mtaw,1,float,NaN
     gemeente,1,string,Destelbergen
     meetnet_code,10,integer,1
     aquifer_code,10,string,0100
@@ -324,6 +324,21 @@ Hydrogeological stratigraphy (Hydrogeologische stratigrafie)
     diepte_laag_tot,10,float,8
     aquifer,10,string,0110
 
+Informal hydrogeological stratigraphy (Informele hydrogeologische stratigrafie)
+-------------------------------------------------------------------------------
+  .. csv-table:: Informal hydrogeological stratigraphy (Informele hydrogeologische stratigrafie)
+    :header-rows: 1
+
+    Field,Cost,Datatype,Example
+    pkey_interpretatie,1,string,https://www.dov.vlaanderen.be/data/interpretatie/2003-297769
+    pkey_boring,1,string,https://www.dov.vlaanderen.be/data/boring/2003-147935
+    betrouwbaarheid_interpretatie,1,string,goed
+    x,1,float,208607
+    y,1,float,210792
+    diepte_laag_van,10,float,0
+    diepte_laag_tot,10,float,1.5
+    beschrijving,10,string,Quartair
+
 Coded lithology (Gecodeerde lithologie)
 ---------------------------------------
   .. csv-table:: Coded lithology (Gecodeerde lithologie)
@@ -405,3 +420,37 @@ Quaternary stratigraphy (Quartaire stratigrafie)
     lid1,10,string,F1
     relatie_lid1_lid2,10,string,T
     lid2,10,string,F1
+
+Borehole samples (grondmonsters)
+--------------------------------
+  .. csv-table:: Borehole samples (grondmonsters)
+    :header-rows: 1
+
+    Field,Cost,Datatype,Example
+    pkey_grondmonster,1,string,https://www.dov.vlaanderen.be/data/grondmonster/2017-168758
+    naam,1,string,N3A
+    pkey_boring,1,string,https://www.dov.vlaanderen.be/data/boring/2005-003015
+    boornummer,1,string,GEO-04/024-B6
+    datum,1,date,nan
+    x,1,float,123280
+    y,1,float,188129
+    gemeente,1,string,Wichelen
+    diepte_van_m,1,float,5.9
+    diepte_tot_m,1,float,6.05
+    peil_van_mtaw,1,float,0.26
+    peil_tot_mtaw,1,float,0.11
+    monstertype,10,string,ongeroerd
+    astm_naam,10,string,Organic silt
+    grondsoort_bggg,10,string,humush. klei
+    humusgehalte,10,float,15.6
+    kalkgehalte,10,float,4.4
+    uitrolgrens,10,float,50.4
+    vloeigrens,10,float,86.4
+    glauconiet,10,float,NaN
+    korrelvolumemassa,10,float,NaN
+    volumemassa,10,float,NaN
+    watergehalte,10,float,NaN
+    diameter,10,float,10
+    fractie,10,float,0
+    methode,10,string,ZEEFPROEF
+

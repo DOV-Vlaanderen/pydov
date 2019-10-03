@@ -14,11 +14,14 @@ Currently, we support the following datasets:
 
     Dataset,Dataset (Dutch),Search object
     Boreholes,Boringen,pydov.search.boring.BoringSearch
+    Borehole samples,Grondmonsters,pydov.search.grondmonster.GrondmonsterSearch
     CPT measurements,Sonderingen,pydov.search.sondering.SonderingSearch
-    Groundwater screens,Grondwater filters,pydov.search.grondwaterfilter.GrondwaterFilterSearch
-    Informal stratigraphy,Informele stratigrafie,pydov.search.interpretaties.InformeleStratigrafieSearch
+    Groundwater screens,Grondwaterfilters,pydov.search.grondwaterfilter.GrondwaterFilterSearch
+    Groundwater samples,Grondwatermonsters,pydov.search.grondwatermonster.GrondwaterMonsterSearch
     Formal stratigraphy,Formele stratigrafie,pydov.search.interpretaties.FormeleStratigrafieSearch
+    Informal stratigraphy,Informele stratigrafie,pydov.search.interpretaties.InformeleStratigrafieSearch
     Hydrogeological stratigraphy,Hydrogeologische stratigrafie,pydov.search.interpretaties.HydrogeologischeStratigrafieSearch
+    Informal hydrogeological stratigraphy,Informele hydrogeologische stratigrafie,pydov.search.interpretaties.InformeleHydrogeologischeStratigrafieSearch
     Coded lithology,Gecodeerde lithologie,pydov.search.interpretaties.GecodeerdeLithologieSearch
     Geotechnical encoding,Geotechnische codering,pydov.search.interpretaties.GeotechnischeCoderingSearch
     Lithological descriptions,Lithologische beschrijvingen,pydov.search.interpretaties.LithologischeBeschrijvingenSearch

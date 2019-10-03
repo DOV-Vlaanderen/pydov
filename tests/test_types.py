@@ -14,6 +14,7 @@ from pydov.types.interpretaties import (
     FormeleStratigrafie,
     GeotechnischeCodering,
     QuartairStratigrafie,
+    InformeleHydrogeologischeStratigrafie,
 )
 from pydov.types.sondering import Sondering
 
@@ -23,6 +24,7 @@ type_objects = [Boring,
                 InformeleStratigrafie,
                 FormeleStratigrafie,
                 HydrogeologischeStratigrafie,
+                InformeleHydrogeologischeStratigrafie,
                 GecodeerdeLithologie,
                 LithologischeBeschrijvingen,
                 GeotechnischeCodering,

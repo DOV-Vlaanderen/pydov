@@ -16,6 +16,7 @@ from numpy.compat import unicode
 from pydov.search.interpretaties import (
     InformeleStratigrafieSearch,
     FormeleStratigrafieSearch,
+    InformeleHydrogeologischeStratigrafieSearch,
     GeotechnischeCoderingSearch,
     QuartairStratigrafieSearch,
 )
@@ -36,6 +37,7 @@ search_objects = [BoringSearch(),
                   SonderingSearch(),
                   GrondwaterFilterSearch(),
                   FormeleStratigrafieSearch(),
+                  InformeleHydrogeologischeStratigrafieSearch(),
                   GeotechnischeCoderingSearch(),
                   QuartairStratigrafieSearch(),
                   InformeleStratigrafieSearch(),

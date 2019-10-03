@@ -13,19 +13,19 @@ Currently, we support the following datasets:
     :header-rows: 1
 
     Dataset,Dataset (Dutch),Search object
-    Boreholes,Boringen,pydov.search.boring.BoringSearch
-    Borehole samples,Grondmonsters,pydov.search.grondmonster.GrondmonsterSearch
-    CPT measurements,Sonderingen,pydov.search.sondering.SonderingSearch
-    Groundwater screens,Grondwaterfilters,pydov.search.grondwaterfilter.GrondwaterFilterSearch
-    Groundwater samples,Grondwatermonsters,pydov.search.grondwatermonster.GrondwaterMonsterSearch
-    Formal stratigraphy,Formele stratigrafie,pydov.search.interpretaties.FormeleStratigrafieSearch
-    Informal stratigraphy,Informele stratigrafie,pydov.search.interpretaties.InformeleStratigrafieSearch
-    Hydrogeological stratigraphy,Hydrogeologische stratigrafie,pydov.search.interpretaties.HydrogeologischeStratigrafieSearch
-    Informal hydrogeological stratigraphy,Informele hydrogeologische stratigrafie,pydov.search.interpretaties.InformeleHydrogeologischeStratigrafieSearch
-    Coded lithology,Gecodeerde lithologie,pydov.search.interpretaties.GecodeerdeLithologieSearch
-    Geotechnical encoding,Geotechnische codering,pydov.search.interpretaties.GeotechnischeCoderingSearch
-    Lithological descriptions,Lithologische beschrijvingen,pydov.search.interpretaties.LithologischeBeschrijvingenSearch
-    Quaternary stratigraphy,Quartair stratigrafie,pydov.search.interpretaties.QuartairStratigrafieSearch
+    Boreholes (with method),Boringen (met boormethode),:class:`pydov.search.boring.BoringSearch`
+    Borehole samples (with particle size distribution),Grondmonsters (met korrelverdeling),:class:`pydov.search.grondmonster.GrondmonsterSearch`
+    CPT measurements (with CPT data),Sonderingen (met sondeergegevens),:class:`pydov.search.sondering.SonderingSearch`
+    Groundwater screens (with water head levels),Grondwaterfilters (met peilmetingen),:class:`pydov.search.grondwaterfilter.GrondwaterFilterSearch`
+    Groundwater samples (with quality measurements),Grondwatermonsters (met kwaliteitsmetingen),:class:`pydov.search.grondwatermonster.GrondwaterMonsterSearch`
+    Formal stratigraphy (with layers),Formele stratigrafie (met lagen),:class:`pydov.search.interpretaties.FormeleStratigrafieSearch`
+    Informal stratigraphy (with layers),Informele stratigrafie (met lagen),:class:`pydov.search.interpretaties.InformeleStratigrafieSearch`
+    Hydrogeological stratigraphy (with layers),Hydrogeologische stratigrafie (met lagen),:class:`pydov.search.interpretaties.HydrogeologischeStratigrafieSearch`
+    Informal hydrogeological stratigraphy (with layers),Informele hydrogeologische stratigrafie (met lagen),:class:`pydov.search.interpretaties.InformeleHydrogeologischeStratigrafieSearch`
+    Coded lithology (with layers),Gecodeerde lithologie (met lagen),:class:`pydov.search.interpretaties.GecodeerdeLithologieSearch`
+    Geotechnical encoding (with layers),Geotechnische codering (met lagen),:class:`pydov.search.interpretaties.GeotechnischeCoderingSearch`
+    Lithological descriptions (with layers),Lithologische beschrijvingen (met lagen),:class:`pydov.search.interpretaties.LithologischeBeschrijvingenSearch`
+    Quaternary stratigraphy (with layers),Quartair stratigrafie (met lagen),:class:`pydov.search.interpretaties.QuartairStratigrafieSearch`
 
 Each of the datasets can be queried using a search object for this dataset. While the search objects are different, the workflow is the same for each dataset. Relevant classes can be imported from the pydov.search package, for example if we'd like to query the boreholes dataset:
 

@@ -74,9 +74,21 @@ class TestPropertyInList(object):
         Test whether a ValueError is raised.
 
         """
-        with pytest.raises(ValueError):
-            l = ['a']
-            PropertyInList('methode', l)
+        l = ['a']
+
+        query = PropertyInList('methode', l)
+        xml = query.toXML()
+
+        assert xml.tag == '{http://www.opengis.net/ogc}PropertyIsEqualTo'
+
+        propertyname = xml.find('./{http://www.opengis.net/ogc}PropertyName')
+        assert propertyname.text == 'methode'
+
+        literal = xml.find('./{http://www.opengis.net/ogc}Literal')
+        assert literal.text in l
+
+        l.remove(literal.text)
+        assert len(l) == 0
 
     def test_tooshort_duplicate(self):
         """Test the PropertyInList expression with a list containing
@@ -85,9 +97,22 @@ class TestPropertyInList(object):
         Test whether a ValueError is raised.
 
         """
-        with pytest.raises(ValueError):
-            l = ['a', 'a']
-            PropertyInList('methode', l)
+        l = ['a', 'a']
+        l_output = ['a']
+
+        query = PropertyInList('methode', l)
+        xml = query.toXML()
+
+        assert xml.tag == '{http://www.opengis.net/ogc}PropertyIsEqualTo'
+
+        propertyname = xml.find('./{http://www.opengis.net/ogc}PropertyName')
+        assert propertyname.text == 'methode'
+
+        literal = xml.find('./{http://www.opengis.net/ogc}Literal')
+        assert literal.text in l_output
+
+        l_output.remove(literal.text)
+        assert len(l_output) == 0
 
     def test_nolist(self):
         """Test the PropertyInList expression with a string instead of a list.
@@ -200,15 +225,26 @@ class TestJoin(object):
         Test whether a ValueError is raised.
 
         """
-        with pytest.raises(ValueError):
-            l = ['https://www.dov.vlaanderen.be/data/boring/1986-068853']
+        l = ['https://www.dov.vlaanderen.be/data/boring/1986-068853']
 
-            df = pd.DataFrame({
-                'pkey_boring': pd.Series(l),
-                'diepte_tot_m': pd.Series([10])
-            })
+        df = pd.DataFrame({
+            'pkey_boring': pd.Series(l),
+            'diepte_tot_m': pd.Series([10])
+        })
 
-            Join(df, 'pkey_boring')
+        query = Join(df, 'pkey_boring')
+        xml = query.toXML()
+
+        assert xml.tag == '{http://www.opengis.net/ogc}PropertyIsEqualTo'
+
+        propertyname = xml.find('./{http://www.opengis.net/ogc}PropertyName')
+        assert propertyname.text == 'pkey_boring'
+
+        literal = xml.find('./{http://www.opengis.net/ogc}Literal')
+        assert literal.text in l
+
+        l.remove(literal.text)
+        assert len(l) == 0
 
     def test_tooshort_duplicate(self):
         """Test the Join expression with a dataframe containing two
@@ -217,16 +253,28 @@ class TestJoin(object):
         Test whether a ValueError is raised.
 
         """
-        with pytest.raises(ValueError):
-            l = ['https://www.dov.vlaanderen.be/data/boring/1986-068853',
-                 'https://www.dov.vlaanderen.be/data/boring/1986-068853']
+        l = ['https://www.dov.vlaanderen.be/data/boring/1986-068853',
+             'https://www.dov.vlaanderen.be/data/boring/1986-068853']
+        l_output = ['https://www.dov.vlaanderen.be/data/boring/1986-068853']
 
-            df = pd.DataFrame({
-                'pkey_boring': pd.Series(l),
-                'diepte_tot_m': pd.Series([10, 20])
-            })
+        df = pd.DataFrame({
+            'pkey_boring': pd.Series(l),
+            'diepte_tot_m': pd.Series([10, 20])
+        })
 
-            Join(df, 'pkey_boring')
+        query = Join(df, 'pkey_boring')
+        xml = query.toXML()
+
+        assert xml.tag == '{http://www.opengis.net/ogc}PropertyIsEqualTo'
+
+        propertyname = xml.find('./{http://www.opengis.net/ogc}PropertyName')
+        assert propertyname.text == 'pkey_boring'
+
+        literal = xml.find('./{http://www.opengis.net/ogc}Literal')
+        assert literal.text in l_output
+
+        l_output.remove(literal.text)
+        assert len(l_output) == 0
 
     def test_on(self):
         """Test the Join expression with a standard dataframe and 'on'.

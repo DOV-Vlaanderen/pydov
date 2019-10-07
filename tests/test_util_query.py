@@ -1,5 +1,6 @@
 """Module grouping tests for the pydov.util.query module."""
 import pandas as pd
+import numpy as np
 import pytest
 
 from pydov.util.query import (
@@ -67,11 +68,12 @@ class TestPropertyInList(object):
 
         assert len(l_output) == 0
 
-    def test_tooshort(self):
+    def test_list_single(self):
         """Test the PropertyInList expression with a list containing
         a single item.
 
-        Test whether a ValueError is raised.
+        Test whether the generated query is correct and does contain only a
+        single PropertyIsEqualTo.
 
         """
         l = ['a']
@@ -90,11 +92,12 @@ class TestPropertyInList(object):
         l.remove(literal.text)
         assert len(l) == 0
 
-    def test_tooshort_duplicate(self):
+    def test_list_single_duplicate(self):
         """Test the PropertyInList expression with a list containing
-        a two identical items.
+        a single duplicated item.
 
-        Test whether a ValueError is raised.
+        Test whether the generated query is correct and does contain only a
+        single PropertyIsEqualTo.
 
         """
         l = ['a', 'a']
@@ -113,6 +116,16 @@ class TestPropertyInList(object):
 
         l_output.remove(literal.text)
         assert len(l_output) == 0
+
+    def test_emptylist(self):
+        """Test the PropertyInList expression with an empty list.
+
+        Test whether a ValueError is raised.
+
+        """
+        with pytest.raises(ValueError):
+            l = []
+            PropertyInList('methode', l)
 
     def test_nolist(self):
         """Test the PropertyInList expression with a string instead of a list.
@@ -219,10 +232,11 @@ class TestJoin(object):
 
             Join(df, 'pkey_sondering')
 
-    def test_tooshort(self):
+    def test_single(self):
         """Test the Join expression with a dataframe containing a single row.
 
-        Test whether a ValueError is raised.
+        Test whether the generated query is correct and does contain only a
+        single PropertyIsEqualTo.
 
         """
         l = ['https://www.dov.vlaanderen.be/data/boring/1986-068853']
@@ -246,11 +260,12 @@ class TestJoin(object):
         l.remove(literal.text)
         assert len(l) == 0
 
-    def test_tooshort_duplicate(self):
+    def test_single_duplicate(self):
         """Test the Join expression with a dataframe containing two
         identical keys.
 
-        Test whether a ValueError is raised.
+        Test whether the generated query is correct and does contain only a
+        single PropertyIsEqualTo.
 
         """
         l = ['https://www.dov.vlaanderen.be/data/boring/1986-068853',
@@ -275,6 +290,20 @@ class TestJoin(object):
 
         l_output.remove(literal.text)
         assert len(l_output) == 0
+
+    def test_empty(self):
+        """Test the Join expression with an empty dataframe.
+
+        Test whether a ValueError is raised
+
+        """
+        df = pd.DataFrame({
+            'pkey_boring': [np.nan, np.nan],
+            'diepte_tot_m': pd.Series([10, 20])
+        })
+
+        with pytest.raises(ValueError):
+            Join(df, 'pkey_boring')
 
     def test_on(self):
         """Test the Join expression with a standard dataframe and 'on'.

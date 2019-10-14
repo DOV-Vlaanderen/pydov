@@ -137,9 +137,6 @@ class GrondwaterMonsterSearch(AbstractSearch):
             tuple or set.
 
         """
-        self._pre_search_validation(location, query, sort_by, return_fields,
-                                    max_features)
-
         fts = self._search(location=location, query=query, sort_by=sort_by,
                            return_fields=return_fields,
                            max_features=max_features)

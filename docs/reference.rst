@@ -25,6 +25,12 @@ Grondwaterfilter
 .. automodule:: pydov.search.grondwaterfilter
     :members:
 
+Grondwatermonster
+*****************
+
+.. automodule:: pydov.search.grondwatermonster
+    :members:
+
 Interpretaties
 **************
 
@@ -61,6 +67,13 @@ Grondwaterfilter
 ****************
 
 .. automodule:: pydov.types.grondwaterfilter
+    :members:
+    :show-inheritance:
+
+Grondwatermonster
+*****************
+
+.. automodule:: pydov.types.grondwatermonster
     :members:
     :show-inheritance:
 

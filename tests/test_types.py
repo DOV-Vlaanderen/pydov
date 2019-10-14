@@ -5,6 +5,7 @@ import pytest
 from pydov.types.boring import Boring
 from pydov.types.fields import XmlField
 from pydov.types.grondwaterfilter import GrondwaterFilter
+from pydov.types.grondwatermonster import GrondwaterMonster
 from pydov.types.grondmonster import Grondmonster
 from pydov.types.interpretaties import (
     GecodeerdeLithologie,
@@ -14,15 +15,18 @@ from pydov.types.interpretaties import (
     FormeleStratigrafie,
     GeotechnischeCodering,
     QuartairStratigrafie,
+    InformeleHydrogeologischeStratigrafie,
 )
 from pydov.types.sondering import Sondering
 
 type_objects = [Boring,
                 Sondering,
                 GrondwaterFilter,
+                GrondwaterMonster,
                 InformeleStratigrafie,
                 FormeleStratigrafie,
                 HydrogeologischeStratigrafie,
+                InformeleHydrogeologischeStratigrafie,
                 GecodeerdeLithologie,
                 LithologischeBeschrijvingen,
                 GeotechnischeCodering,

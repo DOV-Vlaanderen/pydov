@@ -212,7 +212,7 @@ Groundwater screens (grondwaterfilters)
     filtertype,1,string,peilfilter
     x,1,float,110490
     y,1,float,194090
-    mv_mtaw,10,float,NaN
+    start_grondwaterlocatie_mtaw,1,float,NaN
     gemeente,1,string,Destelbergen
     meetnet_code,10,integer,1
     aquifer_code,10,string,0100
@@ -227,6 +227,29 @@ Groundwater screens (grondwaterfilters)
     methode,10,string,peillint
     filterstatus,10,string,1
     filtertoestand,10,string,in rust
+
+Groundwater samples (grondwatermonsters)
+----------------------------------------
+  .. csv-table:: Groundwater screens (grondwaterfilters)
+    :header-rows: 1
+
+    Field,Cost,Datatype,Example
+    pkey_grondwatermonster,1,string,https://www.dov.vlaanderen.be/data/watermonster/2010-001344
+    grondwatermonsternummer,1,string,2-0114/M2010
+    pkey_grondwaterlocatie,1,string,https://www.dov.vlaanderen.be/data/put/2017-000096
+    gw_id,1,string,2-0114
+    pkey_filter,1,string,https://www.dov.vlaanderen.be/data/filter/1996-001085
+    filternummer,1,string,1
+    x,1,float,153030
+    y,1,float,158805
+    start_grondwaterlocatie_mtaw,1,float,129.88
+    gemeente,1,string,Sint-Genesius-Rode
+    parametergroep,10,string,Zware metalen
+    parameter,10,string,Hg
+    detectie,10,string,<
+    waarde,10,float,0.5
+    eenheid,10,string,µg/l
+    veld_labo,10,string,LABO
 
 Formal stratigraphy (Formele stratigrafie)
 ------------------------------------------
@@ -276,6 +299,21 @@ Hydrogeological stratigraphy (Hydrogeologische stratigrafie)
     diepte_laag_van,10,float,0
     diepte_laag_tot,10,float,8
     aquifer,10,string,0110
+
+Informal hydrogeological stratigraphy (Informele hydrogeologische stratigrafie)
+-------------------------------------------------------------------------------
+  .. csv-table:: Informal hydrogeological stratigraphy (Informele hydrogeologische stratigrafie)
+    :header-rows: 1
+
+    Field,Cost,Datatype,Example
+    pkey_interpretatie,1,string,https://www.dov.vlaanderen.be/data/interpretatie/2003-297769
+    pkey_boring,1,string,https://www.dov.vlaanderen.be/data/boring/2003-147935
+    betrouwbaarheid_interpretatie,1,string,goed
+    x,1,float,208607
+    y,1,float,210792
+    diepte_laag_van,10,float,0
+    diepte_laag_tot,10,float,1.5
+    beschrijving,10,string,Quartair
 
 Coded lithology (Gecodeerde lithologie)
 ---------------------------------------

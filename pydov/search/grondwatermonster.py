@@ -78,8 +78,8 @@ class GrondwaterMonsterSearch(AbstractSearch):
                 GrondwaterMonsterSearch.__fc_featurecatalogue,
                 GrondwaterMonsterSearch.__xsd_schemas)
 
-    def search(self, location=None, query=None, return_fields=None,
-               max_features=None):
+    def search(self, location=None, query=None, sort_by=None,
+               return_fields=None, max_features=None):
         """Search for groundwater samples (GrondwaterMonsterSearch). Provide
         `location` and/or `query`. When `return_fields` is None,
         all fields are returned.
@@ -100,6 +100,8 @@ class GrondwaterMonsterSearch(AbstractSearch):
             combination of filter elements defined in owslib.fes. The query
             should use the fields provided in `get_fields()`. Note that not
             all fields are currently supported as a search parameter.
+        sort_by : owslib.fes.SortBy, optional
+            List of properties to sort by.
         return_fields : list<str> or tuple<str> or set<str>
             A list of fields to be returned in the output data. This should
             be a subset of the fields provided in `get_fields()`. Note that
@@ -135,9 +137,7 @@ class GrondwaterMonsterSearch(AbstractSearch):
             tuple or set.
 
         """
-        self._pre_search_validation(location, query, return_fields)
-
-        fts = self._search(location=location, query=query,
+        fts = self._search(location=location, query=query, sort_by=sort_by,
                            return_fields=return_fields,
                            max_features=max_features)
 

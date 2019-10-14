@@ -480,7 +480,7 @@ def set_geometry_column(location, geometry_column):
 
 
 def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
-                                 filter=None, propertyname=None,
+                                 filter=None, sort_by=None, propertyname=None,
                                  max_features=None, version='1.1.0'):
     """Build a WFS GetFeature request in XML to be used as payload in a WFS
     GetFeature request using POST.
@@ -495,8 +495,10 @@ def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
     location : pydov.util.location.AbstractLocationFilter
         Location filter limiting the features to retrieve.
         Requires ``geometry_column`` to be supplied as well.
-    filter : owslib.fes.FilterRequest, optional
+    filter : str of owslib.fes.FilterRequest, optional
         Filter request to search on attribute values.
+    sort_by : str of owslib.fes.SortBy, optional
+        List of properties to sort by.
     propertyname : list<str>, optional
         List of properties to return. Defaults to all properties.
     max_features : int
@@ -524,7 +526,7 @@ def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
     xml.set('version', version)
 
     if max_features is not None:
-        if (not isinstance(max_features, int)) | (max_features <= 0):
+        if (not isinstance(max_features, int)) or (max_features <= 0):
             raise AttributeError('max_features should be a positive integer')
         xml.set('maxFeatures', str(max_features))
 
@@ -561,6 +563,10 @@ def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
         filter_parent.append(location)
 
     query.append(filter_xml)
+
+    if sort_by is not None:
+        query.append(etree.fromstring(sort_by))
+
     xml.append(query)
     return xml
 

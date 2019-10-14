@@ -81,9 +81,10 @@ class InformeleStratigrafieSearch(AbstractSearch):
                 InformeleStratigrafieSearch.__fc_featurecatalogue,
                 InformeleStratigrafieSearch.__xsd_schemas)
 
-    def search(self, location=None, query=None, return_fields=None,
-               max_features=None):
-        """Search for 'informele stratigrafie'. Provide either `location` or `query`.
+    def search(self, location=None, query=None, sort_by=None,
+               return_fields=None, max_features=None):
+        """Search for 'informele stratigrafie'. Provide either `location`
+        and/or `query` and/or `max_features`.
         When `return_fields` is None, all fields are returned.
 
         Parameters
@@ -99,6 +100,8 @@ class InformeleStratigrafieSearch(AbstractSearch):
             combination of filter elements defined in owslib.fes. The query
             should use the fields provided in `get_fields()`. Note that not
             all fields are currently supported as a search parameter.
+        sort_by : owslib.fes.SortBy, optional
+            List of properties to sort by.
         return_fields : list<str> or tuple<str> or set<str>
             A list of fields to be returned in the output data. This should
             be a subset of the fields provided in `get_fields()`. Note that
@@ -114,7 +117,7 @@ class InformeleStratigrafieSearch(AbstractSearch):
         Raises
         ------
         pydov.util.errors.InvalidSearchParameterError
-            When not one of `location` or `query` is provided.
+            When not one of `location`, `query` or `max_features` is provided.
 
         pydov.util.errors.InvalidFieldError
             When at least one of the fields in `return_fields` is unknown.
@@ -134,7 +137,7 @@ class InformeleStratigrafieSearch(AbstractSearch):
             tuple or set.
 
         """
-        fts = self._search(location=location, query=query,
+        fts = self._search(location=location, query=query, sort_by=sort_by,
                            return_fields=return_fields,
                            extra_wfs_fields=['Type_proef', 'Proeffiche'],
                            max_features=max_features)
@@ -217,15 +220,16 @@ class FormeleStratigrafieSearch(AbstractSearch):
                 FormeleStratigrafieSearch.__fc_featurecatalogue,
                 FormeleStratigrafieSearch.__xsd_schemas)
 
-    def search(self, location=None, query=None, return_fields=None,
-               max_features=None):
-        """Search for 'formele stratigrafie'. Provide either `location` or
-        `query`. When `return_fields` is None, all fields are returned.
+    def search(self, location=None, query=None, sort_by=None,
+               return_fields=None, max_features=None):
+        """Search for 'formele stratigrafie'. Provide either `location` and/or
+        `query` and/or `max_features`.
+        When `return_fields` is None, all fields are returned.
 
         Parameters
         ----------
-        location : pydov.util.location.AbstractLocationFilter or
-                    owslib.fes.BinaryLogicOpType<AbstractLocationFilter> or
+        location : pydov.util.location.AbstractLocationFilter or \
+                    owslib.fes.BinaryLogicOpType<AbstractLocationFilter> or \
                     owslib.fes.UnaryLogicOpType<AbstractLocationFilter>
             Location filter limiting the features to retrieve. Can either be a
             single instance of a subclass of AbstractLocationFilter, or a
@@ -235,6 +239,8 @@ class FormeleStratigrafieSearch(AbstractSearch):
             combination of filter elements defined in owslib.fes. The query
             should use the fields provided in `get_fields()`. Note that not
             all fields are currently supported as a search parameter.
+        sort_by : owslib.fes.SortBy, optional
+            List of properties to sort by.
         return_fields : list<str> or tuple<str> or set<str>
             A list of fields to be returned in the output data. This should
             be a subset of the fields provided in `get_fields()`. Note that
@@ -250,7 +256,7 @@ class FormeleStratigrafieSearch(AbstractSearch):
         Raises
         ------
         pydov.util.errors.InvalidSearchParameterError
-            When not one of `location` or `query` is provided.
+            When not one of `location`, `query` or `max_features` is provided.
 
         pydov.util.errors.InvalidFieldError
             When at least one of the fields in `return_fields` is unknown.
@@ -270,7 +276,7 @@ class FormeleStratigrafieSearch(AbstractSearch):
             tuple or set.
 
         """
-        fts = self._search(location=location, query=query,
+        fts = self._search(location=location, query=query, sort_by=sort_by,
                            return_fields=return_fields,
                            extra_wfs_fields=['Type_proef', 'Proeffiche'],
                            max_features=max_features)
@@ -356,10 +362,11 @@ class HydrogeologischeStratigrafieSearch(AbstractSearch):
                 HydrogeologischeStratigrafieSearch.__fc_featurecatalogue,
                 HydrogeologischeStratigrafieSearch.__xsd_schemas)
 
-    def search(self, location=None, query=None, return_fields=None,
-               max_features=None):
+    def search(self, location=None, query=None, sort_by=None,
+               return_fields=None, max_features=None):
         """Search for hydrogeological interpretations. Provide either
-        `location` or `query`. When `return_fields` is None, all fields
+        `location` and/or `query` and/or `max_features`. When
+        `return_fields` is None, all fields
         are returned.
 
         Parameters
@@ -375,6 +382,8 @@ class HydrogeologischeStratigrafieSearch(AbstractSearch):
             combination of filter elements defined in owslib.fes. The query
             should use the fields provided in `get_fields()`. Note that not
             all fields are currently supported as a search parameter.
+        sort_by : owslib.fes.SortBy, optional
+            List of properties to sort by.
         return_fields : list<str> or tuple<str> or set<str>
             A list of fields to be returned in the output data. This should
             be a subset of the fields provided in `get_fields()`. Note that
@@ -390,7 +399,7 @@ class HydrogeologischeStratigrafieSearch(AbstractSearch):
         Raises
         ------
         pydov.util.errors.InvalidSearchParameterError
-            When not one of `location` or `query` is provided.
+            When not one of `location`, `query` or `max_features` is provided.
 
         pydov.util.errors.InvalidFieldError
             When at least one of the fields in `return_fields` is unknown.
@@ -410,7 +419,7 @@ class HydrogeologischeStratigrafieSearch(AbstractSearch):
             tuple or set.
 
         """
-        fts = self._search(location=location, query=query,
+        fts = self._search(location=location, query=query, sort_by=sort_by,
                            return_fields=return_fields,
                            max_features=max_features)
 
@@ -495,11 +504,11 @@ class LithologischeBeschrijvingenSearch(AbstractSearch):
                 LithologischeBeschrijvingenSearch.__fc_featurecatalogue,
                 LithologischeBeschrijvingenSearch.__xsd_schemas)
 
-    def search(self, location=None, query=None, return_fields=None,
-               max_features=None):
+    def search(self, location=None, query=None, sort_by=None,
+               return_fields=None, max_features=None):
         """Search for 'lithologische beschrijvingen'. Provide either
-        `location` or `query`. When `return_fields` is None, all fields
-        are returned.
+        `location` and/or `query` and/or `max_features`.
+        When `return_fields` is None, all fields are returned.
 
         Parameters
         ----------
@@ -514,6 +523,8 @@ class LithologischeBeschrijvingenSearch(AbstractSearch):
             combination of filter elements defined in owslib.fes. The query
             should use the fields provided in `get_fields()`. Note that not
             all fields are currently supported as a search parameter.
+        sort_by : owslib.fes.SortBy, optional
+            List of properties to sort by.
         return_fields : list<str> or tuple<str> or set<str>
             A list of fields to be returned in the output data. This should
             be a subset of the fields provided in `get_fields()`. Note that
@@ -529,7 +540,7 @@ class LithologischeBeschrijvingenSearch(AbstractSearch):
         Raises
         ------
         pydov.util.errors.InvalidSearchParameterError
-            When not one of `location` or `query` is provided.
+            When not one of `location`, `query` or `max_features` is provided.
 
         pydov.util.errors.InvalidFieldError
             When at least one of the fields in `return_fields` is unknown.
@@ -549,7 +560,7 @@ class LithologischeBeschrijvingenSearch(AbstractSearch):
             tuple or set.
 
         """
-        fts = self._search(location=location, query=query,
+        fts = self._search(location=location, query=query, sort_by=sort_by,
                            return_fields=return_fields,
                            max_features=max_features)
 
@@ -634,11 +645,11 @@ class GecodeerdeLithologieSearch(AbstractSearch):
                 GecodeerdeLithologieSearch.__fc_featurecatalogue,
                 GecodeerdeLithologieSearch.__xsd_schemas)
 
-    def search(self, location=None, query=None, return_fields=None,
-               max_features=None):
-        """Search for 'gecodeerde lithologie'. Provide either
-        `location` or `query`. When `return_fields` is None, all fields
-        are returned.
+    def search(self, location=None, query=None, sort_by=None,
+               return_fields=None, max_features=None):
+        """Search for 'gecodeerde lithologie'. Provide either `location`
+        and/or `query` and/or `max_features`.
+        When `return_fields` is None, all fields are returned.
 
         Parameters
         ----------
@@ -653,6 +664,8 @@ class GecodeerdeLithologieSearch(AbstractSearch):
             combination of filter elements defined in owslib.fes. The query
             should use the fields provided in `get_fields()`. Note that not
             all fields are currently supported as a search parameter.
+        sort_by : owslib.fes.SortBy, optional
+            List of properties to sort by.
         return_fields : list<str> or tuple<str> or set<str>
             A list of fields to be returned in the output data. This should
             be a subset of the fields provided in `get_fields()`. Note that
@@ -668,7 +681,7 @@ class GecodeerdeLithologieSearch(AbstractSearch):
         Raises
         ------
         pydov.util.errors.InvalidSearchParameterError
-            When not one of `location` or `query` is provided.
+            When not one of `location`, `query` or `max_features` is provided.
 
         pydov.util.errors.InvalidFieldError
             When at least one of the fields in `return_fields` is unknown.
@@ -688,7 +701,7 @@ class GecodeerdeLithologieSearch(AbstractSearch):
             tuple or set.
 
         """
-        fts = self._search(location=location, query=query,
+        fts = self._search(location=location, query=query, sort_by=sort_by,
                            return_fields=return_fields,
                            max_features=max_features)
 
@@ -773,11 +786,11 @@ class GeotechnischeCoderingSearch(AbstractSearch):
                 GeotechnischeCoderingSearch.__fc_featurecatalogue,
                 GeotechnischeCoderingSearch.__xsd_schemas)
 
-    def search(self, location=None, query=None, return_fields=None,
-               max_features=None):
-        """Search for 'geotechnische_codering'. Provide either
-        `location` or `query`. When `return_fields` is None, all fields
-        are returned.
+    def search(self, location=None, query=None, sort_by=None,
+               return_fields=None, max_features=None):
+        """Search for 'geotechnische_codering'. Provide either `location`
+        and/or `query` and/or `max_features`.
+        When `return_fields` is None, all fields are returned.
 
         Parameters
         ----------
@@ -788,6 +801,8 @@ class GeotechnischeCoderingSearch(AbstractSearch):
             combination of filter elements defined in owslib.fes. The query
             should use the fields provided in `get_fields()`. Note that not
             all fields are currently supported as a search parameter.
+        sort_by : owslib.fes.SortBy, optional
+            List of properties to sort by.
         return_fields : list<str> or tuple<str> or set<str>
             A list of fields to be returned in the output data. This should
             be a subset of the fields provided in `get_fields()`. Note that
@@ -803,7 +818,7 @@ class GeotechnischeCoderingSearch(AbstractSearch):
         Raises
         ------
         pydov.util.errors.InvalidSearchParameterError
-            When not one of `location` or `query` is provided.
+            When not one of `location`, `query` or `max_features` is provided.
 
         pydov.util.errors.InvalidFieldError
             When at least one of the fields in `return_fields` is unknown.
@@ -823,7 +838,7 @@ class GeotechnischeCoderingSearch(AbstractSearch):
             tuple or set.
 
         """
-        fts = self._search(location=location, query=query,
+        fts = self._search(location=location, query=query, sort_by=sort_by,
                            return_fields=return_fields,
                            max_features=max_features)
 
@@ -905,17 +920,17 @@ class QuartairStratigrafieSearch(AbstractSearch):
                 QuartairStratigrafieSearch.__fc_featurecatalogue,
                 QuartairStratigrafieSearch.__xsd_schemas)
 
-    def search(self, location=None, query=None, return_fields=None,
-               max_features=None):
+    def search(self, location=None, query=None, sort_by=None,
+               return_fields=None, max_features=None):
         """Search for interpretations of Quartair stratigrafie.
 
-        Provide either `location` or `query`.
+        Provide either `location` and/or `query` and/or `max_features`.
         When `return_fields` is None, all fields are returned.
 
         Parameters
         ----------
-        location : pydov.util.location.AbstractLocationFilter or
-                    owslib.fes.BinaryLogicOpType<AbstractLocationFilter> or
+        location : pydov.util.location.AbstractLocationFilter or \
+                    owslib.fes.BinaryLogicOpType<AbstractLocationFilter> or \
                     owslib.fes.UnaryLogicOpType<AbstractLocationFilter>
             Location filter limiting the features to retrieve. Can either be a
             single instance of a subclass of AbstractLocationFilter, or a
@@ -925,6 +940,8 @@ class QuartairStratigrafieSearch(AbstractSearch):
             combination of filter elements defined in owslib.fes. The query
             should use the fields provided in `get_fields()`. Note that not
             all fields are currently supported as a search parameter.
+        sort_by : owslib.fes.SortBy, optional
+            List of properties to sort by.
         return_fields : list<str> or tuple<str> or set<str>
             A list of fields to be returned in the output data. This should
             be a subset of the fields provided in `get_fields()`. Note that
@@ -940,7 +957,7 @@ class QuartairStratigrafieSearch(AbstractSearch):
         Raises
         ------
         pydov.util.errors.InvalidSearchParameterError
-            When not one of `location` or `query` is provided.
+            When not one of `location`, `query` or `max_features` is provided.
 
         pydov.util.errors.InvalidFieldError
             When at least one of the fields in `return_fields` is unknown.
@@ -960,7 +977,7 @@ class QuartairStratigrafieSearch(AbstractSearch):
             tuple or set.
 
         """
-        fts = self._search(location=location, query=query,
+        fts = self._search(location=location, query=query, sort_by=sort_by,
                            return_fields=return_fields,
                            max_features=max_features)
 
@@ -1052,8 +1069,8 @@ class InformeleHydrogeologischeStratigrafieSearch(AbstractSearch):
                 __fc_featurecatalogue,
                 InformeleHydrogeologischeStratigrafieSearch.__xsd_schemas)
 
-    def search(self, location=None, query=None, return_fields=None,
-               max_features=None):
+    def search(self, location=None, query=None, sort_by=None,
+               return_fields=None, max_features=None):
         """Search for boreholes (Boring). Provide either `location` or `query`.
         When `return_fields` is None, all fields are returned.
 
@@ -1070,6 +1087,8 @@ class InformeleHydrogeologischeStratigrafieSearch(AbstractSearch):
             combination of filter elements defined in owslib.fes. The query
             should use the fields provided in `get_fields()`. Note that not
             all fields are currently supported as a search parameter.
+        sort_by : owslib.fes.SortBy, optional
+            List of properties to sort by.
         return_fields : list<str> or tuple<str> or set<str>
             A list of fields to be returned in the output data. This should
             be a subset of the fields provided in `get_fields()`. Note that
@@ -1105,7 +1124,7 @@ class InformeleHydrogeologischeStratigrafieSearch(AbstractSearch):
             tuple or set.
 
         """
-        fts = self._search(location=location, query=query,
+        fts = self._search(location=location, query=query, sort_by=sort_by,
                            return_fields=return_fields,
                            max_features=max_features)
 

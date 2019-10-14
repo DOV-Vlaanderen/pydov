@@ -84,11 +84,11 @@ class GrondwaterFilterSearch(AbstractSearch):
                 GrondwaterFilterSearch.__fc_featurecatalogue,
                 GrondwaterFilterSearch.__xsd_schemas)
 
-    def search(self, location=None, query=None, return_fields=None,
-               max_features=None):
+    def search(self, location=None, query=None, sort_by=None,
+               return_fields=None, max_features=None):
         """Search for groundwater screens (GrondwaterFilter). Provide
-        `location` and/or `query`. When `return_fields` is None,
-        all fields are returned.
+        `location` and/or `query` and/or `max_features`.
+        When `return_fields` is None, all fields are returned.
 
         Excludes 'empty' filters (i.e. Putten without Filters) by extending
         the `query` with a not-null check on pkey_filter.
@@ -106,6 +106,8 @@ class GrondwaterFilterSearch(AbstractSearch):
             combination of filter elements defined in owslib.fes. The query
             should use the fields provided in `get_fields()`. Note that not
             all fields are currently supported as a search parameter.
+        sort_by : owslib.fes.SortBy, optional
+            List of properties to sort by.
         return_fields : list<str> or tuple<str> or set<str>
             A list of fields to be returned in the output data. This should
             be a subset of the fields provided in `get_fields()`. Note that
@@ -121,7 +123,7 @@ class GrondwaterFilterSearch(AbstractSearch):
         Raises
         ------
         pydov.util.errors.InvalidSearchParameterError
-            When not one of `location` or `query` is provided.
+            When not one of `location`, `query` or `max_features` is provided.
 
         pydov.util.errors.InvalidFieldError
             When at least one of the fields in `return_fields` is unknown.
@@ -141,7 +143,8 @@ class GrondwaterFilterSearch(AbstractSearch):
             tuple or set.
 
         """
-        self._pre_search_validation(location, query, return_fields)
+        self._pre_search_validation(location, query, sort_by, return_fields,
+                                    max_features)
 
         exclude_empty_filters = Not([PropertyIsNull(
                                      propertyname='pkey_filter')])
@@ -151,7 +154,7 @@ class GrondwaterFilterSearch(AbstractSearch):
         else:
             query = exclude_empty_filters
 
-        fts = self._search(location=location, query=query,
+        fts = self._search(location=location, query=query, sort_by=sort_by,
                            return_fields=return_fields,
                            max_features=max_features)
 

@@ -24,6 +24,7 @@ To run these interactively online without installation, use the following binder
    notebooks/search_boringen.ipynb
    notebooks/search_sonderingen.ipynb
    notebooks/search_grondwaterfilters.ipynb
+   notebooks/search_grondwatermonsters.ipynb
    notebooks/search_formele_stratigrafie.ipynb
    notebooks/search_informele_stratigrafie.ipynb
    notebooks/search_hydrogeologische_stratigrafie.ipynb

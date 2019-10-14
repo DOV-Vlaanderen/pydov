@@ -83,6 +83,7 @@ Contents:
    query_attribute
    query_location
    output_fields
+   sort_limit
    performance
    caching
    hooks

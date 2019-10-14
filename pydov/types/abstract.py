@@ -456,14 +456,15 @@ class AbstractDovType(AbstractTypeCommon):
             raise AttributeError(
                 'return_fields should be a list, tuple or set')
         else:
-            fields = [f['name'] for f in cls.fields if f['name'] in
-                      return_fields]
+            cls_fields = [f['name'] for f in cls.fields]
             if include_subtypes:
                 for st in cls.subtypes:
-                    fields.extend([f for f in st.get_field_names() if f in
-                                   return_fields])
+                    cls_fields.extend(st.get_field_names())
+
+            fields = [f for f in return_fields if f in cls_fields]
+
             for rf in return_fields:
-                if rf not in fields:
+                if rf not in cls_fields:
                     raise InvalidFieldError(
                         "Unknown return field: '{}'".format(rf))
         return fields

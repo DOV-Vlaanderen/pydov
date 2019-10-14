@@ -1,4 +1,5 @@
 import datetime
+import random
 import re
 
 import numpy as np
@@ -411,8 +412,7 @@ class AbstractTestSearch(object):
         return fields in another ordering.
 
         Test whether the output dataframe contains only the selected return
-        fields, in the order that is documented in
-        docs/description_output_dataframes.rst
+        fields, in the order that is given in the return_fields parameter.
 
         Parameters
         ----------
@@ -420,13 +420,17 @@ class AbstractTestSearch(object):
             Monkeypatch the call to get WFS features.
 
         """
+        rf = list(self.get_valid_returnfields())
+
+        while rf == list(self.get_valid_returnfields()):
+            random.shuffle(rf)
+
         df = self.get_search_object().search(
             query=self.get_valid_query_single(),
-            return_fields=self.get_valid_returnfields()[::-1])
+            return_fields=rf)
 
         assert type(df) is DataFrame
-
-        assert list(df) == list(self.get_valid_returnfields())
+        assert list(df) == rf
 
     def test_search_wrongreturnfields(self):
         """Test the search method with the query parameter and an inexistent
@@ -723,15 +727,20 @@ class AbstractTestTypes(object):
         fields in a different order.
 
         Tests whether the returned fields match the ones provided as return
-        fields and that the order is the one we list in
-        docs/description_output_dataframes.rst.
+        fields and that the order is the one given in the return_fields
+        parameter.
 
         """
+        rf = list(self.get_valid_returnfields())
+
+        while rf == list(self.get_valid_returnfields()):
+            random.shuffle(rf)
+
         fields = self.get_type().get_field_names(
-            return_fields=self.get_valid_returnfields()[::-1],
+            return_fields=rf,
             include_subtypes=False)
 
-        assert fields == list(self.get_valid_returnfields())
+        assert fields == rf
 
     def test_get_field_names_wrongreturnfields(self):
         """Test the get_field_names method when specifying an

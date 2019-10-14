@@ -1,6 +1,7 @@
 import datetime
 import random
 import re
+import sys
 
 import numpy as np
 from collections import OrderedDict
@@ -350,11 +351,12 @@ class AbstractTestSearch(object):
         for field in list(df):
             field_datatype = fields[field]['type']
             datatypes = set((type(i) for i in df[field].dropna()))
+
             assert len(datatypes) <= 1
 
             if len(datatypes) > 0:
                 if field_datatype == 'string':
-                    assert str in datatypes
+                    assert (str in datatypes or unicode in datatypes)
                 elif field_datatype == 'float':
                     assert float in datatypes
                 elif field_datatype == 'integer':

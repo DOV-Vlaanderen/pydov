@@ -30,6 +30,10 @@ from pydov.util.location import (
     Within,
     Box,
 )
+from pydov.util.query import (
+    PropertyInList,
+    Join,
+)
 
 
 def service_ok(timeout=5):
@@ -135,6 +139,17 @@ class AbstractTestSearch(object):
         -------
         str
             The name of an inexistent field.
+
+        """
+        raise NotImplementedError
+
+    def get_wfs_field(self):
+        """Get the name of a WFS field.
+
+        Returns
+        -------
+        str
+            The name of the WFS field.
 
         """
         raise NotImplementedError
@@ -581,6 +596,43 @@ class AbstractTestSearch(object):
         df = self.get_search_object().search(
             query=self.get_valid_query_single(),
             return_fields=self.get_valid_returnfields_extra())
+
+    def test_search_propertyinlist(self, mp_remote_describefeaturetype,
+                                   mp_remote_wfs_feature, mp_dov_xml):
+        """Test the search method with a PropertyInList query.
+
+        Parameters
+        ----------
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType.
+        mp_remote_wfs_feature : pytest.fixture
+            Monkeypatch the call to get WFS features.
+        mp_dov_xml : pytest.fixture
+            Monkeypatch the call to get the remote XML data.
+
+        """
+        self.get_search_object().search(
+            query=PropertyInList(self.get_wfs_field(), ['a', 'b']))
+
+    def test_search_join(self, mp_remote_describefeaturetype,
+                         mp_remote_wfs_feature, mp_dov_xml):
+        """Test the search method with a Join query.
+
+        Parameters
+        ----------
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType.
+        mp_remote_wfs_feature : pytest.fixture
+            Monkeypatch the call to get WFS features.
+        mp_dov_xml : pytest.fixture
+            Monkeypatch the call to get the remote XML data.
+
+        """
+        df1 = self.get_search_object().search(
+            query=self.get_valid_query_single())
+
+        df2 = self.get_search_object().search(
+            query=Join(df1, self.get_df_default_columns()[0]))
 
     def test_get_fields_xsd_values(self, mp_remote_xsd):
         """Test the result of get_fields when the XML field has an XSD type.

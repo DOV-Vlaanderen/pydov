@@ -103,6 +103,17 @@ class TestInformeleHydrogeologischeStratigrafieSearch(AbstractTestSearch):
         """
         return 'onbestaand'
 
+    def get_wfs_field(self):
+        """Get the name of a WFS field.
+
+        Returns
+        -------
+        str
+            The name of the WFS field.
+
+        """
+        return 'Proefnummer'
+
     def get_xml_field(self):
         """Get the name of a field defined in XML only.
 

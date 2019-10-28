@@ -4,10 +4,11 @@
 from owslib.fes import (
     Or,
     PropertyIsEqualTo,
+    OgcExpression,
 )
 
 
-class PropertyInList(object):
+class PropertyInList(OgcExpression):
     """Filter expression to test whether a given property has one of the
     values from a list.
 
@@ -36,6 +37,8 @@ class PropertyInList(object):
             If the given list does not contain at least a single item.
 
         """
+        super(PropertyInList, self).__init__()
+
         if not isinstance(lst, list) and not isinstance(lst, set):
             raise ValueError('list should be of type "list" or "set"')
 

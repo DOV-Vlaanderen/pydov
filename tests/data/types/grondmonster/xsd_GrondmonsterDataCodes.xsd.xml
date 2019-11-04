@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2010 (http://www.altova.com) by DPK (DPK) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://grondmonster.kern.schemas.dov.vlaanderen.be"
+           targetNamespace="http://grondmonster.kern.schemas.dov.vlaanderen.be"
+           elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.00">
+
+    <xs:simpleType name="MonsterEnumType">
+        <xs:annotation>
+            <xs:documentation>type monster</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="onbekend">
+                <xs:annotation>
+                    <xs:documentation>Onbekend</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="geroerd">
+                <xs:annotation>
+                    <xs:documentation>Geroerd</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="gestoken met ontnamebuis">
+                <xs:annotation>
+                    <xs:documentation>Gestoken met ontnamebuis</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="continu gestoken">
+                <xs:annotation>
+                    <xs:documentation>Continu gestoken</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="gekernd">
+                <xs:annotation>
+                    <xs:documentation>Gekernd</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="gespoeld">
+                <xs:annotation>
+                    <xs:documentation>Gespoeld</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="steenkoolanalyse">
+                <xs:annotation>
+                    <xs:documentation>Steenkoolanalyse</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ongeroerd">
+                <xs:annotation>
+                    <xs:documentation>Ongeroerd</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="ParameterEnumType">
+        <xs:annotation>
+            <xs:documentation>de mogelijke waarden voor de opgemeten parameter van een grondmonster</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="AREOMETER">
+                <xs:annotation>
+                    <xs:documentation>Areometer</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ASGEHALTE">
+                <xs:annotation>
+                    <xs:documentation>Asgehalte</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ASTM_CODE">
+                <xs:annotation>
+                    <xs:documentation>ASTM_code</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ASTM_NAAM">
+                <xs:annotation>
+                    <xs:documentation>ASTM_naam</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BGGG">
+                <xs:annotation>
+                    <xs:documentation>Grondsoort BGGG</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CHEM_AL">
+                <xs:annotation>
+                    <xs:documentation>Al</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CHEM_CR">
+                <xs:annotation>
+                    <xs:documentation>Cr</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CHEM_CU">
+                <xs:annotation>
+                    <xs:documentation>Cu</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CHEM_FE">
+                <xs:annotation>
+                    <xs:documentation>Fe</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CHEM_HG">
+                <xs:annotation>
+                    <xs:documentation>Hg</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CHEM_K">
+                <xs:annotation>
+                    <xs:documentation>K</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CHEM_NI">
+                <xs:annotation>
+                    <xs:documentation>Ni</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CHEM_PB">
+                <xs:annotation>
+                    <xs:documentation>Pb</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CHEM_S">
+                <xs:annotation>
+                    <xs:documentation>S</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CHEM_AS">
+                <xs:annotation>
+                    <xs:documentation>Arseen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CHEM_CD">
+                <xs:annotation>
+                    <xs:documentation>Cadnium</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CHEM_ZN">
+                <xs:annotation>
+                    <xs:documentation>Zink</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GLAUCONIET_GT500">
+                <xs:annotation>
+                    <xs:documentation>Fractie groter 500 micron</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GLAUCONIET_KL63">
+                <xs:annotation>
+                    <xs:documentation>Fractie kleiner 63micron
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GLAUCONIET_TOTAAL">
+                <xs:annotation>
+                    <xs:documentation>Glauconiet totaal</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GLAUCONIET_TSS">
+                <xs:annotation>
+                    <xs:documentation>Fractie kleiner 500micron en groter 63micron
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="HUMUSGEHALTE">
+                <xs:annotation>
+                    <xs:documentation>Humusgehalte</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KALKGEHALTE">
+                <xs:annotation>
+                    <xs:documentation>Kalkgehalte</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KORRELVOLUMEMASSA">
+                <xs:annotation>
+                    <xs:documentation>korrelvolumemassa</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LASER">
+                <xs:annotation>
+                    <xs:documentation>Laserdiffractie</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="METHYLEENBLAUW">
+                <xs:annotation>
+                    <xs:documentation>Methyleenblauw</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CHEM_MINOLIE">
+                <xs:annotation>
+                    <xs:documentation>Minerale olien</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CHEM_NAFT">
+                <xs:annotation>
+                    <xs:documentation>Naft</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+
+            <xs:enumeration value="CHEM_BENZOAP">
+                <xs:annotation>
+                    <xs:documentation>benzo(a)pyreen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CHEM_BENZOAA">
+                <xs:annotation>
+                    <xs:documentation>benzo(a)antraceen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CHEM_FENAN">
+                <xs:annotation>
+                    <xs:documentation>fenanteen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CHEM_FLUOR">
+                <xs:annotation>
+                    <xs:documentation>fluoranteen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CHEM_CHRYS">
+                <xs:annotation>
+                    <xs:documentation>chryseen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CHEM_BENZOBF">
+                <xs:annotation>
+                    <xs:documentation>benzo(b)fluoranteen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CHEM_BENZOKF">
+                <xs:annotation>
+                    <xs:documentation>benzo(k)fluoranteen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CHEM_BENZOGHIP">
+                <xs:annotation>
+                    <xs:documentation>benzo(ghi)peryleen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CHEM_INDENO">
+                <xs:annotation>
+                    <xs:documentation>indeno(1,2,3-cd)pyreen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="REFLECTIVITEIT">
+                <xs:annotation>
+                    <xs:documentation>Reflectiviteit</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TOLUEEN">
+                <xs:annotation>
+                    <xs:documentation>Tolueen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="UITROLGRENS">
+                <xs:annotation>
+                    <xs:documentation>Uitrolgrens</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="VLOEIGRENS">
+                <xs:annotation>
+                    <xs:documentation>Vloeigrens</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="VLUCHT_BESTAND">
+                <xs:annotation>
+                    <xs:documentation>Vluchtige bestanddelen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="VOLUMEMASSA">
+                <xs:annotation>
+                    <xs:documentation>volumemassa</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="WATERGEHALTE">
+                <xs:annotation>
+                    <xs:documentation>watergehalte</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ZEEFPROEF">
+                <xs:annotation>
+                    <xs:documentation>Zeving</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ZWAVELGEHALTE">
+                <xs:annotation>
+                    <xs:documentation>Zwavelgehalte</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+
+    <xs:simpleType name="ProefNaamEnumType">
+        <xs:annotation>
+            <xs:documentation>de mogelijke waarden voor de naam van een verzameling van één of meerdere parameters
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="CHEMIE">
+                <xs:annotation>
+                    <xs:documentation>Chemische analyses</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MP">
+                <xs:annotation>
+                    <xs:documentation>Mechanische proeven</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="OKP-ALGEMEEN">
+                <xs:annotation>
+                    <xs:documentation>Onderkenning - proeven</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <!-- <xs:enumeration value="OKP-GLAUCONIET">
+                 <xs:annotation>
+                     <xs:documentation>Onderkenning - glauconietgehalte</xs:documentation>
+                 </xs:annotation>
+             </xs:enumeration>
+             <xs:enumeration value="OKP-GRONDSOORT">
+                 <xs:annotation>
+                     <xs:documentation>Onderkenning - grondsoort</xs:documentation>
+                 </xs:annotation>
+             </xs:enumeration>-->
+            <xs:enumeration value="OKP-KORREL">
+                <xs:annotation>
+                    <xs:documentation>Onderkenningsproeven-korrelverdeling</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="STEENKOOL">
+                <xs:annotation>
+                    <xs:documentation>Steenkoolanalyse</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="VOLMASSA-PROEVEN">
+                <xs:annotation>
+                    <xs:documentation>Volumemassa-watergehalte</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+
+            <!--parameters die een referentie kunnen hebben-->
+            <xs:enumeration value="SAMENDRUKKING">
+                <xs:annotation>
+                    <xs:documentation>Samendrukking</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SCHUIFWEERSTAND_GEN">
+                <xs:annotation>
+                    <xs:documentation>Schuifweerstand generiek</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SCHUIFWEERSTAND_CD">
+                <xs:annotation>
+                    <xs:documentation>Schuifweerstand CD</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SCHUIFWEERSTAND_CU">
+                <xs:annotation>
+                    <xs:documentation>Schuifweerstand CU</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SCHUIFWEERSTAND_UU">
+                <xs:annotation>
+                    <xs:documentation>Schuifweerstand UU</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="DOORLATENDHEID_CV">
+                <xs:annotation>
+                    <xs:documentation>Doorlatendheid CV</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="DOORLATENDHEID_VVH">
+                <xs:annotation>
+                    <xs:documentation>Doorlatendheid VVH</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="DOORLATENDHEID_VVV">
+                <xs:annotation>
+                    <xs:documentation>Doorlatendheid VVV</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="DOORLATENDHEID_GEN">
+                <xs:annotation>
+                    <xs:documentation>Doorlatendheid GEN</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PROCTOR">
+                <xs:annotation>
+                    <xs:documentation>Standaard proctorproef</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PROCTOR_VERSTERKT">
+                <xs:annotation>
+                    <xs:documentation>Versterkte proctorproef</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LOSSE_PAKKING">
+                <xs:annotation>
+                    <xs:documentation>Meest losse pakking</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="VINPROEF">
+                <xs:annotation>
+                    <xs:documentation>Vinproef</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <!--Korrel-->
+            <xs:enumeration value="KORREL_ZEVING">
+                <xs:annotation>
+                    <xs:documentation>Zeving</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KORREL_AREOMETER">
+                <xs:annotation>
+                    <xs:documentation>AREOMETER</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KORREL_LASERDIFFRACTIE">
+                <xs:annotation>
+                    <xs:documentation>LASERDIFFRACTIE</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="MethodeOntsluitingEnumType">
+        <xs:annotation>
+            <xs:documentation>de mogelijke waarden voor de methodes ontsluiting van chemische proeven</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="onbekend">
+                <xs:annotation>
+                    <xs:documentation>Onbekend</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="koningswater">
+                <xs:annotation>
+                    <xs:documentation>Koningswater</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="MethodeConcentratieEnumType">
+        <xs:annotation>
+            <xs:documentation>de mogelijke waarden voor de methodes concentratie van chemische proeven
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="onbekend">
+                <xs:annotation>
+                    <xs:documentation>Onbekend</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!---->
+</xs:schema>

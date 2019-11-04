@@ -13,6 +13,8 @@ from pydov.util.dovutil import get_dov_xml
 
 
 class AbstractCache(object):
+    """Abstract base class for caching of downloaded XML files from DOV."""
+
     def _get_remote(self, url):
         """Get the XML data by requesting it from the given URL.
 
@@ -85,6 +87,9 @@ class AbstractCache(object):
 
 
 class AbstractFileCache(AbstractCache):
+    """Abstract class for filebased caching of downloaded XML files from
+    DOV."""
+
     def __init__(self, max_age=datetime.timedelta(weeks=2), cachedir=None):
         """Initialisation.
 

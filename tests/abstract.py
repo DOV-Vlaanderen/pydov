@@ -1,5 +1,7 @@
 import datetime
+import random
 import re
+import sys
 
 import numpy as np
 from collections import OrderedDict
@@ -16,7 +18,11 @@ from pandas.api.types import (
     is_int64_dtype, is_object_dtype,
     is_bool_dtype, is_float_dtype)
 
-from owslib.fes import PropertyIsEqualTo
+from owslib.fes import (
+    PropertyIsEqualTo,
+    SortBy,
+    SortProperty,
+)
 from owslib.etree import etree
 from pydov.types.abstract import AbstractField
 from pydov.util.dovutil import build_dov_url
@@ -350,11 +356,12 @@ class AbstractTestSearch(object):
         for field in list(df):
             field_datatype = fields[field]['type']
             datatypes = set((type(i) for i in df[field].dropna()))
+
             assert len(datatypes) <= 1
 
             if len(datatypes) > 0:
                 if field_datatype == 'string':
-                    assert str in datatypes
+                    assert (str in datatypes or unicode in datatypes)
                 elif field_datatype == 'float':
                     assert float in datatypes
                 elif field_datatype == 'integer':
@@ -412,8 +419,7 @@ class AbstractTestSearch(object):
         return fields in another ordering.
 
         Test whether the output dataframe contains only the selected return
-        fields, in the order that is documented in
-        docs/description_output_dataframes.rst
+        fields, in the order that is given in the return_fields parameter.
 
         Parameters
         ----------
@@ -421,13 +427,17 @@ class AbstractTestSearch(object):
             Monkeypatch the call to get WFS features.
 
         """
+        rf = list(self.get_valid_returnfields())
+
+        while rf == list(self.get_valid_returnfields()):
+            random.shuffle(rf)
+
         df = self.get_search_object().search(
             query=self.get_valid_query_single(),
-            return_fields=self.get_valid_returnfields()[::-1])
+            return_fields=rf)
 
         assert type(df) is DataFrame
-
-        assert list(df) == list(self.get_valid_returnfields())
+        assert list(df) == rf
 
     def test_search_wrongreturnfields(self):
         """Test the search method with the query parameter and an inexistent
@@ -505,6 +515,53 @@ class AbstractTestSearch(object):
         assert type(df) is DataFrame
 
         assert list(df) == list(self.get_valid_returnfields_extra())
+
+    def test_search_sortby_valid(self, mp_remote_describefeaturetype,
+                                 mp_remote_wfs_feature, mp_dov_xml):
+        """Test the search method with the query parameter and the sort_by
+        parameter with a valid sort field.
+
+        Test whether a dataframe is returned.
+
+        Parameters
+        ----------
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType.
+        mp_remote_wfs_feature : pytest.fixture
+            Monkeypatch the call to get WFS features.
+        mp_dov_xml : pytest.fixture
+            Monkeypatch the call to get the remote XML data.
+
+        """
+        df = self.get_search_object().search(
+            query=self.get_valid_query_single(),
+            sort_by=SortBy([SortProperty(
+                self.get_valid_returnfields_extra()[0])]))
+
+        assert type(df) is DataFrame
+
+    def test_search_sortby_invalid(self, mp_remote_describefeaturetype,
+                                   mp_remote_wfs_feature, mp_dov_xml):
+        """Test the search method with the query parameter and the sort_by
+        parameter with an invalid sort field.
+
+        Test whether an InvalidFieldError is raised.
+
+        Parameters
+        ----------
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType.
+        mp_remote_wfs_feature : pytest.fixture
+            Monkeypatch the call to get WFS features.
+        mp_dov_xml : pytest.fixture
+            Monkeypatch the call to get the remote XML data.
+
+        """
+        with pytest.raises(InvalidFieldError):
+            df = self.get_search_object().search(
+                query=self.get_valid_query_single(),
+                sort_by=SortBy([SortProperty(
+                    self.get_xml_field())]))
 
     def test_search_xml_noresolve(self, mp_remote_describefeaturetype,
                                   mp_remote_wfs_feature, mp_dov_xml_broken):
@@ -724,15 +781,20 @@ class AbstractTestTypes(object):
         fields in a different order.
 
         Tests whether the returned fields match the ones provided as return
-        fields and that the order is the one we list in
-        docs/description_output_dataframes.rst.
+        fields and that the order is the one given in the return_fields
+        parameter.
 
         """
+        rf = list(self.get_valid_returnfields())
+
+        while rf == list(self.get_valid_returnfields()):
+            random.shuffle(rf)
+
         fields = self.get_type().get_field_names(
-            return_fields=self.get_valid_returnfields()[::-1],
+            return_fields=rf,
             include_subtypes=False)
 
-        assert fields == list(self.get_valid_returnfields())
+        assert fields == rf
 
     def test_get_field_names_wrongreturnfields(self):
         """Test the get_field_names method when specifying an

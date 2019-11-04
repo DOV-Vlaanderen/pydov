@@ -23,12 +23,12 @@ class Peilmeting(AbstractDovSubType):
     fields = [
         XmlField(name='datum',
                  source_xpath='/datum',
-                 definition='Datum van opmeten.',
-                 datatype='date',
-                 notnull=True),
+                 definition='Datum waarop de peilmeting uitgevoerd werd.',
+                 datatype='date'),
         XmlField(name='tijdstip',
                  source_xpath='/tijdstip',
-                 definition='Tijdstip van opmeten (optioneel).',
+                 definition='Tijdstip waarop de peilmeting uitgevoerd werd ('
+                            'optioneel).',
                  datatype='string'),
         XmlField(name='peil_mtaw',
                  source_xpath='/peil_mtaw',
@@ -36,8 +36,8 @@ class Peilmeting(AbstractDovSubType):
                  datatype='float'),
         XmlField(name='betrouwbaarheid',
                  source_xpath='/betrouwbaarheid',
-                 definition='Lijst van betrouwbaarheden (goed, onbekend of'
-                            'twijfelachtig).',
+                 definition='Betrouwbaarheid van de peilmeting (goed, '
+                            'onbekend of twijfelachtig).',
                  datatype='string'),
         XmlField(name='methode',
                  source_xpath='/methode',
@@ -82,7 +82,8 @@ class GrondwaterFilter(AbstractDovType):
                  datatype='string'),
         WfsField(name='x', source_field='X_mL72', datatype='float'),
         WfsField(name='y', source_field='Y_mL72', datatype='float'),
-        WfsField(name='mv_mtaw', source_field='Z_mTAW', datatype='float'),
+        WfsField(name='start_grondwaterlocatie_mtaw', source_field='Z_mTAW',
+                 datatype='float'),
         WfsField(name='gemeente', source_field='gemeente', datatype='string'),
         XmlField(name='meetnet_code',
                  source_xpath='/filter/meetnet',

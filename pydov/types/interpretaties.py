@@ -588,3 +588,34 @@ class QuartairStratigrafie(AbstractBoringInterpretatie):
     """
 
     subtypes = [QuartairStratigrafieLaag]
+
+
+class InformeleHydrogeologischeStratigrafieLaag(AbstractDovSubType):
+
+    rootpath = './/informelehydrostratigrafie/laag'
+
+    fields = [
+        XmlField(name='diepte_laag_van',
+                 source_xpath='/van',
+                 definition='Diepte van de bovenkant van de laag informele '
+                            'hydrostratigrafie in meter.',
+                 datatype='float'),
+        XmlField(name='diepte_laag_tot',
+                 source_xpath='/tot',
+                 definition='Diepte van de onderkant van de laag informele '
+                            'hydrostratigrafie in meter.',
+                 datatype='float'),
+        XmlField(name='beschrijving',
+                 source_xpath='/beschrijving',
+                 definition='Benoeming van de eenheid van de laag informele '
+                            'hydrostratigrafie in vrije tekst (onbeperkt in '
+                            'lengte).',
+                 datatype='string')
+    ]
+
+
+class InformeleHydrogeologischeStratigrafie(AbstractBoringInterpretatie):
+    """Class representing the DOV data type for 'informele stratigrafie'
+    interpretations."""
+
+    subtypes = [InformeleHydrogeologischeStratigrafieLaag]

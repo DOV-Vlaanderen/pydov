@@ -20,7 +20,7 @@ with open('requirements_doc.txt') as f:
 
 setup(
     name='pydov',
-    version='0.2.0',
+    version='0.3.0',
     description="A Python package to download data from Databank Ondergrond Vlaanderen (DOV).",
     long_description=readme,
     long_description_content_type='text/markdown',
@@ -39,7 +39,7 @@ setup(
     zip_safe=False,
     keywords='pydov',
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
@@ -48,6 +48,7 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
     ],
     test_suite='tests',
     tests_require=requirements_dev,

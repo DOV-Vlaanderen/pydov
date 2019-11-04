@@ -297,14 +297,8 @@ An example of an advanced query using a nested combination of logical filter exp
     df = boring.search(query=query)
 
 
-Using custom filter expressions
-*******************************
-
-pydov adds two custom filter expressions to the available set from OGC described above. They can be imported from the pydov.util.query module.
-
-
 Query using lists
------------------
+*****************
 
 pydov extends the default OGC filter expressions described above with a new expression `PropertyInList` that allows you to use lists (of strings) in search queries.
 
@@ -319,7 +313,7 @@ PropertyInList
 
 
 Join different searches
------------------------
+***********************
 
 The `Join` expression allows you to join multiple searches together. This allows combining results from different datasets to get the results you're looking for.
 

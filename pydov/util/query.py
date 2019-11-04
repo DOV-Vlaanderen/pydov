@@ -7,7 +7,7 @@ from owslib.fes import (
 )
 
 
-class PropertyInList(Or):
+class PropertyInList(object):
     """Filter expression to test whether a given property has one of the
     values from a list.
 
@@ -33,19 +33,30 @@ class PropertyInList(Or):
         Raises
         ------
         ValueError
-            If the given list does not contain at least two distinct items.
+            If the given list does not contain at least a single item.
 
         """
         if not isinstance(lst, list) and not isinstance(lst, set):
             raise ValueError('list should be of type "list" or "set"')
 
-        if len(set(lst)) < 2:
-            raise ValueError('list should contain at least two different '
-                             'elements.')
+        if len(set(lst)) < 1:
+            raise ValueError('list should contain at least a single item')
+        elif len(set(lst)) == 1:
+            self.query = PropertyIsEqualTo(propertyname, set(lst).pop())
+        else:
+            self.query = Or(
+                [PropertyIsEqualTo(propertyname, i) for i in set(lst)])
 
-        super(PropertyInList, self).__init__(
-            [PropertyIsEqualTo(propertyname, i) for i in set(lst)]
-        )
+    def toXML(self):
+        """Return the XML representation of the PropertyInList query.
+
+        Returns
+        -------
+        xml : etree.ElementTree
+            XML representation of the PropertyInList
+
+        """
+        return self.query.toXML()
 
 
 class Join(PropertyInList):
@@ -83,9 +94,8 @@ class Join(PropertyInList):
             If `using` is None and the `on` column is not present in the
             dataframe.
 
-            If the dataframe does not contain at least two different values
-            in the `using` column. A Join is probably overkill here,
-            use PropertyIsEqualTo instead.
+            If the dataframe does not contain at least a single non-null value
+            in the `using` column.
 
         """
         if using is None:
@@ -98,8 +108,8 @@ class Join(PropertyInList):
 
         value_list = list(dataframe[using].dropna().unique())
 
-        if len(set(value_list)) < 2:
-            raise ValueError("dataframe should contain at least two "
-                             "different values in column '{}'.".format(using))
+        if len(set(value_list)) < 1:
+            raise ValueError("dataframe should contain at least a single "
+                             "value in column '{}'.".format(using))
 
         super(Join, self).__init__(on, value_list)

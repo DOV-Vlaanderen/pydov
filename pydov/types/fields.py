@@ -31,10 +31,10 @@ class AbstractField(dict):
         ----------
         name : str
             Name of this field in the return dataframe.
-        source: one of 'wfs', 'xml', 'custom'
+        source : one of 'wfs', 'xml', 'custom'
             Source of this field.
-        datatype : one of 'string', 'integer', 'float', 'date', 'datetime'
-                or 'boolean'
+        datatype : one of 'string', 'integer', 'float', 'date', 'datetime' \
+                   or 'boolean'
             Datatype of the values of this field in the return dataframe.
 
         """
@@ -56,8 +56,8 @@ class WfsField(AbstractField):
             Name of this field in the return dataframe.
         source_field : str
             Name of this field in the source WFS service.
-        datatype : one of 'string', 'integer', 'float', 'date', 'datetime'
-                or 'boolean'
+        datatype : one of 'string', 'integer', 'float', 'date', 'datetime' \
+                   or 'boolean'
             Datatype of the values of this field in the return dataframe.
 
         """
@@ -79,8 +79,8 @@ class _WfsInjectedField(WfsField):
         ----------
         name : str
             Name of this field in the return dataframe.
-        datatype : one of 'string', 'integer', 'float', 'date', 'datetime'
-                or 'boolean'
+        datatype : one of 'string', 'integer', 'float', 'date', 'datetime' \
+                   or 'boolean'
             Datatype of the values of this field in the return dataframe.
 
         """
@@ -102,8 +102,8 @@ class XmlField(AbstractField):
         source_xpath : str
             XPath expression of the values of this field in the source XML
             document.
-        datatype : one of 'string', 'integer', 'float', 'date', 'datetime'
-                or 'boolean'
+        datatype : one of 'string', 'integer', 'float', 'date', 'datetime' \
+                   or 'boolean'
             Datatype of the values of this field in the return dataframe.
         definition : str, optional
             Definition of this field.
@@ -134,8 +134,8 @@ class _CustomField(AbstractField):
         ----------
         name : str
             Name of this field in the return dataframe.
-        datatype : one of 'string', 'integer', 'float', 'date', 'datetime'
-                or 'boolean'
+        datatype : one of 'string', 'integer', 'float', 'date', 'datetime' \
+                   or 'boolean'
             Datatype of the values of this field in the return dataframe.
         definition : str, optional
             Definition of this field.

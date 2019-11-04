@@ -27,7 +27,7 @@ Users can write custom hooks and add them to pydov at runtime, to be able to
 interact with pydov at the occurance of certain 'events'.
 
 To implement custom hooks, create a new subclass of
-pydov.util.hooks.AbstractHook. An instance of this class can then by
+:class:`pydov.util.hooks.AbstractHook`. An instance of this class can then by
 registered as a pydov hook, and implemented methods will be subsequently be
 called when the user interacts with pydov code. The AbstractHook class
 provides default, empty, implementation of all

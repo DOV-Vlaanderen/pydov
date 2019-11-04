@@ -134,10 +134,11 @@ Implementing custom caching
 ...........................
 
 Should you want to implement your own caching mechanism, you can do so by
-subclassing AbstractCache and implementing its abstract methods ``get``,
-``clean`` and ``remove``. Hereby you can use the available methods
-``_get_remote`` to request data from the DOV webservices and
-``_emit_cache_hit`` to notify hooks a file has been retrieved from the cache.
+subclassing :class:`pydov.util.caching.AbstractCache` and implementing its
+abstract methods ``get``, ``clean`` and ``remove``. Hereby you can use the
+available methods ``_get_remote`` to request data from the DOV webservices
+and ``_emit_cache_hit`` to notify hooks a file has been retrieved from the
+cache.
 
 Note that the ``get`` method will be called from multiple threads
 simultaneously, so implementations must be threadsafe or use locking.

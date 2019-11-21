@@ -104,6 +104,17 @@ class TestGecodeerdeLithologieSearch(AbstractTestSearch):
         """
         return 'grondsoort'
 
+    def get_wfs_field(self):
+        """Get the name of a WFS field.
+
+        Returns
+        -------
+        str
+            The name of the WFS field.
+
+        """
+        return 'Proefnummer'
+
     def get_valid_returnfields(self):
         """Get a list of valid return fields from the main type.
 

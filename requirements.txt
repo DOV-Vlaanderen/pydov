@@ -1,4 +1,4 @@
-owslib
+owslib<=0.18.0
 pandas
 numpy
 requests

@@ -1,4 +1,4 @@
-owslib<=0.18.0
-pandas
-numpy
+owslib<0.19.0
+pandas<0.25.0
+numpy<1.17.0
 requests

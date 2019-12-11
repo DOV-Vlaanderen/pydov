@@ -1,4 +1,5 @@
 """Module grouping tests for the pydov.util.owsutil module."""
+import copy
 import os
 
 import pytest
@@ -12,11 +13,12 @@ env_var = "PYDOV_BASE_URL"
 def pydov_base_url_environment():
     """Fixture for setting an environment variable with a different base_url.
     """
+    old_environ = copy.deepcopy(os.environ)
     os.environ[env_var] = 'https://dov/'
 
     yield
 
-    del(os.environ[env_var])
+    os.environ = old_environ
 
 
 class TestDovutil(object):

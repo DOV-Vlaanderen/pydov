@@ -16,6 +16,7 @@ from pydov.types.interpretaties import (
     FormeleStratigrafie,
     InformeleStratigrafie,
     QuartairStratigrafie,
+    InformeleHydrogeologischeStratigrafie,
 )
 from pydov.types.sondering import Sondering
 from pydov.util.dovutil import build_dov_url
@@ -424,6 +425,57 @@ if __name__ == '__main__':
             'types/interpretaties/geotechnische_codering/xsd_%s.xml' %
             xsd_schema.split('/')[-1], xsd_schema)
 
+    # types/interpretaties/informele_hydrogeologische_stratigrafie
+
+    update_file('types/interpretaties/informele_hydrogeologische_stratigrafie'
+                '/informele_hydrogeologische_stratigrafie.xml',
+                build_dov_url('data/interpretatie/2003-297774.xml'))
+
+    update_file('types/interpretaties/informele_hydrogeologische_stratigrafie'
+                '/wfsgetfeature.xml',
+                build_dov_url('geoserver/ows?service=WFS'
+                '&version=1.1.0&request=GetFeature&typeName=interpretaties'
+                ':informele_hydrogeologische_stratigrafie&maxFeatures=1'
+                '&CQL_Filter=Interpretatiefiche=%27') + build_dov_url('data'
+                '/interpretatie/2003-297774%27'))
+
+    update_file('types/interpretaties/informele_hydrogeologische_stratigrafie'
+                '/feature.xml',
+                build_dov_url('geoserver/ows?service=WFS'
+                '&version=1.1.0&request=GetFeature&typeName=interpretaties'
+                ':informele_hydrogeologische_stratigrafie&maxFeatures=1'
+                '&CQL_Filter=Interpretatiefiche=%27') + build_dov_url('data'
+                '/interpretatie/2003-297774%27'),
+                get_first_featuremember)
+
+    update_file(
+        'types/interpretaties/informele_hydrogeologische_stratigrafie'
+        '/fc_featurecatalogue.xml',
+        build_dov_url('geonetwork/srv/dut/csw'
+        '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+        '&outputSchema=http://www.isotc211.org/2005/gfc'
+        '&elementSetName=full&id=69f71840-bd29-4b59-9b02-4e36aafaa041'))
+
+    update_file('types/interpretaties/informele_hydrogeologische_stratigrafie'
+                '/md_metadata.xml',
+                build_dov_url('geonetwork/srv/dut/csw'
+                '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+                '&outputSchema=http://www.isotc211.org/2005/gmd'
+                '&elementSetName=full'
+                '&id=ca1d704a-cdee-4968-aa65-9c353863e4b1'))
+
+    update_file(
+        'types/interpretaties/informele_hydrogeologische_stratigrafie/'
+        'wfsdescribefeaturetype.xml',
+        build_dov_url('geoserver/interpretaties'
+        '/informele_hydrogeologische_stratigrafie/'
+        'ows?service=wfs&version=1.1.0&request=DescribeFeatureType'))
+
+    for xsd_schema in InformeleHydrogeologischeStratigrafie.get_xsd_schemas():
+        update_file(
+            'types/interpretaties/informele_hydrogeologische_stratigrafie/'
+            'xsd_%s.xml' % xsd_schema.split('/')[-1], xsd_schema)
+
     # types/grondwaterfilter
 
     update_file('types/grondwaterfilter/grondwaterfilter.xml',
@@ -471,39 +523,41 @@ if __name__ == '__main__':
     # types/grondwatermonster
 
     update_file('types/grondwatermonster/grondwatermonster.xml',
-                'https://www.dov.vlaanderen.be/data/watermonster/2006-115684.xml')
+                build_dov_url('data/watermonster/2006-115684.xml'))
 
     update_file('types/grondwatermonster/wfsgetfeature.xml',
-                'https://www.dov.vlaanderen.be/geoserver/ows?service=WFS'
+                build_dov_url('geoserver/ows?service=WFS'
                 '&version=1.1.0&request=GetFeature&typeName='
                 'gw_meetnetten:grondwatermonsters&maxFeatures=1&'
-                'CQL_Filter=grondwatermonsterfiche=%27https://www.dov'
-                '.vlaanderen.be/data/watermonster/2006-115684%27')
+                'CQL_Filter=grondwatermonsterfiche=%27' + build_dov_url(
+                    'data/watermonster/2006-115684') + '%27'))
 
     update_file('types/grondwatermonster/feature.xml',
-                'https://www.dov.vlaanderen.be/geoserver/ows?service=WFS'
+                build_dov_url('geoserver/ows?service=WFS'
                 '&version=1.1.0&request=GetFeature&typeName='
                 'gw_meetnetten:grondwatermonsters&maxFeatures=1&'
-                'CQL_Filter=grondwatermonsterfiche=%27https://www.dov'
-                '.vlaanderen.be/data/watermonster/2006-115684%27',
+                'CQL_Filter=grondwatermonsterfiche=%27' + build_dov_url(
+                    'data/watermonster/2006-115684') + '%27'),
                 get_first_featuremember)
 
     update_file('types/grondwatermonster/fc_featurecatalogue.xml',
-                'https://www.dov.vlaanderen.be/geonetwork/srv/dut/csw'
+                build_dov_url('geonetwork/srv/dut/csw'
                 '?Service=CSW&Request=GetRecordById&Version=2.0.2'
                 '&outputSchema=http://www.isotc211.org/2005/gfc'
-                '&elementSetName=full&id=639c9612-4bbb-4826-86fd-fec9afd49bf7')
+                '&elementSetName=full&'
+                'id=639c9612-4bbb-4826-86fd-fec9afd49bf7'))
 
     update_file('types/grondwatermonster/md_metadata.xml',
-                'https://www.dov.vlaanderen.be/geonetwork/srv/dut/csw'
+                build_dov_url('geonetwork/srv/dut/csw'
                 '?Service=CSW&Request=GetRecordById&Version=2.0.2'
                 '&outputSchema=http://www.isotc211.org/2005/gmd'
-                '&elementSetName=full&id=0b378716-39fb-4151-96c5-2021672f4762')
+                '&elementSetName=full&'
+                'id=0b378716-39fb-4151-96c5-2021672f4762'))
 
     update_file('types/grondwatermonster/wfsdescribefeaturetype.xml',
-                'https://www.dov.vlaanderen.be/geoserver/gw_meetnetten/'
+                build_dov_url('geoserver/gw_meetnetten/'
                 'grondwatermonsters/ows?service=wfs&version=1.1.0&'
-                'request=DescribeFeatureType')
+                'request=DescribeFeatureType'))
 
     for xsd_schema in GrondwaterMonster.get_xsd_schemas():
         update_file(
@@ -576,43 +630,43 @@ if __name__ == '__main__':
     # types/grondmonster
 
     update_file('types/grondmonster/grondmonster.xml',
-                'https://www.dov.vlaanderen.be/data/grondmonster/'
-                '2017-168758.xml')
+                build_dov_url('data/grondmonster/2017-168758.xml'))
 
     update_file('types/grondmonster/wfsgetfeature.xml',
-                'https://www.dov.vlaanderen.be/geoserver/ows?service=WFS'
+                build_dov_url('geoserver/ows?service=WFS'
                 '&version=1.1.0&request=GetFeature&typeName='
                 'boringen:grondmonsters&maxFeatures=1&CQL_Filter'
-                '=grondmonsterfiche=%27https://www.dov.vlaanderen.be/data'
-                '/grondmonster/2017-168758%27')
+                '=grondmonsterfiche=%27' + build_dov_url('data'
+                '/grondmonster/2017-168758') + '%27'))
 
     update_file('types/grondmonster/feature.xml',
-                'https://www.dov.vlaanderen.be/geoserver/ows?service=WFS'
+                build_dov_url('geoserver/ows?service=WFS'
                 '&version=1.1.0&request=GetFeature&typeName='
                 'boringen:grondmonsters&maxFeatures=1&CQL_Filter'
-                '=grondmonsterfiche=%27https://www.dov.vlaanderen.be/data'
-                '/grondmonster/2017-168758%27',
+                '=grondmonsterfiche=%27' + build_dov_url('data'
+                '/grondmonster/2017-168758') + '%27'),
                 get_first_featuremember)
 
     update_file(
         'types/grondmonster/fc_featurecatalogue.xml',
-        'https://www.dov.vlaanderen.be/geonetwork/srv/dut/csw'
+        build_dov_url('geonetwork/srv/dut/csw'
         '?Service=CSW&Request=GetRecordById&Version=2.0.2'
         '&outputSchema=http://www.isotc211.org/2005/gfc'
-        '&elementSetName=full&id=b9338fb5-fc9c-4229-858b-06a5fa3ee49d')
+        '&elementSetName=full&id=b9338fb5-fc9c-4229-858b-06a5fa3ee49d'))
 
     update_file('types/grondmonster/md_metadata.xml',
-                'https://www.dov.vlaanderen.be/geonetwork/srv/dut/csw'
+                build_dov_url('geonetwork/srv/dut/csw'
                 '?Service=CSW&Request=GetRecordById&Version=2.0.2'
                 '&outputSchema=http://www.isotc211.org/2005/gmd'
-                '&elementSetName=full&id=6edeab46-2cfc-4aa2-ae03-307d772f34ae')
+                '&elementSetName=full&'
+                'id=6edeab46-2cfc-4aa2-ae03-307d772f34ae'))
 
     update_file(
         'types/grondmonster/wfsdescribefeaturetype'
         '.xml',
-        'https://www.dov.vlaanderen.be/geoserver/boringen'
+        build_dov_url('geoserver/boringen'
         '/grondmonsters/ows?service=wfs&version=1.1.0&request'
-        '=DescribeFeatureType')
+        '=DescribeFeatureType'))
 
     for xsd_schema in Grondmonster.get_xsd_schemas():
         update_file(

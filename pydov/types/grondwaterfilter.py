@@ -87,7 +87,7 @@ class GrondwaterFilter(AbstractDovType):
         XmlField(name='meetnet_code',
                  source_xpath='/filter/meetnet',
                  definition='Tot welk meetnet behoort deze filter.',
-                 datatype='integer',
+                 datatype='string',
                  xsd_type=XsdType(
                      xsd_schema=_filterDataCodes_xsd,
                      typename='MeetnetEnumType')),

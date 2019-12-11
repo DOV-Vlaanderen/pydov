@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Module grouping utility functions for DOV XML services."""
+import os
 
 from owslib.etree import etree
 from pydov.util.errors import XmlParseError
@@ -16,7 +17,12 @@ def build_dov_url(path):
         The absolute DOV url.
 
     """
-    return 'https://oefen.dov.vlaanderen.be/' + path.lstrip('/')
+    if 'PYDOV_BASE_URL' in os.environ:
+        base_url = os.environ['PYDOV_BASE_URL']
+    else:
+        base_url = 'https://www.dov.vlaanderen.be/'
+
+    return base_url + path.lstrip('/')
 
 
 def get_remote_url(url):

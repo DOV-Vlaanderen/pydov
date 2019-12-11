@@ -31,9 +31,7 @@ matrix:
   - python: 3.7
     env: TOXENV=py37-lxml
   - python: 3.7
-    env: TOXENV=py37-lxml PYDOV_BASE_URL=https://oefen.dov.vlaanderen.be/
-    before_script:
-    - python3 tests/data/update_test_data.py
+    env: TOXENV=update-oefen
   - python: 3.7
     env: TOXENV=docs
   - env: TOXENV=flake8

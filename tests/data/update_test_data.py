@@ -1,4 +1,6 @@
 """Script to update the testdata based on DOV webservices."""
+import os
+
 import sys
 
 from owslib.etree import etree
@@ -35,7 +37,7 @@ def get_first_featuremember(wfs_response):
 
 def update_file(filepath, url, process_fn=None):
     sys.stdout.write('Updating {} ...'.format(filepath))
-    # sys.stdout.write('  ' + url)
+    filepath = os.path.join(os.path.dirname(__file__), filepath)
     try:
         data = openURL(url).read()
         if type(data) is bytes:

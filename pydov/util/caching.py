@@ -162,8 +162,8 @@ class AbstractFileCache(AbstractCache):
 
         """
         datatype = self._re_type_key.search(url)
-        if datatype and len(datatype.groups()) > 1:
-            return datatype.group(1), datatype.group(2)
+        if datatype and len(datatype.groups()) > 2:
+            return datatype.group(2), datatype.group(3)
 
     def _get_type_key_from_path(self, path):
         """Parse a filepath and return the datatype and object key.

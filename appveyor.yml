@@ -40,7 +40,6 @@ environment:
       CONDA_INSTALL_LOCN: "C:\\Miniconda36-x64"
       PY_INSTALL: "lxml"
       PYDOV_UPDATE_TESTDATA: "true"
-
 install:
     # Use the pre-installed Miniconda for the desired arch
     - cmd: call %CONDA_INSTALL_LOCN%\Scripts\activate.bat
@@ -53,6 +52,7 @@ install:
 build: false
 
 before_test:
+    - cmd: set PYTHONPATH=%PYTHONPATH%;%APPVEYOR_BUILD_FOLDER%
     - ps: if($env:PYDOV_UPDATE_TESTDATA) { & ($env:CONDA_INSTALL_LOCN + "\python.exe") tests\data\update_test_data.py }
 
 test_script:

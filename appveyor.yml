@@ -1,13 +1,13 @@
 environment:
   matrix:
-    - PYTHON_VERSION: "3.5"
-      PYTHON_ARCH: "64"
-      CONDA_PY: "35"
-      CONDA_INSTALL_LOCN: "C:\\Miniconda35-x64"
-    - PYTHON_VERSION: "3.5"
-      PYTHON_ARCH: "64"
-      CONDA_PY: "35"
-      CONDA_INSTALL_LOCN: "C:\\Miniconda35-x64"
+    - PYTHON_VERSION: "2.7"
+      PYTHON_ARCH: "32"
+      CONDA_PY: "27"
+      CONDA_INSTALL_LOCN: "C:\\Miniconda"
+    - PYTHON_VERSION: "2.7"
+      PYTHON_ARCH: "32"
+      CONDA_PY: "27"
+      CONDA_INSTALL_LOCN: "C:\\Miniconda"
       PY_INSTALL: "lxml"
     - PYTHON_VERSION: "3.6"
       PYTHON_ARCH: "64"
@@ -27,15 +27,19 @@ environment:
       CONDA_PY: "37"
       CONDA_INSTALL_LOCN: "C:\\Miniconda36-x64"
       PY_INSTALL: "lxml"
-    - PYTHON_VERSION: "2.7"
-      PYTHON_ARCH: "32"
-      CONDA_PY: "27"
-      CONDA_INSTALL_LOCN: "C:\\Miniconda"
-    - PYTHON_VERSION: "2.7"
-      PYTHON_ARCH: "32"
-      CONDA_PY: "27"
-      CONDA_INSTALL_LOCN: "C:\\Miniconda"
+    - PYTHON_VERSION: "3.7"
+      PYTHON_ARCH: "64"
+      CONDA_PY: "37"
+      CONDA_INSTALL_LOCN: "C:\\Miniconda36-x64"
       PY_INSTALL: "lxml"
+      PYDOV_BASE_URL: "https://oefen.dov.vlaanderen.be/"
+      PYDOV_UPDATE_TESTDATA: "true"
+    - PYTHON_VERSION: "3.7"
+      PYTHON_ARCH: "64"
+      CONDA_PY: "37"
+      CONDA_INSTALL_LOCN: "C:\\Miniconda36-x64"
+      PY_INSTALL: "lxml"
+      PYDOV_UPDATE_TESTDATA: "true"
 install:
     # Use the pre-installed Miniconda for the desired arch
     - cmd: call %CONDA_INSTALL_LOCN%\Scripts\activate.bat
@@ -44,6 +48,7 @@ install:
     - cmd: conda.exe install -y -q numpy"<1.17.0" pandas"<0.25.0" owslib"<0.19.0"
     - cmd: call %CONDA_INSTALL_LOCN%\python.exe -m pip install --ignore-installed --no-cache-dir -r requirements_appveyor.txt
     - ps: if($env:PY_INSTALL) { & ($env:CONDA_INSTALL_LOCN + "\Scripts\conda.exe") install -y -q $env:PY_INSTALL }
+    - ps: if($env:PYDOV_UPDATE_TESTDATA) { & ($env:CONDA_INSTALL_LOCN + "\python.exe") tests\data\update_test_data.py }
 
 build: false
 

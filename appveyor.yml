@@ -40,6 +40,7 @@ environment:
       CONDA_INSTALL_LOCN: "C:\\Miniconda36-x64"
       PY_INSTALL: "lxml"
       PYDOV_UPDATE_TESTDATA: "true"
+
 install:
     # Use the pre-installed Miniconda for the desired arch
     - cmd: call %CONDA_INSTALL_LOCN%\Scripts\activate.bat
@@ -48,9 +49,11 @@ install:
     - cmd: conda.exe install -y -q numpy"<1.17.0" pandas"<0.25.0" owslib"<0.19.0"
     - cmd: call %CONDA_INSTALL_LOCN%\python.exe -m pip install --ignore-installed --no-cache-dir -r requirements_appveyor.txt
     - ps: if($env:PY_INSTALL) { & ($env:CONDA_INSTALL_LOCN + "\Scripts\conda.exe") install -y -q $env:PY_INSTALL }
-    - ps: if($env:PYDOV_UPDATE_TESTDATA) { & ($env:CONDA_INSTALL_LOCN + "\python.exe") tests\data\update_test_data.py }
 
 build: false
+
+before_test:
+    - ps: if($env:PYDOV_UPDATE_TESTDATA) { & ($env:CONDA_INSTALL_LOCN + "\python.exe") tests\data\update_test_data.py }
 
 test_script:
   - pytest

@@ -12,6 +12,7 @@ import pytest
 from owslib.fes import PropertyIsEqualTo
 from pydov.search.boring import BoringSearch
 from pydov.search.interpretaties import LithologischeBeschrijvingenSearch
+from pydov.util.dovutil import build_dov_url
 from pydov.util.errors import XmlParseWarning
 
 from tests.abstract import (
@@ -63,7 +64,7 @@ class TestEncoding(object):
         boringsearch = BoringSearch()
         query = PropertyIsEqualTo(
             propertyname='pkey_boring',
-            literal='https://www.dov.vlaanderen.be/data/boring/1928-031159')
+            literal=build_dov_url('data/boring/1928-031159'))
 
         df = boringsearch.search(query=query,
                                  return_fields=('pkey_boring', 'uitvoerder'))
@@ -92,7 +93,7 @@ class TestEncoding(object):
         boringsearch = BoringSearch()
         query = PropertyIsEqualTo(
             propertyname='pkey_boring',
-            literal='https://www.dov.vlaanderen.be/data/boring/1928-031159')
+            literal=build_dov_url('data/boring/1928-031159'))
 
         df = boringsearch.search(query=query,
                                  return_fields=('pkey_boring', 'uitvoerder',
@@ -131,7 +132,7 @@ class TestEncoding(object):
         boringsearch = BoringSearch()
         query = PropertyIsEqualTo(
             propertyname='pkey_boring',
-            literal='https://www.dov.vlaanderen.be/data/boring/1928-031159')
+            literal=build_dov_url('data/boring/1928-031159'))
 
         df = boringsearch.search(query=query,
                                  return_fields=('pkey_boring', 'uitvoerder',
@@ -173,7 +174,7 @@ class TestEncoding(object):
         assert not os.path.exists(cached_file)
 
         plaintext_cache.get(
-            'https://www.dov.vlaanderen.be/data/boring/1995-056089.xml')
+            build_dov_url('data/boring/1995-056089.xml')),
         assert os.path.exists(cached_file)
 
         with open(cached_file, 'r', encoding='utf-8') as cf:
@@ -184,7 +185,7 @@ class TestEncoding(object):
 
         time.sleep(0.5)
         plaintext_cache.get(
-            'https://www.dov.vlaanderen.be/data/boring/1995-056089.xml')
+            build_dov_url('data/boring/1995-056089.xml'))
         # assure we didn't redownload the file:
         assert os.path.getmtime(cached_file) == first_download_time
 
@@ -213,7 +214,7 @@ class TestEncoding(object):
         assert not os.path.exists(cached_file)
 
         gziptext_cache.get(
-            'https://www.dov.vlaanderen.be/data/boring/1995-056089.xml')
+            build_dov_url('data/boring/1995-056089.xml')),
         assert os.path.exists(cached_file)
 
         with gzip.open(cached_file, 'rb') as cf:
@@ -224,7 +225,7 @@ class TestEncoding(object):
 
         time.sleep(0.5)
         gziptext_cache.get(
-            'https://www.dov.vlaanderen.be/data/boring/1995-056089.xml')
+            build_dov_url('data/boring/1995-056089.xml'))
         # assure we didn't redownload the file:
         assert os.path.getmtime(cached_file) == first_download_time
 
@@ -254,7 +255,7 @@ class TestEncoding(object):
         assert not os.path.exists(cached_file)
 
         ref_data = plaintext_cache.get(
-            'https://www.dov.vlaanderen.be/data/boring/1995-056089.xml')
+            build_dov_url('data/boring/1995-056089.xml'))
         assert os.path.exists(cached_file)
 
         with open(cached_file, 'r', encoding='utf-8') as cached:
@@ -288,7 +289,7 @@ class TestEncoding(object):
         assert not os.path.exists(cached_file)
 
         ref_data = gziptext_cache.get(
-            'https://www.dov.vlaanderen.be/data/boring/1995-056089.xml')
+            build_dov_url('data/boring/1995-056089.xml'))
         assert os.path.exists(cached_file)
 
         with gzip.open(cached_file, 'rb') as cached:
@@ -322,11 +323,11 @@ class TestEncoding(object):
         assert not os.path.exists(cached_file)
 
         ref_data = plaintext_cache.get(
-            'https://www.dov.vlaanderen.be/data/boring/1995-056089.xml')
+            build_dov_url('data/boring/1995-056089.xml'))
         assert os.path.exists(cached_file)
 
         cached_data = plaintext_cache.get(
-            'https://www.dov.vlaanderen.be/data/boring/1995-056089.xml')
+            build_dov_url('data/boring/1995-056089.xml'))
 
         assert cached_data == ref_data
 
@@ -356,11 +357,11 @@ class TestEncoding(object):
         assert not os.path.exists(cached_file)
 
         ref_data = gziptext_cache.get(
-            'https://www.dov.vlaanderen.be/data/boring/1995-056089.xml')
+            build_dov_url('data/boring/1995-056089.xml'))
         assert os.path.exists(cached_file)
 
         cached_data = gziptext_cache.get(
-            'https://www.dov.vlaanderen.be/data/boring/1995-056089.xml')
+            build_dov_url('data/boring/1995-056089.xml'))
 
         assert cached_data == ref_data
 
@@ -394,8 +395,7 @@ class TestEncoding(object):
         lithosearch = LithologischeBeschrijvingenSearch()
         query = PropertyIsEqualTo(
             propertyname='pkey_interpretatie',
-            literal='https://www.dov.vlaanderen.be/data/interpretatie/'
-                    '1987-070909')
+            literal=build_dov_url('data/interpretatie/1987-070909'))
 
         try:
             import lxml

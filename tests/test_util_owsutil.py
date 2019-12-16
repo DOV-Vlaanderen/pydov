@@ -14,6 +14,7 @@ from owslib.fes import (
 from owslib.iso import MD_Metadata
 from owslib.util import nspath_eval
 from pydov.util import owsutil
+from pydov.util.dovutil import build_dov_url
 from pydov.util.errors import (
     MetadataNotFoundError,
     FeatureCatalogueNotFoundError,
@@ -57,7 +58,7 @@ class TestOwsutil(object):
         """
         contentmetadata = wfs.contents['dov-pub:Boringen']
         assert owsutil.get_csw_base_url(contentmetadata) == \
-               'https://www.dov.vlaanderen.be/geonetwork/srv/dut/csw'
+               build_dov_url('geonetwork/srv/dut/csw')
 
     def test_get_csw_base_url_nometadataurls(self, wfs):
         """Test the owsutil.get_csw_base_url method for a layer without
@@ -172,7 +173,7 @@ class TestOwsutil(object):
 
         """
         fc = owsutil.get_remote_featurecatalogue(
-            'https://www.dov.vlaanderen.be/geonetwork/srv/nl/csw',
+            build_dov_url('geonetwork/srv/nl/csw'),
             'c0cbd397-520f-4ee1-aca7-d70e271eeed6')
 
         assert type(fc) is dict
@@ -224,7 +225,7 @@ class TestOwsutil(object):
         """
         with pytest.raises(FeatureCatalogueNotFoundError):
             owsutil.get_remote_featurecatalogue(
-                'https://www.dov.vlaanderen.be/geonetwork/srv/nl/csw',
+                build_dov_url('geonetwork/srv/nl/csw'),
                 'badfc000-0000-0000-0000-badfc00badfc')
 
     def test_get_remote_metadata(self, md_metadata):

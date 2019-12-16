@@ -31,6 +31,9 @@ from pydov.search.interpretaties import GecodeerdeLithologieSearch
 from pydov.search.interpretaties import LithologischeBeschrijvingenSearch
 from pydov.search.sondering import SonderingSearch
 from pydov.search.grondmonster import GrondmonsterSearch
+
+from pydov.util.dovutil import build_dov_url
+
 from pydov.util.errors import (
     InvalidSearchParameterError,
 )
@@ -95,8 +98,7 @@ def wfs(mp_wfs):
 
     """
     return WebFeatureService(
-        url="https://www.dov.vlaanderen.be/geoserver/wfs",
-        version="1.1.0")
+        url=build_dov_url('geoserver/wfs'), version="1.1.0")
 
 
 @pytest.fixture()

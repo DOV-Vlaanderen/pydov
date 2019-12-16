@@ -14,6 +14,7 @@ from pydov.util.caching import (
     PlainTextFileCache,
     GzipTextFileCache,
 )
+from pydov.util.dovutil import build_dov_url
 
 
 @pytest.fixture
@@ -136,7 +137,7 @@ class TestPlainTextFileCacheCache(object):
             plaintext_cache.cachedir, 'boring', '2004-103984.xml')
 
         plaintext_cache.get(
-            'https://www.dov.vlaanderen.be/data/boring/2004-103984.xml')
+            build_dov_url('data/boring/2004-103984.xml'))
         assert os.path.exists(cached_file)
 
         plaintext_cache.clean()
@@ -171,7 +172,7 @@ class TestPlainTextFileCacheCache(object):
             plaintext_cache.cachedir, 'boring', '2004-103984.xml')
 
         plaintext_cache.get(
-            'https://www.dov.vlaanderen.be/data/boring/2004-103984.xml')
+            build_dov_url('data/boring/2004-103984.xml'))
         assert os.path.exists(cached_file)
 
         plaintext_cache.remove()
@@ -203,7 +204,7 @@ class TestPlainTextFileCacheCache(object):
         assert not os.path.exists(cached_file)
 
         plaintext_cache.get(
-            'https://www.dov.vlaanderen.be/data/boring/2004-103984.xml')
+            build_dov_url('data/boring/2004-103984.xml'))
         assert os.path.exists(cached_file)
 
     @pytest.mark.parametrize('plaintext_cache', [[]],
@@ -232,14 +233,14 @@ class TestPlainTextFileCacheCache(object):
         assert not os.path.exists(cached_file)
 
         plaintext_cache.get(
-            'https://www.dov.vlaanderen.be/data/boring/2004-103984.xml')
+            build_dov_url('data/boring/2004-103984.xml'))
         assert os.path.exists(cached_file)
 
         first_download_time = os.path.getmtime(cached_file)
 
         time.sleep(0.5)
         plaintext_cache.get(
-            'https://www.dov.vlaanderen.be/data/boring/2004-103984.xml')
+            build_dov_url('data/boring/2004-103984.xml'))
         # assure we didn't redownload the file:
         assert os.path.getmtime(cached_file) == first_download_time
 
@@ -269,14 +270,14 @@ class TestPlainTextFileCacheCache(object):
         assert not os.path.exists(cached_file)
 
         plaintext_cache.get(
-            'https://www.dov.vlaanderen.be/data/boring/2004-103984.xml')
+            build_dov_url('data/boring/2004-103984.xml'))
         assert os.path.exists(cached_file)
 
         first_download_time = os.path.getmtime(cached_file)
 
         time.sleep(1.5)
         plaintext_cache.get(
-            'https://www.dov.vlaanderen.be/data/boring/2004-103984.xml')
+            build_dov_url('data/boring/2004-103984.xml'))
         # assure we did redownload the file, since original is invalid now:
         assert os.path.getmtime(cached_file) > first_download_time
 
@@ -306,7 +307,7 @@ class TestPlainTextFileCacheCache(object):
         assert not os.path.exists(cached_file)
 
         plaintext_cache.get(
-            'https://www.dov.vlaanderen.be/data/boring/2004-103984.xml')
+            build_dov_url('data/boring/2004-103984.xml'))
         assert os.path.exists(cached_file)
 
         with open('tests/data/types/boring/boring.xml', 'r',
@@ -344,14 +345,14 @@ class TestPlainTextFileCacheCache(object):
         assert not os.path.exists(cached_file)
 
         plaintext_cache.get(
-            'https://www.dov.vlaanderen.be/data/boring/2004-103984.xml')
+            build_dov_url('data/boring/2004-103984.xml'))
         assert os.path.exists(cached_file)
 
         with open('tests/data/types/boring/boring.xml', 'r') as ref:
             ref_data = ref.read().encode('utf-8')
 
         cached_data = plaintext_cache.get(
-            'https://www.dov.vlaanderen.be/data/boring/2004-103984.xml')
+            build_dov_url('data/boring/2004-103984.xml'))
 
         assert cached_data == ref_data
 
@@ -381,13 +382,13 @@ class TestPlainTextFileCacheCache(object):
         assert not os.path.exists(cached_file)
 
         ref_data = plaintext_cache.get(
-            'https://www.dov.vlaanderen.be/data/boring/2004-103984.xml')
+            build_dov_url('data/boring/2004-103984.xml'))
         assert type(ref_data) is bytes
 
         assert os.path.exists(cached_file)
 
         cached_data = plaintext_cache.get(
-            'https://www.dov.vlaanderen.be/data/boring/2004-103984.xml')
+            build_dov_url('data/boring/2004-103984.xml'))
         assert type(cached_data) is bytes
 
 
@@ -418,7 +419,7 @@ class TestGzipTextFileCacheCache(object):
             gziptext_cache.cachedir, 'boring', '2004-103984.xml.gz')
 
         gziptext_cache.get(
-            'https://www.dov.vlaanderen.be/data/boring/2004-103984.xml')
+            build_dov_url('data/boring/2004-103984.xml'))
         assert os.path.exists(cached_file)
 
         gziptext_cache.clean()
@@ -453,7 +454,7 @@ class TestGzipTextFileCacheCache(object):
             gziptext_cache.cachedir, 'boring', '2004-103984.xml.gz')
 
         gziptext_cache.get(
-            'https://www.dov.vlaanderen.be/data/boring/2004-103984.xml')
+            build_dov_url('data/boring/2004-103984.xml'))
         assert os.path.exists(cached_file)
 
         gziptext_cache.remove()
@@ -485,7 +486,7 @@ class TestGzipTextFileCacheCache(object):
         assert not os.path.exists(cached_file)
 
         gziptext_cache.get(
-            'https://www.dov.vlaanderen.be/data/boring/2004-103984.xml')
+            build_dov_url('data/boring/2004-103984.xml'))
         assert os.path.exists(cached_file)
 
     @pytest.mark.parametrize('gziptext_cache', [[]],
@@ -514,14 +515,14 @@ class TestGzipTextFileCacheCache(object):
         assert not os.path.exists(cached_file)
 
         gziptext_cache.get(
-            'https://www.dov.vlaanderen.be/data/boring/2004-103984.xml')
+            build_dov_url('data/boring/2004-103984.xml'))
         assert os.path.exists(cached_file)
 
         first_download_time = os.path.getmtime(cached_file)
 
         time.sleep(0.5)
         gziptext_cache.get(
-            'https://www.dov.vlaanderen.be/data/boring/2004-103984.xml')
+            build_dov_url('data/boring/2004-103984.xml'))
         # assure we didn't redownload the file:
         assert os.path.getmtime(cached_file) == first_download_time
 
@@ -551,14 +552,14 @@ class TestGzipTextFileCacheCache(object):
         assert not os.path.exists(cached_file)
 
         gziptext_cache.get(
-            'https://www.dov.vlaanderen.be/data/boring/2004-103984.xml')
+            build_dov_url('data/boring/2004-103984.xml'))
         assert os.path.exists(cached_file)
 
         first_download_time = os.path.getmtime(cached_file)
 
         time.sleep(1.5)
         gziptext_cache.get(
-            'https://www.dov.vlaanderen.be/data/boring/2004-103984.xml')
+            build_dov_url('data/boring/2004-103984.xml'))
         # assure we did redownload the file, since original is invalid now:
         assert os.path.getmtime(cached_file) > first_download_time
 
@@ -588,7 +589,7 @@ class TestGzipTextFileCacheCache(object):
         assert not os.path.exists(cached_file)
 
         gziptext_cache.get(
-            'https://www.dov.vlaanderen.be/data/boring/2004-103984.xml')
+            build_dov_url('data/boring/2004-103984.xml'))
         assert os.path.exists(cached_file)
 
         with open('tests/data/types/boring/boring.xml', 'r',
@@ -626,14 +627,14 @@ class TestGzipTextFileCacheCache(object):
         assert not os.path.exists(cached_file)
 
         gziptext_cache.get(
-            'https://www.dov.vlaanderen.be/data/boring/2004-103984.xml')
+            build_dov_url('data/boring/2004-103984.xml'))
         assert os.path.exists(cached_file)
 
         with open('tests/data/types/boring/boring.xml', 'r') as ref:
             ref_data = ref.read().encode('utf-8')
 
         cached_data = gziptext_cache.get(
-            'https://www.dov.vlaanderen.be/data/boring/2004-103984.xml')
+            build_dov_url('data/boring/2004-103984.xml'))
 
         assert cached_data == ref_data
 
@@ -663,11 +664,11 @@ class TestGzipTextFileCacheCache(object):
         assert not os.path.exists(cached_file)
 
         ref_data = gziptext_cache.get(
-            'https://www.dov.vlaanderen.be/data/boring/2004-103984.xml')
+            build_dov_url('data/boring/2004-103984.xml'))
         assert type(ref_data) is bytes
 
         assert os.path.exists(cached_file)
 
         cached_data = gziptext_cache.get(
-            'https://www.dov.vlaanderen.be/data/boring/2004-103984.xml')
+            build_dov_url('data/boring/2004-103984.xml'))
         assert type(cached_data) is bytes

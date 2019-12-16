@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import pytest
 
+from pydov.util.dovutil import build_dov_url
 from pydov.util.query import (
     PropertyInList,
     Join,
@@ -146,9 +147,9 @@ class TestJoin(object):
         Test whether the generated query is correct.
 
         """
-        l = ['https://www.dov.vlaanderen.be/data/boring/1986-068853',
-             'https://www.dov.vlaanderen.be/data/boring/1986-068843',
-             'https://www.dov.vlaanderen.be/data/boring/1980-068861']
+        l = [build_dov_url('data/boring/1986-068853'),
+             build_dov_url('data/boring/1986-068843'),
+             build_dov_url('data/boring/1980-068861')]
 
         df = pd.DataFrame({
             'pkey_boring': pd.Series(l),
@@ -182,12 +183,12 @@ class TestJoin(object):
         duplicate entry twice.
 
         """
-        l = ['https://www.dov.vlaanderen.be/data/boring/1986-068853',
-             'https://www.dov.vlaanderen.be/data/boring/1986-068853',
-             'https://www.dov.vlaanderen.be/data/boring/1980-068861']
+        l = [build_dov_url('data/boring/1986-068853'),
+             build_dov_url('data/boring/1986-068853'),
+             build_dov_url('data/boring/1980-068861')]
 
-        l_output = ['https://www.dov.vlaanderen.be/data/boring/1986-068853',
-                    'https://www.dov.vlaanderen.be/data/boring/1980-068861']
+        l_output = [build_dov_url('data/boring/1986-068853'),
+                    build_dov_url('data/boring/1980-068861')]
 
         df = pd.DataFrame({
             'pkey_boring': pd.Series(l),
@@ -221,9 +222,9 @@ class TestJoin(object):
 
         """
         with pytest.raises(ValueError):
-            l = ['https://www.dov.vlaanderen.be/data/boring/1986-068853',
-                 'https://www.dov.vlaanderen.be/data/boring/1986-068843',
-                 'https://www.dov.vlaanderen.be/data/boring/1980-068861']
+            l = [build_dov_url('data/boring/1986-068853'),
+                 build_dov_url('data/boring/1986-068843'),
+                 build_dov_url('data/boring/1980-068861')]
 
             df = pd.DataFrame({
                 'pkey_boring': pd.Series(l),
@@ -239,7 +240,7 @@ class TestJoin(object):
         single PropertyIsEqualTo.
 
         """
-        l = ['https://www.dov.vlaanderen.be/data/boring/1986-068853']
+        l = [build_dov_url('data/boring/1986-068853')]
 
         df = pd.DataFrame({
             'pkey_boring': pd.Series(l),
@@ -268,9 +269,9 @@ class TestJoin(object):
         single PropertyIsEqualTo.
 
         """
-        l = ['https://www.dov.vlaanderen.be/data/boring/1986-068853',
-             'https://www.dov.vlaanderen.be/data/boring/1986-068853']
-        l_output = ['https://www.dov.vlaanderen.be/data/boring/1986-068853']
+        l = [build_dov_url('data/boring/1986-068853'),
+             build_dov_url('data/boring/1986-068853')]
+        l_output = [build_dov_url('data/boring/1986-068853')]
 
         df = pd.DataFrame({
             'pkey_boring': pd.Series(l),
@@ -311,9 +312,9 @@ class TestJoin(object):
         Test whether the generated query is correct.
 
         """
-        l = ['https://www.dov.vlaanderen.be/data/boring/1986-068853',
-             'https://www.dov.vlaanderen.be/data/boring/1986-068843',
-             'https://www.dov.vlaanderen.be/data/boring/1980-068861']
+        l = [build_dov_url('data/boring/1986-068853'),
+             build_dov_url('data/boring/1986-068843'),
+             build_dov_url('data/boring/1980-068861')]
 
         df = pd.DataFrame({
             'pkey_boring': pd.Series(l),
@@ -346,9 +347,9 @@ class TestJoin(object):
         Test whether the generated query is correct.
 
         """
-        l = ['https://www.dov.vlaanderen.be/data/boring/1986-068853',
-             'https://www.dov.vlaanderen.be/data/boring/1986-068843',
-             'https://www.dov.vlaanderen.be/data/boring/1980-068861']
+        l = [build_dov_url('data/boring/1986-068853'),
+             build_dov_url('data/boring/1986-068843'),
+             build_dov_url('data/boring/1980-068861')]
 
         df = pd.DataFrame({
             'boringfiche': pd.Series(l),

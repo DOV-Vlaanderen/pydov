@@ -208,4 +208,4 @@ class TestGrondwaterfilterSearch(AbstractTestSearch):
             return_fields=('pkey_filter', 'gw_id', 'filternummer',
                            'meetnet_code'))
 
-        assert df.meetnet_code[0] == 8
+        assert df.meetnet_code[0] == '8'

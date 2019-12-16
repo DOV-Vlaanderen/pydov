@@ -1,0 +1,2427 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://observatie.kern.schemas.dov.vlaanderen.be"
+           targetNamespace="http://observatie.kern.schemas.dov.vlaanderen.be"
+           elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.00">
+
+    <xs:simpleType name="DetectieconditieEnumType">
+        <xs:annotation>
+            <xs:documentation>de mogelijke waarden voor de detectielimiet van de kwaliteitsmeting</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <!-- kleiner dan -->
+            <xs:pattern value="[&lt;]"/>
+            <!-- groter dan -->
+            <xs:pattern value="[&gt;]"/>
+            <!-- niet van toepassing -->
+            <xs:pattern value="[-]"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <!--
+select '<xs:enumeration value="'||beschrijving||'"/>' from kern_monster.lut_analysemethode order by beschrijving order by lower(beschrijving)
+-->
+    <xs:simpleType name="AnalysemethodeEnumType">
+        <xs:annotation>
+            <xs:documentation>de mogelijke waarden voor de analysemethode van een kwaliteitsmeting</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="AAS"/>
+            <xs:enumeration value="Berekend"/>
+            <xs:enumeration value="Berekend uit P totaal"/>
+            <xs:enumeration value="casagrande"/>
+            <xs:enumeration value="Chemoluminescentie"/>
+            <xs:enumeration value="Colorimetrie"/>
+            <xs:enumeration value="Combinatie van verschillende methodes"/>
+            <xs:enumeration value="Combustion"/>
+            <xs:enumeration value="Dichromaatmethode volgens BOC"/>
+            <xs:enumeration value="drogen op 105"/>
+            <xs:enumeration value="Electrode"/>
+            <xs:enumeration value="FAAS"/>
+            <xs:enumeration value="Filtratieramp"/>
+            <xs:enumeration value="Fluorescentie"/>
+            <xs:enumeration value="fotometrie"/>
+            <xs:enumeration value="GC"/>
+            <xs:enumeration value="GCMS"/>
+            <xs:enumeration value="GCMSMS"/>
+            <xs:enumeration value="Geleidbaarheidsmeter"/>
+            <xs:enumeration value="granulometrische textuurbepaling volgens BOC"/>
+            <xs:enumeration value="Gravimetrie"/>
+            <xs:enumeration value="HPLC"/>
+            <xs:enumeration value="HSGCMS"/>
+            <xs:enumeration value="IC"/>
+            <xs:enumeration value="ICP"/>
+            <xs:enumeration value="ICP-MS"/>
+            <xs:enumeration value="ICP-OES"/>
+            <xs:enumeration value="Ionchromatografie"/>
+            <xs:enumeration value="ionselectieve electrode"/>
+            <xs:enumeration value="LC-MS"/>
+            <xs:enumeration value="LCMSMS"/>
+            <xs:enumeration value="LC-QTOF-MS"/>
+            <xs:enumeration value="magneetseperator"/>
+            <xs:enumeration value="manuele textuurbepaling volgens BOC"/>
+            <xs:enumeration value="methode voor kalk"/>
+            <xs:enumeration value="methode voor organische stoffen"/>
+            <xs:enumeration value="methyleenblauwproef"/>
+            <xs:enumeration value="microcoulometrie"/>
+            <xs:enumeration value="MS"/>
+            <xs:enumeration value="Onbekend"/>
+            <xs:enumeration value="pH KCl volgens BOC"/>
+            <xs:enumeration value="pH-meter"/>
+            <xs:enumeration value="Plaattelling"/>
+            <xs:enumeration value="pycnometerproef"/>
+            <xs:enumeration value="Spectrofotometrie"/>
+            <xs:enumeration value="stereo miscroscoop"/>
+            <xs:enumeration value="Thermometer"/>
+            <xs:enumeration value="Titratie"/>
+            <xs:enumeration value="TOC volgens BOC"/>
+            <xs:enumeration value="turbidimetrie"/>
+            <xs:enumeration value="Winkler methode"/>
+            <xs:enumeration value="XRD analyse"/>        
+            <!-- bodemanalyses -->
+            <xs:enumeration value="TOC volgens BOC"/>
+            <xs:enumeration value="Dichromaatmethode volgens BOC"/>
+            <xs:enumeration value="pH KCl volgens BOC"/>
+            <xs:enumeration value="manuele textuurbepaling volgens BOC"/>
+            <xs:enumeration value="granulometrische textuurbepaling volgens BOC"/>
+            <xs:enumeration value="koningswater">
+            
+                <xs:annotation>
+                    <xs:documentation>chemie ontsluiting: Koningswater</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <!--
+select '<xs:enumeration value="'||afkorting||'"><xs:annotation><xs:documentation>'||beschrijving||'</xs:documentation></xs:annotation></xs:enumeration>' 
+from kern_monster.lut_meeteenheid 
+order by beschrijving
+-->
+    <xs:simpleType name="MeeteenheidEnumType">
+        <xs:annotation>
+            <xs:documentation>de mogelijke waarden voor de meeteenheid van de opgemeten kwaliteitsparameter
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="-">
+                <xs:annotation>
+                    <xs:documentation>-</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="/100ml">
+                <xs:annotation>
+                    <xs:documentation>/100ml</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="/250ml">
+                <xs:annotation>
+                    <xs:documentation>/250ml</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="/50ml">
+                <xs:annotation>
+                    <xs:documentation>/50ml</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="/ml">
+                <xs:annotation>
+                    <xs:documentation>/ml</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="%">
+                <xs:annotation>
+                    <xs:documentation>%</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="°D">
+                <xs:annotation>
+                    <xs:documentation>Duitse hardheidsgraden</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="dH°">
+                <xs:annotation>
+                    <xs:documentation>Duitse_hardheidsgraden</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="fH°">
+                <xs:annotation>
+                    <xs:documentation>Franse _hardheidsgraden</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="°F">
+                <xs:annotation>
+                    <xs:documentation>Franse hardheidsgraden</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="g/kg">
+                <xs:annotation>
+                    <xs:documentation>g/kg</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="°C">
+                <xs:annotation>
+                    <xs:documentation>graden Celsius</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Fr. °">
+                <xs:annotation>
+                    <xs:documentation>hardheids graden</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="helder">
+                <xs:annotation>
+                    <xs:documentation>helder</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="K">
+                <xs:annotation>
+                    <xs:documentation>Kelvin</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="m/s">
+                <xs:annotation>
+                    <xs:documentation>m/s</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="mEq/100mL">
+                <xs:annotation>
+                    <xs:documentation>mEq/100mL</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="meq/l">
+                <xs:annotation>
+                    <xs:documentation>meq/l</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="mg CaCO3/l">
+                <xs:annotation>
+                    <xs:documentation>mg CaCO3/l</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="mg N/l">
+                <xs:annotation>
+                    <xs:documentation>mg N/l</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="mg O2/l">
+                <xs:annotation>
+                    <xs:documentation>mg O2/l</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="mg P/l">
+                <xs:annotation>
+                    <xs:documentation>mg P/l</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="mg Pt/L">
+                <xs:annotation>
+                    <xs:documentation>mg Pt/L</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+
+            <xs:enumeration value="t/m³">
+                <xs:annotation>
+                    <xs:documentation>ton per kubieke meter</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+
+            <xs:enumeration value="mg S/L">
+                <xs:annotation>
+                    <xs:documentation>mg S/L</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="mg/l Pt-Co">
+                <xs:annotation>
+                    <xs:documentation>mg/l Platinum-Cobalt</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="µg/l">
+                <xs:annotation>
+                    <xs:documentation>microgram per liter</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="µS/cm">
+                <xs:annotation>
+                    <xs:documentation>microSiemens per cm</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="mm/l">
+                <xs:annotation>
+                    <xs:documentation>milimeter per liter</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="mg/l">
+                <xs:annotation>
+                    <xs:documentation>milligram per liter</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="mgN/l">
+                <xs:annotation>
+                    <xs:documentation>milligram stikstof per liter</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="mmol/l">
+                <xs:annotation>
+                    <xs:documentation>millimol per liter</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="mV">
+                <xs:annotation>
+                    <xs:documentation>millivolt</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="mS/cm (20°C)">
+                <xs:annotation>
+                    <xs:documentation>mS/cm (20°C)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="mS/cm (25°C)">
+                <xs:annotation>
+                    <xs:documentation>mS/cm (25°C)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ng/l">
+                <xs:annotation>
+                    <xs:documentation>nanogram per liter</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="normaal">
+                <xs:annotation>
+                    <xs:documentation>normaal</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Onbekend">
+                <xs:annotation>
+                    <xs:documentation>Onbekend</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ppb">
+                <xs:annotation>
+                    <xs:documentation>parts per billion</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ppm">
+                <xs:annotation>
+                    <xs:documentation>parts per million</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Sörensen">
+                <xs:annotation>
+                    <xs:documentation>Sörensen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="°B">
+                <xs:annotation>
+                    <xs:documentation/>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="°E">
+                <xs:annotation>
+                    <xs:documentation/>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="V">
+                <xs:annotation>
+                    <xs:documentation>Volt</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="µS/cm (25°C)">
+                <xs:annotation>
+                    <xs:documentation>µS/cm (25°C)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="µS/cm(20°C)">
+                <xs:annotation>
+                    <xs:documentation>µS/cm(20°C)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="g MB/100g droog monster">
+                <xs:annotation>
+                    <xs:documentation>meeteenheid voor methyleenblauw</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>            
+        </xs:restriction>
+    </xs:simpleType>
+    <!--
+select '<xs:enumeration value="'||korte_naam||'"><xs:annotation><xs:documentation>parameter '||beschrijving||'</xs:documentation></xs:annotation></xs:enumeration>' 
+from kern_monster.lut_parameter 
+order by volgnummer
+-->
+    <xs:simpleType name="ParameterEnumType">
+        <xs:annotation>
+            <xs:documentation>de mogelijke waarden voor de opgemeten kwaliteitsparameter</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="pH">
+                <xs:annotation>
+                    <xs:documentation>parameter Zuurtegraad</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="EC">
+                <xs:annotation>
+                    <xs:documentation>parameter Elektrische geleidbaarheid</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="T">
+                <xs:annotation>
+                    <xs:documentation>parameter Temperatuur</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Kleur">
+                <xs:annotation>
+                    <xs:documentation>parameter Kleur</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Troebelheid">
+                <xs:annotation>
+                    <xs:documentation>parameter Troebelheid</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Reuk">
+                <xs:annotation>
+                    <xs:documentation>parameter Reuk</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Smaak">
+                <xs:annotation>
+                    <xs:documentation>parameter Smaak</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="O2">
+                <xs:annotation>
+                    <xs:documentation>parameter Opgeloste zuurstof</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Eh°">
+                <xs:annotation>
+                    <xs:documentation>parameter Redoxpotentiaal</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="COD">
+                <xs:annotation>
+                    <xs:documentation>parameter Chemische zuurstofbehoefte</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BOD">
+                <xs:annotation>
+                    <xs:documentation>parameter Biologische zuurstofbehoefte</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Verdampingsresten/105">
+                <xs:annotation>
+                    <xs:documentation>parameter Verdampingsresten/105°C</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Verassingresten/600">
+                <xs:annotation>
+                    <xs:documentation>parameter Verassingresten/600°C</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Zwevende stoffen/105">
+                <xs:annotation>
+                    <xs:documentation>parameter Zwevende stoffen/105°C</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Zwevende stoffen/600">
+                <xs:annotation>
+                    <xs:documentation>parameter Zwevende stoffen/600°C</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TA">
+                <xs:annotation>
+                    <xs:documentation>parameter Fenolftaleïne-alkaliniteit</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TAC">
+                <xs:annotation>
+                    <xs:documentation>parameter Methyloranje-alkaliniteit</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Na">
+                <xs:annotation>
+                    <xs:documentation>parameter Natrium</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="K">
+                <xs:annotation>
+                    <xs:documentation>parameter Kalium</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Mg">
+                <xs:annotation>
+                    <xs:documentation>parameter Magnesium</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="NH4">
+                <xs:annotation>
+                    <xs:documentation>parameter Ammonium</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Ca">
+                <xs:annotation>
+                    <xs:documentation>parameter Calcium</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Fe">
+                <xs:annotation>
+                    <xs:documentation>parameter Ijzer</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Mn">
+                <xs:annotation>
+                    <xs:documentation>parameter Mangaan</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Cl">
+                <xs:annotation>
+                    <xs:documentation>parameter Chloriden</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SO4">
+                <xs:annotation>
+                    <xs:documentation>parameter Sulfaat</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="HCO3">
+                <xs:annotation>
+                    <xs:documentation>parameter Bicarbonaat</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CO3">
+                <xs:annotation>
+                    <xs:documentation>parameter Carbonaat</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="NO3">
+                <xs:annotation>
+                    <xs:documentation>parameter Nitraat</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="NO2">
+                <xs:annotation>
+                    <xs:documentation>parameter Nitriet</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PO4">
+                <xs:annotation>
+                    <xs:documentation>parameter Fosfaat</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Al">
+                <xs:annotation>
+                    <xs:documentation>parameter Aluminium</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Sb">
+                <xs:annotation>
+                    <xs:documentation>parameter Antimoon</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Cd">
+                <xs:annotation>
+                    <xs:documentation>parameter Cadmium</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Co">
+                <xs:annotation>
+                    <xs:documentation>parameter Cobalt</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Pb">
+                <xs:annotation>
+                    <xs:documentation>parameter Lood</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Cu">
+                <xs:annotation>
+                    <xs:documentation>parameter Koper</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Ag">
+                <xs:annotation>
+                    <xs:documentation>parameter Zilver</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Au">
+                <xs:annotation>
+                    <xs:documentation>parameter Goud</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="As">
+                <xs:annotation>
+                    <xs:documentation>parameter Arseen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Hg">
+                <xs:annotation>
+                    <xs:documentation>parameter Kwik</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Ba">
+                <xs:annotation>
+                    <xs:documentation>parameter Barium</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Be">
+                <xs:annotation>
+                    <xs:documentation>parameter Beryllium</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="B">
+                <xs:annotation>
+                    <xs:documentation>parameter Boor</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Cr">
+                <xs:annotation>
+                    <xs:documentation>parameter Chroom</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Mo">
+                <xs:annotation>
+                    <xs:documentation>parameter Molybdeen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Ni">
+                <xs:annotation>
+                    <xs:documentation>parameter Nikkel</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Tha">
+                <xs:annotation>
+                    <xs:documentation>parameter Thallium</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Ti">
+                <xs:annotation>
+                    <xs:documentation>parameter titanium</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="V">
+                <xs:annotation>
+                    <xs:documentation>parameter Vanadium</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Atraz">
+                <xs:annotation>
+                    <xs:documentation>parameter Atrazine</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Simaz">
+                <xs:annotation>
+                    <xs:documentation>parameter Simazine</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Diur">
+                <xs:annotation>
+                    <xs:documentation>parameter Diuron</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="mcpp">
+                <xs:annotation>
+                    <xs:documentation>parameter MCPP</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="mcpa">
+                <xs:annotation>
+                    <xs:documentation>parameter MCPA</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ghch">
+                <xs:annotation>
+                    <xs:documentation>parameter Lindaan</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Bentaz">
+                <xs:annotation>
+                    <xs:documentation>parameter Bentazon</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="brom">
+                <xs:annotation>
+                    <xs:documentation>parameter Bromacil</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="24d">
+                <xs:annotation>
+                    <xs:documentation>parameter 2,4-D</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Carbof">
+                <xs:annotation>
+                    <xs:documentation>parameter Carbofuran</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Linur">
+                <xs:annotation>
+                    <xs:documentation>parameter Linuron</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Isoprot">
+                <xs:annotation>
+                    <xs:documentation>parameter Isoproturon</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Chlortol">
+                <xs:annotation>
+                    <xs:documentation>parameter Chloortoluron</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="atr_des">
+                <xs:annotation>
+                    <xs:documentation>parameter Desethylatrazine</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="metola-S">
+                <xs:annotation>
+                    <xs:documentation>parameter S-Metolachlor</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Glyfos">
+                <xs:annotation>
+                    <xs:documentation>parameter Glyfosaat</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="AMPA">
+                <xs:annotation>
+                    <xs:documentation>parameter AMPA</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BrO3">
+                <xs:annotation>
+                    <xs:documentation>parameter Bromaat</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CHBr3">
+                <xs:annotation>
+                    <xs:documentation>parameter Bromoform</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CHClBr2">
+                <xs:annotation>
+                    <xs:documentation>parameter Dibroomchloormethaan</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CHCl2Br">
+                <xs:annotation>
+                    <xs:documentation>parameter Broomdichloormethaan</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="THM-tot">
+                <xs:annotation>
+                    <xs:documentation>parameter Trihalomethanen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="HCB">
+                <xs:annotation>
+                    <xs:documentation>parameter Hexachloorbenzeen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PAK-tot">
+                <xs:annotation>
+                    <xs:documentation>parameter Polycyclische aromatische koolwaterstoffen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TCB-tot">
+                <xs:annotation>
+                    <xs:documentation>parameter Trichlorobenzenen totaal</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="VC">
+                <xs:annotation>
+                    <xs:documentation>parameter Vinylchloride</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="NPOC">
+                <xs:annotation>
+                    <xs:documentation>parameter Niet Purgeerbare Organische Koolstof</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="NPOC">
+                <xs:annotation>
+                    <xs:documentation>parameter Niet Purgeerbare Organische Koolstof</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="AOX">
+                <xs:annotation>
+                    <xs:documentation>parameter Absorbeerbare Organohalogeenverbindingen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Br">
+                <xs:annotation>
+                    <xs:documentation>parameter Bromide</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Tri">
+                <xs:annotation>
+                    <xs:documentation>parameter Trichlooretheen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="C6H5Cl">
+                <xs:annotation>
+                    <xs:documentation>parameter Chloorbenzeen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="C6H5OH">
+                <xs:annotation>
+                    <xs:documentation>parameter Fenolen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="C6H6">
+                <xs:annotation>
+                    <xs:documentation>parameter Benzeen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="C7H8">
+                <xs:annotation>
+                    <xs:documentation>parameter Tolueen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CN">
+                <xs:annotation>
+                    <xs:documentation>parameter Cyanide</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CO2">
+                <xs:annotation>
+                    <xs:documentation>parameter Koolzuur</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CO2(ag)">
+                <xs:annotation>
+                    <xs:documentation>parameter aggresief kooldioxide</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CO2(vrij)">
+                <xs:annotation>
+                    <xs:documentation>parameter vrij kooldioxide</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="N(Kj)">
+                <xs:annotation>
+                    <xs:documentation>parameter Kjeldahlstikstof</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Col.">
+                <xs:annotation>
+                    <xs:documentation>parameter Coliformen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Colibact 44">
+                <xs:annotation>
+                    <xs:documentation>parameter Thermotolerante Coli bacteriën</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="DOC">
+                <xs:annotation>
+                    <xs:documentation>parameter Opgeloste organische koolstof</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="EC(Lab.)">
+                <xs:annotation>
+                    <xs:documentation>parameter Geleidbaarheid in het labo</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="EC(Veld)">
+                <xs:annotation>
+                    <xs:documentation>parameter Geleidbaarheid op het veld</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="F">
+                <xs:annotation>
+                    <xs:documentation>parameter Fluoride</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Fe(Tot.)">
+                <xs:annotation>
+                    <xs:documentation>parameter Ijzer - Totaal</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Fe2+">
+                <xs:annotation>
+                    <xs:documentation>parameter Ijzer II</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Fe3+">
+                <xs:annotation>
+                    <xs:documentation>parameter Ijzer III</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Feac.Col.">
+                <xs:annotation>
+                    <xs:documentation>parameter Feacale Coliformen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Feac.Str.">
+                <xs:annotation>
+                    <xs:documentation>parameter Feacale Streptococcen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="H(tmp)">
+                <xs:annotation>
+                    <xs:documentation>parameter Tijdelijke hardheid</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="H(tot)">
+                <xs:annotation>
+                    <xs:documentation>parameter Totale Hardheid</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="N(Kj)">
+                <xs:annotation>
+                    <xs:documentation>parameter Kjeldahlstikstof</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="OH">
+                <xs:annotation>
+                    <xs:documentation>parameter Hydroxide</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Oxyd. (O2)">
+                <xs:annotation>
+                    <xs:documentation>parameter Oxideerbaarheid</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="test">
+                <xs:annotation>
+                    <xs:documentation>parameter tijdelijk</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="P2O5">
+                <xs:annotation>
+                    <xs:documentation>parameter Orthofosfaat</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Path.Staph.">
+                <xs:annotation>
+                    <xs:documentation>parameter Pathogene staphylococcen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="pH(Lab.)">
+                <xs:annotation>
+                    <xs:documentation>parameter Zuurtegraad in het labo</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="clenbuterol">
+                <xs:annotation>
+                    <xs:documentation>parameter clenbuterol</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="pH(Veld)">
+                <xs:annotation>
+                    <xs:documentation>parameter Zuurtegraad op het veld</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PO4(Tot.)">
+                <xs:annotation>
+                    <xs:documentation>parameter Fosfaat -Totaal</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Se">
+                <xs:annotation>
+                    <xs:documentation>parameter Seleen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SiO2">
+                <xs:annotation>
+                    <xs:documentation>parameter Siliciumoxide</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Sr">
+                <xs:annotation>
+                    <xs:documentation>parameter Strontium</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TAM">
+                <xs:annotation>
+                    <xs:documentation>parameter m-alkaliniteit (methyloranje)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TAP">
+                <xs:annotation>
+                    <xs:documentation>parameter p-alkaliniteit (fenolftaleïne)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Temp.">
+                <xs:annotation>
+                    <xs:documentation>parameter Temperatuur (veld)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TOC">
+                <xs:annotation>
+                    <xs:documentation>parameter Totaal organische koolstof</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Temp(lucht)">
+                <xs:annotation>
+                    <xs:documentation>parameter Temperatuur lucht</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Kiem(22°C)">
+                <xs:annotation>
+                    <xs:documentation>parameter Totaal Kiemgetal (22°C)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Kiem(37°C)">
+                <xs:annotation>
+                    <xs:documentation>parameter Totaal Kiemgetal (37°C)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Zn">
+                <xs:annotation>
+                    <xs:documentation>parameter Zink</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="N-NH4">
+                <xs:annotation>
+                    <xs:documentation>parameter Ammoniakale stikstof</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Sn">
+                <xs:annotation>
+                    <xs:documentation>parameter Tin</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="VOC1">
+                <xs:annotation>
+                    <xs:documentation>parameter VOC1</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="VOC1">
+                <xs:annotation>
+                    <xs:documentation>parameter VOC1</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CC14 extractie">
+                <xs:annotation>
+                    <xs:documentation>parameter CC14 extractie</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Clostr. Sporen">
+                <xs:annotation>
+                    <xs:documentation>parameter VOC1 4</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="H (blijvende)">
+                <xs:annotation>
+                    <xs:documentation>parameter Blijvende Hardheid</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="H (HCO3)">
+                <xs:annotation>
+                    <xs:documentation>parameter Bicarbonaathardheid</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="vrije Clresten">
+                <xs:annotation>
+                    <xs:documentation>parameter vrije chloorresten</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="pHs">
+                <xs:annotation>
+                    <xs:documentation>parameter evenwichtspH</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="NTU">
+                <xs:annotation>
+                    <xs:documentation>parameter Turbiditeit</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Clostridia">
+                <xs:annotation>
+                    <xs:documentation>parameter Sulfiet reducerende clostridia</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Ban. Schim.">
+                <xs:annotation>
+                    <xs:documentation>parameter Banale Schimmels en gisten</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="warme KMnO4">
+                <xs:annotation>
+                    <xs:documentation>parameter warme KMnO4</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Ca na koken">
+                <xs:annotation>
+                    <xs:documentation>parameter Calcium na koken</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Mg na koken">
+                <xs:annotation>
+                    <xs:documentation>parameter Magnesium na koken</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="pH in situ">
+                <xs:annotation>
+                    <xs:documentation>parameter pH in situ</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ttc">
+                <xs:annotation>
+                    <xs:documentation>parameter thermotolerante coliformen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ssra">
+                <xs:annotation>
+                    <xs:documentation>parameter sporen van sulfietreducerende anaeroben</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="G 25°C">
+                <xs:annotation>
+                    <xs:documentation>parameter geleidingsvermogen 25°C</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="droogrest">
+                <xs:annotation>
+                    <xs:documentation>parameter droogrest</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="vrij cyanide">
+                <xs:annotation>
+                    <xs:documentation>parameter vrij cyanide</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="pseudomonas aeruginosa">
+                <xs:annotation>
+                    <xs:documentation>parameter pseudomonas aeruginosa</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="NN">
+                <xs:annotation>
+                    <xs:documentation>parameter nitraat + nitriet</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ethylbenzeen">
+                <xs:annotation>
+                    <xs:documentation>parameter ethylbenzeen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="xylenen">
+                <xs:annotation>
+                    <xs:documentation>parameter xylenen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="naftaleen">
+                <xs:annotation>
+                    <xs:documentation>parameter naftaleen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="totaal BTEX">
+                <xs:annotation>
+                    <xs:documentation>parameter totaal BTEX</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1,2-dichloorethaan">
+                <xs:annotation>
+                    <xs:documentation>parameter 1,2-dichloorethaan</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="cis 1,2-dichloorethaan">
+                <xs:annotation>
+                    <xs:documentation>parameter cis 1,2-dichloorethaan</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1,2 dichloorpropaan">
+                <xs:annotation>
+                    <xs:documentation>parameter 1,2 dichloorpropaan</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Per">
+                <xs:annotation>
+                    <xs:documentation>parameter tetrachlooretheen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="tetrachloormethaan">
+                <xs:annotation>
+                    <xs:documentation>parameter tetrachloormethaan</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1,1,1-trichloorethaan">
+                <xs:annotation>
+                    <xs:documentation>parameter 1,1,1-trichloorethaan</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1,1,2-trichloorethaan">
+                <xs:annotation>
+                    <xs:documentation>parameter 1,1,2-trichloorethaan</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="trichlooretheen">
+                <xs:annotation>
+                    <xs:documentation>parameter trichlooretheen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="chloroform">
+                <xs:annotation>
+                    <xs:documentation>parameter chloroform</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="antraceen">
+                <xs:annotation>
+                    <xs:documentation>parameter antraceen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="fenanteen">
+                <xs:annotation>
+                    <xs:documentation>parameter fenanteen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="fluoranteen">
+                <xs:annotation>
+                    <xs:documentation>parameter fluoranteen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="benzo(a)antraceen">
+                <xs:annotation>
+                    <xs:documentation>parameter benzo(a)antraceen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="benzo(a)pyreen">
+                <xs:annotation>
+                    <xs:documentation>parameter benzo(a)pyreen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="chryseen">
+                <xs:annotation>
+                    <xs:documentation>parameter chryseen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="benzo(ghi)peryleen">
+                <xs:annotation>
+                    <xs:documentation>parameter benzo(ghi)peryleen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="benzo(k)fluoranteen">
+                <xs:annotation>
+                    <xs:documentation>parameter benzo(k)fluoranteen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="indeno(1,2,3-cd)pyreen">
+                <xs:annotation>
+                    <xs:documentation>parameter indeno(1,2,3-cd)pyreen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="acenaftyleen">
+                <xs:annotation>
+                    <xs:documentation>parameter acenaftyleen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="acenafteen">
+                <xs:annotation>
+                    <xs:documentation>parameter acenafteen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="fluoreen">
+                <xs:annotation>
+                    <xs:documentation>parameter fluoreen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="pyreen">
+                <xs:annotation>
+                    <xs:documentation>parameter pyreen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="benzo(b)fluoranteen">
+                <xs:annotation>
+                    <xs:documentation>parameter benzo(b)fluoranteen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="dibenz(sh)antraceen">
+                <xs:annotation>
+                    <xs:documentation>parameter dibenz(sh)antraceen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PCB 28">
+                <xs:annotation>
+                    <xs:documentation>parameter PCB 28</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PCB 52">
+                <xs:annotation>
+                    <xs:documentation>parameter PCB 52</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PCB 101">
+                <xs:annotation>
+                    <xs:documentation>parameter PCB 101</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PCB 118">
+                <xs:annotation>
+                    <xs:documentation>parameter PCB 118</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PCB 138">
+                <xs:annotation>
+                    <xs:documentation>parameter PCB 138</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PCB 153">
+                <xs:annotation>
+                    <xs:documentation>parameter PCB 153</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PCB 180">
+                <xs:annotation>
+                    <xs:documentation>parameter PCB 180</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="alkaliniteit t.o.v. methyloranje">
+                <xs:annotation>
+                    <xs:documentation>parameter alkaliniteit t.o.v. methyloranje</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="alkaliniteit t.o.v. fenolftaleine">
+                <xs:annotation>
+                    <xs:documentation>parameter alkaliniteit t.o.v. fenolftaleine</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SomKAT">
+                <xs:annotation>
+                    <xs:documentation>parameter Som kationen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="styreen">
+                <xs:annotation>
+                    <xs:documentation>parameter styreen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="P">
+                <xs:annotation>
+                    <xs:documentation>parameter Fosfor</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Escherichia Coli">
+                <xs:annotation>
+                    <xs:documentation>parameter Escherichia Coli</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="dichloormethaan">
+                <xs:annotation>
+                    <xs:documentation>parameter dichloormethaan</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Minerale Olie">
+                <xs:annotation>
+                    <xs:documentation>parameter Minerale Olie</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="NaCl">
+                <xs:annotation>
+                    <xs:documentation>parameter Zoutgehalte</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="bufcap.( pH=4,4)">
+                <xs:annotation>
+                    <xs:documentation>parameter Buffercapaciteit bij pH=4,4</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="bufcap.( pH=8,3)">
+                <xs:annotation>
+                    <xs:documentation>parameter Buffercapaciteit bij pH=8,3</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="H (berekend)">
+                <xs:annotation>
+                    <xs:documentation>parameter Berekende hardheid</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SomAN">
+                <xs:annotation>
+                    <xs:documentation>parameter Som anionen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Si">
+                <xs:annotation>
+                    <xs:documentation>parameter silicium</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Saturatie Index">
+                <xs:annotation>
+                    <xs:documentation>parameter Saturatie Index</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="niet ion. detergenten">
+                <xs:annotation>
+                    <xs:documentation>parameter niet ionische detergenten</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="an det">
+                <xs:annotation>
+                    <xs:documentation>parameter anionische detergenten (alkylbenzeensulfonaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="kat det">
+                <xs:annotation>
+                    <xs:documentation>parameter kationische detergenten (cetyltrimethylamm.br)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PE">
+                <xs:annotation>
+                    <xs:documentation>parameter oliën en vetten</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="N-totaal">
+                <xs:annotation>
+                    <xs:documentation>parameter Totale stikstof</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="P-totaal">
+                <xs:annotation>
+                    <xs:documentation>parameter Totale fosfor</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SomIONEN">
+                <xs:annotation>
+                    <xs:documentation>parameter Ionen(tot.)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TDS">
+                <xs:annotation>
+                    <xs:documentation>parameter Total dissolved solids</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BAM">
+                <xs:annotation>
+                    <xs:documentation>parameter 2,6-Dichlorobenzamide (BAM)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Entero">
+                <xs:annotation>
+                    <xs:documentation>parameter Enterococcen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Entero">
+                <xs:annotation>
+                    <xs:documentation>parameter Enterococcen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Aeromon">
+                <xs:annotation>
+                    <xs:documentation>parameter Aeromonas</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MTBE">
+                <xs:annotation>
+                    <xs:documentation>parameter MTBE</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Borneff_4">
+                <xs:annotation>
+                    <xs:documentation>parameter Som van de 4 van Borneff</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Borneff_6">
+                <xs:annotation>
+                    <xs:documentation>parameter Som van de 6 van Borneff</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="OrganischKoolstofgehalte">
+                <xs:annotation>
+                    <xs:documentation>parameter Organisch koolstofgehalte</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Textuur">
+                <xs:annotation>
+                    <xs:documentation>parameter Textuur</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Chloridaz">
+                <xs:annotation>
+                    <xs:documentation>parameter Chloridazon</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="test">
+                <xs:annotation>
+                    <xs:documentation>parameter tijdelijk</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="DMS">
+                <xs:annotation>
+                    <xs:documentation>parameter dimethylsulfamide</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="chazr">
+                <xs:annotation>
+                    <xs:documentation>parameter EZ-3-chlooracrylzuur</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="VIS">
+                <xs:annotation>
+                    <xs:documentation>parameter VIS-01</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Terbu">
+                <xs:annotation>
+                    <xs:documentation>parameter Terbutylazine</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="24db">
+                <xs:annotation>
+                    <xs:documentation>parameter 2,4-DB</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="245t">
+                <xs:annotation>
+                    <xs:documentation>parameter 2,4,5-T</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Ala">
+                <xs:annotation>
+                    <xs:documentation>parameter Alachloor</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Carben">
+                <xs:annotation>
+                    <xs:documentation>parameter Carbendazim</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Carbet">
+                <xs:annotation>
+                    <xs:documentation>parameter Carbetamide</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Cyana">
+                <xs:annotation>
+                    <xs:documentation>parameter Cyanazine</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Clproph">
+                <xs:annotation>
+                    <xs:documentation>parameter Chloorpropharm</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Terbu_des">
+                <xs:annotation>
+                    <xs:documentation>parameter Desethylterbuthylazine</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Atr_desisoprop">
+                <xs:annotation>
+                    <xs:documentation>parameter Desisopropylatrazine</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Dicam">
+                <xs:annotation>
+                    <xs:documentation>parameter Dicamba</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Dichlorpr">
+                <xs:annotation>
+                    <xs:documentation>parameter Dichloorprop</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Fenoprop">
+                <xs:annotation>
+                    <xs:documentation>parameter Fenoprop</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Fluroxypyr">
+                <xs:annotation>
+                    <xs:documentation>parameter Fluroxypyr</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="%AfwijkBalans">
+                <xs:annotation>
+                    <xs:documentation>parameter AfwijkingBalans</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="mcpb">
+                <xs:annotation>
+                    <xs:documentation>parameter MCPB</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Mecopr">
+                <xs:annotation>
+                    <xs:documentation>parameter Mecoprop</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Metami">
+                <xs:annotation>
+                    <xs:documentation>parameter Metamitron</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Metaza">
+                <xs:annotation>
+                    <xs:documentation>parameter Metazachloor</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Ethofum">
+                <xs:annotation>
+                    <xs:documentation>parameter Ethofumesaat</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Hexaz">
+                <xs:annotation>
+                    <xs:documentation>parameter Hexazinone</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Methabenz">
+                <xs:annotation>
+                    <xs:documentation>parameter Methabenzthiazuron</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Metobro">
+                <xs:annotation>
+                    <xs:documentation>parameter Metobromuron</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Metox">
+                <xs:annotation>
+                    <xs:documentation>parameter Metoxuron</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Linur_mono">
+                <xs:annotation>
+                    <xs:documentation>parameter Monolinuron</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="5ClFenol">
+                <xs:annotation>
+                    <xs:documentation>parameter Pentachloorfenol</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Prometr">
+                <xs:annotation>
+                    <xs:documentation>parameter Prometryn</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PropaCl">
+                <xs:annotation>
+                    <xs:documentation>parameter Propachloor</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Propan">
+                <xs:annotation>
+                    <xs:documentation>parameter Propanil</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Sebu">
+                <xs:annotation>
+                    <xs:documentation>parameter Sebuthylazine</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Terbutryn">
+                <xs:annotation>
+                    <xs:documentation>parameter Terbutryn</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="flufe">
+                <xs:annotation>
+                    <xs:documentation>parameter Flufenacet</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Dchdzn">
+                <xs:annotation>
+                    <xs:documentation>parameter Desphenyl-Chloridazon</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="meta4">
+                <xs:annotation>
+                    <xs:documentation>parameter Metazachloor OA (479M04)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="meta8">
+                <xs:annotation>
+                    <xs:documentation>parameter Metazachloor ESA (479M08)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Metola-S-ESA">
+                <xs:annotation>
+                    <xs:documentation>parameter S-Metolachloor ESA</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Propaz">
+                <xs:annotation>
+                    <xs:documentation>parameter Propazine</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="metola">
+                <xs:annotation>
+                    <xs:documentation>parameter Metolachloor</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="dield">
+                <xs:annotation>
+                    <xs:documentation>parameter Dieldrin</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="aldrin">
+                <xs:annotation>
+                    <xs:documentation>parameter Aldrin</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="pest-tot">
+                <xs:annotation>
+                    <xs:documentation>parameter Pesticiden Totaal</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="13DCPE_cis">
+                <xs:annotation>
+                    <xs:documentation>parameter 1,3-Dichloorpropeen (cis)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="13DCPE_trans">
+                <xs:annotation>
+                    <xs:documentation>parameter 1,3-Dichloorpropeen (trans)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CH3Br">
+                <xs:annotation>
+                    <xs:documentation>parameter Broommethaan</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="dibrclprop">
+                <xs:annotation>
+                    <xs:documentation>parameter 1,2-Dibroom-3-chloorpropaan</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="dichlob">
+                <xs:annotation>
+                    <xs:documentation>parameter Dichlobenil</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="cis_chlor">
+                <xs:annotation>
+                    <xs:documentation>parameter c_chlordaan</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="oxadia">
+                <xs:annotation>
+                    <xs:documentation>parameter oxadiazion</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="couma">
+                <xs:annotation>
+                    <xs:documentation>parameter coumafos</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="demeton-S">
+                <xs:annotation>
+                    <xs:documentation>parameter demeton-S</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="hexose oxidase enzyme">
+                <xs:annotation>
+                    <xs:documentation>parameter Hansenula polymorpha</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="triazoph">
+                <xs:annotation>
+                    <xs:documentation>parameter triazophos</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="trichlorpyr">
+                <xs:annotation>
+                    <xs:documentation>parameter trichlorpyr</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Endrin">
+                <xs:annotation>
+                    <xs:documentation>parameter Endrin</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Endrin">
+                <xs:annotation>
+                    <xs:documentation>parameter Endrin</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ahch">
+                <xs:annotation>
+                    <xs:documentation>parameter alfa-HCH</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="bhch">
+                <xs:annotation>
+                    <xs:documentation>parameter beta-HCH</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Heptachloor">
+                <xs:annotation>
+                    <xs:documentation>parameter Heptachloor</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Isodrin">
+                <xs:annotation>
+                    <xs:documentation>parameter Isodrin</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1112TCA">
+                <xs:annotation>
+                    <xs:documentation>parameter 1112TCA</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="111TCA">
+                <xs:annotation>
+                    <xs:documentation>parameter 111TCA</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1122TCA">
+                <xs:annotation>
+                    <xs:documentation>parameter 1122TCA</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="112TCA">
+                <xs:annotation>
+                    <xs:documentation>parameter 112TCA</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="11DCA">
+                <xs:annotation>
+                    <xs:documentation>parameter 11DCA</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="11DCE">
+                <xs:annotation>
+                    <xs:documentation>parameter 11DCE</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="11DCPE">
+                <xs:annotation>
+                    <xs:documentation>parameter 11DCPE</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="123TCB">
+                <xs:annotation>
+                    <xs:documentation>parameter 123TCB</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="123TCPA">
+                <xs:annotation>
+                    <xs:documentation>parameter 123TCPA</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="123TMB">
+                <xs:annotation>
+                    <xs:documentation>parameter 123TMB</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="124TCB">
+                <xs:annotation>
+                    <xs:documentation>parameter 124TCB</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="124TMB">
+                <xs:annotation>
+                    <xs:documentation>parameter 124TMB</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="12DCA">
+                <xs:annotation>
+                    <xs:documentation>parameter 12DCA</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="12DCE_c">
+                <xs:annotation>
+                    <xs:documentation>parameter 12DCE_c</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="12DCE_t">
+                <xs:annotation>
+                    <xs:documentation>parameter 12DCE_t</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="12DCPA">
+                <xs:annotation>
+                    <xs:documentation>parameter 12DCPA</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="135TCB">
+                <xs:annotation>
+                    <xs:documentation>parameter 135TCB</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="135TMB">
+                <xs:annotation>
+                    <xs:documentation>parameter 135TMB</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="13DCPA">
+                <xs:annotation>
+                    <xs:documentation>parameter 13DCPA</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="22DCPA">
+                <xs:annotation>
+                    <xs:documentation>parameter 22DCPA</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="5ClB">
+                <xs:annotation>
+                    <xs:documentation>parameter 5ClB</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="aclonifen">
+                <xs:annotation>
+                    <xs:documentation>parameter aclonifen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Acrylam">
+                <xs:annotation>
+                    <xs:documentation>parameter Acrylam</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="AMETRYN">
+                <xs:annotation>
+                    <xs:documentation>parameter AMETRYN</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="atraton">
+                <xs:annotation>
+                    <xs:documentation>parameter atraton</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="azinfos-ethyl">
+                <xs:annotation>
+                    <xs:documentation>parameter azinfos-ethyl</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="azinfos-methyl">
+                <xs:annotation>
+                    <xs:documentation>parameter azinfos-methyl</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="azoxystrobin">
+                <xs:annotation>
+                    <xs:documentation>parameter azoxystrobin</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BrB">
+                <xs:annotation>
+                    <xs:documentation>parameter BrB</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Br-CH2CH2-Br">
+                <xs:annotation>
+                    <xs:documentation>parameter Br-CH2CH2-Br</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="bromofos-ethyl">
+                <xs:annotation>
+                    <xs:documentation>parameter bromofos-ethyl</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="bromofos-methyl">
+                <xs:annotation>
+                    <xs:documentation>parameter bromofos-methyl</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="c_heptachloorepoxide">
+                <xs:annotation>
+                    <xs:documentation>parameter c_heptachloorepoxide</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="carbophenothion">
+                <xs:annotation>
+                    <xs:documentation>parameter carbophenothion</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CBrCl3">
+                <xs:annotation>
+                    <xs:documentation>parameter CBrCl3</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CCl4">
+                <xs:annotation>
+                    <xs:documentation>parameter CCl4</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CH2Br2">
+                <xs:annotation>
+                    <xs:documentation>parameter CH2Br2</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CH2ClBr">
+                <xs:annotation>
+                    <xs:documentation>parameter CH2ClBr</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="chlorfenvinfos-E">
+                <xs:annotation>
+                    <xs:documentation>parameter chlorfenvinfos-E</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="chlorfenvinfos-Z">
+                <xs:annotation>
+                    <xs:documentation>parameter chlorfenvinfos-Z</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Chloroxur">
+                <xs:annotation>
+                    <xs:documentation>parameter Chloroxur</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="chlorpyrifos-ethyl">
+                <xs:annotation>
+                    <xs:documentation>parameter chlorpyrifos-ethyl</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="chlorpyrifos-methyl">
+                <xs:annotation>
+                    <xs:documentation>parameter chlorpyrifos-methyl</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Clostr per">
+                <xs:annotation>
+                    <xs:documentation>parameter Clostr per</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="cyclohexaan">
+                <xs:annotation>
+                    <xs:documentation>parameter cyclohexaan</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="DEET">
+                <xs:annotation>
+                    <xs:documentation>parameter DEET</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="DESMETRYN">
+                <xs:annotation>
+                    <xs:documentation>parameter DESMETRYN</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="dhch">
+                <xs:annotation>
+                    <xs:documentation>parameter dhch</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="diazinon">
+                <xs:annotation>
+                    <xs:documentation>parameter diazinon</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Dibenzo(ah)antraceen">
+                <xs:annotation>
+                    <xs:documentation>parameter Dibenzo(ah)antraceen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="dichlorobenzophenone">
+                <xs:annotation>
+                    <xs:documentation>parameter dichlorobenzophenone</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="dichlorvos">
+                <xs:annotation>
+                    <xs:documentation>parameter dichlorvos</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="diflufenican">
+                <xs:annotation>
+                    <xs:documentation>parameter diflufenican</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Dimethenamid">
+                <xs:annotation>
+                    <xs:documentation>parameter Dimethenamid</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="dimethoate">
+                <xs:annotation>
+                    <xs:documentation>parameter dimethoate</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="dimethomorph-E">
+                <xs:annotation>
+                    <xs:documentation>parameter dimethomorph-E</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="dimethomorph-Z">
+                <xs:annotation>
+                    <xs:documentation>parameter dimethomorph-Z</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="disulfoton">
+                <xs:annotation>
+                    <xs:documentation>parameter disulfoton</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="endosulfan_I">
+                <xs:annotation>
+                    <xs:documentation>parameter endosulfan_I</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="endosulfan_II">
+                <xs:annotation>
+                    <xs:documentation>parameter endosulfan_II</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="endosulfan_sulfaat">
+                <xs:annotation>
+                    <xs:documentation>parameter endosulfan_sulfaat</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="EpiChlo">
+                <xs:annotation>
+                    <xs:documentation>parameter EpiChlo</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="epoxiconazole">
+                <xs:annotation>
+                    <xs:documentation>parameter epoxiconazole</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ethoprofos">
+                <xs:annotation>
+                    <xs:documentation>parameter ethoprofos</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="etrimfos">
+                <xs:annotation>
+                    <xs:documentation>parameter etrimfos</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="fenantreen">
+                <xs:annotation>
+                    <xs:documentation>parameter fenantreen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="fenitrothion">
+                <xs:annotation>
+                    <xs:documentation>parameter fenitrothion</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="fenthion">
+                <xs:annotation>
+                    <xs:documentation>parameter fenthion</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="FENURON">
+                <xs:annotation>
+                    <xs:documentation>parameter FENURON</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="fluopicolide">
+                <xs:annotation>
+                    <xs:documentation>parameter fluopicolide</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="flusilasole">
+                <xs:annotation>
+                    <xs:documentation>parameter flusilasole</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="flutolanil">
+                <xs:annotation>
+                    <xs:documentation>parameter flutolanil</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="flutriafol">
+                <xs:annotation>
+                    <xs:documentation>parameter flutriafol</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="fonofos">
+                <xs:annotation>
+                    <xs:documentation>parameter fonofos</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="heptenofos">
+                <xs:annotation>
+                    <xs:documentation>parameter heptenofos</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="hexachloorbutadieen">
+                <xs:annotation>
+                    <xs:documentation>parameter hexachloorbutadieen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Imida">
+                <xs:annotation>
+                    <xs:documentation>parameter Imida</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="iP_T">
+                <xs:annotation>
+                    <xs:documentation>parameter iP_T</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="iPB">
+                <xs:annotation>
+                    <xs:documentation>parameter iPB</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="iprodione">
+                <xs:annotation>
+                    <xs:documentation>parameter iprodione</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="lambda-cyhalothrin-B">
+                <xs:annotation>
+                    <xs:documentation>parameter lambda-cyhalothrin-B</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="lenacil">
+                <xs:annotation>
+                    <xs:documentation>parameter lenacil</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="m_DCB">
+                <xs:annotation>
+                    <xs:documentation>parameter m_DCB</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="malathion">
+                <xs:annotation>
+                    <xs:documentation>parameter malathion</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="medesfenylchloridaz">
+                <xs:annotation>
+                    <xs:documentation>parameter medesfenylchloridaz</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Mesotri">
+                <xs:annotation>
+                    <xs:documentation>parameter Mesotri</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="meta11">
+                <xs:annotation>
+                    <xs:documentation>parameter meta11</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="meta9">
+                <xs:annotation>
+                    <xs:documentation>parameter meta9</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="METABENZ">
+                <xs:annotation>
+                    <xs:documentation>parameter METABENZ</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="metalaxyl">
+                <xs:annotation>
+                    <xs:documentation>parameter metalaxyl</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="methidathion">
+                <xs:annotation>
+                    <xs:documentation>parameter methidathion</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="metola-ESA">
+                <xs:annotation>
+                    <xs:documentation>parameter metola-ESA</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="metola-OA">
+                <xs:annotation>
+                    <xs:documentation>parameter metola-OA</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="metoxychlor">
+                <xs:annotation>
+                    <xs:documentation>parameter metoxychlor</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="metribuzin">
+                <xs:annotation>
+                    <xs:documentation>parameter metribuzin</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="mevinphos">
+                <xs:annotation>
+                    <xs:documentation>parameter mevinphos</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="mp_x">
+                <xs:annotation>
+                    <xs:documentation>parameter mp_x</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="nB_B">
+                <xs:annotation>
+                    <xs:documentation>parameter nB_B</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="nP_B">
+                <xs:annotation>
+                    <xs:documentation>parameter nP_B</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="o_ClT">
+                <xs:annotation>
+                    <xs:documentation>parameter o_ClT</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="o_DCB">
+                <xs:annotation>
+                    <xs:documentation>parameter o_DCB</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="o_X">
+                <xs:annotation>
+                    <xs:documentation>parameter o_X</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="op_DDD">
+                <xs:annotation>
+                    <xs:documentation>parameter op_DDD</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="op_DDE">
+                <xs:annotation>
+                    <xs:documentation>parameter op_DDE</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="op_DDT">
+                <xs:annotation>
+                    <xs:documentation>parameter op_DDT</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="p_ClT">
+                <xs:annotation>
+                    <xs:documentation>parameter p_ClT</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="p_DCB">
+                <xs:annotation>
+                    <xs:documentation>parameter p_DCB</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="parathion-ethyl">
+                <xs:annotation>
+                    <xs:documentation>parameter parathion-ethyl</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="parathion-methyl">
+                <xs:annotation>
+                    <xs:documentation>parameter parathion-methyl</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="pendimethalin">
+                <xs:annotation>
+                    <xs:documentation>parameter pendimethalin</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="pirimicarb">
+                <xs:annotation>
+                    <xs:documentation>parameter pirimicarb</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="pirimiphos-methyl">
+                <xs:annotation>
+                    <xs:documentation>parameter pirimiphos-methyl</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="pp_DDD">
+                <xs:annotation>
+                    <xs:documentation>parameter pp_DDD</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="pp_DDE">
+                <xs:annotation>
+                    <xs:documentation>parameter pp_DDE</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="pp_DDT">
+                <xs:annotation>
+                    <xs:documentation>parameter pp_DDT</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="propham">
+                <xs:annotation>
+                    <xs:documentation>parameter propham</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="prosulfocarb">
+                <xs:annotation>
+                    <xs:documentation>parameter prosulfocarb</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="pyrimethanil">
+                <xs:annotation>
+                    <xs:documentation>parameter pyrimethanil</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="quintozene">
+                <xs:annotation>
+                    <xs:documentation>parameter quintozene</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="sB_B">
+                <xs:annotation>
+                    <xs:documentation>parameter sB_B</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="StartTemperatuur">
+                <xs:annotation>
+                    <xs:documentation>parameter StartTemperatuur</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="t_chlordaan">
+                <xs:annotation>
+                    <xs:documentation>parameter t_chlordaan</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="t_heptachloorepoxide">
+                <xs:annotation>
+                    <xs:documentation>parameter t_heptachloorepoxide</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="tB_B">
+                <xs:annotation>
+                    <xs:documentation>parameter tB_B</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="tebuconazole">
+                <xs:annotation>
+                    <xs:documentation>parameter tebuconazole</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Tecnazene">
+                <xs:annotation>
+                    <xs:documentation>parameter Tecnazene</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="telodrin">
+                <xs:annotation>
+                    <xs:documentation>parameter telodrin</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TempTP-Geleidbaarh">
+                <xs:annotation>
+                    <xs:documentation>parameter TempTP-Geleidbaarh</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TempTP-O2">
+                <xs:annotation>
+                    <xs:documentation>parameter TempTP-O2</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TempTP-pH">
+                <xs:annotation>
+                    <xs:documentation>parameter TempTP-pH</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="terbufos">
+                <xs:annotation>
+                    <xs:documentation>parameter terbufos</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="tolchlophos-methyl">
+                <xs:annotation>
+                    <xs:documentation>parameter tolchlophos-methyl</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="tri en tetra">
+                <xs:annotation>
+                    <xs:documentation>parameter tri en tetra</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Triflox">
+                <xs:annotation>
+                    <xs:documentation>parameter Triflox</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="trifluralin">
+                <xs:annotation>
+                    <xs:documentation>parameter trifluralin</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

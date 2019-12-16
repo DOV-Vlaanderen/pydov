@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 """Module containing the DOV data type for boreholes (Boring), including
 subtypes."""
-
+from pydov.types.fields import (
+    XmlField,
+    WfsField,
+)
 from .abstract import (
     AbstractDovType,
     AbstractDovSubType,
@@ -10,108 +13,61 @@ from .abstract import (
 
 class BoorMethode(AbstractDovSubType):
 
-    _name = 'boormethode'
-    _rootpath = './/boring/details/boormethode'
+    rootpath = './/boring/details/boormethode'
 
-    _fields = [{
-        'name': 'diepte_methode_van',
-        'source': 'xml',
-        'sourcefield': '/van',
-        'definition': 'Bovenkant van de laag die met een bepaalde '
-                      'methode aangeboord werd, in meter.',
-        'type': 'float',
-        'notnull': False
-    }, {
-        'name': 'diepte_methode_tot',
-        'source': 'xml',
-        'sourcefield': '/tot',
-        'definition': 'Onderkant van de laag die met een bepaalde '
-                      'methode aangeboord werd, in meter.',
-        'type': 'float',
-        'notnull': False
-    }, {
-        'name': 'boormethode',
-        'source': 'xml',
-        'sourcefield': '/methode',
-        'definition': 'Boormethode voor het diepte-interval.',
-        'type': 'string',
-        'notnull': False
-    }]
+    fields = [
+        XmlField(name='diepte_methode_van',
+                 source_xpath='/van',
+                 definition='Bovenkant van de laag die met een bepaalde '
+                            'methode aangeboord werd, in meter.',
+                 datatype='float'),
+        XmlField(name='diepte_methode_tot',
+                 source_xpath='/tot',
+                 definition='Onderkant van de laag die met een bepaalde '
+                            'methode aangeboord werd, in meter.',
+                 datatype='float'),
+        XmlField(name='boormethode',
+                 source_xpath='/methode',
+                 definition='Boormethode voor het diepte-interval.',
+                 datatype='string')
+    ]
 
 
 class Boring(AbstractDovType):
     """Class representing the DOV data type for boreholes."""
 
-    _subtypes = [BoorMethode]
+    subtypes = [BoorMethode]
 
-    _fields = [{
-        'name': 'pkey_boring',
-        'source': 'wfs',
-        'sourcefield': 'fiche',
-        'type': 'string'
-    }, {
-        'name': 'boornummer',
-        'source': 'wfs',
-        'sourcefield': 'boornummer',
-        'type': 'string'
-    }, {
-        'name': 'x',
-        'source': 'wfs',
-        'sourcefield': 'X_mL72',
-        'type': 'float'
-    }, {
-        'name': 'y',
-        'source': 'wfs',
-        'sourcefield': 'Y_mL72',
-        'type': 'float'
-    }, {
-        'name': 'mv_mtaw',
-        'source': 'xml',
-        'sourcefield': '/boring/oorspronkelijk_maaiveld/waarde',
-        'definition': 'Maaiveldhoogte in mTAW op dag dat de boring '
-                      'uitgevoerd werd.',
-        'type': 'float',
-        'notnull': False
-    }, {
-        'name': 'start_boring_mtaw',
-        'source': 'wfs',
-        'sourcefield': 'Z_mTAW',
-        'type': 'float'
-    }, {
-        'name': 'gemeente',
-        'source': 'wfs',
-        'sourcefield': 'gemeente',
-        'type': 'string'
-    }, {
-        'name': 'diepte_boring_van',
-        'source': 'xml',
-        'sourcefield': '/boring/diepte_van',
-        'definition': 'Startdiepte van de boring (in meter).',
-        'type': 'float',
-        'notnull': True
-    }, {
-        'name': 'diepte_boring_tot',
-        'source': 'wfs',
-        'sourcefield': 'diepte_tot_m',
-        'type': 'float'
-    }, {
-        'name': 'datum_aanvang',
-        'source': 'wfs',
-        'sourcefield': 'datum_aanvang',
-        'type': 'date'
-    }, {
-        'name': 'uitvoerder',
-        'source': 'wfs',
-        'sourcefield': 'uitvoerder',
-        'type': 'string'
-    }, {
-        'name': 'boorgatmeting',
-        'source': 'xml',
-        'sourcefield': '/boring/boorgatmeting/uitgevoerd',
-        'definition': 'Is er een boorgatmeting uitgevoerd (ja/nee).',
-        'type': 'boolean',
-        'notnull': False
-    }]
+    fields = [
+        WfsField(name='pkey_boring', source_field='fiche', datatype='string'),
+        WfsField(name='boornummer', source_field='boornummer',
+                 datatype='string'),
+        WfsField(name='x', source_field='X_mL72', datatype='float'),
+        WfsField(name='y', source_field='Y_mL72', datatype='float'),
+        XmlField(name='mv_mtaw',
+                 source_xpath='/boring/oorspronkelijk_maaiveld/waarde',
+                 definition='Maaiveldhoogte in mTAW op dag dat de boring '
+                            'uitgevoerd werd.',
+                 datatype='float'),
+        WfsField(name='start_boring_mtaw', source_field='Z_mTAW',
+                 datatype='float'),
+        WfsField(name='gemeente', source_field='gemeente', datatype='string'),
+        XmlField(name='diepte_boring_van',
+                 source_xpath='/boring/diepte_van',
+                 definition='Startdiepte van de boring (in meter).',
+                 datatype='float',
+                 notnull=True),
+        WfsField(name='diepte_boring_tot', source_field='diepte_tot_m',
+                 datatype='float'),
+        WfsField(name='datum_aanvang', source_field='datum_aanvang',
+                 datatype='date'),
+        WfsField(name='uitvoerder', source_field='uitvoerder',
+                 datatype='string'),
+        XmlField(name='boorgatmeting',
+                 source_xpath='/boring/boorgatmeting/uitgevoerd',
+                 definition='Is er een boorgatmeting uitgevoerd (ja/nee).',
+                 datatype='boolean')
+    ]
 
     def __init__(self, pkey):
         """Initialisation.
@@ -143,7 +99,7 @@ class Boring(AbstractDovType):
             element.
 
         """
-        b = Boring(feature.findtext('./{{{}}}fiche'.format(namespace)))
+        b = cls(feature.findtext('./{{{}}}fiche'.format(namespace)))
 
         for field in cls.get_fields(source=('wfs',)).values():
             b.data[field['name']] = cls._parse(

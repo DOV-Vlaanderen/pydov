@@ -1,8 +1,8 @@
 .. _object_types:
 
-=======================
-Output data description
-=======================
+=========================
+# Output data description
+=========================
 
 .. warning::
 

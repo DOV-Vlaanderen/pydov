@@ -4,7 +4,7 @@ API reference
 Search classes
 --------------
 
-.. .. automodule:: pydov.search.abstract
+.. automodule:: pydov.search.abstract
     :members:
 
 Boring
@@ -25,16 +25,28 @@ Grondwaterfilter
 .. automodule:: pydov.search.grondwaterfilter
     :members:
 
+Grondwatermonster
+*****************
+
+.. automodule:: pydov.search.grondwatermonster
+    :members:
+
 Interpretaties
 **************
 
 .. automodule:: pydov.search.interpretaties
     :members:
 
+Grondmonster
+************
+
+.. automodule:: pydov.search.grondmonster
+    :members:
+
 Object types
 ------------
 
-.. .. automodule:: pydov.types.abstract
+.. automodule:: pydov.types.abstract
     :members:
 
 Boring
@@ -58,12 +70,34 @@ Grondwaterfilter
     :members:
     :show-inheritance:
 
+Grondwatermonster
+*****************
+
+.. automodule:: pydov.types.grondwatermonster
+    :members:
+    :show-inheritance:
+
 Interpretaties
 **************
 
 .. automodule:: pydov.types.interpretaties
     :members:
     :show-inheritance:
+
+Grondmonster
+************
+
+.. automodule:: pydov.types.grondmonster
+    :members:
+    :show-inheritance:
+
+Fields
+------
+
+.. automodule:: pydov.types.fields
+    :members:
+    :show-inheritance:
+
 
 Search utilities
 ----------------

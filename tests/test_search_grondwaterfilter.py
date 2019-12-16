@@ -80,6 +80,17 @@ class TestGrondwaterfilterSearch(AbstractTestSearch):
         """
         return 'onbestaand'
 
+    def get_wfs_field(self):
+        """Get the name of a WFS field.
+
+        Returns
+        -------
+        str
+            The name of the WFS field.
+
+        """
+        return 'filternummer'
+
     def get_xml_field(self):
         """Get the name of a field defined in XML only.
 
@@ -138,7 +149,8 @@ class TestGrondwaterfilterSearch(AbstractTestSearch):
 
         """
         return ['pkey_filter', 'pkey_grondwaterlocatie', 'gw_id',
-                'filternummer', 'filtertype', 'x', 'y', 'mv_mtaw',
+                'filternummer', 'filtertype', 'x', 'y',
+                'start_grondwaterlocatie_mtaw',
                 'gemeente', 'meetnet_code', 'aquifer_code',
                 'grondwaterlichaam_code', 'regime',
                 'diepte_onderkant_filter', 'lengte_filter',

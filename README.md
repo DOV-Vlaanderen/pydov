@@ -8,6 +8,34 @@ To get started, see the documentation at https://pydov.readthedocs.io.
 
 Please note that downloading DOV data with pydov is governed by the same [disclaimer](https://www.dov.vlaanderen.be/page/disclaimer) that applies to the other DOV services. Be sure to consult it when using DOV data with pydov.
 
+## Installation
+
+You can install `pydov` stable easily using pip:
+
+```shell script
+pip install pydov
+```
+
+Or clone the Git repository and install with `setup.py` to get the latest snapshot from the master branch.
+
+## Quick start
+
+Read the [quick start](https://pydov.readthedocs.io/en/stable/quickstart.html) from the docs or jump straight in:
+
+```python
+from pydov.search.boring import BoringSearch
+from pydov.util.location import Within, Box
+
+from owslib.fes import PropertyIsGreaterThan
+
+boringsearch = BoringSearch()
+
+dataframe = boringsearch.search(
+    query=PropertyIsGreaterThan( propertyname='diepte_tot_m', literal='2000'),
+    location=Within(Box(94720, 186910, 112220, 202870))
+)
+```
+
 ## Meta
 
 - We welcome [contributions](.github/CONTRIBUTING.rst) including bug reports.

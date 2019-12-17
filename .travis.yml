@@ -31,6 +31,10 @@ matrix:
   - python: 3.7
     env: TOXENV=py37-lxml
   - python: 3.7
+    env: TOXENV=update-oefen
+  - python: 3.7
+    env: TOXENV=update-productie
+  - python: 3.7
     env: TOXENV=docs
   - env: TOXENV=flake8
 script: tox

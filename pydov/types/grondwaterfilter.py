@@ -6,13 +6,14 @@ from pydov.types.fields import (
     XsdType,
     WfsField,
 )
+from pydov.util.dovutil import build_dov_url
 from .abstract import (
     AbstractDovType,
     AbstractDovSubType,
 )
 
-_filterDataCodes_xsd = 'https://www.dov.vlaanderen.be/xdov/schema/' \
-                       'latest/xsd/kern/gwmeetnet/FilterDataCodes.xsd'
+_filterDataCodes_xsd = build_dov_url(
+    'xdov/schema/latest/xsd/kern/gwmeetnet/FilterDataCodes.xsd')
 
 
 class Peilmeting(AbstractDovSubType):
@@ -87,7 +88,7 @@ class GrondwaterFilter(AbstractDovType):
         XmlField(name='meetnet_code',
                  source_xpath='/filter/meetnet',
                  definition='Tot welk meetnet behoort deze filter.',
-                 datatype='integer',
+                 datatype='string',
                  xsd_type=XsdType(
                      xsd_schema=_filterDataCodes_xsd,
                      typename='MeetnetEnumType')),
@@ -97,9 +98,9 @@ class GrondwaterFilter(AbstractDovType):
                             '(code).',
                  datatype='string',
                  xsd_type=XsdType(
-                     xsd_schema='https://www.dov.vlaanderen.be/xdov/schema/'
-                                'latest/xsd/kern/interpretatie/'
-                                'HydrogeologischeStratigrafieDataCodes.xsd',
+                     xsd_schema=build_dov_url(
+                         'xdov/schema/latest/xsd/kern/interpretatie/'
+                         'HydrogeologischeStratigrafieDataCodes.xsd'),
                      typename='AquiferEnumType')),
         XmlField(name='grondwaterlichaam_code',
                  source_xpath='/filter/ligging/grondwaterlichaam',

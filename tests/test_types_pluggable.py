@@ -7,6 +7,7 @@ from pydov.types.abstract import (
 )
 from pydov.types.fields import XmlField
 from pydov.types.grondwaterfilter import GrondwaterFilter
+from pydov.util.dovutil import build_dov_url
 
 from tests.test_search import (
     mp_wfs,
@@ -123,8 +124,7 @@ class TestMyWrongGrondwaterFilter(object):
         with pytest.raises(RuntimeError):
             fs.search(query=PropertyIsEqualTo(
                 propertyname='filterfiche',
-                literal='https://www.dov.vlaanderen.be/data/'
-                        'filter/2003-004471'))
+                literal=build_dov_url('data/filter/2003-004471')))
 
 
 class TestMyGrondwaterFilter(object):
@@ -169,7 +169,7 @@ class TestMyGrondwaterFilter(object):
 
         df = fs.search(query=PropertyIsEqualTo(
             propertyname='filterfiche',
-            literal='https://www.dov.vlaanderen.be/data/filter/2003-004471'))
+            literal=build_dov_url('data/filter/2003-004471')))
 
         assert 'grondwatersysteem' in df
         assert df.iloc[0].grondwatersysteem == 'Centraal Vlaams Systeem'
@@ -223,7 +223,7 @@ class TestMyGrondwaterFilterOpbouw(object):
 
         df = fs.search(query=PropertyIsEqualTo(
             propertyname='filterfiche',
-            literal='https://www.dov.vlaanderen.be/data/filter/2003-004471'))
+            literal=build_dov_url('data/filter/2003-004471')))
 
         assert 'opbouw_van' in df
         assert 'opbouw_tot' in df

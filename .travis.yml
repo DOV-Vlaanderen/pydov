@@ -4,6 +4,13 @@ env:
   global:
   - COVERALLS_PARALLEL=true
 notifications:
+  email:
+    recipients:
+      - zabbix.dov@gmail.com
+      - roel@huybrechts.re
+    on_success: change
+    on_failure: always
+    on_error: always
   webhooks: https://coveralls.io/webhook
 install:
 - pip install -U tox-travis

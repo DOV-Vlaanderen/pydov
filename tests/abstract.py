@@ -9,10 +9,6 @@ from collections import OrderedDict
 import pandas as pd
 import pytest
 import requests
-from numpy.compat import (
-    unicode,
-    long,
-)
 from pandas import DataFrame
 from pandas.api.types import (
     is_int64_dtype, is_object_dtype,
@@ -245,20 +241,20 @@ class AbstractTestSearch(object):
         assert type(fields) is dict
 
         for field in fields:
-            assert type(field) in (str, unicode)
+            assert type(field) is str
 
             f = fields[field]
             assert type(f) is dict
 
             assert 'name' in f
-            assert type(f['name']) in (str, unicode)
+            assert type(f['name']) is str
             assert f['name'] == field
 
             assert 'definition' in f
-            assert type(f['name']) in (str, unicode)
+            assert type(f['name']) is str
 
             assert 'type' in f
-            assert type(f['type']) in (str, unicode)
+            assert type(f['type']) is str
             assert f['type'] in ['string', 'float', 'integer', 'date',
                                  'datetime', 'boolean']
 
@@ -280,11 +276,11 @@ class AbstractTestSearch(object):
                 assert type(f['values']) is dict
 
                 for v in f['values'].keys():
-                    assert type(f['values'][v]) in (str, unicode) or f[
+                    assert type(f['values'][v]) is str or f[
                         'values'][v] is None
 
                     if f['type'] == 'string':
-                        assert type(v) in (str, unicode)
+                        assert type(v) is str
                     elif f['type'] == 'float':
                         assert type(v) is float
                     elif f['type'] == 'integer':
@@ -376,12 +372,11 @@ class AbstractTestSearch(object):
 
             if len(datatypes) > 0:
                 if field_datatype == 'string':
-                    assert (str in datatypes or unicode in datatypes)
+                    assert (str in datatypes)
                 elif field_datatype == 'float':
                     assert float in datatypes
                 elif field_datatype == 'integer':
-                    # in Python2 Panda's int64 dtype is translated into 'long'
-                    assert (int in datatypes or long in datatypes)
+                    assert (int in datatypes)
                 elif field_datatype == 'date':
                     assert datetime.date in datatypes
                 elif field_datatype == 'boolean':
@@ -899,24 +894,24 @@ class AbstractTestTypes(object):
         assert isinstance(fields, OrderedDict)
 
         for f in fields.keys():
-            assert type(f) in (str, unicode)
+            assert type(f) is str
 
             field = fields[f]
             assert isinstance(field, AbstractField)
 
             assert 'name' in field
-            assert type(field['name']) in (str, unicode)
+            assert type(field['name']) is str
             assert field['name'] == f
 
             assert 'source' in field
-            assert type(field['source']) in (str, unicode)
+            assert type(field['source']) is str
             assert field['source'] in ('wfs', 'xml')
 
             assert 'sourcefield' in field
-            assert type(field['sourcefield']) in (str, unicode)
+            assert type(field['sourcefield']) is str
 
             assert 'type' in field
-            assert type(field['type']) in (str, unicode)
+            assert type(field['type']) is str
             assert field['type'] in ['string', 'float', 'integer', 'date',
                                      'datetime', 'boolean']
 
@@ -930,7 +925,7 @@ class AbstractTestTypes(object):
                         'name', 'source', 'sourcefield', 'type']
             elif field['source'] == 'xml':
                 assert 'definition' in field
-                assert type(field['definition']) in (str, unicode)
+                assert type(field['definition']) is str
 
                 assert 'notnull' in field
                 assert type(field['notnull']) is bool
@@ -1009,7 +1004,7 @@ class AbstractTestTypes(object):
 
             for value, field in zip(record, fields):
                 if field['type'] == 'string':
-                    assert type(value) in (str, unicode) or np.isnan(value)
+                    assert type(value) is str or np.isnan(value)
                 elif field['type'] == 'float':
                     assert type(value) is float or np.isnan(value)
                 elif field['type'] == 'integer':

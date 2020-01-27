@@ -125,21 +125,12 @@ def get_remote_metadata(contentmetadata):
         If the `contentmetadata` has no valid metadata URL associated with it.
 
     """
-    md_url = None
-    for md in contentmetadata.metadataUrls:
-        if md.get('url', None) is not None \
-                and 'getrecordbyid' in md.get('url', "").lower():
-            md_url = md.get('url')
+    contentmetadata.parse_remote_metadata(pydov.request_timeout)
+    for remote_md in contentmetadata.metadataUrls:
+        if 'metadata' in remote_md:
+            return remote_md['metadata']
 
-    if md_url is None:
-        raise MetadataNotFoundError
-
-    content = __get_remote_md(md_url)
-    doc = etree.fromstring(content)
-
-    with warnings.catch_warnings():
-        warnings.filterwarnings("ignore", category=FutureWarning)
-        return MD_Metadata(doc)
+    raise MetadataNotFoundError
 
 
 def get_csw_base_url(contentmetadata):
@@ -197,20 +188,18 @@ def get_featurecatalogue_uuid(md_metadata):
         UUID could not be retrieved.
 
     """
-    tree = etree.fromstring(md_metadata.xml)
+    fc_uuid = None
 
-    citation = tree.find(nspath_eval(
-        'gmd:MD_Metadata/gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/'
-        'gmd:featureCatalogueCitation', __namespaces))
+    contentinfo = md_metadata.contentinfo[0] if \
+        len(md_metadata.contentinfo) > 0 else None
+    if contentinfo is not None:
+        fc_uuid = contentinfo.featurecatalogues[0] if \
+            len(contentinfo.featurecatalogues) > 0 else None
 
-    if citation is None:
+    if fc_uuid is None:
         raise FeatureCatalogueNotFoundError
-
-    uuid = citation.attrib.get('uuidref', None)
-    if uuid is None:
-        raise FeatureCatalogueNotFoundError
-
-    return uuid
+    else:
+        return fc_uuid
 
 
 def get_remote_featurecatalogue(csw_url, fc_uuid):

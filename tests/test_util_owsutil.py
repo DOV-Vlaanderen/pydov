@@ -108,11 +108,10 @@ class TestOwsutil(object):
 
         """
         tree = etree.fromstring(md_metadata.xml)
-        root = tree.find('{http://www.isotc211.org/2005/gmd}MD_Metadata')
         for ci in tree.findall(
                 './/{http://www.isotc211.org/2005/gmd}contentInfo'):
-            root.remove(ci)
-        md_metadata.xml = etree.tostring(tree)
+            tree.remove(ci)
+        md_metadata = MD_Metadata(tree)
 
         with pytest.raises(FeatureCatalogueNotFoundError):
             owsutil.get_featurecatalogue_uuid(md_metadata)
@@ -132,12 +131,12 @@ class TestOwsutil(object):
         """
         tree = etree.fromstring(md_metadata.xml)
         for ci in tree.findall(nspath_eval(
-            'gmd:MD_Metadata/gmd:contentInfo/'
+            'gmd:contentInfo/'
             'gmd:MD_FeatureCatalogueDescription/'
             'gmd:featureCatalogueCitation',
             {'gmd': 'http://www.isotc211.org/2005/gmd'})):
             ci.attrib.pop('uuidref')
-        md_metadata.xml = etree.tostring(tree)
+        md_metadata = MD_Metadata(tree)
 
         with pytest.raises(FeatureCatalogueNotFoundError):
             owsutil.get_featurecatalogue_uuid(md_metadata)

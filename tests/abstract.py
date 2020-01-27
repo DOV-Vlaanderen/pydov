@@ -25,6 +25,7 @@ from owslib.fes import (
 )
 from owslib.etree import etree
 from pydov.types.abstract import AbstractField
+from pydov.util.dovutil import build_dov_url
 from pydov.util.errors import InvalidFieldError
 from pydov.util.location import (
     Within,
@@ -63,8 +64,8 @@ def service_ok(timeout=5):
             ok = False
         return ok
 
-    return check_url('https://www.dov.vlaanderen.be/geoserver', timeout) and\
-        check_url('https://www.dov.vlaanderen.be/geonetwork', timeout)
+    return check_url(build_dov_url('geoserver'), timeout) and\
+        check_url(build_dov_url('geonetwork'), timeout)
 
 
 def clean_xml(xml):
@@ -973,8 +974,7 @@ class AbstractTestTypes(object):
         assert feature.pkey.startswith(self.get_pkey_base())
 
         assert feature.pkey.startswith(
-            'https://www.dov.vlaanderen.be/data/%s/' %
-            feature.typename)
+            build_dov_url('data/{}/'.format(feature.typename)))
 
         assert type(feature.data) is dict
         assert type(feature.subdata) is dict
@@ -1020,8 +1020,7 @@ class AbstractTestTypes(object):
                     assert type(value) is bool or np.isnan(value)
 
                 if field['name'].startswith('pkey') and not pd.isnull(value):
-                    assert value.startswith(
-                        'https://www.dov.vlaanderen.be/data/')
+                    assert value.startswith(build_dov_url('data/'))
                     assert not value.endswith('.xml')
 
     def test_get_df_array_wrongreturnfields(self, wfs_feature):

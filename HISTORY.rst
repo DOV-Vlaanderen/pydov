@@ -4,6 +4,30 @@
 History
 =======
 
+v1.0.0
+------
+
+* News
+
+  * This version is promoted to Stable.
+
+  * This version is the last to support Python 2.7.
+
+* Fixes and improvements
+
+  * Fix the PropertyInList and Join query operators.
+
+  * Increase the default request timeout to 5 minutes to enable larger WFS queries.
+
+  * Retype the `meetnet_code` field of GrondwaterFilter from integer to string.
+
+  * Pin the dependencies to keep explicit Python2 support.
+
+* Development-only updates
+
+  * Make the DOV base URL configurable to be able to test against the DOV testing environment.
+
+
 v0.3.0
 ------
 

@@ -5,7 +5,7 @@ import pydov.util.caching
 from pydov.util.hooks import SimpleStatusHook
 
 __author__ = """DOV-Vlaanderen"""
-__version__ = '0.3.0'
+__version__ = '1.0.0'
 
 cache = pydov.util.caching.GzipTextFileCache()
 

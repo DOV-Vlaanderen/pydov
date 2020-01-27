@@ -1,5 +1,6 @@
 """Module grouping tests for the pydov.types.boring module."""
 from pydov.types.grondwaterfilter import GrondwaterFilter
+from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes
 
 from tests.test_search_grondwaterfilter import (
@@ -47,7 +48,7 @@ class TestGrondwaterFilter(AbstractTestTypes):
             "https://www.dov.vlaanderen.be/data/boring/"
 
         """
-        return 'https://www.dov.vlaanderen.be/data/filter/'
+        return build_dov_url('data/filter/')
 
     def get_field_names(self):
         """Get the field names for this type as listed in the documentation in

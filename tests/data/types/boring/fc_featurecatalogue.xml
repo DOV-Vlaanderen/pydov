@@ -1,87 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <csw:GetRecordByIdResponse xmlns:csw="http://www.opengis.net/cat/csw/2.0.2">
-  <gfc:FC_FeatureCatalogue xmlns:gfc="http://www.isotc211.org/2005/gfc" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:geonet="http://www.fao.org/geonetwork" uuid="c0cbd397-520f-4ee1-aca7-d70e271eeed6" xsi:schemaLocation="http://www.isotc211.org/2005/gfc http://www.isotc211.org/2005/gfc/gfc.xsd">
-    <gmx:name>
-      <gco:CharacterString>Boringen (objectencatalogus)</gco:CharacterString>
+  <gfc:FC_FeatureCatalogue xmlns:gfc="http://www.isotc211.org/2005/gfc" xmlns:geonet="http://www.fao.org/geonetwork" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="c0cbd397-520f-4ee1-aca7-d70e271eeed6" xsi:schemaLocation="http://www.isotc211.org/2005/gfc http://www.isotc211.org/2005/gfc/gfc.xsd">
+    <gmx:name xmlns:gmx="http://www.isotc211.org/2005/gmx">
+      <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Boringen (objectencatalogus)</gco:CharacterString>
     </gmx:name>
-    <gmx:scope>
-      <gco:CharacterString>geoscientificInformation</gco:CharacterString>
+    <gmx:scope xmlns:gmx="http://www.isotc211.org/2005/gmx">
+      <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">geoscientificInformation</gco:CharacterString>
     </gmx:scope>
-    <gmx:versionNumber>
-      <gco:CharacterString>1</gco:CharacterString>
+    <gmx:versionNumber xmlns:gmx="http://www.isotc211.org/2005/gmx">
+      <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">1</gco:CharacterString>
     </gmx:versionNumber>
-    <gmx:versionDate>
-      <gco:DateTime>2018-03-01T10:12:44</gco:DateTime>
+    <gmx:versionDate xmlns:gmx="http://www.isotc211.org/2005/gmx">
+      <gco:DateTime xmlns:gco="http://www.isotc211.org/2005/gco">2019-08-22T11:23:23</gco:DateTime>
     </gmx:versionDate>
     <gfc:producer>
-      <gmd:CI_ResponsibleParty>
+      <gmd:CI_ResponsibleParty xmlns:gmd="http://www.isotc211.org/2005/gmd">
         <gmd:organisationName>
-          <gco:CharacterString>Databank Ondergrond Vlaanderen (DOV)</gco:CharacterString>
+          <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Vlaamse overheid, Departement Omgeving, Vlaams Planbureau voor Omgeving (VPO)</gco:CharacterString>
         </gmd:organisationName>
         <gmd:contactInfo>
           <gmd:CI_Contact>
-            <gmd:phone>
-              <gmd:CI_Telephone>
-                <gmd:voice>
-                  <gco:CharacterString>+32 9 240 75 93</gco:CharacterString>
-                </gmd:voice>
-              </gmd:CI_Telephone>
-            </gmd:phone>
             <gmd:address>
               <gmd:CI_Address>
                 <gmd:deliveryPoint>
-                  <gco:CharacterString>Technologiepark Gebouw 905</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Koning Albert II-laan 20 bus 8</gco:CharacterString>
                 </gmd:deliveryPoint>
                 <gmd:city>
-                  <gco:CharacterString>Zwijnaarde</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Brussel</gco:CharacterString>
                 </gmd:city>
                 <gmd:postalCode>
-                  <gco:CharacterString>9052</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">1000</gco:CharacterString>
                 </gmd:postalCode>
                 <gmd:country>
-                  <gco:CharacterString>België</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">België</gco:CharacterString>
                 </gmd:country>
                 <gmd:electronicMailAddress>
-                  <gco:CharacterString>dov@vlaanderen.be</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">natuurlijkerijkdommenbrussel.omgeving@vlaanderen.be</gco:CharacterString>
                 </gmd:electronicMailAddress>
               </gmd:CI_Address>
             </gmd:address>
             <gmd:onlineResource>
               <gmd:CI_OnlineResource>
                 <gmd:linkage>
-                  <gmd:URL>https://www.dov.vlaanderen.be</gmd:URL>
+                  <gmd:URL>https://www.omgevingvlaanderen.be</gmd:URL>
                 </gmd:linkage>
               </gmd:CI_OnlineResource>
             </gmd:onlineResource>
           </gmd:CI_Contact>
         </gmd:contactInfo>
         <gmd:role>
-          <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_RoleCode" codeListValue="distributor" />
+          <gmd:CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode" codeListValue="pointOfContact">pointOfContact</gmd:CI_RoleCode>
         </gmd:role>
       </gmd:CI_ResponsibleParty>
     </gfc:producer>
     <gfc:featureType>
-      <gfc:FC_FeatureType uuid="generate-uniq-5508-4b5d-ac0e86394c4e" id="ID1">
+      <gfc:FC_FeatureType>
         <gfc:typeName>
-          <gco:LocalName>BoringenType</gco:LocalName>
+          <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">BoringenType</gco:LocalName>
         </gfc:typeName>
         <gfc:definition>
-          <gco:CharacterString>In de DOV-databank is elke waarneming van grondlagen een boring. Bij de meeste boringen wordt er met een boortoestel een gat gemaakt in de ondergrond om de verschillende grondlagen te kunnen beschrijven. Aan de hand van een boring krijg je een beeld van het materiaal in de ondergrond met toenemende diepte. Afhankelijk van het doel waarvoor de boring geplaatst wordt, zal men een geschikte boormethode toepassen. Boringen worden geplaatst voor verkennend bodemonderzoek, monstername van het sediment en/of grondwater, bepaling van bodemfysische parameters, milieuhygiënisch onderzoek,… Afhankelijk van de diepte, soort materiaal, en het al dan niet boren tot onder de grondwatertafel kan men kiezen uit verscheidene systemen voor handmatig of machinaal te boren. Het bodemmateriaal dat vrijkomt, kan gebruikt worden om een profiel van de ondergrond op te stellen of om er grondmonsters van te nemen om verdere analyses op uit te voeren. Vaak is het de bedoeling een put uit te bouwen zodat water kan gewonnen worden (zie ook grondwatermeetnet en grondwatervergunningen). Soms worden boringen uitgevoerd om een aantal geotechnische karakteristieken te bepalen of om wetenschappelijk onderzoek uit te voeren. Oppervlakkige waarnemingen van de ondergrond noemen we ook boringen. Vooral rond 1900 beschreven een aantal geologen vaak de oppervlakkige lagen. In de databank staan er dan ook verschillende boringen met een diepte van 0 meter. Het gaat vooral om weginsnijdingen of om zichtbare lithologische kenmerken langs de oppervlakte.</gco:CharacterString>
+          <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">In de DOV-databank is elke waarneming van grondlagen een boring. Bij de meeste boringen wordt er met een boortoestel een gat gemaakt in de ondergrond om de verschillende grondlagen te kunnen beschrijven. Aan de hand van een boring krijg je een beeld van het materiaal in de ondergrond met toenemende diepte. Afhankelijk van het doel waarvoor de boring geplaatst wordt, zal men een geschikte boormethode toepassen. Boringen worden geplaatst voor verkennend bodemonderzoek, monstername van het sediment en/of grondwater, bepaling van bodemfysische parameters, milieuhygiënisch onderzoek,… Afhankelijk van de diepte, soort materiaal, en het al dan niet boren tot onder de grondwatertafel kan men kiezen uit verscheidene systemen voor handmatig of machinaal te boren. Het bodemmateriaal dat vrijkomt, kan gebruikt worden om een profiel van de ondergrond op te stellen of om er grondmonsters van te nemen om verdere analyses op uit te voeren. Vaak is het de bedoeling een put uit te bouwen zodat water kan gewonnen worden (zie ook grondwatermeetnet en grondwatervergunningen). Soms worden boringen uitgevoerd om een aantal geotechnische karakteristieken te bepalen of om wetenschappelijk onderzoek uit te voeren. Oppervlakkige waarnemingen van de ondergrond noemen we ook boringen. Vooral rond 1900 beschreven een aantal geologen vaak de oppervlakkige lagen. In de databank staan er dan ook verschillende boringen met een diepte van 0 meter. Het gaat vooral om weginsnijdingen of om zichtbare lithologische kenmerken langs de oppervlakte.</gco:CharacterString>
         </gfc:definition>
         <gfc:isAbstract>
-          <gco:Boolean>false</gco:Boolean>
+          <gco:Boolean xmlns:gco="http://www.isotc211.org/2005/gco">false</gco:Boolean>
         </gfc:isAbstract>
-        <gfc:featureCatalogue uuidref="" />
+        <gfc:featureCatalogue uuidref="c0cbd397-520f-4ee1-aca7-d70e271eeed6" />
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName>generated_id</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">generated_id</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>Oplopend uniek volgnummer ter identificatie (intern en niet-stabiel).</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Oplopend uniek volgnummer ter identificatie (intern en niet-stabiel).</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
-              <gco:Multiplicity>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:range>
                   <gco:MultiplicityRange>
                     <gco:lower>
@@ -95,9 +88,9 @@
               </gco:Multiplicity>
             </gfc:cardinality>
             <gfc:valueType>
-              <gco:TypeName>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:aName>
-                  <gco:CharacterString>Getal (10,0)</gco:CharacterString>
+                  <gco:CharacterString>Number</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
@@ -106,917 +99,566 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName>id</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">id</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>Volgnummer ter identificatie (intern en niet-stabiel).</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Volgnummer ter identificatie (intern en niet-stabiel).</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
-              <gco:Multiplicity>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:range>
                   <gco:MultiplicityRange>
                     <gco:lower>
                       <gco:Integer>1</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
               </gco:Multiplicity>
             </gfc:cardinality>
-            <gfc:code>
-              <gco:CharacterString />
-            </gfc:code>
             <gfc:valueType>
-              <gco:TypeName>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:aName>
-                  <gco:CharacterString>Getal (10,0)</gco:CharacterString>
+                  <gco:CharacterString>String</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
-            <gfc:listedValue>
-              <gfc:FC_ListedValue>
-                <gfc:label>
-                  <gco:CharacterString />
-                </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
-              </gfc:FC_ListedValue>
-            </gfc:listedValue>
           </gfc:FC_FeatureAttribute>
         </gfc:carrierOfCharacteristics>
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName>boornummer</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">boornummer</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>Het boornummer (ook gekend als proefnummer) van de boring.</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Het boornummer (ook gekend als proefnummer) van de boring.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
-              <gco:Multiplicity>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:range>
                   <gco:MultiplicityRange>
                     <gco:lower>
                       <gco:Integer>1</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
               </gco:Multiplicity>
             </gfc:cardinality>
-            <gfc:code>
-              <gco:CharacterString />
-            </gfc:code>
             <gfc:valueType>
-              <gco:TypeName>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:aName>
-                  <gco:CharacterString>Tekst</gco:CharacterString>
+                  <gco:CharacterString>String</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
-            <gfc:listedValue>
-              <gfc:FC_ListedValue>
-                <gfc:label>
-                  <gco:CharacterString />
-                </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
-              </gfc:FC_ListedValue>
-            </gfc:listedValue>
           </gfc:FC_FeatureAttribute>
         </gfc:carrierOfCharacteristics>
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName>fiche</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">fiche</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>Permanente URL die verwijst naar de gegevens van de boring op de website. Voeg '.xml' toe om een XML voorstelling van deze gegevens te verkrijgen.</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Permanente URL die verwijst naar de gegevens van de boring op de website. Voeg '.xml' toe om een XML voorstelling van deze gegevens te verkrijgen.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
-              <gco:Multiplicity>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:range>
                   <gco:MultiplicityRange>
                     <gco:lower>
                       <gco:Integer>1</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
               </gco:Multiplicity>
             </gfc:cardinality>
-            <gfc:code>
-              <gco:CharacterString />
-            </gfc:code>
             <gfc:valueType>
-              <gco:TypeName>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:aName>
-                  <gco:CharacterString>Tekst</gco:CharacterString>
+                  <gco:CharacterString>String</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
-            <gfc:listedValue>
-              <gfc:FC_ListedValue>
-                <gfc:label>
-                  <gco:CharacterString />
-                </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
-              </gfc:FC_ListedValue>
-            </gfc:listedValue>
           </gfc:FC_FeatureAttribute>
         </gfc:carrierOfCharacteristics>
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName>rapport</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">rapport</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>URL die verwijst naar het rapport van de boring in PDF formaat.</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">URL die verwijst naar het rapport van de boring in PDF formaat.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
-              <gco:Multiplicity>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:range>
                   <gco:MultiplicityRange>
                     <gco:lower>
                       <gco:Integer>1</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
               </gco:Multiplicity>
             </gfc:cardinality>
-            <gfc:code>
-              <gco:CharacterString />
-            </gfc:code>
             <gfc:valueType>
-              <gco:TypeName>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:aName>
-                  <gco:CharacterString>Tekst</gco:CharacterString>
+                  <gco:CharacterString>String</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
-            <gfc:listedValue>
-              <gfc:FC_ListedValue>
-                <gfc:label>
-                  <gco:CharacterString />
-                </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
-              </gfc:FC_ListedValue>
-            </gfc:listedValue>
           </gfc:FC_FeatureAttribute>
         </gfc:carrierOfCharacteristics>
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName>diepte_tot_m</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">diepte_tot_m</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>Maximumdiepte van de boring ten opzichte van het aanvangspeil, in meter.</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Maximumdiepte van de boring ten opzichte van het aanvangspeil, in meter.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
-              <gco:Multiplicity>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:range>
                   <gco:MultiplicityRange>
                     <gco:lower>
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
               </gco:Multiplicity>
             </gfc:cardinality>
-            <gfc:code>
-              <gco:CharacterString />
-            </gfc:code>
             <gfc:valueType>
-              <gco:TypeName>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:aName>
-                  <gco:CharacterString>Getal (10,2)</gco:CharacterString>
+                  <gco:CharacterString>Number</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
-            <gfc:listedValue>
-              <gfc:FC_ListedValue>
-                <gfc:label>
-                  <gco:CharacterString />
-                </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
-              </gfc:FC_ListedValue>
-            </gfc:listedValue>
           </gfc:FC_FeatureAttribute>
         </gfc:carrierOfCharacteristics>
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName>datum_aanvang</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">datum_aanvang</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>Datum waarop men de boring gestart is.</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Datum waarop men de boring gestart is.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
-              <gco:Multiplicity>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:range>
                   <gco:MultiplicityRange>
                     <gco:lower>
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
               </gco:Multiplicity>
             </gfc:cardinality>
-            <gfc:code>
-              <gco:CharacterString />
-            </gfc:code>
             <gfc:valueType>
-              <gco:TypeName>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:aName>
-                  <gco:CharacterString>Datum</gco:CharacterString>
+                  <gco:CharacterString>Date</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
-            <gfc:listedValue>
-              <gfc:FC_ListedValue>
-                <gfc:label>
-                  <gco:CharacterString />
-                </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
-              </gfc:FC_ListedValue>
-            </gfc:listedValue>
           </gfc:FC_FeatureAttribute>
         </gfc:carrierOfCharacteristics>
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName>namen</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">namen</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>Alternatieve benamingen voor de boring.</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Alternatieve benamingen voor de boring.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
-              <gco:Multiplicity>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:range>
                   <gco:MultiplicityRange>
                     <gco:lower>
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
               </gco:Multiplicity>
             </gfc:cardinality>
-            <gfc:code>
-              <gco:CharacterString />
-            </gfc:code>
             <gfc:valueType>
-              <gco:TypeName>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:aName>
-                  <gco:CharacterString />
+                  <gco:CharacterString>String</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
-            <gfc:listedValue>
-              <gfc:FC_ListedValue>
-                <gfc:label>
-                  <gco:CharacterString />
-                </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
-              </gfc:FC_ListedValue>
-            </gfc:listedValue>
           </gfc:FC_FeatureAttribute>
         </gfc:carrierOfCharacteristics>
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName>putnummer</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">putnummer</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>Het GW_ID (ook gekend als putnummer) van de put waaraan de boring gekoppeld is. Wanneer dit veld leeg is is de boring niet gekoppeld aan een put.</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Het GW_ID (ook gekend als putnummer) van de put waaraan de boring gekoppeld is. Wanneer dit veld leeg is is de boring niet gekoppeld aan een put.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
-              <gco:Multiplicity>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:range>
                   <gco:MultiplicityRange>
                     <gco:lower>
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
               </gco:Multiplicity>
             </gfc:cardinality>
-            <gfc:code>
-              <gco:CharacterString />
-            </gfc:code>
             <gfc:valueType>
-              <gco:TypeName>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:aName>
-                  <gco:CharacterString>Tekst</gco:CharacterString>
+                  <gco:CharacterString>String</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
-            <gfc:listedValue>
-              <gfc:FC_ListedValue>
-                <gfc:label>
-                  <gco:CharacterString />
-                </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
-              </gfc:FC_ListedValue>
-            </gfc:listedValue>
           </gfc:FC_FeatureAttribute>
         </gfc:carrierOfCharacteristics>
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName>X_mL72</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">X_mL72</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>De x-coördinaat van de boring in het Lambert72 coördinaatsysteem (in meter, EPSG:31370).</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">De x-coördinaat van de boring in het Lambert72 coördinaatsysteem (in meter, EPSG:31370).</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
-              <gco:Multiplicity>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:range>
                   <gco:MultiplicityRange>
                     <gco:lower>
                       <gco:Integer>1</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
               </gco:Multiplicity>
             </gfc:cardinality>
-            <gfc:code>
-              <gco:CharacterString />
-            </gfc:code>
             <gfc:valueType>
-              <gco:TypeName>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:aName>
-                  <gco:CharacterString>Getal (7,1)</gco:CharacterString>
+                  <gco:CharacterString>Number</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
-            <gfc:listedValue>
-              <gfc:FC_ListedValue>
-                <gfc:label>
-                  <gco:CharacterString />
-                </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
-              </gfc:FC_ListedValue>
-            </gfc:listedValue>
           </gfc:FC_FeatureAttribute>
         </gfc:carrierOfCharacteristics>
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName>Y_mL72</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Y_mL72</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>De y-coördinaat van de boring in het Lambert72 coördinaatsysteem (in meter, EPSG:31370).</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">De y-coördinaat van de boring in het Lambert72 coördinaatsysteem (in meter, EPSG:31370).</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
-              <gco:Multiplicity>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:range>
                   <gco:MultiplicityRange>
                     <gco:lower>
                       <gco:Integer>1</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
               </gco:Multiplicity>
             </gfc:cardinality>
-            <gfc:code>
-              <gco:CharacterString />
-            </gfc:code>
             <gfc:valueType>
-              <gco:TypeName>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:aName>
-                  <gco:CharacterString>Getal (7,1)</gco:CharacterString>
+                  <gco:CharacterString>Number</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
-            <gfc:listedValue>
-              <gfc:FC_ListedValue>
-                <gfc:label>
-                  <gco:CharacterString />
-                </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
-              </gfc:FC_ListedValue>
-            </gfc:listedValue>
           </gfc:FC_FeatureAttribute>
         </gfc:carrierOfCharacteristics>
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName>Z_mTAW</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Z_mTAW</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>De hoogte van het aanvangspeil van de boring in het TAW stelsel (in meter).</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">De hoogte van het aanvangspeil van de boring in het TAW stelsel (in meter).</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
-              <gco:Multiplicity>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:range>
                   <gco:MultiplicityRange>
                     <gco:lower>
                       <gco:Integer>1</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
               </gco:Multiplicity>
             </gfc:cardinality>
-            <gfc:code>
-              <gco:CharacterString />
-            </gfc:code>
             <gfc:valueType>
-              <gco:TypeName>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:aName>
-                  <gco:CharacterString>Getal (5,2)</gco:CharacterString>
+                  <gco:CharacterString>Number</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
-            <gfc:listedValue>
-              <gfc:FC_ListedValue>
-                <gfc:label>
-                  <gco:CharacterString />
-                </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
-              </gfc:FC_ListedValue>
-            </gfc:listedValue>
           </gfc:FC_FeatureAttribute>
         </gfc:carrierOfCharacteristics>
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName>gemeente</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">gemeente</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>De gemeente waarin de boring gelegen is.</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">De gemeente waarin de boring gelegen is.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
-              <gco:Multiplicity>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:range>
                   <gco:MultiplicityRange>
                     <gco:lower>
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
               </gco:Multiplicity>
             </gfc:cardinality>
-            <gfc:code>
-              <gco:CharacterString />
-            </gfc:code>
             <gfc:valueType>
-              <gco:TypeName>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:aName>
-                  <gco:CharacterString>Tekst</gco:CharacterString>
+                  <gco:CharacterString>String</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
-            <gfc:listedValue>
-              <gfc:FC_ListedValue>
-                <gfc:label>
-                  <gco:CharacterString />
-                </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
-              </gfc:FC_ListedValue>
-            </gfc:listedValue>
           </gfc:FC_FeatureAttribute>
         </gfc:carrierOfCharacteristics>
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName>uitvoerder</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">uitvoerder</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>De organisatie die de boring uitvoerde. Heeft als waarde 'onbekend' indien de uitvoerder niet gekend is.</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">De organisatie die de boring uitvoerde. Heeft als waarde 'onbekend' indien de uitvoerder niet gekend is.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
-              <gco:Multiplicity>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:range>
                   <gco:MultiplicityRange>
                     <gco:lower>
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
               </gco:Multiplicity>
             </gfc:cardinality>
-            <gfc:code>
-              <gco:CharacterString />
-            </gfc:code>
             <gfc:valueType>
-              <gco:TypeName>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:aName>
-                  <gco:CharacterString>Tekst</gco:CharacterString>
+                  <gco:CharacterString>String</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
-            <gfc:listedValue>
-              <gfc:FC_ListedValue>
-                <gfc:label>
-                  <gco:CharacterString />
-                </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
-              </gfc:FC_ListedValue>
-            </gfc:listedValue>
           </gfc:FC_FeatureAttribute>
         </gfc:carrierOfCharacteristics>
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName>doel</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">doel</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>Het doel van de boring.</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Het doel van de boring.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
-              <gco:Multiplicity>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:range>
                   <gco:MultiplicityRange>
                     <gco:lower>
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
               </gco:Multiplicity>
             </gfc:cardinality>
-            <gfc:code>
-              <gco:CharacterString />
-            </gfc:code>
             <gfc:valueType>
-              <gco:TypeName>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:aName>
-                  <gco:CharacterString>Tekst</gco:CharacterString>
+                  <gco:CharacterString>String</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>Berging</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Berging</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>Drainage en bemaling</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Drainage en bemaling</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>Exploitatie energie bronnen</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Exploratie energie bronnen</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>Exploitatie minerale bronnen</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Exploratie minerale bronnen</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>Exploratie energie bronnen</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Exploratie ondergrondse opslag</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>Exploratie minerale bronnen</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Geochemisch onderzoek</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>Exploratie ondergrondse opslag</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Geofysisch onderzoek</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>Geochemisch onderzoek</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Geologisch onderzoek</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>Geofysisch onderzoek</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Geotechnisch onderzoek</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>Geologisch onderzoek</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Geothermie</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>Geotechnisch onderzoek</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Grondwaterkwaliteit monitoring</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>Geothermie</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Grondwaterkwantiteit monitoring</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>Grondwaterkwaliteit monitoring</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Grondwatermonitoring</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>Grondwaterkwantiteit monitoring</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Grondwaterwinning</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>Grondwatermonitoring</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Hydrogeologisch onderzoek</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>Grondwaterwinning</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Infiltratie</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>Hydrogeologisch onderzoek</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Kathodische bescherming</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>Infiltratie</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Monitoring vervuilde sites</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>Kathodische bescherming</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Sanering</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
-              </gfc:FC_ListedValue>
-            </gfc:listedValue>
-            <gfc:listedValue>
-              <gfc:FC_ListedValue>
-                <gfc:label>
-                  <gco:CharacterString>Monitoring vervuilde sites</gco:CharacterString>
-                </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
-              </gfc:FC_ListedValue>
-            </gfc:listedValue>
-            <gfc:listedValue>
-              <gfc:FC_ListedValue>
-                <gfc:label>
-                  <gco:CharacterString>Sanering</gco:CharacterString>
-                </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
           </gfc:FC_FeatureAttribute>
@@ -1024,384 +666,212 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName>methode</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">methode</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>De methode waarmee de boring uitgevoerd werd. Heeft als waarde 'onbekend' indien de methode niet gekend is.</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">De methode waarmee de boring uitgevoerd werd. Heeft als waarde 'onbekend' indien de methode niet gekend is.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
-              <gco:Multiplicity>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:range>
                   <gco:MultiplicityRange>
                     <gco:lower>
                       <gco:Integer>1</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
               </gco:Multiplicity>
             </gfc:cardinality>
-            <gfc:code>
-              <gco:CharacterString />
-            </gfc:code>
             <gfc:valueType>
-              <gco:TypeName>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:aName>
-                  <gco:CharacterString>Tekst</gco:CharacterString>
+                  <gco:CharacterString>String</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>avegaarboring</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Meerdere technieken</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>droge boring</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">avegaarboring</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>edelmanboring</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">droge boring</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>geen boring</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">edelmanboring</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>gestoken boring</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">geen boring</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>graafmachine</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">gestoken boring</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>handboring</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">graafmachine</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>kernboring</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">handboring</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>lansen</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">kernboring</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>lepelboring</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">lansen</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>luchthamer</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">lepelboring</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>luchthevelboren of air-lift boren</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">luchthamer</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>meerdere technieken</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">luchthevelboren of air-lift boren</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>omgek. spoelboring</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">meerdere technieken</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>onbekend</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">omgek. spoelboring</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>pulsboring</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">onbekend</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>ramguts</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">pulsboring</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>ramkernboring</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">ramkernboring</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>rollerbit</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">rollerbit</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>slagboring</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">slagboring</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>spade</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">spade</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>spiraalboring</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">spiraalboring</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>spoelboring</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">spoelboring</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>steenboring</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">steenboring</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>trilboring</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">trilboring</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>voorput</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">zuigboring</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
-              </gfc:FC_ListedValue>
-            </gfc:listedValue>
-            <gfc:listedValue>
-              <gfc:FC_ListedValue>
-                <gfc:label>
-                  <gco:CharacterString>zuigboring</gco:CharacterString>
-                </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
           </gfc:FC_FeatureAttribute>
@@ -1409,98 +879,65 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName>erkenning</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">erkenning</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>In het kader van welke discipline de boring werd uitgevoerd. Deze codelijst bevat de verschillende disciplines van erkende boorbedrijven uit artikel 6, 7°, a) van VLAREL.</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">In het kader van welke discipline de boring werd uitgevoerd. Deze codelijst bevat de verschillende disciplines van erkende boorbedrijven uit artikel 6, 7°, a) van VLAREL.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
-              <gco:Multiplicity>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:range>
                   <gco:MultiplicityRange>
                     <gco:lower>
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
               </gco:Multiplicity>
             </gfc:cardinality>
-            <gfc:code>
-              <gco:CharacterString />
-            </gfc:code>
             <gfc:valueType>
-              <gco:TypeName>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:aName>
-                  <gco:CharacterString>Tekst</gco:CharacterString>
+                  <gco:CharacterString>String</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>1. Bemalingen en draineringen</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">1. Bemalingen en draineringen</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>2. Andere grondwaterwinningen</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">2. Andere grondwaterwinningen</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>3. Stabiliteitsboringen en geotechnische boringen</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">3. Stabiliteitsboringen en geotechnische boringen</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>4. Verticale boringen</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">4. Verticale boringen</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
             <gfc:listedValue>
               <gfc:FC_ListedValue>
                 <gfc:label>
-                  <gco:CharacterString>5. Andere boringen</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">5. Andere boringen</gco:CharacterString>
                 </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
               </gfc:FC_ListedValue>
             </gfc:listedValue>
           </gfc:FC_FeatureAttribute>
@@ -1508,659 +945,435 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName>opdrachtgever</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">opdrachtgever</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>De organisatie die de opdracht gaf om de boring uit te voeren.  Heeft als waarde 'onbekend' indien de opdrachtgever niet gekend is.</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">De organisatie die de opdracht gaf om de boring uit te voeren. Heeft als waarde 'onbekend' indien de opdrachtgever niet gekend is.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
-              <gco:Multiplicity>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:range>
                   <gco:MultiplicityRange>
                     <gco:lower>
                       <gco:Integer>1</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
               </gco:Multiplicity>
             </gfc:cardinality>
-            <gfc:code>
-              <gco:CharacterString />
-            </gfc:code>
             <gfc:valueType>
-              <gco:TypeName>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:aName>
-                  <gco:CharacterString>Tekst</gco:CharacterString>
+                  <gco:CharacterString>String</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
-            <gfc:listedValue>
-              <gfc:FC_ListedValue>
-                <gfc:label>
-                  <gco:CharacterString />
-                </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
-              </gfc:FC_ListedValue>
-            </gfc:listedValue>
           </gfc:FC_FeatureAttribute>
         </gfc:carrierOfCharacteristics>
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName>informele_stratigrafie</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">informele_stratigrafie</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>Geeft aan of er aan de boring minstens één interpretatie van het type 'informele stratigrafie' gekoppeld is.</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Geeft aan of er aan de boring minstens één interpretatie van het type 'informele stratigrafie' gekoppeld is.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
-              <gco:Multiplicity>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:range>
                   <gco:MultiplicityRange>
                     <gco:lower>
                       <gco:Integer>1</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
               </gco:Multiplicity>
             </gfc:cardinality>
-            <gfc:code>
-              <gco:CharacterString />
-            </gfc:code>
             <gfc:valueType>
-              <gco:TypeName>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:aName>
-                  <gco:CharacterString>Boolean</gco:CharacterString>
+                  <gco:CharacterString>Unknown</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
-            <gfc:listedValue>
-              <gfc:FC_ListedValue>
-                <gfc:label>
-                  <gco:CharacterString />
-                </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
-              </gfc:FC_ListedValue>
-            </gfc:listedValue>
           </gfc:FC_FeatureAttribute>
         </gfc:carrierOfCharacteristics>
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName>formele_stratigrafie</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">formele_stratigrafie</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>Geeft aan of er aan de boring minstens één interpretatie van het type 'formele stratigrafie' gekoppeld is.</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Geeft aan of er aan de boring minstens één interpretatie van het type 'formele stratigrafie' gekoppeld is.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
-              <gco:Multiplicity>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:range>
                   <gco:MultiplicityRange>
                     <gco:lower>
                       <gco:Integer>1</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
               </gco:Multiplicity>
             </gfc:cardinality>
-            <gfc:code>
-              <gco:CharacterString />
-            </gfc:code>
             <gfc:valueType>
-              <gco:TypeName>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:aName>
-                  <gco:CharacterString>Boolean</gco:CharacterString>
+                  <gco:CharacterString>Unknown</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
-            <gfc:listedValue>
-              <gfc:FC_ListedValue>
-                <gfc:label>
-                  <gco:CharacterString />
-                </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
-              </gfc:FC_ListedValue>
-            </gfc:listedValue>
           </gfc:FC_FeatureAttribute>
         </gfc:carrierOfCharacteristics>
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName>lithologische_beschrijving</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">lithologische_beschrijving</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>Geeft aan of er aan de boring minstens één interpretatie van het type 'lithologische beschrijving' gekoppeld is.</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Geeft aan of er aan de boring minstens één interpretatie van het type 'lithologische beschrijving' gekoppeld is.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
-              <gco:Multiplicity>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:range>
                   <gco:MultiplicityRange>
                     <gco:lower>
                       <gco:Integer>1</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
               </gco:Multiplicity>
             </gfc:cardinality>
-            <gfc:code>
-              <gco:CharacterString />
-            </gfc:code>
             <gfc:valueType>
-              <gco:TypeName>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:aName>
-                  <gco:CharacterString>Boolean</gco:CharacterString>
+                  <gco:CharacterString>Unknown</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
-            <gfc:listedValue>
-              <gfc:FC_ListedValue>
-                <gfc:label>
-                  <gco:CharacterString />
-                </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
-              </gfc:FC_ListedValue>
-            </gfc:listedValue>
           </gfc:FC_FeatureAttribute>
         </gfc:carrierOfCharacteristics>
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName>gecodeerde_lithologie</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">gecodeerde_lithologie</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>Geeft aan of er aan de boring minstens één interpretatie van het type 'gecodeerde lithologie' gekoppeld is.</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Geeft aan of er aan de boring minstens één interpretatie van het type 'gecodeerde lithologie' gekoppeld is.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
-              <gco:Multiplicity>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:range>
                   <gco:MultiplicityRange>
                     <gco:lower>
                       <gco:Integer>1</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
               </gco:Multiplicity>
             </gfc:cardinality>
-            <gfc:code>
-              <gco:CharacterString />
-            </gfc:code>
             <gfc:valueType>
-              <gco:TypeName>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:aName>
-                  <gco:CharacterString>Boolean</gco:CharacterString>
+                  <gco:CharacterString>Unknown</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
-            <gfc:listedValue>
-              <gfc:FC_ListedValue>
-                <gfc:label>
-                  <gco:CharacterString />
-                </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
-              </gfc:FC_ListedValue>
-            </gfc:listedValue>
           </gfc:FC_FeatureAttribute>
         </gfc:carrierOfCharacteristics>
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName>hydrogeologische_stratigrafie</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">hydrogeologische_stratigrafie</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>Geeft aan of er aan de boring minstens één interpretatie van het type 'hydrogeologische stratigrafie' gekoppeld is.</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Geeft aan of er aan de boring minstens één interpretatie van het type 'hydrogeologische stratigrafie' gekoppeld is.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
-              <gco:Multiplicity>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:range>
                   <gco:MultiplicityRange>
                     <gco:lower>
                       <gco:Integer>1</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
               </gco:Multiplicity>
             </gfc:cardinality>
-            <gfc:code>
-              <gco:CharacterString />
-            </gfc:code>
             <gfc:valueType>
-              <gco:TypeName>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:aName>
-                  <gco:CharacterString>Boolean</gco:CharacterString>
+                  <gco:CharacterString>Unknown</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
-            <gfc:listedValue>
-              <gfc:FC_ListedValue>
-                <gfc:label>
-                  <gco:CharacterString />
-                </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
-              </gfc:FC_ListedValue>
-            </gfc:listedValue>
           </gfc:FC_FeatureAttribute>
         </gfc:carrierOfCharacteristics>
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName>quartaire_stratigrafie</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">quartaire_stratigrafie</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>Geeft aan of er aan de boring minstens één interpretatie van het type 'quartaire stratigrafie' gekoppeld is.</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Geeft aan of er aan de boring minstens één interpretatie van het type 'quartaire stratigrafie' gekoppeld is.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
-              <gco:Multiplicity>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:range>
                   <gco:MultiplicityRange>
                     <gco:lower>
                       <gco:Integer>1</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
               </gco:Multiplicity>
             </gfc:cardinality>
-            <gfc:code>
-              <gco:CharacterString />
-            </gfc:code>
             <gfc:valueType>
-              <gco:TypeName>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:aName>
-                  <gco:CharacterString>Boolean</gco:CharacterString>
+                  <gco:CharacterString>Unknown</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
-            <gfc:listedValue>
-              <gfc:FC_ListedValue>
-                <gfc:label>
-                  <gco:CharacterString />
-                </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
-              </gfc:FC_ListedValue>
-            </gfc:listedValue>
           </gfc:FC_FeatureAttribute>
         </gfc:carrierOfCharacteristics>
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName>geotechnische_codering</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">geotechnische_codering</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>Geeft aan of er aan de boring minstens één interpretatie van het type 'geotechnische codering' gekoppeld is.</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Geeft aan of er aan de boring minstens één interpretatie van het type 'geotechnische codering' gekoppeld is.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
-              <gco:Multiplicity>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:range>
                   <gco:MultiplicityRange>
                     <gco:lower>
                       <gco:Integer>1</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
               </gco:Multiplicity>
             </gfc:cardinality>
-            <gfc:code>
-              <gco:CharacterString />
-            </gfc:code>
             <gfc:valueType>
-              <gco:TypeName>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:aName>
-                  <gco:CharacterString>Boolean</gco:CharacterString>
+                  <gco:CharacterString>Unknown</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
-            <gfc:listedValue>
-              <gfc:FC_ListedValue>
-                <gfc:label>
-                  <gco:CharacterString />
-                </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
-              </gfc:FC_ListedValue>
-            </gfc:listedValue>
           </gfc:FC_FeatureAttribute>
         </gfc:carrierOfCharacteristics>
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName>informele_hydrostratigrafie</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">informele_hydrostratigrafie</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>Geeft aan of er aan de boring minstens één interpretatie van het type 'informele hydrostratigrafie' gekoppeld is.</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Geeft aan of er aan de boring minstens één interpretatie van het type 'informele hydrostratigrafie' gekoppeld is.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
-              <gco:Multiplicity>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:range>
                   <gco:MultiplicityRange>
                     <gco:lower>
                       <gco:Integer>1</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
               </gco:Multiplicity>
             </gfc:cardinality>
-            <gfc:code>
-              <gco:CharacterString />
-            </gfc:code>
             <gfc:valueType>
-              <gco:TypeName>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:aName>
-                  <gco:CharacterString>Boolean</gco:CharacterString>
+                  <gco:CharacterString>Unknown</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
-            <gfc:listedValue>
-              <gfc:FC_ListedValue>
-                <gfc:label>
-                  <gco:CharacterString />
-                </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
-              </gfc:FC_ListedValue>
-            </gfc:listedValue>
           </gfc:FC_FeatureAttribute>
         </gfc:carrierOfCharacteristics>
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName>doorheen_quartair</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">doorheen_quartair</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>Geeft aan of de boring dieper ging dan de grens van het Quartair en het Neogeen/Paleogeen (Tertiair). Dit veld is enkel ingevuld indien er minstens één interpretatie van het type 'formele stratigrafie' gekoppeld is aan de boring én het Quartair geïnterpreteerd werd.</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Geeft aan of de boring dieper ging dan de grens van het Quartair en het Neogeen/Paleogeen (Tertiair). Dit veld is enkel ingevuld indien er minstens één interpretatie van het type 'formele stratigrafie' gekoppeld is aan de boring én het Quartair geïnterpreteerd werd.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
-              <gco:Multiplicity>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:range>
                   <gco:MultiplicityRange>
                     <gco:lower>
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
               </gco:Multiplicity>
             </gfc:cardinality>
-            <gfc:code>
-              <gco:CharacterString />
-            </gfc:code>
             <gfc:valueType>
-              <gco:TypeName>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:aName>
-                  <gco:CharacterString>Boolean</gco:CharacterString>
+                  <gco:CharacterString>Unknown</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
-            <gfc:listedValue>
-              <gfc:FC_ListedValue>
-                <gfc:label>
-                  <gco:CharacterString />
-                </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
-              </gfc:FC_ListedValue>
-            </gfc:listedValue>
           </gfc:FC_FeatureAttribute>
         </gfc:carrierOfCharacteristics>
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName>dikte_quartair</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">dikte_quartair</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>Dit veld geeft de dikte weer van het Quartair (in meter). Dit is een getal met twee decimalen, soms voorafgegaan door &lt; of &gt;= (bv. &gt;= 10.00).</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Dit veld geeft de dikte weer van het Quartair (in meter). Dit is een getal met twee decimalen, soms voorafgegaan door &lt; of &gt;= (bv. &gt;= 10.00).</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
-              <gco:Multiplicity>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:range>
                   <gco:MultiplicityRange>
                     <gco:lower>
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
               </gco:Multiplicity>
             </gfc:cardinality>
-            <gfc:code>
-              <gco:CharacterString />
-            </gfc:code>
             <gfc:valueType>
-              <gco:TypeName>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:aName>
-                  <gco:CharacterString>Tekst</gco:CharacterString>
+                  <gco:CharacterString>String</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
-            <gfc:listedValue>
-              <gfc:FC_ListedValue>
-                <gfc:label>
-                  <gco:CharacterString />
-                </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
-              </gfc:FC_ListedValue>
-            </gfc:listedValue>
           </gfc:FC_FeatureAttribute>
         </gfc:carrierOfCharacteristics>
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName>tertiair_onder_quartair</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">tertiair_onder_quartair</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>Indien 'doorheen_quartair' true is bevat dit veld de afkorting van de eerste lithostratigrafische eenheid van het Neogeen/Paleogeen (Tertiair) die voorkomt onder het Quartair.</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Indien 'doorheen_quartair' true is bevat dit veld de afkorting van de eerste lithostratigrafische eenheid van het Neogeen/Paleogeen (Tertiair) die voorkomt onder het Quartair.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
-              <gco:Multiplicity>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:range>
                   <gco:MultiplicityRange>
                     <gco:lower>
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
               </gco:Multiplicity>
             </gfc:cardinality>
-            <gfc:code>
-              <gco:CharacterString />
-            </gfc:code>
             <gfc:valueType>
-              <gco:TypeName>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:aName>
-                  <gco:CharacterString>Tekst</gco:CharacterString>
+                  <gco:CharacterString>String</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
-            <gfc:listedValue>
-              <gfc:FC_ListedValue>
-                <gfc:label>
-                  <gco:CharacterString />
-                </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
-              </gfc:FC_ListedValue>
-            </gfc:listedValue>
           </gfc:FC_FeatureAttribute>
         </gfc:carrierOfCharacteristics>
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName>opdrachten</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">opdrachten</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>De DOV-opdracht(en) waaraan de boring gekoppeld is.</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">De DOV-opdracht(en) waaraan de boring gekoppeld is.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
-              <gco:Multiplicity>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:range>
                   <gco:MultiplicityRange>
                     <gco:lower>
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
               </gco:Multiplicity>
             </gfc:cardinality>
-            <gfc:code>
-              <gco:CharacterString />
-            </gfc:code>
             <gfc:valueType>
-              <gco:TypeName>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:aName>
-                  <gco:CharacterString>Tekst</gco:CharacterString>
+                  <gco:CharacterString>String</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
-            <gfc:listedValue>
-              <gfc:FC_ListedValue>
-                <gfc:label>
-                  <gco:CharacterString />
-                </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
-              </gfc:FC_ListedValue>
-            </gfc:listedValue>
           </gfc:FC_FeatureAttribute>
         </gfc:carrierOfCharacteristics>
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName>geom</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">geom</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString>De geometrie van de boring (punt). Dit komt overeen met het punt beschreven door de coördinaten "X_mL72", "Y_mL72".</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">De geometrie van de boring (punt). Dit komt overeen met het punt beschreven door de coördinaten "X_mL72", "Y_mL72".</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
-              <gco:Multiplicity>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:range>
                   <gco:MultiplicityRange>
                     <gco:lower>
                       <gco:Integer>1</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger isInfinite="false" xsi:nil="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
               </gco:Multiplicity>
             </gfc:cardinality>
-            <gfc:code>
-              <gco:CharacterString />
-            </gfc:code>
             <gfc:valueType>
-              <gco:TypeName>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:aName>
-                  <gco:CharacterString>Punt</gco:CharacterString>
+                  <gco:CharacterString>Geometry</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
-            <gfc:listedValue>
-              <gfc:FC_ListedValue>
-                <gfc:label>
-                  <gco:CharacterString />
-                </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString />
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString />
-                </gfc:definition>
-              </gfc:FC_ListedValue>
-            </gfc:listedValue>
           </gfc:FC_FeatureAttribute>
         </gfc:carrierOfCharacteristics>
       </gfc:FC_FeatureType>

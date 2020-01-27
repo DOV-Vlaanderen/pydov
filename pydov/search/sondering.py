@@ -3,6 +3,7 @@
 import pandas as pd
 
 from pydov.search.abstract import AbstractSearch
+from pydov.types.fields import _WfsInjectedField
 from pydov.types.sondering import Sondering
 from pydov.util import owsutil
 
@@ -15,10 +16,21 @@ class SonderingSearch(AbstractSearch):
     __wfs_namespace = None
     __md_metadata = None
     __fc_featurecatalogue = None
+    __xsd_schemas = None
 
-    def __init__(self):
-        """Initialisation."""
-        super(SonderingSearch, self).__init__('dov-pub:Sonderingen', Sondering)
+    def __init__(self, objecttype=Sondering):
+        """Initialisation.
+
+        Parameters
+        ----------
+        objecttype : subclass of pydov.types.abstract.AbstractDovType
+            Reference to a class representing the Sondering type.
+            Optional: defaults to the Sondering type containing
+            the fields described in the documentation.
+
+        """
+        super(SonderingSearch, self).__init__(
+            'dov-pub:Sonderingen', objecttype)
 
     def _init_namespace(self):
         """Initialise the WFS namespace associated with the layer."""
@@ -43,28 +55,32 @@ class SonderingSearch(AbstractSearch):
                 SonderingSearch.__fc_featurecatalogue = \
                     owsutil.get_remote_featurecatalogue(csw_url, fc_uuid)
 
+            if SonderingSearch.__xsd_schemas is None:
+                SonderingSearch.__xsd_schemas = \
+                    self._get_remote_xsd_schemas()
+
             fields = self._build_fields(
                 SonderingSearch.__wfs_schema,
-                SonderingSearch.__fc_featurecatalogue)
+                SonderingSearch.__fc_featurecatalogue,
+                SonderingSearch.__xsd_schemas)
 
             for field in fields.values():
                 if field['name'] not in self._type.get_field_names(
                         include_wfs_injected=True):
-                    self._type._fields.append({
-                        'name': field['name'],
-                        'source': 'wfs',
-                        'sourcefield': field['name'],
-                        'type': field['type'],
-                        'wfs_injected': True
-                    })
+                    self._type.fields.append(
+                        _WfsInjectedField(name=field['name'],
+                                          datatype=field['type']))
 
             self._fields = self._build_fields(
                 SonderingSearch.__wfs_schema,
-                SonderingSearch.__fc_featurecatalogue)
+                SonderingSearch.__fc_featurecatalogue,
+                SonderingSearch.__xsd_schemas)
 
-    def search(self, location=None, query=None, return_fields=None):
+    def search(self, location=None, query=None, sort_by=None,
+               return_fields=None, max_features=None):
         """Search for CPT measurements (Sondering). Provide `location` and/or
-        `query`. When `return_fields` is None, all fields are returned.
+        `query` and/or `max_features`.
+        When `return_fields` is None, all fields are returned.
 
         Parameters
         ----------
@@ -79,10 +95,14 @@ class SonderingSearch(AbstractSearch):
             combination of filter elements defined in owslib.fes. The query
             should use the fields provided in `get_fields()`. Note that not
             all fields are currently supported as a search parameter.
+        sort_by : owslib.fes.SortBy, optional
+            List of properties to sort by.
         return_fields : list<str> or tuple<str> or set<str>
             A list of fields to be returned in the output data. This should
             be a subset of the fields provided in `get_fields()`. Note that
             not all fields are currently supported as return fields.
+        max_features : int
+            Limit the maximum number of features to request.
 
         Returns
         -------
@@ -92,7 +112,7 @@ class SonderingSearch(AbstractSearch):
         Raises
         ------
         pydov.util.errors.InvalidSearchParameterError
-            When not one of `location` or `query` is provided.
+            When not one of `location`, `query` or `max_features` is provided.
 
         pydov.util.errors.InvalidFieldError
             When at least one of the fields in `return_fields` is unknown.
@@ -112,12 +132,13 @@ class SonderingSearch(AbstractSearch):
             tuple or set.
 
         """
-        fts = self._search(location=location, query=query,
-                           return_fields=return_fields)
+        fts = self._search(location=location, query=query, sort_by=sort_by,
+                           return_fields=return_fields,
+                           max_features=max_features)
 
-        sonderingen = Sondering.from_wfs(fts, self.__wfs_namespace)
+        sonderingen = self._type.from_wfs(fts, self.__wfs_namespace)
 
         df = pd.DataFrame(
-            data=Sondering.to_df_array(sonderingen, return_fields),
-            columns=Sondering.get_field_names(return_fields))
+            data=self._type.to_df_array(sonderingen, return_fields),
+            columns=self._type.get_field_names(return_fields))
         return df

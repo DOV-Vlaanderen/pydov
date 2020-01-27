@@ -4,10 +4,11 @@
 from owslib.fes import (
     Or,
     PropertyIsEqualTo,
+    OgcExpression,
 )
 
 
-class PropertyInList(Or):
+class PropertyInList(OgcExpression):
     """Filter expression to test whether a given property has one of the
     values from a list.
 
@@ -33,19 +34,32 @@ class PropertyInList(Or):
         Raises
         ------
         ValueError
-            If the given list does not contain at least two distinct items.
+            If the given list does not contain at least a single item.
 
         """
+        super(PropertyInList, self).__init__()
+
         if not isinstance(lst, list) and not isinstance(lst, set):
             raise ValueError('list should be of type "list" or "set"')
 
-        if len(set(lst)) < 2:
-            raise ValueError('list should contain at least two different '
-                             'elements.')
+        if len(set(lst)) < 1:
+            raise ValueError('list should contain at least a single item')
+        elif len(set(lst)) == 1:
+            self.query = PropertyIsEqualTo(propertyname, set(lst).pop())
+        else:
+            self.query = Or(
+                [PropertyIsEqualTo(propertyname, i) for i in set(lst)])
 
-        super(PropertyInList, self).__init__(
-            [PropertyIsEqualTo(propertyname, i) for i in set(lst)]
-        )
+    def toXML(self):
+        """Return the XML representation of the PropertyInList query.
+
+        Returns
+        -------
+        xml : etree.ElementTree
+            XML representation of the PropertyInList
+
+        """
+        return self.query.toXML()
 
 
 class Join(PropertyInList):
@@ -62,34 +76,43 @@ class Join(PropertyInList):
     'pkey_boring', y), ...]) for every x, y, in df['pkey_boring']
 
     """
-    def __init__(self, dataframe, join_column):
+    def __init__(self, dataframe, on, using=None):
         """Initialisation.
 
         Parameters
         ----------
         dataframe : pandas.DataFrame
             Dataframe to use a basis for joining.
-        join_column : str
-            Name of the column to join on. This column should both exists in
-            the dataframe and in the object type being searched.
+        on : str
+            Name of the column in the queried datatype to join on.
+        using : str, optional
+            Name of the column in the dataframe to use for joining. By
+            default, the same column name as in `on` is assumed.
 
         Raises
         ------
         ValueError
-            If the join_column is not present in the dataframe.
+            If the `using` column is not present in the dataframe.
 
-            If the dataframe does not contain at least two different values
-            in the join_column. A Join is probably overkill here,
-            use PropertyIsEqualTo instead.
+            If `using` is None and the `on` column is not present in the
+            dataframe.
+
+            If the dataframe does not contain at least a single non-null value
+            in the `using` column.
 
         """
-        if join_column not in list(dataframe):
-            raise ValueError('join_column should be present in the dataframe.')
+        if using is None:
+            using = on
 
-        value_list = list(dataframe[join_column].dropna().unique())
+        if using not in list(dataframe):
+            raise ValueError(
+                "column '{}' should be present in the dataframe.".format(
+                    using))
 
-        if len(set(value_list)) < 2:
-            raise ValueError("dataframe should contain at least two "
-                             "different values in column '%s'." % join_column)
+        value_list = list(dataframe[using].dropna().unique())
 
-        super(Join, self).__init__(join_column, value_list)
+        if len(set(value_list)) < 1:
+            raise ValueError("dataframe should contain at least a single "
+                             "value in column '{}'.".format(using))
+
+        super(Join, self).__init__(on, value_list)

@@ -8,10 +8,13 @@ from owslib.etree import etree
 from owslib.fes import (
     PropertyIsEqualTo,
     FilterRequest,
+    SortBy,
+    SortProperty,
 )
 from owslib.iso import MD_Metadata
 from owslib.util import nspath_eval
 from pydov.util import owsutil
+from pydov.util.dovutil import build_dov_url
 from pydov.util.errors import (
     MetadataNotFoundError,
     FeatureCatalogueNotFoundError,
@@ -55,7 +58,7 @@ class TestOwsutil(object):
         """
         contentmetadata = wfs.contents['dov-pub:Boringen']
         assert owsutil.get_csw_base_url(contentmetadata) == \
-               'https://www.dov.vlaanderen.be/geonetwork/srv/nl/csw'
+               build_dov_url('geonetwork/srv/dut/csw')
 
     def test_get_csw_base_url_nometadataurls(self, wfs):
         """Test the owsutil.get_csw_base_url method for a layer without
@@ -170,7 +173,7 @@ class TestOwsutil(object):
 
         """
         fc = owsutil.get_remote_featurecatalogue(
-            'https://www.dov.vlaanderen.be/geonetwork/srv/nl/csw',
+            build_dov_url('geonetwork/srv/nl/csw'),
             'c0cbd397-520f-4ee1-aca7-d70e271eeed6')
 
         assert type(fc) is dict
@@ -190,11 +193,16 @@ class TestOwsutil(object):
                 assert type(attr['definition']) in (str, unicode)
 
                 assert 'values' in attr
-                assert type(attr['values']) is list
-                if len(attr['values']) > 0:
-                    for v in attr['values']:
+
+                if attr['values'] is not None:
+                    assert type(attr['values']) is dict
+
+                    for v in attr['values'].keys():
                         assert type(v) in (str, unicode)
-                    assert len(attr['values']) == len(set(attr['values']))
+                        assert type(attr['values'][v]) in (str, unicode) or \
+                               attr['values'][v] is None
+                    assert len(attr['values'].keys()) == len(
+                        set(attr['values'].keys()))
 
                 assert 'multiplicity' in attr
                 mp = attr['multiplicity']
@@ -217,7 +225,7 @@ class TestOwsutil(object):
         """
         with pytest.raises(FeatureCatalogueNotFoundError):
             owsutil.get_remote_featurecatalogue(
-                'https://www.dov.vlaanderen.be/geonetwork/srv/nl/csw',
+                build_dov_url('geonetwork/srv/nl/csw'),
                 'badfc000-0000-0000-0000-badfc00badfc')
 
     def test_get_remote_metadata(self, md_metadata):
@@ -269,6 +277,63 @@ class TestOwsutil(object):
             'typeName="dov-pub:Boringen"><ogc:Filter '
             'xmlns:ogc="http://www.opengis.net/ogc"/></wfs:Query></wfs'
             ':GetFeature>')
+
+    def test_wfs_build_getfeature_maxfeatures(self):
+        """Test the owsutil.wfs_build_getfeature_request method with a
+        limited set of features defined.
+
+        Test whether the XML of the WFS GetFeature call is generated correctly.
+
+        """
+        xml = owsutil.wfs_build_getfeature_request(
+            'dov-pub:Boringen', max_features=3)
+
+        assert "maxFeatures" in xml.attrib.keys()
+        assert xml.attrib["maxFeatures"] == "3"
+
+    def test_wfs_build_getfeature_maxfeatures_negative(self):
+        """Test the owsutil.wfs_build_getfeature_request method with a
+        a negative maxfeature value.
+
+        Test whether an AttributeError is raised.
+
+        """
+        with pytest.raises(AttributeError):
+            owsutil.wfs_build_getfeature_request(
+                'dov-pub:Boringen', max_features=-5)
+
+    def test_wfs_build_getfeature_maxfeatures_float(self):
+        """Test the owsutil.wfs_build_getfeature_request method with a
+        a floating point maxfeature value.
+
+        Test whether an AttributeError is raised.
+
+        """
+        with pytest.raises(AttributeError):
+            owsutil.wfs_build_getfeature_request(
+                'dov-pub:Boringen', max_features=1.5)
+
+    def test_wfs_build_getfeature_maxfeatures_zero(self):
+        """Test the owsutil.wfs_build_getfeature_request method with a
+        a maxfeature value of 0.
+
+        Test whether an AttributeError is raised.
+
+        """
+        with pytest.raises(AttributeError):
+            owsutil.wfs_build_getfeature_request(
+                'dov-pub:Boringen', max_features=0)
+
+    def test_wfs_build_getfeature_maxfeatures_string(self):
+        """Test the owsutil.wfs_build_getfeature_request method with a
+        an non-integer maxfeature value.
+
+        Test whether an AttributeError is raised.
+
+        """
+        with pytest.raises(AttributeError):
+            owsutil.wfs_build_getfeature_request(
+                'dov-pub:Boringen', max_features="0")
 
     def test_wfs_build_getfeature_request_bbox_nogeometrycolumn(self):
         """Test the owsutil.wfs_build_getfeature_request method with a location
@@ -448,3 +513,68 @@ class TestOwsutil(object):
             '<gml:upperCorner>151750.000000 214775.000000</gml:upperCorner> '
             '</gml:Envelope> </ogc:Within> </ogc:And> </ogc:Filter> '
             '</wfs:Query> </wfs:GetFeature>')
+
+    def test_wfs_build_getfeature_request_sortby(self):
+        """Test the owsutil.wfs_build_getfeature_request method with a sortby.
+
+        Test whether the XML of the WFS GetFeature call is generated correctly.
+
+        """
+        sort_by = SortBy([SortProperty('diepte_tot_m', 'DESC')])
+
+        try:
+            sort_by = etree.tostring(sort_by.toXML(), encoding='unicode')
+        except LookupError:
+            # Python2.7 without lxml uses 'utf-8' instead.
+            sort_by = etree.tostring(sort_by.toXML(), encoding='utf-8')
+
+        xml = owsutil.wfs_build_getfeature_request(
+            'dov-pub:Boringen', propertyname=['fiche', 'diepte_tot_m'],
+            sort_by=sort_by)
+        assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
+            '<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs" '
+            'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
+            'service="WFS" version="1.1.0" '
+            'xsi:schemaLocation="http://www.opengis.net/wfs '
+            'http://schemas.opengis.net/wfs/1.1.0/wfs.xsd"><wfs:Query '
+            'typeName="dov-pub:Boringen"><wfs:PropertyName>fiche</wfs'
+            ':PropertyName><wfs:PropertyName>diepte_tot_m</wfs:PropertyName'
+            '><ogc:Filter/><ogc:SortBy><ogc:SortProperty><ogc:PropertyName'
+            '>diepte_tot_m</ogc:PropertyName><ogc:SortOrder>DESC</ogc'
+            ':SortOrder></ogc:SortProperty></ogc:SortBy></wfs:Query></wfs'
+            ':GetFeature>')
+
+    def test_wfs_build_getfeature_request_sortby_multi(self):
+        """Test the owsutil.wfs_build_getfeature_request method with a
+        sortby containing multiple sort properties.
+
+        Test whether the XML of the WFS GetFeature call is generated correctly.
+
+        """
+        sort_by = SortBy([SortProperty('diepte_tot_m', 'DESC'),
+                          SortProperty('datum_aanvang', 'ASC')])
+
+        try:
+            sort_by = etree.tostring(sort_by.toXML(), encoding='unicode')
+        except LookupError:
+            # Python2.7 without lxml uses 'utf-8' instead.
+            sort_by = etree.tostring(sort_by.toXML(), encoding='utf-8')
+
+        xml = owsutil.wfs_build_getfeature_request(
+            'dov-pub:Boringen', propertyname=['fiche', 'diepte_tot_m'],
+            sort_by=sort_by)
+
+        assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
+            '<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs" '
+            'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
+            'service="WFS" version="1.1.0" '
+            'xsi:schemaLocation="http://www.opengis.net/wfs '
+            'http://schemas.opengis.net/wfs/1.1.0/wfs.xsd"><wfs:Query '
+            'typeName="dov-pub:Boringen"><wfs:PropertyName>fiche</wfs'
+            ':PropertyName><wfs:PropertyName>diepte_tot_m</wfs:PropertyName'
+            '><ogc:Filter/><ogc:SortBy><ogc:SortProperty><ogc:PropertyName'
+            '>diepte_tot_m</ogc:PropertyName><ogc:SortOrder>DESC</ogc'
+            ':SortOrder></ogc:SortProperty><ogc:SortProperty><ogc'
+            ':PropertyName>datum_aanvang</ogc:PropertyName><ogc:SortOrder>ASC'
+            '</ogc:SortOrder></ogc:SortProperty></ogc:SortBy></wfs:Query>'
+            '</wfs:GetFeature>')

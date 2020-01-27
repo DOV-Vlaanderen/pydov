@@ -4,6 +4,7 @@ import datetime
 from owslib.fes import PropertyIsEqualTo
 from pydov.search.grondwaterfilter import GrondwaterFilterSearch
 from pydov.types.grondwaterfilter import GrondwaterFilter
+from pydov.util.dovutil import build_dov_url
 from tests.abstract import (
     AbstractTestSearch,
 )
@@ -15,6 +16,7 @@ from tests.test_search import (
     mp_remote_fc,
     mp_remote_describefeaturetype,
     mp_remote_wfs_feature,
+    mp_remote_xsd,
     mp_dov_xml,
     mp_dov_xml_broken,
     wfs_getfeature,
@@ -29,6 +31,7 @@ location_wfs_describefeaturetype = \
 location_wfs_getfeature = 'tests/data/types/grondwaterfilter/wfsgetfeature.xml'
 location_wfs_feature = 'tests/data/types/grondwaterfilter/feature.xml'
 location_dov_xml = 'tests/data/types/grondwaterfilter/grondwaterfilter.xml'
+location_xsd_base = 'tests/data/types/grondwaterfilter/xsd_*.xml'
 
 
 class TestGrondwaterfilterSearch(AbstractTestSearch):
@@ -64,8 +67,8 @@ class TestGrondwaterfilterSearch(AbstractTestSearch):
 
         """
         return PropertyIsEqualTo(propertyname='filterfiche',
-                                 literal='https://www.dov.vlaanderen.be/'
-                                         'data/filter/2003-004471')
+                                 literal=build_dov_url(
+                                     'data/filter/2003-004471'))
 
     def get_inexistent_field(self):
         """Get the name of a field that doesn't exist.
@@ -77,6 +80,17 @@ class TestGrondwaterfilterSearch(AbstractTestSearch):
 
         """
         return 'onbestaand'
+
+    def get_wfs_field(self):
+        """Get the name of a WFS field.
+
+        Returns
+        -------
+        str
+            The name of the WFS field.
+
+        """
+        return 'filternummer'
 
     def get_xml_field(self):
         """Get the name of a field defined in XML only.
@@ -123,7 +137,7 @@ class TestGrondwaterfilterSearch(AbstractTestSearch):
             from WFS, not present in the default dataframe.
 
         """
-        return ('pkey_filter', 'oxidatie_reductie')
+        return ('pkey_filter', 'beheerder')
 
     def get_df_default_columns(self):
         """Get a list of the column names (and order) from the default
@@ -136,12 +150,13 @@ class TestGrondwaterfilterSearch(AbstractTestSearch):
 
         """
         return ['pkey_filter', 'pkey_grondwaterlocatie', 'gw_id',
-                'filternummer', 'filtertype', 'x', 'y', 'mv_mtaw',
+                'filternummer', 'filtertype', 'x', 'y',
+                'start_grondwaterlocatie_mtaw',
                 'gemeente', 'meetnet_code', 'aquifer_code',
                 'grondwaterlichaam_code', 'regime',
                 'diepte_onderkant_filter', 'lengte_filter',
                 'datum', 'tijdstip', 'peil_mtaw',
-                'betrouwbaarheid', 'methode']
+                'betrouwbaarheid', 'methode', 'filterstatus', 'filtertoestand']
 
     def test_search_date(self, mp_wfs, mp_remote_describefeaturetype,
                          mp_remote_md, mp_remote_fc, mp_remote_wfs_feature,
@@ -194,4 +209,4 @@ class TestGrondwaterfilterSearch(AbstractTestSearch):
             return_fields=('pkey_filter', 'gw_id', 'filternummer',
                            'meetnet_code'))
 
-        assert df.meetnet_code[0] == 8
+        assert df.meetnet_code[0] == '8'

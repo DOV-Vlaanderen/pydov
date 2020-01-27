@@ -14,6 +14,9 @@ Welcome to pydov's documentation!
 .. image:: https://coveralls.io/repos/github/DOV-Vlaanderen/pydov/badge.svg?branch=master
     :target: https://coveralls.io/github/DOV-Vlaanderen/pydov?branch=master
 
+.. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.2788680.svg
+   :target: https://doi.org/10.5281/zenodo.2788680
+
 A Python package to query and download data from Databank Ondergrond Vlaanderen (DOV).
 
 * Free software: MIT license
@@ -40,6 +43,8 @@ researchers, consultants, modelers, and students. As performant and proper funct
 of DOV data processing is of interest to the variety of users, we believe that a
 community-based effort to develop and maintain these functionalities as an open source
 package provides the optimal development traject.
+
+Please note that downloading DOV data with pydov is governed by the same `disclaimer <https://www.dov.vlaanderen.be/page/disclaimer>`_ that applies to the other DOV services. Be sure to consult it when using DOV data with pydov.
 
 Getting started
 ---------------
@@ -77,8 +82,9 @@ Contents:
 
    query_attribute
    query_location
+   output_fields
+   sort_limit
    performance
-   df_format
    caching
    hooks
 
@@ -92,6 +98,7 @@ Contents:
    history
    authors
    conduct
+   df_format
 
 Indices and tables
 ==================

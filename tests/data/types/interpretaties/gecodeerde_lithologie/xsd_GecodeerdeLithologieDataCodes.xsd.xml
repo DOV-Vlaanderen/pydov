@@ -1,0 +1,1868 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://interpretatie.kern.schemas.dov.vlaanderen.be" targetNamespace="http://interpretatie.kern.schemas.dov.vlaanderen.be" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.00">
+	<xs:simpleType name="GecodeerdHoofdnaamCodesEnumType">
+		<xs:annotation>
+			<xs:documentation>De mogelijke waarden voor de hoofdnaam (lithologie) van de gecodeerde lithologie (codes)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AA">
+				<xs:annotation>
+					<xs:documentation>amfiboliet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AB">
+				<xs:annotation>
+					<xs:documentation>andesiet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AC">
+				<xs:annotation>
+					<xs:documentation>anhydriet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AD">
+				<xs:annotation>
+					<xs:documentation>ankeriet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AE">
+				<xs:annotation>
+					<xs:documentation>arkose</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AF">
+				<xs:annotation>
+					<xs:documentation>afval</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AG">
+				<xs:annotation>
+					<xs:documentation>as</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AN">
+				<xs:annotation>
+					<xs:documentation>antropogeen niet vloeistofdicht</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AR">
+				<xs:annotation>
+					<xs:documentation>areniet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AT">
+				<xs:annotation>
+					<xs:documentation>asfalt</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AV">
+				<xs:annotation>
+					<xs:documentation>antropogeen vloeistofdicht</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AW">
+				<xs:annotation>
+					<xs:documentation>antropogeen weinig vloeistofdicht</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BA">
+				<xs:annotation>
+					<xs:documentation>basalt</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BB">
+				<xs:annotation>
+					<xs:documentation>bauxiet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BC">
+				<xs:annotation>
+					<xs:documentation>bentoniet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BS">
+				<xs:annotation>
+					<xs:documentation>blauwshist</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CA">
+				<xs:annotation>
+					<xs:documentation>carbonaatfragmenten</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CB">
+				<xs:annotation>
+					<xs:documentation>conglomeraat/breccie</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CO">
+				<xs:annotation>
+					<xs:documentation>steenkool</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CT">
+				<xs:annotation>
+					<xs:documentation>chert (gebande)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DA">
+				<xs:annotation>
+					<xs:documentation>daciet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DB">
+				<xs:annotation>
+					<xs:documentation>diatomiet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DC">
+				<xs:annotation>
+					<xs:documentation>dioriet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DD">
+				<xs:annotation>
+					<xs:documentation>dolerriet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DE">
+				<xs:annotation>
+					<xs:documentation>duniet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DK">
+				<xs:annotation>
+					<xs:documentation>dolom kalksteen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DL">
+				<xs:annotation>
+					<xs:documentation>dolomiet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="EA">
+				<xs:annotation>
+					<xs:documentation>evaporiet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="EC">
+				<xs:annotation>
+					<xs:documentation>eclogiet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FA">
+				<xs:annotation>
+					<xs:documentation>fosforiet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FE">
+				<xs:annotation>
+					<xs:documentation>ijzer</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FG">
+				<xs:annotation>
+					<xs:documentation>fijn grind</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FO">
+				<xs:annotation>
+					<xs:documentation>fossielen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FY">
+				<xs:annotation>
+					<xs:documentation>fylliet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FZ">
+				<xs:annotation>
+					<xs:documentation>fijn zand</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GA">
+				<xs:annotation>
+					<xs:documentation>geroerd / gestoord</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GB">
+				<xs:annotation>
+					<xs:documentation>gabbro</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GC">
+				<xs:annotation>
+					<xs:documentation>gips</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GD">
+				<xs:annotation>
+					<xs:documentation>gneiss</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GE">
+				<xs:annotation>
+					<xs:documentation>graniet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GF">
+				<xs:annotation>
+					<xs:documentation>granodioriet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GG">
+				<xs:annotation>
+					<xs:documentation>grof grind</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GH">
+				<xs:annotation>
+					<xs:documentation>groenshist</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GI">
+				<xs:annotation>
+					<xs:documentation>glimmers</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GL">
+				<xs:annotation>
+					<xs:documentation>glauconiet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GM">
+				<xs:annotation>
+					<xs:documentation>gespleten metamorf</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GS">
+				<xs:annotation>
+					<xs:documentation>groensteen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GZ">
+				<xs:annotation>
+					<xs:documentation>grof zand</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HA">
+				<xs:annotation>
+					<xs:documentation>haliet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HB">
+				<xs:annotation>
+					<xs:documentation>hematiet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HC">
+				<xs:annotation>
+					<xs:documentation>houtskool</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HD">
+				<xs:annotation>
+					<xs:documentation>hornfels</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HT">
+				<xs:annotation>
+					<xs:documentation>houtresten</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HU">
+				<xs:annotation>
+					<xs:documentation>humus</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IA">
+				<xs:annotation>
+					<xs:documentation>ijzerooliet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IN">
+				<xs:annotation>
+					<xs:documentation>intrusief gesteente</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KA">
+				<xs:annotation>
+					<xs:documentation>kalk</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KB">
+				<xs:annotation>
+					<xs:documentation>kalksteenbreccie</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KC">
+				<xs:annotation>
+					<xs:documentation>kalkschiefer</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KL">
+				<xs:annotation>
+					<xs:documentation>klei</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KO">
+				<xs:annotation>
+					<xs:documentation>komatiet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KR">
+				<xs:annotation>
+					<xs:documentation>krijt</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KS">
+				<xs:annotation>
+					<xs:documentation>kalksteen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KT">
+				<xs:annotation>
+					<xs:documentation>kleisteen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="KW">
+				<xs:annotation>
+					<xs:documentation>kwartsiet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LA">
+				<xs:annotation>
+					<xs:documentation>lateriet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LE">
+				<xs:annotation>
+					<xs:documentation>leem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LG">
+				<xs:annotation>
+					<xs:documentation>ligniet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LI">
+				<xs:annotation>
+					<xs:documentation>limoniet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LS">
+				<xs:annotation>
+					<xs:documentation>leisteen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MA">
+				<xs:annotation>
+					<xs:documentation>marmer</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MB">
+				<xs:annotation>
+					<xs:documentation>micashist</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ME">
+				<xs:annotation>
+					<xs:documentation>mergel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MG">
+				<xs:annotation>
+					<xs:documentation>middelmatig grind</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MI">
+				<xs:annotation>
+					<xs:documentation>migmatiet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MM">
+				<xs:annotation>
+					<xs:documentation>metamorf gesteente</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MS">
+				<xs:annotation>
+					<xs:documentation>schiefer</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MY">
+				<xs:annotation>
+					<xs:documentation>myloniet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MZ">
+				<xs:annotation>
+					<xs:documentation>middelmatig zand</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NN">
+				<xs:annotation>
+					<xs:documentation>nummulieten</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="OK">
+				<xs:annotation>
+					<xs:documentation>oölitische kalksteen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="OM">
+				<xs:annotation>
+					<xs:documentation>organisch materiaal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PA">
+				<xs:annotation>
+					<xs:documentation>pegmatiet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PB">
+				<xs:annotation>
+					<xs:documentation>peridodiet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PC">
+				<xs:annotation>
+					<xs:documentation>poederkool</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PD">
+				<xs:annotation>
+					<xs:documentation>pyroxeniet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PL">
+				<xs:annotation>
+					<xs:documentation>plantenresten</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PM">
+				<xs:annotation>
+					<xs:documentation>puimsteen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PS">
+				<xs:annotation>
+					<xs:documentation>psammiet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PU">
+				<xs:annotation>
+					<xs:documentation>puin</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PY">
+				<xs:annotation>
+					<xs:documentation>pyriet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="QU">
+				<xs:annotation>
+					<xs:documentation>kwarts</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RA">
+				<xs:annotation>
+					<xs:documentation>radiolariet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RB">
+				<xs:annotation>
+					<xs:documentation>rhyoliet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RO">
+				<xs:annotation>
+					<xs:documentation>rots</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RV">
+				<xs:annotation>
+					<xs:documentation>verweerde rots</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SA">
+				<xs:annotation>
+					<xs:documentation>sideriet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SC">
+				<xs:annotation>
+					<xs:documentation>schelpen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SE">
+				<xs:annotation>
+					<xs:documentation>sedimentair</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SF">
+				<xs:annotation>
+					<xs:documentation>schelpfragmenten</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SG">
+				<xs:annotation>
+					<xs:documentation>schelpgruis</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SH">
+				<xs:annotation>
+					<xs:documentation>schalie</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SI">
+				<xs:annotation>
+					<xs:documentation>silt</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SK">
+				<xs:annotation>
+					<xs:documentation>schieferige kalkst.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SL">
+				<xs:annotation>
+					<xs:documentation>slib</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SO">
+				<xs:annotation>
+					<xs:documentation>scoria</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SP">
+				<xs:annotation>
+					<xs:documentation>serpentiniet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SS">
+				<xs:annotation>
+					<xs:documentation>siltsteen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ST">
+				<xs:annotation>
+					<xs:documentation>stenen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SX">
+				<xs:annotation>
+					<xs:documentation>silex</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SY">
+				<xs:annotation>
+					<xs:documentation>shist</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TA">
+				<xs:annotation>
+					<xs:documentation>teelaarde</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TB">
+				<xs:annotation>
+					<xs:documentation>tuff</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TS">
+				<xs:annotation>
+					<xs:documentation>tufsteen (tuffeau)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VA">
+				<xs:annotation>
+					<xs:documentation>vulkanisch gesteente</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VE">
+				<xs:annotation>
+					<xs:documentation>veen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="VS">
+				<xs:annotation>
+					<xs:documentation>vuursteen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="WA">
+				<xs:annotation>
+					<xs:documentation>wacksteen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="XG">
+				<xs:annotation>
+					<xs:documentation>grind</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="XX">
+				<xs:annotation>
+					<xs:documentation>onbekend</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="XZ">
+				<xs:annotation>
+					<xs:documentation>zand</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ZE">
+				<xs:annotation>
+					<xs:documentation>zeepsteen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ZK">
+				<xs:annotation>
+					<xs:documentation>kalkzandsteen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ZL">
+				<xs:annotation>
+					<xs:documentation>zandleem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ZS">
+				<xs:annotation>
+					<xs:documentation>zandsteen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="GecodeerdBijmengingHoeveelheidEnumType">
+		<xs:annotation>
+			<xs:documentation>De mogelijke waarden voor de hoeveelheid bijmenging (X staat voor de lithologie van de bijmenging)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Z">
+				<xs:annotation>
+					<xs:documentation>weinig Xhoudend</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="M">
+				<xs:annotation>
+					<xs:documentation>Xhoudend</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="S">
+				<xs:annotation>
+					<xs:documentation>sterk Xhoudend</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="W">
+				<xs:annotation>
+					<xs:documentation>weinig X</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="V">
+				<xs:annotation>
+					<xs:documentation>veel X</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="N">
+				<xs:annotation>
+					<xs:documentation>geen aanduiding van de hoeveelheid</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="GecodeerdKleurEnumType">
+		<xs:annotation>
+			<xs:documentation>lijst van kleuren te gebruiken bij de gecodeerde lithologie
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="onbekend"/>
+			<xs:enumeration value="beige"/>
+			<xs:enumeration value="zwart"/>
+			<xs:enumeration value="lichtbeige"/>
+			<xs:enumeration value="lichtblauw"/>
+			<xs:enumeration value="lichtbruin"/>
+			<xs:enumeration value="lichtgeel"/>
+			<xs:enumeration value="lichtgrijs"/>
+			<xs:enumeration value="lichtgroen"/>
+			<xs:enumeration value="lichtroest"/>
+			<xs:enumeration value="lichtrood"/>
+			<xs:enumeration value="beigebruin"/>
+			<xs:enumeration value="blauwgrijs"/>
+			<xs:enumeration value="lichtmauve"/>
+			<xs:enumeration value="blauwgroen"/>
+			<xs:enumeration value="lichtkaki"/>
+			<xs:enumeration value="lichtroos"/>
+			<xs:enumeration value="lichtoker"/>
+			<xs:enumeration value="lichtolijfgroen"/>
+			<xs:enumeration value="lichtoranje"/>
+			<xs:enumeration value="bruingeel"/>
+			<xs:enumeration value="bruingrijs"/>
+			<xs:enumeration value="bruingroen"/>
+			<xs:enumeration value="bruinrood"/>
+			<xs:enumeration value="geelgrijs"/>
+			<xs:enumeration value="geelgroen"/>
+			<xs:enumeration value="blauw"/>
+			<xs:enumeration value="grijsgroen"/>
+			<xs:enumeration value="donkerbeige"/>
+			<xs:enumeration value="donkerblauw"/>
+			<xs:enumeration value="donkerbruin"/>
+			<xs:enumeration value="donkergeel"/>
+			<xs:enumeration value="donkergroen"/>
+			<xs:enumeration value="donkerroest"/>
+			<xs:enumeration value="donkerrood"/>
+			<xs:enumeration value="grijsroest"/>
+			<xs:enumeration value="bontgekleurd"/>
+			<xs:enumeration value="donkermauve"/>
+			<xs:enumeration value="mauve"/>
+			<xs:enumeration value="donkerkaki"/>
+			<xs:enumeration value="donkerroos"/>
+			<xs:enumeration value="donkeroker"/>
+			<xs:enumeration value="donkerolijfgroen"/>
+			<xs:enumeration value="donkeroranje"/>
+			<xs:enumeration value="geelbruin"/>
+			<xs:enumeration value="grijsgeel"/>
+			<xs:enumeration value="onbepaald"/>
+			<xs:enumeration value="donkergrijs"/>
+			<xs:enumeration value="bleek / ontkleurd"/>
+			<xs:enumeration value="roodbruin"/>
+			<xs:enumeration value="bruin"/>
+			<xs:enumeration value="kaki"/>
+			<xs:enumeration value="blauwgeel"/>
+			<xs:enumeration value="blauwkaki"/>
+			<xs:enumeration value="blauwmauve"/>
+			<xs:enumeration value="blauwoker"/>
+			<xs:enumeration value="blauwolijfgroen"/>
+			<xs:enumeration value="blauworanje"/>
+			<xs:enumeration value="blauwroest"/>
+			<xs:enumeration value="blauwrood"/>
+			<xs:enumeration value="blauwroos"/>
+			<xs:enumeration value="roos"/>
+			<xs:enumeration value="bruinblauw"/>
+			<xs:enumeration value="bruinbeige"/>
+			<xs:enumeration value="bruinkaki"/>
+			<xs:enumeration value="bruinmauve"/>
+			<xs:enumeration value="bruinoker"/>
+			<xs:enumeration value="bruinolijfgroen"/>
+			<xs:enumeration value="bruinoranje"/>
+			<xs:enumeration value="bruinroest"/>
+			<xs:enumeration value="bruinroos"/>
+			<xs:enumeration value="mauvebeige"/>
+			<xs:enumeration value="oker"/>
+			<xs:enumeration value="mauveblauw"/>
+			<xs:enumeration value="mauvebruin"/>
+			<xs:enumeration value="mauvegeel"/>
+			<xs:enumeration value="mauvegrijs"/>
+			<xs:enumeration value="mauvegroen"/>
+			<xs:enumeration value="mauvekaki"/>
+			<xs:enumeration value="mauveoker"/>
+			<xs:enumeration value="mauveolijfgroen"/>
+			<xs:enumeration value="mauveoranje"/>
+			<xs:enumeration value="mauveroest"/>
+			<xs:enumeration value="olijfgroen"/>
+			<xs:enumeration value="mauverood"/>
+			<xs:enumeration value="mauveroos"/>
+			<xs:enumeration value="okerbeige"/>
+			<xs:enumeration value="okerblauw"/>
+			<xs:enumeration value="okerbruin"/>
+			<xs:enumeration value="okergeel"/>
+			<xs:enumeration value="okergrijs"/>
+			<xs:enumeration value="okergroen"/>
+			<xs:enumeration value="okerkaki"/>
+			<xs:enumeration value="okermauve"/>
+			<xs:enumeration value="oranje"/>
+			<xs:enumeration value="okerolijfgroen"/>
+			<xs:enumeration value="okeroranje"/>
+			<xs:enumeration value="okerroest"/>
+			<xs:enumeration value="okerrood"/>
+			<xs:enumeration value="okerroos"/>
+			<xs:enumeration value="olijfgroenbeige"/>
+			<xs:enumeration value="olijfgroenblauw"/>
+			<xs:enumeration value="olijfgroenbruin"/>
+			<xs:enumeration value="olijfgroengeel"/>
+			<xs:enumeration value="olijfgroengrijs"/>
+			<xs:enumeration value="olijfgroengroen"/>
+			<xs:enumeration value="olijfgroenkaki"/>
+			<xs:enumeration value="olijfgroenmauve"/>
+			<xs:enumeration value="olijfgroenoker"/>
+			<xs:enumeration value="olijfgroenoranje"/>
+			<xs:enumeration value="olijfgroenroest"/>
+			<xs:enumeration value="olijfgroenrood"/>
+			<xs:enumeration value="olijfgroenroos"/>
+			<xs:enumeration value="oranjebeige"/>
+			<xs:enumeration value="oranjeblauw"/>
+			<xs:enumeration value="oranjebruin"/>
+			<xs:enumeration value="oranjegeel"/>
+			<xs:enumeration value="oranjegrijs"/>
+			<xs:enumeration value="oranjegroen"/>
+			<xs:enumeration value="oranjekaki"/>
+			<xs:enumeration value="oranjemauve"/>
+			<xs:enumeration value="oranjeoker"/>
+			<xs:enumeration value="oranjeolijfgroen"/>
+			<xs:enumeration value="oranjeoranje"/>
+			<xs:enumeration value="oranjeroest"/>
+			<xs:enumeration value="oranjerood"/>
+			<xs:enumeration value="oranjeroos"/>
+			<xs:enumeration value="roestbeige"/>
+			<xs:enumeration value="roestblauw"/>
+			<xs:enumeration value="roestbruin"/>
+			<xs:enumeration value="roestgeel"/>
+			<xs:enumeration value="roestgrijs"/>
+			<xs:enumeration value="roestgroen"/>
+			<xs:enumeration value="roestkaki"/>
+			<xs:enumeration value="roestmauve"/>
+			<xs:enumeration value="roestoker"/>
+			<xs:enumeration value="roestolijfgroen"/>
+			<xs:enumeration value="roestoranje"/>
+			<xs:enumeration value="roestroest"/>
+			<xs:enumeration value="roestrood"/>
+			<xs:enumeration value="roestroos"/>
+			<xs:enumeration value="roodbeige"/>
+			<xs:enumeration value="roodblauw"/>
+			<xs:enumeration value="roodgeel"/>
+			<xs:enumeration value="roodgrijs"/>
+			<xs:enumeration value="roodgroen"/>
+			<xs:enumeration value="roodkaki"/>
+			<xs:enumeration value="roodmauve"/>
+			<xs:enumeration value="roodoker"/>
+			<xs:enumeration value="roodolijfgroen"/>
+			<xs:enumeration value="roodoranje"/>
+			<xs:enumeration value="roodroest"/>
+			<xs:enumeration value="roodroos"/>
+			<xs:enumeration value="geel"/>
+			<xs:enumeration value="geelroos"/>
+			<xs:enumeration value="roosbeige"/>
+			<xs:enumeration value="roosblauw"/>
+			<xs:enumeration value="roosbruin"/>
+			<xs:enumeration value="roosgeel"/>
+			<xs:enumeration value="roosgrijs"/>
+			<xs:enumeration value="roosgroen"/>
+			<xs:enumeration value="rooskaki"/>
+			<xs:enumeration value="roosmauve"/>
+			<xs:enumeration value="roosoker"/>
+			<xs:enumeration value="roosolijfgroen"/>
+			<xs:enumeration value="geelbeige"/>
+			<xs:enumeration value="roosoranje"/>
+			<xs:enumeration value="roosroest"/>
+			<xs:enumeration value="roosrood"/>
+			<xs:enumeration value="beigewit"/>
+			<xs:enumeration value="blauwwit"/>
+			<xs:enumeration value="bruinwit"/>
+			<xs:enumeration value="geelwit"/>
+			<xs:enumeration value="grijswit"/>
+			<xs:enumeration value="groenwit"/>
+			<xs:enumeration value="kakiwit"/>
+			<xs:enumeration value="geelblauw"/>
+			<xs:enumeration value="mauvewit"/>
+			<xs:enumeration value="okerwit"/>
+			<xs:enumeration value="olijfgroenwit"/>
+			<xs:enumeration value="oranjewit"/>
+			<xs:enumeration value="roestwit"/>
+			<xs:enumeration value="roodwit"/>
+			<xs:enumeration value="rooswit"/>
+			<xs:enumeration value="beigezwart"/>
+			<xs:enumeration value="blauwzwart"/>
+			<xs:enumeration value="bruinzwart"/>
+			<xs:enumeration value="geelkaki"/>
+			<xs:enumeration value="geelzwart"/>
+			<xs:enumeration value="grijszwart"/>
+			<xs:enumeration value="groenzwart"/>
+			<xs:enumeration value="kakizwart"/>
+			<xs:enumeration value="mauvezwart"/>
+			<xs:enumeration value="okerzwart"/>
+			<xs:enumeration value="olijfgroenzwart"/>
+			<xs:enumeration value="roestzwart"/>
+			<xs:enumeration value="roodzwart"/>
+			<xs:enumeration value="rooszwart"/>
+			<xs:enumeration value="geelmauve"/>
+			<xs:enumeration value="lichtzwart"/>
+			<xs:enumeration value="lichtwit"/>
+			<xs:enumeration value="donkerzwart"/>
+			<xs:enumeration value="donkerwit"/>
+			<xs:enumeration value="witbeige"/>
+			<xs:enumeration value="witblauw"/>
+			<xs:enumeration value="witbruin"/>
+			<xs:enumeration value="witgeel"/>
+			<xs:enumeration value="witgrijs"/>
+			<xs:enumeration value="witgroen"/>
+			<xs:enumeration value="geeloker"/>
+			<xs:enumeration value="witkaki"/>
+			<xs:enumeration value="witmauve"/>
+			<xs:enumeration value="witoker"/>
+			<xs:enumeration value="witolijfgroen"/>
+			<xs:enumeration value="witoranje"/>
+			<xs:enumeration value="witroest"/>
+			<xs:enumeration value="witrood"/>
+			<xs:enumeration value="witroos"/>
+			<xs:enumeration value="zwartbeige"/>
+			<xs:enumeration value="zwartblauw"/>
+			<xs:enumeration value="geelolijfgroen"/>
+			<xs:enumeration value="zwartbruin"/>
+			<xs:enumeration value="zwartgeel"/>
+			<xs:enumeration value="zwartgrijs"/>
+			<xs:enumeration value="zwartgroen"/>
+			<xs:enumeration value="zwartkaki"/>
+			<xs:enumeration value="zwartmauve"/>
+			<xs:enumeration value="zwartoker"/>
+			<xs:enumeration value="zwartolijfgroen"/>
+			<xs:enumeration value="zwartoranje"/>
+			<xs:enumeration value="zwartroest"/>
+			<xs:enumeration value="geeloranje"/>
+			<xs:enumeration value="zwartrood"/>
+			<xs:enumeration value="zwartroos"/>
+			<xs:enumeration value="paarsbruin"/>
+			<xs:enumeration value="lichtrood / roos"/>
+			<xs:enumeration value="zwartwit"/>
+			<xs:enumeration value="geelroest"/>
+			<xs:enumeration value="geelrood"/>
+			<xs:enumeration value="grijs"/>
+			<xs:enumeration value="grijsbeige"/>
+			<xs:enumeration value="grijsblauw"/>
+			<xs:enumeration value="grijsbruin"/>
+			<xs:enumeration value="grijskaki"/>
+			<xs:enumeration value="grijsmauve"/>
+			<xs:enumeration value="grijsoker"/>
+			<xs:enumeration value="grijsolijfgroen"/>
+			<xs:enumeration value="grijsoranje"/>
+			<xs:enumeration value="grijsrood"/>
+			<xs:enumeration value="grijsroos"/>
+			<xs:enumeration value="groen"/>
+			<xs:enumeration value="groenbeige"/>
+			<xs:enumeration value="groenblauw"/>
+			<xs:enumeration value="groenbruin"/>
+			<xs:enumeration value="groengeel"/>
+			<xs:enumeration value="groengrijs"/>
+			<xs:enumeration value="groenkaki"/>
+			<xs:enumeration value="groenmauve"/>
+			<xs:enumeration value="groenoker"/>
+			<xs:enumeration value="groenolijfgroen"/>
+			<xs:enumeration value="groenoranje"/>
+			<xs:enumeration value="roest"/>
+			<xs:enumeration value="groenroest"/>
+			<xs:enumeration value="groenrood"/>
+			<xs:enumeration value="groenroos"/>
+			<xs:enumeration value="kakibeige"/>
+			<xs:enumeration value="kakiblauw"/>
+			<xs:enumeration value="kakibruin"/>
+			<xs:enumeration value="kakigeel"/>
+			<xs:enumeration value="kakigrijs"/>
+			<xs:enumeration value="kakigroen"/>
+			<xs:enumeration value="kakimauve"/>
+			<xs:enumeration value="rood"/>
+			<xs:enumeration value="kakioker"/>
+			<xs:enumeration value="kakiolijfgroen"/>
+			<xs:enumeration value="kakioranje"/>
+			<xs:enumeration value="kakiroest"/>
+			<xs:enumeration value="kakirood"/>
+			<xs:enumeration value="kakiroos"/>
+			<xs:enumeration value="beigeblauw"/>
+			<xs:enumeration value="beigegeel"/>
+			<xs:enumeration value="beigegrijs"/>
+			<xs:enumeration value="beigegroen"/>
+			<xs:enumeration value="wit"/>
+			<xs:enumeration value="beigekaki"/>
+			<xs:enumeration value="beigemauve"/>
+			<xs:enumeration value="beigeoker"/>
+			<xs:enumeration value="beigeolijfgroen"/>
+			<xs:enumeration value="beigeoranje"/>
+			<xs:enumeration value="beigeroest"/>
+			<xs:enumeration value="beigerood"/>
+			<xs:enumeration value="beigeroos"/>
+			<xs:enumeration value="blauwbeige"/>
+			<xs:enumeration value="blauwbruin"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AdertypeEnumType">
+		<xs:annotation>
+			<xs:documentation>Lijst van type van aders</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="onbepaald"/>
+			<xs:enumeration value="kaoliniet"/>
+			<xs:enumeration value="open met kwarts"/>
+			<xs:enumeration value="dicht met kwarts"/>
+			<xs:enumeration value="open met carbonaat"/>
+			<xs:enumeration value="dicht met carbonaat"/>
+			<xs:enumeration value="sulfide"/>
+			<xs:enumeration value="gemengd"/>
+			<xs:enumeration value="breccie"/>
+			<xs:enumeration value="blende"/>
+			<xs:enumeration value="galeniet"/>
+			<xs:enumeration value="pyriet"/>
+			<xs:enumeration value="calciet"/>
+			<xs:enumeration value="dolomiet"/>
+			<xs:enumeration value="hatchettiet"/>
+			<xs:enumeration value="kwarts"/>
+			<xs:enumeration value="milleriet"/>
+			<xs:enumeration value="gips"/>
+			<xs:enumeration value="anhydriet"/>
+			<xs:enumeration value="haliet"/>
+			<xs:enumeration value="mangaan"/>
+			<xs:enumeration value="klei (groen)"/>
+			<xs:enumeration value="blinkend / kolig / bitumineus"/>
+			<xs:enumeration value="chalcopyriet"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TektoniektypeEnumType">
+		<xs:annotation>
+			<xs:documentation>lijst van types tektoniek</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="onbepaald"/>
+			<xs:enumeration value="glijvlak / verschuivingsvlak"/>
+			<xs:enumeration value="diaklaas"/>
+			<xs:enumeration value="breukvlak"/>
+			<xs:enumeration value="diaklaasafstand"/>
+			<xs:enumeration value="plooiing (crochon)"/>
+			<xs:enumeration value="splijtingsvlak"/>
+			<xs:enumeration value="fijne zwarte voegen"/>
+			<xs:enumeration value="calcietgevulde spleten"/>
+			<xs:enumeration value="stylolieten"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SecundairKenmerktypeEnumType">
+		<xs:annotation>
+			<xs:documentation>lijst van types secundaire kenmerken</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="onbepaald"/>
+			<xs:enumeration value="bitumineus / kolig"/>
+			<xs:enumeration value="siderietband"/>
+			<xs:enumeration value="siderietknol / siderietlens"/>
+			<xs:enumeration value="tonstein"/>
+			<xs:enumeration value="doffe pyriet"/>
+			<xs:enumeration value="helle pyriet"/>
+			<xs:enumeration value="sferosideriet"/>
+			<xs:enumeration value="kaoliniet oölieten"/>
+			<xs:enumeration value="coquina / schelpenkalk"/>
+			<xs:enumeration value="koolstrepen"/>
+			<xs:enumeration value="ingekoolde stammen"/>
+			<xs:enumeration value="koolklasten"/>
+			<xs:enumeration value="andere klasten"/>
+			<xs:enumeration value="carbonaathoudend"/>
+			<xs:enumeration value="poreus"/>
+			<xs:enumeration value="paleosol / gesloten bedding"/>
+			<xs:enumeration value="doorworteld / organische resten / houtresten"/>
+			<xs:enumeration value="valse muur (vloer)"/>
+			<xs:enumeration value="escaille"/>
+			<xs:enumeration value="gepyritiseerd"/>
+			<xs:enumeration value="vals dak"/>
+			<xs:enumeration value="verweerd"/>
+			<xs:enumeration value="veldspaatrijk"/>
+			<xs:enumeration value="kwartsietisch"/>
+			<xs:enumeration value="korrelig"/>
+			<xs:enumeration value="venig / veenhoudend"/>
+			<xs:enumeration value="steenbrokjes"/>
+			<xs:enumeration value="glauconiethoudend"/>
+			<xs:enumeration value="kwartshoudend"/>
+			<xs:enumeration value="vivianiethoudend"/>
+			<xs:enumeration value="vuursteenhoudend"/>
+			<xs:enumeration value="verkiezeld"/>
+			<xs:enumeration value="ontkalkt"/>
+			<xs:enumeration value="brokkelig / splinterig"/>
+			<xs:enumeration value="carbonaatconcretie"/>
+			<xs:enumeration value="fosfaatknol"/>
+			<xs:enumeration value="pyrietknol / laag"/>
+			<xs:enumeration value="anhydriet / gipshoudend"/>
+			<xs:enumeration value="gipsknollen / lenzen"/>
+			<xs:enumeration value="psammitisch"/>
+			<xs:enumeration value="silikaathoudend"/>
+			<xs:enumeration value="marmering / spikkeling"/>
+			<xs:enumeration value="dolomiethoudend"/>
+			<xs:enumeration value="septaria"/>
+			<xs:enumeration value="'coal ball'"/>
+			<xs:enumeration value="kleiig"/>
+			<xs:enumeration value="kalklenzen / bankjes"/>
+			<xs:enumeration value="limoniet- / ijzerhoudend"/>
+			<xs:enumeration value="lemig"/>
+			<xs:enumeration value="ligniethoudend"/>
+			<xs:enumeration value="micahoudend"/>
+			<xs:enumeration value="harde banken"/>
+			<xs:enumeration value="zacht"/>
+			<xs:enumeration value="zandig"/>
+			<xs:enumeration value="basisgrind"/>
+			<xs:enumeration value="zandsteenbanken"/>
+			<xs:enumeration value="kleiige banken"/>
+			<xs:enumeration value="mergelige banken"/>
+			<xs:enumeration value="zandige banken"/>
+			<xs:enumeration value="grindbanken"/>
+			<xs:enumeration value="markasietknollen"/>
+			<xs:enumeration value="kristallijn"/>
+			<xs:enumeration value="kalkrijke banken"/>
+			<xs:enumeration value="zachte banken"/>
+			<xs:enumeration value="fijnkorrelig"/>
+			<xs:enumeration value="grofkorrelig"/>
+			<xs:enumeration value="onregelmatige verkiezeling (concreties)"/>
+			<xs:enumeration value="hematiethoudend / hematietoölieten"/>
+			<xs:enumeration value="zandsteenklasten"/>
+			<xs:enumeration value="kalkhoudend"/>
+			<xs:enumeration value="anhydrietknollen / lenzen"/>
+			<xs:enumeration value="sideriethoudend"/>
+			<xs:enumeration value="siltsteenklasten"/>
+			<xs:enumeration value="kleisteenklasten"/>
+			<xs:enumeration value="siltsteenbanken"/>
+			<xs:enumeration value="kalksteenbanken"/>
+			<xs:enumeration value="kleisteenlenzen / -banken"/>
+			<xs:enumeration value="chalcopyrietknollen / -lagen"/>
+			<xs:enumeration value="dolomietbanken"/>
+			<xs:enumeration value="krijtklasten"/>
+			<xs:enumeration value="pyriet"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SedimentaireStructuurtypeEnumType">
+		<xs:annotation>
+			<xs:documentation>lijst van types sedimentaire structuren</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="onbepaald"/>
+			<xs:enumeration value="straticulaties"/>
+			<xs:enumeration value="laminaties"/>
+			<xs:enumeration value="geband"/>
+			<xs:enumeration value="lensvormige gelaagdheid"/>
+			<xs:enumeration value="massief (compact)"/>
+			<xs:enumeration value="zandwolken"/>
+			<xs:enumeration value="schuine gelaagdheid"/>
+			<xs:enumeration value="kriskras gelaagdheid"/>
+			<xs:enumeration value="load cast"/>
+			<xs:enumeration value="slumping"/>
+			<xs:enumeration value="compactiebreuken"/>
+			<xs:enumeration value="'regendruppels' (cf. Planolites)"/>
+			<xs:enumeration value="erosievlak"/>
+			<xs:enumeration value="niet-gecompacteerde fossielen"/>
+			<xs:enumeration value="micarijk vlak"/>
+			<xs:enumeration value="zwart / kolig laagvlak"/>
+			<xs:enumeration value="laagvlak met koolbrokjes"/>
+			<xs:enumeration value="aangespoelde plantenresten / plantenhaksel"/>
+			<xs:enumeration value="bioturbatie"/>
+			<xs:enumeration value="verspreide keien"/>
+			<xs:enumeration value="mudstone textuur"/>
+			<xs:enumeration value="wackestone textuur"/>
+			<xs:enumeration value="packstone textuur"/>
+			<xs:enumeration value="grainstone textuur"/>
+			<xs:enumeration value="boundstone textuur"/>
+			<xs:enumeration value="karst / oplossing"/>
+			<xs:enumeration value="hardground"/>
+			<xs:enumeration value="concretie"/>
+			<xs:enumeration value="versteend / aaneengekit materiaal"/>
+			<xs:enumeration value="uitdrogingsspleten"/>
+			<xs:enumeration value="bioklasten"/>
+			<xs:enumeration value="pellets"/>
+			<xs:enumeration value="oölieten"/>
+			<xs:enumeration value="oncolieten"/>
+			<xs:enumeration value="pisolieten"/>
+			<xs:enumeration value="intraklasten"/>
+			<xs:enumeration value="evaporiet pseudomorfen"/>
+			<xs:enumeration value="calcrete / caliche"/>
+			<xs:enumeration value="FU-gegradeerde gelaagdheid"/>
+			<xs:enumeration value="CU-gegradeerde gelaagdheid"/>
+			<xs:enumeration value="turbidiet"/>
+			<xs:enumeration value="speleotheem"/>
+			<xs:enumeration value="birdseyes"/>
+			<xs:enumeration value="stroomribbels"/>
+			<xs:enumeration value="fijn gebankt"/>
+			<xs:enumeration value="kleiklasten"/>
+			<xs:enumeration value="golvend laagvlak"/>
+			<xs:enumeration value="breccieus"/>
+			<xs:enumeration value="kleilenzen /-laagjes"/>
+			<xs:enumeration value="kalkklasten"/>
+			<xs:enumeration value="fossielrijk"/>
+			<xs:enumeration value="nodulair"/>
+			<xs:enumeration value="kleirijk laagvlak"/>
+			<xs:enumeration value="floatstone"/>
+			<xs:enumeration value="rudstone"/>
+			<xs:enumeration value="pisoiden"/>
+			<xs:enumeration value="laminoid-fenestral structuur"/>
+			<xs:enumeration value="limoniet- / ijzerbanken"/>
+			<xs:enumeration value="lignietbanken"/>
+			<xs:enumeration value="veenbanken"/>
+			<xs:enumeration value="geopetale structuur"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FossielaardEnumType">
+		<xs:annotation>
+			<xs:documentation>lijst van fossielaard</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="fauna"/>
+			<xs:enumeration value="flora"/>
+			<xs:enumeration value="ichnofossiel"/>
+			<xs:enumeration value="mariene fauna"/>
+			<xs:enumeration value="brakwaterfauna"/>
+			<xs:enumeration value="zoetwaterfauna"/>
+			<xs:enumeration value="marien ichnofossiel"/>
+			<xs:enumeration value="brakwaterichnofossiel"/>
+			<xs:enumeration value="zoetwaterichnofossiel"/>
+			<xs:enumeration value="onbepaald"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FossieltypeEnumType">
+		<xs:annotation>
+			<xs:documentation>lijst van types van fossielen</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Acritarchen"/>
+			<xs:enumeration value="Acrolepis sp."/>
+			<xs:enumeration value="Actaeon sp."/>
+			<xs:enumeration value="Actinocamax quadratus"/>
+			<xs:enumeration value="Actinocamax sp."/>
+			<xs:enumeration value="Adiantites sessilis"/>
+			<xs:enumeration value="Adiantites sp."/>
+			<xs:enumeration value="Alethopteris davreuxi"/>
+			<xs:enumeration value="Alethopteris decurrens"/>
+			<xs:enumeration value="Alethopteris decurrens var. Gracillima"/>
+			<xs:enumeration value="Alethopteris gracillima"/>
+			<xs:enumeration value="Alethopteris lonchitica"/>
+			<xs:enumeration value="Alethopteris lonchitica decurrens"/>
+			<xs:enumeration value="Alethopteris lonchitifolia davreuxi"/>
+			<xs:enumeration value="Alethopteris serli"/>
+			<xs:enumeration value="Alethopteris serli lonchitifolia"/>
+			<xs:enumeration value="Alethopteris sp."/>
+			<xs:enumeration value="Alethopteris valida"/>
+			<xs:enumeration value="algaire mat / laminiet"/>
+			<xs:enumeration value="algen"/>
+			<xs:enumeration value="ammonieten"/>
+			<xs:enumeration value="Annularia gallioides"/>
+			<xs:enumeration value="Annularia microphylla"/>
+			<xs:enumeration value="Annularia radiata"/>
+			<xs:enumeration value="Annularia ramosa"/>
+			<xs:enumeration value="Annularia sp."/>
+			<xs:enumeration value="Annularia sphenophylloides"/>
+			<xs:enumeration value="Anomia lamellosa"/>
+			<xs:enumeration value="Anomia sp."/>
+			<xs:enumeration value="Anomya (Terebratula)"/>
+			<xs:enumeration value="Anomya sp."/>
+			<xs:enumeration value="Anthracoceras sp."/>
+			<xs:enumeration value="Anthracomya discordata"/>
+			<xs:enumeration value="Anthracomya minima"/>
+			<xs:enumeration value="Anthracomya minima Phillipsii"/>
+			<xs:enumeration value="Anthracomya modiolaris"/>
+			<xs:enumeration value="Anthracomya oblonga"/>
+			<xs:enumeration value="Anthracomya philippsi"/>
+			<xs:enumeration value="Anthracomya sp."/>
+			<xs:enumeration value="Anthracomya wardi"/>
+			<xs:enumeration value="Anthracomya wardi williamsoni"/>
+			<xs:enumeration value="Anthracomya williamsoni"/>
+			<xs:enumeration value="Anthraconaia sp."/>
+			<xs:enumeration value="Anthraconauta lenisulcata"/>
+			<xs:enumeration value="Anthraconauta minima"/>
+			<xs:enumeration value="Anthraconauta minima phillipsii"/>
+			<xs:enumeration value="Anthraconauta Phillipsii"/>
+			<xs:enumeration value="Anthraconauta scotica"/>
+			<xs:enumeration value="Anthraconauta sp."/>
+			<xs:enumeration value="Anthraconauta subovata"/>
+			<xs:enumeration value="Anthracosia sp."/>
+			<xs:enumeration value="Anthracosphaerum sp."/>
+			<xs:enumeration value="Aphlebia sp."/>
+			<xs:enumeration value="Aporrhais granulosa"/>
+			<xs:enumeration value="Aporrhais nilsoni"/>
+			<xs:enumeration value="Aporrhais sp."/>
+			<xs:enumeration value="Aporrhais speciosa"/>
+			<xs:enumeration value="Arca sp."/>
+			<xs:enumeration value="Arca subglabra"/>
+			<xs:enumeration value="arthropoden"/>
+			<xs:enumeration value="Arthyris lamellosa"/>
+			<xs:enumeration value="Arthyris sp."/>
+			<xs:enumeration value="Artisia sp."/>
+			<xs:enumeration value="Artisia transversa"/>
+			<xs:enumeration value="Asolanus camptotaenia"/>
+			<xs:enumeration value="Asolanus sp."/>
+			<xs:enumeration value="Astarte sp."/>
+			<xs:enumeration value="Asterophyllites charaeformis"/>
+			<xs:enumeration value="Asterophyllites equisetiformis"/>
+			<xs:enumeration value="Asterophyllites grandis"/>
+			<xs:enumeration value="Asterophyllites longifolius"/>
+			<xs:enumeration value="Asterophyllites lycopodioides"/>
+			<xs:enumeration value="Asterophyllites myriophyllum"/>
+			<xs:enumeration value="Asterophyllites roehli"/>
+			<xs:enumeration value="Asterophyllites sp."/>
+			<xs:enumeration value="Asterotheca miltoni"/>
+			<xs:enumeration value="Asterotheca sp."/>
+			<xs:enumeration value="Aulacopteris sp."/>
+			<xs:enumeration value="Aulacopteris vulgaris"/>
+			<xs:enumeration value="Avicula sp."/>
+			<xs:enumeration value="Aviculopecten sp."/>
+			<xs:enumeration value="Baculites sp."/>
+			<xs:enumeration value="Baculites vertebralis"/>
+			<xs:enumeration value="Balanocrinus sp."/>
+			<xs:enumeration value="Balanus sp."/>
+			<xs:enumeration value="Barbatia marullensis"/>
+			<xs:enumeration value="Barbatia sp."/>
+			<xs:enumeration value="belemnieten"/>
+			<xs:enumeration value="Belemnitella mucronata"/>
+			<xs:enumeration value="Belemnitella sp."/>
+			<xs:enumeration value="Bellinurus Céphaloth."/>
+			<xs:enumeration value="Bellinurus reginae"/>
+			<xs:enumeration value="Bellinurus sp."/>
+			<xs:enumeration value="Beyrichia arcuata"/>
+			<xs:enumeration value="Beyrichia sp."/>
+			<xs:enumeration value="Bivalven"/>
+			<xs:enumeration value="Bothrodendron minutifolium"/>
+			<xs:enumeration value="Bothrodendron punctatum"/>
+			<xs:enumeration value="Bothrodendron sp."/>
+			<xs:enumeration value="Bothrostrobus olryi"/>
+			<xs:enumeration value="Bothrostrobus sp."/>
+			<xs:enumeration value="Bourgueticrinus ellipticus"/>
+			<xs:enumeration value="Bourgueticrinus sp."/>
+			<xs:enumeration value="brachiopoden"/>
+			<xs:enumeration value="Bryozoa"/>
+			<xs:enumeration value="Buccinum sp."/>
+			<xs:enumeration value="Calamites approximatus"/>
+			<xs:enumeration value="Calamites carinatus"/>
+			<xs:enumeration value="Calamites cisti"/>
+			<xs:enumeration value="Calamites indulatus"/>
+			<xs:enumeration value="Calamites ostraviensis"/>
+			<xs:enumeration value="Calamites paleaceus"/>
+			<xs:enumeration value="Calamites ramosus"/>
+			<xs:enumeration value="Calamites semicircularis"/>
+			<xs:enumeration value="Calamites sp."/>
+			<xs:enumeration value="Calamites suckowi"/>
+			<xs:enumeration value="Calamites undulatus"/>
+			<xs:enumeration value="Calamites verticillatus"/>
+			<xs:enumeration value="Calamophyllites goepperti"/>
+			<xs:enumeration value="Calamophyllites sp."/>
+			<xs:enumeration value="Calamophyllites verticillatus"/>
+			<xs:enumeration value="Calamostachys germanica"/>
+			<xs:enumeration value="Calamostachys ramosa"/>
+			<xs:enumeration value="Calamostachys sp."/>
+			<xs:enumeration value="Calcarina calcitrapoides"/>
+			<xs:enumeration value="Calcarina sp."/>
+			<xs:enumeration value="Calianassa fayiasi"/>
+			<xs:enumeration value="Calianassa sp."/>
+			<xs:enumeration value="Cancellaria sp."/>
+			<xs:enumeration value="Cantheliophorus sp."/>
+			<xs:enumeration value="Carbonia acuta"/>
+			<xs:enumeration value="Carbonia fabulina"/>
+			<xs:enumeration value="Carbonia sp."/>
+			<xs:enumeration value="Carbonicola acuta"/>
+			<xs:enumeration value="Carbonicola acuta vel. Robusta"/>
+			<xs:enumeration value="Carbonicola aquilina"/>
+			<xs:enumeration value="Carbonicola aquilina acuta"/>
+			<xs:enumeration value="Carbonicola aquilina var. Phrygiana"/>
+			<xs:enumeration value="Carbonicola callopristodus"/>
+			<xs:enumeration value="Carbonicola nucularis"/>
+			<xs:enumeration value="Carbonicola obtusa"/>
+			<xs:enumeration value="Carbonicola ovalis"/>
+			<xs:enumeration value="Carbonicola phrygiana"/>
+			<xs:enumeration value="Carbonicola pyritisées"/>
+			<xs:enumeration value="Carbonicola robusta"/>
+			<xs:enumeration value="Carbonicola similis"/>
+			<xs:enumeration value="Carbonicola sp."/>
+			<xs:enumeration value="Carbonicola turgida"/>
+			<xs:enumeration value="Cardita kickxi"/>
+			<xs:enumeration value="Cardita sp."/>
+			<xs:enumeration value="Cardium becksi"/>
+			<xs:enumeration value="Cardium cingulatum"/>
+			<xs:enumeration value="Cardium nöggerathi"/>
+			<xs:enumeration value="Cardium sp."/>
+			<xs:enumeration value="Carpolites perpusillus"/>
+			<xs:enumeration value="Carpolites sp."/>
+			<xs:enumeration value="Cerithes sp."/>
+			<xs:enumeration value="Cerithium decheni"/>
+			<xs:enumeration value="Cerithium koeneni"/>
+			<xs:enumeration value="Cerithium sp."/>
+			<xs:enumeration value="Cheirodus sp."/>
+			<xs:enumeration value="Cheirodus striatus"/>
+			<xs:enumeration value="Chenopus sp."/>
+			<xs:enumeration value="Chitinozoa"/>
+			<xs:enumeration value="Chlamys sp."/>
+			<xs:enumeration value="Chonetes papilionacea"/>
+			<xs:enumeration value="Chonetes sp."/>
+			<xs:enumeration value="Cidaris sp."/>
+			<xs:enumeration value="Cingularia sp."/>
+			<xs:enumeration value="Cingularia typica"/>
+			<xs:enumeration value="Cochlichnus sp."/>
+			<xs:enumeration value="Coelacanthus elegans"/>
+			<xs:enumeration value="Coelacanthus sp."/>
+			<xs:enumeration value="Coelonautilus sp."/>
+			<xs:enumeration value="coniferen"/>
+			<xs:enumeration value="coprolieten"/>
+			<xs:enumeration value="Corbula sp."/>
+			<xs:enumeration value="Cordaianthus pitcairniae"/>
+			<xs:enumeration value="Cordaianthus sp."/>
+			<xs:enumeration value="Cordaicarpus cordai"/>
+			<xs:enumeration value="Cordaicarpus gutbieri"/>
+			<xs:enumeration value="Cordaicarpus sp."/>
+			<xs:enumeration value="Cordaites borassifolius"/>
+			<xs:enumeration value="Cordaites palmaeformis"/>
+			<xs:enumeration value="Cordaites principalis"/>
+			<xs:enumeration value="Cordaites sp."/>
+			<xs:enumeration value="Cornuspira involvens"/>
+			<xs:enumeration value="Cornuspira sp."/>
+			<xs:enumeration value="Corynepteris coralloides"/>
+			<xs:enumeration value="Corynepteris sp."/>
+			<xs:enumeration value="Corynepteris sternbergi"/>
+			<xs:enumeration value="Crania ignabergensis"/>
+			<xs:enumeration value="Crania sp."/>
+			<xs:enumeration value="Crassatella aracaea"/>
+			<xs:enumeration value="Crassatella sp."/>
+			<xs:enumeration value="Crassatella symmetrica"/>
+			<xs:enumeration value="crinoïden"/>
+			<xs:enumeration value="Cristellaria sp."/>
+			<xs:enumeration value="Crossotheca schatzlarensis"/>
+			<xs:enumeration value="Crossotheca sp."/>
+			<xs:enumeration value="Crustaceae"/>
+			<xs:enumeration value="Cucullea alta"/>
+			<xs:enumeration value="Cucullea matheroniana"/>
+			<xs:enumeration value="Cucullea sp."/>
+			<xs:enumeration value="Cucullea subglabra"/>
+			<xs:enumeration value="Curvirimula sp."/>
+			<xs:enumeration value="Cyclopteris orbicularis"/>
+			<xs:enumeration value="Cyclopteris sp."/>
+			<xs:enumeration value="Cypricardia sp."/>
+			<xs:enumeration value="Cypridina (Entomis) sp."/>
+			<xs:enumeration value="Cyprimeria gelinitzi"/>
+			<xs:enumeration value="Cyprimeria sp."/>
+			<xs:enumeration value="Cyprina morrisi"/>
+			<xs:enumeration value="Cyprina nysti"/>
+			<xs:enumeration value="Cyprina sp."/>
+			<xs:enumeration value="Cypris sp."/>
+			<xs:enumeration value="Cytherea ovalis"/>
+			<xs:enumeration value="Cytherea plana"/>
+			<xs:enumeration value="Cytherea polymorpha"/>
+			<xs:enumeration value="Cytherea sp."/>
+			<xs:enumeration value="Cyzicus (Estheria) sp."/>
+			<xs:enumeration value="Dentalium sp."/>
+			<xs:enumeration value="Dentallum sp."/>
+			<xs:enumeration value="Diplotmema furcatum"/>
+			<xs:enumeration value="Diplotmema sp."/>
+			<xs:enumeration value="Ditrupa clava"/>
+			<xs:enumeration value="Ditrupa mosae"/>
+			<xs:enumeration value="Ditrupa sp."/>
+			<xs:enumeration value="Dorycordaites palmaeformis"/>
+			<xs:enumeration value="Dorycordaites sp."/>
+			<xs:enumeration value="Dosinia lenticularis"/>
+			<xs:enumeration value="Dosinia sp."/>
+			<xs:enumeration value="Drydenius molyneuxi"/>
+			<xs:enumeration value="Drydenius sp."/>
+			<xs:enumeration value="Echinocorys sp."/>
+			<xs:enumeration value="Echinocorys vulgaris"/>
+			<xs:enumeration value="Elonichthys aitkeni"/>
+			<xs:enumeration value="Elonichthys denticulatus"/>
+			<xs:enumeration value="Elonichthys sp."/>
+			<xs:enumeration value="Enchodus (Faujasi) sp."/>
+			<xs:enumeration value="Entalis geinitzi"/>
+			<xs:enumeration value="Entalis sp."/>
+			<xs:enumeration value="Entomostraca"/>
+			<xs:enumeration value="Eriphyla lenticularis"/>
+			<xs:enumeration value="Eriphyla sp."/>
+			<xs:enumeration value="Estheria simoni"/>
+			<xs:enumeration value="Estheria sp."/>
+			<xs:enumeration value="Eurypterus sp."/>
+			<xs:enumeration value="foraminiferen"/>
+			<xs:enumeration value="Fusus sp."/>
+			<xs:enumeration value="Gastropoden"/>
+			<xs:enumeration value="Geinitzia elegans"/>
+			<xs:enumeration value="Geinitzia sp."/>
+			<xs:enumeration value="Geisina sp."/>
+			<xs:enumeration value="Gervillia solenoides"/>
+			<xs:enumeration value="Gervillia sp."/>
+			<xs:enumeration value="Glycemeris sp."/>
+			<xs:enumeration value="goniatieten"/>
+			<xs:enumeration value="graafgang"/>
+			<xs:enumeration value="Graptolieten"/>
+			<xs:enumeration value="Guettardia sp."/>
+			<xs:enumeration value="Guilielmites sp."/>
+			<xs:enumeration value="Gulpenia limburgensis"/>
+			<xs:enumeration value="Gulpenia sp."/>
+			<xs:enumeration value="Gyrolites davreuxi"/>
+			<xs:enumeration value="Gyrolites dewalquei"/>
+			<xs:enumeration value="Gyrolites sp."/>
+			<xs:enumeration value="haaietanden"/>
+			<xs:enumeration value="Hexaspermum sp."/>
+			<xs:enumeration value="Inoceramus balticus"/>
+			<xs:enumeration value="Inoceramus inconstans"/>
+			<xs:enumeration value="Inoceramus kleini"/>
+			<xs:enumeration value="Inoceramus lamarcki var. websteri"/>
+			<xs:enumeration value="Inoceramus sp."/>
+			<xs:enumeration value="Janira quadricostata"/>
+			<xs:enumeration value="Janira sp."/>
+			<xs:enumeration value="koralen"/>
+			<xs:enumeration value="krabben"/>
+			<xs:enumeration value="Lamna sp."/>
+			<xs:enumeration value="Leaia sp."/>
+			<xs:enumeration value="Leaia tricarinata"/>
+			<xs:enumeration value="Leaia tricarinata minima"/>
+			<xs:enumeration value="Leda deshayesiana"/>
+			<xs:enumeration value="Leda sp."/>
+			<xs:enumeration value="Lepidodendron aculeatum"/>
+			<xs:enumeration value="Lepidodendron dichotomum"/>
+			<xs:enumeration value="Lepidodendron dissitum"/>
+			<xs:enumeration value="Lepidodendron jaraczewski"/>
+			<xs:enumeration value="Lepidodendron lycopodioïdes"/>
+			<xs:enumeration value="Lepidodendron obovatum"/>
+			<xs:enumeration value="Lepidodendron ophiurus"/>
+			<xs:enumeration value="Lepidodendron sp."/>
+			<xs:enumeration value="Lepidodendron sternbergi"/>
+			<xs:enumeration value="Lepidodendron triangulaire"/>
+			<xs:enumeration value="Lepidodendron wortheni"/>
+			<xs:enumeration value="Lepidophloios acerosus"/>
+			<xs:enumeration value="Lepidophloios caricinus"/>
+			<xs:enumeration value="Lepidophloios laricinus"/>
+			<xs:enumeration value="Lepidophloios sp."/>
+			<xs:enumeration value="Lepidophyllum lanceolatum"/>
+			<xs:enumeration value="Lepidophyllum majus"/>
+			<xs:enumeration value="Lepidophyllum obovatum"/>
+			<xs:enumeration value="Lepidophyllum sp."/>
+			<xs:enumeration value="Lepidophyllum triangulare"/>
+			<xs:enumeration value="Lepidophyllum waldenburgense"/>
+			<xs:enumeration value="Lepidospermum sp."/>
+			<xs:enumeration value="Lepidostrobus ornatus"/>
+			<xs:enumeration value="Lepidostrobus sp."/>
+			<xs:enumeration value="Lepidostrobus sparrosus"/>
+			<xs:enumeration value="Lepidostrobus spinosus"/>
+			<xs:enumeration value="Lepidostrobus squarrosus"/>
+			<xs:enumeration value="Lepidostrobus variabilis"/>
+			<xs:enumeration value="Lima granulata"/>
+			<xs:enumeration value="Lima oviformis"/>
+			<xs:enumeration value="Lima soverbyi"/>
+			<xs:enumeration value="Lima sp."/>
+			<xs:enumeration value="Limatula nysti"/>
+			<xs:enumeration value="Limatula sp."/>
+			<xs:enumeration value="Limopsis sp."/>
+			<xs:enumeration value="Lingula mytiloïdes"/>
+			<xs:enumeration value="Lingula sp."/>
+			<xs:enumeration value="Lingula squamiformis"/>
+			<xs:enumeration value="Lingula tenuissima"/>
+			<xs:enumeration value="Linopteris muensteri"/>
+			<xs:enumeration value="Linopteris neuropteroides"/>
+			<xs:enumeration value="Linopteris neuropteroides var. Major"/>
+			<xs:enumeration value="Linopteris obliqua"/>
+			<xs:enumeration value="Linopteris sp."/>
+			<xs:enumeration value="Liopistha aequivalvis"/>
+			<xs:enumeration value="Liopistha sp."/>
+			<xs:enumeration value="Lispodesthes schlotheimi"/>
+			<xs:enumeration value="Lispodesthes sp."/>
+			<xs:enumeration value="Lonchopteris bricei"/>
+			<xs:enumeration value="Lonchopteris eschweileriana"/>
+			<xs:enumeration value="Lonchopteris rugosa"/>
+			<xs:enumeration value="Lonchopteris sp."/>
+			<xs:enumeration value="losse bladeren"/>
+			<xs:enumeration value="Lucina sp."/>
+			<xs:enumeration value="Lucina squamula"/>
+			<xs:enumeration value="Lunatia klipsteini"/>
+			<xs:enumeration value="Lunatia sp."/>
+			<xs:enumeration value="Lycopodiales"/>
+			<xs:enumeration value="Lycopodites carbonaceus"/>
+			<xs:enumeration value="Lycopodites sp."/>
+			<xs:enumeration value="Mactra sp."/>
+			<xs:enumeration value="Magas pumilus"/>
+			<xs:enumeration value="Magas sp."/>
+			<xs:enumeration value="Mammalia"/>
+			<xs:enumeration value="Mariopteris acuta"/>
+			<xs:enumeration value="Mariopteris dernoncourti"/>
+			<xs:enumeration value="Mariopteris furcata"/>
+			<xs:enumeration value="Mariopteris latifolia"/>
+			<xs:enumeration value="Mariopteris muricata"/>
+			<xs:enumeration value="Mariopteris muricata acuta"/>
+			<xs:enumeration value="Mariopteris muricata nervosa"/>
+			<xs:enumeration value="Mariopteris muricata sauveuri"/>
+			<xs:enumeration value="Mariopteris nervosa"/>
+			<xs:enumeration value="Mariopteris sauveuri"/>
+			<xs:enumeration value="Mariopteris sauveuri latifolia"/>
+			<xs:enumeration value="Mariopteris sp."/>
+			<xs:enumeration value="Mariopteris sphenopteroides"/>
+			<xs:enumeration value="Megalichthys cocolepis"/>
+			<xs:enumeration value="Megalichthys sp."/>
+			<xs:enumeration value="Meretrix ovalis"/>
+			<xs:enumeration value="Meretrix sp."/>
+			<xs:enumeration value="Micraster sp."/>
+			<xs:enumeration value="Murex sp."/>
+			<xs:enumeration value="Myriophyllites columnaris"/>
+			<xs:enumeration value="Myriophyllites sp."/>
+			<xs:enumeration value="Naiadites carinata"/>
+			<xs:enumeration value="Naiadites carinata aquilina"/>
+			<xs:enumeration value="Naiadites flexuosa"/>
+			<xs:enumeration value="Naiadites modiolaris"/>
+			<xs:enumeration value="Naiadites quadrata"/>
+			<xs:enumeration value="Naiadites sowerbyi"/>
+			<xs:enumeration value="Naiadites sp."/>
+			<xs:enumeration value="Natica cretacea"/>
+			<xs:enumeration value="Natica sp."/>
+			<xs:enumeration value="Nautilus sp."/>
+			<xs:enumeration value="Neithea grypheata"/>
+			<xs:enumeration value="Neithea quadricostata"/>
+			<xs:enumeration value="Neithea quinquecostata"/>
+			<xs:enumeration value="Neithea sp."/>
+			<xs:enumeration value="Neuropteris abbreviata"/>
+			<xs:enumeration value="Neuropteris antecedens"/>
+			<xs:enumeration value="Neuropteris attenuata"/>
+			<xs:enumeration value="Neuropteris fleonosa"/>
+			<xs:enumeration value="Neuropteris flexuosa"/>
+			<xs:enumeration value="Neuropteris gigantea"/>
+			<xs:enumeration value="Neuropteris gigantea abbreviata"/>
+			<xs:enumeration value="Neuropteris gigantea vera"/>
+			<xs:enumeration value="Neuropteris heterophylla"/>
+			<xs:enumeration value="Neuropteris heterophylla hollandica"/>
+			<xs:enumeration value="Neuropteris heterophylla linguaefolia"/>
+			<xs:enumeration value="Neuropteris hollandica"/>
+			<xs:enumeration value="Neuropteris hollandica heterophylla"/>
+			<xs:enumeration value="Neuropteris hollandica tenuifolia"/>
+			<xs:enumeration value="Neuropteris linguaefolia"/>
+			<xs:enumeration value="Neuropteris obliqua"/>
+			<xs:enumeration value="Neuropteris obliqua var. Impar"/>
+			<xs:enumeration value="Neuropteris pseudogigantea"/>
+			<xs:enumeration value="Neuropteris rarinervis"/>
+			<xs:enumeration value="Neuropteris scheuchzeri"/>
+			<xs:enumeration value="Neuropteris schlehani"/>
+			<xs:enumeration value="Neuropteris sp."/>
+			<xs:enumeration value="Neuropteris sporenges"/>
+			<xs:enumeration value="Neuropteris tenuifolia"/>
+			<xs:enumeration value="Neuropteris tenuifolia heterophylla"/>
+			<xs:enumeration value="Neuropteris tenuifolia hollandica"/>
+			<xs:enumeration value="Nodosaria raphanistrum"/>
+			<xs:enumeration value="Nodosaria sp."/>
+			<xs:enumeration value="Notidamus sp."/>
+			<xs:enumeration value="Nucula chastelli"/>
+			<xs:enumeration value="Nucula duchasteli"/>
+			<xs:enumeration value="Nucula sp."/>
+			<xs:enumeration value="Nuculochlamys attenuata"/>
+			<xs:enumeration value="Nuculochlamys sp."/>
+			<xs:enumeration value="nummulieten"/>
+			<xs:enumeration value="Nummulites laevigatus"/>
+			<xs:enumeration value="Nummulites planulatus"/>
+			<xs:enumeration value="Nummulites sp."/>
+			<xs:enumeration value="Nummulites variolarius"/>
+			<xs:enumeration value="Nummulites wemmelensis"/>
+			<xs:enumeration value="Odontaspis sp."/>
+			<xs:enumeration value="Odontaspis winkleri"/>
+			<xs:enumeration value="oesters"/>
+			<xs:enumeration value="Oldhamia"/>
+			<xs:enumeration value="onbepaald"/>
+			<xs:enumeration value="onbepaald ichnofossiel"/>
+			<xs:enumeration value="onbepaalde fauna"/>
+			<xs:enumeration value="onbepaalde flora / plantenresten"/>
+			<xs:enumeration value="Orbiculoides missouriensis"/>
+			<xs:enumeration value="Orbiculoides sp."/>
+			<xs:enumeration value="Orbitoliten"/>
+			<xs:enumeration value="Orthoceras sp."/>
+			<xs:enumeration value="Osmeroides sp."/>
+			<xs:enumeration value="ostracoden"/>
+			<xs:enumeration value="Ostrea callifera"/>
+			<xs:enumeration value="Ostrea goldfussi"/>
+			<xs:enumeration value="Ostrea laciniata"/>
+			<xs:enumeration value="Ostrea lateralis"/>
+			<xs:enumeration value="Ostrea Lunata"/>
+			<xs:enumeration value="Ostrea semiplana"/>
+			<xs:enumeration value="Ostrea sp."/>
+			<xs:enumeration value="Ostrea ventilabrum"/>
+			<xs:enumeration value="Ostrea vesicularis"/>
+			<xs:enumeration value="Oxyrhina angustidens"/>
+			<xs:enumeration value="Oxyrhina sp."/>
+			<xs:enumeration value="Palaeocaris sp."/>
+			<xs:enumeration value="Palaeostachya pedunculata"/>
+			<xs:enumeration value="Palaeostachya sp."/>
+			<xs:enumeration value="Palaeostachya volkmanni"/>
+			<xs:enumeration value="Palaeoxyris helicteroides"/>
+			<xs:enumeration value="Palaeoxyris sp."/>
+			<xs:enumeration value="Palmatopteris furcata"/>
+			<xs:enumeration value="Palmatopteris furcata var. linearis"/>
+			<xs:enumeration value="Palmatopteris sp."/>
+			<xs:enumeration value="Panopoea gurgitis"/>
+			<xs:enumeration value="Panopoea sp."/>
+			<xs:enumeration value="Parapachydiscus levyi"/>
+			<xs:enumeration value="Parapachydiscus sp."/>
+			<xs:enumeration value="Paripteris sp."/>
+			<xs:enumeration value="Patella sp."/>
+			<xs:enumeration value="Pecopteris abbreviata"/>
+			<xs:enumeration value="Pecopteris aspera"/>
+			<xs:enumeration value="Pecopteris avoldensis"/>
+			<xs:enumeration value="Pecopteris dentata"/>
+			<xs:enumeration value="Pecopteris dentata var. delicatula"/>
+			<xs:enumeration value="Pecopteris miltoni"/>
+			<xs:enumeration value="Pecopteris pennaeformis"/>
+			<xs:enumeration value="Pecopteris plumosa"/>
+			<xs:enumeration value="Pecopteris sp."/>
+			<xs:enumeration value="Pecopteris volkmanni"/>
+			<xs:enumeration value="pecten"/>
+			<xs:enumeration value="Pecten campaniensis"/>
+			<xs:enumeration value="Pecten cinctus"/>
+			<xs:enumeration value="Pecten corneus"/>
+			<xs:enumeration value="Pecten loevis"/>
+			<xs:enumeration value="Pecten plebejus"/>
+			<xs:enumeration value="Pecten pulchellus"/>
+			<xs:enumeration value="Pecten pusio"/>
+			<xs:enumeration value="Pecten sp."/>
+			<xs:enumeration value="Pecten spatulus"/>
+			<xs:enumeration value="Pectunculus geinitzi"/>
+			<xs:enumeration value="Pectunculus observatus"/>
+			<xs:enumeration value="Pectunculus obsoletus"/>
+			<xs:enumeration value="Pectunculus sp."/>
+			<xs:enumeration value="Pholadomya margaritacea"/>
+			<xs:enumeration value="Pholadomya sp."/>
+			<xs:enumeration value="Pinakodendron sp."/>
+			<xs:enumeration value="Pinites sp."/>
+			<xs:enumeration value="Pinna cretacea"/>
+			<xs:enumeration value="Pinna margaritacea"/>
+			<xs:enumeration value="Pinna sp."/>
+			<xs:enumeration value="Pinnularia columnaris"/>
+			<xs:enumeration value="Pinnularia sp."/>
+			<xs:enumeration value="Planolites montanus"/>
+			<xs:enumeration value="Planolites ophthalmoides"/>
+			<xs:enumeration value="Planolites sp."/>
+			<xs:enumeration value="Platysomus parvulus"/>
+			<xs:enumeration value="Platysomus sp."/>
+			<xs:enumeration value="Pleurotomaria sp."/>
+			<xs:enumeration value="Posidoniella sp."/>
+			<xs:enumeration value="Posidonomya sp."/>
+			<xs:enumeration value="Prestwichia sp."/>
+			<xs:enumeration value="Prestwichianella rotundata"/>
+			<xs:enumeration value="Prestwichianella sp."/>
+			<xs:enumeration value="Productus cora"/>
+			<xs:enumeration value="Productus pustula"/>
+			<xs:enumeration value="Productus rimberti"/>
+			<xs:enumeration value="Productus sp."/>
+			<xs:enumeration value="Pteria coerulescens"/>
+			<xs:enumeration value="Pteria sp."/>
+			<xs:enumeration value="Pterinopecten papyraceus"/>
+			<xs:enumeration value="Pterinopecten sp."/>
+			<xs:enumeration value="pyriettubulatie"/>
+			<xs:enumeration value="Radicites capillacea"/>
+			<xs:enumeration value="Radicites columnaris"/>
+			<xs:enumeration value="Radicites sp."/>
+			<xs:enumeration value="Renaultia sp."/>
+			<xs:enumeration value="Reticuloceras sp."/>
+			<xs:enumeration value="Rhabdoderma sp."/>
+			<xs:enumeration value="Rhadinichtys renieri"/>
+			<xs:enumeration value="Rhadinichtys sp."/>
+			<xs:enumeration value="Rhipidomella sp."/>
+			<xs:enumeration value="Rhizodopsis sauroides"/>
+			<xs:enumeration value="Rhizodopsis sp."/>
+			<xs:enumeration value="Rhynchonella limbata"/>
+			<xs:enumeration value="Rhynchonella dutempleana"/>
+			<xs:enumeration value="Rhynchonella plicatilis"/>
+			<xs:enumeration value="Rhynchonella sp."/>
+			<xs:enumeration value="Rostellaria sp."/>
+			<xs:enumeration value="Rotalina sp."/>
+			<xs:enumeration value="Samaropsis emarginata"/>
+			<xs:enumeration value="Samaropsis fluitans"/>
+			<xs:enumeration value="Samaropsis sp."/>
+			<xs:enumeration value="Scalaria decorata"/>
+			<xs:enumeration value="Scalaria sp."/>
+			<xs:enumeration value="schelpen / schelpenresten"/>
+			<xs:enumeration value="Schizophoria sp."/>
+			<xs:enumeration value="Schlotheimia angulata"/>
+			<xs:enumeration value="Schlotheimia charmassei"/>
+			<xs:enumeration value="Schlotheimia sp."/>
+			<xs:enumeration value="Sclapellites sp."/>
+			<xs:enumeration value="Sigillaria cordiformis"/>
+			<xs:enumeration value="Sigillaria davreuxi"/>
+			<xs:enumeration value="Sigillaria décortiqués"/>
+			<xs:enumeration value="Sigillaria elegans"/>
+			<xs:enumeration value="Sigillaria elongata"/>
+			<xs:enumeration value="Sigillaria laevigata"/>
+			<xs:enumeration value="Sigillaria mamillaris"/>
+			<xs:enumeration value="Sigillaria ovata"/>
+			<xs:enumeration value="Sigillaria reniformis"/>
+			<xs:enumeration value="Sigillaria reniformis vel laevigata"/>
+			<xs:enumeration value="Sigillaria rugosa"/>
+			<xs:enumeration value="Sigillaria scutellata"/>
+			<xs:enumeration value="Sigillaria sp."/>
+			<xs:enumeration value="Sigillaria tessellata"/>
+			<xs:enumeration value="Sinusites = Cochlichnus"/>
+			<xs:enumeration value="Sphenophyllum cuneifolium"/>
+			<xs:enumeration value="Sphenophyllum emarginatum"/>
+			<xs:enumeration value="Sphenophyllum majus"/>
+			<xs:enumeration value="Sphenophyllum myriophyllum"/>
+			<xs:enumeration value="Sphenophyllum sp."/>
+			<xs:enumeration value="Sphenopteris artemisiaefolioides"/>
+			<xs:enumeration value="Sphenopteris baumleri"/>
+			<xs:enumeration value="Sphenopteris convexiloba"/>
+			<xs:enumeration value="Sphenopteris coralloïdes"/>
+			<xs:enumeration value="Sphenopteris crossotheca"/>
+			<xs:enumeration value="Sphenopteris herbacea"/>
+			<xs:enumeration value="Sphenopteris hoeninghausi"/>
+			<xs:enumeration value="Sphenopteris laurenti"/>
+			<xs:enumeration value="Sphenopteris neuropteroides"/>
+			<xs:enumeration value="Sphenopteris neuroteroides var. Leonardi"/>
+			<xs:enumeration value="Sphenopteris nummularia"/>
+			<xs:enumeration value="Sphenopteris obtusiloba"/>
+			<xs:enumeration value="Sphenopteris quadridactylites"/>
+			<xs:enumeration value="Sphenopteris sp."/>
+			<xs:enumeration value="Sphenopteris spiniformis"/>
+			<xs:enumeration value="Sphenopteris spinosa"/>
+			<xs:enumeration value="Sphenopteris striata"/>
+			<xs:enumeration value="Sphenopteris trifoliolata"/>
+			<xs:enumeration value="Sphenopteris trigonophylla"/>
+			<xs:enumeration value="spiculae"/>
+			<xs:enumeration value="spirifer"/>
+			<xs:enumeration value="Spirifer glaber"/>
+			<xs:enumeration value="Spirifer sp."/>
+			<xs:enumeration value="Spirophyton caudagalli"/>
+			<xs:enumeration value="Spirophyton sp."/>
+			<xs:enumeration value="Spirorbis carbonarius"/>
+			<xs:enumeration value="Spirorbis sp."/>
+			<xs:enumeration value="Spondyles sp."/>
+			<xs:enumeration value="sponsspicullen"/>
+			<xs:enumeration value="sponzen"/>
+			<xs:enumeration value="sporen / sporenregen"/>
+			<xs:enumeration value="Squales sp."/>
+			<xs:enumeration value="Stigmaria eveni"/>
+			<xs:enumeration value="Stigmaria ficoïdes"/>
+			<xs:enumeration value="Stigmaria reticulata"/>
+			<xs:enumeration value="Stigmaria sp."/>
+			<xs:enumeration value="Straparolus sp."/>
+			<xs:enumeration value="Strepsodus sauroides"/>
+			<xs:enumeration value="Strepsodus sp."/>
+			<xs:enumeration value="Streptorhynchus crenistria"/>
+			<xs:enumeration value="Streptorhynchus sp."/>
+			<xs:enumeration value="stromatolieten"/>
+			<xs:enumeration value="stromatoporen"/>
+			<xs:enumeration value="takjes / twijgen"/>
+			<xs:enumeration value="Tellina mülleri"/>
+			<xs:enumeration value="Tellina sp."/>
+			<xs:enumeration value="Tellina strigata"/>
+			<xs:enumeration value="Tellina subdecussata"/>
+			<xs:enumeration value="Terebella lewiensis"/>
+			<xs:enumeration value="Terebella sp."/>
+			<xs:enumeration value="Terebratula sp."/>
+			<xs:enumeration value="Teredo sp."/>
+			<xs:enumeration value="Teredo voracissima"/>
+			<xs:enumeration value="Thecidea papillata"/>
+			<xs:enumeration value="Thecidea sp."/>
+			<xs:enumeration value="Trigonia limbata"/>
+			<xs:enumeration value="Trigonia sp."/>
+			<xs:enumeration value="Trigonia vaalsiensis"/>
+			<xs:enumeration value="Trigonia vallscum"/>
+			<xs:enumeration value="Trigonocarpus noeggerathi"/>
+			<xs:enumeration value="Trigonocarpus sp."/>
+			<xs:enumeration value="Trigonocarpus sporites"/>
+			<xs:enumeration value="Trigonosemus pectiniformis"/>
+			<xs:enumeration value="Trigonosemus sp."/>
+			<xs:enumeration value="Trochus gemineus"/>
+			<xs:enumeration value="Trochus sp."/>
+			<xs:enumeration value="Tubbreva amoropsis"/>
+			<xs:enumeration value="Tubbreva exaltata"/>
+			<xs:enumeration value="Tubbreva sp."/>
+			<xs:enumeration value="Tudicla depressa"/>
+			<xs:enumeration value="Tudicla sp."/>
+			<xs:enumeration value="Turritella acantophospora"/>
+			<xs:enumeration value="Turritella alternans"/>
+			<xs:enumeration value="Turritella multilincata"/>
+			<xs:enumeration value="Turritella nodosa"/>
+			<xs:enumeration value="Turritella sexlineata"/>
+			<xs:enumeration value="Turritella sp."/>
+			<xs:enumeration value="Ulodendron majus"/>
+			<xs:enumeration value="Ulodendron minus"/>
+			<xs:enumeration value="Ulodendron ophiurus"/>
+			<xs:enumeration value="Ulodendron sp."/>
+			<xs:enumeration value="Ulodendron wortheni"/>
+			<xs:enumeration value="Ulostrobus sp."/>
+			<xs:enumeration value="Ulostrobus squarrosus"/>
+			<xs:enumeration value="Venericardia santonensis"/>
+			<xs:enumeration value="Venericardia sp."/>
+			<xs:enumeration value="Ventriculites sp."/>
+			<xs:enumeration value="Ventriculites striatus"/>
+			<xs:enumeration value="Verruculina sp."/>
+			<xs:enumeration value="visresten"/>
+			<xs:enumeration value="Vola quadricostata"/>
+			<xs:enumeration value="Vola sexcostata"/>
+			<xs:enumeration value="Vola sp."/>
+			<xs:enumeration value="Volutilithes sp."/>
+			<xs:enumeration value="Volutilithes subsemiplicatus"/>
+			<xs:enumeration value="Wittleyseya sp."/>
+			<xs:enumeration value="zaden"/>
+			<xs:enumeration value="Zaphrentis postuma"/>
+			<xs:enumeration value="Zaphrentis sp."/>
+			<xs:enumeration value="zeeëgel"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

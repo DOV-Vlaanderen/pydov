@@ -17,37 +17,37 @@ For each field, the following information is available:
 name
     The name of the field.
 
-    Example: 'methode'
+    Example: ``'methode'``
 
 definition
     The definition of the field.
 
-    Example: 'De methode waarmee de boring uitgevoerd werd. Heeft als waarde 'onbekend' indien de methode niet gekend is.'
+    Example: ``'De methode waarmee de boring uitgevoerd werd. Heeft als waarde 'onbekend' indien de methode niet gekend is.'``
 
 cost
     The resource cost (in time) to request this field as part of the return fields. Is either '1' (no additional cost) or '10' (cost of an implicit XML download per result feature).
 
-    Example: 1
+    Example: ``1``
 
 notnull
     Whether the field is mandatory (True) or optional (False).
 
-    Example: True
+    Example: ``True``
 
 query
     Whether the field can be used in an attribute query.
 
-    Example: True
+    Example: ``True``
 
 type
     The datatype of the values of this field.
 
-    Example: 'string'
+    Example: ``'string'``
 
 values
-    (Optional) In case the field has a list of possible values, they are listed here.
+    (Optional) In case the field has a list of possible values, they are listed here as a dictionary mapping the values to a definition (if available).
 
-    Example: ['avegaarboring', 'droge boring', 'edelmanboring', '...']
+    Example: ``{'Aa': 'Formatie van Aalter', 'AaBe': 'Lid van Beernem (Formatie van Aalter)', 'AaOe': 'Lid van Oedelem (Formatie van Aalter)'}``
 
 Example
 -------
@@ -116,7 +116,7 @@ Some fields additionally have a list of possible values (`values`):
 
 ::
 
-    fields['methode']['values']
+    fields['methode']['values'].keys()
 
 ::
 
@@ -147,6 +147,41 @@ Some fields additionally have a list of possible values (`values`):
      'trilboring',
      'voorput',
      'zuigboring']
+
+Sometimes the definition can be used as a (human readable) label for the (machine readable) code in the dataframe. This allows creating an extra column with the mapped labels:
+
+::
+
+    from pydov.search.interpretaties import FormeleStratigrafieSearch
+    itp = FormeleStratigrafieSearch()
+
+    fields['lid1']
+    # {'cost': 10,
+    #  'definition': 'eerste eenheid van de laag formele stratigrafie',
+    #  'name': 'lid1',
+    #  'notnull': False,
+    #  'query': False,
+    #  'type': 'string',
+    #  'values': {'Aa': 'Formatie van Aalter',
+    #   'AaBe': 'Lid van Beernem (Formatie van Aalter)',
+    #   'AaOe': 'Lid van Oedelem (Formatie van Aalter)',
+    #   'Bb': 'Formatie van Bolderberg',
+    #   'BbGe': 'Lid van Genk (Formatie van Bolderberg)',
+    #   'BbHo': 'Lid van Houthalen (Formatie van Bolderberg)',
+    #   'BbOp': 'Lid van Opitter (Formatie van Bolderberg)',
+    #   'Bc': 'Formatie van Berchem',
+    #   ..}
+    # }
+
+    df['lid1_label'] = df['lid1'].map(fields['lid1']['values'])
+    df['lid2_label'] = df['lid2'].map(fields['lid2']['values'])
+
+    print(df[['diepte_laag_van', 'diepte_laag_tot', 'lid1',
+         'lid1_label', 'relatie_lid1_lid2', 'lid2', 'lid2_label']].to_string())
+    #    diepte_laag_van  diepte_laag_tot lid1           lid1_label relatie_lid1_lid2 lid2            lid2_label
+    # 0              0.0             3.00    Q  Quartaire afzetting                 T    Q   Quartaire afzetting
+    # 1              3.0            14.05    U             Onbekend                 T   Bc  Formatie van Berchem
+
 
 Using OGC filter expressions
 ****************************
@@ -262,14 +297,8 @@ An example of an advanced query using a nested combination of logical filter exp
     df = boring.search(query=query)
 
 
-Using custom filter expressions
-*******************************
-
-pydov adds two custom filter expressions to the available set from OGC described above. They can be imported from the pydov.util.query module.
-
-
 Query using lists
------------------
+*****************
 
 pydov extends the default OGC filter expressions described above with a new expression `PropertyInList` that allows you to use lists (of strings) in search queries.
 
@@ -284,14 +313,21 @@ PropertyInList
 
 
 Join different searches
------------------------
+***********************
 
 The `Join` expression allows you to join multiple searches together. This allows combining results from different datasets to get the results you're looking for.
 
 Join
-    Join searches together using a common attribute. Instead of a propertyname and a literal (or a list of literals), this expression takes a Pandas dataframe and a join column. The join column should be a column that exists in the dataframe and is one of the attributes of the type that is being searched.
+    Join searches together using a common attribute. Instead of a propertyname and a literal (or a list of literals), this expression takes a Pandas dataframe and one or two join columns.
 
-    Example: ``Join(dataframe=df_boringen, join_column='pkey_boring')``
+    You can either specify a single column (in the `on` parameter) which should exist both in the provided dataframe as in the datatype being searched.
+    Alternatively, you can specify both the `on` column (which should exist in the queried datatype) as well as the `using` column (which should exists in the provided dataframe).
+
+    Example: ``Join(df_boringen, 'pkey_boring')``
+
+    Example: ``Join(df_boringen, on='pkey_boring')``
+
+    Example: ``Join(df_boringen, on='pkey_boring', using='boringfiche')``
 
 The following example returns all the lithological descriptions of boreholes that are at least 20 meters deep (note that this is different from 'lithological descriptions with a depth of at least 20m'):
 
@@ -330,3 +366,31 @@ The following example returns all the lithological descriptions of boreholes tha
 
     lithologische_beschrijvingen = ls.search(query=And([Join(boringen, 'pkey_boring'),
                                                         PropertyIsEqualTo('betrouwbaarheid_interpretatie', 'goed')]))
+
+The following example gets borehole information based on a search for groundwater filters:
+
+::
+
+    from pydov.util.query import Join
+
+    from pydov.search.boring import BoringSearch
+    from pydov.search.grondwaterfilter import GrondwaterFilterSearch
+
+    fs = GrondwaterFilterSearch()
+    bs = BoringSearch()
+
+    filters = fs.search(location=WithinDistance(Point(96540, 186900), 10, 'km'),
+                        return_fields=('pkey_filter', 'boringfiche'))
+
+    print(filters.head())
+    #                                              pkey_filter                                            boringfiche
+    # 0  https://www.dov.vlaanderen.be/data/filter/1989-000092  https://www.dov.vlaanderen.be/data/boring/1989-021283
+    # 1  https://www.dov.vlaanderen.be/data/filter/2003-007671                                                    NaN
+    # 2  https://www.dov.vlaanderen.be/data/filter/1989-001026  https://www.dov.vlaanderen.be/data/boring/1989-065942
+
+    boringen = bs.search(query=Join(filters, on='pkey_boring', using='boringfiche'))
+
+    print(boringen.head())
+    #                                              pkey_boring      ...     boormethode
+    # 0  https://www.dov.vlaanderen.be/data/boring/1989-021283      ...        onbekend
+    # 1  https://www.dov.vlaanderen.be/data/boring/1989-065942      ...        onbekend

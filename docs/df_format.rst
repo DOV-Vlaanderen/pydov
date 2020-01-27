@@ -1,8 +1,8 @@
 .. _object_types:
 
-=======================
-Output data description
-=======================
+=========================
+# Output data description
+=========================
 
 .. warning::
 
@@ -182,12 +182,12 @@ interpreted data.
     wfs,X_mL72,x,float,152301.0
     wfs,Y_mL72,y,float,211682.0
     wfs,diepte_tot_m,diepte_tot_m,float,2.0
-    xml,/kern:dov-schema/interpretaties/quartairstratigrafie/laag/betrouwbaarheid,betrouwbaarheid_laag,string,goed
-    xml,/kern:dov-schema/interpretaties/quartairstratigrafie/laag/van,diepte_laag_van,float,0.00
-    xml,/kern:dov-schema/interpretaties/quartairstratigrafie/laag/tot,diepte_laag_tot,float,1.75
-    xml,/kern:dov-schema/interpretaties/quartairstratigrafie/laag/lid1,lid1,string,F
-    xml,/kern:dov-schema/interpretaties/quartairstratigrafie/laag/relatie_lid1_lid2,relatie_lid1_lid2,string,T
-    xml,/kern:dov-schema/interpretaties/quartairstratigrafie/laag/lid2,lid2,string,F
+    xml,/kern:dov-schema/interpretaties/QuartaireStratigrafie/laag/betrouwbaarheid,betrouwbaarheid_laag,string,goed
+    xml,/kern:dov-schema/interpretaties/QuartaireStratigrafie/laag/van,diepte_laag_van,float,0.00
+    xml,/kern:dov-schema/interpretaties/QuartaireStratigrafie/laag/tot,diepte_laag_tot,float,1.75
+    xml,/kern:dov-schema/interpretaties/QuartaireStratigrafie/laag/lid1,lid1,string,F
+    xml,/kern:dov-schema/interpretaties/QuartaireStratigrafie/laag/relatie_lid1_lid2,relatie_lid1_lid2,string,T
+    xml,/kern:dov-schema/interpretaties/QuartaireStratigrafie/laag/lid2,lid2,string,F
 
 |
 

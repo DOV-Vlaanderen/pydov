@@ -3,6 +3,8 @@
 PyDOV events."""
 
 import sys
+from multiprocessing import Lock
+
 import time
 
 
@@ -39,6 +41,10 @@ class AbstractHook(object):
     def xml_requested(self, pkey_object):
         """Called upon requesting an XML document of an object.
 
+        Because of parallel processing, this method will be called
+        simultaneously from multiple threads. Make sure your implementation is
+        threadsafe or uses locking.
+
         This is either followed by ``xml_cache_hit`` or ``xml_downloaded``.
 
         Parameters
@@ -53,6 +59,10 @@ class AbstractHook(object):
         """Called when the XML document of an object is retrieved from the
         cache.
 
+        Because of parallel processing, this method will be called
+        simultaneously from multiple threads. Make sure your implementation is
+        threadsafe or uses locking.
+
         Parameters
         ----------
         pkey_object : str
@@ -64,6 +74,10 @@ class AbstractHook(object):
     def xml_downloaded(self, pkey_object):
         """Called when the XML document of an object is downloaded from the
         DOV services.
+
+        Because of parallel processing, this method will be called
+        simultaneously from multiple threads. Make sure your implementation is
+        threadsafe or uses locking.
 
         Parameters
         ----------
@@ -86,6 +100,7 @@ class SimpleStatusHook(AbstractHook):
         self.prog_counter = 0
         self.init_time = None
         self.previous_remaining = None
+        self.lock = Lock()
 
     def _write_progress(self, char):
         """Write progress to standard output.
@@ -100,8 +115,8 @@ class SimpleStatusHook(AbstractHook):
 
         """
         if self.prog_counter == 0:
-            sys.stdout.write('[%03i/%03i] ' % (self.prog_counter,
-                                               self.result_count))
+            sys.stdout.write('[{:03d}/{:03d}] '.format(
+                self.prog_counter, self.result_count))
             sys.stdout.flush()
         elif self.prog_counter % 50 == 0:
             time_elapsed = time.time() - self.init_time
@@ -110,11 +125,11 @@ class SimpleStatusHook(AbstractHook):
                 self.result_count-self.prog_counter))/60)
             if remaining_mins > 1 and remaining_mins != \
                     self.previous_remaining:
-                remaining = " (%i min. left)" % remaining_mins
+                remaining = " ({:d} min. left)".format(remaining_mins)
                 self.previous_remaining = remaining_mins
             else:
                 remaining = ""
-            sys.stdout.write('%s\n[%03i/%03i] ' % (
+            sys.stdout.write('{}\n[{:03d}/{:03d}] '.format(
                 remaining, self.prog_counter, self.result_count))
             sys.stdout.flush()
 
@@ -162,7 +177,8 @@ class SimpleStatusHook(AbstractHook):
             Permanent key of the requested object.
 
         """
-        self._write_progress('c')
+        with self.lock:
+            self._write_progress('c')
 
     def xml_downloaded(self, pkey_object):
         """When an XML document is downloaded from the DOV services,
@@ -174,4 +190,5 @@ class SimpleStatusHook(AbstractHook):
             Permanent key of the requested object.
 
         """
-        self._write_progress('.')
+        with self.lock:
+            self._write_progress('.')

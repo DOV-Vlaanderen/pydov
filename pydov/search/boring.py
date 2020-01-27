@@ -2,6 +2,7 @@
 """Module containing the search classes to retrieve DOV borehole data."""
 import pandas as pd
 
+from pydov.types.fields import _WfsInjectedField
 from .abstract import AbstractSearch
 from ..types.boring import Boring
 from ..util import owsutil
@@ -14,10 +15,20 @@ class BoringSearch(AbstractSearch):
     __wfs_namespace = None
     __md_metadata = None
     __fc_featurecatalogue = None
+    __xsd_schemas = None
 
-    def __init__(self):
-        """Initialisation."""
-        super(BoringSearch, self).__init__('dov-pub:Boringen', Boring)
+    def __init__(self, objecttype=Boring):
+        """Initialisation.
+
+        Parameters
+        ----------
+        objecttype : subclass of pydov.types.abstract.AbstractDovType
+            Reference to a class representing the Boring type.
+            Optional: defaults to the Boring type containing the fields
+            described in the documentation.
+
+        """
+        super(BoringSearch, self).__init__('dov-pub:Boringen', objecttype)
 
     def _init_namespace(self):
         """Initialise the WFS namespace associated with the layer."""
@@ -42,25 +53,31 @@ class BoringSearch(AbstractSearch):
                 BoringSearch.__fc_featurecatalogue = \
                     owsutil.get_remote_featurecatalogue(csw_url, fc_uuid)
 
+            if BoringSearch.__xsd_schemas is None:
+                BoringSearch.__xsd_schemas = \
+                    self._get_remote_xsd_schemas()
+
             fields = self._build_fields(
-                BoringSearch.__wfs_schema, BoringSearch.__fc_featurecatalogue)
+                BoringSearch.__wfs_schema,
+                BoringSearch.__fc_featurecatalogue,
+                BoringSearch.__xsd_schemas)
 
             for field in fields.values():
                 if field['name'] not in self._type.get_field_names(
                         include_wfs_injected=True):
-                    self._type._fields.append({
-                        'name': field['name'],
-                        'source': 'wfs',
-                        'sourcefield': field['name'],
-                        'type': field['type'],
-                        'wfs_injected': True
-                    })
+                    self._type.fields.append(
+                        _WfsInjectedField(name=field['name'],
+                                          datatype=field['type']))
 
             self._fields = self._build_fields(
-                BoringSearch.__wfs_schema, BoringSearch.__fc_featurecatalogue)
+                BoringSearch.__wfs_schema,
+                BoringSearch.__fc_featurecatalogue,
+                BoringSearch.__xsd_schemas)
 
-    def search(self, location=None, query=None, return_fields=None):
-        """Search for boreholes (Boring). Provide `location` and/or `query`.
+    def search(self, location=None, query=None,
+               sort_by=None, return_fields=None, max_features=None):
+        """Search for boreholes (Boring). Provide `location` and/or `query`
+        and/or `max_features`.
         When `return_fields` is None, all fields are returned.
 
         Parameters
@@ -76,10 +93,14 @@ class BoringSearch(AbstractSearch):
             combination of filter elements defined in owslib.fes. The query
             should use the fields provided in `get_fields()`. Note that not
             all fields are currently supported as a search parameter.
+        sort_by : owslib.fes.SortBy, optional
+            List of properties to sort by.
         return_fields : list<str> or tuple<str> or set<str>
             A list of fields to be returned in the output data. This should
             be a subset of the fields provided in `get_fields()`. Note that
             not all fields are currently supported as return fields.
+        max_features : int
+            Limit the maximum number of features to request.
 
         Returns
         -------
@@ -89,7 +110,7 @@ class BoringSearch(AbstractSearch):
         Raises
         ------
         pydov.util.errors.InvalidSearchParameterError
-            When not one of `location` or `query` is provided.
+            When not one of `location`, `query` or `max_features` is provided.
 
         pydov.util.errors.InvalidFieldError
             When at least one of the fields in `return_fields` is unknown.
@@ -109,11 +130,13 @@ class BoringSearch(AbstractSearch):
             tuple or set.
 
         """
-        fts = self._search(location=location, query=query,
-                           return_fields=return_fields)
+        fts = self._search(location=location, query=query, sort_by=sort_by,
+                           return_fields=return_fields,
+                           max_features=max_features)
 
-        boringen = Boring.from_wfs(fts, self.__wfs_namespace)
+        boringen = self._type.from_wfs(fts, self.__wfs_namespace)
 
-        df = pd.DataFrame(data=Boring.to_df_array(boringen, return_fields),
-                          columns=Boring.get_field_names(return_fields))
+        df = pd.DataFrame(
+            data=self._type.to_df_array(boringen, return_fields),
+            columns=self._type.get_field_names(return_fields))
         return df

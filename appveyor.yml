@@ -38,7 +38,7 @@ install:
     - cmd: conda.exe update -y -q conda
     - cmd: conda.exe config --add channels conda-forge
     - cmd: conda.exe install -y -q python=%CONDA_PY:~0,1%.%CONDA_PY:~1,2%
-    - cmd: conda.exe install -y -q numpy"<1.17.0" pandas"<0.25.0" owslib"<0.19.0"
+    - cmd: conda.exe install -y -q numpy pandas owslib
     - cmd: call %CONDA_INSTALL_LOCN%\python.exe -m pip install --ignore-installed --no-cache-dir -r requirements_appveyor.txt
 
 build: false

@@ -2,7 +2,6 @@
 import copy
 
 import pytest
-from numpy.compat import unicode
 
 from owslib.etree import etree
 from owslib.fes import (
@@ -179,7 +178,7 @@ class TestOwsutil(object):
         assert type(fc) is dict
 
         assert 'definition' in fc
-        assert type(fc['definition']) in (str, unicode)
+        assert type(fc['definition']) is str
 
         assert 'attributes' in fc
         assert type(fc['attributes']) is dict
@@ -190,7 +189,7 @@ class TestOwsutil(object):
                 assert type(attr) is dict
 
                 assert 'definition' in attr
-                assert type(attr['definition']) in (str, unicode)
+                assert type(attr['definition']) is str
 
                 assert 'values' in attr
 
@@ -198,8 +197,8 @@ class TestOwsutil(object):
                     assert type(attr['values']) is dict
 
                     for v in attr['values'].keys():
-                        assert type(v) in (str, unicode)
-                        assert type(attr['values'][v]) in (str, unicode) or \
+                        assert type(v) is str
+                        assert type(attr['values'][v]) is str or \
                                attr['values'][v] is None
                     assert len(attr['values'].keys()) == len(
                         set(attr['values'].keys()))
@@ -409,7 +408,6 @@ class TestOwsutil(object):
             filter_request = etree.tostring(filter_request,
                                             encoding='unicode')
         except LookupError:
-            # Python2.7 without lxml uses 'utf-8' instead.
             filter_request = etree.tostring(filter_request,
                                             encoding='utf-8')
 
@@ -442,7 +440,6 @@ class TestOwsutil(object):
             filter_request = etree.tostring(filter_request,
                                             encoding='unicode')
         except LookupError:
-            # Python2.7 without lxml uses 'utf-8' instead.
             filter_request = etree.tostring(filter_request,
                                             encoding='utf-8')
 
@@ -485,7 +482,6 @@ class TestOwsutil(object):
             filter_request = etree.tostring(filter_request,
                                             encoding='unicode')
         except LookupError:
-            # Python2.7 without lxml uses 'utf-8' instead.
             filter_request = etree.tostring(filter_request,
                                             encoding='utf-8')
 
@@ -525,7 +521,6 @@ class TestOwsutil(object):
         try:
             sort_by = etree.tostring(sort_by.toXML(), encoding='unicode')
         except LookupError:
-            # Python2.7 without lxml uses 'utf-8' instead.
             sort_by = etree.tostring(sort_by.toXML(), encoding='utf-8')
 
         xml = owsutil.wfs_build_getfeature_request(
@@ -557,7 +552,6 @@ class TestOwsutil(object):
         try:
             sort_by = etree.tostring(sort_by.toXML(), encoding='unicode')
         except LookupError:
-            # Python2.7 without lxml uses 'utf-8' instead.
             sort_by = etree.tostring(sort_by.toXML(), encoding='utf-8')
 
         xml = owsutil.wfs_build_getfeature_request(

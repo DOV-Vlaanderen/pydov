@@ -1,6 +1,5 @@
 """Module grouping tests for the boring search module."""
 import glob
-from io import open
 
 import pytest
 
@@ -15,8 +14,6 @@ from owslib.fes import (
 from owslib.wfs import WebFeatureService
 from pydov.search.boring import BoringSearch
 from pydov.search.grondwaterfilter import GrondwaterFilterSearch
-
-from numpy.compat import unicode
 
 from pydov.search.grondwatermonster import GrondwaterMonsterSearch
 from pydov.search.interpretaties import (
@@ -379,7 +376,7 @@ def test_get_description(mp_wfs, objectsearch):
     """
     description = objectsearch.get_description()
 
-    assert type(description) in (str, unicode)
+    assert type(description) is str
     assert len(description) > 0
 
 

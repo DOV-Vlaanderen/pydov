@@ -623,7 +623,6 @@ class AbstractSearch(AbstractCommon):
                 filter_request = etree.tostring(filter_request,
                                                 encoding='unicode')
             except LookupError:
-                # Python2.7 without lxml uses 'utf-8' instead.
                 filter_request = etree.tostring(filter_request,
                                                 encoding='utf-8')
 
@@ -653,7 +652,6 @@ class AbstractSearch(AbstractCommon):
             try:
                 sort_by = etree.tostring(sort_by_xml, encoding='unicode')
             except LookupError:
-                # Python2.7 without lxml uses 'utf-8' instead.
                 sort_by = etree.tostring(sort_by_xml, encoding='utf-8')
 
         fts = self._get_remote_wfs_feature(

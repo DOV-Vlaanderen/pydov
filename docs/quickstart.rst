@@ -34,7 +34,7 @@ Each of the datasets can be queried using a search object for this dataset. Whil
     from pydov.search.boring import BoringSearch
     boringsearch = BoringSearch()
 
-Now we can query for boreholes either on attributes, on location or on a combination of both. To query on attributes, we use the OGC filter functions from OWSLib. For example, to request all boreholes with a depth over 2000 m, we would use the following ``query`` parameter:
+To refine the data request, we can query for boreholes on attributes and location. To query on attributes, we use the OGC filter functions from OWSLib. For example, to request all boreholes with a depth over 2000 m, we would use the following ``query`` parameter:
 
 ::
 
@@ -45,14 +45,14 @@ Now we can query for boreholes either on attributes, on location or on a combina
             propertyname='diepte_tot_m', literal='2000')
     )
 
-To query on location, we use location objects and spatial filters from the pydov.util.location module. For example, to request all boreholes in a given bounding box, we would use the following ``location`` parameter:
+To query on location, we use location objects and spatial filters from the pydov.util.location module. For example, to request all boreholes in a given bounding box, we would use the following ``location`` parameter. But mind that a large bounding box without a further refinement of the request could yield a large amount of data with concurrent processing time:
 
 ::
 
     from pydov.util.location import Within, Box
 
     dataframe = boringsearch.search(
-        location=Within(Box(94720, 186910, 112220, 202870))
+        location=Within(Box(108720, 186910, 112220, 202870))
     )
 
 Attribute queries can be combined with location filtering by specifying both parameters in the search call:

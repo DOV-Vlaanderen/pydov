@@ -6,6 +6,9 @@ Customizing data output
 
 When using pydov to search datasets, the returned dataframe has different default columns (fields) depending on the dataset. We believe each dataframe to contain the most relevant fields for the corresponding dataset, but pydov allows you to select and customize the fields you want to be returned in the output dataframe.
 
+Mind that the timeseries contains two columns referring to the time: ´datum´ and ´tijdstip´, with datatype ´date´, respectively ´string´. This distinction is required because the ´tijdstip´ field is not mandatory. It is up to the user to combine these fields in datetime object if required.
+
+
 
 Using return fields
 *******************
@@ -245,6 +248,8 @@ Groundwater samples (grondwatermonsters)
     y,1,float,158805
     start_grondwaterlocatie_mtaw,1,float,129.88
     gemeente,1,string,Sint-Genesius-Rode
+    datum,10,datum,2020-01-20
+    tijdstip,10,tijdstip,''
     parametergroep,10,string,Zware metalen
     parameter,10,string,Hg
     detectie,10,string,<

@@ -6,6 +6,7 @@ from distutils.util import strtobool
 import owslib
 import pydov
 from owslib.etree import etree
+from owslib.feature import get_schema
 from owslib.fes import (
     FilterRequest,
 )
@@ -22,7 +23,6 @@ from pydov.util.errors import (
     InvalidFieldError,
     WfsGetFeatureError,
 )
-from ..util.owsutil import get_remote_schema
 
 
 class AbstractCommon(object):
@@ -181,7 +181,7 @@ class AbstractSearch(AbstractCommon):
         self._init_wfs()
         layername = self._layer.split(':')[1] if ':' in self._layer else \
             self._layer
-        return get_remote_schema(
+        return get_schema(
             build_dov_url('geoserver/wfs'), layername, '1.1.0')
 
     def _get_namespace(self):

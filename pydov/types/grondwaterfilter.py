@@ -87,8 +87,7 @@ class GrondwaterFilter(AbstractDovType):
         XmlField(name='mv_mtaw',
                  source_xpath='/grondwaterlocatie/puntligging/'
                               'oorspronkelijk_maaiveld/waarde',
-                 definition='Hoogte van het maaiveld op het moment van '
-                            'aanmaken van de put in meter TAW.',
+                 definition='Maaiveldhoogte in mTAW op dag dat de put/boring uitgevoerd werd',
                  datatype='float'),
         WfsField(name='gemeente', source_field='gemeente', datatype='string'),
         XmlField(name='meetnet_code',

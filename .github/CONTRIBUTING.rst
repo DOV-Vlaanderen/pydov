@@ -249,6 +249,48 @@ The workflow is provided for command line usage and using the `Github for Deskto
 
 If any of the above seems like magic to you, please look up the `Git documentation <https://git-scm.com/documentation>`_ on the web, or ask a friend or another contributor for help.
 
+
+Setting up your environment
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To start developing, make sure to setup a development environment. We advice to work with a virtual
+environment such as `virtualenv <https://virtualenv.pypa.io/en/latest/>`_ or
+`conda <https://docs.conda.io/en/latest/miniconda.html>`_. To install the required dependencies
+for development, use the ``requirement_dev.txt`` file:
+
+::
+
+   pip install -r requirements_dev.txt
+
+This will install both the packages pydov relies on as well as the development tools (unit testing,...).
+
+
+.. note::
+   The repository contains multiple ``requirement_*.txt`` files:
+
+   * ``requirement.txt`` required packages to use the pydov API
+   * ``requirement_dev.txt`` required packages to contribute to pydov code
+   * ``requirement_doc.txt`` required packages to contribute to the pydov documentation. This environmnet is used by the readthedocs service for building/hosting the documentation.
+   * ``requirement_appveyor.txt`` requirement specific for Appveyor (If someone has a better way of dealing with Appveyor, contributions welcome)
+   * ``binder/requirement.txt`` requirements setup to setup a Binder environment
+
+   When adding dependencies, make sure to make the appropriate adjustments in the individual file!
+
+Running the unit tests
+^^^^^^^^^^^^^^^^^^^^^^^
+
+To run the unit tests, ``pytest`` is used. In the common line, you can run all the tests from the terminal,
+using the command line. Navigate to the ``pydov`` main directory and do:
+
+::
+
+   pytest
+
+When adding new functionality or adjusting code, make sure to check/update/add the unit tests. Test files
+are grouped by the functionality. Each file name starts with ``test_*`` (required for pytest), followed
+by the module name (e.g. ``search``, ``types``,...).
+
+
 .. _docs-technical:
 
 Creating the documentation

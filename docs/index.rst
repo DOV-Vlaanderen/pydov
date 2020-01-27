@@ -11,9 +11,6 @@ Welcome to pydov's documentation!
     :target: http://pydov.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
 
-.. image:: https://coveralls.io/repos/github/DOV-Vlaanderen/pydov/badge.svg?branch=master
-    :target: https://coveralls.io/github/DOV-Vlaanderen/pydov?branch=master
-
 .. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.2788680.svg
    :target: https://doi.org/10.5281/zenodo.2788680
 

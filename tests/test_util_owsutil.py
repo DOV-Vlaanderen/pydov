@@ -241,23 +241,6 @@ class TestOwsutil(object):
         """
         assert type(md_metadata) is MD_Metadata
 
-    def test_get_remote_metadata_nometadataurls(self, wfs):
-        """Test the owsutil.get_remote_metadata method when the WFS layer
-        missed metadata URLs.
-
-        Test whether a MetadataNotFoundError is raised.
-
-        Parameters
-        ----------
-        wfs : pytest.fixture returning owslib.wfs.WebFeatureService
-            WebFeatureService based on the local GetCapabilities.
-
-        """
-        contents = copy.deepcopy(wfs.contents)
-        contentmetadata = contents['dov-pub:Boringen']
-        contentmetadata.metadataUrls = []
-        with pytest.raises(MetadataNotFoundError):
-            owsutil.get_remote_metadata(contentmetadata)
 
     def test_wfs_build_getfeature_request_onlytypename(self):
         """Test the owsutil.wfs_build_getfeature_request method with only a

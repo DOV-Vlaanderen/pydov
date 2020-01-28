@@ -15,6 +15,7 @@ from tests.abstract import (
 from tests.test_search import (
     mp_wfs,
     wfs,
+    mp_get_schema,
     mp_remote_md,
     mp_remote_fc,
     mp_remote_describefeaturetype,
@@ -161,7 +162,8 @@ class TestQuartairStratigrafieSearch(AbstractTestSearch):
                 'diepte_laag_van', 'diepte_laag_tot',
                 'lid1', 'relatie_lid1_lid2', 'lid2']
 
-    def test_search_customreturnfields(self, mp_remote_describefeaturetype,
+    def test_search_customreturnfields(self, mp_get_schema,
+                                       mp_remote_describefeaturetype,
                                        mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with custom return fields.
 
@@ -169,6 +171,8 @@ class TestQuartairStratigrafieSearch(AbstractTestSearch):
 
         Parameters
         ----------
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType .
         mp_remote_wfs_feature : pytest.fixture
@@ -187,7 +191,8 @@ class TestQuartairStratigrafieSearch(AbstractTestSearch):
         assert list(df) == ['pkey_interpretatie', 'pkey_boring',
                             ]
 
-    def test_search_xml_resolve(self, mp_remote_describefeaturetype,
+    def test_search_xml_resolve(self, mp_get_schema,
+                                mp_remote_describefeaturetype,
                                 mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with return fields from XML but not from a
         subtype.
@@ -196,6 +201,8 @@ class TestQuartairStratigrafieSearch(AbstractTestSearch):
 
         Parameters
         ----------
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_wfs_feature : pytest.fixture

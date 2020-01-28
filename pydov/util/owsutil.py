@@ -49,24 +49,6 @@ def __get_namespaces():
 __namespaces = __get_namespaces()
 
 
-def __get_remote_md(md_url):
-    """Request the remote metadata by calling the `md_url` and
-    returning the response.
-
-    Parameters
-    ----------
-    md_url : str
-        URL to the remote metadata.
-
-    Returns
-    -------
-    bytes
-        Response containing the remote metadata.
-
-    """
-    return get_url(md_url)
-
-
 def __get_remote_fc(fc_url):
     """Request the remote featurecatalogue by calling the `fc_url` and
     returning the response.

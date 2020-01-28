@@ -15,6 +15,7 @@ from tests.abstract import (
 from tests.test_search import (
     mp_wfs,
     wfs,
+    mp_get_schema,
     mp_remote_md,
     mp_remote_fc,
     mp_remote_describefeaturetype,
@@ -166,9 +167,9 @@ class TestHydrogeologischeStratigrafieSearch(AbstractTestSearch):
                 'diepte_laag_van', 'diepte_laag_tot',
                 'aquifer']
 
-    def test_search_nan(self, mp_wfs, mp_remote_describefeaturetype,
-                        mp_remote_md, mp_remote_fc, mp_remote_wfs_feature,
-                        mp_dov_xml):
+    def test_search_nan(self, mp_wfs, mp_get_schema,
+                        mp_remote_describefeaturetype, mp_remote_md,
+                        mp_remote_fc, mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with only the query parameter.
 
         Test whether the result is correct.
@@ -177,6 +178,8 @@ class TestHydrogeologischeStratigrafieSearch(AbstractTestSearch):
         ----------
         mp_wfs : pytest.fixture
             Monkeypatch the call to the remote GetCapabilities request.
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_md : pytest.fixture
@@ -192,7 +195,8 @@ class TestHydrogeologischeStratigrafieSearch(AbstractTestSearch):
         df = self.get_search_object().search(
             query=self.get_valid_query_single())
 
-    def test_search_customreturnfields(self, mp_remote_describefeaturetype,
+    def test_search_customreturnfields(self, mp_get_schema,
+                                       mp_remote_describefeaturetype,
                                        mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with custom return fields.
 
@@ -200,6 +204,8 @@ class TestHydrogeologischeStratigrafieSearch(AbstractTestSearch):
 
         Parameters
         ----------
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType .
         mp_remote_wfs_feature : pytest.fixture
@@ -218,7 +224,8 @@ class TestHydrogeologischeStratigrafieSearch(AbstractTestSearch):
 
         assert not pd.isnull(df.pkey_boring[0])
 
-    def test_search_xml_resolve(self, mp_remote_describefeaturetype,
+    def test_search_xml_resolve(self, mp_get_schema,
+                                mp_remote_describefeaturetype,
                                 mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with return fields from XML but not from a
         subtype.
@@ -227,6 +234,8 @@ class TestHydrogeologischeStratigrafieSearch(AbstractTestSearch):
 
         Parameters
         ----------
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_wfs_feature : pytest.fixture

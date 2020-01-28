@@ -22,6 +22,7 @@ from tests.abstract import (
 from tests.test_search import (
     mp_wfs,
     wfs,
+    mp_get_schema,
     mp_remote_describefeaturetype,
     mp_remote_md,
     mp_remote_fc,
@@ -366,8 +367,9 @@ class TestEncoding(object):
         assert cached_data == ref_data
 
     def test_search_invalidxml_single(
-            self, mp_wfs, mp_remote_describefeaturetype, mp_remote_md,
-            mp_remote_fc, mp_remote_wfs_feature, mp_dov_xml, nocache):
+            self, mp_wfs, mp_remote_describefeaturetype, mp_get_schema,
+            mp_remote_md, mp_remote_fc, mp_remote_wfs_feature, mp_dov_xml,
+            nocache):
         """Test the search method when the XML is invalid.
 
         If lxml is installed, the XML should parse regardless of invalid
@@ -380,6 +382,8 @@ class TestEncoding(object):
             Monkeypatch the call to the remote GetCapabilities request.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_md : pytest.fixture
             Monkeypatch the call to get the remote metadata.
         mp_remote_fc : pytest.fixture

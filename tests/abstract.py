@@ -221,8 +221,9 @@ class AbstractTestSearch(object):
         datatype = self.get_type()
         self.get_search_object().__class__(objecttype=datatype)
 
-    def test_get_fields(self, mp_wfs, mp_remote_describefeaturetype,
-                        mp_remote_md, mp_remote_fc, mp_remote_xsd):
+    def test_get_fields(self, mp_wfs, mp_get_schema,
+                        mp_remote_describefeaturetype, mp_remote_md,
+                        mp_remote_fc, mp_remote_xsd):
         """Test the get_fields method.
 
         Test whether the returned fields match the format specified
@@ -232,6 +233,8 @@ class AbstractTestSearch(object):
         ----------
         mp_wfs : pytest.fixture
             Monkeypatch the call to the remote GetCapabilities request.
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_md : pytest.fixture
@@ -297,7 +300,8 @@ class AbstractTestSearch(object):
                 assert sorted(f.keys()) == ['cost', 'definition', 'name',
                                             'notnull', 'query', 'type']
 
-    def test_search_both_location_query(self, mp_remote_describefeaturetype,
+    def test_search_both_location_query(self, mp_get_schema,
+                                        mp_remote_describefeaturetype,
                                         mp_remote_wfs_feature):
         """Test the search method providing both a location and a query.
 
@@ -305,6 +309,8 @@ class AbstractTestSearch(object):
 
         Parameters
         ----------
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_wfs_feature : pytest.fixture
@@ -318,8 +324,9 @@ class AbstractTestSearch(object):
 
         assert type(df) is DataFrame
 
-    def test_search(self, mp_wfs, mp_remote_describefeaturetype, mp_remote_md,
-                    mp_remote_fc, mp_remote_wfs_feature, mp_dov_xml):
+    def test_search(self, mp_wfs, mp_get_schema, mp_remote_describefeaturetype,
+                    mp_remote_md, mp_remote_fc, mp_remote_wfs_feature,
+                    mp_dov_xml):
         """Test the search method with only the query parameter.
 
         Test whether the result is correct.
@@ -328,6 +335,8 @@ class AbstractTestSearch(object):
         ----------
         mp_wfs : pytest.fixture
             Monkeypatch the call to the remote GetCapabilities request.
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_md : pytest.fixture
@@ -508,13 +517,16 @@ class AbstractTestSearch(object):
         with pytest.raises(InvalidFieldError):
             self.get_search_object().search(query=query)
 
-    def test_search_extrareturnfields(self, mp_remote_describefeaturetype,
+    def test_search_extrareturnfields(self, mp_get_schema,
+                                      mp_remote_describefeaturetype,
                                       mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with the query parameter and an extra WFS
         field as return field.
 
         Parameters
         ----------
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_wfs_feature : pytest.fixture
@@ -531,7 +543,8 @@ class AbstractTestSearch(object):
 
         assert list(df) == list(self.get_valid_returnfields_extra())
 
-    def test_search_sortby_valid(self, mp_remote_describefeaturetype,
+    def test_search_sortby_valid(self, mp_get_schema,
+                                 mp_remote_describefeaturetype,
                                  mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with the query parameter and the sort_by
         parameter with a valid sort field.
@@ -540,6 +553,8 @@ class AbstractTestSearch(object):
 
         Parameters
         ----------
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_wfs_feature : pytest.fixture
@@ -555,7 +570,8 @@ class AbstractTestSearch(object):
 
         assert type(df) is DataFrame
 
-    def test_search_sortby_invalid(self, mp_remote_describefeaturetype,
+    def test_search_sortby_invalid(self, mp_get_schema,
+                                   mp_remote_describefeaturetype,
                                    mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with the query parameter and the sort_by
         parameter with an invalid sort field.
@@ -564,6 +580,8 @@ class AbstractTestSearch(object):
 
         Parameters
         ----------
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_wfs_feature : pytest.fixture
@@ -578,7 +596,8 @@ class AbstractTestSearch(object):
                 sort_by=SortBy([SortProperty(
                     self.get_xml_field())]))
 
-    def test_search_xml_noresolve(self, mp_remote_describefeaturetype,
+    def test_search_xml_noresolve(self, mp_get_schema,
+                                  mp_remote_describefeaturetype,
                                   mp_remote_wfs_feature, mp_dov_xml_broken):
         """Test the search method with return fields from WFS only.
 
@@ -586,6 +605,8 @@ class AbstractTestSearch(object):
 
         Parameters
         ----------
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_wfs_feature : pytest.fixture
@@ -598,12 +619,15 @@ class AbstractTestSearch(object):
             query=self.get_valid_query_single(),
             return_fields=self.get_valid_returnfields_extra())
 
-    def test_search_propertyinlist(self, mp_remote_describefeaturetype,
+    def test_search_propertyinlist(self, mp_get_schema,
+                                   mp_remote_describefeaturetype,
                                    mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with a PropertyInList query.
 
         Parameters
         ----------
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_wfs_feature : pytest.fixture
@@ -615,12 +639,14 @@ class AbstractTestSearch(object):
         self.get_search_object().search(
             query=PropertyInList(self.get_wfs_field(), ['a', 'b']))
 
-    def test_search_join(self, mp_remote_describefeaturetype,
+    def test_search_join(self, mp_get_schema, mp_remote_describefeaturetype,
                          mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with a Join query.
 
         Parameters
         ----------
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_wfs_feature : pytest.fixture

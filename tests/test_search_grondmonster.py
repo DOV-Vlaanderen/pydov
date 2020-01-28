@@ -11,6 +11,7 @@ from tests.abstract import (
 from tests.test_search import (
     mp_wfs,
     wfs,
+    mp_get_schema,
     mp_remote_md,
     mp_remote_fc,
     mp_remote_describefeaturetype,
@@ -155,7 +156,8 @@ class TestGrondmonsterSearch(AbstractTestSearch):
                 'korrelvolumemassa', 'volumemassa', 'watergehalte',
                 'diameter', 'fractie', 'methode']
 
-    def test_search_xmlresolving(self, mp_remote_describefeaturetype,
+    def test_search_xmlresolving(self, mp_get_schema,
+                                 mp_remote_describefeaturetype,
                                  mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with return fields from XML but not from a
         subtype.
@@ -164,6 +166,8 @@ class TestGrondmonsterSearch(AbstractTestSearch):
 
         Parameters
         ----------
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_wfs_feature : pytest.fixture

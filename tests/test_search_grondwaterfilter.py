@@ -12,6 +12,7 @@ from tests.abstract import (
 from tests.test_search import (
     mp_wfs,
     wfs,
+    mp_get_schema,
     mp_remote_md,
     mp_remote_fc,
     mp_remote_describefeaturetype,
@@ -158,9 +159,9 @@ class TestGrondwaterfilterSearch(AbstractTestSearch):
                 'datum', 'tijdstip', 'peil_mtaw',
                 'betrouwbaarheid', 'methode', 'filterstatus', 'filtertoestand']
 
-    def test_search_date(self, mp_wfs, mp_remote_describefeaturetype,
-                         mp_remote_md, mp_remote_fc, mp_remote_wfs_feature,
-                         mp_dov_xml):
+    def test_search_date(self, mp_wfs, mp_get_schema,
+                         mp_remote_describefeaturetype, mp_remote_md,
+                         mp_remote_fc, mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with only the query parameter.
 
         Test whether the result is correct.
@@ -169,6 +170,8 @@ class TestGrondwaterfilterSearch(AbstractTestSearch):
         ----------
         mp_wfs : pytest.fixture
             Monkeypatch the call to the remote GetCapabilities request.
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_md : pytest.fixture
@@ -187,7 +190,8 @@ class TestGrondwaterfilterSearch(AbstractTestSearch):
         # specific test for the Zulu time wfs 1.1.0 issue
         assert df.datum.sort_values()[0] == datetime.date(2004, 4, 7)
 
-    def test_search_xmlresolving(self, mp_remote_describefeaturetype,
+    def test_search_xmlresolving(self, mp_get_schema,
+                                 mp_remote_describefeaturetype,
                                  mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with return fields from XML but not from a
         subtype.
@@ -196,6 +200,8 @@ class TestGrondwaterfilterSearch(AbstractTestSearch):
 
         Parameters
         ----------
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_wfs_feature : pytest.fixture

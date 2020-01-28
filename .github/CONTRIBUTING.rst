@@ -34,7 +34,7 @@ Think pydov is useful? Let others discover it, by telling them in person, via Tw
 
 Using pydov for a paper you are writing? Consider citing it:
 
-    Roel Huybrechts, Stijn Van Hoey, Pieter Jan Haest, Johan Van de Wauw, & Peter Desmet. (2019). DOV-Vlaanderen/pydov. Zenodo. http://doi.org/10.5281/zenodo.2788681
+    Roel Huybrechts, Stijn Van Hoey, Pieter Jan Haest, Johan Van de Wauw, Peter Desmet & Joris Synaeve. (2020). DOV-Vlaanderen/pydov. Zenodo. http://doi.org/10.5281/zenodo.2788681
 
 Ask a question ⁉️
 ^^^^^^^^^^^^^^^^^

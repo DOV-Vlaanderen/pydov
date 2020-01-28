@@ -29,17 +29,17 @@ aggregates data about soil, subsoil and groundwater of Flanders and makes them p
 available. Interactive and human-readable extraction and querying of the data is provided
 by a `web application <https://www.dov.vlaanderen.be/portaal/?module=verkenner>`_\ , whereas
 the focus of this package is to support **machine-based** extraction and conversion of
-the data. The pacakge aims to support a set of complementary use cases, for example:
+the data. The package aims to support a set of complementary use cases, for example:
 
 * integrate DOV data in larger data processing pipelines
 * support the reproducibility and/or repeatability of research studies
 * integrate the data in third-party applications
 
 The machine-based availability of the data can potentially serve a diverse community of
-researchers, consultants, modelers, and students. As performant and proper functioning
+researchers, consultants, modelers, and students. As efficient and proper functioning
 of DOV data processing is of interest to the variety of users, we believe that a
 community-based effort to develop and maintain these functionalities as an open source
-package provides the optimal development traject.
+package provides the optimal development trajectory.
 
 Please note that downloading DOV data with pydov is governed by the same `disclaimer <https://www.dov.vlaanderen.be/page/disclaimer>`_ that applies to the other DOV services. Be sure to consult it when using DOV data with pydov.
 
@@ -53,8 +53,8 @@ for each of the object types (:class:`~pydov.search.grondwaterfilter.GrondwaterF
 :class:`~pydov.search.boring.BoringSearch` and the interpretations derived from
 :class:`~pydov.search.interpretaties.InformeleStratigrafieSearch`).
 
-The setup of appropriate queries on attribute or location is similar for the different data types and
-crucial to get acces to the required data. The :ref:`query_attribute` and :ref:`query_location` explain
+While the search objects are different, the workflow is the same for each dataset.
+The :ref:`query_attribute` and :ref:`query_location` explain
 the query options for attributes and locations respectively.
 
 All functionalities are build on top of the existing webservices provided
@@ -95,7 +95,6 @@ Contents:
    history
    authors
    conduct
-   df_format
 
 Indices and tables
 ==================

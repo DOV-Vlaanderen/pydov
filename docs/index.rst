@@ -95,7 +95,6 @@ Contents:
    history
    authors
    conduct
-   df_format
 
 Indices and tables
 ==================

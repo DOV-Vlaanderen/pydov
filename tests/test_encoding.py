@@ -5,7 +5,6 @@ import os
 
 import pandas as pd
 import time
-from io import open
 
 import pytest
 

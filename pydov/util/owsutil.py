@@ -15,12 +15,7 @@ from owslib.fes import (
     BinaryLogicOpType,
 )
 
-try:
-    # Python3
-    from urllib.parse import urlparse
-except ImportError:
-    # Python2
-    from urlparse import urlparse
+from urllib.parse import urlparse
 
 from owslib.etree import etree
 from owslib.iso import MD_Metadata

@@ -6,7 +6,6 @@ import os
 import re
 import shutil
 import tempfile
-from io import open
 
 import pydov
 from pydov.util.dovutil import get_dov_xml

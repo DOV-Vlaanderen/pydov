@@ -32,7 +32,7 @@ boringsearch = BoringSearch()
 
 dataframe = boringsearch.search(
     query=PropertyIsGreaterThan( propertyname='diepte_tot_m', literal='2000'),
-    location=Within(Box(94720, 186910, 112220, 202870))
+    location=Within(Box(108720, 186910, 112220, 202870))
 )
 ```
 

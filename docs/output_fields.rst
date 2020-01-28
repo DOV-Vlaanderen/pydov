@@ -213,6 +213,7 @@ Groundwater screens (grondwaterfilters)
     x,1,float,110490
     y,1,float,194090
     start_grondwaterlocatie_mtaw,1,float,NaN
+    mv_mtaw,10,float,NaN
     gemeente,1,string,Destelbergen
     meetnet_code,10,string,1
     aquifer_code,10,string,0100

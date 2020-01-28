@@ -619,12 +619,7 @@ class AbstractSearch(AbstractCommon):
                 property_name.text = self._map_df_wfs_source.get(
                     property_name.text, property_name.text)
 
-            try:
-                filter_request = etree.tostring(filter_request,
-                                                encoding='unicode')
-            except LookupError:
-                filter_request = etree.tostring(filter_request,
-                                                encoding='utf-8')
+            filter_request = etree.tostring(filter_request, encoding='unicode')
 
         if return_fields is None:
             wfs_property_names = [
@@ -649,10 +644,7 @@ class AbstractSearch(AbstractCommon):
                 property_name.text = self._map_df_wfs_source.get(
                     property_name.text, property_name.text)
 
-            try:
-                sort_by = etree.tostring(sort_by_xml, encoding='unicode')
-            except LookupError:
-                sort_by = etree.tostring(sort_by_xml, encoding='utf-8')
+            sort_by = etree.tostring(sort_by_xml, encoding='unicode')
 
         fts = self._get_remote_wfs_feature(
             wfs=self.__wfs,

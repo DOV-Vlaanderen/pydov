@@ -404,12 +404,7 @@ class TestOwsutil(object):
                                   literal='Herstappe')
         filter_request = FilterRequest()
         filter_request = filter_request.setConstraint(query)
-        try:
-            filter_request = etree.tostring(filter_request,
-                                            encoding='unicode')
-        except LookupError:
-            filter_request = etree.tostring(filter_request,
-                                            encoding='utf-8')
+        filter_request = etree.tostring(filter_request, encoding='unicode')
 
         xml = owsutil.wfs_build_getfeature_request(
             'dov-pub:Boringen', filter=filter_request)
@@ -436,12 +431,7 @@ class TestOwsutil(object):
                                   literal='Herstappe')
         filter_request = FilterRequest()
         filter_request = filter_request.setConstraint(query)
-        try:
-            filter_request = etree.tostring(filter_request,
-                                            encoding='unicode')
-        except LookupError:
-            filter_request = etree.tostring(filter_request,
-                                            encoding='utf-8')
+        filter_request = etree.tostring(filter_request, encoding='unicode')
 
         xml = owsutil.wfs_build_getfeature_request(
             'dov-pub:Boringen', filter=filter_request,
@@ -478,12 +468,7 @@ class TestOwsutil(object):
                                   literal='Herstappe')
         filter_request = FilterRequest()
         filter_request = filter_request.setConstraint(query)
-        try:
-            filter_request = etree.tostring(filter_request,
-                                            encoding='unicode')
-        except LookupError:
-            filter_request = etree.tostring(filter_request,
-                                            encoding='utf-8')
+        filter_request = etree.tostring(filter_request, encoding='unicode')
 
         xml = owsutil.wfs_build_getfeature_request(
             'dov-pub:Boringen', filter=filter_request,
@@ -518,10 +503,7 @@ class TestOwsutil(object):
         """
         sort_by = SortBy([SortProperty('diepte_tot_m', 'DESC')])
 
-        try:
-            sort_by = etree.tostring(sort_by.toXML(), encoding='unicode')
-        except LookupError:
-            sort_by = etree.tostring(sort_by.toXML(), encoding='utf-8')
+        sort_by = etree.tostring(sort_by.toXML(), encoding='unicode')
 
         xml = owsutil.wfs_build_getfeature_request(
             'dov-pub:Boringen', propertyname=['fiche', 'diepte_tot_m'],
@@ -549,10 +531,7 @@ class TestOwsutil(object):
         sort_by = SortBy([SortProperty('diepte_tot_m', 'DESC'),
                           SortProperty('datum_aanvang', 'ASC')])
 
-        try:
-            sort_by = etree.tostring(sort_by.toXML(), encoding='unicode')
-        except LookupError:
-            sort_by = etree.tostring(sort_by.toXML(), encoding='utf-8')
+        sort_by = etree.tostring(sort_by.toXML(), encoding='unicode')
 
         xml = owsutil.wfs_build_getfeature_request(
             'dov-pub:Boringen', propertyname=['fiche', 'diepte_tot_m'],

@@ -1,15 +1,7 @@
 # -*- coding: utf-8 -*-
 """Module grouping utility functions for OWS services."""
-import warnings
-
 import pydov
 
-from owslib.feature.schema import (
-    _get_describefeaturetype_url,
-    _get_elements,
-    XS_NAMESPACE,
-    GML_NAMESPACES
-)
 from owslib.fes import (
     UnaryLogicOpType,
     BinaryLogicOpType,
@@ -23,12 +15,8 @@ except ImportError:
     from urlparse import urlparse
 
 from owslib.etree import etree
-from owslib.iso import MD_Metadata
 from owslib.namespaces import Namespaces
-from owslib.util import (
-    nspath_eval,
-    findall,
-)
+from owslib.util import nspath_eval
 
 from .errors import (
     MetadataNotFoundError,

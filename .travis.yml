@@ -1,8 +1,5 @@
 language: python
 sudo: false
-env:
-  global:
-  - COVERALLS_PARALLEL=true
 notifications:
   email:
     recipients:
@@ -11,10 +8,8 @@ notifications:
     on_success: change
     on_failure: always
     on_error: always
-  webhooks: https://coveralls.io/webhook
 install:
 - pip install -U tox-travis
-- pip install -U coveralls
 addons:
   apt:
     packages:
@@ -45,8 +40,6 @@ matrix:
     env: TOXENV=docs
   - env: TOXENV=flake8
 script: tox
-after_success:
-- coveralls || echo "coveralls failure"
 deploy:
 - provider: pypi
   distributions: sdist bdist_wheel

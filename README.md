@@ -31,8 +31,8 @@ from owslib.fes import PropertyIsGreaterThan
 boringsearch = BoringSearch()
 
 dataframe = boringsearch.search(
-    query=PropertyIsGreaterThan( propertyname='diepte_tot_m', literal='2000'),
-    location=Within(Box(108720, 186910, 112220, 202870))
+    query=PropertyIsGreaterThan( propertyname='diepte_tot_m', literal='550'),
+    location=Within(Box(107500, 202000, 108500, 203000))
 )
 ```
 

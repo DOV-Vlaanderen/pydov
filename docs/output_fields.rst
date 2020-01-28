@@ -234,7 +234,7 @@ Groundwater screens (grondwaterfilters)
 
 Groundwater samples (grondwatermonsters)
 ----------------------------------------
-  .. csv-table:: Groundwater screens (grondwaterfilters)
+  .. csv-table:: Groundwater samples (grondwatermonsters)
     :header-rows: 1
 
     Field,Cost,Datatype,Example
@@ -248,8 +248,7 @@ Groundwater samples (grondwatermonsters)
     y,1,float,158805
     start_grondwaterlocatie_mtaw,1,float,129.88
     gemeente,1,string,Sint-Genesius-Rode
-    datum,10,datum,2020-01-20
-    tijdstip,10,tijdstip,''
+    datum_monstername,1,date,2020-01-20
     parametergroep,10,string,Zware metalen
     parameter,10,string,Hg
     detectie,10,string,<

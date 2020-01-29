@@ -107,11 +107,10 @@ class TestOwsutil(object):
 
         """
         tree = etree.fromstring(md_metadata.xml)
-        root = tree.find('{http://www.isotc211.org/2005/gmd}MD_Metadata')
         for ci in tree.findall(
                 './/{http://www.isotc211.org/2005/gmd}contentInfo'):
-            root.remove(ci)
-        md_metadata.xml = etree.tostring(tree)
+            tree.remove(ci)
+        md_metadata = MD_Metadata(tree)
 
         with pytest.raises(FeatureCatalogueNotFoundError):
             owsutil.get_featurecatalogue_uuid(md_metadata)
@@ -131,12 +130,12 @@ class TestOwsutil(object):
         """
         tree = etree.fromstring(md_metadata.xml)
         for ci in tree.findall(nspath_eval(
-            'gmd:MD_Metadata/gmd:contentInfo/'
+            'gmd:contentInfo/'
             'gmd:MD_FeatureCatalogueDescription/'
             'gmd:featureCatalogueCitation',
             {'gmd': 'http://www.isotc211.org/2005/gmd'})):
             ci.attrib.pop('uuidref')
-        md_metadata.xml = etree.tostring(tree)
+        md_metadata = MD_Metadata(tree)
 
         with pytest.raises(FeatureCatalogueNotFoundError):
             owsutil.get_featurecatalogue_uuid(md_metadata)
@@ -241,23 +240,6 @@ class TestOwsutil(object):
         """
         assert type(md_metadata) is MD_Metadata
 
-    def test_get_remote_metadata_nometadataurls(self, wfs):
-        """Test the owsutil.get_remote_metadata method when the WFS layer
-        missed metadata URLs.
-
-        Test whether a MetadataNotFoundError is raised.
-
-        Parameters
-        ----------
-        wfs : pytest.fixture returning owslib.wfs.WebFeatureService
-            WebFeatureService based on the local GetCapabilities.
-
-        """
-        contents = copy.deepcopy(wfs.contents)
-        contentmetadata = contents['dov-pub:Boringen']
-        contentmetadata.metadataUrls = []
-        with pytest.raises(MetadataNotFoundError):
-            owsutil.get_remote_metadata(contentmetadata)
 
     def test_wfs_build_getfeature_request_onlytypename(self):
         """Test the owsutil.wfs_build_getfeature_request method with only a

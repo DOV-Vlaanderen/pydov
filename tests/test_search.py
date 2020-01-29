@@ -6,11 +6,17 @@ import pytest
 import owslib
 import pydov
 from owslib.etree import etree
+from owslib.feature.schema import (
+    _get_elements,
+    _construct_schema,
+)
 from owslib.fes import (
     SortBy,
     SortProperty,
     And,
 )
+from owslib.iso import MD_Metadata
+from owslib.util import findall
 from owslib.wfs import WebFeatureService
 from pydov.search.boring import BoringSearch
 from pydov.search.grondwaterfilter import GrondwaterFilterSearch
@@ -142,9 +148,10 @@ def mp_remote_md(wfs, monkeymodule, request):
             data = f.read()
             if type(data) is not bytes:
                 data = data.encode('utf-8')
-        return data
+        return MD_Metadata(etree.fromstring(data).find(
+            './{http://www.isotc211.org/2005/gmd}MD_Metadata'))
 
-    monkeymodule.setattr(pydov.util.owsutil, '__get_remote_md',
+    monkeymodule.setattr(pydov.util.owsutil, 'get_remote_metadata',
                          __get_remote_md)
 
 
@@ -203,6 +210,39 @@ def mp_remote_describefeaturetype(monkeymodule, request):
     monkeymodule.setattr(pydov.util.owsutil,
                          '__get_remote_describefeaturetype',
                          __get_remote_describefeaturetype)
+
+
+@pytest.fixture(scope='module')
+def mp_get_schema(monkeymodule, request):
+    def __get_schema(*args, **kwargs):
+        file_path = getattr(request.module, "location_wfs_describefeaturetype")
+        with open(file_path, 'r') as f:
+            data = f.read()
+            if type(data) is not bytes:
+                data = data.encode('utf-8')
+
+        root = etree.fromstring(data)
+
+        typename = root.find(
+            './{http://www.w3.org/2001/XMLSchema}element').get('name')
+
+        if ":" in typename:
+            typename = typename.split(":")[1]
+        type_element = findall(
+            root,
+            "{http://www.w3.org/2001/XMLSchema}element",
+            attribute_name="name",
+            attribute_value=typename,
+        )[0]
+        complex_type = type_element.attrib["type"].split(":")[1]
+        elements = _get_elements(complex_type, root)
+        nsmap = None
+        if hasattr(root, "nsmap"):
+            nsmap = root.nsmap
+        return _construct_schema(elements, nsmap)
+
+    monkeymodule.setattr(pydov.search.abstract.AbstractSearch, '_get_schema',
+                         __get_schema)
 
 
 @pytest.fixture(scope='module')

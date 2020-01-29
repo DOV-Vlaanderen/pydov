@@ -17,6 +17,7 @@ from tests.abstract import (
 from tests.test_search import (
     mp_wfs,
     wfs,
+    mp_get_schema,
     mp_remote_md,
     mp_remote_fc,
     mp_remote_describefeaturetype,
@@ -184,9 +185,9 @@ class TestSonderingSearch(AbstractTestSearch):
                 'sondeermethode', 'apparaat', 'datum_gw_meting',
                 'diepte_gw_m', 'z', 'qc', 'Qt', 'fs', 'u', 'i']
 
-    def test_search_date(self, mp_wfs, mp_remote_describefeaturetype,
-                         mp_remote_md, mp_remote_fc, mp_remote_wfs_feature,
-                         mp_dov_xml):
+    def test_search_date(self, mp_wfs, mp_get_schema,
+                         mp_remote_describefeaturetype, mp_remote_md,
+                         mp_remote_fc, mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with only the query parameter.
 
         Test whether the result is correct.
@@ -195,6 +196,8 @@ class TestSonderingSearch(AbstractTestSearch):
         ----------
         mp_wfs : pytest.fixture
             Monkeypatch the call to the remote GetCapabilities request.
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_md : pytest.fixture
@@ -217,9 +220,9 @@ class TestSonderingSearch(AbstractTestSearch):
             df.datum_gw_meting.unique()[0]).to_pydatetime() == \
                datetime.datetime(2002, 12, 17, 14, 30, 0, 0)
 
-    def test_search_nan(self, mp_wfs, mp_remote_describefeaturetype,
-                        mp_remote_md, mp_remote_fc, mp_remote_wfs_feature,
-                        mp_dov_xml):
+    def test_search_nan(self, mp_wfs, mp_get_schema,
+                        mp_remote_describefeaturetype, mp_remote_md,
+                        mp_remote_fc, mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with only the query parameter.
 
         Test whether the result is correct.
@@ -228,6 +231,8 @@ class TestSonderingSearch(AbstractTestSearch):
         ----------
         mp_wfs : pytest.fixture
             Monkeypatch the call to the remote GetCapabilities request.
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_md : pytest.fixture
@@ -245,7 +250,8 @@ class TestSonderingSearch(AbstractTestSearch):
 
         assert df.Qt.hasnans
 
-    def test_search_xmlresolving(self, mp_remote_describefeaturetype,
+    def test_search_xmlresolving(self, mp_get_schema,
+                                 mp_remote_describefeaturetype,
                                  mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with return fields from XML but not from a
         subtype.
@@ -254,6 +260,8 @@ class TestSonderingSearch(AbstractTestSearch):
 
         Parameters
         ----------
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_wfs_feature : pytest.fixture

@@ -201,6 +201,9 @@ CPT measurements (sonderingen)
 
 Groundwater screens (grondwaterfilters)
 ---------------------------------------
+
+Mind that the timeseries contains two columns referring to the time: `datum` and `tijdstip`, with datatype `date`, respectively `string`. This distinction is required because the `tijdstip` field is not mandatory whereas the `date` is. It is up to the user to combine these fields in a datetime object if required.
+
   .. csv-table:: Groundwater screens (grondwaterfilters)
     :header-rows: 1
 
@@ -231,7 +234,7 @@ Groundwater screens (grondwaterfilters)
 
 Groundwater samples (grondwatermonsters)
 ----------------------------------------
-  .. csv-table:: Groundwater screens (grondwaterfilters)
+  .. csv-table:: Groundwater samples (grondwatermonsters)
     :header-rows: 1
 
     Field,Cost,Datatype,Example
@@ -245,6 +248,7 @@ Groundwater samples (grondwatermonsters)
     y,1,float,158805
     start_grondwaterlocatie_mtaw,1,float,129.88
     gemeente,1,string,Sint-Genesius-Rode
+    datum_monstername,1,date,2020-01-20
     parametergroep,10,string,Zware metalen
     parameter,10,string,Hg
     detectie,10,string,<

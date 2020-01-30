@@ -267,10 +267,26 @@ class AbstractFileCache(AbstractCache):
         """
         datatype, key = self._get_type_key_from_url(url)
 
+        data = None
+        for hook in pydov.hooks:
+            x = hook.inject_xml_retrieved(url)
+            if x is not None:
+                data = x.encode('utf8')
+
+        if data is not None:
+            for hook in pydov.hooks:
+                hook.xml_retrieved(url, data)
+            return data
+
         if self._is_valid(datatype, key):
             try:
                 self._emit_cache_hit(url)
-                return self._load(datatype, key).encode('utf-8')
+                data = self._load(datatype, key).encode('utf-8')
+
+                for hook in pydov.hooks:
+                    hook.xml_retrieved(url, data)
+                return data
+
             except Exception:
                 pass
 
@@ -280,6 +296,8 @@ class AbstractFileCache(AbstractCache):
         except Exception:
             pass
 
+        for hook in pydov.hooks:
+            hook.xml_retrieved(url, data)
         return data
 
     def clean(self):

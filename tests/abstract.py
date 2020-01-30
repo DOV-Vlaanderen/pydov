@@ -14,6 +14,7 @@ from pandas.api.types import (
     is_int64_dtype, is_object_dtype,
     is_bool_dtype, is_float_dtype)
 
+import pydov
 from owslib.fes import (
     PropertyIsEqualTo,
     SortBy,
@@ -51,7 +52,8 @@ def service_ok(timeout=5):
     """
     def check_url(url, timeout):
         try:
-            ok = requests.get(url, timeout=timeout).ok
+            ok = pydov.session.head(
+                url, allow_redirects=True, timeout=timeout).ok
         except requests.exceptions.ReadTimeout:
             ok = False
         except requests.exceptions.ConnectTimeout:

@@ -371,9 +371,26 @@ class TestOwsutil(object):
             'xsi:schemaLocation="http://www.opengis.net/wfs '
             'http://schemas.opengis.net/wfs/1.1.0/wfs.xsd"> <wfs:Query '
             'typeName="dov-pub:Boringen"> '
-            '<wfs:PropertyName>fiche</wfs:PropertyName> '
-            '<wfs:PropertyName>diepte_tot_m</wfs:PropertyName> <ogc:Filter/> '
+            '<wfs:PropertyName>diepte_tot_m</wfs:PropertyName> '
+            '<wfs:PropertyName>fiche</wfs:PropertyName> <ogc:Filter/> '
             '</wfs:Query> </wfs:GetFeature>')
+
+    def test_wfs_build_getfeature_request_propertyname_stable(self):
+        """Test the owsutil.wfs_build_getfeature_request method with a list
+        of propertynames.
+
+        Test whether the XML of the WFS GetFeature that is being generated is
+        stable (i.e. independent of the order of the propertynames).
+
+        """
+        xml = owsutil.wfs_build_getfeature_request(
+            'dov-pub:Boringen', propertyname=['fiche', 'diepte_tot_m'])
+
+        xml2 = owsutil.wfs_build_getfeature_request(
+            'dov-pub:Boringen', propertyname=['diepte_tot_m', 'fiche'])
+
+        assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
+            etree.tostring(xml2).decode('utf8'))
 
     def test_wfs_build_getfeature_request_filter(self):
         """Test the owsutil.wfs_build_getfeature_request method with an
@@ -463,8 +480,8 @@ class TestOwsutil(object):
             'xsi:schemaLocation="http://www.opengis.net/wfs '
             'http://schemas.opengis.net/wfs/1.1.0/wfs.xsd"> <wfs:Query '
             'typeName="dov-pub:Boringen"> '
-            '<wfs:PropertyName>fiche</wfs:PropertyName> '
-            '<wfs:PropertyName>diepte_tot_m</wfs:PropertyName> <ogc:Filter> '
+            '<wfs:PropertyName>diepte_tot_m</wfs:PropertyName> '
+            '<wfs:PropertyName>fiche</wfs:PropertyName> <ogc:Filter> '
             '<ogc:And> <ogc:PropertyIsEqualTo> '
             '<ogc:PropertyName>gemeente</ogc:PropertyName> '
             '<ogc:Literal>Herstappe</ogc:Literal> </ogc:PropertyIsEqualTo> '
@@ -496,8 +513,8 @@ class TestOwsutil(object):
             'service="WFS" version="1.1.0" '
             'xsi:schemaLocation="http://www.opengis.net/wfs '
             'http://schemas.opengis.net/wfs/1.1.0/wfs.xsd"><wfs:Query '
-            'typeName="dov-pub:Boringen"><wfs:PropertyName>fiche</wfs'
-            ':PropertyName><wfs:PropertyName>diepte_tot_m</wfs:PropertyName'
+            'typeName="dov-pub:Boringen"><wfs:PropertyName>diepte_tot_m</wfs'
+            ':PropertyName><wfs:PropertyName>fiche</wfs:PropertyName'
             '><ogc:Filter/><ogc:SortBy><ogc:SortProperty><ogc:PropertyName'
             '>diepte_tot_m</ogc:PropertyName><ogc:SortOrder>DESC</ogc'
             ':SortOrder></ogc:SortProperty></ogc:SortBy></wfs:Query></wfs'
@@ -525,8 +542,8 @@ class TestOwsutil(object):
             'service="WFS" version="1.1.0" '
             'xsi:schemaLocation="http://www.opengis.net/wfs '
             'http://schemas.opengis.net/wfs/1.1.0/wfs.xsd"><wfs:Query '
-            'typeName="dov-pub:Boringen"><wfs:PropertyName>fiche</wfs'
-            ':PropertyName><wfs:PropertyName>diepte_tot_m</wfs:PropertyName'
+            'typeName="dov-pub:Boringen"><wfs:PropertyName>diepte_tot_m</wfs'
+            ':PropertyName><wfs:PropertyName>fiche</wfs:PropertyName'
             '><ogc:Filter/><ogc:SortBy><ogc:SortProperty><ogc:PropertyName'
             '>diepte_tot_m</ogc:PropertyName><ogc:SortOrder>DESC</ogc'
             ':SortOrder></ogc:SortProperty><ogc:SortProperty><ogc'

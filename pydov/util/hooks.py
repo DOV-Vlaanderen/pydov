@@ -89,7 +89,7 @@ class AbstractHook(object):
         """
         pass
 
-    def wfs_search_result_features(self, query, features):
+    def wfs_search_result_received(self, query, features):
         """Called after a WFS search finished.
 
         Includes both the GetFeature query as well as the response from the
@@ -105,7 +105,7 @@ class AbstractHook(object):
         """
         pass
 
-    def inject_wfs_result_features(self, query):
+    def inject_wfs_getfeature_response(self, query):
         """Inject a response for a WFS GetFeature request.
 
         This allows to intercept a WFS GetFeature request and return a
@@ -129,8 +129,8 @@ class AbstractHook(object):
         """
         return None
 
-    def xml_retrieved(self, pkey_object, xml):
-        """Called when the XML of a given object is retrieved, either from
+    def xml_received(self, pkey_object, xml):
+        """Called when the XML of a given object is received, either from
         the cache or from the remote DOV service.
 
         Includes the permanent key of the DOV object as well as the full XML
@@ -150,7 +150,7 @@ class AbstractHook(object):
         """
         pass
 
-    def inject_xml_retrieved(self, pkey_object):
+    def inject_xml_response(self, pkey_object):
         """Inject a response for a DOV XML request.
 
         This allows to intercept a DOV XML request and return a response of

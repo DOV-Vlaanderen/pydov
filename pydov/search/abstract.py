@@ -569,7 +569,7 @@ class AbstractSearch(AbstractCommon):
 
         tree = None
         for hook in pydov.hooks:
-            t = hook.inject_wfs_result_features(wfs_getfeature_xml)
+            t = hook.inject_wfs_getfeature_response(wfs_getfeature_xml)
             if t is not None:
                 tree = t
 
@@ -699,7 +699,7 @@ class AbstractSearch(AbstractCommon):
 
         for hook in pydov.hooks:
             hook.wfs_search_result(int(tree.get('numberOfFeatures')))
-            hook.wfs_search_result_features(getfeature, tree)
+            hook.wfs_search_result_received(getfeature, tree)
 
         return tree
 

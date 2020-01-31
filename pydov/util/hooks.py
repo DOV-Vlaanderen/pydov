@@ -1,26 +1,13 @@
 # -*- coding: utf-8 -*-
 """Module implementing a simple hooks system to allow late-binding actions to
 PyDOV events."""
-import atexit
-import json
-import os
-import uuid
-import zipfile
-from hashlib import md5
-from pathlib import Path
 
-import numpy
-import pandas
-import requests
-
-import owslib
-import pydov
-from owslib.etree import etree
-
-import sys
 from multiprocessing import Lock
 
+import sys
 import time
+
+from owslib.etree import etree
 
 
 class AbstractHook(object):
@@ -32,9 +19,52 @@ class AbstractHook(object):
 
     """
     def meta_received(self, url, response):
+        """Called when a response for a metadata requests is received.
+
+        Metadata calls include amongst others: WFS GetCapabilities, requests
+        for MD_Metadata, FC_FeatureCatalogue and XSD schemas.
+
+        These are all calls except for WFS GetFeature requests and XML
+        downloads of DOV data - these are other hooks.
+
+        Parameters
+        ----------
+        url : str
+            URL of the metadata request.
+        response : bytes
+            The raw response as received from resolving the URL.
+
+        """
         pass
 
     def inject_meta_response(self, url):
+        """Inject a response for a metadata request.
+
+        This allows to intercept a metadata request and return a response of
+        your choice.
+
+        When at least one registered hook returns a response for a given URL,
+        the remote call is not executed and instead the response from the
+        last registered hook (that is non-null) is used instead.
+
+        Metadata calls include amongst others: WFS GetCapabilities, requests
+        for MD_Metadata, FC_FeatureCatalogue and XSD schemas.
+
+        These are all calls except for WFS GetFeature requests and XML
+        downloads of DOV data - these are other hooks.
+
+        Parameters
+        ----------
+        url : str
+            URL of the metadata request.
+
+        Returns
+        -------
+        bytes, optional
+            The response to use in favor of resolving the URL. Return None to
+            disable this inject hook.
+
+        """
         return None
 
     def wfs_search_init(self, typename):
@@ -44,19 +74,6 @@ class AbstractHook(object):
         ----------
         typename : str
             The typename (layername) of the WFS service used for searching.
-
-        """
-        pass
-
-    def wfs_search_query(self, query):
-        """Called upon starting a WFS search.
-
-        Includes the full WFS GetFeature request sent to the WFS server.
-
-        Parameters
-        ----------
-        query : etree.ElementTree
-            The WFS GetFeature request sent to the WFS server.
 
         """
         pass
@@ -75,7 +92,8 @@ class AbstractHook(object):
     def wfs_search_result_features(self, query, features):
         """Called after a WFS search finished.
 
-        Includes the full response from the WFS GetFeature query.
+        Includes both the GetFeature query as well as the response from the
+        WFS server.
 
         Parameters
         ----------
@@ -88,24 +106,77 @@ class AbstractHook(object):
         pass
 
     def inject_wfs_result_features(self, query):
+        """Inject a response for a WFS GetFeature request.
+
+        This allows to intercept a WFS GetFeature request and return a
+        response of your choice.
+
+        When at least one registered hook returns a response for a given query,
+        the remote call is not executed and instead the response from the
+        last registered hook (that is non-null) is used instead.
+
+        Parameters
+        ----------
+        query : etree.ElementTree
+            The WFS GetFeature request sent to the WFS server.
+
+        Returns
+        -------
+        etree.ElementTree, optional
+            The response to use in favor of resolving the URL. Return None to
+            disable this inject hook.
+
+        """
         return None
 
-    def xml_requested(self, pkey_object):
-        """Called upon requesting an XML document of an object.
+    def xml_retrieved(self, pkey_object, xml):
+        """Called when the XML of a given object is retrieved, either from
+        the cache or from the remote DOV service.
+
+        Includes the permanent key of the DOV object as well as the full XML
+        representation.
 
         Because of parallel processing, this method will be called
         simultaneously from multiple threads. Make sure your implementation is
         threadsafe or uses locking.
 
-        This is either followed by ``xml_cache_hit`` or ``xml_downloaded``.
-
         Parameters
         ----------
         pkey_object : str
-            Permanent key of the requested object.
+            Permanent key of the retrieved object.
+        xml : bytes
+            The raw XML data of this DOV object as bytes.
 
         """
         pass
+
+    def inject_xml_retrieved(self, pkey_object):
+        """Inject a response for a DOV XML request.
+
+        This allows to intercept a DOV XML request and return a response of
+        your choice.
+
+        When at least one registered hook returns a response for a given pkey,
+        the remote call is not executed and instead the response from the
+        last registered hook (that is non-null) is used instead.
+
+        Because of parallel processing, this method will be called
+        simultaneously from multiple threads. Make sure your implementation is
+        threadsafe or uses locking.
+
+        Parameters
+        ----------
+        query : etree.ElementTree
+            The WFS GetFeature request sent to the WFS server.
+
+        Returns
+        -------
+        etree.ElementTree, optional
+            The response to use in favor of resolving the URL. Return None to
+            disable this inject hook.
+
+        """
+        return None
 
     def xml_cache_hit(self, pkey_object):
         """Called when the XML document of an object is retrieved from the
@@ -138,26 +209,6 @@ class AbstractHook(object):
 
         """
         pass
-
-    def xml_retrieved(self, pkey_object, xml):
-        """Called when the XML of a given object is retrieved, either from
-        the cache or from the remote DOV service.
-
-        Includes the permanent key of the DOV object as well as the full XML
-        representation.
-
-        Parameters
-        ----------
-        pkey_object : str
-            Permanent key of the retrieved object.
-        xml : bytes
-            The raw XML data of this DOV object as bytes.
-
-        """
-        pass
-
-    def inject_xml_retrieved(self, pkey_object):
-        return None
 
 
 class SimpleStatusHook(AbstractHook):

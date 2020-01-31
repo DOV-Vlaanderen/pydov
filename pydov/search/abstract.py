@@ -566,7 +566,6 @@ class AbstractSearch(AbstractCommon):
 
         for hook in pydov.hooks:
             hook.wfs_search_init(typename)
-            hook.wfs_search_query(wfs_getfeature_xml)
 
         tree = None
         for hook in pydov.hooks:

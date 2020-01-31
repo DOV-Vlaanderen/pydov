@@ -21,7 +21,6 @@ class HookCounter(AbstractHook):
     def __init__(self):
         self.count_wfs_search_init = 0
         self.count_wfs_search_result = 0
-        self.count_xml_requested = 0
         self.count_xml_cache_hit = 0
         self.count_xml_downloaded = 0
 
@@ -46,19 +45,6 @@ class HookCounter(AbstractHook):
 
         """
         self.count_wfs_search_result += 1
-
-    def xml_requested(self, pkey_object):
-        """Called upon requesting an XML document of an object.
-
-        This is either followed by ``xml_cache_hit`` or ``xml_downloaded``.
-
-        Parameters
-        ----------
-        pkey_object : str
-            Permanent key of the requested object.
-
-        """
-        self.count_xml_requested += 1
 
     def xml_cache_hit(self, pkey_object):
         """Called when the XML document of an object is retrieved from the
@@ -126,7 +112,6 @@ class TestHooks(object):
 
         assert pydov.hooks[0].count_wfs_search_init == 1
         assert pydov.hooks[0].count_wfs_search_result == 1
-        assert pydov.hooks[0].count_xml_requested == 0
         assert pydov.hooks[0].count_xml_cache_hit == 0
         assert pydov.hooks[0].count_xml_downloaded == 0
 
@@ -159,7 +144,6 @@ class TestHooks(object):
 
         assert pydov.hooks[0].count_wfs_search_init == 1
         assert pydov.hooks[0].count_wfs_search_result == 1
-        assert pydov.hooks[0].count_xml_requested == 1
         assert pydov.hooks[0].count_xml_cache_hit == 0
         assert pydov.hooks[0].count_xml_downloaded == 1
 
@@ -168,7 +152,6 @@ class TestHooks(object):
 
         assert pydov.hooks[0].count_wfs_search_init == 2
         assert pydov.hooks[0].count_wfs_search_result == 2
-        assert pydov.hooks[0].count_xml_requested == 2
         assert pydov.hooks[0].count_xml_cache_hit == 0
         assert pydov.hooks[0].count_xml_downloaded == 2
 
@@ -205,7 +188,6 @@ class TestHooks(object):
 
         assert pydov.hooks[0].count_wfs_search_init == 1
         assert pydov.hooks[0].count_wfs_search_result == 1
-        assert pydov.hooks[0].count_xml_requested == 1
         assert pydov.hooks[0].count_xml_cache_hit == 0
         assert pydov.hooks[0].count_xml_downloaded == 1
 
@@ -214,7 +196,6 @@ class TestHooks(object):
 
         assert pydov.hooks[0].count_wfs_search_init == 2
         assert pydov.hooks[0].count_wfs_search_result == 2
-        assert pydov.hooks[0].count_xml_requested == 2
         assert pydov.hooks[0].count_xml_cache_hit == 1
         assert pydov.hooks[0].count_xml_downloaded == 1
 

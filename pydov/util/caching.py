@@ -296,8 +296,6 @@ class AbstractFileCache(AbstractCache):
         except Exception:
             pass
 
-        for hook in pydov.hooks:
-            hook.xml_received(url, data)
         return data
 
     def clean(self):

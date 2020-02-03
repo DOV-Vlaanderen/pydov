@@ -19,55 +19,45 @@ from tests.test_util_caching import (
 class HookCounter(AbstractHook):
     """Hook implementation for testing purposes, counting all event calls."""
     def __init__(self):
+        self.count_meta_received = 0
+        self.count_inject_meta_response = 0
         self.count_wfs_search_init = 0
         self.count_wfs_search_result = 0
+        self.count_wfs_search_result_received = 0
+        self.count_inject_wfs_getfeature_response = 0
+        self.count_xml_received = 0
+        self.count_inject_xml_response = 0
         self.count_xml_cache_hit = 0
         self.count_xml_downloaded = 0
 
+    def meta_received(self, url, response):
+        self.count_meta_received += 1
+
+    def inject_meta_response(self, url):
+        self.count_inject_meta_response += 1
+
     def wfs_search_init(self, typename):
-        """Called upon starting a WFS search.
-
-        Parameters
-        ----------
-        typename : str
-            The typename (layername) of the WFS service used for searching.
-
-        """
         self.count_wfs_search_init += 1
 
     def wfs_search_result(self, number_of_results):
-        """Called after a WFS search finished.
-
-        Parameters
-        ----------
-        number_of_results : int
-            The number of features returned by the WFS search.
-
-        """
         self.count_wfs_search_result += 1
 
+    def wfs_search_result_received(self, query, features):
+        self.count_wfs_search_result_received += 1
+
+    def inject_wfs_getfeature_response(self, query):
+        self.count_inject_wfs_getfeature_response += 1
+
+    def xml_received(self, pkey_object, xml):
+        self.count_xml_received += 1
+
+    def inject_xml_response(self, pkey_object):
+        self.count_inject_xml_response += 1
+
     def xml_cache_hit(self, pkey_object):
-        """Called when the XML document of an object is retrieved from the
-        cache.
-
-        Parameters
-        ----------
-        pkey_object : str
-            Permanent key of the requested object.
-
-        """
         self.count_xml_cache_hit += 1
 
     def xml_downloaded(self, pkey_object):
-        """Called when the XML document of an object is downloaded from the
-        DOV services.
-
-        Parameters
-        ----------
-        pkey_object : str
-            Permanent key of the requested object.
-
-        """
         self.count_xml_downloaded += 1
 
 
@@ -112,8 +102,16 @@ class TestHooks(object):
 
         assert pydov.hooks[0].count_wfs_search_init == 1
         assert pydov.hooks[0].count_wfs_search_result == 1
+        assert pydov.hooks[0].count_wfs_search_result_received == 1
+        assert pydov.hooks[0].count_inject_wfs_getfeature_response == 1
+
+        assert pydov.hooks[0].count_xml_received == 0
+        assert pydov.hooks[0].count_inject_xml_response == 0
         assert pydov.hooks[0].count_xml_cache_hit == 0
         assert pydov.hooks[0].count_xml_downloaded == 0
+
+        assert pydov.hooks[0].count_meta_received > 0
+        assert pydov.hooks[0].count_inject_meta_response > 0
 
     @pytest.mark.online
     @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
@@ -144,16 +142,32 @@ class TestHooks(object):
 
         assert pydov.hooks[0].count_wfs_search_init == 1
         assert pydov.hooks[0].count_wfs_search_result == 1
+        assert pydov.hooks[0].count_wfs_search_result_received == 1
+        assert pydov.hooks[0].count_inject_wfs_getfeature_response == 1
+
+        assert pydov.hooks[0].count_xml_received == 1
+        assert pydov.hooks[0].count_inject_xml_response == 1
         assert pydov.hooks[0].count_xml_cache_hit == 0
         assert pydov.hooks[0].count_xml_downloaded == 1
+
+        assert pydov.hooks[0].count_meta_received > 0
+        assert pydov.hooks[0].count_inject_meta_response > 0
 
         df = boringsearch.search(
             query=query, return_fields=('pkey_boring', 'mv_mtaw'))
 
         assert pydov.hooks[0].count_wfs_search_init == 2
         assert pydov.hooks[0].count_wfs_search_result == 2
+        assert pydov.hooks[0].count_wfs_search_result_received == 2
+        assert pydov.hooks[0].count_inject_wfs_getfeature_response == 2
+
+        assert pydov.hooks[0].count_xml_received == 2
+        assert pydov.hooks[0].count_inject_xml_response == 2
         assert pydov.hooks[0].count_xml_cache_hit == 0
         assert pydov.hooks[0].count_xml_downloaded == 2
+
+        assert pydov.hooks[0].count_meta_received > 0
+        assert pydov.hooks[0].count_inject_meta_response > 0
 
     @pytest.mark.online
     @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
@@ -188,16 +202,32 @@ class TestHooks(object):
 
         assert pydov.hooks[0].count_wfs_search_init == 1
         assert pydov.hooks[0].count_wfs_search_result == 1
+        assert pydov.hooks[0].count_wfs_search_result_received == 1
+        assert pydov.hooks[0].count_inject_wfs_getfeature_response == 1
+
+        assert pydov.hooks[0].count_xml_received == 1
+        assert pydov.hooks[0].count_inject_xml_response == 1
         assert pydov.hooks[0].count_xml_cache_hit == 0
         assert pydov.hooks[0].count_xml_downloaded == 1
+
+        assert pydov.hooks[0].count_meta_received > 0
+        assert pydov.hooks[0].count_inject_meta_response > 0
 
         df = boringsearch.search(
             query=query, return_fields=('pkey_boring', 'mv_mtaw'))
 
         assert pydov.hooks[0].count_wfs_search_init == 2
         assert pydov.hooks[0].count_wfs_search_result == 2
+        assert pydov.hooks[0].count_wfs_search_result_received == 2
+        assert pydov.hooks[0].count_inject_wfs_getfeature_response == 2
+
+        assert pydov.hooks[0].count_xml_received == 2
+        assert pydov.hooks[0].count_inject_xml_response == 2
         assert pydov.hooks[0].count_xml_cache_hit == 1
         assert pydov.hooks[0].count_xml_downloaded == 1
+
+        assert pydov.hooks[0].count_meta_received > 0
+        assert pydov.hooks[0].count_inject_meta_response > 0
 
     @pytest.mark.online
     @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")

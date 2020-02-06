@@ -271,7 +271,7 @@ class AbstractFileCache(AbstractCache):
         for hook in pydov.hooks:
             x = hook.inject_xml_response(url)
             if x is not None:
-                data = x.encode('utf8')
+                data = x
 
         if data is not None:
             for hook in pydov.hooks:

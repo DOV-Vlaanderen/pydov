@@ -91,7 +91,7 @@ def get_dov_xml(url):
     for hook in pydov.hooks:
         r = hook.inject_xml_response(url)
         if r is not None:
-            response = r.encode('utf8')
+            response = r
 
     if response is None:
         response = get_remote_url(url)

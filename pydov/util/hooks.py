@@ -122,7 +122,7 @@ class AbstractHook(object):
 
         Returns
         -------
-        etree.ElementTree, optional
+        bytes, optional
             The response to use in favor of resolving the URL. Return None to
             disable this inject hook.
 
@@ -171,7 +171,7 @@ class AbstractHook(object):
 
         Returns
         -------
-        etree.ElementTree, optional
+        bytes, optional
             The response to use in favor of resolving the URL. Return None to
             disable this inject hook.
 

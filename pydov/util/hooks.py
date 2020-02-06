@@ -120,9 +120,9 @@ class AbstractHook(object):
 
         Returns
         -------
-        bytes, optional
-            The response to use in favor of resolving the URL. Return None to
-            disable this inject hook.
+        xml: bytes, optional
+            The GetFeature response to use in favor of resolving the URL.
+            Return None to disable this inject hook.
 
         """
         return None
@@ -169,9 +169,9 @@ class AbstractHook(object):
 
         Returns
         -------
-        bytes, optional
-            The response to use in favor of resolving the URL. Return None to
-            disable this inject hook.
+        xml : bytes, optional
+            The XML response to use in favor of resolving the URL. Return
+            None to disable this inject hook.
 
         """
         return None

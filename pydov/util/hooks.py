@@ -7,8 +7,6 @@ from multiprocessing import Lock
 import sys
 import time
 
-from owslib.etree import etree
-
 
 class AbstractHook(object):
     """Abstract base class for custom hook implementations.

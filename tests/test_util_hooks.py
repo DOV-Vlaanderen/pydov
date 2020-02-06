@@ -191,7 +191,7 @@ class HookInjecter(AbstractHook):
                 '{http://dov.vlaanderen.be/ocdov/dov-pub}gemeente')
             for g in gemeentes:
                 g.text = 'Bevergem'
-            return etree.tostring(tree)
+            return etree.tostring(tree, encoding='utf-8')
 
     def xml_received(self, pkey_object, xml):
         """Save the DOV Xml response in order to adjust and inject later."""
@@ -206,7 +206,7 @@ class HookInjecter(AbstractHook):
                 './/boring/details/boormethode/methode')
             for b in boormethoden:
                 b.text = 'De Pypere 106 T'
-            return etree.tostring(tree)
+            return etree.tostring(tree, encoding='utf-8')
 
 
 class TestHookCount(object):

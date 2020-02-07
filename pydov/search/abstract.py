@@ -117,13 +117,10 @@ class AbstractSearch(AbstractCommon):
         to all subclasses and instances.
         """
         if AbstractSearch.__wfs is None:
-            capabilities = None
 
-            for hook in pydov.hooks.get_inject_hooks():
-                capa = hook.inject_meta_response(
-                    build_dov_url('geoserver/wfs') + '?version=1.1.0')
-                if capa is not None:
-                    capabilities = capa
+            capabilities = pydov.hooks._execute_inject_meta_response(
+                build_dov_url('geoserver/wfs') + '?version=1.1.0'
+            )
 
             if capabilities is None:
                 AbstractSearch.__wfs = WebFeatureService(
@@ -567,11 +564,8 @@ class AbstractSearch(AbstractCommon):
         for hook in pydov.hooks.get_read_hooks():
             hook.wfs_search_init(typename)
 
-        tree = None
-        for hook in pydov.hooks.get_inject_hooks():
-            t = hook.inject_wfs_getfeature_response(wfs_getfeature_xml)
-            if t is not None:
-                tree = t
+        tree = pydov.hooks._execute_inject_wfs_getfeature_response(
+            wfs_getfeature_xml)
 
         if tree is not None:
             return tree, wfs_getfeature_xml

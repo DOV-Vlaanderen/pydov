@@ -35,6 +35,44 @@ class Hooks(list):
         """
         return (h for h in self if isinstance(h, AbstractInjectHook))
 
+    def __execute_inject(self, hook_name, args):
+        """Execute the inject hook with given name for all registered hooks
+        and return the last non-null result.
+
+        Parameters
+        ----------
+        hook_name : str
+            Name of the hook function to execute.
+        args : list
+            List of arguments to pass to the hook function call.
+
+        Returns
+        -------
+        object or bytes or None
+            Returns the last non-null result of the execution of the inject
+            hook. If all inject hooks return None, return None as well.
+
+        """
+        result = None
+        for h in self.get_inject_hooks():
+            r = getattr(h, hook_name)(*args)
+            if r is not None:
+                result = r
+        return result
+
+    def _execute_inject_meta_response(self, url):
+        """Execute the inject_meta_response hooks for the given URL. """
+        return self.__execute_inject('inject_meta_response', [url])
+
+    def _execute_inject_wfs_getfeature_response(self, query):
+        """Execute the inject_wfs_getfeature_response hooks for the given
+        query."""
+        return self.__execute_inject('inject_wfs_getfeature_response', [query])
+
+    def _execute_inject_xml_response(self, pkey_object):
+        """Execute the inject_xml_response hooks for the given pkey_object."""
+        return self.__execute_inject('inject_xml_response', [pkey_object])
+
 
 class AbstractReadHook(object):
     """Abstract base class for custom hook implementations.

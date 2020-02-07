@@ -59,11 +59,7 @@ def get_xsd_schema(url):
         The raw XML data of this XSD schema as bytes.
 
     """
-    response = None
-    for hook in pydov.hooks.get_inject_hooks():
-        r = hook.inject_meta_response(url)
-        if r is not None:
-            response = r.encode('utf8')
+    response = pydov.hooks._execute_inject_meta_response(url)
 
     if response is None:
         response = get_remote_url(url)
@@ -87,11 +83,7 @@ def get_dov_xml(url):
         The raw XML data of this DOV object as bytes.
 
     """
-    response = None
-    for hook in pydov.hooks.get_inject_hooks():
-        r = hook.inject_xml_response(url)
-        if r is not None:
-            response = r
+    response = pydov.hooks._execute_inject_xml_response(url)
 
     if response is None:
         response = get_remote_url(url)

@@ -18,7 +18,7 @@ issuing::
 
     import pydov
 
-    pydov.hooks = []
+    pydov.hooks.clear()
 
 
 Writing custom hooks
@@ -27,12 +27,12 @@ Users can write custom hooks and add them to pydov at runtime, to be able to
 interact with pydov at the occurance of certain 'events'.
 
 To implement custom hooks, create a new subclass of
-:class:`pydov.util.hooks.AbstractHook`. An instance of this class can then by
-registered as a pydov hook, and implemented methods will be subsequently be
-called when the user interacts with pydov code. The AbstractHook class
-provides default, empty, implementation of all
-available methods allowing users to only implement the methods for the
-events they need.
+:class:`pydov.util.hooks.AbstractReadHook` and/or
+:class:`pydov.util.hooks.AbstractInjectHook`. An instance of this class can
+then by registered as a pydov hook, and implemented methods will be
+subsequently be called when the user interacts with pydov code. Both classes
+provide default, empty, implementation of all available methods allowing users
+to only implement the methods for the events they need.
 
 Note that certain events (notably the XML related events) will be called from
 multiple threads simultaneously, so implementations must be threadsafe or use
@@ -41,8 +41,21 @@ as a result can halt or slow down usage of the package, depending on the
 implementation of the hooks itself.
 
 
-Available event hooks
-.....................
+Available read-only event hooks
+...............................
+
+Read-only events allow you to implement custom behaviour when certain events
+occur while running pydov code. They are read-only in the sense that they only
+receive data about the event (in form of method parameters) and cannot influence
+the execution of pydov's internal code.
+
+They are generally safe to use. Mind that they are executed inline in a
+blocking way and consequently can slow down pydov queries depending on your
+implementation.
+
+To receive read-only event hooks your class should subclass
+:class:`pydov.util.hooks.AbstractReadHook`. The following event hooks are
+available:
 
 meta_received (url: str, response: bytes)
     This method will be called whenever a response for a metadata request is
@@ -53,15 +66,6 @@ meta_received (url: str, response: bytes)
     requests for MD_Metadata, FC_FeatureCatalogue and XSD schemas. These are
     all calls except for WFS GetFeature requests and XML downloads of DOV data
     - these are other hooks.
-
-inject_meta_response (url: str) -> bytes
-    This method can be used to inject a custom response for a metadata request
-    with the given URL. There is one parameter `url` with the full URL of the
-    metadata request.
-
-    When at least one registered hook returns a response for a given URL,
-    the remote call is not executed and instead the response from the
-    last registered hook (that is non-null) is used instead.
 
 wfs_search_init (typename: str)
     This method will be called whenever a WFS search is initiated. There is
@@ -76,15 +80,6 @@ wfs_search_result_received (query: etree.ElementTree, features: etree.ElementTre
     parameters, `query` is the WFS GetFeature request sent to the server and
     `features` is the FeatureCollection received in response.
 
-inject_wfs_getfeature_response (query: etree.ElementTree) -> bytes
-    This method can be used to inject a custom response for a WFS GetFeature
-    request with the given query. There is one parameter `query` with the WFS
-    GetFeature request sent to the server.
-
-    When at least one registered hook returns a response for a given query,
-    the remote call is not executed and instead the response from the
-    last registered hook (that is non-null) is used instead.
-
 xml_received (pkey_object: str, xml: bytes)
     This method will be called whenever an XML document is received, either
     from the cache or from the remote DOV service. There are two parameters,
@@ -94,19 +89,6 @@ xml_received (pkey_object: str, xml: bytes)
     Because of parallel processing, this method will be called simultaneously
     from multiple threads. Make sure your implementation is threadsafe or uses
     locking.
-
-inject_xml_response (pkey_object: str) -> bytes
-    This method can be used to inject a custom response for a DOV XML
-    request for the given object. There is one parameter `pkey_object` with
-    the permanent key of the DOV object.
-
-    When at least one registered hook returns a response for a given pkey,
-    the remote call is not executed and instead the response from the
-    last registered hook (that is non-null) is used instead.
-
-    Because of parallel processing, this method will be called
-    simultaneously from multiple threads. Make sure your implementation is
-    threadsafe or uses locking.
 
 xml_cache_hit (pkey_object: str)
     This method will be called whenever an XML document is reused from the
@@ -125,6 +107,54 @@ xml_downloaded (pkey_object: str)
     Because of parallel processing, this method will be called simultaneously
     from multiple threads. Make sure your implementation is threadsafe or uses
     locking.
+
+
+Available inject event hooks
+............................
+
+Contrary to read-only hooks described above, inject events allow you to inject
+custom behaviour at certain points in pydov's execution stack.
+
+They should be used with extreme care! It is probably wise to open an issue in
+Github if you find yourself needing these hooks, since they are most likely not
+the right solution for what you're trying to achieve.
+
+To receive inject event hooks your class should subclass
+:class:`pydov.util.hooks.AbstractInjectHook`. The following event hooks are
+available:
+
+
+inject_meta_response (url: str) -> bytes
+    This method can be used to inject a custom response for a metadata request
+    with the given URL. There is one parameter `url` with the full URL of the
+    metadata request.
+
+    When at least one registered hook returns a response for a given URL,
+    the remote call is not executed and instead the response from the
+    last registered hook (that is non-null) is used instead.
+
+inject_wfs_getfeature_response (query: etree.ElementTree) -> bytes
+    This method can be used to inject a custom response for a WFS GetFeature
+    request with the given query. There is one parameter `query` with the WFS
+    GetFeature request sent to the server.
+
+    When at least one registered hook returns a response for a given query,
+    the remote call is not executed and instead the response from the
+    last registered hook (that is non-null) is used instead.
+
+inject_xml_response (pkey_object: str) -> bytes
+    This method can be used to inject a custom response for a DOV XML
+    request for the given object. There is one parameter `pkey_object` with
+    the permanent key of the DOV object.
+
+    When at least one registered hook returns a response for a given pkey,
+    the remote call is not executed and instead the response from the
+    last registered hook (that is non-null) is used instead.
+
+    Because of parallel processing, this method will be called
+    simultaneously from multiple threads. Make sure your implementation is
+    threadsafe or uses locking.
+
 
 Integrating custom hooks
 ........................

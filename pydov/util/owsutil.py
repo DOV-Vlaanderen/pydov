@@ -462,7 +462,7 @@ def get_url(url):
 
     """
     response = None
-    for hook in pydov.hooks:
+    for hook in pydov.hooks.get_inject_hooks():
         r = hook.inject_meta_response(url)
         if r is not None:
             response = r.encode('utf8')
@@ -472,7 +472,7 @@ def get_url(url):
         request.encoding = 'utf-8'
         response = request.text.encode('utf8')
 
-    for hook in pydov.hooks:
+    for hook in pydov.hooks.get_read_hooks():
         hook.meta_received(url, response)
 
     return response

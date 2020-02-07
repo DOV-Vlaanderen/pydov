@@ -60,7 +60,7 @@ def get_xsd_schema(url):
 
     """
     response = None
-    for hook in pydov.hooks:
+    for hook in pydov.hooks.get_inject_hooks():
         r = hook.inject_meta_response(url)
         if r is not None:
             response = r.encode('utf8')
@@ -68,7 +68,7 @@ def get_xsd_schema(url):
     if response is None:
         response = get_remote_url(url)
 
-    for hook in pydov.hooks:
+    for hook in pydov.hooks.get_read_hooks():
         hook.meta_received(url, response)
     return response
 
@@ -88,7 +88,7 @@ def get_dov_xml(url):
 
     """
     response = None
-    for hook in pydov.hooks:
+    for hook in pydov.hooks.get_inject_hooks():
         r = hook.inject_xml_response(url)
         if r is not None:
             response = r
@@ -96,7 +96,7 @@ def get_dov_xml(url):
     if response is None:
         response = get_remote_url(url)
 
-    for hook in pydov.hooks:
+    for hook in pydov.hooks.get_read_hooks():
         hook.xml_received(url, response)
 
     return response

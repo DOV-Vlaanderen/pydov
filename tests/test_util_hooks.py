@@ -8,8 +8,10 @@ from owslib.etree import etree
 from pydov.search.abstract import AbstractSearch
 from pydov.search.boring import BoringSearch
 from pydov.util.hooks import (
-    AbstractHook,
+    AbstractReadHook,
     SimpleStatusHook,
+    AbstractInjectHook,
+    Hooks,
 )
 from tests.abstract import service_ok
 
@@ -24,9 +26,10 @@ def test_hook_count():
     """PyTest fixture temporarily disabling default hooks and installing
     HookCounter."""
     orig_hooks = pydov.hooks
-    temp_hooks = [HookCounter()]
 
-    pydov.hooks = temp_hooks
+    pydov.hooks = Hooks(
+        (HookCounter(),)
+    )
     yield
 
     pydov.hooks = orig_hooks
@@ -37,9 +40,10 @@ def test_hook_types():
     """PyTest fixture temporarily disabling default hooks and installing
     HookTester."""
     orig_hooks = pydov.hooks
-    temp_hooks = [HookTypeTester()]
 
-    pydov.hooks = temp_hooks
+    pydov.hooks = Hooks(
+        (HookTypeTester(),)
+    )
     yield
 
     pydov.hooks = orig_hooks
@@ -50,9 +54,10 @@ def test_hook_inject():
     """PyTest fixture temporarily disabling default hooks and installing
     HookInjecter."""
     orig_hooks = pydov.hooks
-    temp_hooks = [HookInjecter()]
 
-    pydov.hooks = temp_hooks
+    pydov.hooks = Hooks(
+        (HookInjecter(),)
+    )
     yield
 
     pydov.hooks = orig_hooks
@@ -65,7 +70,7 @@ def force_rebuild_wfs():
     AbstractSearch._AbstractSearch__wfs = None
 
 
-class HookCounter(AbstractHook):
+class HookCounter(AbstractReadHook, AbstractInjectHook):
     """Hook implementation for testing purposes, counting all event calls."""
     def __init__(self):
         self.count_meta_received = 0
@@ -110,7 +115,7 @@ class HookCounter(AbstractHook):
         self.count_xml_downloaded += 1
 
 
-class HookTypeTester(AbstractHook):
+class HookTypeTester(AbstractReadHook, AbstractInjectHook):
     """Hook implementation for testing purposes, testing arguments of all
     event calls."""
     def meta_received(self, url, response):
@@ -158,7 +163,7 @@ class HookTypeTester(AbstractHook):
         assert type(pkey_object) is str
 
 
-class HookInjecter(AbstractHook):
+class HookInjecter(AbstractReadHook, AbstractInjectHook):
     """Hook implementation for testing purposes, testing response injection."""
     def __init__(self):
         self.wfs_features = None
@@ -372,7 +377,9 @@ class TestHookTypes(object):
             Fixture temporarily disabling caching.
 
         """
-        pydov.hooks = [SimpleStatusHook()]
+        pydov.hooks = Hooks(
+            (SimpleStatusHook(),)
+        )
 
         query = PropertyIsEqualTo(propertyname='boornummer',
                                   literal='GEO-04/169-BNo-B1')

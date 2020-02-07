@@ -613,7 +613,7 @@ class AbstractDovType(AbstractTypeCommon):
             return pydov.cache.get(self.pkey + '.xml')
         else:
             xml = get_dov_xml(self.pkey + '.xml')
-            for hook in pydov.hooks:
+            for hook in pydov.hooks.get_read_hooks():
                 hook.xml_downloaded(self.pkey)
             return xml
 

@@ -119,7 +119,7 @@ class AbstractSearch(AbstractCommon):
         if AbstractSearch.__wfs is None:
             capabilities = None
 
-            for hook in pydov.hooks:
+            for hook in pydov.hooks.get_inject_hooks():
                 capa = hook.inject_meta_response(
                     build_dov_url('geoserver/wfs') + '?version=1.1.0')
                 if capa is not None:
@@ -133,7 +133,7 @@ class AbstractSearch(AbstractCommon):
                     url=build_dov_url('geoserver/wfs'), version="1.1.0",
                     xml=capabilities)
 
-            for hook in pydov.hooks:
+            for hook in pydov.hooks.get_read_hooks():
                 hook.meta_received(
                     build_dov_url('geoserver/wfs') + '?version=1.1.0',
                     etree.tostring(AbstractSearch.__wfs._capabilities,
@@ -564,11 +564,11 @@ class AbstractSearch(AbstractCommon):
             propertyname=propertyname
         )
 
-        for hook in pydov.hooks:
+        for hook in pydov.hooks.get_read_hooks():
             hook.wfs_search_init(typename)
 
         tree = None
-        for hook in pydov.hooks:
+        for hook in pydov.hooks.get_inject_hooks():
             t = hook.inject_wfs_getfeature_response(wfs_getfeature_xml)
             if t is not None:
                 tree = t
@@ -697,7 +697,7 @@ class AbstractSearch(AbstractCommon):
                 'Reached the limit of {:d} returned features. Please split up '
                 'the query to ensure getting all results.'.format(10000))
 
-        for hook in pydov.hooks:
+        for hook in pydov.hooks.get_read_hooks():
             hook.wfs_search_result(int(tree.get('numberOfFeatures')))
             hook.wfs_search_result_received(getfeature, tree)
 

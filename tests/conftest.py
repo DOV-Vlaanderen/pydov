@@ -4,14 +4,17 @@ import pytest
 from _pytest.monkeypatch import MonkeyPatch
 
 import pydov
+from pydov import Hooks
 
 
 def pytest_runtest_setup():
-    pydov.hooks = []
+    pydov.hooks = Hooks()
+
 
 def pytest_configure(config):
     config.addinivalue_line("markers",
                             "online: mark test that requires internet access")
+
 
 @pytest.fixture(scope='module')
 def monkeymodule():

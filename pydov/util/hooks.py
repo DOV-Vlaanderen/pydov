@@ -235,6 +235,9 @@ class HookRunner(object):
 class AbstractReadHook(object):
     """Abstract base class for custom hook implementations.
 
+    This class contains all read-only hooks: i.e. hooks receiving events but
+    otherwise not interfering with pydov's execution stack.
+
     Provides all available methods with a default implementation to do
     nothing. This allows for hook subclasses to only implement the events
     they need.
@@ -352,6 +355,21 @@ class AbstractReadHook(object):
 
 
 class AbstractInjectHook(object):
+    """Abstract base class for custom hook implementations.
+
+    This class contains all inject hooks: i.e. hooks receiving events and
+    possibly returning custom data for injection into pydov's execution stack.
+
+    Inject hooks allow you to capture and intercept remote server calls,
+    influencing pydov's inner workings. Use with care! If you reached this
+    part of the code, it is probably wise to open an issue in Github,
+    since this is most likely not what you need.
+
+    Provides all available methods with a default implementation to do
+    nothing. This allows for hook subclasses to only implement the events
+    they need.
+
+    """
     def inject_meta_response(self, url):
         """Inject a response for a metadata request.
 

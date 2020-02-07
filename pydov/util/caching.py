@@ -7,7 +7,6 @@ import re
 import shutil
 import tempfile
 
-import pydov
 from pydov.util.dovutil import get_dov_xml
 from pydov.util.hooks import HookRunner
 

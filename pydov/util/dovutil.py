@@ -5,6 +5,7 @@ import os
 from owslib.etree import etree
 from pydov.util.errors import XmlParseError
 import pydov
+from pydov.util.hooks import HookRunner
 
 
 def build_dov_url(path):
@@ -59,7 +60,7 @@ def get_xsd_schema(url):
         The raw XML data of this XSD schema as bytes.
 
     """
-    response = pydov.hooks._execute_inject_meta_response(url)
+    response = HookRunner.execute_inject_meta_response(url)
 
     if response is None:
         response = get_remote_url(url)
@@ -83,7 +84,7 @@ def get_dov_xml(url):
         The raw XML data of this DOV object as bytes.
 
     """
-    response = pydov.hooks._execute_inject_xml_response(url)
+    response = HookRunner.execute_inject_xml_response(url)
 
     if response is None:
         response = get_remote_url(url)

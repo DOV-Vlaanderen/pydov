@@ -7,6 +7,8 @@ from multiprocessing import Lock
 import sys
 import time
 
+import pydov
+
 
 class Hooks(list):
     """Runtime representation of registered pydov hooks, i.e. a list of
@@ -35,7 +37,10 @@ class Hooks(list):
         """
         return (h for h in self if isinstance(h, AbstractInjectHook))
 
-    def __execute_inject(self, hook_name, args):
+
+class HookRunner(object):
+    @staticmethod
+    def __execute_inject(hook_name, args):
         """Execute the inject hook with given name for all registered hooks
         and return the last non-null result.
 
@@ -54,24 +59,30 @@ class Hooks(list):
 
         """
         result = None
-        for h in self.get_inject_hooks():
+        for h in pydov.hooks.get_inject_hooks():
             r = getattr(h, hook_name)(*args)
             if r is not None:
                 result = r
         return result
 
-    def _execute_inject_meta_response(self, url):
+    @staticmethod
+    def execute_inject_meta_response(url):
         """Execute the inject_meta_response hooks for the given URL. """
-        return self.__execute_inject('inject_meta_response', [url])
+        return HookRunner.__execute_inject(
+            'inject_meta_response', [url])
 
-    def _execute_inject_wfs_getfeature_response(self, query):
+    @staticmethod
+    def execute_inject_wfs_getfeature_response(query):
         """Execute the inject_wfs_getfeature_response hooks for the given
         query."""
-        return self.__execute_inject('inject_wfs_getfeature_response', [query])
+        return HookRunner.__execute_inject(
+            'inject_wfs_getfeature_response', [query])
 
-    def _execute_inject_xml_response(self, pkey_object):
+    @staticmethod
+    def execute_inject_xml_response(pkey_object):
         """Execute the inject_xml_response hooks for the given pkey_object."""
-        return self.__execute_inject('inject_xml_response', [pkey_object])
+        return HookRunner.__execute_inject(
+            'inject_xml_response', [pkey_object])
 
 
 class AbstractReadHook(object):

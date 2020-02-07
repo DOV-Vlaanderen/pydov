@@ -23,6 +23,7 @@ from pydov.util.errors import (
     InvalidFieldError,
     WfsGetFeatureError,
 )
+from pydov.util.hooks import HookRunner
 
 
 class AbstractCommon(object):
@@ -118,7 +119,7 @@ class AbstractSearch(AbstractCommon):
         """
         if AbstractSearch.__wfs is None:
 
-            capabilities = pydov.hooks._execute_inject_meta_response(
+            capabilities = HookRunner.execute_inject_meta_response(
                 build_dov_url('geoserver/wfs') + '?version=1.1.0'
             )
 
@@ -564,7 +565,7 @@ class AbstractSearch(AbstractCommon):
         for hook in pydov.hooks.get_read_hooks():
             hook.wfs_search_init(typename)
 
-        tree = pydov.hooks._execute_inject_wfs_getfeature_response(
+        tree = HookRunner.execute_inject_wfs_getfeature_response(
             wfs_getfeature_xml)
 
         if tree is not None:

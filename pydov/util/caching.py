@@ -9,6 +9,7 @@ import tempfile
 
 import pydov
 from pydov.util.dovutil import get_dov_xml
+from pydov.util.hooks import HookRunner
 
 
 class AbstractCache(object):
@@ -267,7 +268,7 @@ class AbstractFileCache(AbstractCache):
         """
         datatype, key = self._get_type_key_from_url(url)
 
-        data = pydov.hooks._execute_inject_xml_response(url)
+        data = HookRunner.execute_inject_xml_response(url)
 
         if data is not None:
             for hook in pydov.hooks.get_read_hooks():

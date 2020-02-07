@@ -42,7 +42,7 @@ class HookRunner(object):
     """Class for executing registered hooks."""
     @staticmethod
     def __execute_read(hook_name, args):
-        """Execute the read hook with the given name for all registeres hooks.
+        """Execute the read hook with the given name for all registered hooks.
 
         Parameters
         ----------

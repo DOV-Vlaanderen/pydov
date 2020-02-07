@@ -469,7 +469,6 @@ def get_url(url):
         request.encoding = 'utf-8'
         response = request.text.encode('utf8')
 
-    for hook in pydov.hooks.get_read_hooks():
-        hook.meta_received(url, response)
+    HookRunner.execute_meta_received(url, response)
 
     return response

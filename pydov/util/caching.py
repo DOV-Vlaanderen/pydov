@@ -30,8 +30,7 @@ class AbstractCache(object):
 
         """
         xml = get_dov_xml(url)
-        for hook in pydov.hooks.get_read_hooks():
-            hook.xml_downloaded(url.rstrip('.xml'))
+        HookRunner.execute_xml_downloaded(url.rstrip('.xml'))
         return xml
 
     def _emit_cache_hit(self, url):
@@ -43,8 +42,7 @@ class AbstractCache(object):
             Permanent URL to a DOV object.
 
         """
-        for hook in pydov.hooks.get_read_hooks():
-            hook.xml_cache_hit(url.rstrip('.xml'))
+        HookRunner.execute_xml_cache_hit(url.rstrip('.xml'))
 
     def get(self, url):
         """Get the XML data for the DOV object referenced by the given URL.
@@ -271,8 +269,7 @@ class AbstractFileCache(AbstractCache):
         data = HookRunner.execute_inject_xml_response(url)
 
         if data is not None:
-            for hook in pydov.hooks.get_read_hooks():
-                hook.xml_received(url, data)
+            HookRunner.execute_xml_received(url, data)
             return data
 
         if self._is_valid(datatype, key):
@@ -280,8 +277,7 @@ class AbstractFileCache(AbstractCache):
                 self._emit_cache_hit(url)
                 data = self._load(datatype, key).encode('utf-8')
 
-                for hook in pydov.hooks.get_read_hooks():
-                    hook.xml_received(url, data)
+                HookRunner.execute_xml_received(url, data)
                 return data
 
             except Exception:

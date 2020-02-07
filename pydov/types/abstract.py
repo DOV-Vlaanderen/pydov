@@ -22,6 +22,7 @@ from ..util.errors import (
     XmlParseError,
     XmlParseWarning,
 )
+from ..util.hooks import HookRunner
 
 
 class AbstractTypeCommon(AbstractCommon):
@@ -613,8 +614,7 @@ class AbstractDovType(AbstractTypeCommon):
             return pydov.cache.get(self.pkey + '.xml')
         else:
             xml = get_dov_xml(self.pkey + '.xml')
-            for hook in pydov.hooks.get_read_hooks():
-                hook.xml_downloaded(self.pkey)
+            HookRunner.execute_xml_downloaded(self.pkey)
             return xml
 
     def _parse_subtypes(self, xml):

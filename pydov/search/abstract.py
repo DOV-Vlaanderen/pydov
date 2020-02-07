@@ -131,12 +131,11 @@ class AbstractSearch(AbstractCommon):
                     url=build_dov_url('geoserver/wfs'), version="1.1.0",
                     xml=capabilities)
 
-            for hook in pydov.hooks.get_read_hooks():
-                hook.meta_received(
-                    build_dov_url('geoserver/wfs') + '?version=1.1.0',
-                    etree.tostring(AbstractSearch.__wfs._capabilities,
-                                   encoding='utf8')
-                )
+            HookRunner.execute_meta_received(
+                build_dov_url('geoserver/wfs') + '?version=1.1.0',
+                etree.tostring(AbstractSearch.__wfs._capabilities,
+                               encoding='utf8')
+            )
 
     def _init_namespace(self):
         """Initialise the WFS namespace associated with the layer.
@@ -562,8 +561,7 @@ class AbstractSearch(AbstractCommon):
             propertyname=propertyname
         )
 
-        for hook in pydov.hooks.get_read_hooks():
-            hook.wfs_search_init(typename)
+        HookRunner.execute_wfs_search_init(typename)
 
         tree = HookRunner.execute_inject_wfs_getfeature_response(
             wfs_getfeature_xml)
@@ -692,9 +690,8 @@ class AbstractSearch(AbstractCommon):
                 'Reached the limit of {:d} returned features. Please split up '
                 'the query to ensure getting all results.'.format(10000))
 
-        for hook in pydov.hooks.get_read_hooks():
-            hook.wfs_search_result(int(tree.get('numberOfFeatures')))
-            hook.wfs_search_result_received(getfeature, tree)
+        HookRunner.execute_wfs_search_result(int(tree.get('numberOfFeatures')))
+        HookRunner.execute_wfs_search_result_received(getfeature, tree)
 
         return tree
 

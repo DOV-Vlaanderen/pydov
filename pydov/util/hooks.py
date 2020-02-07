@@ -39,6 +39,22 @@ class Hooks(list):
 
 
 class HookRunner(object):
+    """Class for executing registered hooks."""
+    @staticmethod
+    def __execute_read(hook_name, args):
+        """Execute the read hook with the given name for all registeres hooks.
+
+        Parameters
+        ----------
+        hook_name : str
+            Name of the hook function to execute.
+        args : list
+            List of arguments to pass to the hook function call.
+
+        """
+        for h in pydov.hooks.get_read_hooks():
+            getattr(h, hook_name)(*args)
+
     @staticmethod
     def __execute_inject(hook_name, args):
         """Execute the inject hook with given name for all registered hooks
@@ -66,21 +82,152 @@ class HookRunner(object):
         return result
 
     @staticmethod
+    def execute_meta_received(url, response):
+        """Execute the meta_received method for all registered hooks.
+
+        Parameters
+        ----------
+        url : str
+            URL of the metadata request.
+        response : bytes
+            The raw response as received from resolving the URL.
+
+        """
+        HookRunner.__execute_read('meta_received', [url, response])
+
+    @staticmethod
+    def execute_wfs_search_init(typename):
+        """Execute the wfs_search_init method for all registered hooks.
+
+        Parameters
+        ----------
+        typename : str
+            The typename (layername) of the WFS service used for searching.
+
+        """
+        HookRunner.__execute_read('wfs_search_init', [typename])
+
+    @staticmethod
+    def execute_wfs_search_result(number_of_results):
+        """Execute the wfs_search_result method for all registered hooks.
+
+        Parameters
+        ----------
+        number_of_results : int
+            The number of features returned by the WFS search.
+
+        """
+        HookRunner.__execute_read('wfs_search_result', [number_of_results])
+
+    @staticmethod
+    def execute_wfs_search_result_received(query, features):
+        """Execute the wfs_search_result_received method for all registered
+        hooks.
+
+        Parameters
+        ----------
+        query : etree.ElementTree
+            The WFS GetFeature request sent to the WFS server.
+        features : etree.ElementTree
+            The WFS GetFeature response containings the features.
+
+        """
+        HookRunner.__execute_read('wfs_search_result_received', [
+            query, features])
+
+    @staticmethod
+    def execute_xml_received(pkey_object, xml):
+        """Execute the xml_received method for all registered hooks.
+
+        Parameters
+        ----------
+        pkey_object : str
+            Permanent key of the retrieved object.
+        xml : bytes
+            The raw XML data of this DOV object as bytes.
+
+        """
+        HookRunner.__execute_read('xml_received', [pkey_object, xml])
+
+    @staticmethod
+    def execute_xml_cache_hit(pkey_object):
+        """Execute the xml_cache_hit method for all registered hooks.
+
+        Parameters
+        ----------
+        pkey_object : str
+            Permanent key of the requested object.
+
+        """
+        HookRunner.__execute_read('xml_cache_hit', [pkey_object])
+
+    @staticmethod
+    def execute_xml_downloaded(pkey_object):
+        """Execute the xml_downloaded method for all registered hooks.
+
+        Parameters
+        ----------
+        pkey_object : str
+            Permanent key of the requested object.
+
+        """
+        HookRunner.__execute_read('xml_downloaded', [pkey_object])
+
+    @staticmethod
     def execute_inject_meta_response(url):
-        """Execute the inject_meta_response hooks for the given URL. """
+        """Execute the inject_meta_response method for all registered hooks.
+
+        Parameters
+        ----------
+        url : str
+            URL of the metadata request.
+
+        Returns
+        -------
+        bytes, optional
+            The response to use in favor of resolving the URL. Returns None if
+            this inject hook is unused.
+
+        """
         return HookRunner.__execute_inject(
             'inject_meta_response', [url])
 
     @staticmethod
     def execute_inject_wfs_getfeature_response(query):
-        """Execute the inject_wfs_getfeature_response hooks for the given
-        query."""
+        """Execute the inject_wfs_getfeature_response method for all
+        registered hooks.
+
+        Parameters
+        ----------
+        query : etree.ElementTree
+            The WFS GetFeature request sent to the WFS server.
+
+        Returns
+        -------
+        xml: bytes, optional
+            The GetFeature response to use in favor of resolving the URL.
+            Returns None if this inject hook is unused.
+
+        """
         return HookRunner.__execute_inject(
             'inject_wfs_getfeature_response', [query])
 
     @staticmethod
     def execute_inject_xml_response(pkey_object):
-        """Execute the inject_xml_response hooks for the given pkey_object."""
+        """Execute the inject_xml_response method for all registered hooks.
+
+        Parameters
+        ----------
+        query : etree.ElementTree
+            The WFS GetFeature request sent to the WFS server.
+
+        Returns
+        -------
+        xml : bytes, optional
+            The XML response to use in favor of resolving the URL. Returns
+            None if this inject hook is unused.
+
+        """
         return HookRunner.__execute_inject(
             'inject_xml_response', [pkey_object])
 

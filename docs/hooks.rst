@@ -178,11 +178,11 @@ completed and an XML document is requested.::
     import pydov
     import pydov.util.hooks
 
-    class MyHooks(pydov.util.hooks.AbstractHook):
+    class MyHooks(pydov.util.hooks.AbstractReadHook):
         def wfs_search_result(self, number_of_results):
             print('WFS search completed with %i results.' % number_of_results)
 
-        def xml_requested(self, pkey_object):
-            print('Requested XML document for object %s.' % pkey_object)
+        def xml_received(self, pkey_object, xml):
+            print('Received XML document for object %s.' % pkey_object)
 
     pydov.hooks.append(MyHooks())

@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """Module grouping utility functions for OWS services."""
+import warnings
+
 import pydov
 
 from owslib.fes import (
@@ -90,7 +92,10 @@ def get_remote_metadata(contentmetadata):
         If the `contentmetadata` has no valid metadata URL associated with it.
 
     """
-    contentmetadata.parse_remote_metadata(pydov.request_timeout)
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore", category=FutureWarning)
+        contentmetadata.parse_remote_metadata(pydov.request_timeout)
+
     for remote_md in contentmetadata.metadataUrls:
         if 'metadata' in remote_md:
             return remote_md['metadata']

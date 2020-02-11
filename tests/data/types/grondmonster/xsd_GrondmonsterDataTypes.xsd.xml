@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://grondmonster.kern.schemas.dov.vlaanderen.be" xmlns:generiek="http://generiek.kern.schemas.dov.vlaanderen.be" xmlns:observatie="http://observatie.kern.schemas.dov.vlaanderen.be" targetNamespace="http://grondmonster.kern.schemas.dov.vlaanderen.be" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.00">  
+  <xs:import namespace="http://generiek.kern.schemas.dov.vlaanderen.be" schemaLocation="../generiek/Generiek.xsd"/>  
+  <xs:import namespace="http://observatie.kern.schemas.dov.vlaanderen.be" schemaLocation="../observatie/Observatie.xsd"/>  
+  <xs:include schemaLocation="GrondmonsterDataCodes.xsd"/>  
+  <xs:complexType name="GrondmonsterType"> 
+    <xs:sequence> 
+      <xs:element name="naam" type="generiek:string50" minOccurs="1" maxOccurs="1"> 
+        <xs:annotation> 
+          <xs:documentation>unieke identificatie van het monster</xs:documentation> 
+        </xs:annotation> 
+      </xs:element>  
+      <!---->  
+      <xs:element name="boring" type="generiek:BoringReferentieType" minOccurs="1" maxOccurs="1"> 
+        <xs:annotation> 
+          <xs:documentation>verwijzing naar een(bestaande) boring; deze boring bepaalt dan de XY locatie waarop het monster werd genomen</xs:documentation> 
+        </xs:annotation> 
+      </xs:element>  
+      <xs:element name="datum_monstername" type="xs:date" minOccurs="0"> 
+        <xs:annotation> 
+          <xs:documentation>datum waarop het monster werd genomen</xs:documentation> 
+        </xs:annotation> 
+      </xs:element>  
+      <xs:element name="monstertype" type="MonsterEnumType" minOccurs="0"> 
+        <xs:annotation> 
+          <xs:documentation>informatie ivm het type van het monster</xs:documentation> 
+        </xs:annotation> 
+      </xs:element>  
+      <xs:element name="diepte" type="DiepteType" minOccurs="0"> 
+        <xs:annotation> 
+          <xs:documentation>Diepte tov begin van de boring</xs:documentation> 
+        </xs:annotation> 
+      </xs:element>  
+      <!--Observaties-->  
+      <xs:element name="observatieData" type="ObservatieDataType" minOccurs="0" maxOccurs="1"> 
+        <xs:annotation> 
+          <xs:documentation>Lijst van observatie gegevens</xs:documentation> 
+        </xs:annotation> 
+      </xs:element>  
+      <xs:element name="observatieReeksData" type="ObservatieReeksDataType" minOccurs="0" maxOccurs="1"> 
+        <xs:annotation> 
+          <xs:documentation>reeks van resultaten voor een observatie</xs:documentation> 
+        </xs:annotation> 
+      </xs:element>  
+      <!--referenties-->  
+      <xs:element name="proefuitvoeringsData" type="ProefuitvoeringsDataType" minOccurs="0" maxOccurs="1"> 
+        <xs:annotation> 
+          <xs:documentation>Algemene gegevens bij één of meerdere observaties</xs:documentation> 
+        </xs:annotation> 
+      </xs:element>  
+      <!--Gelinkte objecten-->  
+      <xs:element name="opdracht" type="generiek:OpdrachtReferentieType" minOccurs="0" maxOccurs="unbounded"> 
+        <xs:annotation> 
+          <xs:documentation>een monster kan gekoppeld worden aan 1 of meerdere opdrachten</xs:documentation> 
+        </xs:annotation> 
+      </xs:element>  
+      <xs:element name="opmerking" type="generiek:OpmerkingType" minOccurs="0" maxOccurs="unbounded"> 
+        <xs:annotation> 
+          <xs:documentation>opmerkingen aan een monster</xs:documentation> 
+        </xs:annotation> 
+      </xs:element>  
+      <xs:element name="bijlage" type="generiek:BijlageType" minOccurs="0" maxOccurs="unbounded"> 
+        <xs:annotation> 
+          <xs:documentation>bijlage horende bij het monster</xs:documentation> 
+        </xs:annotation> 
+      </xs:element> 
+    </xs:sequence> 
+  </xs:complexType>  
+  <!--Algemeen -->  
+  <xs:complexType name="DiepteType"> 
+    <xs:annotation> 
+      <xs:documentation>Diepte tov begin van de boring</xs:documentation> 
+    </xs:annotation>  
+    <xs:sequence> 
+      <xs:element name="van" type="generiek:DiepteType" minOccurs="0"> 
+        <xs:annotation> 
+          <xs:documentation>vanaf welke diepte</xs:documentation> 
+        </xs:annotation> 
+      </xs:element>  
+      <xs:element name="tot" type="generiek:DiepteType" minOccurs="1" maxOccurs="1"> 
+        <xs:annotation> 
+          <xs:documentation>tot welke diepte</xs:documentation> 
+        </xs:annotation> 
+      </xs:element> 
+    </xs:sequence> 
+  </xs:complexType>  
+  <xs:complexType name="ObservatieDataType"> 
+    <xs:annotation> 
+      <xs:documentation>Observaties</xs:documentation> 
+    </xs:annotation>  
+    <xs:sequence> 
+      <xs:element name="observatie" type="ObservatieType" minOccurs="0" maxOccurs="unbounded"> 
+        <xs:annotation> 
+          <xs:documentation>opgemeten parameters</xs:documentation> 
+        </xs:annotation> 
+      </xs:element> 
+    </xs:sequence> 
+  </xs:complexType>  
+  <xs:complexType name="ObservatieReeksDataType"> 
+    <xs:annotation> 
+      <xs:documentation>De reeksen van resultaten voor bepaalde proeven of observaties</xs:documentation> 
+    </xs:annotation>  
+    <xs:sequence> 
+      <xs:element name="korrelverdeling_reeks" type="KorrelverdelingReeksType" minOccurs="0" maxOccurs="1"> 
+        <xs:annotation> 
+          <xs:documentation>De reeksen van resultaten korrelverdeling</xs:documentation> 
+        </xs:annotation> 
+      </xs:element>  
+      <!----> 
+    </xs:sequence> 
+  </xs:complexType>  
+  <xs:complexType name="ProefuitvoeringsDataType"> 
+    <xs:annotation> 
+      <xs:documentation>Lijst van gemeenschappelijke gegevens over een of meerdere observatie</xs:documentation> 
+    </xs:annotation>  
+    <xs:sequence> 
+      <xs:element name="proefuitvoering" type="ProefuitvoeringsType" minOccurs="0" maxOccurs="unbounded"> 
+        <xs:annotation> 
+          <xs:documentation>De gemeenschappelijke gegevens over een of meerdere observatie</xs:documentation> 
+        </xs:annotation> 
+      </xs:element>  
+      <!--TODO onder voorbehoud; eerder chemische monstertype aanmaken-->  
+      <!--   <xs:element name="proefuitvoering_chemie" type="ChemischeProefuitvoeringsType" minOccurs="0" maxOccurs="1">
+                   <xs:annotation>
+                       <xs:documentation>De gemeenschappelijke gegevens van chemische proeven.</xs:documentation>
+                   </xs:annotation>
+               </xs:element>--> 
+    </xs:sequence> 
+  </xs:complexType>  
+  <!-- Referentie object -->  
+  <xs:group name="BaseProefuitvoeringsType"> 
+    <xs:annotation> 
+      <xs:documentation>Algemene gegevens voor een parameter of reeks van parameters uit eenzelfde groep</xs:documentation> 
+    </xs:annotation>  
+    <xs:sequence> 
+      <xs:element name="proefnaam" type="ProefNaamEnumType"> 
+        <xs:annotation> 
+          <xs:documentation>Naam van de verzameling van één of meerdere parameters</xs:documentation> 
+        </xs:annotation> 
+      </xs:element>  
+      <xs:element name="datum" type="xs:date" minOccurs="0"> 
+        <xs:annotation> 
+          <xs:documentation>datum</xs:documentation> 
+        </xs:annotation> 
+      </xs:element>  
+      <xs:element name="uitvoerder" type="generiek:UitvoerderType" minOccurs="0"> 
+        <xs:annotation> 
+          <xs:documentation>uitvoerder (firma) van de proef</xs:documentation> 
+        </xs:annotation> 
+      </xs:element>  
+      <xs:element name="identificatie" type="generiek:string50" minOccurs="0"> 
+        <xs:annotation> 
+          <xs:documentation>Identificatie id of nummer van de referentie</xs:documentation> 
+        </xs:annotation> 
+      </xs:element>  
+      <xs:element name="bedrijf_dienst" type="generiek:BedrijfDienstType" minOccurs="0"> 
+        <xs:annotation> 
+          <xs:documentation>bedrijf of dienst waarvoor de referentie kan gevonden worden</xs:documentation> 
+        </xs:annotation> 
+      </xs:element>  
+      <xs:element name="opmerking" type="generiek:string255" minOccurs="0"> 
+        <xs:annotation> 
+          <xs:documentation>Opmerking</xs:documentation> 
+        </xs:annotation> 
+      </xs:element>  
+      <xs:element name="methode" type="observatie:AnalysemethodeEnumType" minOccurs="0"> 
+        <xs:annotation> 
+          <xs:documentation>methode waarmee de parameter(s) gemeten werden</xs:documentation> 
+        </xs:annotation> 
+      </xs:element> 
+    </xs:sequence> 
+  </xs:group>  
+  <xs:complexType name="ProefuitvoeringsType"> 
+    <xs:sequence> 
+      <xs:group ref="BaseProefuitvoeringsType"/> 
+    </xs:sequence> 
+  </xs:complexType>  
+  <xs:complexType name="ObservatieType"> 
+    <xs:sequence> 
+      <xs:element name="parameter" type="ParameterEnumType" minOccurs="1"> 
+        <xs:annotation> 
+          <xs:documentation>(verkorte) naam van de parameter</xs:documentation> 
+        </xs:annotation> 
+      </xs:element>  
+      <xs:element name="datum" type="xs:date" minOccurs="0" maxOccurs="1"> 
+        <xs:annotation> 
+          <xs:documentation>datum</xs:documentation> 
+        </xs:annotation> 
+      </xs:element>  
+      <xs:group ref="observatie:BaseObservatieGroup"/>  
+      <xs:element name="opmerking" type="xs:string" minOccurs="0" maxOccurs="1"> 
+        <xs:annotation> 
+          <xs:documentation>opmerking bij dit analyseresultaat</xs:documentation> 
+        </xs:annotation> 
+      </xs:element> 
+    </xs:sequence> 
+  </xs:complexType>  
+  <xs:complexType name="KorrelverdelingReeksType"> 
+    <xs:annotation> 
+      <xs:documentation>Meetwaarden voor de korrelverdeling</xs:documentation> 
+    </xs:annotation>  
+    <xs:sequence> 
+      <xs:element name="onderbreking_van" type="xs:decimal" minOccurs="0" maxOccurs="1"> 
+        <xs:annotation> 
+          <xs:documentation>
+            <!--TODO doc-->
+          </xs:documentation> 
+        </xs:annotation> 
+      </xs:element>  
+      <xs:element name="onderbreking_tot" type="xs:decimal" minOccurs="0" maxOccurs="1"> 
+        <xs:annotation> 
+          <xs:documentation>
+            <!--TODO doc-->
+          </xs:documentation> 
+        </xs:annotation> 
+      </xs:element>  
+      <xs:element name="humus_kalk_verwijderd" type="generiek:JNOEnumType" minOccurs="0" maxOccurs="1" default="O"> 
+        <xs:annotation> 
+          <xs:documentation>Is humus en kalk verwijderd?</xs:documentation> 
+        </xs:annotation> 
+      </xs:element>  
+      <xs:element name="korrelverdeling" type="KorrelverdelingType" minOccurs="0" maxOccurs="unbounded"> 
+        <xs:annotation> 
+          <xs:documentation>Resultaten van de korrelverdeling</xs:documentation> 
+        </xs:annotation> 
+      </xs:element> 
+    </xs:sequence> 
+  </xs:complexType>  
+  <xs:complexType name="KorrelverdelingType"> 
+    <xs:annotation> 
+      <xs:documentation>Resultaatlijn van de korrelverdeling</xs:documentation> 
+    </xs:annotation>  
+    <xs:sequence> 
+      <xs:element name="diameter" type="xs:decimal"> 
+        <xs:annotation> 
+          <xs:documentation>Diameter van de korrel</xs:documentation> 
+        </xs:annotation> 
+      </xs:element>  
+      <xs:element name="fractie" type="generiek:PercentageType"> 
+        <xs:annotation> 
+          <xs:documentation>Fractie groter dan diameter, maw kleinere diameters geven grotere fracties</xs:documentation> 
+        </xs:annotation> 
+      </xs:element>  
+      <xs:element name="methode" type="ParameterEnumType" minOccurs="0"> 
+        <xs:annotation> 
+          <xs:documentation>methode</xs:documentation> 
+        </xs:annotation> 
+      </xs:element> 
+    </xs:sequence> 
+  </xs:complexType>  
+  <!----> 
+</xs:schema>

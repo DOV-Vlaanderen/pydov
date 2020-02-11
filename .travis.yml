@@ -1,61 +1,60 @@
 language: python
 sudo: false
-
 env:
   global:
   - COVERALLS_PARALLEL=true
-
+notifications:
+  email:
+    recipients:
+      - zabbix.dov@gmail.com
+      - roel@huybrechts.re
+    on_success: change
+    on_failure: always
+    on_error: always
+  webhooks: https://coveralls.io/webhook
 install:
-  - pip install -U tox-travis
-  - pip install -U coveralls
-
+- pip install -U tox-travis
+- pip install -U coveralls
 addons:
   apt:
     packages:
-    - pandoc  # for generating documentation from jupyter notebook
-
+    - pandoc
 matrix:
   include:
-    - python: 2.7
-      env: TOXENV=py27-nolxml
-    - python: 2.7
-      env: TOXENV=py27-lxml
-    - python: 3.5
-      env: TOXENV=py35-nolxml
-    - python: 3.5
-      env: TOXENV=py35-lxml
-    - python: 3.6
-      env: TOXENV=py36-nolxml
-    - python: 3.6
-      env: TOXENV=py36-lxml
-    - env: TOXENV=flake8
-    - python: 3.6
-      env: TOXENV=docs
-
+  - python: 3.5
+    env: TOXENV=py35-nolxml
+  - python: 3.5
+    env: TOXENV=py35-lxml
+  - python: 3.6
+    env: TOXENV=py36-nolxml
+  - python: 3.6
+    env: TOXENV=py36-lxml
+  - python: 3.7
+    env: TOXENV=py37-nolxml
+  - python: 3.7
+    env: TOXENV=py37-lxml
+  - python: 3.8
+    env: TOXENV=py38-nolxml
+  - python: 3.8
+    env: TOXENV=py38-lxml
+  - python: 3.8
+    env: TOXENV=update-oefen
+  - python: 3.8
+    env: TOXENV=update-productie
+  - python: 3.8
+    env: TOXENV=docs
+  - env: TOXENV=flake8
 script: tox
-
 after_success:
-  - coveralls || echo "coveralls failure"
-
+- coveralls || echo "coveralls failure"
 deploy:
 - provider: pypi
   distributions: sdist bdist_wheel
   user: roel
+  skip_existing: true
   password:
-    secure: !!binary |
-      WUpMV01FQzJoZUhudDVIQ1BEV1ZBRmlJSU5zaEFqWldjWU1pTktnVUwzOHdMR3FLZEFMbk43aWQr
-      RnFoajZqT2FtVnIrWHRVU1RKODlWYlpIM3dKc0gwNk1zZTN3MXRYR1V3eWxpNi9SRXNGMlBPQjJi
-      OW1sY0NWMURhS3FpMVRhVWVkZmkvaG5ESUN4T2Q4NFg2a3dTOU11cllZYjBtN0Q1WTBtNXVNVFVr
-      YUpKSEtVOEdNRDlqSE1PbU5wb3FKMFF4SXRnanNDZWQ5K2poSVBNVzc5a0F5N0NZaW91UGtyQ1Qz
-      SmtKWjBrNXErWVZBTVczNDgrd2hGK3l2cithbTFhbUJLbjI4SnRDSTlQeHAvMVB1SWZORHpyeDRB
-      MFZEbndDNVd5aUxYVjQxWlNZUkdWZGNRRXNJeWpMd293TStFYVp3WnR6YUEwZWpSc0p4YTNqcmlV
-      ZFQ2b2k0bXRvejF0L24yQ1ljc3dsV3plYmRUNGNIaHpZa01jdTdoWDNjTVVNMzk0RTc2bVlqS3ZT
-      T1NRbFNOUTYxMmg1RklIR0FWeGtmRW1iUXdjcmszeC94RmEwWWRZNVNybVdFTzVRRm9QVkJ5NmpF
-      L3hEQldiVE5qakxVaTBEeW1hWHpMUllqVnBHOExQVE8zQVRsMzNmZmhuYkJTZlI0cVBEZ2d3UDAr
-      aGNzNndkWUNJWU5HNXBrNHdRSGlGS2hSUk1TRnVDcWxzVmY4cEZCL3JVbWJFd1lTNVNoNDZoeCtp
-      TTc2aCtpZ1FMaDhPclZSTWRiMU1VV1RSVllMUzJsL0RpS05TN2NWOTkxZUdXOEFyWlBQZUlnRjA3
-      QXliMVYydFJhV1J6U3liZStWOGx3RXVGVE9QWFdQU2t3QXNEbWgxcGNMbnc0b1ZzYXpPcXZqTjQ9
-  true:
-    python: 2.7
+    secure: BeuikjlpU4ps9nE2YZtfL2xTCrHZAwXNIDwKMy/C6FDutZ2aV2Caxf2MLgpqZhZE0nRWqUQqyN/nry+Qsf0q7dBIe35aaRBjxdbC4sXYu+JdeQuu0oH4PiJ0pwn1mq1BS9eKpViMYv8A5fIG+SNuFRuC0P9wNfyvqKvgLRCefappr0/zm2ScxI0350WXw8WOu2ezmbO2S589U5io0byk8T+qHyl9LgD6QI0eLvgC8fYQmbxg4j+6+Xo8wm8QcSAZTVgPo2pJfJVIYZBsThZrbgvfw5zWX7vgr1FR7KwL+1xZbbtKW0d9svAWXbJkHqEdXqCr6Oy7SPo3huP9FW/U7rg39bcJP44S79k3UKGg4xkjAvK2SQ+m0S8+ZCvu9PlhPYoiFBsHrMgQZGrCDcxaasaJKUgcq8AkvpB5eNX+1eBXyYR+M6jXgVlBDU/iHkITIzISdZ6ebAtIivSMTcSfyqprRO8XpuBk3ThiXjzZ3tYtk8skOmu2nzVGAxmcNvE12OK71QLGz7j3VZQrpTe2zO0nGPLrMqgU6odgi/0rvLO2Tkq34wyWzzWtQvCF0IFjlZDY8nVKQ110cUT2ZUZmNBfujYXNxs3khVJ47m67pe6lD2Is2mLsof2bFxMmD31X8ECcWvdGN730yaQWZETQG/sJF3thjd7+prbw7FX60y8=
+  on:
+    python: 3.7
     repo: DOV-Vlaanderen/pydov
     tags: true

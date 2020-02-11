@@ -2,26 +2,159 @@
 Contributing to pydov
 =====================
 
-Contribution is not only code implementation!
----------------------------------------------
+First of all, thanks for considering contributing to pydov! It's people like you that make it
+rewarding for us - the project :ref:`authors` - to work on pydov.
 
-Even if you don't feel comfortable contributing code, there are still other ways
-to help! For instance, documentation is also a very important part and often doesn’t
-get as much attention as it deserves. If you find a typo in the documentation, or
-have made improvements, do not hesitate to update the documentation and submit a
-GitHub pull request (see further on how to do this). If you develop a good
-introduction tutorial or example case, these are typically the most popular
-sections for a new user!
+.. _maintainers: .
 
-It also helps us if you spread the word: refer to the package from your blog and
-in articles, link to it from your website or integrate the package in a
-bachelor/masters course.
+pydov is an open source project, maintained by people who care. We are not directly funded to do so.
 
-We aspire to treat everybody equally, and value their contributions. Decisions
-are made based on technical merit and consensus. We abide by the :ref:`code_conduct`.
+
+Code of conduct
+---------------
+
+Please note that this project is released with a :ref:`code_conduct`.
+By participating in this project you agree to abide by its terms.
+
+How you can contribute?
+-----------------------
+
+There are several ways you can contribute to this project. If you want to know
+more about why and how to contribute to open source projects like this one,
+see this `Open Source Guide`_.
+
+.. _Open Source Guide: https://opensource.guide/how-to-contribute/
+
+Share the love
+^^^^^^^^^^^^^^
+
+Think pydov is useful? Let others discover it, by telling them in person, via Twitter_ or a blog post.
+
+.. _Twitter: https://twitter.com/DOVdovVO
+
+Using pydov for a paper you are writing? Consider citing it:
+
+    Roel Huybrechts, Stijn Van Hoey, Pieter Jan Haest, Johan Van de Wauw, & Peter Desmet. (2019). DOV-Vlaanderen/pydov. Zenodo. http://doi.org/10.5281/zenodo.2788681
+
+Ask a question ⁉️
+^^^^^^^^^^^^^^^^^
+
+Using pydov and got stuck? Browse the documentation_ to see if you
+can find a solution. Still stuck? Post your question as a `new issue`_ on GitHub.
+While we cannot offer user support, we'll try to do our best to address it,
+as questions often lead to better documentation or the discovery of bugs.
+
+Want to ask a question in private? Contact DOV directly by `email`_.
+
+.. _documentation: https://pydov.readthedocs.io/en/latest/index.html
+.. _new issue: https://github.com/DOV-Vlaanderen/pydov/issues/new
+.. _email: dov@vlaanderen.be
+
+Propose an idea
+^^^^^^^^^^^^^^^^
+
+Have an idea for a new pydov feature? Take a look at the documentation_ and
+`issue list`_ to see if it isn't included or suggested yet. If not, suggest
+your idea as a `new issue`_ on GitHub. While we can't promise to implement
+your idea, it helps to:
+
+.. _documentation: https://pydov.readthedocs.io/en/latest/index.html
+.. _issue list: https://github.com/DOV-Vlaanderen/pydov/issues
+.. _new issue: https://github.com/DOV-Vlaanderen/pydov/issues/new
+
+* Explain in detail how it would work.
+* Keep the scope as narrow as possible.
+
+See below, :ref:`docs-technical`,  if you want to contribute code for your idea as well.
+
+Report a bug
+^^^^^^^^^^^^
+
+Using pydov and discovered a bug? That's annoying! Don't let others have the
+same experience and report it as a `new issue`_ so we can fix it. A good bug
+report makes it easier for us to do so, so please include:
+
+.. _new issue: https://github.com/DOV-Vlaanderen/pydov/issues/new
+
+* Your operating system name and version (e.g. Mac OS 10.13.6).
+* Any details about your local setup that might be helpful in troubleshooting.
+* Detailed steps to reproduce the bug.
+
+Improve the documentation
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Noticed a typo on the website? Think a function could use a better example?
+Good documentation makes all the difference, so your help to improve it is very welcome! Maybe you've written a good
+introduction tutorial or example case, these are typically very popular sections for new users.
+
+**The website**
+
+`This website`_ is generated with Sphinx_. That means we don't have to
+write any html. Content is pulled together from documentation in the code,
+notebooks, reStructuredText_ files and the package ``conf.py`` settings. If you
+know your way around *Sphinx*, you can `propose a file change`_ to improve
+documentation. If not, `report an issue`_ and we can point you in the right direction.
+
+.. _This website: https://pydov.readthedocs.io/en/latest/index.html
+.. _Sphinx: http://www.sphinx-doc.org/en/master/
+.. _reStructuredText: http://docutils.sourceforge.net/rst.html
+.. _propose a file change: https://help.github.com/articles/editing-files-in-another-user-s-repository/
+.. _report an issue: https://github.com/DOV-Vlaanderen/pydov/issues/new
+
+For more technical details about the Sphinx setup of the pydov project, See the :ref:`docs-technical` section.
+
+**Function documentation**
+
+Functions are described as comments near their code and translated to
+documentation using the  `numpy docstring standard`_. If you want to improve a
+function description:
+
+.. _numpy docstring standard: https://numpydoc.readthedocs.io/en/latest/format.html
+
+1. Go to ``pydov/`` directory in the `code repository`_.
+2. Look for the file with the name of the function.
+3. `Propose a file change`_ to update the function documentation in the docstring (in between the triple quotes).
+
+.. _code repository: https://github.com/DOV-Vlaanderen/pydov
+.. _Propose a file change: https://help.github.com/articles/editing-files-in-another-user-s-repository/
+
+
+Contribute code
+^^^^^^^^^^^^^^^
+
+Care to fix bugs or implement new functionality for pydov? Awesome! Have a
+look at the `issue list`_ and leave a comment on the things you want
+to work on. See also the development guidelines below.
+
+.. _dev-guidelines:
+
+Development guidelines
+-----------------------
+
+Coding guidelines
+^^^^^^^^^^^^^^^^^^
+
+The following are some guidelines on how new code should be written. Of course,
+there are special cases and there will be exceptions to these rules. However,
+following these rules when submitting new code makes the review easier so new
+code can be integrated in less time.
+
+Uniformly formatted code makes it easier to share code ownership. The
+pydov project tries to closely follow the official Python guidelines
+detailed in `PEP8 <https://www.python.org/dev/peps/pep-0008/>`_ which detail
+how code should be formatted and indented. Please read it and follow it.
+
+In addition, we add the following guidelines:
+
+* Use underscores to separate words in non class names: ``n_samples`` rather than ``nsamples``.
+* Avoid multiple statements on one line. Prefer a line return after a control flow statement (\ ``if/for``\ ).
+* Please don’t use ``import *`` in any case. It is considered harmful by the official Python recommendations. It makes the code harder to read as the origin of symbols is no longer explicitly referenced, but most important, it prevents using a static analysis tool like pyflakes to automatically find bugs.
+* Use the `numpy docstring standard`_ in all your docstrings.
+* The attributes for specific classes are Pandas data.frames, please use lowercase names (eventually with `_`) as column names.
+
 
 Contribute to the repository
-----------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The preferred workflow for contributing is to fork the `main repository <https://github.com/DOV-Vlaanderen/pydov>`_ on GitHub, clone locally, and develop on a branch. For more information on this workflow, see the `github workflow <https://guides.github.com/introduction/flow/>`_.
 
@@ -116,39 +249,23 @@ The workflow is provided for command line usage and using the `Github for Deskto
 
 If any of the above seems like magic to you, please look up the `Git documentation <https://git-scm.com/documentation>`_ on the web, or ask a friend or another contributor for help.
 
-Coding guidelines
------------------
-
-The following are some guidelines on how new code should be written. Of course, there are special cases and there will be exceptions to these rules. However, following these rules when submitting new code makes the review easier so new code can be integrated in less time.
-
-Uniformly formatted code makes it easier to share code ownership. The pydov project tries to closely follow the official Python guidelines detailed in `PEP8 <https://www.python.org/dev/peps/pep-0008/>`_ which detail how code should be formatted and indented. Please read it and follow it.
-
-In addition, we add the following guidelines:
-
-
-* Use underscores to separate words in non class names: ``n_samples`` rather than ``nsamples``.
-* Avoid multiple statements on one line. Prefer a line return after a control flow statement (\ ``if/for``\ ).
-* Please don’t use ``import *`` in any case. It is considered harmful by the official Python recommendations. It makes the code harder to read as the origin of symbols is no longer explicitly referenced, but most important, it prevents using a static analysis tool like pyflakes to automatically find bugs.
-* Use the `numpy docstring standard <https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt>`_ in all your docstrings.
-* The attributes for specific classes are Pandas data.frames, please use lowercase names (eventually with `_`) as column names.
-
+.. _docs-technical:
 
 Creating the documentation
---------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 We are glad to accept any sort of documentation: function docstrings, reStructuredText
 documents, tutorials, etc. Documentation lives in the ``docs/`` directory.
 
 You can edit the documentation using any text editor and then generate the HTML
 output by typing ``make html`` from the ``doc/`` directory. For building the
-documentation, you will need `sphinx <http://sphinx.pocoo.org/>`_. The ``_build``
+documentation, you will need `Sphinx`_. The ``_build``
 directory is not included in the repository as we rely on CI tooling for the
 documentation building. The documentation is checked on Travis_ and build
 by `Read the docs`_.
 
 .. _Travis: https://travis-ci.org/DOV-Vlaanderen/pydov
 .. _Read the docs: https://readthedocs.org/
-
 
 For the notebooks in :ref:`tutorials`, the default is to *always* run the code of the notebooks
 when the documentation is created. This is defined by the ``nbsphinx_execute = 'always'`` option
@@ -162,18 +279,33 @@ notebook as explained in the `nbsphinx documentation`_.
 In short, to make sure a notebook is not rerun, but the content used as such, add the following
 to the notebook(!) metadata:
 
-
 ::
 
   "nbsphinx": {
    "execute": "never"
   }
 
-Note for maintainers
---------------------
 
-The repo uses the `bumpversion` package to keep track of the package version. use the following commands to switch the version:
+Release new version
+^^^^^^^^^^^^^^^^^^^
 
-#. ``bumpversion patch`` to increase version from 1.0.0 to 1.0.1.
-#. ``bumpversion minor`` to increase version from 1.0.0 to 1.1.0.
-#. ``bumpversion major`` to increase version from 1.0.0 to 2.0.0.
+In order to create a new release, the following steps need to be done ( on ``master`` branch):
+
+1. Update the :ref:`history` file with the changes compared to the previous version. You could take into account the following sections: ``New features``, ``Minor improvements``, ``Major improvements``, ``Documentation fixes``. Commit the edits (``git commit``).
+
+2. Adjust the version of the code. The repo uses the `bumpversion` package to keep track
+of the package version. use the following commands to switch the version:
+
+    - ``bumpversion patch`` to increase version from 1.0.0 to 1.0.1.
+    - ``bumpversion minor`` to increase version from 1.0.0 to 1.1.0.
+    - ``bumpversion major`` to increase version from 1.0.0 to 2.0.0.
+
+3. Push the code to GitHub, `git push origin master`
+4. Push the tags to GitHub, ``git push --tags`` to create the release in Github
+5. `Travis.ci`_ is used to push the distribution archives to pypi_. Make sure to have a look at the pypi_ pydov page to verify this. If not, check the `packaging instructions`_ to do it manually, it basically boils down to ``python3 setup.py sdist bdist_wheel`` and ``twine upload dist/*``.
+
+The new release can be installed using ``pip``, ``pip install --upgrade pydov``.
+
+.. _Travis.ci: https://travis-ci.org/DOV-Vlaanderen/pydov
+.. _pypi: https://pypi.org/project/pydov/
+.. _packaging instructions: https://packaging.python.org/tutorials/packaging-projects/

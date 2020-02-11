@@ -1,6 +1,7 @@
 """Module grouping tests for the pydov.types.boring module."""
 
 from pydov.types.boring import Boring
+from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes
 
 from tests.test_search_boring import (
@@ -46,7 +47,7 @@ class TestBoring(AbstractTestTypes):
             "https://www.dov.vlaanderen.be/data/boring/"
 
         """
-        return 'https://www.dov.vlaanderen.be/data/boring/'
+        return build_dov_url('data/boring/')
 
     def get_field_names(self):
         """Get the field names for this type as listed in the documentation in

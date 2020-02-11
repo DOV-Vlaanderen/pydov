@@ -1,7 +1,9 @@
 """Module grouping tests for the pydov.util.query module."""
 import pandas as pd
+import numpy as np
 import pytest
 
+from pydov.util.dovutil import build_dov_url
 from pydov.util.query import (
     PropertyInList,
     Join,
@@ -67,26 +69,63 @@ class TestPropertyInList(object):
 
         assert len(l_output) == 0
 
-    def test_tooshort(self):
+    def test_list_single(self):
         """Test the PropertyInList expression with a list containing
         a single item.
 
-        Test whether a ValueError is raised.
+        Test whether the generated query is correct and does contain only a
+        single PropertyIsEqualTo.
 
         """
-        with pytest.raises(ValueError):
-            l = ['a']
-            PropertyInList('methode', l)
+        l = ['a']
 
-    def test_tooshort_duplicate(self):
+        query = PropertyInList('methode', l)
+        xml = query.toXML()
+
+        assert xml.tag == '{http://www.opengis.net/ogc}PropertyIsEqualTo'
+
+        propertyname = xml.find('./{http://www.opengis.net/ogc}PropertyName')
+        assert propertyname.text == 'methode'
+
+        literal = xml.find('./{http://www.opengis.net/ogc}Literal')
+        assert literal.text in l
+
+        l.remove(literal.text)
+        assert len(l) == 0
+
+    def test_list_single_duplicate(self):
         """Test the PropertyInList expression with a list containing
-        a two identical items.
+        a single duplicated item.
+
+        Test whether the generated query is correct and does contain only a
+        single PropertyIsEqualTo.
+
+        """
+        l = ['a', 'a']
+        l_output = ['a']
+
+        query = PropertyInList('methode', l)
+        xml = query.toXML()
+
+        assert xml.tag == '{http://www.opengis.net/ogc}PropertyIsEqualTo'
+
+        propertyname = xml.find('./{http://www.opengis.net/ogc}PropertyName')
+        assert propertyname.text == 'methode'
+
+        literal = xml.find('./{http://www.opengis.net/ogc}Literal')
+        assert literal.text in l_output
+
+        l_output.remove(literal.text)
+        assert len(l_output) == 0
+
+    def test_emptylist(self):
+        """Test the PropertyInList expression with an empty list.
 
         Test whether a ValueError is raised.
 
         """
         with pytest.raises(ValueError):
-            l = ['a', 'a']
+            l = []
             PropertyInList('methode', l)
 
     def test_nolist(self):
@@ -108,9 +147,9 @@ class TestJoin(object):
         Test whether the generated query is correct.
 
         """
-        l = ['https://www.dov.vlaanderen.be/data/boring/1986-068853',
-             'https://www.dov.vlaanderen.be/data/boring/1986-068843',
-             'https://www.dov.vlaanderen.be/data/boring/1980-068861']
+        l = [build_dov_url('data/boring/1986-068853'),
+             build_dov_url('data/boring/1986-068843'),
+             build_dov_url('data/boring/1980-068861')]
 
         df = pd.DataFrame({
             'pkey_boring': pd.Series(l),
@@ -144,12 +183,12 @@ class TestJoin(object):
         duplicate entry twice.
 
         """
-        l = ['https://www.dov.vlaanderen.be/data/boring/1986-068853',
-             'https://www.dov.vlaanderen.be/data/boring/1986-068853',
-             'https://www.dov.vlaanderen.be/data/boring/1980-068861']
+        l = [build_dov_url('data/boring/1986-068853'),
+             build_dov_url('data/boring/1986-068853'),
+             build_dov_url('data/boring/1980-068861')]
 
-        l_output = ['https://www.dov.vlaanderen.be/data/boring/1986-068853',
-                    'https://www.dov.vlaanderen.be/data/boring/1980-068861']
+        l_output = [build_dov_url('data/boring/1986-068853'),
+                    build_dov_url('data/boring/1980-068861')]
 
         df = pd.DataFrame({
             'pkey_boring': pd.Series(l),
@@ -183,9 +222,9 @@ class TestJoin(object):
 
         """
         with pytest.raises(ValueError):
-            l = ['https://www.dov.vlaanderen.be/data/boring/1986-068853',
-                 'https://www.dov.vlaanderen.be/data/boring/1986-068843',
-                 'https://www.dov.vlaanderen.be/data/boring/1980-068861']
+            l = [build_dov_url('data/boring/1986-068853'),
+                 build_dov_url('data/boring/1986-068843'),
+                 build_dov_url('data/boring/1980-068861')]
 
             df = pd.DataFrame({
                 'pkey_boring': pd.Series(l),
@@ -194,36 +233,144 @@ class TestJoin(object):
 
             Join(df, 'pkey_sondering')
 
-    def test_tooshort(self):
+    def test_single(self):
         """Test the Join expression with a dataframe containing a single row.
 
-        Test whether a ValueError is raised.
+        Test whether the generated query is correct and does contain only a
+        single PropertyIsEqualTo.
 
         """
-        with pytest.raises(ValueError):
-            l = ['https://www.dov.vlaanderen.be/data/boring/1986-068853']
+        l = [build_dov_url('data/boring/1986-068853')]
 
-            df = pd.DataFrame({
-                'pkey_boring': pd.Series(l),
-                'diepte_tot_m': pd.Series([10])
-            })
+        df = pd.DataFrame({
+            'pkey_boring': pd.Series(l),
+            'diepte_tot_m': pd.Series([10])
+        })
 
-            Join(df, 'pkey_boring')
+        query = Join(df, 'pkey_boring')
+        xml = query.toXML()
 
-    def test_tooshort_duplicate(self):
+        assert xml.tag == '{http://www.opengis.net/ogc}PropertyIsEqualTo'
+
+        propertyname = xml.find('./{http://www.opengis.net/ogc}PropertyName')
+        assert propertyname.text == 'pkey_boring'
+
+        literal = xml.find('./{http://www.opengis.net/ogc}Literal')
+        assert literal.text in l
+
+        l.remove(literal.text)
+        assert len(l) == 0
+
+    def test_single_duplicate(self):
         """Test the Join expression with a dataframe containing two
         identical keys.
 
-        Test whether a ValueError is raised.
+        Test whether the generated query is correct and does contain only a
+        single PropertyIsEqualTo.
 
         """
+        l = [build_dov_url('data/boring/1986-068853'),
+             build_dov_url('data/boring/1986-068853')]
+        l_output = [build_dov_url('data/boring/1986-068853')]
+
+        df = pd.DataFrame({
+            'pkey_boring': pd.Series(l),
+            'diepte_tot_m': pd.Series([10, 20])
+        })
+
+        query = Join(df, 'pkey_boring')
+        xml = query.toXML()
+
+        assert xml.tag == '{http://www.opengis.net/ogc}PropertyIsEqualTo'
+
+        propertyname = xml.find('./{http://www.opengis.net/ogc}PropertyName')
+        assert propertyname.text == 'pkey_boring'
+
+        literal = xml.find('./{http://www.opengis.net/ogc}Literal')
+        assert literal.text in l_output
+
+        l_output.remove(literal.text)
+        assert len(l_output) == 0
+
+    def test_empty(self):
+        """Test the Join expression with an empty dataframe.
+
+        Test whether a ValueError is raised
+
+        """
+        df = pd.DataFrame({
+            'pkey_boring': [np.nan, np.nan],
+            'diepte_tot_m': pd.Series([10, 20])
+        })
+
         with pytest.raises(ValueError):
-            l = ['https://www.dov.vlaanderen.be/data/boring/1986-068853',
-                 'https://www.dov.vlaanderen.be/data/boring/1986-068853']
-
-            df = pd.DataFrame({
-                'pkey_boring': pd.Series(l),
-                'diepte_tot_m': pd.Series([10, 20])
-            })
-
             Join(df, 'pkey_boring')
+
+    def test_on(self):
+        """Test the Join expression with a standard dataframe and 'on'.
+
+        Test whether the generated query is correct.
+
+        """
+        l = [build_dov_url('data/boring/1986-068853'),
+             build_dov_url('data/boring/1986-068843'),
+             build_dov_url('data/boring/1980-068861')]
+
+        df = pd.DataFrame({
+            'pkey_boring': pd.Series(l),
+            'diepte_tot_m': pd.Series([10, 20, 30])
+        })
+
+        query = Join(df, on='pkey_boring')
+        xml = query.toXML()
+
+        assert xml.tag == '{http://www.opengis.net/ogc}Or'
+        assert len(list(xml)) == 3
+
+        for f in xml:
+            assert f.tag == '{http://www.opengis.net/ogc}PropertyIsEqualTo'
+
+            propertyname = f.find('./{http://www.opengis.net/ogc}PropertyName')
+            assert propertyname.text == 'pkey_boring'
+
+            literal = f.find('./{http://www.opengis.net/ogc}Literal')
+            assert literal.text in l
+
+            l.remove(literal.text)
+
+        assert len(l) == 0
+
+    def test_using(self):
+        """Test the Join expression with a standard dataframe and 'on' and
+        'using'.
+
+        Test whether the generated query is correct.
+
+        """
+        l = [build_dov_url('data/boring/1986-068853'),
+             build_dov_url('data/boring/1986-068843'),
+             build_dov_url('data/boring/1980-068861')]
+
+        df = pd.DataFrame({
+            'boringfiche': pd.Series(l),
+            'diepte_tot_m': pd.Series([10, 20, 30])
+        })
+
+        query = Join(df, on='pkey_boring', using='boringfiche')
+        xml = query.toXML()
+
+        assert xml.tag == '{http://www.opengis.net/ogc}Or'
+        assert len(list(xml)) == 3
+
+        for f in xml:
+            assert f.tag == '{http://www.opengis.net/ogc}PropertyIsEqualTo'
+
+            propertyname = f.find('./{http://www.opengis.net/ogc}PropertyName')
+            assert propertyname.text == 'pkey_boring'
+
+            literal = f.find('./{http://www.opengis.net/ogc}Literal')
+            assert literal.text in l
+
+            l.remove(literal.text)
+
+        assert len(l) == 0

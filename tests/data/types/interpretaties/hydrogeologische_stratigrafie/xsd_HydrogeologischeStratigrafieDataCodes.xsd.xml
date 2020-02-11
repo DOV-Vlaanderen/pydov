@@ -1,0 +1,718 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://interpretatie.kern.schemas.dov.vlaanderen.be" targetNamespace="http://interpretatie.kern.schemas.dov.vlaanderen.be" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.00">
+	<xs:simpleType name="AquiferEnumType">
+		<xs:annotation>
+			<xs:documentation>de mogelijke HCOV codes voor de watervoerende laag (aquifer)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="0000">
+				<xs:annotation>
+					<xs:documentation>Onbekend</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0100">
+				<xs:annotation>
+					<xs:documentation>Quartaire aquifersystemen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0110">
+				<xs:annotation>
+					<xs:documentation>Ophogingen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0120">
+				<xs:annotation>
+					<xs:documentation>Duinen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0130">
+				<xs:annotation>
+					<xs:documentation>Polderafzettingen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0131">
+				<xs:annotation>
+					<xs:documentation>Kleiige polderafzettingen van de kustvlakte</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0132">
+				<xs:annotation>
+					<xs:documentation>Kleiige polderafzettingen van het Meetjesland</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0133">
+				<xs:annotation>
+					<xs:documentation>Kleiige polderafzettingen van Waasland-Antwerpen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0134">
+				<xs:annotation>
+					<xs:documentation>Zandige kreekruggen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0135">
+				<xs:annotation>
+					<xs:documentation>Veen-kleiige poelgronden</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0140">
+				<xs:annotation>
+					<xs:documentation>Alluviale deklagen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0150">
+				<xs:annotation>
+					<xs:documentation>Deklagen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0151">
+				<xs:annotation>
+					<xs:documentation>Zandige deklagen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0152">
+				<xs:annotation>
+					<xs:documentation>Zand-lemige deklagen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0153">
+				<xs:annotation>
+					<xs:documentation>Lemige deklagen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0154">
+				<xs:annotation>
+					<xs:documentation>Kleiige deklagen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0160">
+				<xs:annotation>
+					<xs:documentation>Pleistocene afzettingen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0161">
+				<xs:annotation>
+					<xs:documentation>Pleistoceen van de kustvlakte</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0162">
+				<xs:annotation>
+					<xs:documentation>Pleistoceen van de Vlaamse Vallei</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0163">
+				<xs:annotation>
+					<xs:documentation>Pleistoceen van de riviervalleien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0170">
+				<xs:annotation>
+					<xs:documentation>Maas- en Rijnafzettingen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0171">
+				<xs:annotation>
+					<xs:documentation>Afzettingen Hoofdterras</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0172">
+				<xs:annotation>
+					<xs:documentation>Afzettingen Tussenterassen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0173">
+				<xs:annotation>
+					<xs:documentation>Afzettingen Maasvlakte</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0200">
+				<xs:annotation>
+					<xs:documentation>Kempens Aquifersysteem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0210">
+				<xs:annotation>
+					<xs:documentation>Kiezeloolietformatie ten noorden van Feldbiss</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0211">
+				<xs:annotation>
+					<xs:documentation>Zandige eenheid boven de Brunssum I-klei</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0212">
+				<xs:annotation>
+					<xs:documentation>Brunssum I-Klei</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0213">
+				<xs:annotation>
+					<xs:documentation>Zand van Pey</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0214">
+				<xs:annotation>
+					<xs:documentation>Brunssum II-klei</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0215">
+				<xs:annotation>
+					<xs:documentation>Zand van Waubach</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0220">
+				<xs:annotation>
+					<xs:documentation>Klei-zand-complex van de Kempen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0221">
+				<xs:annotation>
+					<xs:documentation>Klei van Turnhout</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0222">
+				<xs:annotation>
+					<xs:documentation>Zand van Beerse</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0223">
+				<xs:annotation>
+					<xs:documentation>Klei van Rijkevorsel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0230">
+				<xs:annotation>
+					<xs:documentation>Pleistoceen en Plioceen aquifer</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0231">
+				<xs:annotation>
+					<xs:documentation>Zanden van Brasschaat en/of Merksplas</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0232">
+				<xs:annotation>
+					<xs:documentation>Zand van Mol</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0233">
+				<xs:annotation>
+					<xs:documentation>Zandige top van Lillo</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0234">
+				<xs:annotation>
+					<xs:documentation>Zand van Poederlee en/of zandige top van Kasterlee</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0240">
+				<xs:annotation>
+					<xs:documentation>Pliocene kleiige laag</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0241">
+				<xs:annotation>
+					<xs:documentation>Kleiig deel van Lillo en/of van de overgang Lillo-Kattendijk</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0242">
+				<xs:annotation>
+					<xs:documentation>Kleiige overgang tussen de zanden van Kasterlee en Diest</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0250">
+				<xs:annotation>
+					<xs:documentation>Mioceen Aquifersysteem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0251">
+				<xs:annotation>
+					<xs:documentation>Zand van Kattendijk en/of onderste zandlaag van Lillo</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0252">
+				<xs:annotation>
+					<xs:documentation>Zand van Diest</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0253">
+				<xs:annotation>
+					<xs:documentation>Zand van Bolderberg</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0254">
+				<xs:annotation>
+					<xs:documentation>Zanden van Berchem en/of Voort</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0255">
+				<xs:annotation>
+					<xs:documentation>Klei van Veldhoven</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0256">
+				<xs:annotation>
+					<xs:documentation>Zand van Eigenbilzen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0300">
+				<xs:annotation>
+					<xs:documentation>Boom Aquitard</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0301">
+				<xs:annotation>
+					<xs:documentation>Kleiig deel van Eigenbilzen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0302">
+				<xs:annotation>
+					<xs:documentation>Klei van Putte</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0303">
+				<xs:annotation>
+					<xs:documentation>Klei van Terhagen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0304">
+				<xs:annotation>
+					<xs:documentation>Klei van Belsele-Waas</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0400">
+				<xs:annotation>
+					<xs:documentation>Oligoceen Aquifersysteem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0410">
+				<xs:annotation>
+					<xs:documentation>Zand van Kerniel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0420">
+				<xs:annotation>
+					<xs:documentation>Klei van Kleine-Spouwen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0430">
+				<xs:annotation>
+					<xs:documentation>Ruisbroek-Berg Aquifer</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0431">
+				<xs:annotation>
+					<xs:documentation>Zand van Berg</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0432">
+				<xs:annotation>
+					<xs:documentation>Zand van Kerkom</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0433">
+				<xs:annotation>
+					<xs:documentation>Kleiig zand van Oude Biezen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0434">
+				<xs:annotation>
+					<xs:documentation>Zand van Boutersem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0435">
+				<xs:annotation>
+					<xs:documentation>Zand van Ruisbroek</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0436">
+				<xs:annotation>
+					<xs:documentation>Zand van Wintham</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0440">
+				<xs:annotation>
+					<xs:documentation>Tongeren Aquitard</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0441">
+				<xs:annotation>
+					<xs:documentation>Klei van Henis</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0442">
+				<xs:annotation>
+					<xs:documentation>Klei van Watervliet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0450">
+				<xs:annotation>
+					<xs:documentation>Onder-Oligoceen Aquifersysteem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0451">
+				<xs:annotation>
+					<xs:documentation>Zand van Neerrepen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0452">
+				<xs:annotation>
+					<xs:documentation>Zand-Klei van Grimmertingen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0453">
+				<xs:annotation>
+					<xs:documentation>Kleiig zand van Bassevelde</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0500">
+				<xs:annotation>
+					<xs:documentation>Bartoon Aquitardsysteem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0501">
+				<xs:annotation>
+					<xs:documentation>Klei van Onderdijke</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0502">
+				<xs:annotation>
+					<xs:documentation>Zand van Buisputten</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0503">
+				<xs:annotation>
+					<xs:documentation>Klei van Zomergem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0504">
+				<xs:annotation>
+					<xs:documentation>Zand van Onderdaele</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0505">
+				<xs:annotation>
+					<xs:documentation>Kleien van Ursel en/of Asse</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0600">
+				<xs:annotation>
+					<xs:documentation>Ledo Paniseliaan Brusseliaan Aquifersysteem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0610">
+				<xs:annotation>
+					<xs:documentation>Wemmel-Lede Aquifer</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0611">
+				<xs:annotation>
+					<xs:documentation>Zand van Wemmel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0612">
+				<xs:annotation>
+					<xs:documentation>Zand van Lede</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0620">
+				<xs:annotation>
+					<xs:documentation>Zand van Brussel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0630">
+				<xs:annotation>
+					<xs:documentation>Afzettingen van het Boven-Paniseliaan</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0631">
+				<xs:annotation>
+					<xs:documentation>Zanden van Aanlter en/of Oedelem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0632">
+				<xs:annotation>
+					<xs:documentation>Zandige klei van Beernem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0640">
+				<xs:annotation>
+					<xs:documentation>Zandige afzettingen van het Onder-Paniseliaan (Vlierzele en/of Aalterbrugge)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0700">
+				<xs:annotation>
+					<xs:documentation>Paniseliaan Aquitard</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0701">
+				<xs:annotation>
+					<xs:documentation>Klei van Pittem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0702">
+				<xs:annotation>
+					<xs:documentation>Klei van Merelbeke</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0800">
+				<xs:annotation>
+					<xs:documentation>Ieperiaan Aquifer (Egem en of Mont-Panisel)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0900">
+				<xs:annotation>
+					<xs:documentation>Ieperiaan aquitardsysteem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0910">
+				<xs:annotation>
+					<xs:documentation>Silt van Kortemark</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0920">
+				<xs:annotation>
+					<xs:documentation>Afzettingen van Kortrijk</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0921">
+				<xs:annotation>
+					<xs:documentation>Klei van Aalbeke</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0922">
+				<xs:annotation>
+					<xs:documentation>Klei van Moen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0923">
+				<xs:annotation>
+					<xs:documentation>Zand van Mons-en-Pévèle</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0924">
+				<xs:annotation>
+					<xs:documentation>Klei van Saint-Maur</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0925">
+				<xs:annotation>
+					<xs:documentation>Klei van Mont-Héribu</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1000">
+				<xs:annotation>
+					<xs:documentation>Paleoceen Aquifersysteem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1010">
+				<xs:annotation>
+					<xs:documentation>Landeniaan Aquifersysteem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1011">
+				<xs:annotation>
+					<xs:documentation>Zand van Knokke</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1012">
+				<xs:annotation>
+					<xs:documentation>Zandige afzettingen van Loksbergen en/of Dormaal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1013">
+				<xs:annotation>
+					<xs:documentation>Zand van Grandglise en/of Hoegaarden</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1014">
+				<xs:annotation>
+					<xs:documentation>Kleiig deel van Lincent</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1015">
+				<xs:annotation>
+					<xs:documentation>Versteend deel van Lincent</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1020">
+				<xs:annotation>
+					<xs:documentation>Landeniaan en Heersiaan Aquitard</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1021">
+				<xs:annotation>
+					<xs:documentation>Siltige afzetting van Halen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1022">
+				<xs:annotation>
+					<xs:documentation>Klei van Waterschei</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1023">
+				<xs:annotation>
+					<xs:documentation>Slecht doorlatend deel van de mergels van Gelinden</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1030">
+				<xs:annotation>
+					<xs:documentation>Heersiaan en Opglabbeek Aquifersysteem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1031">
+				<xs:annotation>
+					<xs:documentation>Doorlatend deel van de Mergels van Gelinden</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1032">
+				<xs:annotation>
+					<xs:documentation>Zand van Orp</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1033">
+				<xs:annotation>
+					<xs:documentation>Zand van Eisden</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1034">
+				<xs:annotation>
+					<xs:documentation>Klei van Opoeteren</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1035">
+				<xs:annotation>
+					<xs:documentation>Zand van Maasmechelen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1100">
+				<xs:annotation>
+					<xs:documentation>Krijt Aquifersysteem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1110">
+				<xs:annotation>
+					<xs:documentation>Krijt Aquifer</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1111">
+				<xs:annotation>
+					<xs:documentation>Kalksteen van Houthem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1112">
+				<xs:annotation>
+					<xs:documentation>Tufkrijt van Maastricht</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1113">
+				<xs:annotation>
+					<xs:documentation>Krijt van Gulpen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1120">
+				<xs:annotation>
+					<xs:documentation>Afzettingen van Vaals (Smectiet van Herve)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1130">
+				<xs:annotation>
+					<xs:documentation>Zand van Aken</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1140">
+				<xs:annotation>
+					<xs:documentation>Turoonmergels op Massief van Brabant</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1150">
+				<xs:annotation>
+					<xs:documentation>Wealdiaan</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1200">
+				<xs:annotation>
+					<xs:documentation>Jura-Trias-Perm</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1210">
+				<xs:annotation>
+					<xs:documentation>Jura</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1220">
+				<xs:annotation>
+					<xs:documentation>Trias</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1230">
+				<xs:annotation>
+					<xs:documentation>Perm</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1300">
+				<xs:annotation>
+					<xs:documentation>Sokkel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1310">
+				<xs:annotation>
+					<xs:documentation>Boven-Carboon</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1320">
+				<xs:annotation>
+					<xs:documentation>Kolenkalk</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1330">
+				<xs:annotation>
+					<xs:documentation>Devoon</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1340">
+				<xs:annotation>
+					<xs:documentation>Cambro-Siluur Massief van Brabant</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RegimeEnumType">
+		<xs:annotation>
+			<xs:documentation>de mogelijke waarden voor het grondwaterregime</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="onbekend"/>
+			<xs:enumeration value="freatisch"/>
+			<xs:enumeration value="niet-freatisch"/>
+			<xs:enumeration value="semi-freatisch"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HydrotypeEnumType">
+		<xs:annotation>
+			<xs:documentation>de mogelijke waarden voor het hydrotype (codes)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="A">
+				<xs:annotation>
+					<xs:documentation>code voor afdekkend</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="B">
+				<xs:annotation>
+					<xs:documentation>code voor basis</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="S">
+				<xs:annotation>
+					<xs:documentation>code voor scheidend</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="W">
+				<xs:annotation>
+					<xs:documentation>code voor watervoerend</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

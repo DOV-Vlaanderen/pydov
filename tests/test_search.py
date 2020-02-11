@@ -1,31 +1,61 @@
 """Module grouping tests for the boring search module."""
+import glob
+from io import open
 
 import pytest
 
 import owslib
 import pydov
 from owslib.etree import etree
+from owslib.fes import (
+    SortBy,
+    SortProperty,
+    And,
+)
 from owslib.wfs import WebFeatureService
 from pydov.search.boring import BoringSearch
 from pydov.search.grondwaterfilter import GrondwaterFilterSearch
 
 from numpy.compat import unicode
 
-from pydov.search.interpretaties import InformeleStratigrafieSearch
+from pydov.search.grondwatermonster import GrondwaterMonsterSearch
+from pydov.search.interpretaties import (
+    InformeleStratigrafieSearch,
+    FormeleStratigrafieSearch,
+    InformeleHydrogeologischeStratigrafieSearch,
+    GeotechnischeCoderingSearch,
+    QuartairStratigrafieSearch,
+)
 from pydov.search.interpretaties import HydrogeologischeStratigrafieSearch
 from pydov.search.interpretaties import GecodeerdeLithologieSearch
 from pydov.search.interpretaties import LithologischeBeschrijvingenSearch
+from pydov.search.sondering import SonderingSearch
+from pydov.search.grondmonster import GrondmonsterSearch
+
+from pydov.util.dovutil import build_dov_url
+
 from pydov.util.errors import (
     InvalidSearchParameterError,
 )
-
+from pydov.util.location import (
+    WithinDistance,
+    Point,
+)
+from tests.abstract import service_ok
 
 search_objects = [BoringSearch(),
+                  SonderingSearch(),
                   GrondwaterFilterSearch(),
+                  GrondwaterMonsterSearch(),
+                  FormeleStratigrafieSearch(),
+                  InformeleHydrogeologischeStratigrafieSearch(),
+                  GeotechnischeCoderingSearch(),
+                  QuartairStratigrafieSearch(),
                   InformeleStratigrafieSearch(),
                   HydrogeologischeStratigrafieSearch(),
                   GecodeerdeLithologieSearch(),
-                  LithologischeBeschrijvingenSearch(),]
+                  LithologischeBeschrijvingenSearch(),
+                  GrondmonsterSearch()]
 
 
 @pytest.fixture(scope='module')
@@ -39,7 +69,8 @@ def mp_wfs(monkeymodule):
 
     """
     def read(*args, **kwargs):
-        with open('tests/data/util/owsutil/wfscapabilities.xml', 'r') as f:
+        with open('tests/data/util/owsutil/wfscapabilities.xml', 'r',
+                  encoding='utf-8') as f:
             data = f.read()
             if type(data) is not bytes:
                 data = data.encode('utf-8')
@@ -67,8 +98,7 @@ def wfs(mp_wfs):
 
     """
     return WebFeatureService(
-        url="https://www.dov.vlaanderen.be/geoserver/wfs",
-        version="1.1.0")
+        url=build_dov_url('geoserver/wfs'), version="1.1.0")
 
 
 @pytest.fixture()
@@ -271,7 +301,7 @@ def mp_dov_xml(monkeymodule, request):
 
     def _get_xml_data(*args, **kwargs):
         file_path = getattr(request.module, "location_dov_xml")
-        with open(file_path, 'r') as f:
+        with open(file_path, 'r', encoding="utf-8") as f:
             data = f.read()
             if type(data) is not bytes:
                 data = data.encode('utf-8')
@@ -299,6 +329,39 @@ def mp_dov_xml_broken(monkeypatch):
                         '_get_xml_data', _get_xml_data)
 
 
+@pytest.fixture()
+def mp_remote_xsd(monkeymodule, request):
+    """Monkeypatch the call to get the remote XSD schemas.
+
+    This monkeypatch requires a module variable ``location_xsd_base``
+    with a glob expression to the XSD file(s) on disk.
+
+    Parameters
+    ----------
+    monkeymodule : pytest.fixture
+        PyTest monkeypatch fixture with module scope.
+    request : pytest.fixtue
+        PyTest fixture providing request context.
+
+    """
+
+    def _get_remote_xsd(*args, **kwargs):
+        xsd_base_path = getattr(request.module, "location_xsd_base")
+        schemas = []
+
+        for xsd_file in glob.glob(xsd_base_path):
+            with open(xsd_file, 'r', encoding="utf-8") as f:
+                data = f.read()
+                if type(data) is not bytes:
+                    data = data.encode('utf-8')
+                schemas.append(etree.fromstring(data))
+
+        return schemas
+
+    monkeymodule.setattr(pydov.search.abstract.AbstractSearch,
+                         '_get_remote_xsd_schemas', _get_remote_xsd)
+
+
 @pytest.mark.parametrize("objectsearch", search_objects)
 def test_get_description(mp_wfs, objectsearch):
     """Test the get_description method.
@@ -309,15 +372,72 @@ def test_get_description(mp_wfs, objectsearch):
     ----------
     mp_wfs : pytest.fixture
         Monkeypatch the call to the remote GetCapabilities request.
-    boringsearch : pytest.fixture returning pydov.search.BoringSearch
-        An instance of BoringSearch to perform search operations on the DOV
-        type 'Boring'.
+    objectsearch : pytest.fixture
+        An instance of a subclass of AbstractTestSearch to perform search
+        operations on the corresponding DOV type.
 
     """
     description = objectsearch.get_description()
 
     assert type(description) in (str, unicode)
     assert len(description) > 0
+
+
+@pytest.mark.online
+@pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
+@pytest.mark.parametrize("objectsearch", search_objects)
+def test_search_location(objectsearch):
+    """Test the get_description method.
+
+    Test whether the method returns a non-empty string.
+
+    Parameters
+    ----------
+    mp_wfs : pytest.fixture
+        Monkeypatch the call to the remote GetCapabilities request.
+    objectsearch : pytest.fixture
+        An instance of a subclass of AbstractTestSearch to perform search
+        operations on the corresponding DOV type.
+
+    """
+    objectsearch.search(location=WithinDistance(Point(100000, 100000), 100))
+
+
+@pytest.mark.online
+@pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
+@pytest.mark.parametrize("objectsearch", search_objects)
+def test_search_maxfeatures(objectsearch):
+    """Test the search method with a max_features parameter.
+
+    Test whether no error is raised.
+
+    Parameters
+    ----------
+    objectsearch : pytest.fixture
+        An instance of a subclass of AbstractTestSearch to perform search
+        operations on the corresponding DOV type.
+
+    """
+    objectsearch.search(location=WithinDistance(Point(100000, 100000), 100),
+                        max_features=10)
+
+
+@pytest.mark.online
+@pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
+@pytest.mark.parametrize("objectsearch", search_objects)
+def test_search_maxfeatures_only(objectsearch):
+    """Test the search method with only the max_features parameter.
+
+    Test whether no error is raised.
+
+    Parameters
+    ----------
+    objectsearch : pytest.fixture
+        An instance of a subclass of AbstractTestSearch to perform search
+        operations on the corresponding DOV type.
+
+    """
+    objectsearch.search(max_features=1)
 
 
 @pytest.mark.parametrize("objectsearch", search_objects)

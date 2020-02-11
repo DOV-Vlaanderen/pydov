@@ -11,7 +11,7 @@ from pydov.util.hooks import (
 from tests.abstract import service_ok
 
 from tests.test_util_caching import (
-    cache,
+    plaintext_cache,
     nocache,
 )
 
@@ -174,9 +174,10 @@ class TestHooks(object):
 
     @pytest.mark.online
     @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
-    @pytest.mark.parametrize('cache', [[datetime.timedelta(minutes=15)]],
-                             indirect=['cache'])
-    def test_wfs_and_xml_cache(self, temp_hooks, cache):
+    @pytest.mark.parametrize('plaintext_cache',
+                             [[datetime.timedelta(minutes=15)]],
+                             indirect=['plaintext_cache'])
+    def test_wfs_and_xml_cache(self, temp_hooks, plaintext_cache):
         """Test the search method providing both a location and a query.
 
         Test whether a dataframe is returned.
@@ -190,7 +191,7 @@ class TestHooks(object):
             Monkeypatch the call to get WFS features.
         temp_hooks : pytest.fixture
             Fixture removing default hooks and installing HookCounter.
-        cache : pytest.fixture
+        plaintext_cache : pytest.fixture
             Fixture temporarily setting up a testcache with max_age of 1
             second.
 

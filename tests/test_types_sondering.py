@@ -1,6 +1,7 @@
 """Module grouping tests for the pydov.types.sondering module."""
 
 from pydov.types.sondering import Sondering
+from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes
 
 from tests.test_search_sondering import (
@@ -46,7 +47,7 @@ class TestSondering(AbstractTestTypes):
             "https://www.dov.vlaanderen.be/data/sondering/"
 
         """
-        return 'https://www.dov.vlaanderen.be/data/sondering/'
+        return build_dov_url('data/sondering/')
 
     def get_field_names(self):
         """Get the field names for this type as listed in the documentation in

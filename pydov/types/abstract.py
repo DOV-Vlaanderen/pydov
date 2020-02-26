@@ -22,6 +22,7 @@ from ..util.errors import (
     XmlParseError,
     XmlParseWarning,
 )
+from ..util.hooks import HookRunner
 
 
 class AbstractTypeCommon(AbstractCommon):
@@ -609,15 +610,11 @@ class AbstractDovType(AbstractTypeCommon):
             The raw XML data of this DOV object as bytes.
 
         """
-        for hook in pydov.hooks:
-            hook.xml_requested(self.pkey)
-
         if pydov.cache:
             return pydov.cache.get(self.pkey + '.xml')
         else:
             xml = get_dov_xml(self.pkey + '.xml')
-            for hook in pydov.hooks:
-                hook.xml_downloaded(self.pkey)
+            HookRunner.execute_xml_downloaded(self.pkey)
             return xml
 
     def _parse_subtypes(self, xml):

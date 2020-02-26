@@ -7,8 +7,8 @@ import re
 import shutil
 import tempfile
 
-import pydov
 from pydov.util.dovutil import get_dov_xml
+from pydov.util.hooks import HookRunner
 
 
 class AbstractCache(object):
@@ -29,8 +29,7 @@ class AbstractCache(object):
 
         """
         xml = get_dov_xml(url)
-        for hook in pydov.hooks:
-            hook.xml_downloaded(url.rstrip('.xml'))
+        HookRunner.execute_xml_downloaded(url.rstrip('.xml'))
         return xml
 
     def _emit_cache_hit(self, url):
@@ -42,8 +41,7 @@ class AbstractCache(object):
             Permanent URL to a DOV object.
 
         """
-        for hook in pydov.hooks:
-            hook.xml_cache_hit(url.rstrip('.xml'))
+        HookRunner.execute_xml_cache_hit(url.rstrip('.xml'))
 
     def get(self, url):
         """Get the XML data for the DOV object referenced by the given URL.
@@ -267,10 +265,20 @@ class AbstractFileCache(AbstractCache):
         """
         datatype, key = self._get_type_key_from_url(url)
 
+        data = HookRunner.execute_inject_xml_response(url)
+
+        if data is not None:
+            HookRunner.execute_xml_received(url, data)
+            return data
+
         if self._is_valid(datatype, key):
             try:
                 self._emit_cache_hit(url)
-                return self._load(datatype, key).encode('utf-8')
+                data = self._load(datatype, key).encode('utf-8')
+
+                HookRunner.execute_xml_received(url, data)
+                return data
+
             except Exception:
                 pass
 

@@ -23,6 +23,7 @@ from pydov.util.errors import (
     InvalidFieldError,
     WfsGetFeatureError,
 )
+from pydov.util.hooks import HookRunner
 
 
 class AbstractCommon(object):
@@ -117,8 +118,24 @@ class AbstractSearch(AbstractCommon):
         to all subclasses and instances.
         """
         if AbstractSearch.__wfs is None:
-            AbstractSearch.__wfs = WebFeatureService(
-                url=build_dov_url('geoserver/wfs'), version="1.1.0")
+
+            capabilities = HookRunner.execute_inject_meta_response(
+                build_dov_url('geoserver/wfs') + '?version=1.1.0'
+            )
+
+            if capabilities is None:
+                AbstractSearch.__wfs = WebFeatureService(
+                    url=build_dov_url('geoserver/wfs'), version="1.1.0")
+            else:
+                AbstractSearch.__wfs = WebFeatureService(
+                    url=build_dov_url('geoserver/wfs'), version="1.1.0",
+                    xml=capabilities)
+
+            HookRunner.execute_meta_received(
+                build_dov_url('geoserver/wfs') + '?version=1.1.0',
+                etree.tostring(AbstractSearch.__wfs._capabilities,
+                               encoding='utf8')
+            )
 
     def _init_namespace(self):
         """Initialise the WFS namespace associated with the layer.
@@ -529,7 +546,7 @@ class AbstractSearch(AbstractCommon):
 
         Returns
         -------
-        bytes
+        wfs_response, wfs_getfeature_request : bytes, etree.Element
             Response of the WFS service.
 
         """
@@ -544,13 +561,18 @@ class AbstractSearch(AbstractCommon):
             propertyname=propertyname
         )
 
-        for hook in pydov.hooks:
-            hook.wfs_search_init(typename)
+        HookRunner.execute_wfs_search_init(typename)
+
+        tree = HookRunner.execute_inject_wfs_getfeature_response(
+            wfs_getfeature_xml)
+
+        if tree is not None:
+            return tree, wfs_getfeature_xml
 
         return owsutil.wfs_get_feature(
             baseurl=wfs.url,
             get_feature_request=wfs_getfeature_xml
-        )
+        ), wfs_getfeature_xml
 
     def _search(self, location=None, query=None, return_fields=None,
                 sort_by=None, max_features=None, extra_wfs_fields=[]):
@@ -646,7 +668,7 @@ class AbstractSearch(AbstractCommon):
 
             sort_by = etree.tostring(sort_by_xml, encoding='unicode')
 
-        fts = self._get_remote_wfs_feature(
+        fts, getfeature = self._get_remote_wfs_feature(
             wfs=self.__wfs,
             typename=self._layer,
             location=location,
@@ -668,8 +690,8 @@ class AbstractSearch(AbstractCommon):
                 'Reached the limit of {:d} returned features. Please split up '
                 'the query to ensure getting all results.'.format(10000))
 
-        for hook in pydov.hooks:
-            hook.wfs_search_result(int(tree.get('numberOfFeatures')))
+        HookRunner.execute_wfs_search_result(int(tree.get('numberOfFeatures')))
+        HookRunner.execute_wfs_search_result_received(getfeature, tree)
 
         return tree
 

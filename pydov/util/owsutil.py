@@ -19,6 +19,7 @@ from .errors import (
     MetadataNotFoundError,
     FeatureCatalogueNotFoundError,
 )
+from .hooks import HookRunner
 
 
 def __get_namespaces():
@@ -466,7 +467,13 @@ def get_url(url):
         Response containing the result of the GET request.
 
     """
+    response = HookRunner.execute_inject_meta_response(url)
 
-    request = pydov.session.get(url, timeout=pydov.request_timeout)
-    request.encoding = 'utf-8'
-    return request.text.encode('utf8')
+    if response is None:
+        request = pydov.session.get(url, timeout=pydov.request_timeout)
+        request.encoding = 'utf-8'
+        response = request.text.encode('utf8')
+
+    HookRunner.execute_meta_received(url, response)
+
+    return response

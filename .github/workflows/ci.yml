@@ -30,6 +30,8 @@ jobs:
       - uses: "actions/setup-python@v1"
         with:
           python-version: "${{ matrix.python-version }}"
+      - if: matrix.os == 'ubuntu-latest'
+        run: sudo apt install pandoc
       - name: "Install dependencies"
         run: |
           set -xe

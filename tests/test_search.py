@@ -416,7 +416,7 @@ def test_get_description(mp_wfs, objectsearch):
     """
     description = objectsearch.get_description()
 
-    assert type(description) is str
+    assert isinstance(description, str)
     assert len(description) > 0
 
 

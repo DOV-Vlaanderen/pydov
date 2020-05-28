@@ -1,31 +1,14 @@
 """Module grouping tests for the interpretaties search module."""
-import pandas as pd
 import numpy as np
+import pandas as pd
 import pytest
+from owslib.fes import PropertyIsEqualTo
 from pandas import DataFrame
 
 import pydov
-from owslib.fes import PropertyIsEqualTo
 from pydov.search.interpretaties import QuartairStratigrafieSearch
 from pydov.types.interpretaties import QuartairStratigrafie
-from tests.abstract import (
-    AbstractTestSearch,
-)
-
-from tests.test_search import (
-    mp_wfs,
-    wfs,
-    mp_get_schema,
-    mp_remote_md,
-    mp_remote_fc,
-    mp_remote_describefeaturetype,
-    mp_remote_wfs_feature,
-    mp_dov_xml,
-    mp_dov_xml_broken,
-    mp_remote_xsd,
-    wfs_getfeature,
-    wfs_feature,
-)
+from tests.abstract import AbstractTestSearch
 
 location_md_metadata = \
     'tests/data/types/interpretaties/quartaire_stratigrafie/md_metadata.xml'

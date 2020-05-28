@@ -2,47 +2,25 @@
 import datetime
 import gzip
 import os
-
-import pandas as pd
 import time
 
+import pandas as pd
 import pytest
-
 from owslib.fes import PropertyIsEqualTo
+
 from pydov.search.boring import BoringSearch
 from pydov.search.interpretaties import LithologischeBeschrijvingenSearch
 from pydov.util.dovutil import build_dov_url
 from pydov.util.errors import XmlParseWarning
-
-from tests.abstract import (
-    service_ok,
-)
-
-from tests.test_search import (
-    mp_wfs,
-    wfs,
-    mp_get_schema,
-    mp_remote_describefeaturetype,
-    mp_remote_md,
-    mp_remote_fc,
-    mp_remote_wfs_feature,
-    mp_dov_xml
-)
+from tests.abstract import service_ok
 
 from tests.test_search_itp_lithologischebeschrijvingen import (
-    location_wfs_describefeaturetype,
-    location_md_metadata,
-    location_fc_featurecatalogue,
-    location_wfs_getfeature
-)
+    location_fc_featurecatalogue, location_md_metadata,
+    location_wfs_describefeaturetype, location_wfs_getfeature)
+from tests.test_util_caching import gziptext_cache, nocache, plaintext_cache
 
 location_dov_xml = 'tests/data/encoding/invalidcharacters.xml'
 
-from tests.test_util_caching import (
-    plaintext_cache,
-    gziptext_cache,
-    nocache,
-)
 
 
 class TestEncoding(object):

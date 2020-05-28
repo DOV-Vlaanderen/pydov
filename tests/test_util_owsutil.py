@@ -2,43 +2,20 @@
 import copy
 
 import pytest
-
 from owslib.etree import etree
-from owslib.fes import (
-    PropertyIsEqualTo,
-    FilterRequest,
-    SortBy,
-    SortProperty,
-)
+from owslib.fes import FilterRequest, PropertyIsEqualTo, SortBy, SortProperty
 from owslib.iso import MD_Metadata
 from owslib.util import nspath_eval
+
 from pydov.util import owsutil
 from pydov.util.dovutil import build_dov_url
-from pydov.util.errors import (
-    MetadataNotFoundError,
-    FeatureCatalogueNotFoundError,
-)
-from pydov.util.location import (
-    Within,
-    Box,
-)
+from pydov.util.errors import (FeatureCatalogueNotFoundError,
+                               MetadataNotFoundError)
+from pydov.util.location import Box, Within
 from tests.abstract import clean_xml
-
-from tests.test_search_boring import (
-    md_metadata,
-    mp_remote_md,
-    mp_remote_describefeaturetype,
-    mp_remote_fc,
-    location_md_metadata,
-    location_fc_featurecatalogue,
-    location_wfs_describefeaturetype,
-)
-
-from tests.test_search import (
-    wfs,
-    mp_wfs,
-    mp_remote_fc_notfound
-)
+from tests.test_search_boring import (location_fc_featurecatalogue,
+                                      location_md_metadata,
+                                      location_wfs_describefeaturetype)
 
 
 class TestOwsutil(object):
@@ -61,7 +38,7 @@ class TestOwsutil(object):
 
     def test_get_csw_base_url_nometadataurls(self, wfs):
         """Test the owsutil.get_csw_base_url method for a layer without
-        metdata urls.
+        metadata urls.
 
         Test whether a MetadataNotFoundError is raised.
 

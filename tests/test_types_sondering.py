@@ -3,15 +3,10 @@
 from pydov.types.sondering import Sondering
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes
+from tests.test_search_sondering import (location_dov_xml,
+                                         location_wfs_feature,
+                                         location_wfs_getfeature)
 
-from tests.test_search_sondering import (
-    wfs_getfeature,
-    wfs_feature,
-    mp_dov_xml,
-    location_wfs_getfeature,
-    location_wfs_feature,
-    location_dov_xml,
-)
 
 class TestSondering(AbstractTestTypes):
     """Class grouping tests for the pydov.types.sondering.Sondering class."""
@@ -125,4 +120,3 @@ class TestSondering(AbstractTestTypes):
 
         """
         return 'onbestaand'
-

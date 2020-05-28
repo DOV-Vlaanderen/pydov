@@ -2,26 +2,10 @@
 import datetime
 
 from owslib.fes import PropertyIsEqualTo
+
 from pydov.search.grondwatermonster import GrondwaterMonsterSearch
 from pydov.types.grondwatermonster import GrondwaterMonster
-from tests.abstract import (
-    AbstractTestSearch,
-)
-
-from tests.test_search import (
-    mp_wfs,
-    wfs,
-    mp_get_schema,
-    mp_remote_md,
-    mp_remote_fc,
-    mp_remote_describefeaturetype,
-    mp_remote_wfs_feature,
-    mp_remote_xsd,
-    mp_dov_xml,
-    mp_dov_xml_broken,
-    wfs_getfeature,
-    wfs_feature,
-)
+from tests.abstract import AbstractTestSearch
 
 location_md_metadata = 'tests/data/types/grondwatermonster/md_metadata.xml'
 location_fc_featurecatalogue = \
@@ -185,4 +169,3 @@ class TestGrondwaterMonsterSearch(AbstractTestSearch):
 
         # specific test for the Zulu time wfs 1.1.0 issue
         assert df.datum_monstername.sort_values()[0] == datetime.date(2006, 5, 19)
-

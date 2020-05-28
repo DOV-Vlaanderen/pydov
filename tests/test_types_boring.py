@@ -3,15 +3,9 @@
 from pydov.types.boring import Boring
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes
+from tests.test_search_boring import (location_dov_xml, location_wfs_feature,
+                                      location_wfs_getfeature)
 
-from tests.test_search_boring import (
-    wfs_getfeature,
-    wfs_feature,
-    mp_dov_xml,
-    location_wfs_getfeature,
-    location_wfs_feature,
-    location_dov_xml,
-)
 
 class TestBoring(AbstractTestTypes):
     """Class grouping tests for the pydov.types.boring.Boring class."""
@@ -124,4 +118,3 @@ class TestBoring(AbstractTestTypes):
 
         """
         return 'onbestaand'
-

@@ -2,15 +2,9 @@
 from pydov.types.grondwaterfilter import GrondwaterFilter
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes
-
-from tests.test_search_grondwaterfilter import (
-    wfs_getfeature,
-    wfs_feature,
-    mp_dov_xml,
-    location_wfs_getfeature,
-    location_wfs_feature,
-    location_dov_xml,
-)
+from tests.test_search_grondwaterfilter import (location_dov_xml,
+                                                location_wfs_feature,
+                                                location_wfs_getfeature)
 
 
 class TestGrondwaterFilter(AbstractTestTypes):

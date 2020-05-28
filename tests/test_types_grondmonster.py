@@ -3,15 +3,10 @@
 from pydov.types.grondmonster import Grondmonster
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes
+from tests.test_search_grondmonster import (location_dov_xml,
+                                            location_wfs_feature,
+                                            location_wfs_getfeature)
 
-from tests.test_search_grondmonster import (
-    wfs_getfeature,
-    wfs_feature,
-    mp_dov_xml,
-    location_wfs_getfeature,
-    location_wfs_feature,
-    location_dov_xml,
-)
 
 class TestGrondmonster(AbstractTestTypes):
     """Class grouping tests for the pydov.types.grondmonster.Grondmonster class."""
@@ -128,4 +123,3 @@ class TestGrondmonster(AbstractTestTypes):
 
         """
         return 'onbestaand'
-

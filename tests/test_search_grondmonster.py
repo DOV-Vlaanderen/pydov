@@ -2,26 +2,10 @@
 import datetime
 
 from owslib.fes import PropertyIsEqualTo
+
 from pydov.search.grondmonster import GrondmonsterSearch
 from pydov.types.grondmonster import Grondmonster
-from tests.abstract import (
-    AbstractTestSearch,
-)
-
-from tests.test_search import (
-    mp_wfs,
-    wfs,
-    mp_get_schema,
-    mp_remote_md,
-    mp_remote_fc,
-    mp_remote_describefeaturetype,
-    mp_remote_wfs_feature,
-    mp_remote_xsd,
-    mp_dov_xml,
-    mp_dov_xml_broken,
-    wfs_getfeature,
-    wfs_feature,
-)
+from tests.abstract import AbstractTestSearch
 
 location_md_metadata = 'tests/data/types/grondmonster/md_metadata.xml'
 location_fc_featurecatalogue = \

@@ -50,11 +50,16 @@ Once you have a copy of the source, you can install it with:
 .. _tarball: https://github.com/DOV-Vlaanderen/pydov/tarball/master
 
 
+.. _devinstallation:
+
 For package contributors
 ------------------------
 
-Noticed a bug, want to improve the documentation? Great! Have a look at the :ref:`contributing guidelines <contribute>`.
-Want to dive into the code directly on your local machine?
+Noticed a bug, want to improve the documentation? Great! Want to dive into the code directly on your local machine? Make sure to
+have the development environment setup:
+
+- Fork the `project repository <https://github.com/DOV-Vlaanderen/pydov>`_ by clicking on the 'Fork' button
+  near the top right of the page. This creates a copy of the code under your personal GitHub user account.
 
 - Clone the `Github repo`_:
 
@@ -85,6 +90,8 @@ Want to dive into the code directly on your local machine?
 .. note::
     If the :code:`sphinx-build` (or :code:`make html`) CLI command returns an error, try to reinstall sphinx separately in the environment using
     :code:`pip install -U sphinx`.
+
+Have a look at the :ref:`development guidelines <dev-guidelines>` to see ow we develop the pydov package and get more information on the workflow.
 
 .. _conda: https://docs.conda.io/en/latest/miniconda.html
 .. _virtualenv: https://virtualenv.pypa.io/en/latest/

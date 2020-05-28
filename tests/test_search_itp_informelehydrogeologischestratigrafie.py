@@ -21,6 +21,7 @@ from tests.abstract import (
 from tests.test_search import (
     mp_wfs,
     wfs,
+    mp_get_schema,
     mp_remote_md,
     mp_remote_fc,
     mp_remote_describefeaturetype,
@@ -176,7 +177,8 @@ class TestInformeleHydrogeologischeStratigrafieSearch(AbstractTestSearch):
                 'diepte_laag_van', 'diepte_laag_tot',
                 'beschrijving']
 
-    def test_search_customreturnfields(self, mp_remote_describefeaturetype,
+    def test_search_customreturnfields(self, mp_get_schema,
+                                       mp_remote_describefeaturetype,
                                        mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with custom return fields.
 
@@ -184,6 +186,8 @@ class TestInformeleHydrogeologischeStratigrafieSearch(AbstractTestSearch):
 
         Parameters
         ----------
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType .
         mp_remote_wfs_feature : pytest.fixture
@@ -204,7 +208,8 @@ class TestInformeleHydrogeologischeStratigrafieSearch(AbstractTestSearch):
 
         assert not pd.isnull(df.pkey_boring[0])
 
-    def test_search_xml_resolve(self, mp_remote_describefeaturetype,
+    def test_search_xml_resolve(self, mp_get_schema,
+                                mp_remote_describefeaturetype,
                                 mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with return fields from XML but not from a
         subtype.
@@ -213,6 +218,8 @@ class TestInformeleHydrogeologischeStratigrafieSearch(AbstractTestSearch):
 
         Parameters
         ----------
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_wfs_feature : pytest.fixture

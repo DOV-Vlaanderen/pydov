@@ -7,8 +7,6 @@ Filter Encoding 1.1 and GML 3.1.1.
 """
 import os
 
-from numpy.compat import unicode
-
 from owslib.etree import etree
 from owslib.fes import (
     Or,
@@ -282,7 +280,7 @@ class GmlObject(AbstractLocation):
             string representation.
 
         """
-        if type(gml_element) in (str, unicode):
+        if type(gml_element) is str:
             self.element = etree.fromstring(gml_element.encode('utf8'))
         elif type(gml_element) is bytes:
             self.element = etree.fromstring(gml_element)
@@ -564,7 +562,7 @@ class GmlFilter(AbstractLocationFilter):
         """
         gml_tree = None
         try:
-            if type(self.gml) in (str, unicode):
+            if type(self.gml) is str:
                 gml_tree = etree.fromstring(self.gml.encode('utf8'))
             elif type(self.gml) is bytes:
                 gml_tree = etree.fromstring(self.gml)

@@ -9,15 +9,12 @@ from collections import OrderedDict
 import pandas as pd
 import pytest
 import requests
-from numpy.compat import (
-    unicode,
-    long,
-)
 from pandas import DataFrame
 from pandas.api.types import (
     is_int64_dtype, is_object_dtype,
     is_bool_dtype, is_float_dtype)
 
+import pydov
 from owslib.fes import (
     PropertyIsEqualTo,
     SortBy,
@@ -55,7 +52,8 @@ def service_ok(timeout=5):
     """
     def check_url(url, timeout):
         try:
-            ok = requests.get(url, timeout=timeout).ok
+            ok = pydov.session.head(
+                url, allow_redirects=True, timeout=timeout).ok
         except requests.exceptions.ReadTimeout:
             ok = False
         except requests.exceptions.ConnectTimeout:
@@ -221,8 +219,9 @@ class AbstractTestSearch(object):
         datatype = self.get_type()
         self.get_search_object().__class__(objecttype=datatype)
 
-    def test_get_fields(self, mp_wfs, mp_remote_describefeaturetype,
-                        mp_remote_md, mp_remote_fc, mp_remote_xsd):
+    def test_get_fields(self, mp_wfs, mp_get_schema,
+                        mp_remote_describefeaturetype, mp_remote_md,
+                        mp_remote_fc, mp_remote_xsd):
         """Test the get_fields method.
 
         Test whether the returned fields match the format specified
@@ -232,6 +231,8 @@ class AbstractTestSearch(object):
         ----------
         mp_wfs : pytest.fixture
             Monkeypatch the call to the remote GetCapabilities request.
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_md : pytest.fixture
@@ -245,20 +246,20 @@ class AbstractTestSearch(object):
         assert type(fields) is dict
 
         for field in fields:
-            assert type(field) in (str, unicode)
+            assert type(field) is str
 
             f = fields[field]
             assert type(f) is dict
 
             assert 'name' in f
-            assert type(f['name']) in (str, unicode)
+            assert type(f['name']) is str
             assert f['name'] == field
 
             assert 'definition' in f
-            assert type(f['name']) in (str, unicode)
+            assert type(f['name']) is str
 
             assert 'type' in f
-            assert type(f['type']) in (str, unicode)
+            assert type(f['type']) is str
             assert f['type'] in ['string', 'float', 'integer', 'date',
                                  'datetime', 'boolean']
 
@@ -280,11 +281,11 @@ class AbstractTestSearch(object):
                 assert type(f['values']) is dict
 
                 for v in f['values'].keys():
-                    assert type(f['values'][v]) in (str, unicode) or f[
+                    assert type(f['values'][v]) is str or f[
                         'values'][v] is None
 
                     if f['type'] == 'string':
-                        assert type(v) in (str, unicode)
+                        assert type(v) is str
                     elif f['type'] == 'float':
                         assert type(v) is float
                     elif f['type'] == 'integer':
@@ -297,7 +298,8 @@ class AbstractTestSearch(object):
                 assert sorted(f.keys()) == ['cost', 'definition', 'name',
                                             'notnull', 'query', 'type']
 
-    def test_search_both_location_query(self, mp_remote_describefeaturetype,
+    def test_search_both_location_query(self, mp_get_schema,
+                                        mp_remote_describefeaturetype,
                                         mp_remote_wfs_feature):
         """Test the search method providing both a location and a query.
 
@@ -305,6 +307,8 @@ class AbstractTestSearch(object):
 
         Parameters
         ----------
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_wfs_feature : pytest.fixture
@@ -318,8 +322,9 @@ class AbstractTestSearch(object):
 
         assert type(df) is DataFrame
 
-    def test_search(self, mp_wfs, mp_remote_describefeaturetype, mp_remote_md,
-                    mp_remote_fc, mp_remote_wfs_feature, mp_dov_xml):
+    def test_search(self, mp_wfs, mp_get_schema, mp_remote_describefeaturetype,
+                    mp_remote_md, mp_remote_fc, mp_remote_wfs_feature,
+                    mp_dov_xml):
         """Test the search method with only the query parameter.
 
         Test whether the result is correct.
@@ -328,6 +333,8 @@ class AbstractTestSearch(object):
         ----------
         mp_wfs : pytest.fixture
             Monkeypatch the call to the remote GetCapabilities request.
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_md : pytest.fixture
@@ -376,12 +383,11 @@ class AbstractTestSearch(object):
 
             if len(datatypes) > 0:
                 if field_datatype == 'string':
-                    assert (str in datatypes or unicode in datatypes)
+                    assert (str in datatypes)
                 elif field_datatype == 'float':
                     assert float in datatypes
                 elif field_datatype == 'integer':
-                    # in Python2 Panda's int64 dtype is translated into 'long'
-                    assert (int in datatypes or long in datatypes)
+                    assert (int in datatypes)
                 elif field_datatype == 'date':
                     assert datetime.date in datatypes
                 elif field_datatype == 'boolean':
@@ -508,13 +514,16 @@ class AbstractTestSearch(object):
         with pytest.raises(InvalidFieldError):
             self.get_search_object().search(query=query)
 
-    def test_search_extrareturnfields(self, mp_remote_describefeaturetype,
+    def test_search_extrareturnfields(self, mp_get_schema,
+                                      mp_remote_describefeaturetype,
                                       mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with the query parameter and an extra WFS
         field as return field.
 
         Parameters
         ----------
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_wfs_feature : pytest.fixture
@@ -531,7 +540,8 @@ class AbstractTestSearch(object):
 
         assert list(df) == list(self.get_valid_returnfields_extra())
 
-    def test_search_sortby_valid(self, mp_remote_describefeaturetype,
+    def test_search_sortby_valid(self, mp_get_schema,
+                                 mp_remote_describefeaturetype,
                                  mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with the query parameter and the sort_by
         parameter with a valid sort field.
@@ -540,6 +550,8 @@ class AbstractTestSearch(object):
 
         Parameters
         ----------
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_wfs_feature : pytest.fixture
@@ -555,7 +567,8 @@ class AbstractTestSearch(object):
 
         assert type(df) is DataFrame
 
-    def test_search_sortby_invalid(self, mp_remote_describefeaturetype,
+    def test_search_sortby_invalid(self, mp_get_schema,
+                                   mp_remote_describefeaturetype,
                                    mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with the query parameter and the sort_by
         parameter with an invalid sort field.
@@ -564,6 +577,8 @@ class AbstractTestSearch(object):
 
         Parameters
         ----------
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_wfs_feature : pytest.fixture
@@ -578,7 +593,8 @@ class AbstractTestSearch(object):
                 sort_by=SortBy([SortProperty(
                     self.get_xml_field())]))
 
-    def test_search_xml_noresolve(self, mp_remote_describefeaturetype,
+    def test_search_xml_noresolve(self, mp_get_schema,
+                                  mp_remote_describefeaturetype,
                                   mp_remote_wfs_feature, mp_dov_xml_broken):
         """Test the search method with return fields from WFS only.
 
@@ -586,6 +602,8 @@ class AbstractTestSearch(object):
 
         Parameters
         ----------
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_wfs_feature : pytest.fixture
@@ -598,12 +616,15 @@ class AbstractTestSearch(object):
             query=self.get_valid_query_single(),
             return_fields=self.get_valid_returnfields_extra())
 
-    def test_search_propertyinlist(self, mp_remote_describefeaturetype,
+    def test_search_propertyinlist(self, mp_get_schema,
+                                   mp_remote_describefeaturetype,
                                    mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with a PropertyInList query.
 
         Parameters
         ----------
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_wfs_feature : pytest.fixture
@@ -615,12 +636,14 @@ class AbstractTestSearch(object):
         self.get_search_object().search(
             query=PropertyInList(self.get_wfs_field(), ['a', 'b']))
 
-    def test_search_join(self, mp_remote_describefeaturetype,
+    def test_search_join(self, mp_get_schema, mp_remote_describefeaturetype,
                          mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with a Join query.
 
         Parameters
         ----------
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_wfs_feature : pytest.fixture
@@ -899,24 +922,24 @@ class AbstractTestTypes(object):
         assert isinstance(fields, OrderedDict)
 
         for f in fields.keys():
-            assert type(f) in (str, unicode)
+            assert type(f) is str
 
             field = fields[f]
             assert isinstance(field, AbstractField)
 
             assert 'name' in field
-            assert type(field['name']) in (str, unicode)
+            assert type(field['name']) is str
             assert field['name'] == f
 
             assert 'source' in field
-            assert type(field['source']) in (str, unicode)
+            assert type(field['source']) is str
             assert field['source'] in ('wfs', 'xml')
 
             assert 'sourcefield' in field
-            assert type(field['sourcefield']) in (str, unicode)
+            assert type(field['sourcefield']) is str
 
             assert 'type' in field
-            assert type(field['type']) in (str, unicode)
+            assert type(field['type']) is str
             assert field['type'] in ['string', 'float', 'integer', 'date',
                                      'datetime', 'boolean']
 
@@ -930,7 +953,7 @@ class AbstractTestTypes(object):
                         'name', 'source', 'sourcefield', 'type']
             elif field['source'] == 'xml':
                 assert 'definition' in field
-                assert type(field['definition']) in (str, unicode)
+                assert type(field['definition']) is str
 
                 assert 'notnull' in field
                 assert type(field['notnull']) is bool
@@ -1009,7 +1032,7 @@ class AbstractTestTypes(object):
 
             for value, field in zip(record, fields):
                 if field['type'] == 'string':
-                    assert type(value) in (str, unicode) or np.isnan(value)
+                    assert type(value) is str or np.isnan(value)
                 elif field['type'] == 'float':
                     assert type(value) is float or np.isnan(value)
                 elif field['type'] == 'integer':

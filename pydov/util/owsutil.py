@@ -4,36 +4,22 @@ import warnings
 
 import pydov
 
-from owslib.feature.schema import (
-    _get_describefeaturetype_url,
-    _get_elements,
-    XS_NAMESPACE,
-    GML_NAMESPACES
-)
 from owslib.fes import (
     UnaryLogicOpType,
     BinaryLogicOpType,
 )
 
-try:
-    # Python3
-    from urllib.parse import urlparse
-except ImportError:
-    # Python2
-    from urlparse import urlparse
+from urllib.parse import urlparse
 
 from owslib.etree import etree
-from owslib.iso import MD_Metadata
 from owslib.namespaces import Namespaces
-from owslib.util import (
-    nspath_eval,
-    findall,
-)
+from owslib.util import nspath_eval
 
 from .errors import (
     MetadataNotFoundError,
     FeatureCatalogueNotFoundError,
 )
+from .hooks import HookRunner
 
 
 def __get_namespaces():
@@ -47,24 +33,6 @@ def __get_namespaces():
 
 
 __namespaces = __get_namespaces()
-
-
-def __get_remote_md(md_url):
-    """Request the remote metadata by calling the `md_url` and
-    returning the response.
-
-    Parameters
-    ----------
-    md_url : str
-        URL to the remote metadata.
-
-    Returns
-    -------
-    bytes
-        Response containing the remote metadata.
-
-    """
-    return get_url(md_url)
 
 
 def __get_remote_fc(fc_url):
@@ -125,21 +93,15 @@ def get_remote_metadata(contentmetadata):
         If the `contentmetadata` has no valid metadata URL associated with it.
 
     """
-    md_url = None
-    for md in contentmetadata.metadataUrls:
-        if md.get('url', None) is not None \
-                and 'getrecordbyid' in md.get('url', "").lower():
-            md_url = md.get('url')
-
-    if md_url is None:
-        raise MetadataNotFoundError
-
-    content = __get_remote_md(md_url)
-    doc = etree.fromstring(content)
-
     with warnings.catch_warnings():
         warnings.filterwarnings("ignore", category=FutureWarning)
-        return MD_Metadata(doc)
+        contentmetadata.parse_remote_metadata(pydov.request_timeout)
+
+    for remote_md in contentmetadata.metadataUrls:
+        if 'metadata' in remote_md:
+            return remote_md['metadata']
+
+    raise MetadataNotFoundError
 
 
 def get_csw_base_url(contentmetadata):
@@ -197,20 +159,18 @@ def get_featurecatalogue_uuid(md_metadata):
         UUID could not be retrieved.
 
     """
-    tree = etree.fromstring(md_metadata.xml)
+    fc_uuid = None
 
-    citation = tree.find(nspath_eval(
-        'gmd:MD_Metadata/gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/'
-        'gmd:featureCatalogueCitation', __namespaces))
+    contentinfo = md_metadata.contentinfo[0] if \
+        len(md_metadata.contentinfo) > 0 else None
+    if contentinfo is not None:
+        fc_uuid = contentinfo.featurecatalogues[0] if \
+            len(contentinfo.featurecatalogues) > 0 else None
 
-    if citation is None:
+    if fc_uuid is None:
         raise FeatureCatalogueNotFoundError
-
-    uuid = citation.attrib.get('uuidref', None)
-    if uuid is None:
-        raise FeatureCatalogueNotFoundError
-
-    return uuid
+    else:
+        return fc_uuid
 
 
 def get_remote_featurecatalogue(csw_url, fc_uuid):
@@ -346,107 +306,6 @@ def get_namespace(wfs, layer):
     tree = etree.fromstring(schema)
     namespace = tree.attrib.get('targetNamespace', None)
     return namespace
-
-
-def _construct_schema(elements, nsmap):
-    """Copy the owslib.feature.schema.get_schema method to be able to get
-    the geometry column name.
-
-    Parameters
-    ----------
-    elements : list<Element>
-        List of elements
-    nsmap : dict
-        Namespace map
-
-    Returns
-    -------
-    dict
-        Schema
-
-    """
-    schema = {
-        'properties': {},
-        'geometry': None
-    }
-
-    schema_key = None
-    gml_key = None
-
-    # if nsmap is defined, use it
-    if nsmap:
-        for key in nsmap:
-            if nsmap[key] == XS_NAMESPACE:
-                schema_key = key
-            if nsmap[key] in GML_NAMESPACES:
-                gml_key = key
-    # if no nsmap is defined, we have to guess
-    else:
-        gml_key = 'gml'
-        schema_key = 'xsd'
-
-    mappings = {
-        'PointPropertyType': 'Point',
-        'PolygonPropertyType': 'Polygon',
-        'LineStringPropertyType': 'LineString',
-        'MultiPointPropertyType': 'MultiPoint',
-        'MultiLineStringPropertyType': 'MultiLineString',
-        'MultiPolygonPropertyType': 'MultiPolygon',
-        'MultiGeometryPropertyType': 'MultiGeometry',
-        'GeometryPropertyType': 'GeometryCollection',
-        'SurfacePropertyType': '3D Polygon',
-        'MultiSurfacePropertyType': '3D MultiPolygon'
-    }
-
-    for element in elements:
-        data_type = element.attrib['type'].replace(gml_key + ':', '')
-        name = element.attrib['name']
-
-        if data_type in mappings:
-            schema['geometry'] = mappings[data_type]
-            schema['geometry_column'] = name
-        else:
-            schema['properties'][name] = data_type.replace(schema_key+':', '')
-
-    if schema['properties'] or schema['geometry']:
-        return schema
-    else:
-        return None
-
-
-def get_remote_schema(url, typename, version='1.0.0'):
-    """Copy the owslib.feature.schema.get_schema method to be able to
-    monkeypatch the request in tests.
-
-    Parameters
-    ----------
-    url : str
-        Base URL of the WFS service.
-    typename : str
-        Typename of the feature type to get the schema of.
-    version : str
-        Version of WFS to use. Defaults to 1.0.0
-
-    Returns
-    -------
-    dict
-        Schema of the given WFS layer.
-
-    """
-    url = _get_describefeaturetype_url(url, version, typename)
-    res = __get_remote_describefeaturetype(url)
-    root = etree.fromstring(res)
-
-    if ':' in typename:
-        typename = typename.split(':')[1]
-    type_element = findall(root, '{{{}}}element'.format(XS_NAMESPACE),
-                           attribute_name='name', attribute_value=typename)[0]
-    complex_type = type_element.attrib['type'].split(":")[1]
-    elements = _get_elements(complex_type, root)
-    nsmap = None
-    if hasattr(root, 'nsmap'):
-        nsmap = root.nsmap
-    return _construct_schema(elements, nsmap)
 
 
 def set_geometry_column(location, geometry_column):
@@ -608,7 +467,13 @@ def get_url(url):
         Response containing the result of the GET request.
 
     """
+    response = HookRunner.execute_inject_meta_response(url)
 
-    request = pydov.session.get(url, timeout=pydov.request_timeout)
-    request.encoding = 'utf-8'
-    return request.text.encode('utf8')
+    if response is None:
+        request = pydov.session.get(url, timeout=pydov.request_timeout)
+        request.encoding = 'utf-8'
+        response = request.text.encode('utf8')
+
+    HookRunner.execute_meta_received(url, response)
+
+    return response

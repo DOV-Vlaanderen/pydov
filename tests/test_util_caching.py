@@ -3,7 +3,6 @@ import datetime
 import gzip
 import os
 import tempfile
-from io import open
 
 import time
 

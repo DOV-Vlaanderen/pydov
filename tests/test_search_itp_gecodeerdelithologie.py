@@ -15,6 +15,7 @@ from tests.abstract import (
 from tests.test_search import (
     mp_wfs,
     wfs,
+    mp_get_schema,
     mp_remote_md,
     mp_remote_fc,
     mp_remote_describefeaturetype,
@@ -165,13 +166,15 @@ class TestGecodeerdeLithologieSearch(AbstractTestSearch):
                 'betrouwbaarheid_interpretatie', 'x', 'y',
                 'diepte_laag_van', 'diepte_laag_tot',
                 'hoofdnaam1_grondsoort', 'hoofdnaam2_grondsoort',
-                'bijmenging1_plaatselijk', 'bijmenging1_hoeveelheid', 'bijmenging1_grondsoort',
-                'bijmenging2_plaatselijk', 'bijmenging2_hoeveelheid', 'bijmenging2_grondsoort',
-                'bijmenging3_plaatselijk', 'bijmenging3_hoeveelheid', 'bijmenging3_grondsoort']
+                'bijmenging1_plaatselijk', 'bijmenging1_hoeveelheid',
+                'bijmenging1_grondsoort', 'bijmenging2_plaatselijk',
+                'bijmenging2_hoeveelheid', 'bijmenging2_grondsoort',
+                'bijmenging3_plaatselijk', 'bijmenging3_hoeveelheid',
+                'bijmenging3_grondsoort']
 
-    def test_search_nan(self, mp_wfs, mp_remote_describefeaturetype,
-                        mp_remote_md, mp_remote_fc, mp_remote_wfs_feature,
-                        mp_dov_xml):
+    def test_search_nan(self, mp_wfs, mp_get_schema,
+                        mp_remote_describefeaturetype, mp_remote_md,
+                        mp_remote_fc, mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with only the query parameter.
 
         Test whether the result is correct.
@@ -180,6 +183,8 @@ class TestGecodeerdeLithologieSearch(AbstractTestSearch):
         ----------
         mp_wfs : pytest.fixture
             Monkeypatch the call to the remote GetCapabilities request.
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_md : pytest.fixture
@@ -195,7 +200,8 @@ class TestGecodeerdeLithologieSearch(AbstractTestSearch):
         df = self.get_search_object().search(
             query=self.get_valid_query_single())
 
-    def test_search_customreturnfields(self, mp_remote_describefeaturetype,
+    def test_search_customreturnfields(self, mp_get_schema,
+                                       mp_remote_describefeaturetype,
                                        mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with custom return fields.
 
@@ -203,6 +209,8 @@ class TestGecodeerdeLithologieSearch(AbstractTestSearch):
 
         Parameters
         ----------
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType .
         mp_remote_wfs_feature : pytest.fixture
@@ -221,7 +229,8 @@ class TestGecodeerdeLithologieSearch(AbstractTestSearch):
 
         assert not pd.isnull(df.pkey_boring[0])
 
-    def test_search_xml_resolve(self, mp_remote_describefeaturetype,
+    def test_search_xml_resolve(self, mp_get_schema,
+                                mp_remote_describefeaturetype,
                                 mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with return fields from XML but not from a
         subtype.
@@ -230,6 +239,8 @@ class TestGecodeerdeLithologieSearch(AbstractTestSearch):
 
         Parameters
         ----------
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_wfs_feature : pytest.fixture
@@ -244,7 +255,8 @@ class TestGecodeerdeLithologieSearch(AbstractTestSearch):
 
         assert df.diepte_laag_tot[0] == 4.
 
-    def test_search_multiple_return(self, mp_remote_describefeaturetype,
+    def test_search_multiple_return(self, mp_get_schema,
+                                    mp_remote_describefeaturetype,
                                     mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method returning multiple (sub)elements of the same subject.
 
@@ -252,6 +264,8 @@ class TestGecodeerdeLithologieSearch(AbstractTestSearch):
 
         Parameters
         ----------
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_wfs_feature : pytest.fixture

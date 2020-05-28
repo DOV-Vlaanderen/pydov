@@ -7,6 +7,7 @@ from pydov.util.dovutil import build_dov_url
 from tests.test_search import (
     mp_wfs,
     wfs,
+    mp_get_schema,
     mp_remote_md,
     mp_remote_fc,
     mp_remote_describefeaturetype,
@@ -32,7 +33,7 @@ location_dov_xml = \
 
 class TestSearchNoSubtype(object):
     def test_search_nosubtype(self, mp_wfs, mp_remote_md, mp_remote_fc,
-                              mp_remote_describefeaturetype,
+                              mp_get_schema, mp_remote_describefeaturetype,
                               mp_remote_wfs_feature, mp_remote_xsd,
                               mp_dov_xml):
         """Test the search method with a result containing no elements from
@@ -45,6 +46,8 @@ class TestSearchNoSubtype(object):
         ----------
         mp_wfs : pytest.fixture
             Monkeypatch the call to the remote GetCapabilities request.
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_md : pytest.fixture

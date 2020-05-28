@@ -2,7 +2,6 @@
 import copy
 
 import pytest
-from numpy.compat import unicode
 
 from owslib.etree import etree
 from owslib.fes import (
@@ -108,11 +107,10 @@ class TestOwsutil(object):
 
         """
         tree = etree.fromstring(md_metadata.xml)
-        root = tree.find('{http://www.isotc211.org/2005/gmd}MD_Metadata')
         for ci in tree.findall(
                 './/{http://www.isotc211.org/2005/gmd}contentInfo'):
-            root.remove(ci)
-        md_metadata.xml = etree.tostring(tree)
+            tree.remove(ci)
+        md_metadata = MD_Metadata(tree)
 
         with pytest.raises(FeatureCatalogueNotFoundError):
             owsutil.get_featurecatalogue_uuid(md_metadata)
@@ -132,12 +130,12 @@ class TestOwsutil(object):
         """
         tree = etree.fromstring(md_metadata.xml)
         for ci in tree.findall(nspath_eval(
-            'gmd:MD_Metadata/gmd:contentInfo/'
+            'gmd:contentInfo/'
             'gmd:MD_FeatureCatalogueDescription/'
             'gmd:featureCatalogueCitation',
             {'gmd': 'http://www.isotc211.org/2005/gmd'})):
             ci.attrib.pop('uuidref')
-        md_metadata.xml = etree.tostring(tree)
+        md_metadata = MD_Metadata(tree)
 
         with pytest.raises(FeatureCatalogueNotFoundError):
             owsutil.get_featurecatalogue_uuid(md_metadata)
@@ -179,7 +177,7 @@ class TestOwsutil(object):
         assert type(fc) is dict
 
         assert 'definition' in fc
-        assert type(fc['definition']) in (str, unicode)
+        assert type(fc['definition']) is str
 
         assert 'attributes' in fc
         assert type(fc['attributes']) is dict
@@ -190,7 +188,7 @@ class TestOwsutil(object):
                 assert type(attr) is dict
 
                 assert 'definition' in attr
-                assert type(attr['definition']) in (str, unicode)
+                assert type(attr['definition']) is str
 
                 assert 'values' in attr
 
@@ -198,8 +196,8 @@ class TestOwsutil(object):
                     assert type(attr['values']) is dict
 
                     for v in attr['values'].keys():
-                        assert type(v) in (str, unicode)
-                        assert type(attr['values'][v]) in (str, unicode) or \
+                        assert type(v) is str
+                        assert type(attr['values'][v]) is str or \
                                attr['values'][v] is None
                     assert len(attr['values'].keys()) == len(
                         set(attr['values'].keys()))
@@ -242,23 +240,6 @@ class TestOwsutil(object):
         """
         assert type(md_metadata) is MD_Metadata
 
-    def test_get_remote_metadata_nometadataurls(self, wfs):
-        """Test the owsutil.get_remote_metadata method when the WFS layer
-        missed metadata URLs.
-
-        Test whether a MetadataNotFoundError is raised.
-
-        Parameters
-        ----------
-        wfs : pytest.fixture returning owslib.wfs.WebFeatureService
-            WebFeatureService based on the local GetCapabilities.
-
-        """
-        contents = copy.deepcopy(wfs.contents)
-        contentmetadata = contents['dov-pub:Boringen']
-        contentmetadata.metadataUrls = []
-        with pytest.raises(MetadataNotFoundError):
-            owsutil.get_remote_metadata(contentmetadata)
 
     def test_wfs_build_getfeature_request_onlytypename(self):
         """Test the owsutil.wfs_build_getfeature_request method with only a
@@ -405,13 +386,7 @@ class TestOwsutil(object):
                                   literal='Herstappe')
         filter_request = FilterRequest()
         filter_request = filter_request.setConstraint(query)
-        try:
-            filter_request = etree.tostring(filter_request,
-                                            encoding='unicode')
-        except LookupError:
-            # Python2.7 without lxml uses 'utf-8' instead.
-            filter_request = etree.tostring(filter_request,
-                                            encoding='utf-8')
+        filter_request = etree.tostring(filter_request, encoding='unicode')
 
         xml = owsutil.wfs_build_getfeature_request(
             'dov-pub:Boringen', filter=filter_request)
@@ -438,13 +413,7 @@ class TestOwsutil(object):
                                   literal='Herstappe')
         filter_request = FilterRequest()
         filter_request = filter_request.setConstraint(query)
-        try:
-            filter_request = etree.tostring(filter_request,
-                                            encoding='unicode')
-        except LookupError:
-            # Python2.7 without lxml uses 'utf-8' instead.
-            filter_request = etree.tostring(filter_request,
-                                            encoding='utf-8')
+        filter_request = etree.tostring(filter_request, encoding='unicode')
 
         xml = owsutil.wfs_build_getfeature_request(
             'dov-pub:Boringen', filter=filter_request,
@@ -481,13 +450,7 @@ class TestOwsutil(object):
                                   literal='Herstappe')
         filter_request = FilterRequest()
         filter_request = filter_request.setConstraint(query)
-        try:
-            filter_request = etree.tostring(filter_request,
-                                            encoding='unicode')
-        except LookupError:
-            # Python2.7 without lxml uses 'utf-8' instead.
-            filter_request = etree.tostring(filter_request,
-                                            encoding='utf-8')
+        filter_request = etree.tostring(filter_request, encoding='unicode')
 
         xml = owsutil.wfs_build_getfeature_request(
             'dov-pub:Boringen', filter=filter_request,
@@ -522,11 +485,7 @@ class TestOwsutil(object):
         """
         sort_by = SortBy([SortProperty('diepte_tot_m', 'DESC')])
 
-        try:
-            sort_by = etree.tostring(sort_by.toXML(), encoding='unicode')
-        except LookupError:
-            # Python2.7 without lxml uses 'utf-8' instead.
-            sort_by = etree.tostring(sort_by.toXML(), encoding='utf-8')
+        sort_by = etree.tostring(sort_by.toXML(), encoding='unicode')
 
         xml = owsutil.wfs_build_getfeature_request(
             'dov-pub:Boringen', propertyname=['fiche', 'diepte_tot_m'],
@@ -554,11 +513,7 @@ class TestOwsutil(object):
         sort_by = SortBy([SortProperty('diepte_tot_m', 'DESC'),
                           SortProperty('datum_aanvang', 'ASC')])
 
-        try:
-            sort_by = etree.tostring(sort_by.toXML(), encoding='unicode')
-        except LookupError:
-            # Python2.7 without lxml uses 'utf-8' instead.
-            sort_by = etree.tostring(sort_by.toXML(), encoding='utf-8')
+        sort_by = etree.tostring(sort_by.toXML(), encoding='unicode')
 
         xml = owsutil.wfs_build_getfeature_request(
             'dov-pub:Boringen', propertyname=['fiche', 'diepte_tot_m'],

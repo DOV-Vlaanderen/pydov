@@ -2,16 +2,19 @@
 import requests
 
 import pydov.util.caching
-from pydov.util.hooks import SimpleStatusHook
+from pydov.util.hooks import (
+    SimpleStatusHook,
+    Hooks,
+)
 
 __author__ = """DOV-Vlaanderen"""
 __version__ = '1.0.0'
 
 cache = pydov.util.caching.GzipTextFileCache()
 
-hooks = [
-    SimpleStatusHook(),
-]
+hooks = Hooks(
+    (SimpleStatusHook(),)
+)
 
 # Package wide requests session object. This increases performance as using a
 # session object allows connection pooling and TCP connection reuse.

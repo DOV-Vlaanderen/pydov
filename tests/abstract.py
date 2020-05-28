@@ -2,36 +2,24 @@ import datetime
 import random
 import re
 import sys
-
-import numpy as np
 from collections import OrderedDict
 
+import numpy as np
 import pandas as pd
 import pytest
 import requests
+from owslib.etree import etree
+from owslib.fes import PropertyIsEqualTo, SortBy, SortProperty
 from pandas import DataFrame
-from pandas.api.types import (
-    is_int64_dtype, is_object_dtype,
-    is_bool_dtype, is_float_dtype)
+from pandas.api.types import (is_bool_dtype, is_float_dtype, is_int64_dtype,
+                              is_object_dtype)
 
 import pydov
-from owslib.fes import (
-    PropertyIsEqualTo,
-    SortBy,
-    SortProperty,
-)
-from owslib.etree import etree
 from pydov.types.abstract import AbstractField
 from pydov.util.dovutil import build_dov_url
 from pydov.util.errors import InvalidFieldError
-from pydov.util.location import (
-    Within,
-    Box,
-)
-from pydov.util.query import (
-    PropertyInList,
-    Join,
-)
+from pydov.util.location import Box, Within
+from pydov.util.query import Join, PropertyInList
 
 
 def service_ok(timeout=5):
@@ -107,7 +95,7 @@ class AbstractTestSearch(object):
             Instance of subclass of this type used for searching.
 
         """
-        raise NotImplementedError
+        raise NotImplementedError('This should be implemented in a subclass.')
 
     def get_type(self):
         """Get the class reference for this datatype.
@@ -118,7 +106,7 @@ class AbstractTestSearch(object):
             Class reference for the corresponding datatype.
 
         """
-        raise NotImplementedError
+        raise NotImplementedError('This should be implemented in a subclass.')
 
     def get_valid_query_single(self):
         """Get a valid query returning a single feature.
@@ -129,7 +117,7 @@ class AbstractTestSearch(object):
             OGC expression of the query.
 
         """
-        raise NotImplementedError
+        raise NotImplementedError('This should be implemented in a subclass.')
 
     def get_inexistent_field(self):
         """Get the name of a field that doesn't exist.
@@ -140,7 +128,7 @@ class AbstractTestSearch(object):
             The name of an inexistent field.
 
         """
-        raise NotImplementedError
+        raise NotImplementedError('This should be implemented in a subclass.')
 
     def get_wfs_field(self):
         """Get the name of a WFS field.
@@ -151,7 +139,7 @@ class AbstractTestSearch(object):
             The name of the WFS field.
 
         """
-        raise NotImplementedError
+        raise NotImplementedError('This should be implemented in a subclass.')
 
     def get_xml_field(self):
         """Get the name of a field defined in XML only.
@@ -162,7 +150,7 @@ class AbstractTestSearch(object):
             The name of the XML field.
 
         """
-        raise NotImplementedError
+        raise NotImplementedError('This should be implemented in a subclass.')
 
     def get_valid_returnfields(self):
         """Get a list of valid return fields from the main type.
@@ -173,7 +161,7 @@ class AbstractTestSearch(object):
             A tuple containing only valid return fields.
 
         """
-        raise NotImplementedError
+        raise NotImplementedError('This should be implemented in a subclass.')
 
     def get_valid_returnfields_subtype(self):
         """Get a list of valid return fields, including fields from a subtype.
@@ -185,7 +173,7 @@ class AbstractTestSearch(object):
             subtype.
 
         """
-        raise NotImplementedError
+        raise NotImplementedError('This should be implemented in a subclass.')
 
     def get_valid_returnfields_extra(self):
         """Get a list of valid return fields, including extra WFS only
@@ -198,7 +186,7 @@ class AbstractTestSearch(object):
             from WFS, not present in the default dataframe.
 
         """
-        raise NotImplementedError
+        raise NotImplementedError('This should be implemented in a subclass.')
 
     def get_df_default_columns(self):
         """Get a list of the column names (and order) from the default
@@ -210,7 +198,7 @@ class AbstractTestSearch(object):
             A list of the column names of the default dataframe.
 
         """
-        raise NotImplementedError
+        raise NotImplementedError('This should be implemented in a subclass.')
 
     def test_pluggable_type(self):
         """Test whether the search object can be initialised by explicitly
@@ -588,7 +576,7 @@ class AbstractTestSearch(object):
 
         """
         with pytest.raises(InvalidFieldError):
-            df = self.get_search_object().search(
+            self.get_search_object().search(
                 query=self.get_valid_query_single(),
                 sort_by=SortBy([SortProperty(
                     self.get_xml_field())]))
@@ -612,7 +600,7 @@ class AbstractTestSearch(object):
             Monkeypatch the call to break fetching of remote XML data.
 
         """
-        df = self.get_search_object().search(
+        self.get_search_object().search(
             query=self.get_valid_query_single(),
             return_fields=self.get_valid_returnfields_extra())
 
@@ -655,7 +643,7 @@ class AbstractTestSearch(object):
         df1 = self.get_search_object().search(
             query=self.get_valid_query_single())
 
-        df2 = self.get_search_object().search(
+        self.get_search_object().search(
             query=Join(df1, self.get_df_default_columns()[0]))
 
     def test_get_fields_xsd_values(self, mp_remote_xsd):
@@ -1141,4 +1129,4 @@ class AbstractTestTypes(object):
 
         """
         with pytest.raises(ValueError):
-            instance = self.get_type()(None)
+            self.get_type()(None)

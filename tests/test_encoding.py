@@ -13,14 +13,11 @@ from pydov.search.interpretaties import LithologischeBeschrijvingenSearch
 from pydov.util.dovutil import build_dov_url
 from pydov.util.errors import XmlParseWarning
 from tests.abstract import service_ok
-
 from tests.test_search_itp_lithologischebeschrijvingen import (
     location_fc_featurecatalogue, location_md_metadata,
     location_wfs_describefeaturetype, location_wfs_getfeature)
-from tests.test_util_caching import gziptext_cache, nocache, plaintext_cache
 
 location_dov_xml = 'tests/data/encoding/invalidcharacters.xml'
-
 
 
 class TestEncoding(object):

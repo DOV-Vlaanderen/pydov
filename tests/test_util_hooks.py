@@ -1,24 +1,16 @@
 import copy
 import datetime
+
 import pytest
+from owslib.etree import etree
+from owslib.fes import PropertyIsEqualTo
 
 import pydov
-from owslib.fes import PropertyIsEqualTo
-from owslib.etree import etree
 from pydov.search.abstract import AbstractSearch
 from pydov.search.boring import BoringSearch
-from pydov.util.hooks import (
-    AbstractReadHook,
-    SimpleStatusHook,
-    AbstractInjectHook,
-    Hooks,
-)
+from pydov.util.hooks import (AbstractInjectHook, AbstractReadHook, Hooks,
+                              SimpleStatusHook)
 from tests.abstract import service_ok
-
-from tests.test_util_caching import (
-    plaintext_cache,
-    nocache,
-)
 
 
 @pytest.fixture
@@ -234,7 +226,7 @@ class TestHookCount(object):
                                   literal='GEO-04/169-BNo-B1')
 
         boringsearch = BoringSearch()
-        df = boringsearch.search(
+        boringsearch.search(
             query=query, return_fields=('pkey_boring', 'x', 'y'))
 
         assert pydov.hooks[0].count_wfs_search_init == 1
@@ -272,7 +264,7 @@ class TestHookCount(object):
                                   literal='GEO-04/169-BNo-B1')
 
         boringsearch = BoringSearch()
-        df = boringsearch.search(
+        boringsearch.search(
             query=query, return_fields=('pkey_boring', 'mv_mtaw'))
 
         assert pydov.hooks[0].count_wfs_search_init == 1
@@ -288,7 +280,7 @@ class TestHookCount(object):
         assert pydov.hooks[0].count_meta_received > 0
         assert pydov.hooks[0].count_inject_meta_response > 0
 
-        df = boringsearch.search(
+        boringsearch.search(
             query=query, return_fields=('pkey_boring', 'mv_mtaw'))
 
         assert pydov.hooks[0].count_wfs_search_init == 2
@@ -330,7 +322,7 @@ class TestHookCount(object):
                                   literal='GEO-04/169-BNo-B1')
 
         boringsearch = BoringSearch()
-        df = boringsearch.search(
+        boringsearch.search(
             query=query, return_fields=('pkey_boring', 'mv_mtaw'))
 
         assert pydov.hooks[0].count_wfs_search_init == 1
@@ -346,7 +338,7 @@ class TestHookCount(object):
         assert pydov.hooks[0].count_meta_received > 0
         assert pydov.hooks[0].count_inject_meta_response > 0
 
-        df = boringsearch.search(
+        boringsearch.search(
             query=query, return_fields=('pkey_boring', 'mv_mtaw'))
 
         assert pydov.hooks[0].count_wfs_search_init == 2
@@ -385,7 +377,7 @@ class TestHookTypes(object):
                                   literal='GEO-04/169-BNo-B1')
 
         boringsearch = BoringSearch()
-        df = boringsearch.search(query=query)
+        boringsearch.search(query=query)
 
     @pytest.mark.online
     @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
@@ -404,7 +396,7 @@ class TestHookTypes(object):
                                   literal='GEO-04/169-BNo-B1')
 
         boringsearch = BoringSearch()
-        df = boringsearch.search(query=query)
+        boringsearch.search(query=query)
 
 
 class TestHookInject(object):

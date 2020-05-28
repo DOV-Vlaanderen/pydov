@@ -1,11 +1,9 @@
 """Module grouping tests for the interpretaties search module."""
 import numpy as np
 import pandas as pd
-import pytest
 from owslib.fes import PropertyIsEqualTo
 from pandas import DataFrame
 
-import pydov
 from pydov.search.interpretaties import FormeleStratigrafieSearch
 from pydov.types.interpretaties import FormeleStratigrafie
 from tests.abstract import AbstractTestSearch
@@ -13,9 +11,11 @@ from tests.abstract import AbstractTestSearch
 location_md_metadata = \
     'tests/data/types/interpretaties/formele_stratigrafie/md_metadata.xml'
 location_fc_featurecatalogue = \
-    'tests/data/types/interpretaties/formele_stratigrafie/fc_featurecatalogue.xml'
+    'tests/data/types/interpretaties/formele_stratigrafie/' \
+    'fc_featurecatalogue.xml'
 location_wfs_describefeaturetype = \
-    'tests/data/types/interpretaties/formele_stratigrafie/wfsdescribefeaturetype.xml'
+    'tests/data/types/interpretaties/formele_stratigrafie/' \
+    'wfsdescribefeaturetype.xml'
 location_wfs_getfeature = \
     'tests/data/types/interpretaties/formele_stratigrafie/wfsgetfeature.xml'
 location_wfs_feature = \

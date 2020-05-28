@@ -57,7 +57,8 @@ class TestFormeleStratigrafie(AbstractTestTypes):
         """
         return ['pkey_interpretatie', 'pkey_boring',
                 'pkey_sondering', 'betrouwbaarheid_interpretatie', 'x', 'y',
-                'diepte_laag_van', 'diepte_laag_tot', 'lid1', 'relatie_lid1_lid2', 'lid2']
+                'diepte_laag_van', 'diepte_laag_tot', 'lid1',
+                'relatie_lid1_lid2', 'lid2']
 
     def get_field_names_subtypes(self):
         """Get the field names of this type that originate from subtypes only.
@@ -68,7 +69,8 @@ class TestFormeleStratigrafie(AbstractTestTypes):
             List of field names from subtypes.
 
         """
-        return ['diepte_laag_van', 'diepte_laag_tot', 'lid1', 'relatie_lid1_lid2', 'lid2']
+        return ['diepte_laag_van', 'diepte_laag_tot', 'lid1',
+                'relatie_lid1_lid2', 'lid2']
 
     def get_field_names_nosubtypes(self):
         """Get the field names for this type, without including fields from

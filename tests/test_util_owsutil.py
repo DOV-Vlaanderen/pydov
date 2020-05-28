@@ -34,7 +34,7 @@ class TestOwsutil(object):
         """
         contentmetadata = wfs.contents['dov-pub:Boringen']
         assert owsutil.get_csw_base_url(contentmetadata) == \
-               build_dov_url('geonetwork/srv/dut/csw')
+            build_dov_url('geonetwork/srv/dut/csw')
 
     def test_get_csw_base_url_nometadataurls(self, wfs):
         """Test the owsutil.get_csw_base_url method for a layer without
@@ -68,7 +68,7 @@ class TestOwsutil(object):
 
         """
         assert owsutil.get_featurecatalogue_uuid(md_metadata) == \
-               'c0cbd397-520f-4ee1-aca7-d70e271eeed6'
+            'c0cbd397-520f-4ee1-aca7-d70e271eeed6'
 
     def test_get_featurecatalogue_uuid_nocontentinfo(self, md_metadata):
         """Test the owsutil.get_featurecatalogue_uuid method when the
@@ -110,7 +110,7 @@ class TestOwsutil(object):
             'gmd:contentInfo/'
             'gmd:MD_FeatureCatalogueDescription/'
             'gmd:featureCatalogueCitation',
-            {'gmd': 'http://www.isotc211.org/2005/gmd'})):
+                {'gmd': 'http://www.isotc211.org/2005/gmd'})):
             ci.attrib.pop('uuidref')
         md_metadata = MD_Metadata(tree)
 
@@ -132,7 +132,7 @@ class TestOwsutil(object):
 
         """
         assert owsutil.get_namespace(wfs, 'dov-pub:Boringen') == \
-               'http://dov.vlaanderen.be/ocdov/dov-pub'
+            'http://dov.vlaanderen.be/ocdov/dov-pub'
 
     def test_get_remote_featurecatalogue(self, mp_remote_fc):
         """Test the owsutil.get_remote_featurecatalogue method.
@@ -175,7 +175,7 @@ class TestOwsutil(object):
                     for v in attr['values'].keys():
                         assert type(v) is str
                         assert type(attr['values'][v]) is str or \
-                               attr['values'][v] is None
+                            attr['values'][v] is None
                     assert len(attr['values'].keys()) == len(
                         set(attr['values'].keys()))
 
@@ -216,7 +216,6 @@ class TestOwsutil(object):
 
         """
         assert type(md_metadata) is MD_Metadata
-
 
     def test_wfs_build_getfeature_request_onlytypename(self):
         """Test the owsutil.wfs_build_getfeature_request method with only a
@@ -301,7 +300,7 @@ class TestOwsutil(object):
 
         """
         with pytest.raises(AttributeError):
-            xml = owsutil.wfs_build_getfeature_request(
+            owsutil.wfs_build_getfeature_request(
                 'dov-pub:Boringen',
                 location=Within(Box(151650, 214675, 151750, 214775)))
 

@@ -1,11 +1,9 @@
 """Module grouping tests for the interpretaties search module."""
-import numpy as np
+
 import pandas as pd
-import pytest
 from owslib.fes import PropertyIsEqualTo
 from pandas import DataFrame
 
-import pydov
 from pydov.search.interpretaties import HydrogeologischeStratigrafieSearch
 from pydov.types.interpretaties import HydrogeologischeStratigrafie
 from tests.abstract import AbstractTestSearch
@@ -175,8 +173,7 @@ class TestHydrogeologischeStratigrafieSearch(AbstractTestSearch):
             Monkeypatch the call to get the remote XML data.
 
         """
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single())
+        self.get_search_object().search(query=self.get_valid_query_single())
 
     def test_search_customreturnfields(self, mp_get_schema,
                                        mp_remote_describefeaturetype,

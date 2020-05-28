@@ -1,15 +1,11 @@
 """Module grouping tests for the interpretaties search module."""
-import numpy as np
+
 import pandas as pd
-import pytest
 from owslib.fes import PropertyIsEqualTo
 from pandas import DataFrame
-
-import pydov
-from pydov.search.interpretaties import (
-    FormeleStratigrafieSearch, InformeleHydrogeologischeStratigrafieSearch)
-from pydov.types.interpretaties import (FormeleStratigrafie,
-                                        InformeleHydrogeologischeStratigrafie)
+from pydov.search.interpretaties import \
+    InformeleHydrogeologischeStratigrafieSearch
+from pydov.types.interpretaties import InformeleHydrogeologischeStratigrafie
 from tests.abstract import AbstractTestSearch
 
 location_md_metadata = \

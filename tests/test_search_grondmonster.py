@@ -1,5 +1,4 @@
 """Module grouping tests for the search grondmonster module."""
-import datetime
 
 from owslib.fes import PropertyIsEqualTo
 

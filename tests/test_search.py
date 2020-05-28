@@ -1,16 +1,7 @@
 """Module grouping tests for the boring search module."""
-import glob
 
-import owslib
 import pytest
-from owslib.etree import etree
-from owslib.feature.schema import _construct_schema, _get_elements
-from owslib.fes import And, SortBy, SortProperty
-from owslib.iso import MD_Metadata
-from owslib.util import findall
-from owslib.wfs import WebFeatureService
 
-import pydov
 from pydov.search.boring import BoringSearch
 from pydov.search.grondmonster import GrondmonsterSearch
 from pydov.search.grondwaterfilter import GrondwaterFilterSearch
@@ -21,7 +12,6 @@ from pydov.search.interpretaties import (
     InformeleHydrogeologischeStratigrafieSearch, InformeleStratigrafieSearch,
     LithologischeBeschrijvingenSearch, QuartairStratigrafieSearch)
 from pydov.search.sondering import SonderingSearch
-from pydov.util.dovutil import build_dov_url
 from pydov.util.errors import InvalidSearchParameterError
 from pydov.util.location import Point, WithinDistance
 from tests.abstract import service_ok
@@ -39,7 +29,6 @@ search_objects = [BoringSearch(),
                   GecodeerdeLithologieSearch(),
                   LithologischeBeschrijvingenSearch(),
                   GrondmonsterSearch()]
-
 
 
 @pytest.mark.parametrize("objectsearch", search_objects)

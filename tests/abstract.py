@@ -1,37 +1,22 @@
 import datetime
 import random
 import re
-import sys
-
-import numpy as np
 from collections import OrderedDict
 
+import numpy as np
 import pandas as pd
 import pytest
 import requests
+from owslib.etree import etree
+from owslib.fes import PropertyIsEqualTo, SortBy, SortProperty
 from pandas import DataFrame
-from pandas.api.types import (
-    is_int64_dtype, is_object_dtype,
-    is_bool_dtype, is_float_dtype)
 
 import pydov
-from owslib.fes import (
-    PropertyIsEqualTo,
-    SortBy,
-    SortProperty,
-)
-from owslib.etree import etree
 from pydov.types.abstract import AbstractField
 from pydov.util.dovutil import build_dov_url
 from pydov.util.errors import InvalidFieldError
-from pydov.util.location import (
-    Within,
-    Box,
-)
-from pydov.util.query import (
-    PropertyInList,
-    Join,
-)
+from pydov.util.location import Box, Within
+from pydov.util.query import Join, PropertyInList
 
 
 def service_ok(timeout=5):
@@ -588,7 +573,7 @@ class AbstractTestSearch(object):
 
         """
         with pytest.raises(InvalidFieldError):
-            df = self.get_search_object().search(
+            self.get_search_object().search(
                 query=self.get_valid_query_single(),
                 sort_by=SortBy([SortProperty(
                     self.get_xml_field())]))
@@ -612,7 +597,7 @@ class AbstractTestSearch(object):
             Monkeypatch the call to break fetching of remote XML data.
 
         """
-        df = self.get_search_object().search(
+        self.get_search_object().search(
             query=self.get_valid_query_single(),
             return_fields=self.get_valid_returnfields_extra())
 
@@ -655,7 +640,7 @@ class AbstractTestSearch(object):
         df1 = self.get_search_object().search(
             query=self.get_valid_query_single())
 
-        df2 = self.get_search_object().search(
+        self.get_search_object().search(
             query=Join(df1, self.get_df_default_columns()[0]))
 
     def test_get_fields_xsd_values(self, mp_remote_xsd):
@@ -1141,4 +1126,4 @@ class AbstractTestTypes(object):
 
         """
         with pytest.raises(ValueError):
-            instance = self.get_type()(None)
+            self.get_type()(None)

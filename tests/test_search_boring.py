@@ -1,12 +1,10 @@
 """Module grouping tests for the boring search module."""
 import datetime
 
-import pytest
 from owslib.fes import PropertyIsEqualTo
 
 from pydov.search.boring import BoringSearch
 from pydov.types.boring import Boring
-from pydov.util import owsutil
 from tests.abstract import AbstractTestSearch
 
 location_md_metadata = 'tests/data/types/boring/md_metadata.xml'

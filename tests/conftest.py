@@ -1,15 +1,23 @@
 """Module grouping session scoped PyTest fixtures."""
 
+import datetime
+import glob
+import os
+import tempfile
+
 import owslib
 import pytest
 from _pytest.monkeypatch import MonkeyPatch
 from owslib.etree import etree
+from owslib.feature.schema import _construct_schema, _get_elements
+from owslib.iso import MD_Metadata
 from owslib.util import findall
 from owslib.wfs import WebFeatureService
 
 import pydov
 from pydov import Hooks
 from pydov.util import owsutil
+from pydov.util.caching import GzipTextFileCache, PlainTextFileCache
 from pydov.util.dovutil import build_dov_url
 
 
@@ -389,3 +397,96 @@ def md_metadata(wfs, mp_remote_md):
     """
     contentmetadata = wfs.contents['dov-pub:Boringen']
     return owsutil.get_remote_metadata(contentmetadata)
+
+
+@pytest.fixture
+def mp_remote_xml(monkeypatch):
+    """Monkeypatch the call to get the remote Boring XML data.
+
+    Parameters
+    ----------
+    monkeypatch : pytest.fixture
+        PyTest monkeypatch fixture.
+
+    """
+
+    def _get_remote_data(*args, **kwargs):
+        with open('tests/data/types/boring/boring.xml', 'r') as f:
+            data = f.read()
+            if type(data) is not bytes:
+                data = data.encode('utf-8')
+        return data
+
+    monkeypatch.setattr(pydov.util.caching.AbstractFileCache,
+                        '_get_remote', _get_remote_data)
+
+
+@pytest.fixture
+def plaintext_cache(request):
+    """Fixture for a temporary cache.
+
+    This fixture should be parametrized, with a list of parameters in the
+    order described below.
+
+    Paramaters
+    ----------
+    max_age : datetime.timedelta
+        The maximum age to use for the cache.
+
+    """
+    orig_cache = pydov.cache
+
+    if len(request.param) == 0:
+        max_age = datetime.timedelta(seconds=1)
+    else:
+        max_age = request.param[0]
+
+    plaintext_cache = PlainTextFileCache(
+        cachedir=os.path.join(tempfile.gettempdir(), 'pydov_tests'),
+        max_age=max_age)
+    pydov.cache = plaintext_cache
+
+    yield plaintext_cache
+
+    plaintext_cache.remove()
+    pydov.cache = orig_cache
+
+
+@pytest.fixture
+def gziptext_cache(request):
+    """Fixture for a temporary cache.
+
+    This fixture should be parametrized, with a list of parameters in the
+    order described below.
+
+    Paramaters
+    ----------
+    max_age : datetime.timedelta
+        The maximum age to use for the cache.
+
+    """
+    orig_cache = pydov.cache
+
+    if len(request.param) == 0:
+        max_age = datetime.timedelta(seconds=1)
+    else:
+        max_age = request.param[0]
+
+    gziptext_cache = GzipTextFileCache(
+        cachedir=os.path.join(tempfile.gettempdir(), 'pydov_tests'),
+        max_age=max_age)
+    pydov.cache = gziptext_cache
+
+    yield gziptext_cache
+
+    gziptext_cache.remove()
+    pydov.cache = orig_cache
+
+
+@pytest.fixture
+def nocache():
+    """Fixture to temporarily disable caching."""
+    orig_cache = pydov.cache
+    pydov.cache = None
+    yield
+    pydov.cache = orig_cache

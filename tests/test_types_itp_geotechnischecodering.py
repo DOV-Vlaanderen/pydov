@@ -63,7 +63,7 @@ class TestGeotechnischeCodering(AbstractTestTypes):
                 'bijmenging2_plaatselijk', 'bijmenging2_hoeveelheid',
                 'bijmenging2_grondsoort',
                 'bijmenging3_plaatselijk', 'bijmenging3_hoeveelheid',
-                'bijmenging3_grondsoort',]
+                'bijmenging3_grondsoort']
 
     def get_field_names_subtypes(self):
         """Get the field names of this type that originate from subtypes only.
@@ -81,7 +81,7 @@ class TestGeotechnischeCodering(AbstractTestTypes):
                 'bijmenging2_plaatselijk', 'bijmenging2_hoeveelheid',
                 'bijmenging2_grondsoort',
                 'bijmenging3_plaatselijk', 'bijmenging3_hoeveelheid',
-                'bijmenging3_grondsoort',]
+                'bijmenging3_grondsoort']
 
     def get_field_names_nosubtypes(self):
         """Get the field names for this type, without including fields from

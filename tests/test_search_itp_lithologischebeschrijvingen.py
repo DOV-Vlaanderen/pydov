@@ -1,11 +1,9 @@
 """Module grouping tests for the interpretaties search module."""
-import numpy as np
-import pandas as pd
-import pytest
-from owslib.fes import PropertyIsEqualTo
-from pandas import DataFrame
 
-import pydov
+import pandas as pd
+from owslib.fes import PropertyIsEqualTo
+
+
 from pydov.search.interpretaties import LithologischeBeschrijvingenSearch
 from pydov.types.interpretaties import LithologischeBeschrijvingen
 from tests.abstract import AbstractTestSearch

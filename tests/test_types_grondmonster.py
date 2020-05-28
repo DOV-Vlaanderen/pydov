@@ -9,7 +9,8 @@ from tests.test_search_grondmonster import (location_dov_xml,
 
 
 class TestGrondmonster(AbstractTestTypes):
-    """Class grouping tests for the pydov.types.grondmonster.Grondmonster class."""
+    """Class grouping tests for the pydov.types.grondmonster.Grondmonster
+    class."""
     def get_type(self):
         """Get the class reference for this datatype.
 

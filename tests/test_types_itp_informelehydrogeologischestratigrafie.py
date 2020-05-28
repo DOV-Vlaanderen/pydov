@@ -1,7 +1,6 @@
 """Module grouping tests for the
 pydov.types.interpretaties.FormeleStratigrafie class."""
-from pydov.types.interpretaties import (FormeleStratigrafie,
-                                        InformeleHydrogeologischeStratigrafie)
+from pydov.types.interpretaties import InformeleHydrogeologischeStratigrafie
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes
 from tests.test_search_itp_formelestratigrafie import (location_dov_xml,
@@ -12,13 +11,15 @@ from tests.test_search_itp_formelestratigrafie import (location_dov_xml,
 class TestInformeleHydrogeologischeFormeleStratigrafie(AbstractTestTypes):
     """Class grouping tests for the
     pydov.types.interpretaties.FormeleStratigrafie class."""
+
     def get_type(self):
         """Get the class reference for this datatype.
 
         Returns
         -------
         pydov.types.interpretaties.InformeleHydrogeologischeStratigrafie
-            Class reference for the InformeleHydrogeologischeStratigrafie class.
+            Class reference for the InformeleHydrogeologischeStratigrafie
+            class.
 
         """
         return InformeleHydrogeologischeStratigrafie

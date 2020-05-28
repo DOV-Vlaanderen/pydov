@@ -28,7 +28,7 @@ install the package in development mode:
 pip install -e .[devs]
 ```
 
-Need more detailed instructions? Check out the [installation instructions](https://pydov.readthedocs.io/en/stable/installation.html) and the [contributing guidelines](https://pydov.readthedocs.io/en/stable/contributing.html#development-guidelines).
+Need more detailed instructions? Check out the [installation instructions](https://pydov.readthedocs.io/en/stable/installation.html) and the [development guidelines](https://pydov.readthedocs.io/en/stable/development.html).
 
 ## Quick start
 
@@ -51,6 +51,11 @@ dataframe = boringsearch.search(
 ## Documentation
 
 Full documentation of `pydov` can be found on our [ReadTheDocs page](https://pydov.readthedocs.io).
+
+## Contributing
+
+You do not need to be a code expert to contribute to this project as there are several ways you can contribute to
+this project. Have a look at the [contributing page](https://pydov.readthedocs.io/en/latest/contributing.html).
 
 ## Meta
 

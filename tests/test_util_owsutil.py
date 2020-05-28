@@ -62,7 +62,7 @@ class TestOwsutil(object):
 
     def test_get_csw_base_url_nometadataurls(self, wfs):
         """Test the owsutil.get_csw_base_url method for a layer without
-        metdata urls.
+        metadata urls.
 
         Test whether a MetadataNotFoundError is raised.
 

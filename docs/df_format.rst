@@ -29,7 +29,7 @@ that require downloads of multiple ``xml`` file will take more time. For more in
 difference of ``wfs`` based versus ``xml`` based queries, see :ref:`query duration guide <performance>`.
 
 Not all ``wfs`` fields are included in the :class:`~pandas.DataFrame`, but they can be used
-to select records from the DOV database. For example, whe searching on :ref:`Boreholes <ref_boreholes>`,
+to select records from the DOV database. For example, when searching on :ref:`Boreholes <ref_boreholes>`,
 the presence of the ``informele_stratigrafie``,
 ``formele_stratigrafie``, ``hydrogeologische_stratigrafie``, etc. are available in the ``wfs`` as
 boolean fields to search on.
@@ -263,7 +263,7 @@ When requesting Cone Penetration Test (CPT) data, two dataframes are discerned:
 
 More than one measurement can be performed, listed as a ``metingWeerstand`` type, i.e.:
 qc, Qt, fs, u and i. All elements are by default included in the output dataframe, where
-``NaN`` s indicate that it wasn not measured.
+``NaN`` s indicate that it was not measured.
 
   .. csv-table:: Sonderingen metadata
     :header-rows: 1

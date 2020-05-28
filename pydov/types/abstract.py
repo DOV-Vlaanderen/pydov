@@ -149,7 +149,7 @@ class AbstractDovSubType(AbstractTypeCommon):
 
         Yields
         ------
-            An instance of this type for each occurence of the rootpath in
+            An instance of this type for each occurrence of the rootpath in
             the XML document.
 
         """

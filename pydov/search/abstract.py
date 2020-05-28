@@ -113,7 +113,7 @@ class AbstractSearch(AbstractCommon):
 
     def _init_wfs(self):
         """Initialise the WFS service. If the WFS service is not
-        instanciated yet, do so and save it in a static variable available
+        instantiated yet, do so and save it in a static variable available
         to all subclasses and instances.
         """
         if AbstractSearch.__wfs is None:

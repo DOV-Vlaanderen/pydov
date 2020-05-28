@@ -11,40 +11,37 @@ from tests.test_search_itp_gecodeerdelithologie import (
 class TestGecodeerdeLithologie(AbstractTestTypes):
     """Class grouping tests for the
     pydov.types.interpretaties.GecodeerdeLithologie class."""
-    def get_type(self):
-        return GecodeerdeLithologie
 
-    def get_namespace(self):
-        return 'http://dov.vlaanderen.be/ocdov/interpretaties'
+    datatype_class = GecodeerdeLithologie
+    namespace = 'http://dov.vlaanderen.be/ocdov/interpretaties'
+    pkey_base = build_dov_url('data/interpretatie/')
 
-    def get_pkey_base(self):
-        return build_dov_url('data/interpretatie/')
+    field_names = [
+        'pkey_interpretatie', 'pkey_boring',
+        'betrouwbaarheid_interpretatie', 'x', 'y',
+        'diepte_laag_van', 'diepte_laag_tot',
+        'hoofdnaam1_grondsoort', 'hoofdnaam2_grondsoort',
+        'bijmenging1_plaatselijk', 'bijmenging1_hoeveelheid',
+        'bijmenging1_grondsoort',
+        'bijmenging2_plaatselijk', 'bijmenging2_hoeveelheid',
+        'bijmenging2_grondsoort',
+        'bijmenging3_plaatselijk', 'bijmenging3_hoeveelheid',
+        'bijmenging3_grondsoort']
+    field_names_subtypes = [
+        'diepte_laag_van', 'diepte_laag_tot',
+        'hoofdnaam1_grondsoort', 'hoofdnaam2_grondsoort',
+        'bijmenging1_plaatselijk', 'bijmenging1_hoeveelheid',
+        'bijmenging1_grondsoort',
+        'bijmenging2_plaatselijk', 'bijmenging2_hoeveelheid',
+        'bijmenging2_grondsoort',
+        'bijmenging3_plaatselijk', 'bijmenging3_hoeveelheid',
+        'bijmenging3_grondsoort']
+    field_names_nosubtypes = [
+        'pkey_interpretatie', 'pkey_boring',
+        'betrouwbaarheid_interpretatie', 'x', 'y']
 
-    def get_field_names(self):
-        return ['pkey_interpretatie', 'pkey_boring',
-                'betrouwbaarheid_interpretatie', 'x', 'y',
-                'diepte_laag_van', 'diepte_laag_tot',
-                'hoofdnaam1_grondsoort', 'hoofdnaam2_grondsoort',
-                'bijmenging1_plaatselijk', 'bijmenging1_hoeveelheid', 'bijmenging1_grondsoort',
-                'bijmenging2_plaatselijk', 'bijmenging2_hoeveelheid', 'bijmenging2_grondsoort',
-                'bijmenging3_plaatselijk', 'bijmenging3_hoeveelheid', 'bijmenging3_grondsoort',]
+    valid_returnfields = ('pkey_interpretatie', 'pkey_boring')
+    valid_returnfields_subtype = (
+        'pkey_interpretatie', 'diepte_laag_van', 'diepte_laag_tot')
 
-    def get_field_names_subtypes(self):
-        return ['diepte_laag_van', 'diepte_laag_tot',
-                'hoofdnaam1_grondsoort', 'hoofdnaam2_grondsoort',
-                'bijmenging1_plaatselijk', 'bijmenging1_hoeveelheid', 'bijmenging1_grondsoort',
-                'bijmenging2_plaatselijk', 'bijmenging2_hoeveelheid', 'bijmenging2_grondsoort',
-                'bijmenging3_plaatselijk', 'bijmenging3_hoeveelheid', 'bijmenging3_grondsoort',]
-
-    def get_field_names_nosubtypes(self):
-        return ['pkey_interpretatie', 'pkey_boring',
-                'betrouwbaarheid_interpretatie', 'x', 'y']
-
-    def get_valid_returnfields(self):
-        return ('pkey_interpretatie', 'pkey_boring')
-
-    def get_valid_returnfields_subtype(self):
-        return ('pkey_interpretatie', 'diepte_laag_van', 'diepte_laag_tot')
-
-    def get_inexistent_field(self):
-        return 'onbestaand'
+    inexistent_field = 'onbestaand'

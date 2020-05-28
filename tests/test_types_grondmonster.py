@@ -11,41 +11,32 @@ from tests.test_search_grondmonster import (location_dov_xml,
 
 
 class TestGrondmonster(AbstractTestTypes):
-    """Class grouping tests for the pydov.types.grondmonster.Grondmonster class."""
-    def get_type(self):
-        return Grondmonster
+    """Class grouping tests for the pydov.types.grondmonster.Grondmonster
+    class."""
 
-    def get_namespace(self):
-        return 'http://dov.vlaanderen.be/ocdov/boringen'
+    datatype_class = Grondmonster
+    namespace = 'http://dov.vlaanderen.be/ocdov/boringen'
+    pkey_base = build_dov_url('data/grondmonster/')
 
-    def get_pkey_base(self):
-        return build_dov_url('data/grondmonster/')
+    field_names = [
+        'pkey_grondmonster', 'naam', 'pkey_boring', 'boornummer',
+        'datum', 'x', 'y', 'gemeente', 'diepte_van_m', 'diepte_tot_m',
+        'peil_van_mtaw', 'peil_tot_mtaw', 'monstertype', 'astm_naam',
+        'grondsoort_bggg', 'humusgehalte', 'kalkgehalte',
+        'uitrolgrens', 'vloeigrens', 'glauconiet',
+        'korrelvolumemassa', 'volumemassa', 'watergehalte',
+        'diameter', 'fractie', 'methode']
+    field_names_subtypes = [
+        'diepte_methode_van', 'diepte_methode_tot', 'boormethode']
+    field_names_nosubtypes = [
+        'pkey_grondmonster', 'naam', 'pkey_boring', 'boornummer',
+        'datum', 'x', 'y', 'gemeente', 'diepte_van_m', 'diepte_tot_m',
+        'peil_van_mtaw', 'peil_tot_mtaw', 'monstertype', 'astm_naam',
+        'grondsoort_bggg', 'humusgehalte', 'kalkgehalte',
+        'uitrolgrens', 'vloeigrens', 'glauconiet',
+        'korrelvolumemassa', 'volumemassa', 'watergehalte']
 
-    def get_field_names(self):
-        return ['pkey_grondmonster', 'naam', 'pkey_boring', 'boornummer',
-                'datum', 'x', 'y', 'gemeente', 'diepte_van_m', 'diepte_tot_m',
-                'peil_van_mtaw', 'peil_tot_mtaw', 'monstertype', 'astm_naam',
-                'grondsoort_bggg', 'humusgehalte', 'kalkgehalte',
-                'uitrolgrens', 'vloeigrens', 'glauconiet',
-                'korrelvolumemassa', 'volumemassa', 'watergehalte',
-                'diameter', 'fractie', 'methode']
+    valid_returnfields = ('pkey_grondmonster', 'diepte_tot_m')
+    valid_returnfields_subtype = ('diameter', 'fractie', 'methode')
 
-    def get_field_names_subtypes(self):
-        return ['diepte_methode_van', 'diepte_methode_tot', 'boormethode']
-
-    def get_field_names_nosubtypes(self):
-        return ['pkey_grondmonster', 'naam', 'pkey_boring', 'boornummer',
-                'datum', 'x', 'y', 'gemeente', 'diepte_van_m', 'diepte_tot_m',
-                'peil_van_mtaw', 'peil_tot_mtaw', 'monstertype', 'astm_naam',
-                'grondsoort_bggg', 'humusgehalte', 'kalkgehalte',
-                'uitrolgrens', 'vloeigrens', 'glauconiet',
-                'korrelvolumemassa', 'volumemassa', 'watergehalte']
-
-    def get_valid_returnfields(self):
-        return ('pkey_grondmonster', 'diepte_tot_m')
-
-    def get_valid_returnfields_subtype(self):
-        return ('diameter', 'fractie', 'methode')
-
-    def get_inexistent_field(self):
-        return 'onbestaand'
+    inexistent_field = 'onbestaand'

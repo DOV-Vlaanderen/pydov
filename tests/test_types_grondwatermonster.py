@@ -12,37 +12,28 @@ from tests.test_search_grondwatermonster import (location_dov_xml,
 class TestGrondwaterMonster(AbstractTestTypes):
     """Class grouping tests for the
     pydov.types.grondwaterfilter.GrondwaterFilter class."""
-    def get_type(self):
-        return GrondwaterMonster
 
-    def get_namespace(self):
-        return 'http://dov.vlaanderen.be/grondwater/gw_meetnetten'
+    datatype_class = GrondwaterMonster
+    namespace = 'http://dov.vlaanderen.be/grondwater/gw_meetnetten'
+    pkey_base = build_dov_url('data/watermonster/')
 
-    def get_pkey_base(self):
-        return build_dov_url('data/watermonster/')
+    field_names = [
+        'pkey_grondwatermonster', 'grondwatermonsternummer',
+        'pkey_grondwaterlocatie', 'gw_id', 'pkey_filter',
+        'filternummer', 'x', 'y', 'start_grondwaterlocatie_mtaw',
+        'gemeente', 'datum_monstername', 'parametergroep',
+        'parameter', 'detectie', 'waarde', 'eenheid', 'veld_labo']
+    field_names_subtypes = [
+        'parametergroep', 'parameter', 'detectie',
+        'waarde', 'eenheid', 'veld_labo']
+    field_names_nosubtypes = [
+        'pkey_grondwatermonster', 'grondwatermonsternummer',
+        'pkey_grondwaterlocatie', 'gw_id', 'pkey_filter',
+        'filternummer', 'x', 'y', 'start_grondwaterlocatie_mtaw',
+        'gemeente', 'datum_monstername']
 
-    def get_field_names(self):
-        return ['pkey_grondwatermonster', 'grondwatermonsternummer',
-                'pkey_grondwaterlocatie', 'gw_id', 'pkey_filter',
-                'filternummer', 'x', 'y', 'start_grondwaterlocatie_mtaw',
-                'gemeente', 'datum_monstername', 'parametergroep',
-                'parameter', 'detectie', 'waarde', 'eenheid', 'veld_labo']
+    valid_returnfields = ('y', 'gemeente')
+    valid_returnfields_subtype = (
+        'pkey_filter', 'pkey_grondwatermonster', 'eenheid')
 
-    def get_field_names_subtypes(self):
-        return ['parametergroep', 'parameter', 'detectie',
-                'waarde', 'eenheid', 'veld_labo']
-
-    def get_field_names_nosubtypes(self):
-        return ['pkey_grondwatermonster', 'grondwatermonsternummer',
-                'pkey_grondwaterlocatie', 'gw_id', 'pkey_filter',
-                'filternummer', 'x', 'y', 'start_grondwaterlocatie_mtaw',
-                'gemeente', 'datum_monstername']
-
-    def get_valid_returnfields(self):
-        return ('y', 'gemeente')
-
-    def get_valid_returnfields_subtype(self):
-        return ('pkey_filter', 'pkey_grondwatermonster', 'eenheid')
-
-    def get_inexistent_field(self):
-        return 'onbestaand'
+    inexistent_field = 'onbestaand'

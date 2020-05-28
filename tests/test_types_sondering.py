@@ -11,37 +11,27 @@ from tests.test_search_sondering import (location_dov_xml,
 
 class TestSondering(AbstractTestTypes):
     """Class grouping tests for the pydov.types.sondering.Sondering class."""
-    def get_type(self):
-        return Sondering
 
-    def get_namespace(self):
-        return 'http://dov.vlaanderen.be/ocdov/dov-pub'
+    datatype_class = Sondering
+    namespace = 'http://dov.vlaanderen.be/ocdov/dov-pub'
+    pkey_base = build_dov_url('data/sondering/')
 
-    def get_pkey_base(self):
-        return build_dov_url('data/sondering/')
+    field_names = [
+        'pkey_sondering', 'sondeernummer', 'x', 'y',
+        'start_sondering_mtaw', 'diepte_sondering_van',
+        'diepte_sondering_tot', 'datum_aanvang', 'uitvoerder',
+        'sondeermethode', 'apparaat', 'datum_gw_meting',
+        'diepte_gw_m', 'z', 'qc', 'Qt', 'fs', 'u', 'i']
+    field_names_subtypes = [
+        'z', 'qc', 'Qt', 'fs', 'u', 'i']
+    field_names_nosubtypes = [
+        'pkey_sondering', 'sondeernummer', 'x', 'y',
+        'start_sondering_mtaw', 'diepte_sondering_van',
+        'diepte_sondering_tot', 'datum_aanvang', 'uitvoerder',
+        'sondeermethode', 'apparaat', 'datum_gw_meting',
+        'diepte_gw_m']
 
-    def get_field_names(self):
-        return ['pkey_sondering', 'sondeernummer', 'x', 'y',
-                'start_sondering_mtaw', 'diepte_sondering_van',
-                'diepte_sondering_tot', 'datum_aanvang', 'uitvoerder',
-                'sondeermethode', 'apparaat', 'datum_gw_meting',
-                'diepte_gw_m', 'z', 'qc', 'Qt', 'fs', 'u', 'i']
+    valid_returnfields = ('pkey_sondering', 'sondeernummer')
+    valid_returnfields_subtype = ('pkey_sondering', 'sondeernummer', 'z')
 
-    def get_field_names_subtypes(self):
-        return ['z', 'qc', 'Qt', 'fs', 'u', 'i']
-
-    def get_field_names_nosubtypes(self):
-        return ['pkey_sondering', 'sondeernummer', 'x', 'y',
-                'start_sondering_mtaw', 'diepte_sondering_van',
-                'diepte_sondering_tot', 'datum_aanvang', 'uitvoerder',
-                'sondeermethode', 'apparaat', 'datum_gw_meting',
-                'diepte_gw_m']
-
-    def get_valid_returnfields(self):
-        return ('pkey_sondering', 'sondeernummer')
-
-    def get_valid_returnfields_subtype(self):
-        return ('pkey_sondering', 'sondeernummer', 'z')
-
-    def get_inexistent_field(self):
-        return 'onbestaand'
+    inexistent_field = 'onbestaand'

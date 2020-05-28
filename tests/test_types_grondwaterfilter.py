@@ -12,42 +12,32 @@ from tests.test_search_grondwaterfilter import (location_dov_xml,
 class TestGrondwaterFilter(AbstractTestTypes):
     """Class grouping tests for the
     pydov.types.grondwaterfilter.GrondwaterFilter class."""
-    def get_type(self):
-        return GrondwaterFilter
 
-    def get_namespace(self):
-        return 'http://dov.vlaanderen.be/grondwater/gw_meetnetten'
+    datatype_class = GrondwaterFilter
+    namespace = 'http://dov.vlaanderen.be/grondwater/gw_meetnetten'
+    pkey_base = build_dov_url('data/filter/')
 
-    def get_pkey_base(self):
-        return build_dov_url('data/filter/')
+    field_names = [
+        'pkey_filter', 'pkey_grondwaterlocatie', 'gw_id',
+        'filternummer', 'filtertype', 'x', 'y',
+        'start_grondwaterlocatie_mtaw', 'mv_mtaw',
+        'gemeente', 'meetnet_code', 'aquifer_code',
+        'grondwaterlichaam_code', 'regime',
+        'diepte_onderkant_filter', 'lengte_filter',
+        'datum', 'tijdstip', 'peil_mtaw',
+        'betrouwbaarheid', 'methode', 'filterstatus', 'filtertoestand']
+    field_names_subtypes = [
+        'datum', 'tijdstip', 'peil_mtaw', 'betrouwbaarheid',
+        'methode']
+    field_names_nosubtypes = [
+        'pkey_filter', 'pkey_grondwaterlocatie', 'gw_id',
+        'filternummer', 'filtertype', 'x', 'y',
+        'start_grondwaterlocatie_mtaw', 'mv_mtaw',
+        'gemeente', 'meetnet_code', 'aquifer_code',
+        'grondwaterlichaam_code', 'regime',
+        'diepte_onderkant_filter', 'lengte_filter']
 
-    def get_field_names(self):
-        return ['pkey_filter', 'pkey_grondwaterlocatie', 'gw_id',
-                'filternummer', 'filtertype', 'x', 'y',
-                'start_grondwaterlocatie_mtaw', 'mv_mtaw',
-                'gemeente', 'meetnet_code', 'aquifer_code',
-                'grondwaterlichaam_code', 'regime',
-                'diepte_onderkant_filter', 'lengte_filter',
-                'datum', 'tijdstip', 'peil_mtaw',
-                'betrouwbaarheid', 'methode', 'filterstatus', 'filtertoestand']
+    valid_returnfields = ('pkey_filter', 'meetnet_code')
+    valid_returnfields_subtype = ('pkey_filter', 'peil_mtaw')
 
-    def get_field_names_subtypes(self):
-        return ['datum', 'tijdstip', 'peil_mtaw', 'betrouwbaarheid',
-                'methode']
-
-    def get_field_names_nosubtypes(self):
-        return ['pkey_filter', 'pkey_grondwaterlocatie', 'gw_id',
-                'filternummer', 'filtertype', 'x', 'y',
-                'start_grondwaterlocatie_mtaw', 'mv_mtaw',
-                'gemeente', 'meetnet_code', 'aquifer_code',
-                'grondwaterlichaam_code', 'regime',
-                'diepte_onderkant_filter', 'lengte_filter']
-
-    def get_valid_returnfields(self):
-        return ('pkey_filter', 'meetnet_code')
-
-    def get_valid_returnfields_subtype(self):
-        return ('pkey_filter', 'peil_mtaw')
-
-    def get_inexistent_field(self):
-        return 'onbestaand'
+    inexistent_field = 'onbestaand'

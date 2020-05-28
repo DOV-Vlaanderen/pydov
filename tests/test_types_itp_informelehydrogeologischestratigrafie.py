@@ -14,32 +14,23 @@ from tests.test_search_itp_formelestratigrafie import (location_dov_xml,
 class TestInformeleHydrogeologischeFormeleStratigrafie(AbstractTestTypes):
     """Class grouping tests for the
     pydov.types.interpretaties.FormeleStratigrafie class."""
-    def get_type(self):
-        return InformeleHydrogeologischeStratigrafie
 
-    def get_namespace(self):
-        return 'http://dov.vlaanderen.be/ocdov/interpretaties'
+    datatype_class = InformeleHydrogeologischeStratigrafie
+    namespace = 'http://dov.vlaanderen.be/ocdov/interpretaties'
+    pkey_base = build_dov_url('data/interpretatie/')
 
-    def get_pkey_base(self):
-        return build_dov_url('data/interpretatie/')
+    field_names = [
+        'pkey_interpretatie', 'pkey_boring',
+        'betrouwbaarheid_interpretatie', 'x', 'y',
+        'diepte_laag_van', 'diepte_laag_tot', 'beschrijving']
+    field_names_subtypes = [
+        'diepte_laag_van', 'diepte_laag_tot', 'beschrijving']
+    field_names_nosubtypes = [
+        'pkey_interpretatie', 'pkey_boring',
+        'betrouwbaarheid_interpretatie', 'x', 'y']
 
-    def get_field_names(self):
-        return ['pkey_interpretatie', 'pkey_boring',
-                'betrouwbaarheid_interpretatie', 'x', 'y',
-                'diepte_laag_van', 'diepte_laag_tot', 'beschrijving']
+    valid_returnfields = ('pkey_interpretatie', 'pkey_boring')
+    valid_returnfields_subtype = (
+        'pkey_interpretatie', 'diepte_laag_van', 'diepte_laag_tot')
 
-    def get_field_names_subtypes(self):
-        return ['diepte_laag_van', 'diepte_laag_tot', 'beschrijving']
-
-    def get_field_names_nosubtypes(self):
-        return ['pkey_interpretatie', 'pkey_boring',
-                'betrouwbaarheid_interpretatie', 'x', 'y']
-
-    def get_valid_returnfields(self):
-        return ('pkey_interpretatie', 'pkey_boring')
-
-    def get_valid_returnfields_subtype(self):
-        return ('pkey_interpretatie', 'diepte_laag_van', 'diepte_laag_tot')
-
-    def get_inexistent_field(self):
-        return 'onbestaand'
+    inexistent_field = 'onbestaand'

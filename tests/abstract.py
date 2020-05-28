@@ -115,7 +115,7 @@ class AbstractTestSearch(object):
     df_default_columns : list of str
             A list of the column names of the default dataframe.
 
-        """
+    """
 
     def test_pluggable_type(self):
         """Test whether the search object can be initialised by explicitly
@@ -616,109 +616,36 @@ class AbstractTestSearch(object):
 
 
 class AbstractTestTypes(object):
-    """Class grouping common test code for datatype classes."""
-    def get_type(self):
-        """Get the class reference for this datatype.
+    """Class grouping common test code for datatype classes.
 
-        Returns
-        -------
-        pydov.types.abstract.AbstractDovType
-            Class reference for the corresponding datatype.
+    Subclasses should implement at least the following public attributes
+    in order for the tests defined here to be executed.
 
-        """
-        raise NotImplementedError('This should be implemented in a subclass.')
-
-    def get_namespace(self):
-        """Get the WFS namespace associated with this datatype.
-
-        Returns
-        -------
-        str
-            WFS namespace for this type.
-
-        """
-        raise NotImplementedError('This should be implemented in a subclass.')
-
-    def get_pkey_base(self):
-        """Get the base URL for the permanent keys of this datatype.
-
-        Returns
-        -------
-        str
-            Base URL for the permanent keys of this datatype. For example
-            "https://www.dov.vlaanderen.be/data/boring/"
-
-        """
-        raise NotImplementedError('This should be implemented in a subclass.')
-
-    def get_field_names(self):
-        """Get the field names for this type as listed in the documentation in
+    Attributes
+    ----------
+    datatype_class : pydov.types.abstract.AbstractDovType
+        Class reference for the corresponding datatype.
+    namespace : str
+        WFS namespace for this type.
+    pkey_base : str
+        Base URL for the permanent keys of this datatype.
+    field_names : list of str
+        The field names for this type as listed in the documentation in
         docs/description_output_dataframes.rst
-
-        Returns
-        -------
-        list<str>
-            List of field names.
-
-        """
-        raise NotImplementedError('This should be implemented in a subclass.')
-
-    def get_field_names_subtypes(self):
-        """Get the field names of this type that originate from subtypes only.
-
-        Returns
-        -------
-        list<str>
-            List of field names from subtypes.
-
-        """
-        raise NotImplementedError('This should be implemented in a subclass.')
-
-    def get_field_names_nosubtypes(self):
-        """Get the field names for this type, without including fields from
+    field_names_subtypes : list of str
+        The field names of this type that originate from subtypes only.
+    field_names_nosubtypes : list of str
+        The field names for this type, without including fields from
         subtypes.
-
-        Returns
-        -------
-        list<str>
-            List of field names.
-
-        """
-        raise NotImplementedError('This should be implemented in a subclass.')
-
-    def get_valid_returnfields(self):
-        """Get a list of valid return fields from the main type.
-
-        Returns
-        -------
-        tuple
-            A tuple containing only valid return fields.
-
-        """
-        raise NotImplementedError('This should be implemented in a subclass.')
-
-    def get_valid_returnfields_subtype(self):
-        """Get a list of valid return fields, including fields from a subtype.
-
-        Returns
-        -------
-        tuple
+    valid_returnfields : tuple of str
+        A tuple of valid return fields from the main type.
+    valid_returnfields_subtype : typle of str
             A tuple containing valid return fields, including fields from a
             subtype.
-
-        """
-        raise NotImplementedError('This should be implemented in a subclass.')
-
-    def get_inexistent_field(self):
-        """Get the name of a field that doesn't exist.
-
-        Returns
-        -------
-        str
+    inexistent_field : str
             The name of an inexistent field.
 
-        """
-        raise NotImplementedError('This should be implemented in a subclass.')
+    """
 
     def test_get_field_names(self):
         """Test the get_field_names method.
@@ -727,8 +654,8 @@ class AbstractTestTypes(object):
         ones we list in docs/description_output_dataframes.rst.
 
         """
-        fields = self.get_type().get_field_names()
-        assert fields == self.get_field_names()
+        fields = self.datatype_class.get_field_names()
+        assert fields == self.field_names
 
     def test_get_field_names_nosubtypes(self):
         """Test the get_field_names method without including subtypes.
@@ -737,10 +664,10 @@ class AbstractTestTypes(object):
         disabling subtypes.
 
         """
-        fields = self.get_type().get_field_names(
+        fields = self.datatype_class.get_field_names(
             return_fields=None, include_subtypes=False)
 
-        assert fields == self.get_field_names_nosubtypes()
+        assert fields == self.field_names_nosubtypes
 
     def test_get_field_names_returnfields_nosubtypes(self):
         """Test the get_field_names method when specifying return
@@ -750,11 +677,11 @@ class AbstractTestTypes(object):
         fields.
 
         """
-        fields = self.get_type().get_field_names(
-            return_fields=self.get_valid_returnfields(),
+        fields = self.datatype_class.get_field_names(
+            return_fields=self.valid_returnfields,
             include_subtypes=False)
 
-        assert fields == list(self.get_valid_returnfields())
+        assert fields == list(self.valid_returnfields)
 
     def test_get_field_names_returnfields_order(self):
         """Test the get_field_names method when specifying return
@@ -765,12 +692,12 @@ class AbstractTestTypes(object):
         parameter.
 
         """
-        rf = list(self.get_valid_returnfields())
+        rf = list(self.valid_returnfields)
 
-        while rf == list(self.get_valid_returnfields()):
+        while rf == list(self.valid_returnfields):
             random.shuffle(rf)
 
-        fields = self.get_type().get_field_names(
+        fields = self.datatype_class.get_field_names(
             return_fields=rf,
             include_subtypes=False)
 
@@ -783,11 +710,11 @@ class AbstractTestTypes(object):
         Test whether an InvalidFieldError is raised.
 
         """
-        return_fields = list(self.get_valid_returnfields())
-        return_fields.append(self.get_inexistent_field())
+        return_fields = list(self.valid_returnfields)
+        return_fields.append(self.inexistent_field)
 
         with pytest.raises(InvalidFieldError):
-            self.get_type().get_field_names(
+            self.datatype_class.get_field_names(
                 return_fields=return_fields,
                 include_subtypes=False)
 
@@ -799,8 +726,8 @@ class AbstractTestTypes(object):
 
         """
         with pytest.raises(AttributeError):
-            self.get_type().get_field_names(
-                return_fields=self.get_valid_returnfields()[0],
+            self.datatype_class.get_field_names(
+                return_fields=self.valid_returnfields[0],
                 include_subtypes=False)
 
     def test_get_field_names_wrongreturnfields_nosubtypes(self):
@@ -811,8 +738,8 @@ class AbstractTestTypes(object):
 
         """
         with pytest.raises(InvalidFieldError):
-            self.get_type().get_field_names(
-                return_fields=self.get_valid_returnfields_subtype(),
+            self.datatype_class.get_field_names(
+                return_fields=self.valid_returnfields_subtype,
                 include_subtypes=False)
 
     def test_get_fields(self):
@@ -822,7 +749,7 @@ class AbstractTestTypes(object):
         requirements and the format listed in the docs.
 
         """
-        fields = self.get_type().get_fields()
+        fields = self.datatype_class.get_fields()
 
         assert isinstance(fields, OrderedDict)
 
@@ -878,9 +805,9 @@ class AbstractTestTypes(object):
         Test whether fields provides by subtypes are not listed in the output.
 
         """
-        fields = self.get_type().get_fields(include_subtypes=False)
+        fields = self.datatype_class.get_fields(include_subtypes=False)
         for field in fields:
-            assert field not in self.get_field_names_subtypes()
+            assert field not in self.field_names_subtypes
 
     def test_from_wfs_element(self, wfs_feature):
         """Test the from_wfs_element method.
@@ -894,12 +821,12 @@ class AbstractTestTypes(object):
             the WFS layer.
 
         """
-        feature = self.get_type().from_wfs_element(
-            wfs_feature, self.get_namespace())
+        feature = self.datatype_class.from_wfs_element(
+            wfs_feature, self.namespace)
 
-        assert type(feature) is self.get_type()
+        assert type(feature) is self.datatype_class
 
-        assert feature.pkey.startswith(self.get_pkey_base())
+        assert feature.pkey.startswith(self.pkey_base)
 
         assert feature.pkey.startswith(
             build_dov_url('data/{}/'.format(feature.typename)))
@@ -921,10 +848,10 @@ class AbstractTestTypes(object):
             Monkeypatch the call to get the remote XML data.
 
         """
-        feature = self.get_type().from_wfs_element(
-            wfs_feature, self.get_namespace())
+        feature = self.datatype_class.from_wfs_element(
+            wfs_feature, self.namespace)
 
-        fields = [f for f in self.get_type().get_fields(
+        fields = [f for f in self.datatype_class.get_fields(
             source=('wfs', 'xml', 'custom')).values() if not
             f.get('wfs_injected', False)]
 
@@ -963,11 +890,11 @@ class AbstractTestTypes(object):
             the WFS layer.
 
         """
-        feature = self.get_type().from_wfs_element(
-            wfs_feature, self.get_namespace())
+        feature = self.datatype_class.from_wfs_element(
+            wfs_feature, self.namespace)
 
         with pytest.raises(InvalidFieldError):
-            feature.get_df_array(return_fields=(self.get_inexistent_field(),))
+            feature.get_df_array(return_fields=(self.inexistent_field,))
 
     def test_from_wfs_str(self, wfs_getfeature):
         """Test the from_wfs method to construct objects from a WFS response,
@@ -979,11 +906,11 @@ class AbstractTestTypes(object):
             Fixture providing a WFS GetFeature response.
 
         """
-        features = self.get_type().from_wfs(wfs_getfeature,
-                                            self.get_namespace())
+        features = self.datatype_class.from_wfs(wfs_getfeature,
+                                            self.namespace)
 
         for feature in features:
-            assert type(feature) is self.get_type()
+            assert type(feature) is self.datatype_class
 
     def test_from_wfs_bytes(self, wfs_getfeature):
         """Test the from_wfs method to construct objects from a WFS response,
@@ -995,11 +922,11 @@ class AbstractTestTypes(object):
             Fixture providing a WFS GetFeature response.
 
         """
-        features = self.get_type().from_wfs(wfs_getfeature.encode('utf-8'),
-                                            self.get_namespace())
+        features = self.datatype_class.from_wfs(wfs_getfeature.encode('utf-8'),
+                                            self.namespace)
 
         for feature in features:
-            assert type(feature) is self.get_type()
+            assert type(feature) is self.datatype_class
 
     def test_from_wfs_tree(self, wfs_getfeature):
         """Test the from_wfs method to construct objects from a WFS response,
@@ -1012,10 +939,10 @@ class AbstractTestTypes(object):
 
         """
         tree = etree.fromstring(wfs_getfeature.encode('utf8'))
-        features = self.get_type().from_wfs(tree, self.get_namespace())
+        features = self.datatype_class.from_wfs(tree, self.namespace)
 
         for feature in features:
-            assert type(feature) is self.get_type()
+            assert type(feature) is self.datatype_class
 
     def test_from_wfs_list(self, wfs_getfeature):
         """Test the from_wfs method to construct objects from a WFS response,
@@ -1034,10 +961,10 @@ class AbstractTestTypes(object):
         if feature_members is not None:
             fts = [ft for ft in feature_members]
 
-            features = self.get_type().from_wfs(fts, self.get_namespace())
+            features = self.datatype_class.from_wfs(fts, self.namespace)
 
             for feature in features:
-                assert type(feature) is self.get_type()
+                assert type(feature) is self.datatype_class
 
     def test_missing_pkey(self):
         """Test initialising an object type with a pkey of 'None'.
@@ -1046,4 +973,4 @@ class AbstractTestTypes(object):
 
         """
         with pytest.raises(ValueError):
-            self.get_type()(None)
+            self.datatype_class(None)

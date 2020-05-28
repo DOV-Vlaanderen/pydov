@@ -204,7 +204,7 @@ class TestGeotechnischeCoderingSearch(AbstractTestSearch):
             query=self.get_valid_query_single(),
             return_fields=('pkey_interpretatie', 'pkey_boring'))
 
-        assert type(df) is DataFrame
+        assert isinstance(df, DataFrame)
 
         assert list(df) == ['pkey_interpretatie', 'pkey_boring']
 

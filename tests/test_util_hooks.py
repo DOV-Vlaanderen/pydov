@@ -113,21 +113,21 @@ class HookTypeTester(AbstractReadHook, AbstractInjectHook):
     def meta_received(self, url, response):
         assert url is not None
         assert response is not None
-        assert type(url) is str
-        assert type(response) is bytes
+        assert isinstance(url, str)
+        assert isinstance(response, bytes)
 
     def inject_meta_response(self, url):
         assert url is not None
-        assert type(url) is str
+        assert isinstance(url, str)
 
     def wfs_search_init(self, typename):
         assert typename is not None
-        assert type(typename) is str
+        assert isinstance(typename, str)
 
     def wfs_search_result(self, number_of_results):
         assert number_of_results is not None
         assert number_of_results > 0
-        assert type(number_of_results) is int
+        assert isinstance(number_of_results, int)
 
     def wfs_search_result_received(self, query, features):
         assert query is not None
@@ -139,20 +139,20 @@ class HookTypeTester(AbstractReadHook, AbstractInjectHook):
     def xml_received(self, pkey_object, xml):
         assert pkey_object is not None
         assert xml is not None
-        assert type(pkey_object) is str
-        assert type(xml) is bytes
+        assert isinstance(pkey_object, str)
+        assert isinstance(xml, bytes)
 
     def inject_xml_response(self, pkey_object):
         assert pkey_object is not None
-        assert type(pkey_object) is str
+        assert isinstance(pkey_object, str)
 
     def xml_cache_hit(self, pkey_object):
         assert pkey_object is not None
-        assert type(pkey_object) is str
+        assert isinstance(pkey_object, str)
 
     def xml_downloaded(self, pkey_object):
         assert pkey_object is not None
-        assert type(pkey_object) is str
+        assert isinstance(pkey_object, str)
 
 
 class HookInjecter(AbstractReadHook, AbstractInjectHook):

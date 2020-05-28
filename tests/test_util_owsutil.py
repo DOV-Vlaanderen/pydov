@@ -13,9 +13,12 @@ from pydov.util.errors import (FeatureCatalogueNotFoundError,
                                MetadataNotFoundError)
 from pydov.util.location import Box, Within
 from tests.abstract import clean_xml
-from tests.test_search_boring import (location_fc_featurecatalogue,
-                                      location_md_metadata,
-                                      location_wfs_describefeaturetype)
+
+location_md_metadata = 'tests/data/types/boring/md_metadata.xml'
+location_fc_featurecatalogue = \
+    'tests/data/types/boring/fc_featurecatalogue.xml'
+location_wfs_describefeaturetype = \
+    'tests/data/types/boring/wfsdescribefeaturetype.xml'
 
 
 class TestOwsutil(object):
@@ -151,40 +154,40 @@ class TestOwsutil(object):
             build_dov_url('geonetwork/srv/nl/csw'),
             'c0cbd397-520f-4ee1-aca7-d70e271eeed6')
 
-        assert type(fc) is dict
+        assert isinstance(fc, dict)
 
         assert 'definition' in fc
-        assert type(fc['definition']) is str
+        assert isinstance(fc['definition'], str)
 
         assert 'attributes' in fc
-        assert type(fc['attributes']) is dict
+        assert isinstance(fc['attributes'], dict)
 
         attrs = fc['attributes']
         if len(attrs) > 0:
             for attr in attrs.values():
-                assert type(attr) is dict
+                assert isinstance(attr, dict)
 
                 assert 'definition' in attr
-                assert type(attr['definition']) is str
+                assert isinstance(attr['definition'], str)
 
                 assert 'values' in attr
 
                 if attr['values'] is not None:
-                    assert type(attr['values']) is dict
+                    assert isinstance(attr['values'], dict)
 
                     for v in attr['values'].keys():
-                        assert type(v) is str
-                        assert type(attr['values'][v]) is str or \
+                        assert isinstance(v, str)
+                        assert isinstance(attr['values'][v], str) or \
                             attr['values'][v] is None
                     assert len(attr['values'].keys()) == len(
                         set(attr['values'].keys()))
 
                 assert 'multiplicity' in attr
                 mp = attr['multiplicity']
-                assert type(mp) is tuple
+                assert isinstance(mp, tuple)
                 assert len(mp) == 2
                 assert mp[0] in (0, 1)
-                assert (type(mp[1]) is int and mp[1] > 0) or mp[1] == 'Inf'
+                assert (isinstance(mp[1], int) and mp[1] > 0) or mp[1] == 'Inf'
 
     def test_get_remote_featurecataloge_baduuid(self, mp_remote_fc_notfound):
         """Test the owsutil.get_remote_featurecatalogue method with an
@@ -215,7 +218,7 @@ class TestOwsutil(object):
             in the ISO 19115/19139 format.
 
         """
-        assert type(md_metadata) is MD_Metadata
+        assert isinstance(md_metadata, MD_Metadata)
 
     def test_wfs_build_getfeature_request_onlytypename(self):
         """Test the owsutil.wfs_build_getfeature_request method with only a

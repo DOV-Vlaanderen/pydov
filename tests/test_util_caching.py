@@ -282,13 +282,13 @@ class TestPlainTextFileCacheCache(object):
 
         ref_data = plaintext_cache.get(
             build_dov_url('data/boring/2004-103984.xml'))
-        assert type(ref_data) is bytes
+        assert isinstance(ref_data, bytes)
 
         assert os.path.exists(cached_file)
 
         cached_data = plaintext_cache.get(
             build_dov_url('data/boring/2004-103984.xml'))
-        assert type(cached_data) is bytes
+        assert isinstance(cached_data, bytes)
 
 
 class TestGzipTextFileCacheCache(object):
@@ -564,10 +564,10 @@ class TestGzipTextFileCacheCache(object):
 
         ref_data = gziptext_cache.get(
             build_dov_url('data/boring/2004-103984.xml'))
-        assert type(ref_data) is bytes
+        assert isinstance(ref_data, bytes)
 
         assert os.path.exists(cached_file)
 
         cached_data = gziptext_cache.get(
             build_dov_url('data/boring/2004-103984.xml'))
-        assert type(cached_data) is bytes
+        assert isinstance(cached_data, bytes)

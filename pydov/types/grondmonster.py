@@ -1,15 +1,9 @@
 # -*- coding: utf-8 -*-
 """Module containing the DOV data type for grondmonster, including
 subtypes."""
-from .abstract import (
-    AbstractDovType,
-    AbstractDovSubType,
-)
-from pydov.types.fields import (
-    WfsField,
-    XmlField,
-    XsdType,
-)
+from pydov.types.fields import WfsField, XmlField, XsdType
+
+from .abstract import AbstractDovSubType, AbstractDovType
 
 
 class Korrelverdeling(AbstractDovSubType):
@@ -153,22 +147,6 @@ class Grondmonster(AbstractDovType):
 
     @classmethod
     def from_wfs_element(cls, feature, namespace):
-        """Build `Grondmonster` instance from a WFS feature element.
-
-        Parameters
-        ----------
-        feature : etree.Element
-            XML element representing a single record of the WFS layer.
-        namespace : str
-            Namespace associated with this WFS featuretype.
-
-        Returns
-        -------
-        grondmonster : Grondmonster
-            An instance of this class populated with the data from the WFS
-            element.
-
-        """
         grondmonster = cls(feature.findtext(
             './{{{}}}grondmonsterfiche'.format(namespace)))
 

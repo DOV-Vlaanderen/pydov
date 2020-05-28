@@ -8,9 +8,7 @@ Filter Encoding 1.1 and GML 3.1.1.
 import os
 
 from owslib.etree import etree
-from owslib.fes import (
-    Or,
-)
+from owslib.fes import Or
 
 
 class AbstractLocation(object):
@@ -33,7 +31,7 @@ class AbstractLocation(object):
         etree.Element
             XML element of the GML representation of this location.
         """
-        raise NotImplementedError
+        raise NotImplementedError('This should be implemented in a subclass.')
 
 
 class AbstractLocationFilter(object):
@@ -60,7 +58,7 @@ class AbstractLocationFilter(object):
             The name of the geometry column to query.
 
         """
-        raise NotImplementedError
+        raise NotImplementedError('This should be implemented in a subclass.')
 
     def toXML(self):
         """Return the XML representation of the location filter.
@@ -81,7 +79,7 @@ class AbstractLocationFilter(object):
             filters without the geometry column name are invalid.
 
         """
-        raise NotImplementedError
+        raise NotImplementedError('This should be implemented in a subclass.')
 
 
 class AbstractBinarySpatialFilter(AbstractLocationFilter):
@@ -101,7 +99,7 @@ class AbstractBinarySpatialFilter(AbstractLocationFilter):
             Type of this filter: one of Equals, Disjoint, Touches, Within,
             Overlaps, Crosses, Intersects or Contains.
         location : AbstractLocation
-            An instance of a location to use as location for the Within
+            An instance of a location to use as location for the spatial
             filter.
 
         """
@@ -118,33 +116,11 @@ class AbstractBinarySpatialFilter(AbstractLocationFilter):
         self.element.append(location.get_element())
 
     def set_geometry_column(self, geometry_column):
-        """Set the name of the geometry column to query.
-
-        Parameters
-        ----------
-        geometry_column : str
-            The name of the geometry column to query.
-
-        """
         self.geom_column = geometry_column
         geom = self.element.find('.//{http://www.opengis.net/ogc}PropertyName')
         geom.text = geometry_column
 
     def toXML(self):
-        """Return the XML representation of the Within filter.
-
-        Returns
-        -------
-        etree.Element
-            XML element of this Within filter.
-
-        Raises
-        ------
-        RuntimeError
-            When called before the geometry column name is set: location
-            filters without the geometry column name are invalid.
-
-        """
         if self.geom_column == '':
             raise RuntimeError('Geometry column has not been set. Use '
                                '"set_geometry_column" to set it.')
@@ -209,14 +185,6 @@ class Box(AbstractLocation):
         self.element.append(upper_corner)
 
     def get_element(self):
-        """Return the GML representation of the box.
-
-        Returns
-        -------
-        etree.Element
-            XML element of the GML representation of this box.
-
-        """
         return self.element
 
 
@@ -254,13 +222,6 @@ class Point(AbstractLocation):
         self.element.append(coordinates)
 
     def get_element(self):
-        """Return the GML representation of the point.
-
-        Returns
-        -------
-        etree.Element
-            XML element of the GML representation of this point.
-        """
         return self.element
 
 
@@ -288,13 +249,6 @@ class GmlObject(AbstractLocation):
             self.element = gml_element
 
     def get_element(self):
-        """Return the GML representation of this location.
-
-        Returns
-        -------
-        etree.Element
-            XML element of the GML representation of this location.
-        """
         return self.element
 
 
@@ -441,33 +395,11 @@ class WithinDistance(AbstractLocationFilter):
         self.element.append(distance)
 
     def set_geometry_column(self, geometry_column):
-        """Set the name of the geometry column to query.
-
-        Parameters
-        ----------
-        geometry_column : str
-            The name of the geometry column to query.
-
-        """
         self.geom_column = geometry_column
         geom = self.element.find('.//{http://www.opengis.net/ogc}PropertyName')
         geom.text = geometry_column
 
     def toXML(self):
-        """Return the XML representation of the WithinDistance filter.
-
-        Returns
-        -------
-        etree.Element
-            XML element of this WithinDistance filter.
-
-        Raises
-        ------
-        RuntimeError
-            When called before the geometry column name is set: location
-            filters without the geometry column name are invalid.
-
-        """
         if self.geom_column == '':
             raise RuntimeError('Geometry column has not been set. Use '
                                '"set_geometry_column" to set it.')
@@ -622,14 +554,6 @@ class GmlFilter(AbstractLocationFilter):
             raise ValueError('Failed to extract geometries from GML file.')
 
     def set_geometry_column(self, geometry_column):
-        """Set the name of the geometry column to query.
-
-        Parameters
-        ----------
-        geometry_column : str
-            The name of the geometry column to query.
-
-        """
         if len(self.subelements) == 1:
             self.element.set_geometry_column(geometry_column)
         else:
@@ -637,18 +561,4 @@ class GmlFilter(AbstractLocationFilter):
                 sub_element.set_geometry_column(geometry_column)
 
     def toXML(self):
-        """Return the XML representation of the GML filter.
-
-        Returns
-        -------
-        etree.Element
-            XML element of this GML filter.
-
-        Raises
-        ------
-        RuntimeError
-            When called before the geometry column name is set: location
-            filters without the geometry column name are invalid.
-
-        """
         return self.element.toXML()

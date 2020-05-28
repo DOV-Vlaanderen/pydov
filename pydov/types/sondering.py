@@ -1,14 +1,8 @@
 # -*- coding: utf-8 -*-
 """Module containing the DOV data type for CPT measurements (Sonderingen),
 including subtypes."""
-from pydov.types.abstract import (
-    AbstractDovType,
-    AbstractDovSubType,
-)
-from pydov.types.fields import (
-    XmlField,
-    WfsField,
-)
+from pydov.types.abstract import AbstractDovSubType, AbstractDovType
+from pydov.types.fields import WfsField, XmlField
 
 
 class Meetdata(AbstractDovSubType):
@@ -103,22 +97,6 @@ class Sondering(AbstractDovType):
 
     @classmethod
     def from_wfs_element(cls, feature, namespace):
-        """Build `Sondering` instance from a WFS feature element.
-
-        Parameters
-        ----------
-        feature : etree.Element
-            XML element representing a single record of the WFS layer.
-        namespace : str
-            Namespace associated with this WFS featuretype.
-
-        Returns
-        -------
-        sondering : Sondering
-            An instance of this class populated with the data from the WFS
-            element.
-
-        """
         s = cls(feature.findtext('./{{{}}}fiche'.format(namespace)))
 
         for field in cls.get_fields(source=('wfs',)).values():

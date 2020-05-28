@@ -180,7 +180,7 @@ class TestOwsutil(object):
         assert isinstance(fc['definition'], str)
 
         assert 'attributes' in fc
-        assert isinstance(fc['attributes'], str)
+        assert isinstance(fc['attributes'], dict)
 
         attrs = fc['attributes']
         if len(attrs) > 0:

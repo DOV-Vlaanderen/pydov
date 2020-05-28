@@ -270,7 +270,7 @@ class AbstractTestSearch(object):
             assert isinstance(f['query'], bool)
 
             assert 'cost' in f
-            assert isinstance(f['cost'], bool)
+            assert isinstance(f['cost'], int)
             assert f['cost'] > 0
 
             if 'values' in f:

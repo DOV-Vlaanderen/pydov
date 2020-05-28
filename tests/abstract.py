@@ -243,34 +243,34 @@ class AbstractTestSearch(object):
         """
         fields = self.get_search_object().get_fields()
 
-        assert type(fields) is dict
+        assert isinstance(fields, dict)
 
         for field in fields:
-            assert type(field) is str
+            assert isinstance(field, str)
 
             f = fields[field]
-            assert type(f) is dict
+            assert isinstance(f, dict)
 
             assert 'name' in f
-            assert type(f['name']) is str
+            assert isinstance(f['name'],str)
             assert f['name'] == field
 
             assert 'definition' in f
-            assert type(f['name']) is str
+            assert isinstance(f['name'], str)
 
             assert 'type' in f
-            assert type(f['type']) is str
+            assert isinstance(f['type'], str)
             assert f['type'] in ['string', 'float', 'integer', 'date',
                                  'datetime', 'boolean']
 
             assert 'notnull' in f
-            assert type(f['notnull']) is bool
+            assert isinstance(f['notnull'], bool)
 
             assert 'query' in f
-            assert type(f['query']) is bool
+            assert isinstance(f['query'], bool)
 
             assert 'cost' in f
-            assert type(f['cost']) is int
+            assert isinstance(f['cost'], bool)
             assert f['cost'] > 0
 
             if 'values' in f:
@@ -278,22 +278,22 @@ class AbstractTestSearch(object):
                     'cost', 'definition', 'name', 'notnull', 'query', 'type',
                     'values']
 
-                assert type(f['values']) is dict
+                assert isinstance(f['values'], dict)
 
                 for v in f['values'].keys():
-                    assert type(f['values'][v]) is str or f[
+                    assert isinstance(f['values'][v], str) or f[
                         'values'][v] is None
 
                     if f['type'] == 'string':
-                        assert type(v) is str
+                        assert isinstance(v, str)
                     elif f['type'] == 'float':
-                        assert type(v) is float
+                        assert isinstance(v, float)
                     elif f['type'] == 'integer':
-                        assert type(v) is int
+                        assert isinstance(v, int)
                     elif f['type'] == 'date':
-                        assert type(v) is datetime.date
+                        assert isinstance(v, datetime.date)
                     elif f['type'] == 'boolean':
-                        assert type(v) is bool
+                        assert isinstance(v, bool)
             else:
                 assert sorted(f.keys()) == ['cost', 'definition', 'name',
                                             'notnull', 'query', 'type']
@@ -320,7 +320,7 @@ class AbstractTestSearch(object):
             query=self.get_valid_query_single(),
             return_fields=self.get_valid_returnfields())
 
-        assert type(df) is DataFrame
+        assert isinstance(df, DataFrame)
 
     def test_search(self, mp_wfs, mp_get_schema, mp_remote_describefeaturetype,
                     mp_remote_md, mp_remote_fc, mp_remote_wfs_feature,
@@ -350,7 +350,7 @@ class AbstractTestSearch(object):
         df = self.get_search_object().search(
             query=self.get_valid_query_single())
 
-        assert type(df) is DataFrame
+        assert isinstance(df, DataFrame)
 
         assert list(df) == self.get_df_default_columns()
 
@@ -410,7 +410,7 @@ class AbstractTestSearch(object):
             query=self.get_valid_query_single(),
             return_fields=self.get_valid_returnfields())
 
-        assert type(df) is DataFrame
+        assert isinstance(df, DataFrame)
 
         assert list(df) == list(self.get_valid_returnfields())
 
@@ -431,7 +431,7 @@ class AbstractTestSearch(object):
             query=self.get_valid_query_single(),
             return_fields=self.get_valid_returnfields_subtype())
 
-        assert type(df) is DataFrame
+        assert isinstance(df, DataFrame)
 
         assert list(df) == list(self.get_valid_returnfields_subtype())
 
@@ -457,7 +457,7 @@ class AbstractTestSearch(object):
             query=self.get_valid_query_single(),
             return_fields=rf)
 
-        assert type(df) is DataFrame
+        assert isinstance(df, DataFrame)
         assert list(df) == rf
 
     def test_search_wrongreturnfields(self):
@@ -536,7 +536,7 @@ class AbstractTestSearch(object):
             query=self.get_valid_query_single(),
             return_fields=self.get_valid_returnfields_extra())
 
-        assert type(df) is DataFrame
+        assert isinstance(df, DataFrame)
 
         assert list(df) == list(self.get_valid_returnfields_extra())
 
@@ -565,7 +565,7 @@ class AbstractTestSearch(object):
             sort_by=SortBy([SortProperty(
                 self.get_valid_returnfields_extra()[0])]))
 
-        assert type(df) is DataFrame
+        assert isinstance(df, DataFrame)
 
     def test_search_sortby_invalid(self, mp_get_schema,
                                    mp_remote_describefeaturetype,
@@ -678,7 +678,7 @@ class AbstractTestSearch(object):
             for f in xml_fields.values():
                 if 'xsd_type' in f:
                     assert 'values' in fields[f['name']]
-                    assert type(fields[f['name']]['values']) is dict
+                    assert isinstance(fields[f['name']]['values'], dict)
 
     def test_get_fields_no_xsd(self):
         """Test whether no XML fields have an XSD type when no XSD schemas
@@ -922,24 +922,24 @@ class AbstractTestTypes(object):
         assert isinstance(fields, OrderedDict)
 
         for f in fields.keys():
-            assert type(f) is str
+            assert isinstance(f, str)
 
             field = fields[f]
             assert isinstance(field, AbstractField)
 
             assert 'name' in field
-            assert type(field['name']) is str
+            assert isinstance(field['name'], str)
             assert field['name'] == f
 
             assert 'source' in field
-            assert type(field['source']) is str
+            assert isinstance(field['source'], str)
             assert field['source'] in ('wfs', 'xml')
 
             assert 'sourcefield' in field
-            assert type(field['sourcefield']) is str
+            assert isinstance(field['sourcefield'],str)
 
             assert 'type' in field
-            assert type(field['type']) is str
+            assert isinstance(field['type'], str)
             assert field['type'] in ['string', 'float', 'integer', 'date',
                                      'datetime', 'boolean']
 
@@ -953,10 +953,10 @@ class AbstractTestTypes(object):
                         'name', 'source', 'sourcefield', 'type']
             elif field['source'] == 'xml':
                 assert 'definition' in field
-                assert type(field['definition']) is str
+                assert isinstance(field['definition'], str)
 
                 assert 'notnull' in field
-                assert type(field['notnull']) is bool
+                assert isinstance(field['notnull'], bool)
 
                 if 'xsd_type' in field:
                     assert sorted(field.keys()) == [
@@ -992,15 +992,15 @@ class AbstractTestTypes(object):
         feature = self.get_type().from_wfs_element(
             wfs_feature, self.get_namespace())
 
-        assert type(feature) is self.get_type()
+        assert isinstance(feature, self.get_type())
 
         assert feature.pkey.startswith(self.get_pkey_base())
 
         assert feature.pkey.startswith(
             build_dov_url('data/{}/'.format(feature.typename)))
 
-        assert type(feature.data) is dict
-        assert type(feature.subdata) is dict
+        assert isinstance(feature.data, dict)
+        assert isinstance(feature.subdata, dict)
 
     def test_get_df_array(self, wfs_feature, mp_dov_xml):
         """Test the get_df_array method.
@@ -1025,22 +1025,22 @@ class AbstractTestTypes(object):
 
         df_array = feature.get_df_array()
 
-        assert type(df_array) is list
+        assert isinstance(df_array, list)
 
         for record in df_array:
             assert len(record) == len(fields)
 
             for value, field in zip(record, fields):
                 if field['type'] == 'string':
-                    assert type(value) is str or np.isnan(value)
+                    assert isinstance(value, str) or np.isnan(value)
                 elif field['type'] == 'float':
-                    assert type(value) is float or np.isnan(value)
+                    assert isinstance(value, float) or np.isnan(value)
                 elif field['type'] == 'integer':
-                    assert type(value) is int or np.isnan(value)
+                    assert isinstance(value, int) or np.isnan(value)
                 elif field['type'] == 'date':
-                    assert type(value) is datetime.date or np.isnan(value)
+                    assert isinstance(value, datetime.date) or np.isnan(value)
                 elif field['type'] == 'boolean':
-                    assert type(value) is bool or np.isnan(value)
+                    assert isinstance(value, bool) or np.isnan(value)
 
                 if field['name'].startswith('pkey') and not pd.isnull(value):
                     assert value.startswith(build_dov_url('data/'))
@@ -1078,7 +1078,7 @@ class AbstractTestTypes(object):
                                             self.get_namespace())
 
         for feature in features:
-            assert type(feature) is self.get_type()
+            assert isinstance(feature, self.get_type())
 
     def test_from_wfs_bytes(self, wfs_getfeature):
         """Test the from_wfs method to construct objects from a WFS response,
@@ -1094,7 +1094,7 @@ class AbstractTestTypes(object):
                                             self.get_namespace())
 
         for feature in features:
-            assert type(feature) is self.get_type()
+            assert isinstance(feature, self.get_type())
 
     def test_from_wfs_tree(self, wfs_getfeature):
         """Test the from_wfs method to construct objects from a WFS response,
@@ -1110,7 +1110,7 @@ class AbstractTestTypes(object):
         features = self.get_type().from_wfs(tree, self.get_namespace())
 
         for feature in features:
-            assert type(feature) is self.get_type()
+            assert isinstance(feature, self.get_type())
 
     def test_from_wfs_list(self, wfs_getfeature):
         """Test the from_wfs method to construct objects from a WFS response,
@@ -1132,7 +1132,7 @@ class AbstractTestTypes(object):
             features = self.get_type().from_wfs(fts, self.get_namespace())
 
             for feature in features:
-                assert type(feature) is self.get_type()
+                assert isinstance(feature, self.get_type())
 
     def test_missing_pkey(self):
         """Test initialising an object type with a pkey of 'None'.

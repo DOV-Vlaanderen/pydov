@@ -85,127 +85,44 @@ def clean_xml(xml):
 
 
 class AbstractTestSearch(object):
-    """Class grouping common test code for search classes."""
-    def get_search_object(self):
-        """Get an instance of the search object for this type.
+    """Class grouping common test code for search classes.
 
-        Returns
-        -------
-        pydov.search.abstract.AbstractSearch
-            Instance of subclass of this type used for searching.
+    Subclasses should implement at least the following public attributes
+    in order for the tests defined here to be executed.
 
-        """
-        raise NotImplementedError('This should be implemented in a subclass.')
-
-    def get_type(self):
-        """Get the class reference for this datatype.
-
-        Returns
-        -------
-        pydov.types.abstract.AbstractDovType
+    Attributes
+    ----------
+    search_instance : pydov.search.abstract.AbstractSearch
+        Instance of subclass of this type used for searching.
+    datatype_class : pydov.types.abstract.AbstractDovType
             Class reference for the corresponding datatype.
-
-        """
-        raise NotImplementedError('This should be implemented in a subclass.')
-
-    def get_valid_query_single(self):
-        """Get a valid query returning a single feature.
-
-        Returns
-        -------
-        owslib.fes.OgcExpression
-            OGC expression of the query.
-
-        """
-        raise NotImplementedError('This should be implemented in a subclass.')
-
-    def get_inexistent_field(self):
-        """Get the name of a field that doesn't exist.
-
-        Returns
-        -------
-        str
+    valid_query_single : owslib.fes.OgcExpression
+        OGC expression of a valid query returning a single result.
+    inexistent_field : str
             The name of an inexistent field.
-
-        """
-        raise NotImplementedError('This should be implemented in a subclass.')
-
-    def get_wfs_field(self):
-        """Get the name of a WFS field.
-
-        Returns
-        -------
-        str
-            The name of the WFS field.
-
-        """
-        raise NotImplementedError('This should be implemented in a subclass.')
-
-    def get_xml_field(self):
-        """Get the name of a field defined in XML only.
-
-        Returns
-        -------
-        str
-            The name of the XML field.
-
-        """
-        raise NotImplementedError('This should be implemented in a subclass.')
-
-    def get_valid_returnfields(self):
-        """Get a list of valid return fields from the main type.
-
-        Returns
-        -------
-        tuple
-            A tuple containing only valid return fields.
-
-        """
-        raise NotImplementedError('This should be implemented in a subclass.')
-
-    def get_valid_returnfields_subtype(self):
-        """Get a list of valid return fields, including fields from a subtype.
-
-        Returns
-        -------
-        tuple
+    wfs_field : str
+        The name of a WFS field.
+    xml_field : str
+        The name of an XML field.
+    valid_returnfields : tuple of str
+        A tuple of valid return fields from the main type.
+    valid_returnfields_subtype : typle of str
             A tuple containing valid return fields, including fields from a
             subtype.
-
-        """
-        raise NotImplementedError('This should be implemented in a subclass.')
-
-    def get_valid_returnfields_extra(self):
-        """Get a list of valid return fields, including extra WFS only
-        fields not present in the default dataframe.
-
-        Returns
-        -------
-        tuple
+    valid_returnfields_extra : tuple of str
             A tuple containing valid return fields, including extra fields
             from WFS, not present in the default dataframe.
-
-        """
-        raise NotImplementedError('This should be implemented in a subclass.')
-
-    def get_df_default_columns(self):
-        """Get a list of the column names (and order) from the default
-        dataframe.
-
-        Returns
-        -------
-        list
+    df_default_columns : list of str
             A list of the column names of the default dataframe.
 
         """
-        raise NotImplementedError('This should be implemented in a subclass.')
 
     def test_pluggable_type(self):
         """Test whether the search object can be initialised by explicitly
         giving the objecttype.
         """
-        datatype = self.get_type()
-        self.get_search_object().__class__(objecttype=datatype)
+        datatype = self.datatype_class
+        self.search_instance.__class__(objecttype=datatype)
 
     def test_get_fields(self, mp_wfs, mp_get_schema,
                         mp_remote_describefeaturetype, mp_remote_md,
@@ -229,7 +146,7 @@ class AbstractTestSearch(object):
             Monkeypatch the call to get the remote feature catalogue.
 
         """
-        fields = self.get_search_object().get_fields()
+        fields = self.search_instance.get_fields()
 
         assert type(fields) is dict
 
@@ -303,10 +220,10 @@ class AbstractTestSearch(object):
             Monkeypatch the call to get WFS features.
 
         """
-        df = self.get_search_object().search(
+        df = self.search_instance.search(
             location=Within(Box(1, 2, 3, 4)),
-            query=self.get_valid_query_single(),
-            return_fields=self.get_valid_returnfields())
+            query=self.valid_query_single,
+            return_fields=self.valid_returnfields)
 
         assert type(df) is DataFrame
 
@@ -335,14 +252,14 @@ class AbstractTestSearch(object):
             Monkeypatch the call to get the remote XML data.
 
         """
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single())
+        df = self.search_instance.search(
+            query=self.valid_query_single)
 
         assert type(df) is DataFrame
 
-        assert list(df) == self.get_df_default_columns()
+        assert list(df) == self.df_default_columns
 
-        datatype = self.get_type()
+        datatype = self.datatype_class
         allfields = datatype.get_field_names()
         ownfields = datatype.get_field_names(include_subtypes=False)
         subfields = [f for f in allfields if f not in ownfields]
@@ -356,7 +273,7 @@ class AbstractTestSearch(object):
                 assert len(df[field].unique()) >= 1
 
         # dtype checks of the resulting df columns
-        fields = self.get_search_object().get_fields()
+        fields = self.search_instance.get_fields()
 
         for field in list(df):
             mandatory = fields[field]['notnull']
@@ -394,13 +311,13 @@ class AbstractTestSearch(object):
             Monkeypatch the call to get WFS features.
 
         """
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single(),
-            return_fields=self.get_valid_returnfields())
+        df = self.search_instance.search(
+            query=self.valid_query_single,
+            return_fields=self.valid_returnfields)
 
         assert type(df) is DataFrame
 
-        assert list(df) == list(self.get_valid_returnfields())
+        assert list(df) == list(self.valid_returnfields)
 
     def test_search_returnfields_subtype(self, mp_remote_wfs_feature):
         """Test the search method with the query parameter and a selection of
@@ -415,13 +332,13 @@ class AbstractTestSearch(object):
             Monkeypatch the call to get WFS features.
 
         """
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single(),
-            return_fields=self.get_valid_returnfields_subtype())
+        df = self.search_instance.search(
+            query=self.valid_query_single,
+            return_fields=self.valid_returnfields_subtype)
 
         assert type(df) is DataFrame
 
-        assert list(df) == list(self.get_valid_returnfields_subtype())
+        assert list(df) == list(self.valid_returnfields_subtype)
 
     def test_search_returnfields_order(self, mp_remote_wfs_feature):
         """Test the search method with the query parameter and a selection of
@@ -436,13 +353,13 @@ class AbstractTestSearch(object):
             Monkeypatch the call to get WFS features.
 
         """
-        rf = list(self.get_valid_returnfields())
+        rf = list(self.valid_returnfields)
 
-        while rf == list(self.get_valid_returnfields()):
+        while rf == list(self.valid_returnfields):
             random.shuffle(rf)
 
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single(),
+        df = self.search_instance.search(
+            query=self.valid_query_single,
             return_fields=rf)
 
         assert type(df) is DataFrame
@@ -455,12 +372,12 @@ class AbstractTestSearch(object):
         Test whether an InvalidFieldError is raised.
 
         """
-        return_fields = list(self.get_valid_returnfields())
-        return_fields.append(self.get_inexistent_field())
+        return_fields = list(self.valid_returnfields)
+        return_fields.append(self.inexistent_field)
 
         with pytest.raises(InvalidFieldError):
-            self.get_search_object().search(
-                query=self.get_valid_query_single(),
+            self.search_instance.search(
+                query=self.valid_query_single,
                 return_fields=return_fields)
 
     def test_search_wrongreturnfieldstype(self):
@@ -471,9 +388,9 @@ class AbstractTestSearch(object):
 
         """
         with pytest.raises(AttributeError):
-            self.get_search_object().search(
-                query=self.get_valid_query_single(),
-                return_fields=self.get_valid_returnfields()[0])
+            self.search_instance.search(
+                query=self.valid_query_single,
+                return_fields=self.valid_returnfields[0])
 
     def test_search_query_wrongfield(self):
         """Test the search method with the query parameter using an
@@ -482,11 +399,11 @@ class AbstractTestSearch(object):
         Test whether an InvalidFieldError is raised.
 
         """
-        query = PropertyIsEqualTo(propertyname=self.get_inexistent_field(),
+        query = PropertyIsEqualTo(propertyname=self.inexistent_field,
                                   literal='The cat is out of the bag.')
 
         with pytest.raises(InvalidFieldError):
-            self.get_search_object().search(
+            self.search_instance.search(
                 query=query)
 
     def test_search_query_wrongfield_returnfield(self):
@@ -496,11 +413,11 @@ class AbstractTestSearch(object):
         Test whether an InvalidFieldError is raised.
 
         """
-        query = PropertyIsEqualTo(propertyname=self.get_xml_field(),
+        query = PropertyIsEqualTo(propertyname=self.xml_field,
                                   literal='Geotechnisch onderzoek')
 
         with pytest.raises(InvalidFieldError):
-            self.get_search_object().search(query=query)
+            self.search_instance.search(query=query)
 
     def test_search_extrareturnfields(self, mp_get_schema,
                                       mp_remote_describefeaturetype,
@@ -520,13 +437,13 @@ class AbstractTestSearch(object):
             Monkeypatch the call to get the remote XML data.
 
         """
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single(),
-            return_fields=self.get_valid_returnfields_extra())
+        df = self.search_instance.search(
+            query=self.valid_query_single,
+            return_fields=self.valid_returnfields_extra)
 
         assert type(df) is DataFrame
 
-        assert list(df) == list(self.get_valid_returnfields_extra())
+        assert list(df) == list(self.valid_returnfields_extra)
 
     def test_search_sortby_valid(self, mp_get_schema,
                                  mp_remote_describefeaturetype,
@@ -548,10 +465,10 @@ class AbstractTestSearch(object):
             Monkeypatch the call to get the remote XML data.
 
         """
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single(),
+        df = self.search_instance.search(
+            query=self.valid_query_single,
             sort_by=SortBy([SortProperty(
-                self.get_valid_returnfields_extra()[0])]))
+                self.valid_returnfields_extra[0])]))
 
         assert type(df) is DataFrame
 
@@ -576,10 +493,10 @@ class AbstractTestSearch(object):
 
         """
         with pytest.raises(InvalidFieldError):
-            self.get_search_object().search(
-                query=self.get_valid_query_single(),
+            self.search_instance.search(
+                query=self.valid_query_single,
                 sort_by=SortBy([SortProperty(
-                    self.get_xml_field())]))
+                    self.xml_field)]))
 
     def test_search_xml_noresolve(self, mp_get_schema,
                                   mp_remote_describefeaturetype,
@@ -600,9 +517,9 @@ class AbstractTestSearch(object):
             Monkeypatch the call to break fetching of remote XML data.
 
         """
-        self.get_search_object().search(
-            query=self.get_valid_query_single(),
-            return_fields=self.get_valid_returnfields_extra())
+        self.search_instance.search(
+            query=self.valid_query_single,
+            return_fields=self.valid_returnfields_extra)
 
     def test_search_propertyinlist(self, mp_get_schema,
                                    mp_remote_describefeaturetype,
@@ -621,8 +538,8 @@ class AbstractTestSearch(object):
             Monkeypatch the call to get the remote XML data.
 
         """
-        self.get_search_object().search(
-            query=PropertyInList(self.get_wfs_field(), ['a', 'b']))
+        self.search_instance.search(
+            query=PropertyInList(self.wfs_field, ['a', 'b']))
 
     def test_search_join(self, mp_get_schema, mp_remote_describefeaturetype,
                          mp_remote_wfs_feature, mp_dov_xml):
@@ -640,11 +557,11 @@ class AbstractTestSearch(object):
             Monkeypatch the call to get the remote XML data.
 
         """
-        df1 = self.get_search_object().search(
-            query=self.get_valid_query_single())
+        df1 = self.search_instance.search(
+            query=self.valid_query_single)
 
-        self.get_search_object().search(
-            query=Join(df1, self.get_df_default_columns()[0]))
+        self.search_instance.search(
+            query=Join(df1, self.df_default_columns[0]))
 
     def test_get_fields_xsd_values(self, mp_remote_xsd):
         """Test the result of get_fields when the XML field has an XSD type.
@@ -658,11 +575,11 @@ class AbstractTestSearch(object):
             Monkeypatch the call to get XSD schemas.
 
         """
-        xsd_schemas = self.get_type().get_xsd_schemas()
+        xsd_schemas = self.datatype_class.get_xsd_schemas()
 
         if len(xsd_schemas) > 0:
-            xml_fields = self.get_type().get_fields(source='xml')
-            fields = self.get_search_object().get_fields()
+            xml_fields = self.datatype_class.get_fields(source='xml')
+            fields = self.search_instance.get_fields()
             for f in xml_fields.values():
                 if 'xsd_type' in f:
                     assert 'values' in fields[f['name']]
@@ -671,10 +588,10 @@ class AbstractTestSearch(object):
     def test_get_fields_no_xsd(self):
         """Test whether no XML fields have an XSD type when no XSD schemas
         are available."""
-        xsd_schemas = self.get_type().get_xsd_schemas()
+        xsd_schemas = self.datatype_class.get_xsd_schemas()
 
         if len(xsd_schemas) == 0:
-            xml_fields = self.get_type().get_fields(source='xml')
+            xml_fields = self.datatype_class.get_fields(source='xml')
             for f in xml_fields.values():
                 assert 'xsd_type' not in f
 
@@ -686,12 +603,12 @@ class AbstractTestSearch(object):
         needed.
 
         """
-        xsd_schemas = self.get_type().get_xsd_schemas()
+        xsd_schemas = self.datatype_class.get_xsd_schemas()
 
         xsd_type_count = 0
 
         if len(xsd_schemas) > 0:
-            xml_fields = self.get_type().get_fields(source='xml')
+            xml_fields = self.datatype_class.get_fields(source='xml')
             for f in xml_fields.values():
                 if 'xsd_type' in f:
                     xsd_type_count += 1

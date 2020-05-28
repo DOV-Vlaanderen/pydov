@@ -53,41 +53,30 @@ def md_metadata(wfs, mp_remote_md):
 
 
 class TestSonderingSearch(AbstractTestSearch):
-    def get_search_object(self):
-        return SonderingSearch()
 
-    def get_type(self):
-        return Sondering
+    search_instance = SonderingSearch()
+    datatype_class = Sondering
 
-    def get_valid_query_single(self):
-        return PropertyIsEqualTo(propertyname='sondeernummer',
-                                 literal='GEO-61/3075-S1')
+    valid_query_single = PropertyIsEqualTo(propertyname='sondeernummer',
+                                           literal='GEO-61/3075-S1')
 
-    def get_inexistent_field(self):
-        return 'onbestaand'
+    inexistent_field = 'onbestaand'
+    wfs_field = 'sondeernummer'
+    xml_field = 'gw_meting'
 
-    def get_wfs_field(self):
-        return 'sondeernummer'
+    valid_returnfields = (
+        'pkey_sondering', 'sondeernummer', 'diepte_sondering_tot',
+                          'datum_aanvang')
+    valid_returnfields_subtype = (
+        'pkey_sondering', 'sondeernummer', 'z', 'qc', 'Qt')
+    valid_returnfields_extra = ('pkey_sondering', 'conus')
 
-    def get_xml_field(self):
-        return 'gw_meting'
-
-    def get_valid_returnfields(self):
-        return ('pkey_sondering', 'sondeernummer', 'diepte_sondering_tot',
-                'datum_aanvang')
-
-    def get_valid_returnfields_subtype(self):
-        return ('pkey_sondering', 'sondeernummer', 'z', 'qc', 'Qt')
-
-    def get_valid_returnfields_extra(self):
-        return ('pkey_sondering', 'conus')
-
-    def get_df_default_columns(self):
-        return ['pkey_sondering', 'sondeernummer', 'x', 'y',
-                'start_sondering_mtaw', 'diepte_sondering_van',
-                'diepte_sondering_tot', 'datum_aanvang', 'uitvoerder',
-                'sondeermethode', 'apparaat', 'datum_gw_meting',
-                'diepte_gw_m', 'z', 'qc', 'Qt', 'fs', 'u', 'i']
+    df_default_columns = [
+        'pkey_sondering', 'sondeernummer', 'x', 'y',
+        'start_sondering_mtaw', 'diepte_sondering_van',
+        'diepte_sondering_tot', 'datum_aanvang', 'uitvoerder',
+        'sondeermethode', 'apparaat', 'datum_gw_meting',
+        'diepte_gw_m', 'z', 'qc', 'Qt', 'fs', 'u', 'i']
 
     def test_search_date(self, mp_wfs, mp_get_schema,
                          mp_remote_describefeaturetype, mp_remote_md,
@@ -114,15 +103,15 @@ class TestSonderingSearch(AbstractTestSearch):
             Monkeypatch the call to get the remote XML data.
 
         """
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single())
+        df = self.search_instance.search(
+            query=self.valid_query_single)
 
         # specific test for the Zulu time wfs 1.1.0 issue
         assert df.datum_aanvang.unique()[0] == datetime.date(2002, 12, 17)
 
         assert pd.Timestamp(
             df.datum_gw_meting.unique()[0]).to_pydatetime() == \
-               datetime.datetime(2002, 12, 17, 14, 30, 0, 0)
+            datetime.datetime(2002, 12, 17, 14, 30, 0, 0)
 
     def test_search_nan(self, mp_wfs, mp_get_schema,
                         mp_remote_describefeaturetype, mp_remote_md,
@@ -149,8 +138,8 @@ class TestSonderingSearch(AbstractTestSearch):
             Monkeypatch the call to get the remote XML data.
 
         """
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single())
+        df = self.search_instance.search(
+            query=self.valid_query_single)
 
         assert df.Qt.hasnans
 
@@ -174,8 +163,8 @@ class TestSonderingSearch(AbstractTestSearch):
             Monkeypatch the call to get the remote XML data.
 
         """
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single(),
+        df = self.search_instance.search(
+            query=self.valid_query_single,
             return_fields=('pkey_sondering', 'sondeernummer', 'diepte_gw_m'))
 
         assert df.diepte_gw_m[0] == 3.60

@@ -50,43 +50,29 @@ def md_metadata(wfs, mp_remote_md):
 
 
 class TestBoringSearch(AbstractTestSearch):
-    def get_search_object(self):
-        return BoringSearch()
 
-    def get_type(self):
-        return Boring
+    search_instance = BoringSearch()
+    datatype_class = Boring
 
-    def get_valid_query_single(self):
-        return PropertyIsEqualTo(propertyname='boornummer',
-                                 literal='GEO-04/169-BNo-B1')
+    valid_query_single = PropertyIsEqualTo(propertyname='boornummer',
+                                           literal='GEO-04/169-BNo-B1')
 
-    def get_inexistent_field(self):
-        return 'onbestaand'
+    inexistent_field = 'onbestaand'
+    wfs_field = 'boornummer'
+    xml_field = 'boormethode'
 
-    def get_wfs_field(self):
-        return 'boornummer'
+    valid_returnfields = ('pkey_boring', 'boornummer', 'diepte_boring_tot',
+                          'datum_aanvang')
+    valid_returnfields_subtype = ('pkey_boring', 'boornummer',
+                                  'diepte_methode_van', 'diepte_methode_tot')
+    valid_returnfields_extra = ('pkey_boring', 'doel')
 
-    def get_xml_field(self):
-        return 'boormethode'
-
-    def get_valid_returnfields(self):
-        return ('pkey_boring', 'boornummer', 'diepte_boring_tot',
-                'datum_aanvang')
-
-    def get_valid_returnfields_subtype(self):
-        return ('pkey_boring', 'boornummer', 'diepte_methode_van',
-                'diepte_methode_tot')
-
-    def get_valid_returnfields_extra(self):
-        return ('pkey_boring', 'doel')
-
-    def get_df_default_columns(self):
-        return ['pkey_boring', 'boornummer', 'x', 'y', 'mv_mtaw',
-                'start_boring_mtaw', 'gemeente',
-                'diepte_boring_van', 'diepte_boring_tot',
-                'datum_aanvang', 'uitvoerder', 'boorgatmeting',
-                'diepte_methode_van', 'diepte_methode_tot',
-                'boormethode']
+    df_default_columns = ['pkey_boring', 'boornummer', 'x', 'y', 'mv_mtaw',
+                          'start_boring_mtaw', 'gemeente',
+                          'diepte_boring_van', 'diepte_boring_tot',
+                          'datum_aanvang', 'uitvoerder', 'boorgatmeting',
+                          'diepte_methode_van', 'diepte_methode_tot',
+                          'boormethode']
 
     def test_search_date(self, mp_wfs, mp_get_schema,
                          mp_remote_describefeaturetype, mp_remote_md,
@@ -113,8 +99,8 @@ class TestBoringSearch(AbstractTestSearch):
             Monkeypatch the call to get the remote XML data.
 
         """
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single())
+        df = self.search_instance.search(
+            query=self.valid_query_single)
 
         # specific test for the Zulu time wfs 1.1.0 issue
         assert df.datum_aanvang.unique()[0] == datetime.date(2004, 12, 20)
@@ -144,8 +130,8 @@ class TestBoringSearch(AbstractTestSearch):
             Monkeypatch the call to get the remote XML data.
 
         """
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single())
+        df = self.search_instance.search(
+            query=self.valid_query_single)
 
         assert df.mv_mtaw.hasnans
 
@@ -169,8 +155,8 @@ class TestBoringSearch(AbstractTestSearch):
             Monkeypatch the call to get the remote XML data.
 
         """
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single(),
+        df = self.search_instance.search(
+            query=self.valid_query_single,
             return_fields=('pkey_boring', 'boornummer', 'boorgatmeting'))
 
         assert not df.boorgatmeting[0]

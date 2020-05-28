@@ -24,41 +24,30 @@ location_xsd_base = 'tests/data/types/grondwatermonster/xsd_*.xml'
 
 
 class TestGrondwaterMonsterSearch(AbstractTestSearch):
-    def get_search_object(self):
-        return GrondwaterMonsterSearch()
 
-    def get_type(self):
-        return GrondwaterMonster
+    search_instance = GrondwaterMonsterSearch()
+    datatype_class = GrondwaterMonster
 
-    def get_valid_query_single(self):
-        return PropertyIsEqualTo(propertyname='grondwatermonsterfiche',
-                                 literal='https://www.dov.vlaanderen.be/data/'
-                                         'watermonster/2006-115684')
+    valid_query_single = PropertyIsEqualTo(
+        propertyname='grondwatermonsterfiche',
+        literal='https://www.dov.vlaanderen.be/data/'
+        'watermonster/2006-115684')
 
-    def get_inexistent_field(self):
-        return 'onbestaand'
+    inexistent_field = 'onbestaand'
+    wfs_field = 'kationen'
+    xml_field = 'eenheid'
 
-    def get_wfs_field(self):
-        return 'kationen'
+    valid_returnfields = ('pkey_grondwatermonster', 'datum_monstername')
+    valid_returnfields_subtype = (
+        'pkey_grondwatermonster', 'datum_monstername', 'eenheid')
+    valid_returnfields_extra = ('pkey_grondwatermonster', 'kationen')
 
-    def get_xml_field(self):
-        return 'eenheid'
-
-    def get_valid_returnfields(self):
-        return ('pkey_grondwatermonster', 'datum_monstername')
-
-    def get_valid_returnfields_subtype(self):
-        return ('pkey_grondwatermonster', 'datum_monstername', 'eenheid')
-
-    def get_valid_returnfields_extra(self):
-        return ('pkey_grondwatermonster', 'kationen')
-
-    def get_df_default_columns(self):
-        return ['pkey_grondwatermonster', 'grondwatermonsternummer',
-                'pkey_grondwaterlocatie', 'gw_id', 'pkey_filter',
-                'filternummer', 'x', 'y', 'start_grondwaterlocatie_mtaw',
-                'gemeente', 'datum_monstername', 'parametergroep',
-                'parameter', 'detectie', 'waarde', 'eenheid', 'veld_labo']
+    df_default_columns = [
+        'pkey_grondwatermonster', 'grondwatermonsternummer',
+        'pkey_grondwaterlocatie', 'gw_id', 'pkey_filter',
+        'filternummer', 'x', 'y', 'start_grondwaterlocatie_mtaw',
+        'gemeente', 'datum_monstername', 'parametergroep',
+        'parameter', 'detectie', 'waarde', 'eenheid', 'veld_labo']
 
     def test_search_date(self, mp_wfs, mp_get_schema,
                          mp_remote_describefeaturetype, mp_remote_md,
@@ -85,8 +74,8 @@ class TestGrondwaterMonsterSearch(AbstractTestSearch):
             Monkeypatch the call to get the remote XML data.
 
         """
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single())
+        df = self.search_instance.search(
+            query=self.valid_query_single)
 
         # specific test for the Zulu time wfs 1.1.0 issue
         assert df.datum_monstername.sort_values()[0] == datetime.date(

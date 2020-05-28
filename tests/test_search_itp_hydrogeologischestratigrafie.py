@@ -37,39 +37,27 @@ location_xsd_base = \
 
 
 class TestHydrogeologischeStratigrafieSearch(AbstractTestSearch):
-    def get_search_object(self):
-        return HydrogeologischeStratigrafieSearch()
 
-    def get_type(self):
-        return HydrogeologischeStratigrafie
+    search_instance = HydrogeologischeStratigrafieSearch()
+    datatype_class = HydrogeologischeStratigrafie
 
-    def get_valid_query_single(self):
-        return PropertyIsEqualTo(propertyname='Proefnummer',
-                                 literal='GEO-74/254-b1')
+    valid_query_single = PropertyIsEqualTo(propertyname='Proefnummer',
+                                           literal='GEO-74/254-b1')
 
-    def get_inexistent_field(self):
-        return 'onbestaand'
+    inexistent_field = 'onbestaand'
+    wfs_field = 'Proefnummer'
+    xml_field = 'aquifer'
 
-    def get_wfs_field(self):
-        return 'Proefnummer'
+    valid_returnfields = ('pkey_interpretatie',
+                          'betrouwbaarheid_interpretatie')
+    valid_returnfields_subtype = (
+        'pkey_interpretatie', 'diepte_laag_van', 'diepte_laag_tot')
+    valid_returnfields_extra = ('pkey_interpretatie', 'gemeente')
 
-    def get_xml_field(self):
-        return 'aquifer'
-
-    def get_valid_returnfields(self):
-        return ('pkey_interpretatie', 'betrouwbaarheid_interpretatie')
-
-    def get_valid_returnfields_subtype(self):
-        return ('pkey_interpretatie', 'diepte_laag_van', 'diepte_laag_tot')
-
-    def get_valid_returnfields_extra(self):
-        return ('pkey_interpretatie', 'gemeente')
-
-    def get_df_default_columns(self):
-        return ['pkey_interpretatie', 'pkey_boring',
-                'betrouwbaarheid_interpretatie', 'x', 'y',
-                'diepte_laag_van', 'diepte_laag_tot',
-                'aquifer']
+    df_default_columns = ['pkey_interpretatie', 'pkey_boring',
+                          'betrouwbaarheid_interpretatie', 'x', 'y',
+                          'diepte_laag_van', 'diepte_laag_tot',
+                          'aquifer']
 
     def test_search_nan(self, mp_wfs, mp_get_schema,
                         mp_remote_describefeaturetype, mp_remote_md,
@@ -96,8 +84,8 @@ class TestHydrogeologischeStratigrafieSearch(AbstractTestSearch):
             Monkeypatch the call to get the remote XML data.
 
         """
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single())
+        df = self.search_instance.search(
+            query=self.valid_query_single)
 
     def test_search_customreturnfields(self, mp_get_schema,
                                        mp_remote_describefeaturetype,
@@ -118,8 +106,8 @@ class TestHydrogeologischeStratigrafieSearch(AbstractTestSearch):
             Monkeypatch the call to get the remote XML data.
 
         """
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single(),
+        df = self.search_instance.search(
+            query=self.valid_query_single,
             return_fields=('pkey_interpretatie', 'pkey_boring'))
 
         assert type(df) is DataFrame
@@ -148,8 +136,8 @@ class TestHydrogeologischeStratigrafieSearch(AbstractTestSearch):
             Monkeypatch the call to get the remote XML data.
 
         """
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single(),
+        df = self.search_instance.search(
+            query=self.valid_query_single,
             return_fields=('pkey_interpretatie', 'diepte_laag_tot'))
 
         assert df.diepte_laag_tot[0] == 2.5

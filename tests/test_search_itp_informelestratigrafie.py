@@ -33,40 +33,28 @@ location_xsd_base = \
 
 
 class TestInformeleStratigrafieSearch(AbstractTestSearch):
-    def get_search_object(self):
-        return InformeleStratigrafieSearch()
 
-    def get_type(self):
-        return InformeleStratigrafie
+    search_instance = InformeleStratigrafieSearch()
+    datatype_class = InformeleStratigrafie
 
-    def get_valid_query_single(self):
-        return PropertyIsEqualTo(propertyname='Proefnummer',
-                                 literal='kb21d54e-B45')
+    valid_query_single = PropertyIsEqualTo(propertyname='Proefnummer',
+                                           literal='kb21d54e-B45')
 
-    def get_inexistent_field(self):
-        return 'onbestaand'
+    inexistent_field = 'onbestaand'
+    wfs_field = 'Proefnummer'
+    xml_field = 'diepte_laag_van'
 
-    def get_xml_field(self):
-        return 'diepte_laag_van'
+    valid_returnfields = ('pkey_interpretatie',
+                          'betrouwbaarheid_interpretatie')
+    valid_returnfields_subtype = (
+        'pkey_interpretatie', 'diepte_laag_van', 'diepte_laag_tot')
+    valid_returnfields_extra = ('pkey_interpretatie', 'gemeente')
 
-    def get_wfs_field(self):
-        return 'Proefnummer'
-
-    def get_valid_returnfields(self):
-        return ('pkey_interpretatie', 'betrouwbaarheid_interpretatie')
-
-    def get_valid_returnfields_subtype(self):
-        return ('pkey_interpretatie', 'diepte_laag_van', 'diepte_laag_tot')
-
-    def get_valid_returnfields_extra(self):
-        return ('pkey_interpretatie', 'gemeente')
-
-    def get_df_default_columns(self):
-        return ['pkey_interpretatie', 'pkey_boring',
-                'pkey_sondering',
-                'betrouwbaarheid_interpretatie', 'x', 'y',
-                'diepte_laag_van', 'diepte_laag_tot',
-                'beschrijving']
+    df_default_columns = ['pkey_interpretatie', 'pkey_boring',
+                          'pkey_sondering',
+                          'betrouwbaarheid_interpretatie', 'x', 'y',
+                          'diepte_laag_van', 'diepte_laag_tot',
+                          'beschrijving']
 
     def test_search_nan(self, mp_wfs, mp_get_schema,
                         mp_remote_describefeaturetype, mp_remote_md,
@@ -93,8 +81,8 @@ class TestInformeleStratigrafieSearch(AbstractTestSearch):
             Monkeypatch the call to get the remote XML data.
 
         """
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single())
+        df = self.search_instance.search(
+            query=self.valid_query_single)
 
         assert df.pkey_sondering.hasnans
 
@@ -117,8 +105,8 @@ class TestInformeleStratigrafieSearch(AbstractTestSearch):
             Monkeypatch the call to get the remote XML data.
 
         """
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single(),
+        df = self.search_instance.search(
+            query=self.valid_query_single,
             return_fields=('pkey_interpretatie', 'pkey_boring',
                            'pkey_sondering'))
 
@@ -150,8 +138,8 @@ class TestInformeleStratigrafieSearch(AbstractTestSearch):
             Monkeypatch the call to get the remote XML data.
 
         """
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single(),
+        df = self.search_instance.search(
+            query=self.valid_query_single,
             return_fields=('pkey_interpretatie', 'diepte_laag_tot'))
 
         assert df.diepte_laag_tot[0] == 15.5

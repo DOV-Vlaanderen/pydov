@@ -25,44 +25,31 @@ location_xsd_base = 'tests/data/types/grondwaterfilter/xsd_*.xml'
 
 
 class TestGrondwaterfilterSearch(AbstractTestSearch):
-    def get_search_object(self):
-        return GrondwaterFilterSearch()
 
-    def get_type(self):
-        return GrondwaterFilter
+    search_instance = GrondwaterFilterSearch()
+    datatype_class = GrondwaterFilter
 
-    def get_valid_query_single(self):
-        return PropertyIsEqualTo(propertyname='filterfiche',
-                                 literal=build_dov_url(
-                                     'data/filter/2003-004471'))
+    valid_query_single = PropertyIsEqualTo(propertyname='filterfiche',
+                                           literal=build_dov_url(
+                                               'data/filter/2003-004471'))
 
-    def get_inexistent_field(self):
-        return 'onbestaand'
+    inexistent_field = 'onbestaand'
+    wfs_field = 'filternummer'
+    xml_field = 'peil_mtaw'
 
-    def get_wfs_field(self):
-        return 'filternummer'
+    valid_returnfields = ('pkey_filter', 'filternummer')
+    valid_returnfields_subtype = ('pkey_filter', 'filternummer', 'peil_mtaw')
+    valid_returnfields_extra = ('pkey_filter', 'beheerder')
 
-    def get_xml_field(self):
-        return 'peil_mtaw'
-
-    def get_valid_returnfields(self):
-        return ('pkey_filter', 'filternummer')
-
-    def get_valid_returnfields_subtype(self):
-        return ('pkey_filter', 'filternummer', 'peil_mtaw')
-
-    def get_valid_returnfields_extra(self):
-        return ('pkey_filter', 'beheerder')
-
-    def get_df_default_columns(self):
-        return ['pkey_filter', 'pkey_grondwaterlocatie', 'gw_id',
-                'filternummer', 'filtertype', 'x', 'y',
-                'start_grondwaterlocatie_mtaw', 'mv_mtaw',
-                'gemeente', 'meetnet_code', 'aquifer_code',
-                'grondwaterlichaam_code', 'regime',
-                'diepte_onderkant_filter', 'lengte_filter',
-                'datum', 'tijdstip', 'peil_mtaw',
-                'betrouwbaarheid', 'methode', 'filterstatus', 'filtertoestand']
+    df_default_columns = ['pkey_filter', 'pkey_grondwaterlocatie', 'gw_id',
+                          'filternummer', 'filtertype', 'x', 'y',
+                          'start_grondwaterlocatie_mtaw', 'mv_mtaw',
+                          'gemeente', 'meetnet_code', 'aquifer_code',
+                          'grondwaterlichaam_code', 'regime',
+                          'diepte_onderkant_filter', 'lengte_filter',
+                          'datum', 'tijdstip', 'peil_mtaw',
+                          'betrouwbaarheid', 'methode', 'filterstatus',
+                          'filtertoestand']
 
     def test_search_date(self, mp_wfs, mp_get_schema,
                          mp_remote_describefeaturetype, mp_remote_md,
@@ -89,8 +76,8 @@ class TestGrondwaterfilterSearch(AbstractTestSearch):
             Monkeypatch the call to get the remote XML data.
 
         """
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single())
+        df = self.search_instance.search(
+            query=self.valid_query_single)
 
         # specific test for the Zulu time wfs 1.1.0 issue
         assert df.datum.sort_values()[0] == datetime.date(2004, 4, 7)
@@ -115,8 +102,8 @@ class TestGrondwaterfilterSearch(AbstractTestSearch):
             Monkeypatch the call to get the remote XML data.
 
         """
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single(),
+        df = self.search_instance.search(
+            query=self.valid_query_single,
             return_fields=('pkey_filter', 'gw_id', 'filternummer',
                            'meetnet_code'))
 

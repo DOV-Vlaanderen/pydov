@@ -24,42 +24,29 @@ location_xsd_base = 'tests/data/types/grondmonster/xsd_*.xml'
 
 
 class TestGrondmonsterSearch(AbstractTestSearch):
-    def get_search_object(self):
-        return GrondmonsterSearch()
 
-    def get_type(self):
-        return Grondmonster
+    search_instance = GrondmonsterSearch()
+    datatype_class = Grondmonster
 
-    def get_valid_query_single(self):
-        return PropertyIsEqualTo(propertyname='boornummer',
-                                 literal='GEO-04/024-B6')
+    valid_query_single = PropertyIsEqualTo(propertyname='boornummer',
+                                           literal='GEO-04/024-B6')
 
-    def get_inexistent_field(self):
-        return 'onbestaand'
+    inexistent_field = 'onbestaand'
+    wfs_field = 'boornummer'
+    xml_field = 'astm_naam'
 
-    def get_wfs_field(self):
-        return 'boornummer'
+    valid_returnfields = ('pkey_grondmonster', 'boornummer')
+    valid_returnfields_subtype = (
+        'pkey_grondmonster', 'boornummer', 'diameter')
+    valid_returnfields_extra = ('pkey_grondmonster', 'korrelverdeling')
 
-    def get_xml_field(self):
-        return 'astm_naam'
-
-    def get_valid_returnfields(self):
-        return ('pkey_grondmonster', 'boornummer')
-
-    def get_valid_returnfields_subtype(self):
-        return ('pkey_grondmonster', 'boornummer', 'diameter')
-
-    def get_valid_returnfields_extra(self):
-        return ('pkey_grondmonster', 'korrelverdeling')
-
-    def get_df_default_columns(self):
-        return ['pkey_grondmonster', 'naam', 'pkey_boring', 'boornummer',
-                'datum', 'x', 'y', 'gemeente', 'diepte_van_m', 'diepte_tot_m',
-                'peil_van_mtaw', 'peil_tot_mtaw', 'monstertype', 'astm_naam',
-                'grondsoort_bggg', 'humusgehalte', 'kalkgehalte',
-                'uitrolgrens', 'vloeigrens', 'glauconiet',
-                'korrelvolumemassa', 'volumemassa', 'watergehalte',
-                'diameter', 'fractie', 'methode']
+    df_default_columns = ['pkey_grondmonster', 'naam', 'pkey_boring', 'boornummer',
+                          'datum', 'x', 'y', 'gemeente', 'diepte_van_m', 'diepte_tot_m',
+                          'peil_van_mtaw', 'peil_tot_mtaw', 'monstertype', 'astm_naam',
+                          'grondsoort_bggg', 'humusgehalte', 'kalkgehalte',
+                          'uitrolgrens', 'vloeigrens', 'glauconiet',
+                          'korrelvolumemassa', 'volumemassa', 'watergehalte',
+                          'diameter', 'fractie', 'methode']
 
     def test_search_xmlresolving(self, mp_get_schema,
                                  mp_remote_describefeaturetype,
@@ -81,8 +68,8 @@ class TestGrondmonsterSearch(AbstractTestSearch):
             Monkeypatch the call to get the remote XML data.
 
         """
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single(),
+        df = self.search_instance.search(
+            query=self.valid_query_single,
             return_fields=('pkey_grondmonster', 'boornummer', 'humusgehalte',
                            'methode'))
 

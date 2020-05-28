@@ -1,4 +1,6 @@
 
+.. _contribute:
+
 Contributing to pydov
 =====================
 

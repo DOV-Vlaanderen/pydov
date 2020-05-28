@@ -428,7 +428,7 @@ def plaintext_cache(request):
     This fixture should be parametrized, with a list of parameters in the
     order described below.
 
-    Paramaters
+    Parameters
     ----------
     max_age : datetime.timedelta
         The maximum age to use for the cache.
@@ -459,7 +459,7 @@ def gziptext_cache(request):
     This fixture should be parametrized, with a list of parameters in the
     order described below.
 
-    Paramaters
+    Parameters
     ----------
     max_age : datetime.timedelta
         The maximum age to use for the cache.

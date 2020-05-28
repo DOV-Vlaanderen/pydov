@@ -260,7 +260,7 @@ class TestPlainTextFileCacheCache(object):
     def test_return_type(self, plaintext_cache, mp_remote_xml):
         """The the return type of the get method.
 
-        Test wether the get method returns the data in the same datatype (
+        Test whether the get method returns the data in the same datatype (
         i.e. bytes) regardless of the data was cached or not.
 
         Parameters
@@ -542,7 +542,7 @@ class TestGzipTextFileCacheCache(object):
     def test_return_type(self, gziptext_cache, mp_remote_xml):
         """The the return type of the get method.
 
-        Test wether the get method returns the data in the same datatype (
+        Test whether the get method returns the data in the same datatype (
         i.e. bytes) regardless of the data was cached or not.
 
         Parameters

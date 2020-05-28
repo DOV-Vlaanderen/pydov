@@ -24,7 +24,7 @@ issuing::
 Writing custom hooks
 ********************
 Users can write custom hooks and add them to pydov at runtime, to be able to
-interact with pydov at the occurance of certain 'events'.
+interact with pydov at the occurrence of certain 'events'.
 
 To implement custom hooks, create a new subclass of
 :class:`pydov.util.hooks.AbstractReadHook` and/or

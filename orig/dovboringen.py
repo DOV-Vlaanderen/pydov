@@ -452,7 +452,7 @@ class DovBoringen(object):
         return result
 
     def get_boringen_data(self, boringen, interpretation):
-        """Retreive the data from the boringen of an on-line xml query or
+        """Retrieve the data from the boringen of an on-line xml query or
         downloaded xml file
 
         Parameters

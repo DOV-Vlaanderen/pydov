@@ -46,7 +46,7 @@ Now we can query for boreholes either on attributes, on location or on a combina
     )
     dataframe
 
-pydov will load (status is shown in the progress bar) the required data and return the data into a Pandas DataFrame:
+pydov will perform the search and load the matching data (status is shown in the progress bar) into a Pandas DataFrame:
 
 ::
 
@@ -83,7 +83,7 @@ To query on location, we use location objects and spatial filters from the pydov
     )
     dataframe.head()
 
-pydov will load the required data and return the data into a Pandas DataFrame (for convenience, only the first 5 lines are shown in the output using the :code:`.head()` method from Pandas:
+pydov will perform the search and load the matching data into a Pandas DataFrame. For convenience, only the first 5 lines are shown in the output using the :code:`.head()` method from Pandas:
 
 ::
 
@@ -98,8 +98,8 @@ pydov will load the required data and return the data into a Pandas DataFrame (f
 
 .. note::
 
-    You see the :code:`cc` in the progress bar while loading of the data? It defines the data was loaded from
-    your local cache instead of downloaded as it was already part of an earlier data request. See the :ref:`caching documentation <caching>`
+    Notice the :code:`cc` in the progress bar while loading of the data? It means the data was loaded from
+    your local cache instead of being downloaded, as it was already part of an earlier data request. See the :ref:`caching documentation <caching>`
     for more in-depth information.
 
 Attribute queries can be combined with location filtering by specifying both parameters in the search call:
@@ -113,7 +113,7 @@ Attribute queries can be combined with location filtering by specifying both par
     )
     dataframe
 
-pydov will again load the required data and return the data into a Pandas DataFrame:
+pydov will perform the search and return the data that matches both the attribute and the location filters as a Pandas DataFrame:
 
 ::
 

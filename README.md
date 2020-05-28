@@ -31,12 +31,12 @@ from owslib.fes import PropertyIsGreaterThan
 boringsearch = BoringSearch()
 
 dataframe = boringsearch.search(
-    query=PropertyIsGreaterThan( propertyname='diepte_tot_m', literal='550'),
+    query=PropertyIsGreaterThan(propertyname='diepte_tot_m', literal='550'),
     location=Within(Box(107500, 202000, 108500, 203000))
 )
 ```
 
-The resulting dataframe contains the information on boreholes (boringen) within the provided coordinate box (as defined by the `location` argument)
+The resulting dataframe contains the information on boreholes (boringen) within the provided bounding box (as defined by the `location` argument)
 with a depth larger than 550m:
 ```
 >>> dataframe

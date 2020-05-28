@@ -3,9 +3,10 @@
 from pydov.types.sondering import Sondering
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes
-from tests.test_search_sondering import (location_dov_xml,
-                                         location_wfs_feature,
-                                         location_wfs_getfeature)
+
+location_wfs_getfeature = 'tests/data/types/sondering/wfsgetfeature.xml'
+location_wfs_feature = 'tests/data/types/sondering/feature.xml'
+location_dov_xml = 'tests/data/types/sondering/sondering.xml'
 
 
 class TestSondering(AbstractTestTypes):

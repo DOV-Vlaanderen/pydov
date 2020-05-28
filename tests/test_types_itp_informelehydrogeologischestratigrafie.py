@@ -3,9 +3,17 @@ pydov.types.interpretaties.FormeleStratigrafie class."""
 from pydov.types.interpretaties import InformeleHydrogeologischeStratigrafie
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes
-from tests.test_search_itp_formelestratigrafie import (location_dov_xml,
-                                                       location_wfs_feature,
-                                                       location_wfs_getfeature)
+
+location_wfs_getfeature = \
+    'tests/data/types/interpretaties/' \
+    'informele_hydrogeologische_stratigrafie/wfsgetfeature.xml'
+location_wfs_feature = \
+    'tests/data/types/interpretaties/' \
+    'informele_hydrogeologische_stratigrafie/feature.xml'
+location_dov_xml = \
+    'tests/data/types/interpretaties/' \
+    'informele_hydrogeologische_stratigrafie' \
+    '/informele_hydrogeologische_stratigrafie.xml'
 
 
 class TestInformeleHydrogeologischeFormeleStratigrafie(AbstractTestTypes):

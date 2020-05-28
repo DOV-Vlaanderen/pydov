@@ -12,7 +12,8 @@ location_fc_featurecatalogue = \
     'tests/data/types/grondwatermonster/fc_featurecatalogue.xml'
 location_wfs_describefeaturetype = \
     'tests/data/types/grondwatermonster/wfsdescribefeaturetype.xml'
-location_wfs_getfeature = 'tests/data/types/grondwatermonster/wfsgetfeature.xml'
+location_wfs_getfeature = 'tests/data/types/grondwatermonster/' \
+    'wfsgetfeature.xml'
 location_wfs_feature = 'tests/data/types/grondwatermonster/feature.xml'
 location_dov_xml = 'tests/data/types/grondwatermonster/grondwatermonster.xml'
 location_xsd_base = 'tests/data/types/grondwatermonster/xsd_*.xml'
@@ -168,4 +169,5 @@ class TestGrondwaterMonsterSearch(AbstractTestSearch):
             query=self.get_valid_query_single())
 
         # specific test for the Zulu time wfs 1.1.0 issue
-        assert df.datum_monstername.sort_values()[0] == datetime.date(2006, 5, 19)
+        assert df.datum_monstername.sort_values()[0] == datetime.date(
+            2006, 5, 19)

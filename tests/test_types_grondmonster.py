@@ -3,9 +3,10 @@
 from pydov.types.grondmonster import Grondmonster
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes
-from tests.test_search_grondmonster import (location_dov_xml,
-                                            location_wfs_feature,
-                                            location_wfs_getfeature)
+
+location_wfs_getfeature = 'tests/data/types/grondmonster/wfsgetfeature.xml'
+location_wfs_feature = 'tests/data/types/grondmonster/feature.xml'
+location_dov_xml = 'tests/data/types/grondmonster/grondmonster.xml'
 
 
 class TestGrondmonster(AbstractTestTypes):

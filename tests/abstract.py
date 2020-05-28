@@ -1070,7 +1070,7 @@ class AbstractTestTypes(object):
 
         Parameters
         ----------
-        wfs_getfeature : pytest.fixture returing str
+        wfs_getfeature : pytest.fixture returning str
             Fixture providing a WFS GetFeature response.
 
         """
@@ -1086,7 +1086,7 @@ class AbstractTestTypes(object):
 
         Parameters
         ----------
-        wfs_getfeature : pytest.fixture returing str
+        wfs_getfeature : pytest.fixture returning str
             Fixture providing a WFS GetFeature response.
 
         """
@@ -1102,7 +1102,7 @@ class AbstractTestTypes(object):
 
         Parameters
         ----------
-        wfs_getfeature : pytest.fixture returing str
+        wfs_getfeature : pytest.fixture returning str
             Fixture providing a WFS GetFeature response.
 
         """
@@ -1118,7 +1118,7 @@ class AbstractTestTypes(object):
 
         Parameters
         ----------
-        wfs_getfeature : pytest.fixture returing str
+        wfs_getfeature : pytest.fixture returning str
             Fixture providing a WFS GetFeature response.
 
         """

@@ -31,10 +31,20 @@ from owslib.fes import PropertyIsGreaterThan
 boringsearch = BoringSearch()
 
 dataframe = boringsearch.search(
-    query=PropertyIsGreaterThan( propertyname='diepte_tot_m', literal='550'),
+    query=PropertyIsGreaterThan(propertyname='diepte_tot_m', literal='550'),
     location=Within(Box(107500, 202000, 108500, 203000))
 )
 ```
+
+The resulting dataframe contains the information on boreholes (boringen) within the provided bounding box (as defined by the `location` argument)
+with a depth larger than 550m:
+```
+>>> dataframe
+                                         pkey_boring     boornummer         x         y  mv_mtaw  start_boring_mtaw gemeente  diepte_boring_van  diepte_boring_tot datum_aanvang uitvoerder  boorgatmeting  diepte_methode_van  diepte_methode_tot boormethode
+0  https://www.dov.vlaanderen.be/data/boring/1989...  kb14d40e-B777  108015.0  202860.0      5.0                5.0     Gent                0.0              660.0    1989-01-25   onbekend          False                 0.0               660.0    onbekend
+1  https://www.dov.vlaanderen.be/data/boring/1972...  kb14d40e-B778  108090.0  202835.0      5.0                5.0     Gent                0.0              600.0    1972-05-17   onbekend          False                 0.0               600.0    onbekend
+```
+
 
 ## Documentation
 

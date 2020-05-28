@@ -74,4 +74,4 @@ Background
 
     .. _Pandas package: https://pandas.pydata.org/
 
-    As pydov relies on the XML data returned by the existing DOV webservices, downloads of these files can slow down the data retrieval. To mitigate this, pydov implementes some additional features that you can use to speed up your searches. Details are explained in the :ref:`performance guide <performance>`.
+    As pydov relies on the XML data returned by the existing DOV webservices, downloads of these files can slow down the data retrieval. To mitigate this, pydov implements some additional features that you can use to speed up your searches. Details are explained in the :ref:`performance guide <performance>`.

@@ -709,7 +709,7 @@ class AbstractTestTypes(object):
             Class reference for the corresponding datatype.
 
         """
-        raise NotImplementedError
+        raise NotImplementedError('This should be implemented in a subclass.')
 
     def get_namespace(self):
         """Get the WFS namespace associated with this datatype.
@@ -720,7 +720,7 @@ class AbstractTestTypes(object):
             WFS namespace for this type.
 
         """
-        raise NotImplementedError
+        raise NotImplementedError('This should be implemented in a subclass.')
 
     def get_pkey_base(self):
         """Get the base URL for the permanent keys of this datatype.
@@ -732,7 +732,7 @@ class AbstractTestTypes(object):
             "https://www.dov.vlaanderen.be/data/boring/"
 
         """
-        raise NotImplementedError
+        raise NotImplementedError('This should be implemented in a subclass.')
 
     def get_field_names(self):
         """Get the field names for this type as listed in the documentation in
@@ -744,7 +744,7 @@ class AbstractTestTypes(object):
             List of field names.
 
         """
-        raise NotImplementedError
+        raise NotImplementedError('This should be implemented in a subclass.')
 
     def get_field_names_subtypes(self):
         """Get the field names of this type that originate from subtypes only.
@@ -755,7 +755,7 @@ class AbstractTestTypes(object):
             List of field names from subtypes.
 
         """
-        raise NotImplementedError
+        raise NotImplementedError('This should be implemented in a subclass.')
 
     def get_field_names_nosubtypes(self):
         """Get the field names for this type, without including fields from
@@ -767,7 +767,7 @@ class AbstractTestTypes(object):
             List of field names.
 
         """
-        raise NotImplementedError
+        raise NotImplementedError('This should be implemented in a subclass.')
 
     def get_valid_returnfields(self):
         """Get a list of valid return fields from the main type.
@@ -778,7 +778,7 @@ class AbstractTestTypes(object):
             A tuple containing only valid return fields.
 
         """
-        raise NotImplementedError
+        raise NotImplementedError('This should be implemented in a subclass.')
 
     def get_valid_returnfields_subtype(self):
         """Get a list of valid return fields, including fields from a subtype.
@@ -790,7 +790,7 @@ class AbstractTestTypes(object):
             subtype.
 
         """
-        raise NotImplementedError
+        raise NotImplementedError('This should be implemented in a subclass.')
 
     def get_inexistent_field(self):
         """Get the name of a field that doesn't exist.
@@ -801,7 +801,7 @@ class AbstractTestTypes(object):
             The name of an inexistent field.
 
         """
-        raise NotImplementedError
+        raise NotImplementedError('This should be implemented in a subclass.')
 
     def test_get_field_names(self):
         """Test the get_field_names method.

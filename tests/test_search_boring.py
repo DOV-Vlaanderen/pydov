@@ -50,13 +50,10 @@ def md_metadata(wfs, mp_remote_md):
 
 
 class TestBoringSearch(AbstractTestSearch):
-    search_object = BoringSearch()
-
     def get_search_object(self):
         return BoringSearch()
 
     def get_type(self):
-
         return Boring
 
     def get_valid_query_single(self):

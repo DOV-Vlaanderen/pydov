@@ -7,11 +7,6 @@ from pydov.search.grondwaterfilter import GrondwaterFilterSearch
 from pydov.types.grondwaterfilter import GrondwaterFilter
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestSearch
-from tests.test_search import (mp_dov_xml, mp_dov_xml_broken, mp_get_schema,
-                               mp_remote_describefeaturetype, mp_remote_fc,
-                               mp_remote_md, mp_remote_wfs_feature,
-                               mp_remote_xsd, mp_wfs, wfs, wfs_feature,
-                               wfs_getfeature)
 
 location_md_metadata = 'tests/data/types/grondwaterfilter/md_metadata.xml'
 location_fc_featurecatalogue = \

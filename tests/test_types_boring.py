@@ -3,9 +3,10 @@
 from pydov.types.boring import Boring
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes
-from tests.test_search_boring import (location_dov_xml, location_wfs_feature,
-                                      location_wfs_getfeature, mp_dov_xml,
-                                      wfs_feature, wfs_getfeature)
+
+location_wfs_getfeature = 'tests/data/types/boring/wfsgetfeature.xml'
+location_wfs_feature = 'tests/data/types/boring/feature.xml'
+location_dov_xml = 'tests/data/types/boring/boring.xml'
 
 
 class TestBoring(AbstractTestTypes):

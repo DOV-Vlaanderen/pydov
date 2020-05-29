@@ -3,9 +3,14 @@ pydov.types.interpretaties.InformeleStratigrafie class."""
 from pydov.types.interpretaties import InformeleStratigrafie
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes
-from tests.test_search_itp_informelestratigrafie import (
-    location_dov_xml, location_wfs_feature, location_wfs_getfeature,
-    mp_dov_xml, wfs_feature, wfs_getfeature)
+
+location_wfs_getfeature = \
+    'tests/data/types/interpretaties/informele_stratigrafie/wfsgetfeature.xml'
+location_wfs_feature = \
+    'tests/data/types/interpretaties/informele_stratigrafie/feature.xml'
+location_dov_xml = \
+    'tests/data/types/interpretaties/informele_stratigrafie' \
+    '/informele_stratigrafie.xml'
 
 
 class TestInformeleStratigrafie(AbstractTestTypes):

@@ -1,16 +1,10 @@
 """Module grouping tests for the search grondmonster module."""
-import datetime
 
 from owslib.fes import PropertyIsEqualTo
 
 from pydov.search.grondmonster import GrondmonsterSearch
 from pydov.types.grondmonster import Grondmonster
 from tests.abstract import AbstractTestSearch
-from tests.test_search import (mp_dov_xml, mp_dov_xml_broken, mp_get_schema,
-                               mp_remote_describefeaturetype, mp_remote_fc,
-                               mp_remote_md, mp_remote_wfs_feature,
-                               mp_remote_xsd, mp_wfs, wfs, wfs_feature,
-                               wfs_getfeature)
 
 location_md_metadata = 'tests/data/types/grondmonster/md_metadata.xml'
 location_fc_featurecatalogue = \
@@ -40,13 +34,14 @@ class TestGrondmonsterSearch(AbstractTestSearch):
         'pkey_grondmonster', 'boornummer', 'diameter')
     valid_returnfields_extra = ('pkey_grondmonster', 'korrelverdeling')
 
-    df_default_columns = ['pkey_grondmonster', 'naam', 'pkey_boring', 'boornummer',
-                          'datum', 'x', 'y', 'gemeente', 'diepte_van_m', 'diepte_tot_m',
-                          'peil_van_mtaw', 'peil_tot_mtaw', 'monstertype', 'astm_naam',
-                          'grondsoort_bggg', 'humusgehalte', 'kalkgehalte',
-                          'uitrolgrens', 'vloeigrens', 'glauconiet',
-                          'korrelvolumemassa', 'volumemassa', 'watergehalte',
-                          'diameter', 'fractie', 'methode']
+    df_default_columns = [
+        'pkey_grondmonster', 'naam', 'pkey_boring', 'boornummer',
+        'datum', 'x', 'y', 'gemeente', 'diepte_van_m', 'diepte_tot_m',
+        'peil_van_mtaw', 'peil_tot_mtaw', 'monstertype', 'astm_naam',
+        'grondsoort_bggg', 'humusgehalte', 'kalkgehalte',
+        'uitrolgrens', 'vloeigrens', 'glauconiet',
+        'korrelvolumemassa', 'volumemassa', 'watergehalte',
+        'diameter', 'fractie', 'methode']
 
     def test_search_xmlresolving(self, mp_get_schema,
                                  mp_remote_describefeaturetype,

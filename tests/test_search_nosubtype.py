@@ -1,20 +1,9 @@
 """Module for test for features without subtype values."""
 
 from owslib.fes import PropertyIsEqualTo
+
 from pydov.search.grondwaterfilter import GrondwaterFilterSearch
 from pydov.util.dovutil import build_dov_url
-
-from tests.test_search import (
-    mp_wfs,
-    wfs,
-    mp_get_schema,
-    mp_remote_md,
-    mp_remote_fc,
-    mp_remote_describefeaturetype,
-    mp_remote_wfs_feature,
-    mp_remote_xsd,
-    mp_dov_xml,
-)
 
 location_md_metadata = 'tests/data/types/grondwaterfilter/md_metadata.xml'
 location_fc_featurecatalogue = \
@@ -75,4 +64,3 @@ class TestSearchNoSubtype(object):
         assert df.tijdstip.hasnans
         assert df.peil_mtaw.hasnans
         assert df.betrouwbaarheid.hasnans
-

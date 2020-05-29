@@ -3,9 +3,15 @@ pydov.types.interpretaties.InformeleStratigrafie class."""
 from pydov.types.interpretaties import GecodeerdeLithologie
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes
-from tests.test_search_itp_gecodeerdelithologie import (
-    location_dov_xml, location_wfs_feature, location_wfs_getfeature,
-    mp_dov_xml, wfs_feature, wfs_getfeature)
+
+location_wfs_getfeature = \
+    'tests/data/types/interpretaties/gecodeerde_lithologie/' \
+    'wfsgetfeature.xml'
+location_wfs_feature = \
+    'tests/data/types/interpretaties/gecodeerde_lithologie/feature.xml'
+location_dov_xml = \
+    'tests/data/types/interpretaties/gecodeerde_lithologie' \
+    '/gecodeerde_lithologie.xml'
 
 
 class TestGecodeerdeLithologie(AbstractTestTypes):

@@ -1,16 +1,13 @@
 """Module grouping tests for the pydov.util.query module."""
 from itertools import permutations
 
-import pandas as pd
 import numpy as np
+import pandas as pd
 import pytest
 from owslib.etree import etree
 
 from pydov.util.dovutil import build_dov_url
-from pydov.util.query import (
-    PropertyInList,
-    Join,
-)
+from pydov.util.query import Join, PropertyInList
 from tests.abstract import clean_xml
 
 

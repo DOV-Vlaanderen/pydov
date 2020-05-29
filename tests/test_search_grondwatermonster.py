@@ -6,18 +6,14 @@ from owslib.fes import PropertyIsEqualTo
 from pydov.search.grondwatermonster import GrondwaterMonsterSearch
 from pydov.types.grondwatermonster import GrondwaterMonster
 from tests.abstract import AbstractTestSearch
-from tests.test_search import (mp_dov_xml, mp_dov_xml_broken, mp_get_schema,
-                               mp_remote_describefeaturetype, mp_remote_fc,
-                               mp_remote_md, mp_remote_wfs_feature,
-                               mp_remote_xsd, mp_wfs, wfs, wfs_feature,
-                               wfs_getfeature)
 
 location_md_metadata = 'tests/data/types/grondwatermonster/md_metadata.xml'
 location_fc_featurecatalogue = \
     'tests/data/types/grondwatermonster/fc_featurecatalogue.xml'
 location_wfs_describefeaturetype = \
     'tests/data/types/grondwatermonster/wfsdescribefeaturetype.xml'
-location_wfs_getfeature = 'tests/data/types/grondwatermonster/wfsgetfeature.xml'
+location_wfs_getfeature = 'tests/data/types/grondwatermonster/' \
+    'wfsgetfeature.xml'
 location_wfs_feature = 'tests/data/types/grondwatermonster/feature.xml'
 location_dov_xml = 'tests/data/types/grondwatermonster/grondwatermonster.xml'
 location_xsd_base = 'tests/data/types/grondwatermonster/xsd_*.xml'

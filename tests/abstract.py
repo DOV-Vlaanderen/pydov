@@ -1,7 +1,6 @@
 import datetime
 import random
 import re
-import sys
 from collections import OrderedDict
 
 import numpy as np
@@ -11,8 +10,6 @@ import requests
 from owslib.etree import etree
 from owslib.fes import PropertyIsEqualTo, SortBy, SortProperty
 from pandas import DataFrame
-from pandas.api.types import (is_bool_dtype, is_float_dtype, is_int64_dtype,
-                              is_object_dtype)
 
 import pydov
 from pydov.types.abstract import AbstractField

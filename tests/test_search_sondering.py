@@ -2,20 +2,11 @@
 import datetime
 
 import pandas as pd
-import pytest
 from owslib.fes import PropertyIsEqualTo
 
-from pydov.search.boring import BoringSearch
 from pydov.search.sondering import SonderingSearch
-from pydov.types.boring import Boring
 from pydov.types.sondering import Sondering
-from pydov.util import owsutil
 from tests.abstract import AbstractTestSearch
-from tests.test_search import (mp_dov_xml, mp_dov_xml_broken, mp_get_schema,
-                               mp_remote_describefeaturetype, mp_remote_fc,
-                               mp_remote_md, mp_remote_wfs_feature,
-                               mp_remote_xsd, mp_wfs, wfs, wfs_feature,
-                               wfs_getfeature)
 
 location_md_metadata = 'tests/data/types/sondering/md_metadata.xml'
 location_fc_featurecatalogue = \
@@ -26,30 +17,6 @@ location_wfs_getfeature = 'tests/data/types/sondering/wfsgetfeature.xml'
 location_wfs_feature = 'tests/data/types/sondering/feature.xml'
 location_dov_xml = 'tests/data/types/sondering/sondering.xml'
 location_xsd_base = 'tests/data/types/sondering/xsd_*.xml'
-
-
-@pytest.fixture
-def md_metadata(wfs, mp_remote_md):
-    """PyTest fixture providing a MD_Metadata instance of the
-    dov-pub:Sonderingen layer.
-
-    Parameters
-    ----------
-    wfs : pytest.fixture returning owslib.wfs.WebFeatureService
-        WebFeatureService based on the local GetCapabilities.
-    mp_remote_md : pytest.fixture
-        Monkeypatch the call to get the remote metadata of the
-        dov-pub:Sonderingen layer.
-
-    Returns
-    -------
-    owslib.iso.MD_Metadata
-        Parsed metadata describing the Sonderingen WFS layer in more detail,
-        in the ISO 19115/19139 format.
-
-    """
-    contentmetadata = wfs.contents['dov-pub:Sonderingen']
-    return owsutil.get_remote_metadata(contentmetadata)
 
 
 class TestSonderingSearch(AbstractTestSearch):

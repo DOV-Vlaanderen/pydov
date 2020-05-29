@@ -3,9 +3,15 @@ pydov.types.interpretaties.GeotechnischeCodering class."""
 from pydov.types.interpretaties import GeotechnischeCodering
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes
-from tests.test_search_itp_geotechnischecodering import (
-    location_dov_xml, location_wfs_feature, location_wfs_getfeature,
-    mp_dov_xml, wfs_feature, wfs_getfeature)
+
+location_wfs_getfeature = \
+    'tests/data/types/interpretaties/geotechnische_codering/' \
+    'wfsgetfeature.xml'
+location_wfs_feature = \
+    'tests/data/types/interpretaties/geotechnische_codering/feature.xml'
+location_dov_xml = \
+    'tests/data/types/interpretaties/geotechnische_codering' \
+    '/geotechnische_codering.xml'
 
 
 class TestGeotechnischeCodering(AbstractTestTypes):

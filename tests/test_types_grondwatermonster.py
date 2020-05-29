@@ -2,11 +2,11 @@
 from pydov.types.grondwatermonster import GrondwaterMonster
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes
-from tests.test_search_grondwatermonster import (location_dov_xml,
-                                                 location_wfs_feature,
-                                                 location_wfs_getfeature,
-                                                 mp_dov_xml, wfs_feature,
-                                                 wfs_getfeature)
+
+location_wfs_getfeature = 'tests/data/types/grondwatermonster/' \
+    'wfsgetfeature.xml'
+location_wfs_feature = 'tests/data/types/grondwatermonster/feature.xml'
+location_dov_xml = 'tests/data/types/grondwatermonster/grondwatermonster.xml'
 
 
 class TestGrondwaterMonster(AbstractTestTypes):

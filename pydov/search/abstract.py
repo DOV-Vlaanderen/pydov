@@ -4,25 +4,17 @@ import datetime
 from distutils.util import strtobool
 
 import owslib
-import pydov
 from owslib.etree import etree
 from owslib.feature import get_schema
-from owslib.fes import (
-    FilterRequest,
-)
+from owslib.fes import FilterRequest
 from owslib.wfs import WebFeatureService
+
+import pydov
 from pydov.util import owsutil
-from pydov.util.dovutil import (
-    get_xsd_schema,
-    build_dov_url,
-)
-from pydov.util.errors import (
-    LayerNotFoundError,
-    InvalidSearchParameterError,
-    FeatureOverflowError,
-    InvalidFieldError,
-    WfsGetFeatureError,
-)
+from pydov.util.dovutil import build_dov_url, get_xsd_schema
+from pydov.util.errors import (FeatureOverflowError, InvalidFieldError,
+                               InvalidSearchParameterError, LayerNotFoundError,
+                               WfsGetFeatureError)
 from pydov.util.hooks import HookRunner
 
 
@@ -63,15 +55,15 @@ class AbstractCommon(object):
                 # Patch for Zulu-time issue of geoserver for WFS 1.1.0
                 if x.endswith('Z'):
                     return datetime.datetime.strptime(x, '%Y-%m-%dZ').date() \
-                           + datetime.timedelta(days=1)
+                        + datetime.timedelta(days=1)
                 else:
                     return datetime.datetime.strptime(x, '%Y-%m-%d').date()
         elif returntype == 'datetime':
             def typeconvert(x):
                 if x.endswith('Z'):
                     return datetime.datetime.strptime(
-                            x, '%Y-%m-%dT%H:%M:%SZ').date() \
-                           + datetime.timedelta(days=1)
+                        x, '%Y-%m-%dT%H:%M:%SZ').date() \
+                        + datetime.timedelta(days=1)
                 else:
                     return datetime.datetime.strptime(
                         x.split('.')[0], '%Y-%m-%dT%H:%M:%S')
@@ -114,7 +106,7 @@ class AbstractSearch(AbstractCommon):
 
     def _init_wfs(self):
         """Initialise the WFS service. If the WFS service is not
-        instanciated yet, do so and save it in a static variable available
+        instantiated yet, do so and save it in a static variable available
         to all subclasses and instances.
         """
         if AbstractSearch.__wfs is None:
@@ -800,5 +792,9 @@ class AbstractSearch(AbstractCommon):
             When the argument supplied as return_fields is not a list,
             tuple or set.
 
+        NotImplementedError
+            This is an abstract method that should be implemented in a
+            subclass.
+
         """
-        raise NotImplementedError
+        raise NotImplementedError('This should be implemented in a subclass.')

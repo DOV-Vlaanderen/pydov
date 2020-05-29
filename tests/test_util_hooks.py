@@ -1,24 +1,16 @@
 import copy
 import datetime
+
 import pytest
+from owslib.etree import etree
+from owslib.fes import PropertyIsEqualTo
 
 import pydov
-from owslib.fes import PropertyIsEqualTo
-from owslib.etree import etree
 from pydov.search.abstract import AbstractSearch
 from pydov.search.boring import BoringSearch
-from pydov.util.hooks import (
-    AbstractReadHook,
-    SimpleStatusHook,
-    AbstractInjectHook,
-    Hooks,
-)
+from pydov.util.hooks import (AbstractInjectHook, AbstractReadHook, Hooks,
+                              SimpleStatusHook)
 from tests.abstract import service_ok
-
-from tests.test_util_caching import (
-    plaintext_cache,
-    nocache,
-)
 
 
 @pytest.fixture
@@ -121,21 +113,21 @@ class HookTypeTester(AbstractReadHook, AbstractInjectHook):
     def meta_received(self, url, response):
         assert url is not None
         assert response is not None
-        assert type(url) is str
-        assert type(response) is bytes
+        assert isinstance(url, str)
+        assert isinstance(response, bytes)
 
     def inject_meta_response(self, url):
         assert url is not None
-        assert type(url) is str
+        assert isinstance(url, str)
 
     def wfs_search_init(self, typename):
         assert typename is not None
-        assert type(typename) is str
+        assert isinstance(typename, str)
 
     def wfs_search_result(self, number_of_results):
         assert number_of_results is not None
         assert number_of_results > 0
-        assert type(number_of_results) is int
+        assert isinstance(number_of_results, int)
 
     def wfs_search_result_received(self, query, features):
         assert query is not None
@@ -147,20 +139,20 @@ class HookTypeTester(AbstractReadHook, AbstractInjectHook):
     def xml_received(self, pkey_object, xml):
         assert pkey_object is not None
         assert xml is not None
-        assert type(pkey_object) is str
-        assert type(xml) is bytes
+        assert isinstance(pkey_object, str)
+        assert isinstance(xml, bytes)
 
     def inject_xml_response(self, pkey_object):
         assert pkey_object is not None
-        assert type(pkey_object) is str
+        assert isinstance(pkey_object, str)
 
     def xml_cache_hit(self, pkey_object):
         assert pkey_object is not None
-        assert type(pkey_object) is str
+        assert isinstance(pkey_object, str)
 
     def xml_downloaded(self, pkey_object):
         assert pkey_object is not None
-        assert type(pkey_object) is str
+        assert isinstance(pkey_object, str)
 
 
 class HookInjecter(AbstractReadHook, AbstractInjectHook):
@@ -234,7 +226,7 @@ class TestHookCount(object):
                                   literal='GEO-04/169-BNo-B1')
 
         boringsearch = BoringSearch()
-        df = boringsearch.search(
+        boringsearch.search(
             query=query, return_fields=('pkey_boring', 'x', 'y'))
 
         assert pydov.hooks[0].count_wfs_search_init == 1
@@ -272,7 +264,7 @@ class TestHookCount(object):
                                   literal='GEO-04/169-BNo-B1')
 
         boringsearch = BoringSearch()
-        df = boringsearch.search(
+        boringsearch.search(
             query=query, return_fields=('pkey_boring', 'mv_mtaw'))
 
         assert pydov.hooks[0].count_wfs_search_init == 1
@@ -288,7 +280,7 @@ class TestHookCount(object):
         assert pydov.hooks[0].count_meta_received > 0
         assert pydov.hooks[0].count_inject_meta_response > 0
 
-        df = boringsearch.search(
+        boringsearch.search(
             query=query, return_fields=('pkey_boring', 'mv_mtaw'))
 
         assert pydov.hooks[0].count_wfs_search_init == 2
@@ -330,7 +322,7 @@ class TestHookCount(object):
                                   literal='GEO-04/169-BNo-B1')
 
         boringsearch = BoringSearch()
-        df = boringsearch.search(
+        boringsearch.search(
             query=query, return_fields=('pkey_boring', 'mv_mtaw'))
 
         assert pydov.hooks[0].count_wfs_search_init == 1
@@ -346,7 +338,7 @@ class TestHookCount(object):
         assert pydov.hooks[0].count_meta_received > 0
         assert pydov.hooks[0].count_inject_meta_response > 0
 
-        df = boringsearch.search(
+        boringsearch.search(
             query=query, return_fields=('pkey_boring', 'mv_mtaw'))
 
         assert pydov.hooks[0].count_wfs_search_init == 2
@@ -385,7 +377,7 @@ class TestHookTypes(object):
                                   literal='GEO-04/169-BNo-B1')
 
         boringsearch = BoringSearch()
-        df = boringsearch.search(query=query)
+        boringsearch.search(query=query)
 
     @pytest.mark.online
     @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
@@ -404,7 +396,7 @@ class TestHookTypes(object):
                                   literal='GEO-04/169-BNo-B1')
 
         boringsearch = BoringSearch()
-        df = boringsearch.search(query=query)
+        boringsearch.search(query=query)
 
 
 class TestHookInject(object):

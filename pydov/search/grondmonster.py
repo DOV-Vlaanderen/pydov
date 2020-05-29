@@ -33,13 +33,10 @@ class GrondmonsterSearch(AbstractSearch):
             __init__('boringen:grondmonsters', objecttype)
 
     def _init_namespace(self):
-        """Initialise the WFS namespace associated with the layer."""
         if GrondmonsterSearch.__wfs_namespace is None:
             GrondmonsterSearch.__wfs_namespace = self._get_namespace()
 
     def _init_fields(self):
-        """Initialise the fields and their metadata available in this search
-        class."""
         if self._fields is None:
             if GrondmonsterSearch.__wfs_schema is None:
                 GrondmonsterSearch.__wfs_schema = self._get_schema()
@@ -79,60 +76,6 @@ class GrondmonsterSearch(AbstractSearch):
 
     def search(self, location=None, query=None, sort_by=None,
                return_fields=None, max_features=None):
-        """Search for ground samples (Grondmonster). Provide either
-        `location` or `query`. When `return_fields` is None,
-        all fields are returned.
-
-        Parameters
-        ----------
-        location : pydov.util.location.AbstractLocationFilter or \
-                    owslib.fes.BinaryLogicOpType<AbstractLocationFilter> or \
-                    owslib.fes.UnaryLogicOpType<AbstractLocationFilter>
-            Location filter limiting the features to retrieve. Can either be a
-            single instance of a subclass of AbstractLocationFilter, or a
-            combination using And, Or, Not of AbstractLocationFilters.
-        query : owslib.fes.OgcExpression
-            OGC filter expression to use for searching. This can contain any
-            combination of filter elements defined in owslib.fes. The query
-            should use the fields provided in `get_fields()`. Note that not
-            all fields are currently supported as a search parameter.
-        sort_by : owslib.fes.SortBy, optional
-            List of properties to sort by.
-        return_fields : list<str> or tuple<str> or set<str>
-            A list of fields to be returned in the output data. This should
-            be a subset of the fields provided in `get_fields()`. Note that
-            not all fields are currently supported as return fields.
-        max_features : int
-            Limit the maximum number of features to request.
-
-        Returns
-        -------
-        pandas.core.frame.DataFrame
-            DataFrame containing the output of the search query.
-
-        Raises
-        ------
-        pydov.util.errors.InvalidSearchParameterError
-            When not one of `location`, `query` or `max_features` is provided.
-
-        pydov.util.errors.InvalidFieldError
-            When at least one of the fields in `return_fields` is unknown.
-
-            When a field that is only accessible as return field is used as
-            a query parameter.
-
-            When a field that can only be used as a query parameter is used as
-            a return field.
-
-        pydov.util.errors.FeatureOverflowError
-            When the number of features to be returned is equal to the
-            maxFeatures limit of the WFS server.
-
-        AttributeError
-            When the argument supplied as return_fields is not a list,
-            tuple or set.
-
-        """
         self._pre_search_validation(location, query, sort_by, return_fields,
                                     max_features)
 

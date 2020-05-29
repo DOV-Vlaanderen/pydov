@@ -7,11 +7,6 @@ import pytest
 from pydov.util import owsutil
 from pydov.util.errors import MetadataNotFoundError
 
-from tests.test_search import (
-    wfs,
-    mp_wfs
-)
-
 
 class TestOwsutilNoMP(object):
     """Class grouping tests for the pydov.util.owsutil module, without all

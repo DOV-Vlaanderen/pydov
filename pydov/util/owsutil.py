@@ -397,7 +397,7 @@ def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
     query.set('typeName', typename)
 
     if propertyname and len(propertyname) > 0:
-        for property in propertyname:
+        for property in sorted(propertyname):
             propertyname_xml = etree.Element(
                 '{http://www.opengis.net/wfs}PropertyName')
             propertyname_xml.text = property

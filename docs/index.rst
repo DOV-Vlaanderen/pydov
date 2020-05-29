@@ -90,6 +90,7 @@ Contents:
    :maxdepth: 1
 
    contributing
+   development
    endpoints
    reference
    history

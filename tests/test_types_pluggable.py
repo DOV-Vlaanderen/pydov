@@ -1,27 +1,11 @@
 import pytest
-
 from owslib.fes import PropertyIsEqualTo
+
 from pydov.search.grondwaterfilter import GrondwaterFilterSearch
-from pydov.types.abstract import (
-    AbstractDovSubType,
-)
+from pydov.types.abstract import AbstractDovSubType
 from pydov.types.fields import XmlField
 from pydov.types.grondwaterfilter import GrondwaterFilter
 from pydov.util.dovutil import build_dov_url
-
-from tests.test_search import (
-    mp_wfs,
-    wfs,
-    mp_remote_md,
-    mp_remote_fc,
-    mp_remote_describefeaturetype,
-    mp_remote_wfs_feature,
-    mp_remote_xsd,
-    mp_dov_xml,
-    mp_dov_xml_broken,
-    wfs_getfeature,
-    wfs_feature,
-)
 
 location_md_metadata = 'tests/data/types/grondwaterfilter/md_metadata.xml'
 location_fc_featurecatalogue = \

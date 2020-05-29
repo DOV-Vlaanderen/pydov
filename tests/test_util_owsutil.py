@@ -2,43 +2,23 @@
 import copy
 
 import pytest
-
 from owslib.etree import etree
-from owslib.fes import (
-    PropertyIsEqualTo,
-    FilterRequest,
-    SortBy,
-    SortProperty,
-)
+from owslib.fes import FilterRequest, PropertyIsEqualTo, SortBy, SortProperty
 from owslib.iso import MD_Metadata
 from owslib.util import nspath_eval
+
 from pydov.util import owsutil
 from pydov.util.dovutil import build_dov_url
-from pydov.util.errors import (
-    MetadataNotFoundError,
-    FeatureCatalogueNotFoundError,
-)
-from pydov.util.location import (
-    Within,
-    Box,
-)
+from pydov.util.errors import (FeatureCatalogueNotFoundError,
+                               MetadataNotFoundError)
+from pydov.util.location import Box, Within
 from tests.abstract import clean_xml
 
-from tests.test_search_boring import (
-    md_metadata,
-    mp_remote_md,
-    mp_remote_describefeaturetype,
-    mp_remote_fc,
-    location_md_metadata,
-    location_fc_featurecatalogue,
-    location_wfs_describefeaturetype,
-)
-
-from tests.test_search import (
-    wfs,
-    mp_wfs,
-    mp_remote_fc_notfound
-)
+location_md_metadata = 'tests/data/types/boring/md_metadata.xml'
+location_fc_featurecatalogue = \
+    'tests/data/types/boring/fc_featurecatalogue.xml'
+location_wfs_describefeaturetype = \
+    'tests/data/types/boring/wfsdescribefeaturetype.xml'
 
 
 class TestOwsutil(object):
@@ -57,11 +37,11 @@ class TestOwsutil(object):
         """
         contentmetadata = wfs.contents['dov-pub:Boringen']
         assert owsutil.get_csw_base_url(contentmetadata) == \
-               build_dov_url('geonetwork/srv/dut/csw')
+            build_dov_url('geonetwork/srv/dut/csw')
 
     def test_get_csw_base_url_nometadataurls(self, wfs):
         """Test the owsutil.get_csw_base_url method for a layer without
-        metdata urls.
+        metadata urls.
 
         Test whether a MetadataNotFoundError is raised.
 
@@ -91,7 +71,7 @@ class TestOwsutil(object):
 
         """
         assert owsutil.get_featurecatalogue_uuid(md_metadata) == \
-               'c0cbd397-520f-4ee1-aca7-d70e271eeed6'
+            'c0cbd397-520f-4ee1-aca7-d70e271eeed6'
 
     def test_get_featurecatalogue_uuid_nocontentinfo(self, md_metadata):
         """Test the owsutil.get_featurecatalogue_uuid method when the
@@ -133,7 +113,7 @@ class TestOwsutil(object):
             'gmd:contentInfo/'
             'gmd:MD_FeatureCatalogueDescription/'
             'gmd:featureCatalogueCitation',
-            {'gmd': 'http://www.isotc211.org/2005/gmd'})):
+                {'gmd': 'http://www.isotc211.org/2005/gmd'})):
             ci.attrib.pop('uuidref')
         md_metadata = MD_Metadata(tree)
 
@@ -155,7 +135,7 @@ class TestOwsutil(object):
 
         """
         assert owsutil.get_namespace(wfs, 'dov-pub:Boringen') == \
-               'http://dov.vlaanderen.be/ocdov/dov-pub'
+            'http://dov.vlaanderen.be/ocdov/dov-pub'
 
     def test_get_remote_featurecatalogue(self, mp_remote_fc):
         """Test the owsutil.get_remote_featurecatalogue method.
@@ -174,40 +154,40 @@ class TestOwsutil(object):
             build_dov_url('geonetwork/srv/nl/csw'),
             'c0cbd397-520f-4ee1-aca7-d70e271eeed6')
 
-        assert type(fc) is dict
+        assert isinstance(fc, dict)
 
         assert 'definition' in fc
-        assert type(fc['definition']) is str
+        assert isinstance(fc['definition'], str)
 
         assert 'attributes' in fc
-        assert type(fc['attributes']) is dict
+        assert isinstance(fc['attributes'], dict)
 
         attrs = fc['attributes']
         if len(attrs) > 0:
             for attr in attrs.values():
-                assert type(attr) is dict
+                assert isinstance(attr, dict)
 
                 assert 'definition' in attr
-                assert type(attr['definition']) is str
+                assert isinstance(attr['definition'], str)
 
                 assert 'values' in attr
 
                 if attr['values'] is not None:
-                    assert type(attr['values']) is dict
+                    assert isinstance(attr['values'], dict)
 
                     for v in attr['values'].keys():
-                        assert type(v) is str
-                        assert type(attr['values'][v]) is str or \
-                               attr['values'][v] is None
+                        assert isinstance(v, str)
+                        assert isinstance(attr['values'][v], str) or \
+                            attr['values'][v] is None
                     assert len(attr['values'].keys()) == len(
                         set(attr['values'].keys()))
 
                 assert 'multiplicity' in attr
                 mp = attr['multiplicity']
-                assert type(mp) is tuple
+                assert isinstance(mp, tuple)
                 assert len(mp) == 2
                 assert mp[0] in (0, 1)
-                assert (type(mp[1]) is int and mp[1] > 0) or mp[1] == 'Inf'
+                assert (isinstance(mp[1], int) and mp[1] > 0) or mp[1] == 'Inf'
 
     def test_get_remote_featurecataloge_baduuid(self, mp_remote_fc_notfound):
         """Test the owsutil.get_remote_featurecatalogue method with an
@@ -238,8 +218,7 @@ class TestOwsutil(object):
             in the ISO 19115/19139 format.
 
         """
-        assert type(md_metadata) is MD_Metadata
-
+        assert isinstance(md_metadata, MD_Metadata)
 
     def test_wfs_build_getfeature_request_onlytypename(self):
         """Test the owsutil.wfs_build_getfeature_request method with only a
@@ -324,7 +303,7 @@ class TestOwsutil(object):
 
         """
         with pytest.raises(AttributeError):
-            xml = owsutil.wfs_build_getfeature_request(
+            owsutil.wfs_build_getfeature_request(
                 'dov-pub:Boringen',
                 location=Within(Box(151650, 214675, 151750, 214775)))
 
@@ -371,9 +350,26 @@ class TestOwsutil(object):
             'xsi:schemaLocation="http://www.opengis.net/wfs '
             'http://schemas.opengis.net/wfs/1.1.0/wfs.xsd"> <wfs:Query '
             'typeName="dov-pub:Boringen"> '
-            '<wfs:PropertyName>fiche</wfs:PropertyName> '
-            '<wfs:PropertyName>diepte_tot_m</wfs:PropertyName> <ogc:Filter/> '
+            '<wfs:PropertyName>diepte_tot_m</wfs:PropertyName> '
+            '<wfs:PropertyName>fiche</wfs:PropertyName> <ogc:Filter/> '
             '</wfs:Query> </wfs:GetFeature>')
+
+    def test_wfs_build_getfeature_request_propertyname_stable(self):
+        """Test the owsutil.wfs_build_getfeature_request method with a list
+        of propertynames.
+
+        Test whether the XML of the WFS GetFeature that is being generated is
+        stable (i.e. independent of the order of the propertynames).
+
+        """
+        xml = owsutil.wfs_build_getfeature_request(
+            'dov-pub:Boringen', propertyname=['fiche', 'diepte_tot_m'])
+
+        xml2 = owsutil.wfs_build_getfeature_request(
+            'dov-pub:Boringen', propertyname=['diepte_tot_m', 'fiche'])
+
+        assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
+            etree.tostring(xml2).decode('utf8'))
 
     def test_wfs_build_getfeature_request_filter(self):
         """Test the owsutil.wfs_build_getfeature_request method with an
@@ -463,8 +459,8 @@ class TestOwsutil(object):
             'xsi:schemaLocation="http://www.opengis.net/wfs '
             'http://schemas.opengis.net/wfs/1.1.0/wfs.xsd"> <wfs:Query '
             'typeName="dov-pub:Boringen"> '
-            '<wfs:PropertyName>fiche</wfs:PropertyName> '
-            '<wfs:PropertyName>diepte_tot_m</wfs:PropertyName> <ogc:Filter> '
+            '<wfs:PropertyName>diepte_tot_m</wfs:PropertyName> '
+            '<wfs:PropertyName>fiche</wfs:PropertyName> <ogc:Filter> '
             '<ogc:And> <ogc:PropertyIsEqualTo> '
             '<ogc:PropertyName>gemeente</ogc:PropertyName> '
             '<ogc:Literal>Herstappe</ogc:Literal> </ogc:PropertyIsEqualTo> '
@@ -496,8 +492,8 @@ class TestOwsutil(object):
             'service="WFS" version="1.1.0" '
             'xsi:schemaLocation="http://www.opengis.net/wfs '
             'http://schemas.opengis.net/wfs/1.1.0/wfs.xsd"><wfs:Query '
-            'typeName="dov-pub:Boringen"><wfs:PropertyName>fiche</wfs'
-            ':PropertyName><wfs:PropertyName>diepte_tot_m</wfs:PropertyName'
+            'typeName="dov-pub:Boringen"><wfs:PropertyName>diepte_tot_m</wfs'
+            ':PropertyName><wfs:PropertyName>fiche</wfs:PropertyName'
             '><ogc:Filter/><ogc:SortBy><ogc:SortProperty><ogc:PropertyName'
             '>diepte_tot_m</ogc:PropertyName><ogc:SortOrder>DESC</ogc'
             ':SortOrder></ogc:SortProperty></ogc:SortBy></wfs:Query></wfs'
@@ -525,8 +521,8 @@ class TestOwsutil(object):
             'service="WFS" version="1.1.0" '
             'xsi:schemaLocation="http://www.opengis.net/wfs '
             'http://schemas.opengis.net/wfs/1.1.0/wfs.xsd"><wfs:Query '
-            'typeName="dov-pub:Boringen"><wfs:PropertyName>fiche</wfs'
-            ':PropertyName><wfs:PropertyName>diepte_tot_m</wfs:PropertyName'
+            'typeName="dov-pub:Boringen"><wfs:PropertyName>diepte_tot_m</wfs'
+            ':PropertyName><wfs:PropertyName>fiche</wfs:PropertyName'
             '><ogc:Filter/><ogc:SortBy><ogc:SortProperty><ogc:PropertyName'
             '>diepte_tot_m</ogc:PropertyName><ogc:SortOrder>DESC</ogc'
             ':SortOrder></ogc:SortProperty><ogc:SortProperty><ogc'

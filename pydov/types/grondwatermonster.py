@@ -1,15 +1,9 @@
 # -*- coding: utf-8 -*-
 """Module containing the DOV data type for groundwater samples
 (GrondwaterMonsters), including subtypes."""
-from pydov.types.fields import (
-    XmlField,
-    XsdType,
-    WfsField,
-)
-from .abstract import (
-    AbstractDovType,
-    AbstractDovSubType,
-)
+from pydov.types.fields import WfsField, XmlField, XsdType
+
+from .abstract import AbstractDovSubType, AbstractDovType
 
 _observatieDataCodes_xsd = 'https://www.dov.vlaanderen.be/xdov/schema/' \
                        'latest/xsd/kern/observatie/ObservatieDataCodes.xsd'
@@ -97,22 +91,6 @@ class GrondwaterMonster(AbstractDovType):
 
     @classmethod
     def from_wfs_element(cls, feature, namespace):
-        """Build `GrondwaterMonster` instance from a WFS feature element.
-
-        Parameters
-        ----------
-        feature : etree.Element
-            XML element representing a single record of the WFS layer.
-        namespace : str
-            Namespace associated with this WFS featuretype.
-
-        Returns
-        -------
-        gwmonster : GrondwaterMonster
-            An instance of this class populated with the data from the WFS
-            element.
-
-        """
         gwmonster = cls(
             feature.findtext(
                 './{{{}}}grondwatermonsterfiche'.format(namespace)))

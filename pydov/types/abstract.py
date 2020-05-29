@@ -6,22 +6,15 @@ import warnings
 from collections import OrderedDict
 from multiprocessing.dummy import Pool
 
-import pydov
 import numpy as np
-
 from owslib.etree import etree
+
+import pydov
 from pydov.search.abstract import AbstractCommon
 from pydov.types.fields import AbstractField
-from pydov.util.dovutil import (
-    get_dov_xml,
-    parse_dov_xml,
-)
+from pydov.util.dovutil import get_dov_xml, parse_dov_xml
 
-from ..util.errors import (
-    InvalidFieldError,
-    XmlParseError,
-    XmlParseWarning,
-)
+from ..util.errors import InvalidFieldError, XmlParseError, XmlParseWarning
 from ..util.hooks import HookRunner
 
 
@@ -150,7 +143,7 @@ class AbstractDovSubType(AbstractTypeCommon):
 
         Yields
         ------
-            An instance of this type for each occurence of the rootpath in
+            An instance of this type for each occurrence of the rootpath in
             the XML document.
 
         """
@@ -343,7 +336,7 @@ class AbstractDovType(AbstractTypeCommon):
             self._parse_subtypes(xml)
         except XmlParseError:
             warnings.warn(("Failed to parse XML for object '{}'. Resulting "
-                          "dataframe will be incomplete.").format(self.pkey),
+                           "dataframe will be incomplete.").format(self.pkey),
                           XmlParseWarning)
 
     @classmethod
@@ -356,6 +349,12 @@ class AbstractDovType(AbstractTypeCommon):
             XML element representing a single record of the WFS layer.
         namespace : str
             Namespace associated with this WFS featuretype.
+
+        Returns
+        -------
+        cls
+            An instance of this class populated with the data from the WFS
+            element.
 
         Raises
         ------

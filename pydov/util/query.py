@@ -48,7 +48,7 @@ class PropertyInList(OgcExpression):
             self.query = PropertyIsEqualTo(propertyname, set(lst).pop())
         else:
             self.query = Or(
-                [PropertyIsEqualTo(propertyname, i) for i in set(lst)])
+                [PropertyIsEqualTo(propertyname, i) for i in sorted(set(lst))])
 
     def toXML(self):
         """Return the XML representation of the PropertyInList query.

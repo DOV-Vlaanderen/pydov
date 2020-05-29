@@ -11,6 +11,17 @@ you can run yourself.
 
 .. _jupyter notebook: http://jupyter.org/
 
+.. note::
+    These tutorials use a number of Python packages that are not required by the pydov package itself. For example `folium`_
+    to create interactive maps. We keep track of these dependencies in the :code:`binder/requirements.txt` file. If you want to run the tutorials
+    on your own computer, install these packages to your existing :code:`conda` or :code:`venv` environment by running:
+
+    ::
+
+        pip install -r binder/requirements.txt
+
+
+.. _folium: https://pypi.org/project/folium/
 
 To run these interactively online without installation, use the following binder link:
 

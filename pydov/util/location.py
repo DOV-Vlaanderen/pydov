@@ -6,6 +6,7 @@ Filter Encoding 1.1 and GML 3.1.1.
 
 """
 import os
+from collections import OrderedDict
 
 from owslib.etree import etree
 from owslib.fes import (
@@ -507,7 +508,7 @@ class GmlFilter(AbstractLocationFilter):
 
         """
         self.gml = gml
-        self.subelements = set()
+        self.subelements = OrderedDict()
 
         if location_filter_kwargs is None:
             location_filter_kwargs = {}
@@ -543,11 +544,12 @@ class GmlFilter(AbstractLocationFilter):
             Sets of the parsed single and multi geometry Elements.
 
         """
-        single = set(tree.findall(xpath_single))
-        multi = set(tree.findall(xpath_multi))
+        single = OrderedDict.fromkeys(tree.findall(xpath_single))
+        multi = OrderedDict.fromkeys(tree.findall(xpath_multi))
 
         for m in multi:
-            single -= set(m.findall(xpath_single))
+            s_in_m = OrderedDict.fromkeys(m.findall(xpath_single))
+            single = OrderedDict.fromkeys(e for e in single if e not in s_in_m)
 
         return single, multi
 

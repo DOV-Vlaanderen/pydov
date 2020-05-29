@@ -65,7 +65,7 @@ class AbstractCache(object):
             The raw XML data of this DOV object as bytes.
 
         """
-        raise NotImplementedError
+        raise NotImplementedError('This should be implemented in a subclass.')
 
     def clean(self):
         """Clean the cache by removing old records from the cache.
@@ -76,11 +76,11 @@ class AbstractCache(object):
         the maximum age from the cache.
 
         """
-        raise NotImplementedError
+        raise NotImplementedError('This should be implemented in a subclass.')
 
     def remove(self):
         """Remove the entire cache."""
-        raise NotImplementedError
+        raise NotImplementedError('This should be implemented in a subclass.')
 
 
 class AbstractFileCache(AbstractCache):
@@ -139,7 +139,7 @@ class AbstractFileCache(AbstractCache):
             Full absolute path on disk where the object is to be saved.
 
         """
-        raise NotImplementedError
+        raise NotImplementedError('This should be implemented in a subclass.')
 
     def _get_type_key_from_url(self, url):
         """Parse a DOV permalink and return the datatype and object key.
@@ -179,7 +179,7 @@ class AbstractFileCache(AbstractCache):
             referred to by the URL.
 
         """
-        raise NotImplementedError
+        raise NotImplementedError('This should be implemented in a subclass.')
 
     def _is_valid(self, datatype, key):
         """Check if a valid version of the given DOV object exists in the
@@ -228,7 +228,7 @@ class AbstractFileCache(AbstractCache):
             XML string of the DOV object, loaded from the cache.
 
         """
-        raise NotImplementedError
+        raise NotImplementedError('This should be implemented in a subclass.')
 
     def _save(self, datatype, key, content):
         """Save the given content in the cache.
@@ -243,26 +243,9 @@ class AbstractFileCache(AbstractCache):
             The raw XML data of this DOV object as bytes.
 
         """
-        raise NotImplementedError
+        raise NotImplementedError('This should be implemented in a subclass.')
 
     def get(self, url):
-        """Get the XML data for the DOV object referenced by the given URL.
-
-        If a valid version exists in the cache, it will be loaded and
-        returned. If no valid version exists, the XML will be downloaded
-        from the DOV webservice, saved in the cache and returned.
-
-        Parameters
-        ----------
-        url : str
-            Permanent URL to a DOV object.
-
-        Returns
-        -------
-        xml : bytes
-            The raw XML data of this DOV object as bytes.
-
-        """
         datatype, key = self._get_type_key_from_url(url)
 
         data = HookRunner.execute_inject_xml_response(url)
@@ -330,58 +313,14 @@ class PlainTextFileCache(AbstractFileCache):
     """Class for plain text caching of downloaded XML files from DOV."""
 
     def _get_filepath(self, datatype, key):
-        """Get the location on disk where the object with given datatype and
-        key is to be saved.
-
-        Parameters
-        ----------
-        datatype : str
-            Datatype of the DOV object.
-        key : str
-            Unique and permanent object key of the DOV object.
-
-        Returns
-        -------
-        str
-            Full absolute path on disk where the object is to be saved.
-
-        """
         return os.path.join(self.cachedir, datatype, key + '.xml')
 
     def _get_type_key_from_path(self, path):
-        """Parse a filepath and return the datatype and object key.
-
-        Parameters
-        ----------
-        path : str
-            Full, absolute, path to a cached file.
-
-        Returns
-        -------
-        datatype : str
-            Datatype of the DOV object referred to by the URL.
-        key : str
-            Unique and permanent key of the instance of the DOV object
-            referred to by the URL.
-
-        """
         key = os.path.basename(path).rstrip('.xml')
         datatype = os.path.dirname(path).split()[-1]
         return datatype, key
 
     def _save(self, datatype, key, content):
-        """Save the given content in the cache.
-
-        Parameters
-        ----------
-        datatype : str
-            Datatype of the DOV object to save.
-        key : str
-            Unique and permanent object key of the DOV object to save.
-        content : bytes
-            The raw XML data of this DOV object as bytes.
-
-        """
         filepath = self._get_filepath(datatype, key)
         folder = os.path.dirname(filepath)
 
@@ -392,19 +331,6 @@ class PlainTextFileCache(AbstractFileCache):
             f.write(content.decode('utf-8'))
 
     def _load(self, datatype, key):
-        """Read a cached version from disk.
-
-        datatype : str
-            Datatype of the DOV object.
-        key : str
-            Unique and permanent object key of the DOV object.
-
-        Returns
-        -------
-        str (xml)
-            XML string of the DOV object, loaded from the cache.
-
-        """
         filepath = self._get_filepath(datatype, key)
         with open(filepath, 'r', encoding='utf-8') as f:
             return f.read()
@@ -414,58 +340,14 @@ class GzipTextFileCache(AbstractFileCache):
     """Class for GZipped text caching of downloaded XML files from DOV."""
 
     def _get_filepath(self, datatype, key):
-        """Get the location on disk where the object with given datatype and
-        key is to be saved.
-
-        Parameters
-        ----------
-        datatype : str
-            Datatype of the DOV object.
-        key : str
-            Unique and permanent object key of the DOV object.
-
-        Returns
-        -------
-        str
-            Full absolute path on disk where the object is to be saved.
-
-        """
         return os.path.join(self.cachedir, datatype, key + '.xml.gz')
 
     def _get_type_key_from_path(self, path):
-        """Parse a filepath and return the datatype and object key.
-
-        Parameters
-        ----------
-        path : str
-            Full, absolute, path to a cached file.
-
-        Returns
-        -------
-        datatype : str
-            Datatype of the DOV object referred to by the URL.
-        key : str
-            Unique and permanent key of the instance of the DOV object
-            referred to by the URL.
-
-        """
         key = os.path.basename(path).rstrip('.xml.gz')
         datatype = os.path.dirname(path).split()[-1]
         return datatype, key
 
     def _save(self, datatype, key, content):
-        """Save the given content in the cache.
-
-        Parameters
-        ----------
-        datatype : str
-            Datatype of the DOV object to save.
-        key : str
-            Unique and permanent object key of the DOV object to save.
-        content : bytes
-            The raw XML data of this DOV object as bytes.
-
-        """
         filepath = self._get_filepath(datatype, key)
         folder = os.path.dirname(filepath)
 
@@ -476,19 +358,6 @@ class GzipTextFileCache(AbstractFileCache):
             f.write(content)
 
     def _load(self, datatype, key):
-        """Read a cached version from disk.
-
-        datatype : str
-            Datatype of the DOV object.
-        key : str
-            Unique and permanent object key of the DOV object.
-
-        Returns
-        -------
-        str (xml)
-            XML string of the DOV object, loaded from the cache.
-
-        """
         filepath = self._get_filepath(datatype, key)
         with gzip.open(filepath, 'rb') as f:
             return f.read().decode('utf-8')

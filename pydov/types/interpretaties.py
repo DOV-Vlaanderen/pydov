@@ -3,16 +3,8 @@
 subtypes."""
 import numpy as np
 
-from pydov.types.abstract import (
-    AbstractDovType,
-    AbstractDovSubType,
-)
-from pydov.types.fields import (
-    WfsField,
-    _CustomField,
-    XmlField,
-    XsdType,
-)
+from pydov.types.abstract import AbstractDovSubType, AbstractDovType
+from pydov.types.fields import WfsField, XmlField, XsdType, _CustomField
 from pydov.util.dovutil import build_dov_url
 
 
@@ -57,22 +49,6 @@ class AbstractCommonInterpretatie(AbstractDovType):
 
     @classmethod
     def from_wfs_element(cls, feature, namespace):
-        """Build an instance from a WFS feature element.
-
-        Parameters
-        ----------
-        feature : etree.Element
-            XML element representing a single record of the WFS layer.
-        namespace : str
-            Namespace associated with this WFS featuretype.
-
-        Returns
-        -------
-        instance of this class
-            An instance of this class populated with the data from the WFS
-            element.
-
-        """
         instance = cls(
             feature.findtext('./{{{}}}Interpretatiefiche'.format(namespace)))
 
@@ -148,22 +124,6 @@ class AbstractBoringInterpretatie(AbstractDovType):
 
     @classmethod
     def from_wfs_element(cls, feature, namespace):
-        """Build an instance from a WFS feature element.
-
-        Parameters
-        ----------
-        feature : etree.Element
-            XML element representing a single record of the WFS layer.
-        namespace : str
-            Namespace associated with this WFS featuretype.
-
-        Returns
-        -------
-        instance of this class
-            An instance of this class populated with the data from the WFS
-            element.
-
-        """
         instance = cls(
             feature.findtext('./{{{}}}Interpretatiefiche'.format(namespace)))
 
@@ -516,12 +476,7 @@ class GeotechnischeCoderingLaag(AbstractDovSubType):
 
 class GeotechnischeCodering(AbstractBoringInterpretatie):
     """Class representing the DOV data type for 'geotechnische
-    codering' interpretations.
-
-    In Dutch: Een geotechnische codering van een boring is een
-    codering opgesteld vanuit geotechnisch oogpunt,
-    rekening houdend met informatie uit de lithologie,
-    laboproeven en bijhorende sondering(en)."""
+    codering' interpretations."""
 
     subtypes = [GeotechnischeCoderingLaag]
 
@@ -576,16 +531,7 @@ class QuartairStratigrafieLaag(AbstractDovSubType):
 
 class QuartairStratigrafie(AbstractBoringInterpretatie):
     """Class representing the DOV data type for 'Quartairstratigrafie'
-    interpretations.
-
-    In Dutch: Afgeleid type van interpretatie, specifiek voor de quartair-
-    stratigrafie. Een Quartair interpretatie omvat een discrete formele
-    interpretatie van het materiaal in de ondergrond, al dan niet aan
-    de hand van monsters, op basis van een door DOV gestandaardiseerde
-    codering. De Quartair interpretatie gebeurt in tegenstelling tot de
-    formele interpretatie op basis van sedimentgenetische profieltypen
-    ipv lithostratigrafie
-    """
+    interpretations."""
 
     subtypes = [QuartairStratigrafieLaag]
 

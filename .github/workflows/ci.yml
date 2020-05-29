@@ -15,7 +15,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
         os: [ubuntu-latest]
         python-version: ["3.5", "3.6", "3.7", "3.8"]
@@ -43,7 +43,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
         os: [windows-latest]
         python-version: ["3.5", "3.6", "3.7", "3.8"]
@@ -83,11 +83,15 @@ jobs:
           auto-update-conda: true
           python-version: ${{ matrix.python-version }}
           activate-environment: pydov
-      - name: PowerShell Core
+      - name: Install dependencies and package
         shell: pwsh
         run: |
           pip install -e .[devs]
           conda list
+      - name: Run unit tests
+        shell: pwsh
+        run: |
+          pytest
 
 
 

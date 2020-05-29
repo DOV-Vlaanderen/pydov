@@ -77,11 +77,11 @@ have the development environment setup:
 
     # or
 
-    # using virtualenv
+    $ # using virtualenv
     $ virtualenv venv
-    # activating virtualenv is OS dependent:
-    $ source venv/bin/activate # for linux users
-    $ venv\Scripts\activate # for windows users
+    $ # activating is OS dependent:
+    $ source venv/bin/activate # linux users
+    $ venv\Scripts\activate # windows users
 
 - install all development dependencies and the package in development mode:
 

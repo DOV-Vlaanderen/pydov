@@ -77,9 +77,9 @@ have the development environment setup:
 
     # or
 
-    $ # using virtualenv
+    # using virtualenv
     $ virtualenv venv
-    $ # activating is OS dependent:
+    # activating is OS dependent:
     $ source venv/bin/activate # linux users
     $ venv\Scripts\activate # windows users
 

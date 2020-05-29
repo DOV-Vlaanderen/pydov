@@ -71,25 +71,22 @@ have the development environment setup:
 
 .. code-block:: console
 
-    # using conda
-    $ conda create -n pydov python=3.7
-    $ conda activate pydov
+    # using conda:
+      $ conda create -n pydov python=3.7
+      $ conda activate pydov
 
-    # or
-
-    # using venv (commands are OS dependent):
-
+    # or using venv (commands are OS dependent):
       # linux users
-    $ python3 -m venv pydov/venv              # linux users
-    $ source pydov/venv/bin/activate          # linux
+        $ python3 -m venv pydov/venv              # linux users
+        $ source pydov/venv/bin/activate          # linux users
 
       # windows users
-    $ c:\Python35\python -m venv pydov\venv   # windows users
-    $ pydov\venv\Scripts\activate             # windows users
+        $ c:\Python35\python -m venv pydov\venv   # windows users
+        $ pydov\venv\Scripts\activate             # windows users
 
 The Python documentation on `virtual environments`_ provides more guidance on using a development environment.
 
-- install all development dependencies and the package in development mode:
+- From inside the "pydov" repository folder, install all development dependencies and the package in development mode:
 
 .. code-block:: console
 

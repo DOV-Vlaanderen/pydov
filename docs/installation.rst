@@ -65,7 +65,7 @@ have the development environment setup:
 
 .. code-block:: console
 
-    $ git clone git://github.com/DOV-Vlaanderen/pydov
+    $ git clone git://github.com/YOUR-GITHUB-USERNAME/pydov
 
 - Create a development environment, for example using `conda`_ or `venv`_:
 

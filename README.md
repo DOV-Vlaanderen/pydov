@@ -19,7 +19,7 @@ pip install pydov
 Or clone the [git repository](https://github.com/DOV-Vlaanderen/pydov) and install with `python setup.py install` to get the latest snapshot from the master branch.
 
 To contribute to the code, make sure to install the package and all of the development dependencies enlisted in the
-[requiremends_dev.txt](requiremends_dev.txt) file. First, clone the [git repository](https://github.com/DOV-Vlaanderen/pydov).
+[requirements_dev.txt](requirements_dev.txt) file. First, clone the [git repository](https://github.com/DOV-Vlaanderen/pydov).
 We advice to use an Python development environment, for example with [conda](https://docs.conda.io/en/latest/miniconda.html) or
 [virtualenv](https://virtualenv.pypa.io/en/latest/). Activate the (conda/virtualenv) environment and
 install the package in development mode:

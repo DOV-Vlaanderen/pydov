@@ -89,6 +89,10 @@ jobs:
           conda update -n base -c defaults conda
           conda install --name pydov --file requirements.txt
           conda list
+      - name: adjust owslib version for py3.5
+        if: matrix.python-version == "3.5"
+        run: |
+          conda install owslib=0.19.1
       - name: Install development dependencies with pip
         shell: pwsh
         run: |

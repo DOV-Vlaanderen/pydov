@@ -93,7 +93,7 @@ jobs:
       - name: Run unit tests
         shell: pwsh
         run: |
-          pytest
+          python -m pytest
 
 
 

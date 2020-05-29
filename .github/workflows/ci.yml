@@ -82,12 +82,12 @@ jobs:
           channel-priority: flexible
           auto-update-conda: true
           python-version: ${{ matrix.python-version }}
-      - name: Conda info
-        shell: bash
-        run: conda info
-      - name: Conda list
+          activate-environment: pydov
+      - name: PowerShell Core
         shell: pwsh
-        run: conda list
+        run: |
+          pip install -e .[devs]
+          conda list
 
 
 

@@ -83,13 +83,17 @@ jobs:
           auto-update-conda: true
           python-version: ${{ matrix.python-version }}
           activate-environment: pydov
-      - name: Install dependencies and package
+      - name: Install package dependencies with conda
         shell: pwsh
         run: |
           conda update -n base -c defaults conda
           conda install --name pydov --file requirements.txt
-          pip install -e .[devs]
           conda list
+      - name: Install development dependencies with pip
+        shell: pwsh
+        run: |
+          pip install -r requirements_dev.txt
+          conda list          
       - name: Run unit tests
         shell: pwsh
         run: |

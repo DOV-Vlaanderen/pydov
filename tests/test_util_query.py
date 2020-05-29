@@ -1,13 +1,17 @@
 """Module grouping tests for the pydov.util.query module."""
+from itertools import permutations
+
 import pandas as pd
 import numpy as np
 import pytest
+from owslib.etree import etree
 
 from pydov.util.dovutil import build_dov_url
 from pydov.util.query import (
     PropertyInList,
     Join,
 )
+from tests.abstract import clean_xml
 
 
 class TestPropertyInList(object):
@@ -38,6 +42,27 @@ class TestPropertyInList(object):
             l.remove(literal.text)
 
         assert len(l) == 0
+
+    def test_stable(self):
+        """Test the PropertyInList expression with a standard list.
+
+        Test whether the generated query is correct and stable.
+
+        """
+        l = ['a', 'b', 'c']
+
+        for p in permutations(l):
+            query = PropertyInList('methode', list(p))
+            xml = query.toXML()
+
+            assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
+                '<ogc:Or><ogc:PropertyIsEqualTo><ogc:PropertyName>methode</ogc'
+                ':PropertyName><ogc:Literal>a</ogc:Literal></ogc'
+                ':PropertyIsEqualTo><ogc:PropertyIsEqualTo><ogc:PropertyName'
+                '>methode</ogc:PropertyName><ogc:Literal>b</ogc:Literal></ogc'
+                ':PropertyIsEqualTo><ogc:PropertyIsEqualTo><ogc:PropertyName'
+                '>methode</ogc:PropertyName><ogc:Literal>c</ogc:Literal></ogc'
+                ':PropertyIsEqualTo></ogc:Or>')
 
     def test_duplicate(self):
         """Test the PropertyInList expression with a list containing

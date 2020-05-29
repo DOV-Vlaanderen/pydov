@@ -117,7 +117,8 @@ class AbstractSearch(AbstractCommon):
 
             if capabilities is None:
                 AbstractSearch.__wfs = WebFeatureService(
-                    url=build_dov_url('geoserver/wfs'), version="1.1.0")
+                    url=build_dov_url('geoserver/wfs'), version="1.1.0",
+                    timeout=pydov.request_timeout)
             else:
                 AbstractSearch.__wfs = WebFeatureService(
                     url=build_dov_url('geoserver/wfs'), version="1.1.0",

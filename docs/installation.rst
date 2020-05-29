@@ -78,8 +78,10 @@ have the development environment setup:
     # or
 
     $ # using virtualenv
-    $ virtualenv pydov
-    $ source pydov/bin/activate | pydov\Scripts\activate
+    $ virtualenv venv
+    $ # activating is OS dependent:
+    $ source venv/bin/activate # linux users
+    $ venv\Scripts\activate # windows users
 
 - install all development dependencies and the package in development mode:
 

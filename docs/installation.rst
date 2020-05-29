@@ -67,7 +67,7 @@ have the development environment setup:
 
     $ git clone git://github.com/DOV-Vlaanderen/pydov
 
-- Create a development environment, for example using `conda`_ or `virtualenv`_:
+- Create a development environment, for example using `conda`_ or `venv`_:
 
 .. code-block:: console
 
@@ -77,11 +77,17 @@ have the development environment setup:
 
     # or
 
-    # using virtualenv
-    $ virtualenv venv
-    # activating is OS dependent:
-    $ source venv/bin/activate # linux users
-    $ venv\Scripts\activate # windows users
+    # using venv (commands are OS dependent):
+
+      # linux users
+    $ python3 -m venv pydov/venv              # linux users
+    $ source pydov/venv/bin/activate          # linux
+
+      # windows users
+    $ c:\Python35\python -m venv pydov\venv   # windows users
+    $ pydov\venv\Scripts\activate             # windows users
+
+The Python documentation on `virtual environments`_ provides more guidance on using a development environment.
 
 - install all development dependencies and the package in development mode:
 
@@ -103,5 +109,5 @@ have the development environment setup:
 Have a look at the :ref:`development guidelines <dev-guidelines>` to see ow we develop the pydov package and get more information on the workflow.
 
 .. _conda: https://docs.conda.io/en/latest/miniconda.html
-.. _virtualenv: https://virtualenv.pypa.io/en/latest/
-
+.. _venv: https://docs.python.org/3/library/venv.html#module-venv
+.. _virtual environments: https://packaging.python.org/tutorials/installing-packages/#creating-virtual-environments

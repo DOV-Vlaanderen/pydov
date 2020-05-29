@@ -71,15 +71,17 @@ have the development environment setup:
 
 .. code-block:: console
 
-    $ # using conda
+    # using conda
     $ conda create -n pydov python=3.7
     $ conda activate pydov
 
     # or
 
-    $ # using virtualenv
-    $ virtualenv pydov
-    $ source pydov/bin/activate | pydov\Scripts\activate
+    # using virtualenv
+    $ virtualenv venv
+    # activating virtualenv is OS dependent:
+    $ source venv/bin/activate # for linux users
+    $ venv\Scripts\activate # for windows users
 
 - install all development dependencies and the package in development mode:
 

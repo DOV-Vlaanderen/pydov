@@ -1,31 +1,19 @@
 """Module grouping tests for the interpretaties search module."""
-import pandas as pd
 import numpy as np
+import pandas as pd
 import pytest
+from owslib.fes import PropertyIsEqualTo
 from pandas import DataFrame
 
 import pydov
-from owslib.fes import PropertyIsEqualTo
 from pydov.search.interpretaties import HydrogeologischeStratigrafieSearch
 from pydov.types.interpretaties import HydrogeologischeStratigrafie
-from tests.abstract import (
-    AbstractTestSearch,
-)
-
-from tests.test_search import (
-    mp_wfs,
-    wfs,
-    mp_get_schema,
-    mp_remote_md,
-    mp_remote_fc,
-    mp_remote_describefeaturetype,
-    mp_remote_wfs_feature,
-    mp_remote_xsd,
-    mp_dov_xml,
-    mp_dov_xml_broken,
-    wfs_getfeature,
-    wfs_feature,
-)
+from tests.abstract import AbstractTestSearch
+from tests.test_search import (mp_dov_xml, mp_dov_xml_broken, mp_get_schema,
+                               mp_remote_describefeaturetype, mp_remote_fc,
+                               mp_remote_md, mp_remote_wfs_feature,
+                               mp_remote_xsd, mp_wfs, wfs, wfs_feature,
+                               wfs_getfeature)
 
 location_md_metadata = \
     'tests/data/types/interpretaties/hydrogeologische_stratigrafie/' \
@@ -49,123 +37,27 @@ location_xsd_base = \
 
 
 class TestHydrogeologischeStratigrafieSearch(AbstractTestSearch):
-    def get_search_object(self):
-        """Get an instance of the search object for this type.
 
-        Returns
-        -------
-        pydov.search.interpretaties.HydrogeologischeStratigrafieSearch
-            Instance of HydrogeologischeStratigrafieSearch used for searching.
+    search_instance = HydrogeologischeStratigrafieSearch()
+    datatype_class = HydrogeologischeStratigrafie
 
-        """
-        return HydrogeologischeStratigrafieSearch()
+    valid_query_single = PropertyIsEqualTo(propertyname='Proefnummer',
+                                           literal='GEO-74/254-b1')
 
-    def get_type(self):
-        """Get the class reference for this datatype.
+    inexistent_field = 'onbestaand'
+    wfs_field = 'Proefnummer'
+    xml_field = 'aquifer'
 
-        Returns
-        -------
-        pydov.types.interpretaties.HydrogeologischeStratigrafie
-            Class reference for the HydrogeologischeStratigrafie class.
+    valid_returnfields = ('pkey_interpretatie',
+                          'betrouwbaarheid_interpretatie')
+    valid_returnfields_subtype = (
+        'pkey_interpretatie', 'diepte_laag_van', 'diepte_laag_tot')
+    valid_returnfields_extra = ('pkey_interpretatie', 'gemeente')
 
-        """
-        return HydrogeologischeStratigrafie
-
-    def get_valid_query_single(self):
-        """Get a valid query returning a single feature.
-
-        Returns
-        -------
-        owslib.fes.OgcExpression
-            OGC expression of the query.
-
-        """
-        return PropertyIsEqualTo(propertyname='Proefnummer',
-                                 literal='GEO-74/254-b1')
-
-    def get_inexistent_field(self):
-        """Get the name of a field that doesn't exist.
-
-        Returns
-        -------
-        str
-            The name of an inexistent field.
-
-        """
-        return 'onbestaand'
-
-    def get_wfs_field(self):
-        """Get the name of a WFS field.
-
-        Returns
-        -------
-        str
-            The name of the WFS field.
-
-        """
-        return 'Proefnummer'
-
-    def get_xml_field(self):
-        """Get the name of a field defined in XML only.
-
-        Returns
-        -------
-        str
-            The name of the XML field.
-
-        """
-        return 'aquifer'
-
-    def get_valid_returnfields(self):
-        """Get a list of valid return fields from the main type.
-
-        Returns
-        -------
-        tuple
-            A tuple containing only valid return fields.
-
-        """
-        return ('pkey_interpretatie', 'betrouwbaarheid_interpretatie')
-
-    def get_valid_returnfields_subtype(self):
-        """Get a list of valid return fields, including fields from a subtype.
-
-        Returns
-        -------
-        tuple
-            A tuple containing valid return fields, including fields from a
-            subtype.
-
-        """
-        return ('pkey_interpretatie', 'diepte_laag_van', 'diepte_laag_tot')
-
-    def get_valid_returnfields_extra(self):
-        """Get a list of valid return fields, including extra WFS only
-        fields not present in the default dataframe.
-
-        Returns
-        -------
-        tuple
-            A tuple containing valid return fields, including extra fields
-            from WFS, not present in the default dataframe.
-
-        """
-        return ('pkey_interpretatie', 'gemeente')
-
-    def get_df_default_columns(self):
-        """Get a list of the column names (and order) from the default
-        dataframe.
-
-        Returns
-        -------
-        list
-            A list of the column names of the default dataframe.
-
-        """
-        return ['pkey_interpretatie', 'pkey_boring',
-                'betrouwbaarheid_interpretatie', 'x', 'y',
-                'diepte_laag_van', 'diepte_laag_tot',
-                'aquifer']
+    df_default_columns = ['pkey_interpretatie', 'pkey_boring',
+                          'betrouwbaarheid_interpretatie', 'x', 'y',
+                          'diepte_laag_van', 'diepte_laag_tot',
+                          'aquifer']
 
     def test_search_nan(self, mp_wfs, mp_get_schema,
                         mp_remote_describefeaturetype, mp_remote_md,
@@ -192,8 +84,8 @@ class TestHydrogeologischeStratigrafieSearch(AbstractTestSearch):
             Monkeypatch the call to get the remote XML data.
 
         """
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single())
+        df = self.search_instance.search(
+            query=self.valid_query_single)
 
     def test_search_customreturnfields(self, mp_get_schema,
                                        mp_remote_describefeaturetype,
@@ -214,8 +106,8 @@ class TestHydrogeologischeStratigrafieSearch(AbstractTestSearch):
             Monkeypatch the call to get the remote XML data.
 
         """
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single(),
+        df = self.search_instance.search(
+            query=self.valid_query_single,
             return_fields=('pkey_interpretatie', 'pkey_boring'))
 
         assert isinstance(df, DataFrame)
@@ -244,8 +136,8 @@ class TestHydrogeologischeStratigrafieSearch(AbstractTestSearch):
             Monkeypatch the call to get the remote XML data.
 
         """
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single(),
+        df = self.search_instance.search(
+            query=self.valid_query_single,
             return_fields=('pkey_interpretatie', 'diepte_laag_tot'))
 
         assert df.diepte_laag_tot[0] == 2.5

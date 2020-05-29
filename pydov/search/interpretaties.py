@@ -2,14 +2,14 @@ import pandas as pd
 
 from pydov.search.abstract import AbstractSearch
 from pydov.types.fields import _WfsInjectedField
-from pydov.types.interpretaties import FormeleStratigrafie
-from pydov.types.interpretaties import InformeleHydrogeologischeStratigrafie
-from pydov.types.interpretaties import InformeleStratigrafie
-from pydov.types.interpretaties import HydrogeologischeStratigrafie
-from pydov.types.interpretaties import LithologischeBeschrijvingen
-from pydov.types.interpretaties import GecodeerdeLithologie
-from pydov.types.interpretaties import GeotechnischeCodering
-from pydov.types.interpretaties import QuartairStratigrafie
+from pydov.types.interpretaties import (FormeleStratigrafie,
+                                        GecodeerdeLithologie,
+                                        GeotechnischeCodering,
+                                        HydrogeologischeStratigrafie,
+                                        InformeleHydrogeologischeStratigrafie,
+                                        InformeleStratigrafie,
+                                        LithologischeBeschrijvingen,
+                                        QuartairStratigrafie)
 from pydov.util import owsutil
 
 
@@ -37,13 +37,10 @@ class InformeleStratigrafieSearch(AbstractSearch):
             'interpretaties:informele_stratigrafie', objecttype)
 
     def _init_namespace(self):
-        """Initialise the WFS namespace associated with the layer."""
         if InformeleStratigrafieSearch.__wfs_namespace is None:
             InformeleStratigrafieSearch.__wfs_namespace = self._get_namespace()
 
     def _init_fields(self):
-        """Initialise the fields and their metadata available in this search
-        class."""
         if self._fields is None:
             if InformeleStratigrafieSearch.__wfs_schema is None:
                 InformeleStratigrafieSearch.__wfs_schema = self._get_schema()
@@ -83,60 +80,6 @@ class InformeleStratigrafieSearch(AbstractSearch):
 
     def search(self, location=None, query=None, sort_by=None,
                return_fields=None, max_features=None):
-        """Search for 'informele stratigrafie'. Provide either `location`
-        and/or `query` and/or `max_features`.
-        When `return_fields` is None, all fields are returned.
-
-        Parameters
-        ----------
-        location : pydov.util.location.AbstractLocationFilter or \
-                    owslib.fes.BinaryLogicOpType<AbstractLocationFilter> or \
-                    owslib.fes.UnaryLogicOpType<AbstractLocationFilter>
-            Location filter limiting the features to retrieve. Can either be a
-            single instance of a subclass of AbstractLocationFilter, or a
-            combination using And, Or, Not of AbstractLocationFilters.
-        query : owslib.fes.OgcExpression
-            OGC filter expression to use for searching. This can contain any
-            combination of filter elements defined in owslib.fes. The query
-            should use the fields provided in `get_fields()`. Note that not
-            all fields are currently supported as a search parameter.
-        sort_by : owslib.fes.SortBy, optional
-            List of properties to sort by.
-        return_fields : list<str> or tuple<str> or set<str>
-            A list of fields to be returned in the output data. This should
-            be a subset of the fields provided in `get_fields()`. Note that
-            not all fields are currently supported as return fields.
-        max_features : int
-            Limit the maximum number of features to request.
-
-        Returns
-        -------
-        pandas.core.frame.DataFrame
-            DataFrame containing the output of the search query.
-
-        Raises
-        ------
-        pydov.util.errors.InvalidSearchParameterError
-            When not one of `location`, `query` or `max_features` is provided.
-
-        pydov.util.errors.InvalidFieldError
-            When at least one of the fields in `return_fields` is unknown.
-
-            When a field that is only accessible as return field is used as
-            a query parameter.
-
-            When a field that can only be used as a query parameter is used as
-            a return field.
-
-        pydov.util.errors.FeatureOverflowError
-            When the number of features to be returned is equal to the
-            maxFeatures limit of the WFS server.
-
-        AttributeError
-            When the argument supplied as return_fields is not a list,
-            tuple or set.
-
-        """
         fts = self._search(location=location, query=query, sort_by=sort_by,
                            return_fields=return_fields,
                            extra_wfs_fields=['Type_proef', 'Proeffiche'],
@@ -176,13 +119,10 @@ class FormeleStratigrafieSearch(AbstractSearch):
             'interpretaties:formele_stratigrafie', objecttype)
 
     def _init_namespace(self):
-        """Initialise the WFS namespace associated with the layer."""
         if FormeleStratigrafieSearch.__wfs_namespace is None:
             FormeleStratigrafieSearch.__wfs_namespace = self._get_namespace()
 
     def _init_fields(self):
-        """Initialise the fields and their metadata available in this search
-        class."""
         if self._fields is None:
             if FormeleStratigrafieSearch.__wfs_schema is None:
                 FormeleStratigrafieSearch.__wfs_schema = self._get_schema()
@@ -222,60 +162,6 @@ class FormeleStratigrafieSearch(AbstractSearch):
 
     def search(self, location=None, query=None, sort_by=None,
                return_fields=None, max_features=None):
-        """Search for 'formele stratigrafie'. Provide either `location` and/or
-        `query` and/or `max_features`.
-        When `return_fields` is None, all fields are returned.
-
-        Parameters
-        ----------
-        location : pydov.util.location.AbstractLocationFilter or \
-                    owslib.fes.BinaryLogicOpType<AbstractLocationFilter> or \
-                    owslib.fes.UnaryLogicOpType<AbstractLocationFilter>
-            Location filter limiting the features to retrieve. Can either be a
-            single instance of a subclass of AbstractLocationFilter, or a
-            combination using And, Or, Not of AbstractLocationFilters.
-        query : owslib.fes.OgcExpression
-            OGC filter expression to use for searching. This can contain any
-            combination of filter elements defined in owslib.fes. The query
-            should use the fields provided in `get_fields()`. Note that not
-            all fields are currently supported as a search parameter.
-        sort_by : owslib.fes.SortBy, optional
-            List of properties to sort by.
-        return_fields : list<str> or tuple<str> or set<str>
-            A list of fields to be returned in the output data. This should
-            be a subset of the fields provided in `get_fields()`. Note that
-            not all fields are currently supported as return fields.
-        max_features : int
-            Limit the maximum number of features to request.
-
-        Returns
-        -------
-        pandas.core.frame.DataFrame
-            DataFrame containing the output of the search query.
-
-        Raises
-        ------
-        pydov.util.errors.InvalidSearchParameterError
-            When not one of `location`, `query` or `max_features` is provided.
-
-        pydov.util.errors.InvalidFieldError
-            When at least one of the fields in `return_fields` is unknown.
-
-            When a field that is only accessible as return field is used as
-            a query parameter.
-
-            When a field that can only be used as a query parameter is used as
-            a return field.
-
-        pydov.util.errors.FeatureOverflowError
-            When the number of features to be returned is equal to the
-            maxFeatures limit of the WFS server.
-
-        AttributeError
-            When the argument supplied as return_fields is not a list,
-            tuple or set.
-
-        """
         fts = self._search(location=location, query=query, sort_by=sort_by,
                            return_fields=return_fields,
                            extra_wfs_fields=['Type_proef', 'Proeffiche'],
@@ -315,14 +201,11 @@ class HydrogeologischeStratigrafieSearch(AbstractSearch):
             objecttype)
 
     def _init_namespace(self):
-        """Initialise the WFS namespace associated with the layer."""
         if HydrogeologischeStratigrafieSearch.__wfs_namespace is None:
             HydrogeologischeStratigrafieSearch.__wfs_namespace = \
                 self._get_namespace()
 
     def _init_fields(self):
-        """Initialise the fields and their metadata available in this search
-        class."""
         if self._fields is None:
             if HydrogeologischeStratigrafieSearch.__wfs_schema is None:
                 HydrogeologischeStratigrafieSearch.__wfs_schema = \
@@ -364,61 +247,6 @@ class HydrogeologischeStratigrafieSearch(AbstractSearch):
 
     def search(self, location=None, query=None, sort_by=None,
                return_fields=None, max_features=None):
-        """Search for hydrogeological interpretations. Provide either
-        `location` and/or `query` and/or `max_features`. When
-        `return_fields` is None, all fields
-        are returned.
-
-        Parameters
-        ----------
-        location : pydov.util.location.AbstractLocationFilter or \
-                    owslib.fes.BinaryLogicOpType<AbstractLocationFilter> or \
-                    owslib.fes.UnaryLogicOpType<AbstractLocationFilter>
-            Location filter limiting the features to retrieve. Can either be a
-            single instance of a subclass of AbstractLocationFilter, or a
-            combination using And, Or, Not of AbstractLocationFilters.
-        query : owslib.fes.OgcExpression
-            OGC filter expression to use for searching. This can contain any
-            combination of filter elements defined in owslib.fes. The query
-            should use the fields provided in `get_fields()`. Note that not
-            all fields are currently supported as a search parameter.
-        sort_by : owslib.fes.SortBy, optional
-            List of properties to sort by.
-        return_fields : list<str> or tuple<str> or set<str>
-            A list of fields to be returned in the output data. This should
-            be a subset of the fields provided in `get_fields()`. Note that
-            not all fields are currently supported as return fields.
-        max_features : int
-            Limit the maximum number of features to request.
-
-        Returns
-        -------
-        pandas.core.frame.DataFrame
-            DataFrame containing the output of the search query.
-
-        Raises
-        ------
-        pydov.util.errors.InvalidSearchParameterError
-            When not one of `location`, `query` or `max_features` is provided.
-
-        pydov.util.errors.InvalidFieldError
-            When at least one of the fields in `return_fields` is unknown.
-
-            When a field that is only accessible as return field is used as
-            a query parameter.
-
-            When a field that can only be used as a query parameter is used as
-            a return field.
-
-        pydov.util.errors.FeatureOverflowError
-            When the number of features to be returned is equal to the
-            maxFeatures limit of the WFS server.
-
-        AttributeError
-            When the argument supplied as return_fields is not a list,
-            tuple or set.
-
-        """
         fts = self._search(location=location, query=query, sort_by=sort_by,
                            return_fields=return_fields,
                            max_features=max_features)
@@ -457,14 +285,11 @@ class LithologischeBeschrijvingenSearch(AbstractSearch):
             objecttype)
 
     def _init_namespace(self):
-        """Initialise the WFS namespace associated with the layer."""
         if LithologischeBeschrijvingenSearch.__wfs_namespace is None:
             LithologischeBeschrijvingenSearch.__wfs_namespace = \
                 self._get_namespace()
 
     def _init_fields(self):
-        """Initialise the fields and their metadata available in this search
-        class."""
         if self._fields is None:
             if LithologischeBeschrijvingenSearch.__wfs_schema is None:
                 LithologischeBeschrijvingenSearch.__wfs_schema = \
@@ -506,60 +331,6 @@ class LithologischeBeschrijvingenSearch(AbstractSearch):
 
     def search(self, location=None, query=None, sort_by=None,
                return_fields=None, max_features=None):
-        """Search for 'lithologische beschrijvingen'. Provide either
-        `location` and/or `query` and/or `max_features`.
-        When `return_fields` is None, all fields are returned.
-
-        Parameters
-        ----------
-        location : pydov.util.location.AbstractLocationFilter or \
-                    owslib.fes.BinaryLogicOpType<AbstractLocationFilter> or \
-                    owslib.fes.UnaryLogicOpType<AbstractLocationFilter>
-            Location filter limiting the features to retrieve. Can either be a
-            single instance of a subclass of AbstractLocationFilter, or a
-            combination using And, Or, Not of AbstractLocationFilters.
-        query : owslib.fes.OgcExpression
-            OGC filter expression to use for searching. This can contain any
-            combination of filter elements defined in owslib.fes. The query
-            should use the fields provided in `get_fields()`. Note that not
-            all fields are currently supported as a search parameter.
-        sort_by : owslib.fes.SortBy, optional
-            List of properties to sort by.
-        return_fields : list<str> or tuple<str> or set<str>
-            A list of fields to be returned in the output data. This should
-            be a subset of the fields provided in `get_fields()`. Note that
-            not all fields are currently supported as return fields.
-        max_features : int
-            Limit the maximum number of features to request.
-
-        Returns
-        -------
-        pandas.core.frame.DataFrame
-            DataFrame containing the output of the search query.
-
-        Raises
-        ------
-        pydov.util.errors.InvalidSearchParameterError
-            When not one of `location`, `query` or `max_features` is provided.
-
-        pydov.util.errors.InvalidFieldError
-            When at least one of the fields in `return_fields` is unknown.
-
-            When a field that is only accessible as return field is used as
-            a query parameter.
-
-            When a field that can only be used as a query parameter is used as
-            a return field.
-
-        pydov.util.errors.FeatureOverflowError
-            When the number of features to be returned is equal to the
-            maxFeatures limit of the WFS server.
-
-        AttributeError
-            When the argument supplied as return_fields is not a list,
-            tuple or set.
-
-        """
         fts = self._search(location=location, query=query, sort_by=sort_by,
                            return_fields=return_fields,
                            max_features=max_features)
@@ -598,14 +369,11 @@ class GecodeerdeLithologieSearch(AbstractSearch):
             objecttype)
 
     def _init_namespace(self):
-        """Initialise the WFS namespace associated with the layer."""
         if GecodeerdeLithologieSearch.__wfs_namespace is None:
             GecodeerdeLithologieSearch.__wfs_namespace = \
                 self._get_namespace()
 
     def _init_fields(self):
-        """Initialise the fields and their metadata available in this search
-        class."""
         if self._fields is None:
             if GecodeerdeLithologieSearch.__wfs_schema is None:
                 GecodeerdeLithologieSearch.__wfs_schema = \
@@ -647,60 +415,6 @@ class GecodeerdeLithologieSearch(AbstractSearch):
 
     def search(self, location=None, query=None, sort_by=None,
                return_fields=None, max_features=None):
-        """Search for 'gecodeerde lithologie'. Provide either `location`
-        and/or `query` and/or `max_features`.
-        When `return_fields` is None, all fields are returned.
-
-        Parameters
-        ----------
-        location : pydov.util.location.AbstractLocationFilter or \
-                    owslib.fes.BinaryLogicOpType<AbstractLocationFilter> or \
-                    owslib.fes.UnaryLogicOpType<AbstractLocationFilter>
-            Location filter limiting the features to retrieve. Can either be a
-            single instance of a subclass of AbstractLocationFilter, or a
-            combination using And, Or, Not of AbstractLocationFilters.
-        query : owslib.fes.OgcExpression
-            OGC filter expression to use for searching. This can contain any
-            combination of filter elements defined in owslib.fes. The query
-            should use the fields provided in `get_fields()`. Note that not
-            all fields are currently supported as a search parameter.
-        sort_by : owslib.fes.SortBy, optional
-            List of properties to sort by.
-        return_fields : list<str> or tuple<str> or set<str>
-            A list of fields to be returned in the output data. This should
-            be a subset of the fields provided in `get_fields()`. Note that
-            not all fields are currently supported as return fields.
-        max_features : int
-            Limit the maximum number of features to request.
-
-        Returns
-        -------
-        pandas.core.frame.DataFrame
-            DataFrame containing the output of the search query.
-
-        Raises
-        ------
-        pydov.util.errors.InvalidSearchParameterError
-            When not one of `location`, `query` or `max_features` is provided.
-
-        pydov.util.errors.InvalidFieldError
-            When at least one of the fields in `return_fields` is unknown.
-
-            When a field that is only accessible as return field is used as
-            a query parameter.
-
-            When a field that can only be used as a query parameter is used as
-            a return field.
-
-        pydov.util.errors.FeatureOverflowError
-            When the number of features to be returned is equal to the
-            maxFeatures limit of the WFS server.
-
-        AttributeError
-            When the argument supplied as return_fields is not a list,
-            tuple or set.
-
-        """
         fts = self._search(location=location, query=query, sort_by=sort_by,
                            return_fields=return_fields,
                            max_features=max_features)
@@ -739,14 +453,11 @@ class GeotechnischeCoderingSearch(AbstractSearch):
             objecttype)
 
     def _init_namespace(self):
-        """Initialise the WFS namespace associated with the layer."""
         if GeotechnischeCoderingSearch.__wfs_namespace is None:
             GeotechnischeCoderingSearch.__wfs_namespace = \
                 self._get_namespace()
 
     def _init_fields(self):
-        """Initialise the fields and their metadata available in this search
-        class."""
         if self._fields is None:
             if GeotechnischeCoderingSearch.__wfs_schema is None:
                 GeotechnischeCoderingSearch.__wfs_schema = \
@@ -788,56 +499,6 @@ class GeotechnischeCoderingSearch(AbstractSearch):
 
     def search(self, location=None, query=None, sort_by=None,
                return_fields=None, max_features=None):
-        """Search for 'geotechnische_codering'. Provide either `location`
-        and/or `query` and/or `max_features`.
-        When `return_fields` is None, all fields are returned.
-
-        Parameters
-        ----------
-        location : tuple<minx,miny,maxx,maxy>
-            The bounding box limiting the features to retrieve.
-        query : owslib.fes.OgcExpression
-            OGC filter expression to use for searching. This can contain any
-            combination of filter elements defined in owslib.fes. The query
-            should use the fields provided in `get_fields()`. Note that not
-            all fields are currently supported as a search parameter.
-        sort_by : owslib.fes.SortBy, optional
-            List of properties to sort by.
-        return_fields : list<str> or tuple<str> or set<str>
-            A list of fields to be returned in the output data. This should
-            be a subset of the fields provided in `get_fields()`. Note that
-            not all fields are currently supported as return fields.
-        max_features : int
-            Limit the maximum number of features to request.
-
-        Returns
-        -------
-        pandas.core.frame.DataFrame
-            DataFrame containing the output of the search query.
-
-        Raises
-        ------
-        pydov.util.errors.InvalidSearchParameterError
-            When not one of `location`, `query` or `max_features` is provided.
-
-        pydov.util.errors.InvalidFieldError
-            When at least one of the fields in `return_fields` is unknown.
-
-            When a field that is only accessible as return field is used as
-            a query parameter.
-
-            When a field that can only be used as a query parameter is used as
-            a return field.
-
-        pydov.util.errors.FeatureOverflowError
-            When the number of features to be returned is equal to the
-            maxFeatures limit of the WFS server.
-
-        AttributeError
-            When the argument supplied as return_fields is not a list,
-            tuple or set.
-
-        """
         fts = self._search(location=location, query=query, sort_by=sort_by,
                            return_fields=return_fields,
                            max_features=max_features)
@@ -876,13 +537,10 @@ class QuartairStratigrafieSearch(AbstractSearch):
             'interpretaties:quartaire_stratigrafie', objecttype)
 
     def _init_namespace(self):
-        """Initialise the WFS namespace associated with the layer."""
         if QuartairStratigrafieSearch.__wfs_namespace is None:
             QuartairStratigrafieSearch.__wfs_namespace = self._get_namespace()
 
     def _init_fields(self):
-        """Initialise the fields and their metadata available in this search
-        class."""
         if self._fields is None:
             if QuartairStratigrafieSearch.__wfs_schema is None:
                 QuartairStratigrafieSearch.__wfs_schema = self._get_schema()
@@ -922,61 +580,6 @@ class QuartairStratigrafieSearch(AbstractSearch):
 
     def search(self, location=None, query=None, sort_by=None,
                return_fields=None, max_features=None):
-        """Search for interpretations of Quartair stratigrafie.
-
-        Provide either `location` and/or `query` and/or `max_features`.
-        When `return_fields` is None, all fields are returned.
-
-        Parameters
-        ----------
-        location : pydov.util.location.AbstractLocationFilter or \
-                    owslib.fes.BinaryLogicOpType<AbstractLocationFilter> or \
-                    owslib.fes.UnaryLogicOpType<AbstractLocationFilter>
-            Location filter limiting the features to retrieve. Can either be a
-            single instance of a subclass of AbstractLocationFilter, or a
-            combination using And, Or, Not of AbstractLocationFilters.
-        query : owslib.fes.OgcExpression
-            OGC filter expression to use for searching. This can contain any
-            combination of filter elements defined in owslib.fes. The query
-            should use the fields provided in `get_fields()`. Note that not
-            all fields are currently supported as a search parameter.
-        sort_by : owslib.fes.SortBy, optional
-            List of properties to sort by.
-        return_fields : list<str> or tuple<str> or set<str>
-            A list of fields to be returned in the output data. This should
-            be a subset of the fields provided in `get_fields()`. Note that
-            not all fields are currently supported as return fields.
-        max_features : int
-            Limit the maximum number of features to request.
-
-        Returns
-        -------
-        pandas.core.frame.DataFrame
-            DataFrame containing the output of the search query.
-
-        Raises
-        ------
-        pydov.util.errors.InvalidSearchParameterError
-            When not one of `location`, `query` or `max_features` is provided.
-
-        pydov.util.errors.InvalidFieldError
-            When at least one of the fields in `return_fields` is unknown.
-
-            When a field that is only accessible as return field is used as
-            a query parameter.
-
-            When a field that can only be used as a query parameter is used as
-            a return field.
-
-        pydov.util.errors.FeatureOverflowError
-            When the number of features to be returned is equal to the
-            maxFeatures limit of the WFS server.
-
-        AttributeError
-            When the argument supplied as return_fields is not a list,
-            tuple or set.
-
-        """
         fts = self._search(location=location, query=query, sort_by=sort_by,
                            return_fields=return_fields,
                            max_features=max_features)
@@ -1016,14 +619,11 @@ class InformeleHydrogeologischeStratigrafieSearch(AbstractSearch):
             objecttype)
 
     def _init_namespace(self):
-        """Initialise the WFS namespace associated with the layer."""
         if InformeleHydrogeologischeStratigrafieSearch.__wfs_namespace is None:
             InformeleHydrogeologischeStratigrafieSearch.__wfs_namespace = \
                 self._get_namespace()
 
     def _init_fields(self):
-        """Initialise the fields and their metadata available in this search
-        class."""
         if self._fields is None:
             if InformeleHydrogeologischeStratigrafieSearch.__wfs_schema is \
                     None:
@@ -1071,59 +671,6 @@ class InformeleHydrogeologischeStratigrafieSearch(AbstractSearch):
 
     def search(self, location=None, query=None, sort_by=None,
                return_fields=None, max_features=None):
-        """Search for boreholes (Boring). Provide either `location` or `query`.
-        When `return_fields` is None, all fields are returned.
-
-        Parameters
-        ----------
-        location : pydov.util.location.AbstractLocationFilter or \
-                    owslib.fes.BinaryLogicOpType<AbstractLocationFilter> or \
-                    owslib.fes.UnaryLogicOpType<AbstractLocationFilter>
-            Location filter limiting the features to retrieve. Can either be a
-            single instance of a subclass of AbstractLocationFilter, or a
-            combination using And, Or, Not of AbstractLocationFilters.
-        query : owslib.fes.OgcExpression
-            OGC filter expression to use for searching. This can contain any
-            combination of filter elements defined in owslib.fes. The query
-            should use the fields provided in `get_fields()`. Note that not
-            all fields are currently supported as a search parameter.
-        sort_by : owslib.fes.SortBy, optional
-            List of properties to sort by.
-        return_fields : list<str> or tuple<str> or set<str>
-            A list of fields to be returned in the output data. This should
-            be a subset of the fields provided in `get_fields()`. Note that
-            not all fields are currently supported as return fields.
-        max_features : int
-            Limit the maximum number of features to request.
-
-        Returns
-        -------
-        pandas.core.frame.DataFrame
-            DataFrame containing the output of the search query.
-
-        Raises
-        ------
-        pydov.util.errors.InvalidSearchParameterError
-            When not one of `location` or `query` is provided.
-
-        pydov.util.errors.InvalidFieldError
-            When at least one of the fields in `return_fields` is unknown.
-
-            When a field that is only accessible as return field is used as
-            a query parameter.
-
-            When a field that can only be used as a query parameter is used as
-            a return field.
-
-        pydov.util.errors.FeatureOverflowError
-            When the number of features to be returned is equal to the
-            maxFeatures limit of the WFS server.
-
-        AttributeError
-            When the argument supplied as return_fields is not a list,
-            tuple or set.
-
-        """
         fts = self._search(location=location, query=query, sort_by=sort_by,
                            return_fields=return_fields,
                            max_features=max_features)

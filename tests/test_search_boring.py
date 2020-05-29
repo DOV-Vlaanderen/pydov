@@ -2,29 +2,17 @@
 import datetime
 
 import pytest
-
 from owslib.fes import PropertyIsEqualTo
+
 from pydov.search.boring import BoringSearch
 from pydov.types.boring import Boring
 from pydov.util import owsutil
-from tests.abstract import (
-    AbstractTestSearch,
-)
-
-from tests.test_search import (
-    mp_wfs,
-    wfs,
-    mp_get_schema,
-    mp_remote_md,
-    mp_remote_fc,
-    mp_remote_describefeaturetype,
-    mp_remote_wfs_feature,
-    mp_remote_xsd,
-    mp_dov_xml,
-    mp_dov_xml_broken,
-    wfs_getfeature,
-    wfs_feature,
-)
+from tests.abstract import AbstractTestSearch
+from tests.test_search import (mp_dov_xml, mp_dov_xml_broken, mp_get_schema,
+                               mp_remote_describefeaturetype, mp_remote_fc,
+                               mp_remote_md, mp_remote_wfs_feature,
+                               mp_remote_xsd, mp_wfs, wfs, wfs_feature,
+                               wfs_getfeature)
 
 location_md_metadata = 'tests/data/types/boring/md_metadata.xml'
 location_fc_featurecatalogue = \
@@ -62,127 +50,29 @@ def md_metadata(wfs, mp_remote_md):
 
 
 class TestBoringSearch(AbstractTestSearch):
-    def get_search_object(self):
-        """Get an instance of the search object for this type.
 
-        Returns
-        -------
-        pydov.search.boring.BoringSearch
-            Instance of BoringSearch used for searching.
+    search_instance = BoringSearch()
+    datatype_class = Boring
 
-        """
-        return BoringSearch()
+    valid_query_single = PropertyIsEqualTo(propertyname='boornummer',
+                                           literal='GEO-04/169-BNo-B1')
 
-    def get_type(self):
-        """Get the class reference for this datatype.
+    inexistent_field = 'onbestaand'
+    wfs_field = 'boornummer'
+    xml_field = 'boormethode'
 
-        Returns
-        -------
-        pydov.types.boring.Boring
-            Class reference for the Boring class.
+    valid_returnfields = ('pkey_boring', 'boornummer', 'diepte_boring_tot',
+                          'datum_aanvang')
+    valid_returnfields_subtype = ('pkey_boring', 'boornummer',
+                                  'diepte_methode_van', 'diepte_methode_tot')
+    valid_returnfields_extra = ('pkey_boring', 'doel')
 
-        """
-        return Boring
-
-    def get_valid_query_single(self):
-        """Get a valid query returning a single feature.
-
-        Returns
-        -------
-        owslib.fes.OgcExpression
-            OGC expression of the query.
-
-        """
-        return PropertyIsEqualTo(propertyname='boornummer',
-                                 literal='GEO-04/169-BNo-B1')
-
-    def get_inexistent_field(self):
-        """Get the name of a field that doesn't exist.
-
-        Returns
-        -------
-        str
-            The name of an inexistent field.
-
-        """
-        return 'onbestaand'
-
-    def get_wfs_field(self):
-        """Get the name of a WFS field.
-
-        Returns
-        -------
-        str
-            The name of the WFS field.
-
-        """
-        return 'boornummer'
-
-    def get_xml_field(self):
-        """Get the name of a field defined in XML only.
-
-        Returns
-        -------
-        str
-            The name of the XML field.
-
-        """
-        return 'boormethode'
-
-    def get_valid_returnfields(self):
-        """Get a list of valid return fields from the main type.
-
-        Returns
-        -------
-        tuple
-            A tuple containing only valid return fields.
-
-        """
-        return ('pkey_boring', 'boornummer', 'diepte_boring_tot',
-                'datum_aanvang')
-
-    def get_valid_returnfields_subtype(self):
-        """Get a list of valid return fields, including fields from a subtype.
-
-        Returns
-        -------
-        tuple
-            A tuple containing valid return fields, including fields from a
-            subtype.
-
-        """
-        return ('pkey_boring', 'boornummer', 'diepte_methode_van',
-                'diepte_methode_tot')
-
-    def get_valid_returnfields_extra(self):
-        """Get a list of valid return fields, including extra WFS only
-        fields not present in the default dataframe.
-
-        Returns
-        -------
-        tuple
-            A tuple containing valid return fields, including extra fields
-            from WFS, not present in the default dataframe.
-
-        """
-        return ('pkey_boring', 'doel')
-
-    def get_df_default_columns(self):
-        """Get a list of the column names (and order) from the default
-        dataframe.
-
-        Returns
-        -------
-        list
-            A list of the column names of the default dataframe.
-
-        """
-        return ['pkey_boring', 'boornummer', 'x', 'y', 'mv_mtaw',
-                'start_boring_mtaw', 'gemeente',
-                'diepte_boring_van', 'diepte_boring_tot',
-                'datum_aanvang', 'uitvoerder', 'boorgatmeting',
-                'diepte_methode_van', 'diepte_methode_tot',
-                'boormethode']
+    df_default_columns = ['pkey_boring', 'boornummer', 'x', 'y', 'mv_mtaw',
+                          'start_boring_mtaw', 'gemeente',
+                          'diepte_boring_van', 'diepte_boring_tot',
+                          'datum_aanvang', 'uitvoerder', 'boorgatmeting',
+                          'diepte_methode_van', 'diepte_methode_tot',
+                          'boormethode']
 
     def test_search_date(self, mp_wfs, mp_get_schema,
                          mp_remote_describefeaturetype, mp_remote_md,
@@ -209,8 +99,8 @@ class TestBoringSearch(AbstractTestSearch):
             Monkeypatch the call to get the remote XML data.
 
         """
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single())
+        df = self.search_instance.search(
+            query=self.valid_query_single)
 
         # specific test for the Zulu time wfs 1.1.0 issue
         assert df.datum_aanvang.unique()[0] == datetime.date(2004, 12, 20)
@@ -240,8 +130,8 @@ class TestBoringSearch(AbstractTestSearch):
             Monkeypatch the call to get the remote XML data.
 
         """
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single())
+        df = self.search_instance.search(
+            query=self.valid_query_single)
 
         assert df.mv_mtaw.hasnans
 
@@ -265,8 +155,8 @@ class TestBoringSearch(AbstractTestSearch):
             Monkeypatch the call to get the remote XML data.
 
         """
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single(),
+        df = self.search_instance.search(
+            query=self.valid_query_single,
             return_fields=('pkey_boring', 'boornummer', 'boorgatmeting'))
 
         assert not df.boorgatmeting[0]

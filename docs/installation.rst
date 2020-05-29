@@ -87,6 +87,13 @@ have the development environment setup:
 
     $ pip install -e .[devs]
 
+- To build the documentation, make sure to also install `pandoc`_ as it is required by `Sphinx`_, the
+  tool used to generate the documentation website. See the `pandoc installation instructions`_.
+
+.. _Sphinx: https://www.sphinx-doc.org/en/master/
+.. _pandoc: https://pandoc.org
+.. _pandoc installation instructions: https://pandoc.org/installing.html
+
 .. note::
     If the :code:`sphinx-build` (or :code:`make html`) CLI command returns an error, try to reinstall sphinx separately in the environment using
     :code:`pip install -U sphinx`.

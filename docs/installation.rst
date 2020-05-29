@@ -84,7 +84,7 @@ have the development environment setup:
     $ source pydov/venv/bin/activate          # linux
 
       # windows users
-    $ c:\Python35\python -m venv pydov\venv   # windows users
+    $ python3 -m venv pydov\venv              # windows users
     $ pydov\venv\Scripts\activate             # windows users
 
 The Python documentation on `virtual environments`_ provides more guidance on using a development environment.

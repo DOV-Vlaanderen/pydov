@@ -86,6 +86,7 @@ jobs:
       - name: Install dependencies and package
         shell: pwsh
         run: |
+          conda install --name pydov --file requirements.txt
           pip install -e .[devs]
           conda list
       - name: Run unit tests

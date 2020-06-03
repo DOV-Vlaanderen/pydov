@@ -1,0 +1,104 @@
+---
+name: CI
+
+on:
+  push:
+    branches: ["master"]
+  pull_request:
+    branches: ["master"]
+  schedule:
+    - cron: '0 8 * * 2'
+
+jobs:
+  tests-linux:
+    name: "Python ${{ matrix.python-version }} on ${{ matrix.os }}"
+    runs-on: ${{ matrix.os }}
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        python-version: ["3.6", "3.7", "3.8"]
+    steps:
+      - uses: "actions/checkout@v2"
+      - uses: "actions/setup-python@v1"
+        with:
+          python-version: "${{ matrix.python-version }}"
+      - name: "Install pandoc"
+        run: sudo apt install pandoc
+        if: matrix.python-version == '3.8'
+      - name: "Install dependencies"
+        run: |
+          set -xe
+          python -VV
+          python -m site
+          python -m pip install --upgrade pip setuptools wheel
+          python -m pip install --upgrade coverage[toml] virtualenv tox tox-gh-actions
+
+      - name: "Run tox targets for ${{ matrix.python-version }}"
+        run: "python -m tox"
+
+  tests-windows:
+    name: "Python ${{ matrix.python-version }} on ${{ matrix.os }}"
+    runs-on: ${{ matrix.os }}
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest]
+        python-version: ["3.6", "3.7", "3.8"]
+    steps:
+      - uses: "actions/checkout@v2"
+      - uses: "actions/setup-python@v1"
+        with:
+          python-version: "${{ matrix.python-version }}"
+      - name: "Install pandoc"
+        run: choco install pandoc
+        if: matrix.python-version == '3.8'
+      - name: "Install dependencies"
+        run: |
+          python -VV
+          python -m site
+          python -m pip install --upgrade pip setuptools wheel
+          python -m pip install --upgrade coverage[toml] virtualenv tox tox-gh-actions
+
+      - name: "Run tox targets for ${{ matrix.python-version }}"
+        run: "python -m tox"
+
+  tests-conda:
+    name: "Python with conda (${{ matrix.python-version }} on ${{ matrix.os }})"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ["ubuntu-latest", "windows-latest"]
+        python-version: ["3.6", "3.7", "3.8"]
+    steps:
+      - uses: "actions/checkout@v2"
+      - uses: goanpeca/setup-miniconda@v1
+        with:
+          channels: conda-forge
+          allow-softlinks: true
+          channel-priority: flexible
+          auto-update-conda: true
+          python-version: ${{ matrix.python-version }}
+          activate-environment: pydov
+      - name: Install package dependencies with conda
+        shell: pwsh
+        run: |
+          conda update -n base -c defaults conda
+          conda install --name pydov --file requirements.txt
+          conda list
+      - name: Install development dependencies with pip
+        shell: pwsh
+        run: |
+          pip install -r requirements_dev.txt
+          conda list
+      - name: Run unit tests
+        shell: pwsh
+        run: |
+          python -m pytest
+
+
+
+

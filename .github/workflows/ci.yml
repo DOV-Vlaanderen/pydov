@@ -18,7 +18,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        python-version: ["3.5", "3.6", "3.7", "3.8"]
+        python-version: ["3.6", "3.7", "3.8"]
     steps:
       - uses: "actions/checkout@v2"
       - uses: "actions/setup-python@v1"
@@ -46,7 +46,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [windows-latest]
-        python-version: ["3.5", "3.6", "3.7", "3.8"]
+        python-version: ["3.6", "3.7", "3.8"]
     steps:
       - uses: "actions/checkout@v2"
       - uses: "actions/setup-python@v1"
@@ -72,7 +72,7 @@ jobs:
       fail-fast: false
       matrix:
         os: ["ubuntu-latest", "windows-latest"]
-        python-version: ["3.5", "3.7", "3.8"]
+        python-version: ["3.6", "3.7", "3.8"]
     steps:
       - uses: "actions/checkout@v2"
       - uses: goanpeca/setup-miniconda@v1
@@ -89,15 +89,11 @@ jobs:
           conda update -n base -c defaults conda
           conda install --name pydov --file requirements.txt
           conda list
-      - name: adjust owslib version for py3.5
-        if: matrix.python-version == 3.5
-        run: |
-          conda install --name pydov owslib=0.19.1
       - name: Install development dependencies with pip
         shell: pwsh
         run: |
           pip install -r requirements_dev.txt
-          conda list          
+          conda list
       - name: Run unit tests
         shell: pwsh
         run: |

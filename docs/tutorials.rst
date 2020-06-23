@@ -7,7 +7,9 @@ Tutorials
 
 These tutorials illustrate use cases the pydov package supports, split
 up by different topics each setup as a `jupyter notebook`_
-you can run yourself.
+you can run yourself. The notebook `Introductory_tutorial` bundles most 
+of the interesting features and methods of pydov. That would be a good
+start.
 
 .. _jupyter notebook: http://jupyter.org/
 
@@ -32,6 +34,7 @@ To run these interactively online without installation, use the following binder
 .. toctree::
    :maxdepth: 1
 
+   notebooks/Introductory_tutorial.ipynb
    notebooks/search_boringen.ipynb
    notebooks/search_sonderingen.ipynb
    notebooks/search_grondwaterfilters.ipynb

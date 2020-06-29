@@ -4,14 +4,14 @@ from pydov.types.abstract import AbstractDovType
 from pydov.types.fields import WfsField
 
 
-class Gw_vergunningen(AbstractDovType):
+class Gwvergunningen(AbstractDovType):
     """Class representing the DOV data type for groundwater abstraction
     permits."""
 
     subtypes = []
 
     fields = [
-        WfsField(name='pkey_gw_vergunning', source_field='installatie',
+        WfsField(name='pkey_gwvergunning', source_field='installatie',
                  datatype='string'),
         WfsField(name='id', source_field='id',
                  datatype='string'),
@@ -54,12 +54,12 @@ class Gw_vergunningen(AbstractDovType):
         Parameters
         ----------
         pkey : str
-            Permanent key of the Gw_vergunningen (permits), being a URI
+            Permanent key of the Gwvergunningen (permits), being a URI
             of the form
             `https://www.dov.vlaanderen.be/data/installatie/<id>`.
 
         """
-        super(Gw_vergunningen, self).__init__('gw_vergunningen', pkey)
+        super(Gwvergunningen, self).__init__('gwvergunningen', pkey)
 
     @classmethod
     def from_wfs_element(cls, feature, namespace):

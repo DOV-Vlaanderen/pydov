@@ -10,7 +10,7 @@ from pydov.util import owsutil
 
 class GwvergunningenSearch(AbstractSearch):
     """Search class to retrieve information about Gw permits (
-    Sonderingen)."""
+    all permits: current and historical)."""
 
     __wfs_schema = None
     __wfs_namespace = None

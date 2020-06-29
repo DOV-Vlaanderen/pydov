@@ -674,3 +674,34 @@ if __name__ == '__main__':
         update_file(
             'types/grondmonster/xsd_%s.xml' %
             xsd_schema.split('/')[-1], xsd_schema)
+
+    # types/gw_vergunningen
+
+    # no feature catalogue at dov
+
+    # update_file with query since no permanent xml for wfs
+    # service
+    filepath = 'types/boring/feature.xml'
+    sys.stdout.write('Updating {} ...'.format(filepath))
+    filepath = os.path.join(os.path.dirname(__file__), filepath)
+    from owslib.wfs import WebFeatureService
+    wfs11 = WebFeatureService(url='https://www.dov.vlaanderen.be/'
+                                  'geoserver/wfs', version='1.1.0')
+    response = wfs11.getfeature(typename='gw_vergunningen:alle_verg',
+                                bbox=(126000, 156000, 128000, 158000),
+                                srsname='urn:x-ogc:def:crs:EPSG:31370')
+    with open(filepath, 'w') as file:
+        file.write(response.read())
+
+    # no feature catalogue
+
+    update_file('types/gwvergunningen/md_metadata.xml',
+                build_dov_url('geonetwork/srv/dut/csw'
+                '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+                '&outputSchema=http://www.isotc211.org/2005/gmd'
+                '&elementSetName=full&id=1b8d9dce-40b2-450c-81ed-'
+                              'decb453b3143'))
+
+    update_file('types/gwvergunningen/wfsdescribefeaturetype.xml',
+                build_dov_url('geoserver/gw_vergunningen/alle_verg'
+                '/ows?service=wfs&version=1.1.0&request=DescribeFeatureType'))

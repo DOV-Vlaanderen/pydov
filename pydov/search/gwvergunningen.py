@@ -44,22 +44,24 @@ class GwvergunningenSearch(AbstractSearch):
             if GwvergunningenSearch.__md_metadata is None:
                 GwvergunningenSearch.__md_metadata = self._get_remote_metadata()
 
-            if GwvergunningenSearch.__fc_featurecatalogue is None:
-                csw_url = self._get_csw_base_url()
-                fc_uuid = owsutil.get_featurecatalogue_uuid(
-                    GwvergunningenSearch.__md_metadata)
+            # not present
+            # if GwvergunningenSearch.__fc_featurecatalogue is None:
+                #     csw_url = self._get_csw_base_url()
+                #     fc_uuid = owsutil.get_featurecatalogue_uuid(
+                #         GwvergunningenSearch.__md_metadata)
 
-                GwvergunningenSearch.__fc_featurecatalogue = \
-                    owsutil.get_remote_featurecatalogue(csw_url, fc_uuid)
+                # GwvergunningenSearch.__fc_featurecatalogue = \
+            #     owsutil.get_remote_featurecatalogue(csw_url, fc_uuid)
 
-            if GwvergunningenSearch.__xsd_schemas is None:
-                GwvergunningenSearch.__xsd_schemas = \
-                    self._get_remote_xsd_schemas()
+            # if GwvergunningenSearch.__xsd_schemas is None:
+                #     GwvergunningenSearch.__xsd_schemas = \
+            #         self._get_remote_xsd_schemas()
 
             fields = self._build_fields(
                 GwvergunningenSearch.__wfs_schema,
-                GwvergunningenSearch.__fc_featurecatalogue,
-                GwvergunningenSearch.__xsd_schemas)
+                {'attributes': []}, # GwvergunningenSearch.__fc_featurecatalogue,
+                [], # GwvergunningenSearch.__xsd_schemas
+            )
 
             for field in fields.values():
                 if field['name'] not in self._type.get_field_names(
@@ -70,8 +72,9 @@ class GwvergunningenSearch(AbstractSearch):
 
             self._fields = self._build_fields(
                 GwvergunningenSearch.__wfs_schema,
-                GwvergunningenSearch.__fc_featurecatalogue,
-                GwvergunningenSearch.__xsd_schemas)
+                {'attributes': []}, # GwvergunningenSearch.__fc_featurecatalogue,
+                [], # GwvergunningenSearch.__xsd_schemas
+            )
 
     def search(self, location=None, query=None, sort_by=None,
                return_fields=None, max_features=None):

@@ -1,25 +1,22 @@
 """Script to update the testdata based on DOV webservices."""
 import os
-
 import sys
 
 from owslib.etree import etree
 from owslib.util import openURL
 
 from pydov.types.boring import Boring
+from pydov.types.grondmonster import Grondmonster
 from pydov.types.grondwaterfilter import GrondwaterFilter
 from pydov.types.grondwatermonster import GrondwaterMonster
-from pydov.types.grondmonster import Grondmonster
-from pydov.types.interpretaties import (
-    GeotechnischeCodering,
-    GecodeerdeLithologie,
-    LithologischeBeschrijvingen,
-    HydrogeologischeStratigrafie,
-    FormeleStratigrafie,
-    InformeleStratigrafie,
-    QuartairStratigrafie,
-    InformeleHydrogeologischeStratigrafie,
-)
+from pydov.types.interpretaties import (FormeleStratigrafie,
+                                        GecodeerdeLithologie,
+                                        GeotechnischeCodering,
+                                        HydrogeologischeStratigrafie,
+                                        InformeleHydrogeologischeStratigrafie,
+                                        InformeleStratigrafie,
+                                        LithologischeBeschrijvingen,
+                                        QuartairStratigrafie)
 from pydov.types.sondering import Sondering
 from pydov.util.dovutil import build_dov_url
 
@@ -632,21 +629,21 @@ if __name__ == '__main__':
     # types/grondmonster
 
     update_file('types/grondmonster/grondmonster.xml',
-                build_dov_url('data/grondmonster/2017-168758.xml'))
+                build_dov_url('data/grondmonster/2018-211728.xml'))
 
     update_file('types/grondmonster/wfsgetfeature.xml',
                 build_dov_url('geoserver/ows?service=WFS'
                 '&version=1.1.0&request=GetFeature&typeName='
                 'boringen:grondmonsters&maxFeatures=1&CQL_Filter'
                 '=grondmonsterfiche=%27' + build_dov_url('data'
-                '/grondmonster/2017-168758') + '%27'))
+                '/grondmonster/2018-211728') + '%27'))
 
     update_file('types/grondmonster/feature.xml',
                 build_dov_url('geoserver/ows?service=WFS'
                 '&version=1.1.0&request=GetFeature&typeName='
                 'boringen:grondmonsters&maxFeatures=1&CQL_Filter'
                 '=grondmonsterfiche=%27' + build_dov_url('data'
-                '/grondmonster/2017-168758') + '%27'),
+                '/grondmonster/2018-211728') + '%27'),
                 get_first_featuremember)
 
     update_file(

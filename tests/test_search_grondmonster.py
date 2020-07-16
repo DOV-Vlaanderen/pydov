@@ -68,5 +68,5 @@ class TestGrondmonsterSearch(AbstractTestSearch):
             return_fields=('pkey_grondmonster', 'boornummer', 'humusgehalte',
                            'methode'))
 
-        assert df.humusgehalte[0] == 15.6
-        assert df.methode[22] == 'AREOMETER'
+        assert df.humusgehalte[0] == 4.7
+        assert df.methode[0] == 'ZEEFPROEF'

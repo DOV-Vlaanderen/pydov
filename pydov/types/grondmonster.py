@@ -118,17 +118,17 @@ class Grondmonster(AbstractDovType):
                  datatype='float'),
         XmlField(name='korrelvolumemassa',
                  source_xpath='/grondmonster/observatieData/observatie['
-                              'parameter="korrelvolumemassa"]/waarde_numeriek',
+                              'parameter="KORRELVOLUMEMASSA"]/waarde_numeriek',
                  definition='',
                  datatype='float'),
         XmlField(name='volumemassa',
                  source_xpath='/grondmonster/observatieData/observatie['
-                              'parameter="volumemassa"]/waarde_numeriek',
+                              'parameter="VOLUMEMASSA"]/waarde_numeriek',
                  definition='',
                  datatype='float'),
         XmlField(name='watergehalte',
                  source_xpath='/grondmonster/observatieData/observatie['
-                              'parameter="watergehalte"]/waarde_numeriek',
+                              'parameter="WATERGEHALTE"]/waarde_numeriek',
                  definition='',
                  datatype='float')
     ]

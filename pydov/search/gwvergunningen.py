@@ -15,8 +15,13 @@ class GwvergunningenSearch(AbstractSearch):
     __wfs_schema = None
     __wfs_namespace = None
     __md_metadata = None
-    __fc_featurecatalogue = None
     __xsd_schemas = None
+    # create dummy feature catalogue from custom definition in type
+    __fc_featurecatalogue = {'attributes': {}}
+    for wfs_field in Gwvergunningen.fields:
+        __fc_featurecatalogue['attributes'].update(
+            {wfs_field.source: {'definition': '', 'value': ''}}
+        )
 
     def __init__(self, objecttype=Gwvergunningen):
         """Initialisation.
@@ -59,8 +64,9 @@ class GwvergunningenSearch(AbstractSearch):
 
             fields = self._build_fields(
                 GwvergunningenSearch.__wfs_schema,
-                {'attributes': []}, # GwvergunningenSearch.__fc_featurecatalogue,
+                GwvergunningenSearch.__fc_featurecatalogue,
                 [], # GwvergunningenSearch.__xsd_schemas
+                source=('wfs',)
             )
 
             for field in fields.values():

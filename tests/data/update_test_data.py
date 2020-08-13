@@ -681,7 +681,7 @@ if __name__ == '__main__':
 
     # update_file with query since no permanent xml for wfs
     # service
-    filepath = 'types/boring/feature.xml'
+    filepath = 'types/gwvergunningen/feature.xml'
     sys.stdout.write('Updating {} ...'.format(filepath))
     filepath = os.path.join(os.path.dirname(__file__), filepath)
     from owslib.wfs import WebFeatureService
@@ -693,7 +693,12 @@ if __name__ == '__main__':
     with open(filepath, 'w') as file:
         file.write(response.read())
 
-    # no feature catalogue
+    update_file(
+        'types/gwvergunningen/fc_featurecatalogue.xml',
+        build_dov_url('geonetwork/srv/dut/csw'
+                      '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+                      '&outputSchema=http://www.isotc211.org/2005/gfc'
+                      '&elementSetName=full&id=aan_te_vullen'))
 
     update_file('types/gwvergunningen/md_metadata.xml',
                 build_dov_url('geonetwork/srv/dut/csw'

@@ -329,6 +329,9 @@ class AbstractTestSearch(object):
             Monkeypatch the call to get WFS features.
 
         """
+        if not self.valid_returnfields_subtype:
+            return
+
         df = self.search_instance.search(
             query=self.valid_query_single,
             return_fields=self.valid_returnfields_subtype)
@@ -410,6 +413,9 @@ class AbstractTestSearch(object):
         Test whether an InvalidFieldError is raised.
 
         """
+        if self.xml_field is None:
+            return
+
         query = PropertyIsEqualTo(propertyname=self.xml_field,
                                   literal='Geotechnisch onderzoek')
 
@@ -489,6 +495,9 @@ class AbstractTestSearch(object):
             Monkeypatch the call to get the remote XML data.
 
         """
+        if self.xml_field is None:
+            return
+
         with pytest.raises(InvalidFieldError):
             self.search_instance.search(
                 query=self.valid_query_single,
@@ -572,6 +581,9 @@ class AbstractTestSearch(object):
             Monkeypatch the call to get XSD schemas.
 
         """
+        if self.xml_field is None:
+            return
+
         xsd_schemas = self.datatype_class.get_xsd_schemas()
 
         if len(xsd_schemas) > 0:
@@ -585,6 +597,9 @@ class AbstractTestSearch(object):
     def test_get_fields_no_xsd(self):
         """Test whether no XML fields have an XSD type when no XSD schemas
         are available."""
+        if self.xml_field is None:
+            return
+
         xsd_schemas = self.datatype_class.get_xsd_schemas()
 
         if len(xsd_schemas) == 0:
@@ -600,6 +615,9 @@ class AbstractTestSearch(object):
         needed.
 
         """
+        if self.xml_field is None:
+            return
+
         xsd_schemas = self.datatype_class.get_xsd_schemas()
 
         xsd_type_count = 0
@@ -734,6 +752,9 @@ class AbstractTestTypes(object):
         Test whether an InvalidFieldError is raised.
 
         """
+        if not self.valid_returnfields_subtype:
+            return
+
         with pytest.raises(InvalidFieldError):
             self.datatype_class.get_field_names(
                 return_fields=self.valid_returnfields_subtype,

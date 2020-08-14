@@ -11,9 +11,9 @@ class Gwvergunningen(AbstractDovType):
     subtypes = []
 
     fields = [
-        WfsField(name='pkey_gwvergunning', source_field='installatie',
+        WfsField(name='pkey_vergunning', source_field='id',
                  datatype='string'),
-        WfsField(name='id', source_field='id',
+        WfsField(name='pkey_installatie', source_field='installatie',
                  datatype='string'),
         WfsField(name='x', source_field='installatie_X_mL72', datatype='float'),
         WfsField(name='y', source_field='installatie_Y_mL72', datatype='float'),

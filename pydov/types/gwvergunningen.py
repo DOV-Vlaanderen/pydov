@@ -48,7 +48,7 @@ class Gwvergunningen(AbstractDovType):
                  datatype='string'),
     ]
 
-    def __init__(self, pkey):
+    def __init__(self, pkey=r'to_be_defined'):
         """Initialisation.
 
         Parameters
@@ -59,7 +59,7 @@ class Gwvergunningen(AbstractDovType):
             `https://www.dov.vlaanderen.be/data/installatie/<id>`.
 
         """
-        super(Gwvergunningen, self).__init__('gwvergunningen', pkey)
+        super(Gwvergunningen, self).__init__('gwvergunningen', pkey=r'to_be_defined')
 
     @classmethod
     def from_wfs_element(cls, feature, namespace):

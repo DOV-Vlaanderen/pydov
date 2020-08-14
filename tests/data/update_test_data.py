@@ -685,11 +685,21 @@ if __name__ == '__main__':
     sys.stdout.write('Updating {} ...'.format(filepath))
     filepath = os.path.join(os.path.dirname(__file__), filepath)
     from owslib.wfs import WebFeatureService
+    from owslib.fes import PropertyIsEqualTo
+    filter = PropertyIsEqualTo(propertyname='id', literal='38598')
+    filterxml = etree.tostring(filter.toXML()).decode("utf-8")
     wfs11 = WebFeatureService(url='https://www.dov.vlaanderen.be/'
                                   'geoserver/wfs', version='1.1.0')
     response = wfs11.getfeature(typename='gw_vergunningen:alle_verg',
-                                bbox=(126000, 156000, 128000, 158000),
-                                srsname='urn:x-ogc:def:crs:EPSG:31370')
+                                filter=filterxml)
+    with open(filepath, 'w') as file:
+        file.write(response.read())
+
+    filepath = 'types/gwvergunningen/wfsgetfeature.xml'
+    sys.stdout.write('Updating {} ...'.format(filepath))
+    filepath = os.path.join(os.path.dirname(__file__), filepath)
+    response = wfs11.getfeature(typename='gw_vergunningen:alle_verg',
+                                filter=filterxml)
     with open(filepath, 'w') as file:
         file.write(response.read())
 

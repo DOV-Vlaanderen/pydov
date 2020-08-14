@@ -698,7 +698,8 @@ if __name__ == '__main__':
         build_dov_url('geonetwork/srv/dut/csw'
                       '?Service=CSW&Request=GetRecordById&Version=2.0.2'
                       '&outputSchema=http://www.isotc211.org/2005/gfc'
-                      '&elementSetName=full&id=aan_te_vullen'))
+                      '&elementSetName=full&id=5e605651-'
+                      '6b2e-406f-863f-d2eda4d3e534'))
 
     update_file('types/gwvergunningen/md_metadata.xml',
                 build_dov_url('geonetwork/srv/dut/csw'

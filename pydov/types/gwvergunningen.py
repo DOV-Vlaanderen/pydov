@@ -38,7 +38,7 @@ class Gwvergunningen(AbstractDovType):
                  datatype='string'),
         WfsField(name='nacebelcode', source_field='IIOA_nacebelcode',
                  datatype='string'),
-        WfsField(name='actie_waakgebied', source_field='actie_waakgebeid',
+        WfsField(name='actie_waakgebied', source_field='actie_waakgebied',
                  datatype='string'),
         WfsField(name='aquifer_vergunning', source_field='aquifer_vergunning',
                  datatype='string'),

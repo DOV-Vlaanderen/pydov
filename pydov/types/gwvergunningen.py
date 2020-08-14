@@ -17,7 +17,7 @@ class Gwvergunningen(AbstractDovType):
                  datatype='string'),
         WfsField(name='x', source_field='installatie_X_mL72', datatype='float'),
         WfsField(name='y', source_field='installatie_Y_mL72', datatype='float'),
-        WfsField(name='d', source_field='vergunde_diepte_m', datatype='float'),
+        WfsField(name='diepte', source_field='vergunde_diepte_m', datatype='float'),
         WfsField(name='exploitant_naam', source_field='exploitant_naam',
                  datatype='string'),
         WfsField(name='watnr', source_field='watnr',

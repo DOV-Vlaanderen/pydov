@@ -40,8 +40,6 @@ class Gwvergunningen(AbstractDovType):
                  datatype='string'),
         WfsField(name='actie_waakgebied', source_field='actie_waakgebied',
                  datatype='string'),
-        WfsField(name='aquifer_vergunning', source_field='aquifer_vergunning',
-                 datatype='string'),
         WfsField(name='cbbnr', source_field='exploitant_CBBnr',
                  datatype='string'),
         WfsField(name='kbonr', source_field='exploitant_KBOnr',

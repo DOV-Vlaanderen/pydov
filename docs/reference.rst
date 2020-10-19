@@ -91,6 +91,13 @@ Grondmonster
     :members:
     :show-inheritance:
 
+Gwvergunningen
+**************
+
+.. automodule:: pydov.types.gwvergunningen
+    :members:
+    :show-inheritance:
+
 Fields
 ------
 

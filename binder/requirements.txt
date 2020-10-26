@@ -8,3 +8,5 @@ ipykernel
 folium
 pyproj
 matplotlib
+fiona
+geopandas

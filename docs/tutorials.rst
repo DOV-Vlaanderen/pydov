@@ -64,5 +64,5 @@ To run these interactively online without installation, use the following binder
    notebooks/search_quartaire_stratigrafie.ipynb
    notebooks/search_grondmonsters.ipynb
    notebooks/customizing_object_types.ipynb
-   notebooks/remote_wfs_gml_query.ipynb
+   notebooks/spatial_querying.ipynb
    notebooks/caching.ipynb

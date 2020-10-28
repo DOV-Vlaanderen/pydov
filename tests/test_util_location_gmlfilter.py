@@ -5,6 +5,7 @@ from owslib.fes import (
 )
 from pydov.util.location import (
     GmlFilter,
+    GeometryFilter,
     WithinDistance,
     Within,
     Disjoint,

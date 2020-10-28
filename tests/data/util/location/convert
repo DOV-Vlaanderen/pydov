@@ -1,0 +1,4 @@
+!#/bin/bash
+for f in *.gml; do
+    ogr2ogr -f "ESRI Shapefile" "${f%.gml}.shp" "$f"
+done

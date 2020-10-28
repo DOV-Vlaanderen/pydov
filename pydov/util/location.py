@@ -6,11 +6,13 @@ Filter Encoding 1.1 and GML 3.1.1.
 
 """
 import os
+from io import BytesIO
 from collections import OrderedDict
 
 from owslib.etree import etree
 from owslib.fes import Or
 
+from distutils.version import LooseVersion
 
 class AbstractLocation(object):
     """Abstract base class for location types (f.ex. point, box, polygon).
@@ -564,3 +566,79 @@ class GmlFilter(AbstractLocationFilter):
 
     def toXML(self):
         return self.element.toXML()
+
+
+class GeometryFilter(GmlFilter):
+    """Class for construction a spatial filter expression from any Geometry
+    Fiona can convert to a GML 3.1.1 document.
+    """
+
+    def __init__(self, geometry, location_filter, location_filter_kwargs=None,
+                 combinator=Or):
+        """Initialise a spatial filter expression from a given Geometry.
+
+        Parameters
+        ----------
+        geometry : str
+            Either a string representation of the geometry to parse,
+            or a path to a file on disk.
+        location_filter : class<AbstractLocationFilter>
+            Location filter to use for the geometries in the GML document.
+        location_filter_kwargs : dict, optional
+            Keyword-based arguments to pass to the `location_filter` on
+            initialisation (with the exception of the `location` parameter,
+            which is automatically parsed from the geomery). Can be skipped in
+            cases where the location_filter takes no extra arguments besides
+            location.
+        combinator : class<BinaryLogicOpType>, optional, defaults to Or
+            One of (Or, And) used to combine filters for different geometries
+            in the geometry document.
+
+        Raises
+        ------
+        ValueError
+            When no geometries could be parsed from the given geometry.
+
+        """
+        gml = self._parse_geometry(geometry)
+
+        super().__init__(gml, location_filter, location_filter_kwargs,
+                 combinator)
+
+    @staticmethod
+    def _parse_geometry(geometry):
+        """Checks the geometry and parse the file if possible.
+
+        Raises
+        ------
+        ValueError
+            When the file could not be parsed.
+
+        """
+
+        try:
+            import fiona
+            # Check if the GML driver and write mode are supported and check
+            # if the version of Fiona supports GML 3.1.1 output (Fiona >= 1.8.18)
+            drivers = fiona.supported_drivers
+            if 'w' not in drivers.get('GML', '') or LooseVersion(fiona.__version__) < LooseVersion('1.8.18'):
+                raise UserWarning('Please use module Fiona version 1.8.18 or higher')
+        except ImportError:
+            raise ImportError('No module named fiona. GeometryFilter '
+                              'requires fiona to be installed')
+        else:
+            # Open the geometry as a collection containing multiple records
+            with fiona.open(geometry, 'r') as c:
+                gml_blob = BytesIO()
+                # Momenteel gaan we uit dat de geometry een bestand is
+                layer = os.path.basename(os.path.splitext(geometry)[0])
+                with fiona.open(gml_blob, 'w', layer=layer, driver='GML', schema=c.schema, crs=c.crs, FORMAT='GML3') as gml:
+                    for r in list(c):
+                        gml.write(r)
+                gml_blob.seek(0)
+                # Set the gml attribute used by the parent class
+                azerty = gml_blob.read()
+                with open('test.gml', 'wb') as t:
+                    t.write(azerty)
+                #
+                return azerty

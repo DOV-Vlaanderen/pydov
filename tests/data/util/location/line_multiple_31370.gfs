@@ -1,0 +1,16 @@
+<GMLFeatureClassList>
+  <GMLFeatureClass>
+    <Name>line_multiple_31370</Name>
+    <ElementPath>line_multiple_31370</ElementPath>
+    <!--LINESTRING-->
+    <GeometryType>2</GeometryType>
+    <SRSName>urn:ogc:def:crs:EPSG::31370</SRSName>
+    <DatasetSpecificInfo>
+      <FeatureCount>2</FeatureCount>
+      <ExtentXMin>108194.91460</ExtentXMin>
+      <ExtentXMax>109077.38545</ExtentXMax>
+      <ExtentYMin>194842.65624</ExtentYMin>
+      <ExtentYMax>196032.41604</ExtentYMax>
+    </DatasetSpecificInfo>
+  </GMLFeatureClass>
+</GMLFeatureClassList>

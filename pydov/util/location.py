@@ -637,8 +637,4 @@ class GeometryFilter(GmlFilter):
                         gml.write(r)
                 gml_blob.seek(0)
                 # Set the gml attribute used by the parent class
-                azerty = gml_blob.read()
-                with open('test.gml', 'wb') as t:
-                    t.write(azerty)
-                #
-                return azerty
+                return gml_blob.read()

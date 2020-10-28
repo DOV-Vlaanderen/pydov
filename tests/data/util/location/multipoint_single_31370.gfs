@@ -1,0 +1,16 @@
+<GMLFeatureClassList>
+  <GMLFeatureClass>
+    <Name>multipoint_single_31370</Name>
+    <ElementPath>multipoint_single_31370</ElementPath>
+    <!--MULTIPOINT-->
+    <GeometryType>4</GeometryType>
+    <SRSName>urn:ogc:def:crs:EPSG::31370</SRSName>
+    <DatasetSpecificInfo>
+      <FeatureCount>1</FeatureCount>
+      <ExtentXMin>108770.09649</ExtentXMin>
+      <ExtentXMax>109045.86863</ExtentXMax>
+      <ExtentYMin>194929.32748</ExtentYMin>
+      <ExtentYMax>194992.36111</ExtentYMax>
+    </DatasetSpecificInfo>
+  </GMLFeatureClass>
+</GMLFeatureClassList>

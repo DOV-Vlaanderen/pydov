@@ -1,0 +1,16 @@
+<GMLFeatureClassList>
+  <GMLFeatureClass>
+    <Name>multiline_single_31370</Name>
+    <ElementPath>multiline_single_31370</ElementPath>
+    <!--MULTILINESTRING-->
+    <GeometryType>5</GeometryType>
+    <SRSName>urn:ogc:def:crs:EPSG::31370</SRSName>
+    <DatasetSpecificInfo>
+      <FeatureCount>1</FeatureCount>
+      <ExtentXMin>108210.67300</ExtentXMin>
+      <ExtentXMax>109416.19122</ExtentXMax>
+      <ExtentYMin>194440.81683</ExtentYMin>
+      <ExtentYMax>195055.39474</ExtentYMax>
+    </DatasetSpecificInfo>
+  </GMLFeatureClass>
+</GMLFeatureClassList>

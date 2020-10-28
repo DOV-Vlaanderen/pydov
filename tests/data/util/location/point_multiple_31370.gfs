@@ -1,0 +1,16 @@
+<GMLFeatureClassList>
+  <GMLFeatureClass>
+    <Name>point_multiple_31370</Name>
+    <ElementPath>point_multiple_31370</ElementPath>
+    <!--POINT-->
+    <GeometryType>1</GeometryType>
+    <SRSName>urn:ogc:def:crs:EPSG::31370</SRSName>
+    <DatasetSpecificInfo>
+      <FeatureCount>2</FeatureCount>
+      <ExtentXMin>109124.66067</ExtentXMin>
+      <ExtentXMax>109234.96953</ExtentXMax>
+      <ExtentYMin>194937.20668</ExtentYMin>
+      <ExtentYMax>195772.40231</ExtentYMax>
+    </DatasetSpecificInfo>
+  </GMLFeatureClass>
+</GMLFeatureClassList>

@@ -10,6 +10,7 @@ from owslib.fes import FilterRequest
 from owslib.wfs import WebFeatureService
 
 import pydov
+from pydov.types.fields import _WfsInjectedField
 from pydov.util import owsutil
 from pydov.util.dovutil import build_dov_url, get_xsd_schema
 from pydov.util.errors import (FeatureOverflowError, InvalidFieldError,
@@ -81,8 +82,6 @@ class AbstractSearch(AbstractCommon):
     """Abstract search class grouping methods common to all DOV search
     classes. Not to be instantiated or used directly."""
 
-    __wfs = None
-
     def __init__(self, layer, objecttype):
         """Initialisation.
 
@@ -104,29 +103,35 @@ class AbstractSearch(AbstractCommon):
         self._map_wfs_source_df = {}
         self._map_df_wfs_source = {}
 
+        self._wfs = None
+        self._wfs_schema = None
+        self._wfs_namespace = None
+        self._md_metadata = None
+        self._fc_featurecatalogue = None
+        self._xsd_schemas = None
+
     def _init_wfs(self):
         """Initialise the WFS service. If the WFS service is not
         instantiated yet, do so and save it in a static variable available
         to all subclasses and instances.
         """
-        if AbstractSearch.__wfs is None:
+        if self._wfs is None:
+            url = build_dov_url('geoserver/')
+            url += self._layer.split(':')[0]
+            url += '/wfs'
 
             capabilities = HookRunner.execute_inject_meta_response(
-                build_dov_url('geoserver/wfs') + '?version=1.1.0'
-            )
+                url + '?version=1.1.0')
 
             if capabilities is None:
-                AbstractSearch.__wfs = WebFeatureService(
-                    url=build_dov_url('geoserver/wfs'), version="1.1.0")
+                self._wfs = WebFeatureService(url=url, version="1.1.0")
             else:
-                AbstractSearch.__wfs = WebFeatureService(
-                    url=build_dov_url('geoserver/wfs'), version="1.1.0",
-                    xml=capabilities)
+                self._wfs = WebFeatureService(url=url, version="1.1.0",
+                                              xml=capabilities)
 
             HookRunner.execute_meta_received(
-                build_dov_url('geoserver/wfs') + '?version=1.1.0',
-                etree.tostring(AbstractSearch.__wfs._capabilities,
-                               encoding='utf8')
+                url + '?version=1.1.0',
+                etree.tostring(self._wfs._capabilities, encoding='utf8')
             )
 
     def _init_namespace(self):
@@ -139,7 +144,8 @@ class AbstractSearch(AbstractCommon):
             subclass.
 
         """
-        raise NotImplementedError('This should be implemented in a subclass.')
+        if self._wfs_namespace is None:
+            self._wfs_namespace = self._get_namespace()
 
     def _init_fields(self):
         """Initialise the fields and their metadata available in this search
@@ -152,7 +158,38 @@ class AbstractSearch(AbstractCommon):
             subclass.
 
         """
-        raise NotImplementedError('This should be implemented in a subclass.')
+        if self._fields is None:
+            if self._wfs_schema is None:
+                self._wfs_schema = self._get_schema()
+
+            if self._md_metadata is None:
+                self._md_metadata = self._get_remote_metadata()
+
+            if self._fc_featurecatalogue is None:
+                csw_url = self._get_csw_base_url()
+                fc_uuid = owsutil.get_featurecatalogue_uuid(self._md_metadata)
+                self._fc_featurecatalogue = \
+                    owsutil.get_remote_featurecatalogue(csw_url, fc_uuid)
+
+            if self._xsd_schemas is None:
+                self._xsd_schemas = self._get_remote_xsd_schemas()
+
+            fields = self._build_fields(
+                self._wfs_schema,
+                self._fc_featurecatalogue,
+                self._xsd_schemas)
+
+            for field in fields.values():
+                if field['name'] not in self._type.get_field_names(
+                        include_wfs_injected=True):
+                    self._type.fields.append(
+                        _WfsInjectedField(name=field['name'],
+                                          datatype=field['type']))
+
+            self._fields = self._build_fields(
+                self._wfs_schema,
+                self._fc_featurecatalogue,
+                self._xsd_schemas)
 
     def _get_layer(self):
         """Get the WFS metadata for the layer.
@@ -171,11 +208,11 @@ class AbstractSearch(AbstractCommon):
         """
         self._init_wfs()
 
-        if self._layer not in self.__wfs.contents:
+        if self._layer not in self._wfs.contents:
             raise LayerNotFoundError(
                 'Layer {} could not be found'.format(self._layer))
         else:
-            return self.__wfs.contents[self._layer]
+            return self._wfs.contents[self._layer]
 
     def _get_schema(self):
         """Get the WFS schema (i.e. the output of the DescribeFeatureType
@@ -205,7 +242,7 @@ class AbstractSearch(AbstractCommon):
 
         """
         self._init_wfs()
-        return owsutil.get_namespace(self.__wfs, self._layer)
+        return owsutil.get_namespace(self._wfs, self._layer)
 
     def _get_remote_metadata(self):
         """Request and parse the remote metadata associated with the layer.
@@ -661,7 +698,7 @@ class AbstractSearch(AbstractCommon):
             sort_by = etree.tostring(sort_by_xml, encoding='unicode')
 
         fts, getfeature = self._get_remote_wfs_feature(
-            wfs=self.__wfs,
+            wfs=self._wfs,
             typename=self._layer,
             location=location,
             filter=filter_request,

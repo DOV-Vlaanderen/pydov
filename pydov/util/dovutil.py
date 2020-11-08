@@ -3,8 +3,9 @@
 import os
 
 from owslib.etree import etree
-from pydov.util.errors import XmlParseError
+
 import pydov
+from pydov.util.errors import XmlParseError
 from pydov.util.hooks import HookRunner
 
 
@@ -41,7 +42,7 @@ def get_remote_url(url):
 
     """
 
-    request = pydov.session.get(url, timeout=pydov.request_timeout)
+    request = pydov.session.get(url)
     request.encoding = 'utf-8'
     return request.text.encode('utf8')
 

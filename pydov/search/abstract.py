@@ -4,6 +4,7 @@ import datetime
 from distutils.util import strtobool
 
 import owslib
+import pandas as pd
 from owslib.etree import etree
 from owslib.feature import get_schema
 from owslib.fes import FilterRequest
@@ -110,15 +111,27 @@ class AbstractSearch(AbstractCommon):
         self._fc_featurecatalogue = None
         self._xsd_schemas = None
 
+    def _get_wfs_endpoint(self):
+        """Get the WFS endpoint URL to use for accessing the feature type.
+
+        Returns
+        -------
+        str
+            The WFS endpoint URL.
+        """
+        url = build_dov_url('geoserver/')
+        # url += "/".join(self._layer.split(':'))
+        url += self._layer.split(':')[0]
+        url += '/wfs'
+        return url
+
     def _init_wfs(self):
         """Initialise the WFS service. If the WFS service is not
         instantiated yet, do so and save it in a static variable available
         to all subclasses and instances.
         """
         if self._wfs is None:
-            url = build_dov_url('geoserver/')
-            url += self._layer.split(':')[0]
-            url += '/wfs'
+            url = self._get_wfs_endpoint()
 
             capabilities = HookRunner.execute_inject_meta_response(
                 url + '?version=1.1.0')
@@ -834,4 +847,13 @@ class AbstractSearch(AbstractCommon):
             subclass.
 
         """
-        raise NotImplementedError('This should be implemented in a subclass.')
+        fts = self._search(location=location, query=query, sort_by=sort_by,
+                           return_fields=return_fields,
+                           max_features=max_features)
+
+        features = self._type.from_wfs(fts, self._wfs_namespace)
+
+        df = pd.DataFrame(
+            data=self._type.to_df_array(features, return_fields),
+            columns=self._type.get_field_names(return_fields))
+        return df

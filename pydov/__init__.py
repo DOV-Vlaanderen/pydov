@@ -4,6 +4,7 @@ import urllib3
 
 import pydov.util.caching
 from pydov.util.hooks import Hooks, SimpleStatusHook
+from pydov.util.net import TimeoutHTTPAdapter
 
 __author__ = """DOV-Vlaanderen"""
 __version__ = '2.0.0'
@@ -18,7 +19,6 @@ hooks = Hooks(
 # session object allows connection pooling and TCP connection reuse.
 request_timeout = 300
 session = requests.Session()
-session.timeout = (60, 300)
 
 session.headers.update({'user-agent': 'pydov/{}'.format(pydov.__version__)})
 
@@ -29,6 +29,6 @@ except TypeError:
     retry = urllib3.util.Retry(total=10, connect=5, read=3, redirect=5,
                                method_whitelist=set(['GET', 'POST']))
 
-adapter = requests.adapters.HTTPAdapter(max_retries=retry)
+adapter = TimeoutHTTPAdapter(timeout=request_timeout, max_retries=retry)
 session.mount('http://', adapter)
 session.mount('https://', adapter)

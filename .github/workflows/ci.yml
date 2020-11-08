@@ -3,17 +3,17 @@ name: CI
 
 on:
   push:
-    branches: ["master"]
+    branches: ["*"]
   pull_request:
     branches: ["master"]
   schedule:
-    - cron: '0 8 * * 2'
+    - cron: "0 8 * * 2"
 
 jobs:
   tests-linux:
     name: "Python ${{ matrix.python-version }} on ${{ matrix.os }}"
     runs-on: ${{ matrix.os }}
-    
+
     strategy:
       fail-fast: false
       matrix:
@@ -41,7 +41,7 @@ jobs:
   tests-windows:
     name: "Python ${{ matrix.python-version }} on ${{ matrix.os }}"
     runs-on: ${{ matrix.os }}
-    
+
     strategy:
       fail-fast: false
       matrix:
@@ -98,7 +98,3 @@ jobs:
         shell: pwsh
         run: |
           python -m pytest
-
-
-
-

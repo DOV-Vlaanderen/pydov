@@ -3,7 +3,6 @@ import os
 import sys
 
 from owslib.etree import etree
-from owslib.util import openURL
 
 from pydov.types.boring import Boring
 from pydov.types.grondmonster import Grondmonster
@@ -18,7 +17,7 @@ from pydov.types.interpretaties import (FormeleStratigrafie,
                                         LithologischeBeschrijvingen,
                                         QuartairStratigrafie)
 from pydov.types.sondering import Sondering
-from pydov.util.dovutil import build_dov_url
+from pydov.util.dovutil import build_dov_url, get_remote_url
 
 
 def get_first_featuremember(wfs_response):
@@ -36,8 +35,8 @@ def update_file(filepath, url, process_fn=None):
     sys.stdout.write('Updating {} ...'.format(filepath))
     filepath = os.path.join(os.path.dirname(__file__), filepath)
     try:
-        data = openURL(url).read()
-        if type(data) is bytes:
+        data = get_remote_url(url)
+        if isinstance(data, bytes):
             data = data.decode('utf-8')
     except Exception as e:
         sys.stdout.write(' FAILED:\n   {}.\n'.format(e))

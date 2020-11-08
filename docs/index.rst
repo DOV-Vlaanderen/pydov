@@ -1,11 +1,8 @@
 Welcome to pydov's documentation!
 ==================================
 
-.. image:: https://travis-ci.org/DOV-Vlaanderen/pydov.svg?branch=master
-    :target: https://travis-ci.org/DOV-Vlaanderen/pydov
-
-.. image:: https://ci.appveyor.com/api/projects/status/4ljy2a0p661v3d9k/branch/master?svg=true
-    :target: https://ci.appveyor.com/project/Roel/pydov
+.. image:: https://github.com/DOV-Vlaanderen/pydov/workflows/CI/badge.svg
+    :target: https://github.com/DOV-Vlaanderen/pydov
 
 .. image:: https://readthedocs.org/projects/pydov/badge/?version=latest
     :target: http://pydov.readthedocs.io/en/latest/?badge=latest
@@ -13,6 +10,10 @@ Welcome to pydov's documentation!
 
 .. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.2788680.svg
    :target: https://doi.org/10.5281/zenodo.2788680
+   
+.. image:: https://camo.githubusercontent.com/63ff31cdb80a06361e53ac2b9ac0d184118ebd0b/68747470733a2f2f74696e7975726c2e636f6d2f7932326e62387570
+   :target: https://github.com/pyOpenSci/software-review/issues/19
+   :alt: pyopensci approval   
 
 A Python package to query and download data from Databank Ondergrond Vlaanderen (DOV).
 

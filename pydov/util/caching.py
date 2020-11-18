@@ -14,7 +14,7 @@ from pydov.util.hooks import HookRunner
 class AbstractCache(object):
     """Abstract base class for caching of downloaded XML files from DOV."""
 
-    def _get_remote(self, url):
+    def _get_remote(self, url, session=None):
         """Get the XML data by requesting it from the given URL.
 
         Parameters
@@ -28,7 +28,7 @@ class AbstractCache(object):
             The raw XML data of this DOV object as bytes.
 
         """
-        xml = get_dov_xml(url)
+        xml = get_dov_xml(url, session)
         HookRunner.execute_xml_downloaded(url.rstrip('.xml'))
         return xml
 
@@ -245,7 +245,7 @@ class AbstractFileCache(AbstractCache):
         """
         raise NotImplementedError('This should be implemented in a subclass.')
 
-    def get(self, url):
+    def get(self, url, session=None):
         datatype, key = self._get_type_key_from_url(url)
 
         data = HookRunner.execute_inject_xml_response(url)
@@ -265,7 +265,7 @@ class AbstractFileCache(AbstractCache):
             except Exception:
                 pass
 
-        data = self._get_remote(url)
+        data = self._get_remote(url, session)
         try:
             self._save(datatype, key, data)
         except Exception:

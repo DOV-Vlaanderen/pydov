@@ -14,5 +14,4 @@ hooks = Hooks(
 
 # Package wide requests session object. This increases performance as using a
 # session object allows connection pooling and TCP connection reuse.
-request_timeout = 300
 session = SessionFactory.get_session()

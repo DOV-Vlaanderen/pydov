@@ -4,9 +4,9 @@ import os
 
 from owslib.etree import etree
 
-import pydov
 from pydov.util.errors import XmlParseError
 from pydov.util.hooks import HookRunner
+from pydov.util.net import SessionFactory
 
 
 def build_dov_url(path):
@@ -42,7 +42,7 @@ def get_remote_url(url, session=None):
 
     """
     if session is None:
-        session = pydov.session
+        session = SessionFactory.get_session()
 
     request = session.get(url)
     request.encoding = 'utf-8'

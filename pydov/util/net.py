@@ -7,10 +7,12 @@ from requests.adapters import HTTPAdapter
 
 import pydov
 
+request_timeout = 300
+
 
 class TimeoutHTTPAdapter(HTTPAdapter):
     def __init__(self, *args, **kwargs):
-        self.timeout = 300
+        self.timeout = request_timeout
         if "timeout" in kwargs:
             self.timeout = kwargs["timeout"]
             del kwargs["timeout"]
@@ -40,7 +42,7 @@ class SessionFactory:
                 total=10, connect=10, read=10, redirect=5, backoff_factor=1,
                 method_whitelist=set(['GET', 'POST']))
 
-        adapter = TimeoutHTTPAdapter(timeout=pydov.request_timeout,
+        adapter = TimeoutHTTPAdapter(timeout=request_timeout,
                                      max_retries=retry)
         session.mount('http://', adapter)
         session.mount('https://', adapter)

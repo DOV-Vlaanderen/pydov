@@ -87,7 +87,7 @@ def get_remote_metadata(contentmetadata):
     """
     with warnings.catch_warnings():
         warnings.filterwarnings("ignore", category=FutureWarning)
-        contentmetadata.parse_remote_metadata(pydov.request_timeout)
+        contentmetadata.parse_remote_metadata(pydov.util.net.request_timeout)
 
     for remote_md in contentmetadata.metadataUrls:
         if 'metadata' in remote_md:

@@ -14,7 +14,7 @@ from pydov.search.interpretaties import (
 from pydov.search.sondering import SonderingSearch
 from pydov.util.errors import InvalidSearchParameterError
 from pydov.util.location import Point, WithinDistance
-from tests.abstract import service_ok
+from tests.abstract import ServiceCheck
 
 search_objects = [BoringSearch(),
                   SonderingSearch(),
@@ -53,7 +53,8 @@ def test_get_description(mp_wfs, objectsearch):
 
 
 @pytest.mark.online
-@pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
+@pytest.mark.skipif(not ServiceCheck.service_ok(),
+                    reason="DOV service is unreachable")
 @pytest.mark.parametrize("objectsearch", search_objects)
 def test_search_location(objectsearch):
     """Test the get_description method.
@@ -73,7 +74,8 @@ def test_search_location(objectsearch):
 
 
 @pytest.mark.online
-@pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
+@pytest.mark.skipif(not ServiceCheck.service_ok(),
+                    reason="DOV service is unreachable")
 @pytest.mark.parametrize("objectsearch", search_objects)
 def test_search_maxfeatures(objectsearch):
     """Test the search method with a max_features parameter.
@@ -92,7 +94,8 @@ def test_search_maxfeatures(objectsearch):
 
 
 @pytest.mark.online
-@pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
+@pytest.mark.skipif(not ServiceCheck.service_ok(),
+                    reason="DOV service is unreachable")
 @pytest.mark.parametrize("objectsearch", search_objects)
 def test_search_maxfeatures_only(objectsearch):
     """Test the search method with only the max_features parameter.

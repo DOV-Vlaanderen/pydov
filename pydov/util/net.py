@@ -99,8 +99,7 @@ class LocalSessionThreadPool:
         self.result_queue = Queue()
 
         for i in range(workers):
-            self.workers.append(
-                LocalSessionThread(self.input_queue, self.result_queue))
+            self.workers.append(LocalSessionThread(self.input_queue))
 
         self._start()
 

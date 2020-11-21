@@ -143,6 +143,13 @@ Hooks
     :members:
     :show-inheritance:
 
+Network utilities
+-----------------
+
+.. automodule:: pydov.util.net
+    :members:
+    :show-inheritance:
+
 Errors and warnings
 -------------------
 

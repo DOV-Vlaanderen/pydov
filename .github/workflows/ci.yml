@@ -13,7 +13,7 @@ jobs:
   tests-linux:
     name: "Python ${{ matrix.python-version }} on ${{ matrix.os }}"
     runs-on: ${{ matrix.os }}
-
+    timeout-minutes: 45
     strategy:
       fail-fast: false
       matrix:
@@ -41,7 +41,7 @@ jobs:
   tests-windows:
     name: "Python ${{ matrix.python-version }} on ${{ matrix.os }}"
     runs-on: ${{ matrix.os }}
-
+    timeout-minutes: 45
     strategy:
       fail-fast: false
       matrix:
@@ -68,6 +68,7 @@ jobs:
   tests-conda:
     name: "Python with conda (${{ matrix.python-version }} on ${{ matrix.os }})"
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
     strategy:
       fail-fast: false
       matrix:

@@ -11,9 +11,9 @@ on:
 
 jobs:
   tests-linux:
-    name: "Python ${{ matrix.python-version }} on ${{ matrix.os }}"
+    name: "Tests on ${{ matrix.python-version }} on ${{ matrix.os }}"
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 45
+    timeout-minutes: 20
     strategy:
       fail-fast: false
       matrix:
@@ -24,9 +24,6 @@ jobs:
       - uses: "actions/setup-python@v1"
         with:
           python-version: "${{ matrix.python-version }}"
-      - name: "Install pandoc"
-        run: sudo apt install pandoc
-        if: matrix.python-version == '3.8'
       - name: "Install dependencies"
         run: |
           set -xe
@@ -36,12 +33,12 @@ jobs:
           python -m pip install --upgrade coverage[toml] virtualenv tox tox-gh-actions
 
       - name: "Run tox targets for ${{ matrix.python-version }}"
-        run: "python -m tox"
+        run: "python -m tox -e '{py36,py37,py38}-{nolxml,lxml}'"
 
   tests-windows:
-    name: "Python ${{ matrix.python-version }} on ${{ matrix.os }}"
+    name: "Tests on ${{ matrix.python-version }} on ${{ matrix.os }}"
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 45
+    timeout-minutes: 20
     strategy:
       fail-fast: false
       matrix:
@@ -52,9 +49,6 @@ jobs:
       - uses: "actions/setup-python@v1"
         with:
           python-version: "${{ matrix.python-version }}"
-      - name: "Install pandoc"
-        run: choco install pandoc
-        if: matrix.python-version == '3.8'
       - name: "Install dependencies"
         run: |
           python -VV
@@ -63,12 +57,12 @@ jobs:
           python -m pip install --upgrade coverage[toml] virtualenv tox tox-gh-actions
 
       - name: "Run tox targets for ${{ matrix.python-version }}"
-        run: "python -m tox"
+        run: "python -m tox -e '{py36,py37,py38}-{nolxml,lxml}'"
 
   tests-conda:
-    name: "Python with conda (${{ matrix.python-version }} on ${{ matrix.os }})"
+    name: "Tests with conda (${{ matrix.python-version }} on ${{ matrix.os }})"
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 45
+    timeout-minutes: 20
     strategy:
       fail-fast: false
       matrix:
@@ -99,3 +93,80 @@ jobs:
         shell: pwsh
         run: |
           python -m pytest
+
+  update-data:
+    name: "Updated data on ${{ matrix.python-version }} on ${{ matrix.os }}"
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        python-version: ["3.8"]
+    steps:
+      - uses: "actions/checkout@v2"
+      - uses: "actions/setup-python@v1"
+        with:
+          python-version: "${{ matrix.python-version }}"
+      - name: "Install dependencies"
+        run: |
+          set -xe
+          python -VV
+          python -m site
+          python -m pip install --upgrade pip setuptools wheel
+          python -m pip install --upgrade coverage[toml] virtualenv tox tox-gh-actions
+
+      - name: "Run tox targets for ${{ matrix.python-version }}"
+        run: "python -m tox -e 'update-oefen, update-productie'"
+
+  flake8:
+    name: "Flake8 on ${{ matrix.python-version }} on ${{ matrix.os }}"
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        python-version: ["3.8"]
+    steps:
+      - uses: "actions/checkout@v2"
+      - uses: "actions/setup-python@v1"
+        with:
+          python-version: "${{ matrix.python-version }}"
+      - name: "Install dependencies"
+        run: |
+          set -xe
+          python -VV
+          python -m site
+          python -m pip install --upgrade pip setuptools wheel
+          python -m pip install --upgrade coverage[toml] virtualenv tox tox-gh-actions
+
+      - name: "Run tox targets for ${{ matrix.python-version }}"
+        run: "python -m tox -e 'flake8'"
+
+  docs:
+    name: "Docs on ${{ matrix.python-version }} on ${{ matrix.os }}"
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        python-version: ["3.8"]
+    steps:
+      - uses: "actions/checkout@v2"
+      - uses: "actions/setup-python@v1"
+        with:
+          python-version: "${{ matrix.python-version }}"
+      - name: "Install pandoc"
+        run: sudo apt install pandoc
+      - name: "Install dependencies"
+        run: |
+          set -xe
+          python -VV
+          python -m site
+          python -m pip install --upgrade pip setuptools wheel
+          python -m pip install --upgrade coverage[toml] virtualenv tox tox-gh-actions
+
+      - name: "Run tox targets for ${{ matrix.python-version }}"
+        run: "python -m tox -e 'docs'"

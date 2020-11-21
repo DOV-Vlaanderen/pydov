@@ -33,7 +33,7 @@ jobs:
           python -m pip install --upgrade coverage[toml] virtualenv tox tox-gh-actions
 
       - name: "Run tox targets for ${{ matrix.python-version }}"
-        run: "python -m tox -e '{py36,py37,py38}-{nolxml,lxml}'"
+        run: "python -m tox -e '{py${{ matrix.python-version }}}-{nolxml,lxml}'"
 
   tests-windows:
     name: "Tests on ${{ matrix.python-version }} on ${{ matrix.os }}"
@@ -57,7 +57,7 @@ jobs:
           python -m pip install --upgrade coverage[toml] virtualenv tox tox-gh-actions
 
       - name: "Run tox targets for ${{ matrix.python-version }}"
-        run: "python -m tox -e '{py36,py37,py38}-{nolxml,lxml}'"
+        run: "python -m tox -e '{py${{ matrix.python-version }}}-{nolxml,lxml}'"
 
   tests-conda:
     name: "Tests with conda (${{ matrix.python-version }} on ${{ matrix.os }})"

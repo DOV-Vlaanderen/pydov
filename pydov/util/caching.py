@@ -21,6 +21,9 @@ class AbstractCache(object):
         ----------
         url : str
             Permanent URL to a DOV object.
+        session : requests.Session
+            Session to use to perform HTTP requests for data. Defaults to None,
+            which means a new session will be created for each request.
 
         Returns
         -------
@@ -43,7 +46,7 @@ class AbstractCache(object):
         """
         HookRunner.execute_xml_cache_hit(url.rstrip('.xml'))
 
-    def get(self, url):
+    def get(self, url, session=None):
         """Get the XML data for the DOV object referenced by the given URL.
 
         Because of parallel processing, this method will be called
@@ -58,6 +61,9 @@ class AbstractCache(object):
         ----------
         url : str
             Permanent URL to a DOV object.
+        session : requests.Session
+            Session to use to perform HTTP requests for data. Defaults to None,
+            which means a new session will be created for each request.
 
         Returns
         -------

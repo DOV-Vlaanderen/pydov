@@ -34,6 +34,9 @@ def get_remote_url(url, session=None):
     ----------
     url : str
         URL to download.
+    session : requests.Session
+        Session to use to perform HTTP requests for data. Defaults to None,
+        which means a new session will be created for each request.
 
     Returns
     -------
@@ -80,6 +83,9 @@ def get_dov_xml(url, session=None):
     ----------
     url : str
         URL of the DOV object to download.
+    session : requests.Session
+        Session to use to perform HTTP requests for data. Defaults to None,
+        which means a new session will be created for each request.
 
     Returns
     -------

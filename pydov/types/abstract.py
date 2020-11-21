@@ -312,6 +312,12 @@ class AbstractDovType(AbstractTypeCommon):
         """Get remote XML data for this DOV object, parse the raw XML and
         save the results in the data object.
 
+        Parameters
+        ----------
+        session : requests.Session
+            Session to use to perform HTTP requests for data. Defaults to None,
+            which means a new session will be created for each request.
+
         """
         xml = self._get_xml_data(session)
 
@@ -594,6 +600,12 @@ class AbstractDovType(AbstractTypeCommon):
     def _get_xml_data(self, session=None):
         """Return the raw XML data for this DOV object.
 
+        Parameters
+        ----------
+        session : requests.Session
+            Session to use to perform HTTP requests for data. Defaults to None,
+            which means a new session will be created for each request.
+
         Returns
         -------
         xml : bytes
@@ -634,6 +646,9 @@ class AbstractDovType(AbstractTypeCommon):
             List of fields to include in the data array. The order is
             ignored, the default order of the fields of the datatype is used
             instead. Defaults to None, which will include all fields.
+        session : requests.Session
+            Session to use to perform HTTP requests for data. Defaults to None,
+            which means a new session will be created for each request.
 
         Returns
         -------

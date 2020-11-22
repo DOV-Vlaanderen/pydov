@@ -54,9 +54,12 @@ class ServiceCheck:
             return ok
 
         if ServiceCheck.is_service_ok is None:
-            ServiceCheck.is_service_ok = \
-                check_url(build_dov_url('geoserver'), timeout) \
-                and check_url(build_dov_url('geonetwork'), timeout)
+            ServiceCheck.is_service_ok = (
+                check_url(build_dov_url('geoserver'), timeout) and
+                check_url(build_dov_url('geonetwork'), timeout) and
+                check_url(
+                    build_dov_url('xdov/schema/latest/xsd/kern/dov.xsd'),
+                    timeout))
 
         return ServiceCheck.is_service_ok
 

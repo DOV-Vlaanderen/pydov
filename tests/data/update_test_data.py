@@ -20,6 +20,7 @@ from pydov.types.interpretaties import (FormeleStratigrafie,
 from pydov.types.sondering import Sondering
 from pydov.util.dovutil import build_dov_url, get_remote_url
 from pydov.util.net import LocalSessionThreadPool
+from tests.abstract import ServiceCheck
 
 lock = Lock()
 
@@ -57,6 +58,10 @@ def update_file_real(filepath, url, process_fn=None, session=None):
 
 
 if __name__ == '__main__':
+    if not ServiceCheck.service_ok():
+        print('Not updating test data as services are unavailable.')
+        sys.exit(1)
+
     pool = LocalSessionThreadPool()
 
     def update_file(filepath, url, process_fn=None):

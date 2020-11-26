@@ -68,5 +68,35 @@ class TestGrondmonsterSearch(AbstractTestSearch):
             return_fields=('pkey_grondmonster', 'boornummer', 'humusgehalte',
                            'methode'))
 
-        assert df.humusgehalte[0] == 15.6
-        assert df.methode[22] == 'AREOMETER'
+        assert df.humusgehalte[0] == 4.7
+        assert df.methode[0] == 'ZEEFPROEF'
+
+    def test_issue_285(self, mp_get_schema,
+                       mp_remote_describefeaturetype,
+                       mp_remote_wfs_feature, mp_dov_xml):
+        """Test whether korrelvolumemassa, volumemassa and watergehalte
+        resolve correctly.
+
+        Parameters
+        ----------
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType.
+        mp_remote_wfs_feature : pytest.fixture
+            Monkeypatch the call to get WFS features.
+        mp_dov_xml : pytest.fixture
+            Monkeypatch the call to get the remote XML data.
+        """
+        df = self.search_instance.search(
+            query=self.valid_query_single,
+            return_fields=(
+                'boornummer',
+                'naam',
+                'korrelvolumemassa',
+                'volumemassa',
+                'watergehalte'))
+
+        assert df.korrelvolumemassa[0] == 2.65
+        assert df.volumemassa[0] == 1.627
+        assert df.watergehalte[0] == 57.7

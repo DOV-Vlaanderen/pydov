@@ -12,7 +12,7 @@ from pydov.search.boring import BoringSearch
 from pydov.search.interpretaties import LithologischeBeschrijvingenSearch
 from pydov.util.dovutil import build_dov_url
 from pydov.util.errors import XmlParseWarning
-from tests.abstract import service_ok
+from tests.abstract import ServiceCheck
 from tests.test_search_itp_lithologischebeschrijvingen import (
     location_fc_featurecatalogue, location_md_metadata,
     location_wfs_describefeaturetype, location_wfs_getfeature)
@@ -24,7 +24,8 @@ class TestEncoding(object):
     """Class grouping tests related to encoding issues."""
 
     @pytest.mark.online
-    @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
+    @pytest.mark.skipif(not ServiceCheck.service_ok(),
+                        reason="DOV service is unreachable")
     def test_search(self, nocache):
         """Test the search method with strange character in the output.
 
@@ -47,7 +48,8 @@ class TestEncoding(object):
         assert df.uitvoerder[0] == u'Societé Belge des Bétons'
 
     @pytest.mark.online
-    @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
+    @pytest.mark.skipif(not ServiceCheck.service_ok(),
+                        reason="DOV service is unreachable")
     @pytest.mark.parametrize('plaintext_cache',
                              [[datetime.timedelta(minutes=15)]],
                              indirect=['plaintext_cache'])
@@ -86,7 +88,8 @@ class TestEncoding(object):
         assert df.uitvoerder[0] == u'Societé Belge des Bétons'
 
     @pytest.mark.online
-    @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
+    @pytest.mark.skipif(not ServiceCheck.service_ok(),
+                        reason="DOV service is unreachable")
     @pytest.mark.parametrize('gziptext_cache',
                              [[datetime.timedelta(minutes=15)]],
                              indirect=['gziptext_cache'])
@@ -125,7 +128,8 @@ class TestEncoding(object):
         assert df.uitvoerder[0] == u'Societé Belge des Bétons'
 
     @pytest.mark.online
-    @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
+    @pytest.mark.skipif(not ServiceCheck.service_ok(),
+                        reason="DOV service is unreachable")
     @pytest.mark.parametrize('plaintext_cache',
                              [[datetime.timedelta(minutes=15)]],
                              indirect=['plaintext_cache'])
@@ -165,7 +169,8 @@ class TestEncoding(object):
         assert os.path.getmtime(cached_file) == first_download_time
 
     @pytest.mark.online
-    @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
+    @pytest.mark.skipif(not ServiceCheck.service_ok(),
+                        reason="DOV service is unreachable")
     @pytest.mark.parametrize('gziptext_cache',
                              [[datetime.timedelta(minutes=15)]],
                              indirect=['gziptext_cache'])
@@ -205,7 +210,8 @@ class TestEncoding(object):
         assert os.path.getmtime(cached_file) == first_download_time
 
     @pytest.mark.online
-    @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
+    @pytest.mark.skipif(not ServiceCheck.service_ok(),
+                        reason="DOV service is unreachable")
     @pytest.mark.parametrize('plaintext_cache',
                              [[datetime.timedelta(minutes=15)]],
                              indirect=['plaintext_cache'])
@@ -239,7 +245,8 @@ class TestEncoding(object):
         assert cached_data == ref_data
 
     @pytest.mark.online
-    @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
+    @pytest.mark.skipif(not ServiceCheck.service_ok(),
+                        reason="DOV service is unreachable")
     @pytest.mark.parametrize('gziptext_cache',
                              [[datetime.timedelta(minutes=15)]],
                              indirect=['gziptext_cache'])
@@ -273,7 +280,8 @@ class TestEncoding(object):
         assert cached_data == ref_data
 
     @pytest.mark.online
-    @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
+    @pytest.mark.skipif(not ServiceCheck.service_ok(),
+                        reason="DOV service is unreachable")
     @pytest.mark.parametrize('plaintext_cache',
                              [[datetime.timedelta(minutes=15)]],
                              indirect=['plaintext_cache'])
@@ -307,7 +315,8 @@ class TestEncoding(object):
         assert cached_data == ref_data
 
     @pytest.mark.online
-    @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
+    @pytest.mark.skipif(not ServiceCheck.service_ok(),
+                        reason="DOV service is unreachable")
     @pytest.mark.parametrize('gziptext_cache',
                              [[datetime.timedelta(minutes=15)]],
                              indirect=['gziptext_cache'])

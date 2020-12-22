@@ -63,6 +63,29 @@ def __get_remote_describefeaturetype(describefeaturetype_url):
     return get_url(describefeaturetype_url)
 
 
+def _get_remote_describefeaturetype_tree(url, timeout, headers, auth):
+    """Patchfunction for owslib.feature.schema._get_remote_describefeaturetype
+    using our pydov requests session.
+
+    Parameters
+    ----------
+    url : str
+        URL for the DescribeFeatureType request.
+    timeout : int
+        Ignored in favor of the pydov session.
+    headers : dict
+        Ignored in favor of the pydov session.
+    auth : dict
+        Ignored in favor of the pydov session.
+
+    Returns
+    -------
+    etree.Element
+        Element tree with the root of the DescribeFeatureType response
+    """
+    return etree.fromstring(__get_remote_describefeaturetype(url))
+
+
 def get_remote_metadata(contentmetadata):
     """Request and parse the remote metadata associated with the layer
     described in `contentmetadata`.

@@ -179,12 +179,6 @@ class AbstractSearch(AbstractCommon):
         self._init_wfs()
         layername = self._layer.split(':')[1] if ':' in self._layer else \
             self._layer
-
-        # Patch OWSLib's function for getting the remote data with our own,
-        # using our custom requests session.
-        owslib.feature.schema._get_remote_describefeaturetype = \
-            owsutil._get_remote_describefeaturetype_tree
-
         return get_schema(
             build_dov_url('geoserver/wfs'), layername, '1.1.0')
 

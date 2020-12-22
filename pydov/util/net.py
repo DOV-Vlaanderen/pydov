@@ -1,13 +1,36 @@
 from queue import Empty, Queue
 from threading import Thread
 
+import owslib
 import requests
 import urllib3
+from owslib.util import ResponseWrapper
 from requests.adapters import HTTPAdapter
 
 import pydov
 
 request_timeout = 300
+
+
+def _openURL(url, *args, **kwargs):
+    """Patch function for owslib.util.openURL using our custom pydov
+    requests session.
+
+    Parameters
+    ----------
+    url : str
+        URL to open.
+
+    Returns
+    -------
+    ResponseWrapper
+        Wrapped response of the request.
+    """
+    return ResponseWrapper(pydov.session.get(url))
+
+
+# Patch OWSLib's openURL function to use our custom pydov requests session.
+owslib.util.openURL = _openURL
 
 
 class TimeoutHTTPAdapter(HTTPAdapter):

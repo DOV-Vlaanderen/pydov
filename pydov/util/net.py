@@ -34,7 +34,7 @@ class TimeoutHTTPAdapter(HTTPAdapter):
         Returns
         -------
         requests.Response
-            The Respone of the request.
+            The Response of the request.
         """
         timeout = kwargs.get("timeout")
         if timeout is None:
@@ -46,8 +46,8 @@ class SessionFactory:
     """Class for generating pydov configured requests Sessions. They are used
     to send HTTP requests using our user-agent and with added retry-logic.
 
-    One global session is generated for all requests, and additionally one
-    session is generated per thread executing XML requests in parallel.
+    One global session is used for all requests, and additionally one
+    session is used per thread executing XML requests in parallel.
     """
     @staticmethod
     def get_session():
@@ -66,11 +66,14 @@ class SessionFactory:
         try:
             retry = urllib3.util.Retry(
                 total=10, connect=10, read=10, redirect=5, backoff_factor=1,
-                allowed_methods=set(['GET', 'POST']))
+                allowed_methods=set(
+                    ['HEAD', 'GET', 'POST', 'PUT', 'OPTIONS']))
         except TypeError:
+            # urllib3 < 1.26.0 used method_whitelist instead
             retry = urllib3.util.Retry(
                 total=10, connect=10, read=10, redirect=5, backoff_factor=1,
-                method_whitelist=set(['GET', 'POST']))
+                method_whitelist=set(
+                    ['HEAD', 'GET', 'POST', 'PUT', 'OPTIONS']))
 
         adapter = TimeoutHTTPAdapter(timeout=request_timeout,
                                      max_retries=retry)

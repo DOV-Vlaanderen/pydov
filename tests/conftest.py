@@ -6,6 +6,7 @@ import os
 import tempfile
 
 import owslib
+import owslib.util
 import pytest
 from _pytest.monkeypatch import MonkeyPatch
 from owslib.etree import etree

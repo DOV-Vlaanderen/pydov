@@ -11,7 +11,7 @@ from _pytest.monkeypatch import MonkeyPatch
 from owslib.etree import etree
 from owslib.feature.schema import _construct_schema, _get_elements
 from owslib.iso import MD_Metadata
-from owslib.util import findall
+from owslib.util import ResponseWrapper, findall
 from owslib.wfs import WebFeatureService
 
 import pydov
@@ -51,7 +51,7 @@ def mp_wfs(monkeymodule):
         with open('tests/data/util/owsutil/wfscapabilities.xml', 'r',
                   encoding='utf-8') as f:
             data = f.read()
-            if type(data) is not bytes:
+            if not isinstance(data, bytes):
                 data = data.encode('utf-8')
             data = etree.fromstring(data)
         return data
@@ -94,7 +94,7 @@ def mp_remote_fc_notfound(monkeypatch):
         with open('tests/data/util/owsutil/fc_featurecatalogue_notfound.xml',
                   'r') as f:
             data = f.read()
-            if type(data) is not bytes:
+            if not isinstance(data, bytes):
                 data = data.encode('utf-8')
         return data
 
@@ -122,7 +122,7 @@ def mp_remote_md(wfs, monkeymodule, request):
         file_path = getattr(request.module, "location_md_metadata")
         with open(file_path, 'r') as f:
             data = f.read()
-            if type(data) is not bytes:
+            if not isinstance(data, bytes):
                 data = data.encode('utf-8')
         return MD_Metadata(etree.fromstring(data).find(
             './{http://www.isotc211.org/2005/gmd}MD_Metadata'))
@@ -151,7 +151,7 @@ def mp_remote_fc(monkeymodule, request):
         file_path = getattr(request.module, "location_fc_featurecatalogue")
         with open(file_path, 'r') as f:
             data = f.read()
-            if type(data) is not bytes:
+            if not isinstance(data, bytes):
                 data = data.encode('utf-8')
         return data
 
@@ -179,7 +179,7 @@ def mp_remote_describefeaturetype(monkeymodule, request):
         file_path = getattr(request.module, "location_wfs_describefeaturetype")
         with open(file_path, 'r') as f:
             data = f.read()
-            if type(data) is not bytes:
+            if not isinstance(data, bytes):
                 data = data.encode('utf-8')
         return data
 
@@ -194,7 +194,7 @@ def mp_get_schema(monkeymodule, request):
         file_path = getattr(request.module, "location_wfs_describefeaturetype")
         with open(file_path, 'r') as f:
             data = f.read()
-            if type(data) is not bytes:
+            if not isinstance(data, bytes):
                 data = data.encode('utf-8')
 
         root = etree.fromstring(data)
@@ -287,7 +287,7 @@ def mp_remote_wfs_feature(monkeymodule, request):
         file_path = getattr(request.module, "location_wfs_getfeature")
         with open(file_path, 'r') as f:
             data = f.read()
-            if type(data) is not bytes:
+            if not isinstance(data, bytes):
                 data = data.encode('utf-8')
         return data
 
@@ -316,7 +316,7 @@ def mp_dov_xml(monkeymodule, request):
         file_path = getattr(request.module, "location_dov_xml")
         with open(file_path, 'r', encoding="utf-8") as f:
             data = f.read()
-            if type(data) is not bytes:
+            if not isinstance(data, bytes):
                 data = data.encode('utf-8')
         return data
 
@@ -365,7 +365,7 @@ def mp_remote_xsd(monkeymodule, request):
         for xsd_file in glob.glob(xsd_base_path):
             with open(xsd_file, 'r', encoding="utf-8") as f:
                 data = f.read()
-                if type(data) is not bytes:
+                if not isinstance(data, bytes):
                     data = data.encode('utf-8')
                 schemas.append(etree.fromstring(data))
 
@@ -413,7 +413,7 @@ def mp_remote_xml(monkeypatch):
     def _get_remote_data(*args, **kwargs):
         with open('tests/data/types/boring/boring.xml', 'r') as f:
             data = f.read()
-            if type(data) is not bytes:
+            if not isinstance(data, bytes):
                 data = data.encode('utf-8')
         return data
 
@@ -490,3 +490,26 @@ def nocache():
     pydov.cache = None
     yield
     pydov.cache = orig_cache
+
+
+@pytest.fixture(autouse=True, scope='function')
+def patch_owslib_openURL(monkeypatch):
+    """Fixture to patch OWSLib's openURL function in favor of a GET request
+    using our pydov requests session."""
+    def _openURL(url, *args, **kwargs):
+        """Patch function for owslib.util.openURL using our custom pydov
+        requests session.
+
+        Parameters
+        ----------
+        url : str
+            URL to open.
+
+        Returns
+        -------
+        ResponseWrapper
+            Wrapped response of the request.
+        """
+        return ResponseWrapper(pydov.session.get(url))
+
+    monkeypatch.setattr(owslib.util, 'openURL', _openURL)

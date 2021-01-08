@@ -1,11 +1,7 @@
 # -*- coding: utf-8 -*-
 """Module containing extra query classes to build attribute search queries."""
 
-from owslib.fes import (
-    Or,
-    PropertyIsEqualTo,
-    OgcExpression,
-)
+from owslib.fes import OgcExpression, Or, PropertyIsEqualTo
 
 
 class PropertyInList(OgcExpression):
@@ -21,6 +17,7 @@ class PropertyInList(OgcExpression):
     'spoelboring')])
 
     """
+
     def __init__(self, propertyname, lst):
         """Initialisation.
 
@@ -76,6 +73,7 @@ class Join(PropertyInList):
     'pkey_boring', y), ...]) for every x, y, in df['pkey_boring']
 
     """
+
     def __init__(self, dataframe, on, using=None):
         """Initialisation.
 

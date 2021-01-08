@@ -6,7 +6,6 @@ import os
 import tempfile
 
 import owslib
-import owslib.util
 import pytest
 from _pytest.monkeypatch import MonkeyPatch
 from owslib.etree import etree
@@ -513,4 +512,4 @@ def patch_owslib_openURL(monkeypatch):
         """
         return ResponseWrapper(pydov.session.get(url))
 
-    monkeypatch.setattr(owslib.util, 'openURL', _openURL)
+    monkeypatch.setattr('owslib.util.openURL', _openURL)

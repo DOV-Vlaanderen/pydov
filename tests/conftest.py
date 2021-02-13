@@ -496,7 +496,7 @@ def nocache():
 def patch_owslib_openURL(monkeypatch):
     """Fixture to patch OWSLib's openURL function in favor of a GET request
     using our pydov requests session."""
-    def _openURL(url, *args, **kwargs):
+    def _openURL(*args, **kwargs):
         """Patch function for owslib.util.openURL using our custom pydov
         requests session.
 
@@ -510,6 +510,10 @@ def patch_owslib_openURL(monkeypatch):
         ResponseWrapper
             Wrapped response of the request.
         """
+        url = args[0]
         return ResponseWrapper(pydov.session.get(url))
 
     monkeypatch.setattr('owslib.util.openURL', _openURL)
+    monkeypatch.setattr('owslib.feature.common.openURL', _openURL)
+    monkeypatch.setattr('owslib.feature.schema.openURL', _openURL)
+    monkeypatch.setattr('owslib.feature.wfs110.openURL', _openURL)

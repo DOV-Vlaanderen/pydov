@@ -119,11 +119,9 @@ class AbstractSearch(AbstractCommon):
         str
             The WFS endpoint URL.
         """
-        url = build_dov_url('geoserver/')
-        # url += "/".join(self._layer.split(':'))
-        url += self._layer.split(':')[0]
-        url += '/wfs'
-        return url
+        base_url = build_dov_url('geoserver/')
+        workspace = self._layer.split(':')[0]
+        return base_url + workspace + '/wfs'
 
     def _init_wfs(self):
         """Initialise the WFS service. If the WFS service is not

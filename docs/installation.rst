@@ -103,7 +103,7 @@ The Python documentation on `virtual environments`_ provides more guidance on us
     If the :code:`sphinx-build` (or :code:`make html`) CLI command returns an error, try to reinstall sphinx separately in the environment using
     :code:`pip install -U sphinx`.
 
-Have a look at the :ref:`development guidelines <dev-guidelines>` to see ow we develop the pydov package and get more information on the workflow.
+Have a look at the :ref:`development guidelines <dev-guidelines>` to see how we develop the pydov package and get more information on the workflow.
 
 .. _conda: https://docs.conda.io/en/latest/miniconda.html
 .. _venv: https://docs.python.org/3/library/venv.html#module-venv

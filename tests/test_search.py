@@ -2,6 +2,7 @@
 
 import pytest
 
+from pydov.search.bodemlocatie import BodemlocatieSearch
 from pydov.search.boring import BoringSearch
 from pydov.search.grondmonster import GrondmonsterSearch
 from pydov.search.grondwaterfilter import GrondwaterFilterSearch
@@ -16,7 +17,8 @@ from pydov.util.errors import InvalidSearchParameterError
 from pydov.util.location import Point, WithinDistance
 from tests.abstract import ServiceCheck
 
-search_objects = [BoringSearch(),
+search_objects = [BodemlocatieSearch(),
+                  BoringSearch(),
                   SonderingSearch(),
                   GrondwaterFilterSearch(),
                   GrondwaterMonsterSearch(),

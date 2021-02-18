@@ -482,17 +482,28 @@ Bodem diepteintervallen
 	type,1,string,horizont
 	naam,1,string,Bg
 	beschrijving,1,string,verweringshorizont met gleyverschijnselen
-	
-	
 
-
+	
 Bodemmonsters
 --------------------------------
   .. csv-table:: Bodemmonsters
     :header-rows: 1
 	
     Field,Cost,Datatype,Example
-
+	pkey_bodemmonster,1,string,https://www.dov.vlaanderen.be/data/bodemmonster/1964-264869
+	identificatie,1,string,KART_PROF_073E/12_H2_M1
+	datum_monstername,1,date,1964-11-12
+	tijdstip_monstername,10,time,NaN
+	type,1,string,ENK
+	monsternamedoor,1,string,Centrum voor Grondonderzoek (C.V.G.)
+	techniek,1,string,NaN
+	condities,1,string,Zie scan analoge profielbeschrijving
+	van,1,float,30
+	tot,1,float,45
+	labo,1,string,Centrum voor Grondonderzoek (C.V.G.)
+	laboreferentie,10,string,NaN
+	opmerking,10,string,NaN
+	
 
 Bodemobservaties
 --------------------------------
@@ -500,4 +511,19 @@ Bodemobservaties
     :header-rows: 1
 	
     Field,Cost,Datatype,Example
+	pkey_bodemobservatie,1,string,https://www.dov.vlaanderen.be/data/bodemobservatie/2019-349078
+	parameter,1,string,organische_c_perc
+	parametergroep,10,string
+	waarde,1,string,0.38
+	eenheid,1,string,%
+	ondergrens,10,float,NaN
+	bovengrens,10,float,NaN
+	methode,1,string,Aardewerk nieuwe methode organische koolstof
+	betrouwbaarheid,10,string,onbekend
+	veld_labo,1,string,VELD
+	diepte_van,1,float,30
+	diepte_tot,1,float,45
+	observatiedatum,10,date,1964-11-12
+	invoerdatum,10,date,NaN
+	auteur,10,string,Appelmans Frans
 

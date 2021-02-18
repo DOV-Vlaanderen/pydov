@@ -457,6 +457,19 @@ BodemLocaties
     :header-rows: 1
 	
     Field,Cost,Datatype,Example
+	pkey_bodemlocatie,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/2011-000002
+	naam,1,string,STARC_4
+	type,1,string,profielput
+	datum,1,date,nan
+	doel,1,string,archeologische landschappelijke profielputten
+	x,1,float,206553.85
+	y,1,float,168891.11
+	z,1,float,44.00
+	erfgoed,1,boolean,true
+	bodemstreek,1,string,Zandleemstreek
+	waarnemingsdatum,10,date,nan
+	invoerdatum,10,date,nan
+	educatieve_waarde,10,string,ZEER
 
 
 Bodemclassificaties

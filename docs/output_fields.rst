@@ -435,3 +435,52 @@ Borehole samples (grondmonsters)
     fractie,10,float,0
     methode,10,string,ZEEFPROEF
 
+Bodemsites
+--------------------------------
+  .. csv-table:: Bodemsites
+    :header-rows: 1
+	
+    Field,Cost,Datatype,Example
+	
+	
+	
+
+BodemLocaties
+--------------------------------
+  .. csv-table:: Bodemlocaties
+    :header-rows: 1
+	
+    Field,Cost,Datatype,Example
+
+
+Bodemclassificaties
+--------------------------------
+  .. csv-table:: Bodemclassificaties
+    :header-rows: 1
+	
+    Field,Cost,Datatype,Example
+
+
+Bodemkundige opbouw
+--------------------------------
+  .. csv-table:: Bodemkundige opbouw
+    :header-rows: 1
+	
+    Field,Cost,Datatype,Example
+
+
+Bodemmonsters
+--------------------------------
+  .. csv-table:: Bodemmonsters
+    :header-rows: 1
+	
+    Field,Cost,Datatype,Example
+
+
+Bodemobservaties
+--------------------------------
+  .. csv-table:: Bodemobservaties
+    :header-rows: 1
+	
+    Field,Cost,Datatype,Example
+

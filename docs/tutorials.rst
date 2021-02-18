@@ -7,7 +7,7 @@ Tutorials
 
 These tutorials illustrate use cases the pydov package supports, split
 up by different topics each setup as a `jupyter notebook`_
-you can run yourself. The introductory tutorial bundles most 
+you can run yourself. The introductory tutorial bundles most
 of the interesting features and methods of pydov and would be a good
 start.
 
@@ -22,23 +22,7 @@ start.
 
         pip install -r binder/requirements.txt
 
-    One of the dependencies is `Fiona`_, it is described as "`GDAL`_’s neat and nimble vector API for Python programmers". `GDAL`_ is a 
-    translator library for raster and vector geospatial data formats. Fiona makes it easy to work with. It's required by GeoPandas,
-    which extends the Pandas DataFrames we all love. Combining these three packages, it makes us easy to convert ESRI Shape files to GML files.
-    However, it can be cumbersome to get it installed on a Windows. Please consult the installation guides of the different packages or give
-    the following a try:
-
-    #. Download the latest wheel (choose the approptiate version, based on your python distribution and operating system) 
-       from `www.lfd.uci.edu`_ for both `Fiona`_ and `GDAL`_. For example `Fiona‑1.8.17‑cp38‑cp38‑win_amd64.whl` will 
-       allow you to install `Fiona`_ for your python 3.8 distribution on a 64bit Windows system.
-    #. Install the wheels using :code:`pip install <your wheel>`
-    #. Install `GeoPandas`_ using :code:`pip install geopandas`
-
 .. _folium: https://pypi.org/project/folium/
-.. _Fiona: https://pypi.org/project/Fiona/
-.. _GDAL: https://gdal.org/
-.. _www.lfd.uci.edu: https://www.lfd.uci.edu/~gohlke/pythonlibs/
-.. _GeoPandas: https://geopandas.org/
 
 To run these interactively online without installation, use the following binder link:
 

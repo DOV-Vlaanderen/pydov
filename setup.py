@@ -55,6 +55,7 @@ setup(
     tests_require=requirements_dev,
     extras_require={
         'docs': requirements_doc,
-        'devs': requirements_dev
+        'devs': requirements_dev,
+        'vectorfile': ['geopandas', 'fiona>1.8.18']
     }
 )

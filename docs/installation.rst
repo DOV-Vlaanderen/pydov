@@ -23,6 +23,23 @@ you through the process.
 .. _pip: https://pip.pypa.io
 .. _Python installation guide: http://docs.python-guide.org/en/latest/starting/installation/
 
+.. note::
+
+    To be able to use vector files not defined as GML (for example ESRI Shape files), some additional dependencies
+    are required which are not installed by default. One of the dependencies is `Fiona`_, it is described as "`GDAL`_’s
+    neat and nimble vector API for Python programmers". `GDAL`_ is a translator library for raster and vector
+    geospatial data formats. Fiona is also required by `GeoPandas`_. Combining these three packages, vector files like
+    ESRI Shape files can be converted to GML files and used in spatial queries to DOV. To install the required
+    dependencies to handle vector files, add the `vectorfile` option to the installation instruction:
+
+    .. code-block:: console
+
+        pip install pydov[vectorfile]
+
+.. _Fiona: https://pypi.org/project/Fiona/
+.. _GDAL: https://gdal.org/
+.. _GeoPandas: https://geopandas.org/
+
 From sources
 ------------
 

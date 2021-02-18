@@ -686,7 +686,9 @@ class GeopandasFilter(GmlFilter):
             raise ImportError('No module named GeoPandas. GeoPandasFilter '
                               'requires geopandas to be installed')
         else:
-            gml_blob = BytesIO()
-            gdf.to_file(gml_blob, driver="GML", FORMAT='GML3')
-            gml_blob.seek(0)
-            return gml_blob.read()
+            with BytesIO() as gml_blob:
+                gdf.to_file(gml_blob, driver="GML", FORMAT='GML3')
+                gml_blob.seek(0)
+                gml = gml_blob.read()
+                print(gml.decode('utf8'))
+            return gml.decode('utf8')

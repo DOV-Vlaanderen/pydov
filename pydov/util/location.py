@@ -598,12 +598,10 @@ class GeometryFilter(GmlFilter):
         ------
         ValueError
             When no geometries could be parsed from the given geometry.
-
         """
         gml = self._parse_geometry(geometry)
 
-        super().__init__(gml, location_filter, location_filter_kwargs,
-                 combinator)
+        super().__init__(gml, location_filter, location_filter_kwargs, combinator)
 
     @staticmethod
     def _parse_geometry(geometry):
@@ -613,15 +611,14 @@ class GeometryFilter(GmlFilter):
         ------
         ValueError
             When the file could not be parsed.
-
         """
-
         try:
             import fiona
             # Check if the GML driver and write mode are supported and check
             # if the version of Fiona supports GML 3.1.1 output (Fiona >= 1.8.18)
             drivers = fiona.supported_drivers
-            if 'w' not in drivers.get('GML', '') or LooseVersion(fiona.__version__) < LooseVersion('1.8.18'):
+            if 'w' not in drivers.get('GML', '') or \
+                    LooseVersion(fiona.__version__) < LooseVersion('1.8.18'):
                 raise UserWarning('Please use module Fiona version 1.8.18 or higher')
         except ImportError:
             raise ImportError('No module named fiona. GeometryFilter '
@@ -630,11 +627,66 @@ class GeometryFilter(GmlFilter):
             # Open the geometry as a collection containing multiple records
             with fiona.open(geometry, 'r') as c:
                 gml_blob = BytesIO()
-                # Momenteel gaan we uit dat de geometry een bestand is
+                # Assume the geometry is loaded from file
                 layer = os.path.basename(os.path.splitext(geometry)[0])
-                with fiona.open(gml_blob, 'w', layer=layer, driver='GML', schema=c.schema, crs=c.crs, FORMAT='GML3') as gml:
+                with fiona.open(gml_blob, 'w', layer=layer, driver='GML',
+                                schema=c.schema, crs=c.crs, FORMAT='GML3') as gml:
                     for r in list(c):
                         gml.write(r)
                 gml_blob.seek(0)
                 # Set the gml attribute used by the parent class
                 return gml_blob.read()
+
+
+class GeopandasFilter(GmlFilter):
+    """Class for construction a spatial filter expression from a GeoPandas object.
+    """
+
+    def __init__(self, geodataframe, location_filter, location_filter_kwargs=None,
+                 combinator=Or):
+        """Initialise a spatial filter expression from a GeoPandas GeoDataFrame.
+
+        Parameters
+        ----------
+        geodataframe : GeoPandas.GeoDataFrame
+            A GeoDataFrame with a valid crs.
+        location_filter : class<AbstractLocationFilter>
+            Location filter to use for the geometries in the GML document.
+        location_filter_kwargs : dict, optional
+            Keyword-based arguments to pass to the `location_filter` on
+            initialisation (with the exception of the `location` parameter,
+            which is automatically parsed from the geomery). Can be skipped in
+            cases where the location_filter takes no extra arguments besides
+            location.
+        combinator : class<BinaryLogicOpType>, optional, defaults to Or
+            One of (Or, And) used to combine filters for different geometries
+            in the geometry document.
+
+        Raises
+        ------
+        ValueError
+            When no geometries could be parsed from the given geometry.
+        """
+        gml = self._parse_geometry(geodataframe)
+
+        super().__init__(gml, location_filter, location_filter_kwargs, combinator)
+
+    @staticmethod
+    def _parse_geometry(gdf):
+        """Checks the geometry and parse the file if possible.
+
+        Raises
+        ------
+        ValueError
+            When the file could not be parsed.
+        """
+        try:
+            import geopandas
+        except ImportError:
+            raise ImportError('No module named GeoPandas. GeoPandasFilter '
+                              'requires geopandas to be installed')
+        else:
+            gml_blob = BytesIO()
+            gdf.to_file(gml_blob, driver="GML", FORMAT='GML3')
+            gml_blob.seek(0)
+            return gml_blob.read()

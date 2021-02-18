@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+"""Module grouping Exception classes."""
+
+
 class DOVError(Exception):
     """General error within PyDOV."""
     pass

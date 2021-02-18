@@ -9,7 +9,7 @@ from .abstract import AbstractDovSubType, AbstractDovType
 class Korrelverdeling(AbstractDovSubType):
 
     rootpath = './/grondmonster/observatieReeksData/' \
-                'korrelverdeling_reeks/korrelverdeling'
+        'korrelverdeling_reeks/korrelverdeling'
 
     fields = [
         XmlField(name='diameter',

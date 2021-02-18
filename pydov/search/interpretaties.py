@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+"""Module containing the search classes to retrieve DOV interpretations."""
+
 from pydov.search.abstract import AbstractSearch
 from pydov.types.interpretaties import (FormeleStratigrafie,
                                         GecodeerdeLithologie,

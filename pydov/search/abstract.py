@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Module containing the abstract search classes to retrieve DOV data."""
+
 import datetime
 from distutils.util import strtobool
 

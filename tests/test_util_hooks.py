@@ -10,7 +10,7 @@ from pydov.search.abstract import AbstractSearch
 from pydov.search.boring import BoringSearch
 from pydov.util.hooks import (AbstractInjectHook, AbstractReadHook, Hooks,
                               SimpleStatusHook)
-from tests.abstract import service_ok
+from tests.abstract import ServiceCheck
 
 
 @pytest.fixture
@@ -64,6 +64,7 @@ def force_rebuild_wfs():
 
 class HookCounter(AbstractReadHook, AbstractInjectHook):
     """Hook implementation for testing purposes, counting all event calls."""
+
     def __init__(self):
         self.count_meta_received = 0
         self.count_inject_meta_response = 0
@@ -110,6 +111,7 @@ class HookCounter(AbstractReadHook, AbstractInjectHook):
 class HookTypeTester(AbstractReadHook, AbstractInjectHook):
     """Hook implementation for testing purposes, testing arguments of all
     event calls."""
+
     def meta_received(self, url, response):
         assert url is not None
         assert response is not None
@@ -157,6 +159,7 @@ class HookTypeTester(AbstractReadHook, AbstractInjectHook):
 
 class HookInjecter(AbstractReadHook, AbstractInjectHook):
     """Hook implementation for testing purposes, testing response injection."""
+
     def __init__(self):
         self.wfs_features = None
         self.dov_xml = None
@@ -208,7 +211,8 @@ class HookInjecter(AbstractReadHook, AbstractInjectHook):
 
 class TestHookCount(object):
     @pytest.mark.online
-    @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
+    @pytest.mark.skipif(not ServiceCheck.service_ok(),
+                        reason="DOV service is unreachable")
     def test_wfs_only(self, force_rebuild_wfs, test_hook_count):
         """Test the search method providing both a location and a query.
 
@@ -243,7 +247,8 @@ class TestHookCount(object):
         assert pydov.hooks[0].count_inject_meta_response > 0
 
     @pytest.mark.online
-    @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
+    @pytest.mark.skipif(not ServiceCheck.service_ok(),
+                        reason="DOV service is unreachable")
     def test_wfs_and_xml_nocache(self, force_rebuild_wfs, test_hook_count,
                                  nocache):
         """Test the search method providing both a location and a query.
@@ -297,7 +302,8 @@ class TestHookCount(object):
         assert pydov.hooks[0].count_inject_meta_response > 0
 
     @pytest.mark.online
-    @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
+    @pytest.mark.skipif(not ServiceCheck.service_ok(),
+                        reason="DOV service is unreachable")
     @pytest.mark.parametrize('plaintext_cache',
                              [[datetime.timedelta(minutes=15)]],
                              indirect=['plaintext_cache'])
@@ -357,7 +363,8 @@ class TestHookCount(object):
 
 class TestHookTypes(object):
     @pytest.mark.online
-    @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
+    @pytest.mark.skipif(not ServiceCheck.service_ok(),
+                        reason="DOV service is unreachable")
     def test_default_hooks(self, nocache):
         """Test the default hooks by performing a simple search.
 
@@ -380,7 +387,8 @@ class TestHookTypes(object):
         boringsearch.search(query=query)
 
     @pytest.mark.online
-    @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
+    @pytest.mark.skipif(not ServiceCheck.service_ok(),
+                        reason="DOV service is unreachable")
     def test_hooks(self, force_rebuild_wfs, test_hook_types):
         """Test the argument types of the hook events.
 
@@ -401,7 +409,8 @@ class TestHookTypes(object):
 
 class TestHookInject(object):
     @pytest.mark.online
-    @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
+    @pytest.mark.skipif(not ServiceCheck.service_ok(),
+                        reason="DOV service is unreachable")
     def test_hooks_inject(self, force_rebuild_wfs, test_hook_inject):
         """Test the of the hook inject events.
 

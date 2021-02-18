@@ -2,11 +2,12 @@
 """Module containing the DOV data type for groundwater samples
 (GrondwaterMonsters), including subtypes."""
 from pydov.types.fields import WfsField, XmlField, XsdType
+from pydov.util.dovutil import build_dov_url
 
 from .abstract import AbstractDovSubType, AbstractDovType
 
-_observatieDataCodes_xsd = 'https://www.dov.vlaanderen.be/xdov/schema/' \
-                       'latest/xsd/kern/observatie/ObservatieDataCodes.xsd'
+_observatieDataCodes_xsd = build_dov_url(
+    'xdov/schema/latest/xsd/kern/observatie/ObservatieDataCodes.xsd')
 
 
 class Observatie(AbstractDovSubType):

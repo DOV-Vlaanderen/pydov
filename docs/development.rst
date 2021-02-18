@@ -138,7 +138,7 @@ in the development installation instructions :ref:`for package contributors <dev
    * ``requirement.txt`` required packages to use the pydov API
    * ``requirement_dev.txt`` required packages to contribute to pydov code
    * ``requirement_doc.txt`` required packages to contribute to the pydov documentation. This environmnet is used by the readthedocs service for building/hosting the documentation.
-   * ``requirement_appveyor.txt`` requirement specific for Appveyor (If someone has a better way of dealing with Appveyor, contributions welcome)
+   * ``docs/requirements_rtd.txt`` requirement specific for building the documentation website on `readthedocs <https://readthedocs.org/>`_
    * ``binder/requirement.txt`` requirements setup to setup a Binder environment
 
    When adding dependencies, make sure to make the appropriate adjustments in the individual file!

@@ -4,10 +4,7 @@
 import pandas as pd
 from owslib.fes import And, Not, PropertyIsNull
 
-from pydov.types.fields import _WfsInjectedField
-
 from ..types.grondwaterfilter import GrondwaterFilter
-from ..util import owsutil
 from .abstract import AbstractSearch
 
 
@@ -15,12 +12,6 @@ class GrondwaterFilterSearch(AbstractSearch):
     """Search class to retrieve information about groundwater screens
     (GrondwaterFilter).
     """
-
-    __wfs_schema = None
-    __wfs_namespace = None
-    __md_metadata = None
-    __fc_featurecatalogue = None
-    __xsd_schemas = None
 
     def __init__(self, objecttype=GrondwaterFilter):
         """Initialisation.
@@ -35,48 +26,6 @@ class GrondwaterFilterSearch(AbstractSearch):
         """
         super(GrondwaterFilterSearch,
               self).__init__('gw_meetnetten:meetnetten', objecttype)
-
-    def _init_namespace(self):
-        if GrondwaterFilterSearch.__wfs_namespace is None:
-            GrondwaterFilterSearch.__wfs_namespace = self._get_namespace()
-
-    def _init_fields(self):
-        if self._fields is None:
-            if GrondwaterFilterSearch.__wfs_schema is None:
-                GrondwaterFilterSearch.__wfs_schema = self._get_schema()
-
-            if GrondwaterFilterSearch.__md_metadata is None:
-                GrondwaterFilterSearch.__md_metadata = \
-                    self._get_remote_metadata()
-
-            if GrondwaterFilterSearch.__fc_featurecatalogue is None:
-                csw_url = self._get_csw_base_url()
-                fc_uuid = owsutil.get_featurecatalogue_uuid(
-                    GrondwaterFilterSearch.__md_metadata)
-
-                GrondwaterFilterSearch.__fc_featurecatalogue = \
-                    owsutil.get_remote_featurecatalogue(csw_url, fc_uuid)
-
-            if GrondwaterFilterSearch.__xsd_schemas is None:
-                GrondwaterFilterSearch.__xsd_schemas = \
-                    self._get_remote_xsd_schemas()
-
-            fields = self._build_fields(
-                GrondwaterFilterSearch.__wfs_schema,
-                GrondwaterFilterSearch.__fc_featurecatalogue,
-                GrondwaterFilterSearch.__xsd_schemas)
-
-            for field in fields.values():
-                if field['name'] not in self._type.get_field_names(
-                        include_wfs_injected=True):
-                    self._type.fields.append(
-                        _WfsInjectedField(name=field['name'],
-                                          datatype=field['type']))
-
-            self._fields = self._build_fields(
-                GrondwaterFilterSearch.__wfs_schema,
-                GrondwaterFilterSearch.__fc_featurecatalogue,
-                GrondwaterFilterSearch.__xsd_schemas)
 
     def search(self, location=None, query=None, sort_by=None,
                return_fields=None, max_features=None):
@@ -157,7 +106,7 @@ class GrondwaterFilterSearch(AbstractSearch):
                            return_fields=return_fields,
                            max_features=max_features)
 
-        gw_filters = self._type.from_wfs(fts, self.__wfs_namespace)
+        gw_filters = self._type.from_wfs(fts, self._wfs_namespace)
 
         df = pd.DataFrame(
             data=self._type.to_df_array(gw_filters, return_fields),

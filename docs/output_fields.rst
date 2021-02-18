@@ -441,9 +441,15 @@ Bodemsites
     :header-rows: 1
 	
     Field,Cost,Datatype,Example
-	
-	
-	
+	pkey_bodemsite,1,string,https://www.dov.vlaanderen.be/data/bodemsite/2013-000180
+	naam,1,string,Meise_Neerpoorten
+	datum,1,date,nan
+	beschrijving,1,string,grasland
+	aantal_bodemlocaties,1,float,2
+	aantal_observaties,1,float,0
+	waarnemingsdatum,10,date,nan
+	invoerdatum,10,date,nan
+		
 
 BodemLocaties
 --------------------------------

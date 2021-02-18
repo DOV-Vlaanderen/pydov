@@ -56,6 +56,6 @@ setup(
     extras_require={
         'docs': requirements_doc,
         'devs': requirements_dev,
-        'vectorfile': ['geopandas', 'fiona>1.8.18']
+        'vectorfile': ['geopandas', 'fiona>=1.8.18']
     }
 )

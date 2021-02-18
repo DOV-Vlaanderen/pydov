@@ -445,8 +445,6 @@ Bodemsites
 	naam,1,string,Meise_Neerpoorten
 	datum,1,date,nan
 	beschrijving,1,string,grasland
-	aantal_bodemlocaties,1,float,2
-	aantal_observaties,1,float,0
 	waarnemingsdatum,10,date,nan
 	invoerdatum,10,date,nan
 		
@@ -472,20 +470,20 @@ BodemLocaties
 	educatieve_waarde,10,string,ZEER
 
 
-Bodemclassificaties
+Bodem diepteintervallen
 --------------------------------
-  .. csv-table:: Bodemclassificaties
+  .. csv-table:: Bodem diepteintervallen
     :header-rows: 1
 	
     Field,Cost,Datatype,Example
-
-
-Bodemkundige opbouw
---------------------------------
-  .. csv-table:: Bodemkundige opbouw
-    :header-rows: 1
+	pkey_diepteinterval,1,string,https://www.dov.vlaanderen.be/data/bodemdiepteinterval/2018-000003
+	pkey_bodemlocatie,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/2014-000001
+	nummer,1,float,3
+	type,1,string,horizont
+	naam,1,string,Bg
+	beschrijving,1,string,verweringshorizont met gleyverschijnselen
 	
-    Field,Cost,Datatype,Example
+	
 
 
 Bodemmonsters

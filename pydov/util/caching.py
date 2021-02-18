@@ -7,20 +7,23 @@ import re
 import shutil
 import tempfile
 
-from pydov.util.dovutil import get_dov_xml
+from pydov.util.dovutil import build_dov_url, get_dov_xml
 from pydov.util.hooks import HookRunner
 
 
 class AbstractCache(object):
     """Abstract base class for caching of downloaded XML files from DOV."""
 
-    def _get_remote(self, url):
+    def _get_remote(self, url, session=None):
         """Get the XML data by requesting it from the given URL.
 
         Parameters
         ----------
         url : str
             Permanent URL to a DOV object.
+        session : requests.Session
+            Session to use to perform HTTP requests for data. Defaults to None,
+            which means a new session will be created for each request.
 
         Returns
         -------
@@ -28,7 +31,7 @@ class AbstractCache(object):
             The raw XML data of this DOV object as bytes.
 
         """
-        xml = get_dov_xml(url)
+        xml = get_dov_xml(url, session)
         HookRunner.execute_xml_downloaded(url.rstrip('.xml'))
         return xml
 
@@ -43,7 +46,7 @@ class AbstractCache(object):
         """
         HookRunner.execute_xml_cache_hit(url.rstrip('.xml'))
 
-    def get(self, url):
+    def get(self, url, session=None):
         """Get the XML data for the DOV object referenced by the given URL.
 
         Because of parallel processing, this method will be called
@@ -58,6 +61,9 @@ class AbstractCache(object):
         ----------
         url : str
             Permanent URL to a DOV object.
+        session : requests.Session
+            Session to use to perform HTTP requests for data. Defaults to None,
+            which means a new session will be created for each request.
 
         Returns
         -------
@@ -113,8 +119,8 @@ class AbstractFileCache(AbstractCache):
         self.max_age = max_age
 
         self._re_type_key = re.compile(
-            r'https?://(www|oefen|ontwikkel)\.dov\.vlaanderen\.be/'
-            r'data/([^ /]+)/([^.]+)')
+            build_dov_url('data/') + r'([^ /]+)/([^.]+)'
+        )
 
         try:
             if not os.path.exists(self.cachedir):
@@ -159,8 +165,8 @@ class AbstractFileCache(AbstractCache):
 
         """
         datatype = self._re_type_key.search(url)
-        if datatype and len(datatype.groups()) > 2:
-            return datatype.group(2), datatype.group(3)
+        if datatype and len(datatype.groups()) > 1:
+            return datatype.group(1), datatype.group(2)
 
     def _get_type_key_from_path(self, path):
         """Parse a filepath and return the datatype and object key.
@@ -245,7 +251,7 @@ class AbstractFileCache(AbstractCache):
         """
         raise NotImplementedError('This should be implemented in a subclass.')
 
-    def get(self, url):
+    def get(self, url, session=None):
         datatype, key = self._get_type_key_from_url(url)
 
         data = HookRunner.execute_inject_xml_response(url)
@@ -265,7 +271,7 @@ class AbstractFileCache(AbstractCache):
             except Exception:
                 pass
 
-        data = self._get_remote(url)
+        data = self._get_remote(url, session)
         try:
             self._save(datatype, key, data)
         except Exception:

@@ -1,24 +1,16 @@
 # -*- coding: utf-8 -*-
 """Module grouping utility functions for OWS services."""
 import warnings
-
-import pydov
-
-from owslib.fes import (
-    UnaryLogicOpType,
-    BinaryLogicOpType,
-)
-
 from urllib.parse import urlparse
 
 from owslib.etree import etree
+from owslib.fes import BinaryLogicOpType, UnaryLogicOpType
 from owslib.namespaces import Namespaces
 from owslib.util import nspath_eval
 
-from .errors import (
-    MetadataNotFoundError,
-    FeatureCatalogueNotFoundError,
-)
+import pydov
+
+from .errors import FeatureCatalogueNotFoundError, MetadataNotFoundError
 from .hooks import HookRunner
 
 
@@ -95,7 +87,7 @@ def get_remote_metadata(contentmetadata):
     """
     with warnings.catch_warnings():
         warnings.filterwarnings("ignore", category=FutureWarning)
-        contentmetadata.parse_remote_metadata(pydov.request_timeout)
+        contentmetadata.parse_remote_metadata(pydov.util.net.request_timeout)
 
     for remote_md in contentmetadata.metadataUrls:
         if 'metadata' in remote_md:
@@ -448,7 +440,7 @@ def wfs_get_feature(baseurl, get_feature_request):
     """
     data = etree.tostring(get_feature_request)
 
-    request = pydov.session.post(baseurl, data, timeout=pydov.request_timeout)
+    request = pydov.session.post(baseurl, data)
     request.encoding = 'utf-8'
     return request.text.encode('utf8')
 
@@ -470,7 +462,7 @@ def get_url(url):
     response = HookRunner.execute_inject_meta_response(url)
 
     if response is None:
-        request = pydov.session.get(url, timeout=pydov.request_timeout)
+        request = pydov.session.get(url)
         request.encoding = 'utf-8'
         response = request.text.encode('utf8')
 

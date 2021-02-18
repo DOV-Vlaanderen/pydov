@@ -2,10 +2,9 @@
 """Module implementing a simple hooks system to allow late-binding actions to
 PyDOV events."""
 
-from multiprocessing import Lock
-
 import sys
 import time
+from multiprocessing import Lock
 
 import pydov
 
@@ -13,6 +12,7 @@ import pydov
 class Hooks(list):
     """Runtime representation of registered pydov hooks, i.e. a list of
     instances of AbstractReadHook and/or AbstractInjectHook."""
+
     def get_read_hooks(self):
         """Get the registered read hooks (i.e. hooks that are subclasses of
         AbstractReadHook), in the order they are defined in the list.
@@ -243,6 +243,7 @@ class AbstractReadHook(object):
     they need.
 
     """
+
     def meta_received(self, url, response):
         """Called when a response for a metadata requests is received.
 
@@ -370,6 +371,7 @@ class AbstractInjectHook(object):
     they need.
 
     """
+
     def inject_meta_response(self, url):
         """Inject a response for a metadata request.
 
@@ -455,6 +457,7 @@ class AbstractInjectHook(object):
 
 class SimpleStatusHook(AbstractReadHook):
     """Simple hook implementation to print progress to stdout."""
+
     def __init__(self):
         """Initialisation.
 
@@ -485,9 +488,9 @@ class SimpleStatusHook(AbstractReadHook):
             sys.stdout.flush()
         elif self.prog_counter % 50 == 0:
             time_elapsed = time.time() - self.init_time
-            time_per_item = time_elapsed/self.prog_counter
-            remaining_mins = int((time_per_item*(
-                self.result_count-self.prog_counter))/60)
+            time_per_item = time_elapsed / self.prog_counter
+            remaining_mins = int((time_per_item * (
+                self.result_count - self.prog_counter)) / 60)
             if remaining_mins > 1 and remaining_mins != \
                     self.previous_remaining:
                 remaining = " ({:d} min. left)".format(remaining_mins)

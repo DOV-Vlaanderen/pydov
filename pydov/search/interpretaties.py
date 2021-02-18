@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+"""Module containing the search classes to retrieve DOV interpretations."""
 import pandas as pd
 
 from pydov.search.abstract import AbstractSearch

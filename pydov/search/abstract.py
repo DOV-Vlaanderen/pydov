@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Module containing the abstract search classes to retrieve DOV data."""
+
 import datetime
 from distutils.util import strtobool
 
@@ -111,23 +112,12 @@ class AbstractSearch(AbstractCommon):
         """
         if AbstractSearch.__wfs is None:
 
-            capabilities = HookRunner.execute_inject_meta_response(
-                build_dov_url('geoserver/wfs') + '?version=1.1.0'
-            )
+            capabilities = owsutil.get_url(build_dov_url(
+                'geoserver/wfs?request=GetCapabilities&version=1.1.0'))
 
-            if capabilities is None:
-                AbstractSearch.__wfs = WebFeatureService(
-                    url=build_dov_url('geoserver/wfs'), version="1.1.0")
-            else:
-                AbstractSearch.__wfs = WebFeatureService(
-                    url=build_dov_url('geoserver/wfs'), version="1.1.0",
-                    xml=capabilities)
-
-            HookRunner.execute_meta_received(
-                build_dov_url('geoserver/wfs') + '?version=1.1.0',
-                etree.tostring(AbstractSearch.__wfs._capabilities,
-                               encoding='utf8')
-            )
+            AbstractSearch.__wfs = WebFeatureService(
+                url=build_dov_url('geoserver/wfs'), version="1.1.0",
+                xml=capabilities)
 
     def _init_namespace(self):
         """Initialise the WFS namespace associated with the layer.

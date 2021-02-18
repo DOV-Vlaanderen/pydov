@@ -19,36 +19,49 @@ from pydov.util.location import Box, Within
 from pydov.util.query import Join, PropertyInList
 
 
-def service_ok(timeout=5):
-    """Check whether DOV services are accessible.
+class ServiceCheck:
 
-    Used to skip online tests when the service is unavailable or unreachable.
+    is_service_ok = None
 
-    Parameters
-    ----------
-    timeout : int, optional
-        Timeout in seconds. Defaults to 5.
+    @staticmethod
+    def service_ok(timeout=5):
+        """Check whether DOV services are accessible.
 
-    Returns
-    -------
-    bool
-        True if the DOV services are reachable, False otherwise.
+        Used to skip online tests when the service is unavailable or
+        unreachable.
 
-    """
-    def check_url(url, timeout):
-        try:
-            ok = pydov.session.head(
-                url, allow_redirects=True, timeout=timeout).ok
-        except requests.exceptions.ReadTimeout:
-            ok = False
-        except requests.exceptions.ConnectTimeout:
-            ok = False
-        except Exception:
-            ok = False
-        return ok
+        Parameters
+        ----------
+        timeout : int, optional
+            Timeout in seconds. Defaults to 5.
 
-    return check_url(build_dov_url('geoserver'), timeout) and\
-        check_url(build_dov_url('geonetwork'), timeout)
+        Returns
+        -------
+        bool
+            True if the DOV services are reachable, False otherwise.
+
+        """
+        def check_url(url, timeout):
+            try:
+                ok = pydov.session.head(
+                    url, allow_redirects=True, timeout=timeout).ok
+            except requests.exceptions.ReadTimeout:
+                ok = False
+            except requests.exceptions.ConnectTimeout:
+                ok = False
+            except Exception:
+                ok = False
+            return ok
+
+        if ServiceCheck.is_service_ok is None:
+            ServiceCheck.is_service_ok = (
+                check_url(build_dov_url('geoserver'), timeout) and
+                check_url(build_dov_url('geonetwork'), timeout) and
+                check_url(
+                    build_dov_url('xdov/schema/latest/xsd/kern/dov.xsd'),
+                    timeout))
+
+        return ServiceCheck.is_service_ok
 
 
 def clean_xml(xml):

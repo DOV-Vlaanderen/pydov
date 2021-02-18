@@ -5,7 +5,7 @@ from .abstract import AbstractSearch
 
 
 class BodemobservatieSearch(AbstractSearch):
-    """Search class to retrieve information about bodemlocaties."""
+    """Search class to retrieve information about bodemobservaties."""
 
     def __init__(self, objecttype=Bodemobservatie):
         """Initialisation.

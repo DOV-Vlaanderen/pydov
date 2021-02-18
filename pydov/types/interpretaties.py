@@ -44,8 +44,7 @@ class AbstractCommonInterpretatie(AbstractDovType):
             `https://www.dov.vlaanderen.be/data/interpretatie/<id>`.
 
         """
-        super(AbstractCommonInterpretatie, self).__init__(
-            'interpretatie', pkey)
+        super().__init__('interpretatie', pkey)
 
     @classmethod
     def from_wfs_element(cls, feature, namespace):
@@ -119,8 +118,7 @@ class AbstractBoringInterpretatie(AbstractDovType):
             `https://www.dov.vlaanderen.be/data/interpretatie/<id>`.
 
         """
-        super(AbstractBoringInterpretatie, self).__init__(
-            'interpretatie', pkey)
+        super().__init__('interpretatie', pkey)
 
     @classmethod
     def from_wfs_element(cls, feature, namespace):

@@ -58,6 +58,22 @@ class DOVWarning(Warning):
     pass
 
 
+class XsdFetchWarning(DOVWarning):
+    """Emitted when an XSD document fails to be fetched from the DOV
+    webservice, resulting in the fields metadata to be incomplete."""
+
+
+class XmlFetchWarning(DOVWarning):
+    """Emitted when an XML document fails to be fetched from the DOV
+    webservice, resulting in an incomplete dataframe."""
+
+
+class XmlStaleWarning(DOVWarning):
+    """Emitted when an XML document fails to be fetched from the DOV
+    webservice and an older stale version is used from the cache, resulting
+    in an out-of-date dataframe."""
+
+
 class XmlParseWarning(DOVWarning):
     """Emitted when the failure to parse an XML document results in
     an incomplete dataframe."""

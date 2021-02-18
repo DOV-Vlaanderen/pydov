@@ -577,7 +577,7 @@ class AbstractDovType(AbstractTypeCommon):
         def unnest_result(result, df_result):
             """Unnest the result into multiple rows (lists) if necessary. Rows
             are appended to the df_result list."""
-            if len(result) > 0:
+            if result is not None and len(result) > 0:
                 if isinstance(result[0], list):
                     for r in result:
                         df_result.append(r)

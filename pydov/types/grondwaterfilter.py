@@ -129,7 +129,7 @@ class GrondwaterFilter(AbstractDovType):
             `https://www.dov.vlaanderen.be/data/filter/<id>`.
 
         """
-        super(GrondwaterFilter, self).__init__('filter', pkey)
+        super().__init__('filter', pkey)
 
     @classmethod
     def from_wfs_element(cls, feature, namespace):

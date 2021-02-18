@@ -223,8 +223,15 @@ class LocalSessionThread(Thread):
                 fn, args, r = self.input_queue.get(timeout=0.5)
                 args = list(args)
                 args.append(self.session)
-                result = fn(*args)
-                r.set_result(result)
-                self.input_queue.task_done()
+
+                try:
+                    result = fn(*args)
+                except BaseException:
+                    pass
+                    # r.set_error(e)
+                else:
+                    r.set_result(result)
+                finally:
+                    self.input_queue.task_done()
             except Empty:
                 pass

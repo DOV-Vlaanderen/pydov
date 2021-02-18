@@ -7,6 +7,18 @@ app = Flask(__name__)
 
 no_xdov = False
 
+error_404 = """<!-- THEME DEBUG -->
+<!-- THEME HOOK: 'html' -->
+<!-- FILE NAME SUGGESTIONS:
+* html--error--502.html.html.twig
+* html--error.html.twig
+x html.html.twig
+-->
+<!-- BEGIN OUTPUT from 'themes/dov_webuniversum/html.html.twig' -->
+<html>
+</html>
+"""
+
 
 def rewrite_content_reverse(content):
     def rewrite(content):
@@ -43,18 +55,9 @@ def proxy_head(path):
 def proxy_get(path):
     full_path = request.full_path
 
-    if no_xdov and full_path.startswith('/data'):
-        return """<!-- THEME DEBUG -->
-            <!-- THEME HOOK: 'html' -->
-            <!-- FILE NAME SUGGESTIONS:
-            * html--error--502.html.html.twig
-            * html--error.html.twig
-            x html.html.twig
-            -->
-            <!-- BEGIN OUTPUT from 'themes/dov_webuniversum/html.html.twig' -->
-            <html>
-            </html>
-            """, 404
+    if no_xdov and (full_path.startswith('/data')
+                    or full_path.startswith('/xdov')):
+        return error_404, 404
 
     r = requests.get(f'https://www.dov.vlaanderen.be{full_path}')
     return rewrite_content_reverse(r.content)

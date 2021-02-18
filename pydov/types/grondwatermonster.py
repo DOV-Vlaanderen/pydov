@@ -88,7 +88,7 @@ class GrondwaterMonster(AbstractDovType):
             `https://www.dov.vlaanderen.be/data/watermonster/<id>`.
 
         """
-        super(GrondwaterMonster, self).__init__('watermonster', pkey)
+        super().__init__('watermonster', pkey)
 
     @classmethod
     def from_wfs_element(cls, feature, namespace):

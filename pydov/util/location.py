@@ -635,7 +635,8 @@ class GeometryFilter(GmlFilter):
                         gml.write(r)
                 gml_blob.seek(0)
                 # Set the gml attribute used by the parent class
-                return gml_blob.read()
+                gml = gml_blob.read()
+                return gml
 
 
 class GeopandasFilter(GmlFilter):
@@ -684,11 +685,19 @@ class GeopandasFilter(GmlFilter):
             import geopandas
         except ImportError:
             raise ImportError('No module named GeoPandas. GeoPandasFilter '
-                              'requires geopandas to be installed')
+                              'requires geopandas to be installed.')
         else:
+            if not isinstance(gdf, geopandas.geodataframe.GeoDataFrame):
+                raise TypeError("pydov only supports geopandas.GeoDataFrame "
+                                "to define a spatial query.")
+
+            if not gdf.crs:
+                raise AttributeError("geopandas.GeoDataFrame is missing a "
+                                     "CRS definition")
+
             with BytesIO() as gml_blob:
-                gdf.to_file(gml_blob, driver="GML", FORMAT='GML3')
+                gdf.to_file(gml_blob, driver="GML", FORMAT="GML3",
+                            layer="geodataframe")
                 gml_blob.seek(0)
                 gml = gml_blob.read()
-                print(gml.decode('utf8'))
-            return gml.decode('utf8')
+            return gml

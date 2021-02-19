@@ -14,6 +14,7 @@ from owslib.fes import Or
 
 from distutils.version import LooseVersion
 
+
 class AbstractLocation(object):
     """Abstract base class for location types (f.ex. point, box, polygon).
 

@@ -12,8 +12,17 @@ class Bodemobservatie(AbstractDovType):
     subtypes = []
 
     fields = [
-        WfsField(name='pkey_bodemlocatie',
+        WfsField(name='pkey_bodemobservatie',
                  source_field='Bodemobservatiefiche',
+                 datatype='string'),
+        WfsField(name='pkey_bodemlocatie',
+                 source_field='Bodemlocatiefiche',
+                 datatype='string'),
+        WfsField(name='Aan',
+                 source_field='Aan',
+                 datatype='string'),
+        WfsField(name='pkey_parent',
+                 source_field='Parentfiche',
                  datatype='string'),
         WfsField(name='parameter', source_field='Parameter',
                  datatype='string'),
@@ -51,11 +60,7 @@ class Bodemobservatie(AbstractDovType):
         XmlField(name='invoerdatum',
                  source_xpath='/bodemobservatie/invoerdatum',
                  definition='Invoerdatum van de bodemobservatie.',
-                 datatype='date'),
-        XmlField(name='auteur',
-                 source_xpath='/bodemobservatie/auteur',
-                 definition='Auteur van de bodemobservatie.',
-                 datatype='string')
+                 datatype='date')
     ]
 
     def __init__(self, pkey):

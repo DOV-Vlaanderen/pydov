@@ -4,14 +4,14 @@ from pydov.types.abstract import AbstractDovType
 from pydov.types.fields import WfsField
 
 
-class Gwvergunningen(AbstractDovType):
+class GrondwaterVergunning(AbstractDovType):
     """Class representing the DOV data type for groundwater abstraction
     permits."""
 
     subtypes = []
 
     fields = [
-        WfsField(name='pkey_vergunning',
+        WfsField(name='id_vergunning',
                  source_field='id',
                  datatype='string'),
         WfsField(name='pkey_installatie',
@@ -67,7 +67,7 @@ class Gwvergunningen(AbstractDovType):
                  datatype='string'),
     ]
 
-    def __init__(self, pkey=r'to_be_defined'):
+    def __init__(self, pkey):
         """Initialisation.
 
         Parameters
@@ -78,19 +78,18 @@ class Gwvergunningen(AbstractDovType):
             `https://www.dov.vlaanderen.be/data/installatie/<id>`.
 
         """
-        super(Gwvergunningen, self).__init__('gwvergunningen',
-                                             pkey=r'to_be_defined')
+        super(GrondwaterVergunning, self).__init__('gwvergunning', pkey)
 
     @classmethod
     def from_wfs_element(cls, feature, namespace):
-        s = cls(feature.findtext('./{{{}}}fiche'.format(namespace)))
+        gwvergunning = cls(feature.findtext('./{{{}}}id'.format(namespace)))
 
         for field in cls.get_fields(source=('wfs',)).values():
-            s.data[field['name']] = cls._parse(
+            gwvergunning.data[field['name']] = cls._parse(
                 func=feature.findtext,
                 xpath=field['sourcefield'],
                 namespace=namespace,
                 returntype=field.get('type', None)
             )
 
-        return s
+        return gwvergunning

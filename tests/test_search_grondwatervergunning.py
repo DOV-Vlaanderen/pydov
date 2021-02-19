@@ -1,10 +1,11 @@
 """Tests for grondwatervergunningen"""
+import pytest
 from owslib.fes import PropertyIsEqualTo
 from pandas import DataFrame
 
 from pydov.search.grondwatervergunning import GrondwaterVergunningSearch
 from pydov.types.grondwatervergunning import GrondwaterVergunning
-from tests.abstract import AbstractTestSearch
+from tests.abstract import AbstractTestSearch, ServiceCheck
 
 location_md_metadata = \
     'tests/data/types/grondwatervergunning/md_metadata.xml'
@@ -93,5 +94,30 @@ class TestGrondwaterVergunningSearch(AbstractTestSearch):
         df = self.search_instance.search(
             query=self.valid_query_single,
             return_fields=('id_vergunning', 'diepte'))
+
+        assert df.diepte[0] == 32.0
+
+    @pytest.mark.online
+    @pytest.mark.skipif(not ServiceCheck.service_ok(),
+                        reason="DOV service is unreachable")
+    def test_search_wfs_no_id(self):
+        """Test the search method with return fields from WFS but not
+        including the id_vergunning column.
+
+        Test whether the output dataframe contains the resolved WFS data.
+
+        Parameters
+        ----------
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType.
+        mp_remote_wfs_feature : pytest.fixture
+            Monkeypatch the call to get WFS features.
+
+        """
+        df = self.search_instance.search(
+            max_features=1,
+            return_fields=('diepte',))
 
         assert df.diepte[0] == 32.0

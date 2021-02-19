@@ -18,4 +18,5 @@ class BodemmonsterSearch(AbstractSearch):
             described in the documentation.
 
         """
-        super(BodemmonsterSearch, self).__init__('bodem:bodemmonsters', objecttype)
+        super(BodemmonsterSearch, self).__init__('bodem:bodemmonsters',
+                                                 objecttype)

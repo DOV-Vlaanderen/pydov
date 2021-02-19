@@ -18,4 +18,5 @@ class BodemlocatieSearch(AbstractSearch):
             described in the documentation.
 
         """
-        super(BodemlocatieSearch, self).__init__('bodem:bodemlocaties', objecttype)
+        super(BodemlocatieSearch, self).__init__('bodem:bodemlocaties',
+                                                 objecttype)

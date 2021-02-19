@@ -12,10 +12,12 @@ class Bodemsite(AbstractDovType):
     subtypes = []
 
     fields = [
-        WfsField(name='pkey_bodemsite', source_field='Bodemsitefiche', datatype='string'),
+        WfsField(name='pkey_bodemsite', source_field='Bodemsitefiche',
+                 datatype='string'),
         WfsField(name='naam', source_field='Naam', datatype='string'),
         WfsField(name='datum', source_field='Datum', datatype='date'),
-        WfsField(name='beschrijving', source_field='Beschrijving', datatype='string'),
+        WfsField(name='beschrijving', source_field='Beschrijving',
+                 datatype='string'),
         XmlField(name='waarnemingsdatum',
                  source_xpath='/bodemsite/waarnemingsdatum',
                  definition='Datum van waarneming van de bodemsite.',

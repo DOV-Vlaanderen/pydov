@@ -1,5 +1,6 @@
 """Module grouping common tests for all search modules."""
 
+import numpy as np
 import pytest
 
 from pydov.search.boring import BoringSearch
@@ -164,3 +165,17 @@ def test_search_query_wrongtype(objectsearch):
     """
     with pytest.raises(InvalidSearchParameterError):
         objectsearch.search(query='computer says no')
+
+
+@pytest.mark.online
+@pytest.mark.skipif(not ServiceCheck.service_ok(),
+                    reason="DOV service is unreachable")
+@pytest.mark.parametrize("objectsearch", search_objects)
+def test_search_wfs_no_primary_key(objectsearch):
+    """Test the search method with return fields from WFS but not
+    including the primary key column.
+
+    Test whether the output dataframe contains the resolved WFS data.
+    """
+    df = objectsearch.search(max_features=1, return_fields=('x',))
+    assert not np.isnan(df.x[0])

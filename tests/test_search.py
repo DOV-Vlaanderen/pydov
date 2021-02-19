@@ -3,6 +3,8 @@
 import pytest
 
 from pydov.search.bodemlocatie import BodemlocatieSearch
+from pydov.search.bodemobservatie import BodemobservatieSearch
+from pydov.search.bodemmonster import BodemmonsterSearch
 from pydov.search.boring import BoringSearch
 from pydov.search.grondmonster import GrondmonsterSearch
 from pydov.search.grondwaterfilter import GrondwaterFilterSearch
@@ -18,6 +20,8 @@ from pydov.util.location import Point, WithinDistance
 from tests.abstract import ServiceCheck
 
 search_objects = [BodemlocatieSearch(),
+                  BodemobservatieSearch(),
+                  BodemmonsterSearch(),
                   BoringSearch(),
                   SonderingSearch(),
                   GrondwaterFilterSearch(),

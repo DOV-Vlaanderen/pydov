@@ -6,6 +6,8 @@ from multiprocessing import Lock
 from owslib.etree import etree
 
 from pydov.types.bodemlocatie import Bodemlocatie
+from pydov.types.bodemobservatie import Bodemobservatie
+from pydov.types.bodemmonster import Bodemmonster
 from pydov.types.boring import Boring
 from pydov.types.grondmonster import Grondmonster
 from pydov.types.grondwaterfilter import GrondwaterFilter
@@ -869,6 +871,102 @@ if __name__ == '__main__':
     for xsd_schema in Bodemlocatie.get_xsd_schemas():
         update_file(
             'types/bodemlocatie/xsd_{}.xml'.format(xsd_schema.split('/')[-1]),
+            xsd_schema)
+        
+    # types/bodemobservatie
+    update_file('types/bodemobservatie/bodemobservatie.xml',
+                build_dov_url('data/bodemobservatie/2019-333913.xml'))
+
+    update_file(
+        'types/bodemobservatie/wfsgetfeature.xml',
+        build_dov_url(
+            'geoserver/ows?service=WFS'
+            '&version=1.1.0&request=GetFeature&typeName=bodem:bodemobservaties'
+            '&maxFeatures=1&CQL_Filter=Bodemobservatiefiche=%27' +
+            build_dov_url('data/bodemobservatie/2019-333913%27')))
+
+    update_file(
+        'types/bodemobservatie/feature.xml',
+        build_dov_url(
+            'geoserver/ows?service=WFS'
+            '&version=1.1.0&request=GetFeature&typeName=bodem:bodemobservaties'
+            '&maxFeatures=1&CQL_Filter=Bodemobservatiefiche=%27' +
+            build_dov_url('data/bodemobservatie/2019-333913%27')),
+        get_first_featuremember)
+
+    update_file(
+        'types/bodemobservatie/fc_featurecatalogue.xml',
+        build_dov_url(
+            'geonetwork/srv/dut/csw'
+            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+            '&outputSchema=http://www.isotc211.org/2005/gfc'
+            '&elementSetName=full&id=44df1272-6b57-471b-9f7a-2dc82f760137'))
+
+    update_file(
+        'types/bodemobservatie/md_metadata.xml',
+        build_dov_url(
+            'geonetwork/srv/dut/csw'
+            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+            '&outputSchema=http://www.isotc211.org/2005/gmd'
+            '&elementSetName=full&id=dd327fef-62c7-4980-9788-9fac047a1553'))
+
+    update_file(
+        'types/bodemobservatie/wfsdescribefeaturetype.xml',
+        build_dov_url(
+            'geoserver/bodem/bodemobservaties'
+            '/ows?service=wfs&version=1.1.0&request=DescribeFeatureType'))
+
+    for xsd_schema in Bodemobservatie.get_xsd_schemas():
+        update_file(
+            'types/bodemobservatie/xsd_{}.xml'.format(xsd_schema.split('/')[-1]),
+            xsd_schema)
+        
+    # types/bodemmonster
+    update_file('types/bodemmonster/bodemmonster.xml',
+                build_dov_url('data/bodemmonster/1964-264869.xml'))
+
+    update_file(
+        'types/bodemmonster/wfsgetfeature.xml',
+        build_dov_url(
+            'geoserver/ows?service=WFS'
+            '&version=1.1.0&request=GetFeature&typeName=bodem:bodemmonsters'
+            '&maxFeatures=1&CQL_Filter=Bodemmonsterfiche=%27' +
+            build_dov_url('data/bodemmonster/1964-264869%27')))
+
+    update_file(
+        'types/bodemmonster/feature.xml',
+        build_dov_url(
+            'geoserver/ows?service=WFS'
+            '&version=1.1.0&request=GetFeature&typeName=bodem:bodemmonsters'
+            '&maxFeatures=1&CQL_Filter=Bodemmonsterfiche=%27' +
+            build_dov_url('data/bodemmonster/1964-264869%27')),
+        get_first_featuremember)
+
+    update_file(
+        'types/bodemmonster/fc_featurecatalogue.xml',
+        build_dov_url(
+            'geonetwork/srv/dut/csw'
+            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+            '&outputSchema=http://www.isotc211.org/2005/gfc'
+            '&elementSetName=full&id=7d69c092-fa5a-4399-86ed-003877f5899e'))
+
+    update_file(
+        'types/bodemmonster/md_metadata.xml',
+        build_dov_url(
+            'geonetwork/srv/dut/csw'
+            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+            '&outputSchema=http://www.isotc211.org/2005/gmd'
+            '&elementSetName=full&id=ff1902b2-7ba2-46be-ba8c-bfcf893444c2'))
+
+    update_file(
+        'types/bodemmonster/wfsdescribefeaturetype.xml',
+        build_dov_url(
+            'geoserver/bodem/bodemmonsters'
+            '/ows?service=wfs&version=1.1.0&request=DescribeFeatureType'))
+
+    for xsd_schema in Bodemmonster.get_xsd_schemas():
+        update_file(
+            'types/bodemmonster/xsd_{}.xml'.format(xsd_schema.split('/')[-1]),
             xsd_schema)
 
     pool.join()

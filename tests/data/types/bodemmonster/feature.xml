@@ -1,0 +1,26 @@
+<bodem:bodemmonsters gml:id="bodemmonsters.1"
+			xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			xmlns:wfs="http://www.opengis.net/wfs/2.0"
+			xmlns:bodem="https://www.dov.vlaanderen.be/bodem"
+			xmlns:gml="http://www.opengis.net/gml/3.2"
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+			<bodem:Bodemmonster>A0057352</bodem:Bodemmonster>
+			<bodem:Bodemmonsterfiche>https://www.dov.vlaanderen.be/data/bodemmonster/2015-211806</bodem:Bodemmonsterfiche>
+			<bodem:Aan>diepteinterval</bodem:Aan>
+			<bodem:Parentfiche>https://www.dov.vlaanderen.be/data/diepteinterval/2019-003355</bodem:Parentfiche>
+			<bodem:Diepte_van>30.00</bodem:Diepte_van>
+			<bodem:Diepte_tot>80.00</bodem:Diepte_tot>
+			<bodem:Type>Enkelvoudig monster</bodem:Type>
+			<bodem:Datum_monsterafname>2015-12-10</bodem:Datum_monsterafname>
+			<bodem:Monsterafname_door>Bodemkundige Dienst van België vzw</bodem:Monsterafname_door>
+			<bodem:Techniek_monsterafname>Edelmanboor</bodem:Techniek_monsterafname>
+			<bodem:Labo>Bodemkundige Dienst van België vzw</bodem:Labo>
+			<bodem:Bevat_observaties>ja</bodem:Bevat_observaties>
+			<bodem:Bodemlocatie>2015-000743</bodem:Bodemlocatie>
+			<bodem:Bodemlocatiefiche>https://www.dov.vlaanderen.be/data/bodemlocatie/2015-000743</bodem:Bodemlocatiefiche>
+			<bodem:geom>
+				<gml:Point srsName="urn:ogc:def:crs:EPSG::31370" srsDimension="3" gml:id="bodemmonsters.1.geom">
+					<gml:pos>223500 197540 0</gml:pos>
+				</gml:Point>
+			</bodem:geom>
+		</bodem:bodemmonsters>

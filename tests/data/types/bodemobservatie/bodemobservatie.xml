@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns3:dov-schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns3="http://kern.schemas.dov.vlaanderen.be" xsi:schemaLocation="http://kern.schemas.dov.vlaanderen.be https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/dov.xsd">
+    <bodemobservatie>
+        <parameter>organische_c_perc</parameter>
+        <parametergroep>Bodem_chemisch</parametergroep>
+        <waarde_numeriek>1.25</waarde_numeriek>
+        <eenheid>%</eenheid>
+        <methode>Aardewerk nieuwe methode organische koolstof</methode>
+        <betrouwbaarheid>onbekend</betrouwbaarheid>
+        <veld_labo>LABO</veld_labo>
+        <permkey>2019-333913</permkey>
+        <diepte_van>0.0</diepte_van>
+        <diepte_tot>20.0</diepte_tot>
+        <observatiedatum>1964-01-01</observatiedatum>
+        <status>publiek</status>
+        <auteur>
+            <bedrijf>
+                <naam>Centrum voor Grondonderzoek (C.V.G.)</naam>
+            </bedrijf>
+        </auteur>
+        <ref_bodemmonster>
+            <ref_bodemlocatie>
+                <naam>KART_OPP_072W/021</naam>
+            </ref_bodemlocatie>
+            <identificatie>KART_OPP_072W/021</identificatie>
+        </ref_bodemmonster>
+    </bodemobservatie>
+</ns3:dov-schema>

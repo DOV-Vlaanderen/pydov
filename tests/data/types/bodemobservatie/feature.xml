@@ -1,0 +1,26 @@
+<bodem:bodemobservaties gml:id="bodemobservaties.1"
+			xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			xmlns:wfs="http://www.opengis.net/wfs/2.0"
+			xmlns:bodem="https://www.dov.vlaanderen.be/bodem"
+			xmlns:gml="http://www.opengis.net/gml/3.2">
+			<bodem:Bodemobservatie>2019-000564</bodem:Bodemobservatie>
+			<bodem:Bodemobservatiefiche>https://www.dov.vlaanderen.be/data/bodemobservatie/2019-000564</bodem:Bodemobservatiefiche>
+			<bodem:Aan>bodemdiepteinterval</bodem:Aan>
+			<bodem:Parentfiche>https://www.dov.vlaanderen.be/data/bodemdiepteinterval/2019-003355</bodem:Parentfiche>
+			<bodem:Diepte_van>30.00</bodem:Diepte_van>
+			<bodem:Diepte_tot>80.00</bodem:Diepte_tot>
+			<bodem:Parameter>Ksat</bodem:Parameter>
+			<bodem:Waarde>0.00000000</bodem:Waarde>
+			<bodem:Eenheid>m/s</bodem:Eenheid>
+			<bodem:Observatiemethode>Ksat Porchet-methode</bodem:Observatiemethode>
+			<bodem:Labo_of_veld>veld</bodem:Labo_of_veld>
+			<bodem:Opmerkingen>0</bodem:Opmerkingen>
+			<bodem:Opmerkingenfiche>https://www.dov.vlaanderen.be/data/bodemobservatie/2019-000564?tabindex=1</bodem:Opmerkingenfiche>
+			<bodem:Bodemlocatie>2015-000743</bodem:Bodemlocatie>
+			<bodem:Bodemlocatiefiche>https://www.dov.vlaanderen.be/data/bodemlocatie/2015-000743</bodem:Bodemlocatiefiche>
+			<bodem:geom>
+				<gml:Point srsName="urn:ogc:def:crs:EPSG::31370" srsDimension="2" gml:id="bodemobservaties.1.geom">
+					<gml:pos>223500 197540</gml:pos>
+				</gml:Point>
+			</bodem:geom>
+		</bodem:bodemobservaties>

@@ -585,8 +585,8 @@ class GeometryFilter(GmlFilter):
     Fiona can convert to a GML 3.1.1 document.
     """
 
-    def __init__(self, geometry, location_filter, location_filter_kwargs=None,
-                 combinator=Or):
+    def __init__(self, geometry, location_filter,
+                 location_filter_kwargs=None, combinator=Or):
         """Initialise a spatial filter expression from a given Geometry.
 
         Parameters
@@ -613,7 +613,8 @@ class GeometryFilter(GmlFilter):
         """
         gml = self._parse_geometry(geometry)
 
-        super().__init__(gml, location_filter, location_filter_kwargs, combinator)
+        super().__init__(gml, location_filter, location_filter_kwargs,
+                         combinator)
 
     @staticmethod
     def _parse_geometry(geometry):
@@ -627,11 +628,12 @@ class GeometryFilter(GmlFilter):
         try:
             import fiona
             # Check if the GML driver and write mode are supported and check
-            # if the version of Fiona supports GML 3.1.1 output (Fiona >= 1.8.18)
+            # if version of Fiona supports GML 3.1.1 output (Fiona >= 1.8.18)
             drivers = fiona.supported_drivers
             if 'w' not in drivers.get('GML', '') or \
                     LooseVersion(fiona.__version__) < LooseVersion('1.8.18'):
-                raise UserWarning('Please use module Fiona version 1.8.18 or higher')
+                raise UserWarning('Please use module Fiona version 1.8.18 '
+                                  'or higher')
         except ImportError:
             raise ImportError('No module named fiona. GeometryFilter '
                               'requires fiona to be installed')
@@ -642,7 +644,8 @@ class GeometryFilter(GmlFilter):
                 # Assume the geometry is loaded from file
                 layer = os.path.basename(os.path.splitext(geometry)[0])
                 with fiona.open(gml_blob, 'w', layer=layer, driver='GML',
-                                schema=c.schema, crs=c.crs, FORMAT='GML3') as gml:
+                                schema=c.schema, crs=c.crs,
+                                FORMAT='GML3') as gml:
                     for r in list(c):
                         gml.write(r)
                 gml_blob.seek(0)
@@ -652,12 +655,14 @@ class GeometryFilter(GmlFilter):
 
 
 class GeopandasFilter(GmlFilter):
-    """Class for construction a spatial filter expression from a GeoPandas object.
+    """Class for construction a spatial filter expression from a
+    GeoPandas object.
     """
 
-    def __init__(self, geodataframe, location_filter, location_filter_kwargs=None,
-                 combinator=Or):
-        """Initialise a spatial filter expression from a GeoPandas GeoDataFrame.
+    def __init__(self, geodataframe, location_filter,
+                 location_filter_kwargs=None, combinator=Or):
+        """Initialise a spatial filter expression from a GeoPandas
+        GeoDataFrame.
 
         Parameters
         ----------
@@ -682,7 +687,8 @@ class GeopandasFilter(GmlFilter):
         """
         gml = self._parse_geometry(geodataframe)
 
-        super().__init__(gml, location_filter, location_filter_kwargs, combinator)
+        super().__init__(gml, location_filter, location_filter_kwargs,
+                         combinator)
 
     @staticmethod
     def _parse_geometry(gdf):

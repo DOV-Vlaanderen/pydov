@@ -435,13 +435,13 @@ Borehole samples (grondmonsters)
     fractie,10,float,0
     methode,10,string,ZEEFPROEF
 
-Groundwater permits (grondwater vergunningen)
+Groundwater permits (grondwatervergunningen)
 ---------------------------------------------
-  .. csv-table:: Groundwater permits (gwvergunningen)
+  .. csv-table:: Groundwater permits (grondwatervergunningen)
     :header-rows: 1
 
     Field,Cost,Datatype,Example
-    pkey_vergunning,1,string,66229
+    id_vergunning,1,string,66229
     pkey_installatie,1,string,https://www.dov.vlaanderen.be/data/installatie/2020-093103
     x,1,float,157403.75
     y,1,float,214471.32

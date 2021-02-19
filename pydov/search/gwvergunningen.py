@@ -53,7 +53,7 @@ class GwvergunningenSearch(AbstractSearch):
                     GwvergunningenSearch.__md_metadata)
 
                 GwvergunningenSearch.__fc_featurecatalogue = \
-                owsutil.get_remote_featurecatalogue(csw_url, fc_uuid)
+                    owsutil.get_remote_featurecatalogue(csw_url, fc_uuid)
 
             if GwvergunningenSearch.__xsd_schemas is None:
                 GwvergunningenSearch.__xsd_schemas = \

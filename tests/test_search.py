@@ -63,8 +63,6 @@ def test_search_location(objectsearch):
 
     Parameters
     ----------
-    mp_wfs : pytest.fixture
-        Monkeypatch the call to the remote GetCapabilities request.
     objectsearch : pytest.fixture
         An instance of a subclass of AbstractTestSearch to perform search
         operations on the corresponding DOV type.

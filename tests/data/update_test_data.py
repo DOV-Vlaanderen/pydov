@@ -5,6 +5,7 @@ from multiprocessing import Lock
 
 from owslib.etree import etree
 
+from pydov.types.bodemsite import Bodemsite
 from pydov.types.bodemlocatie import Bodemlocatie
 from pydov.types.boring import Boring
 from pydov.types.grondmonster import Grondmonster
@@ -870,5 +871,54 @@ if __name__ == '__main__':
         update_file(
             'types/bodemlocatie/xsd_{}.xml'.format(xsd_schema.split('/')[-1]),
             xsd_schema)
+
+    # types/bodemsite
+    update_file('types/bodemsite/bodemsite.xml',
+                build_dov_url('data/bodemsite/2013-000180.xml'))
+
+    update_file(
+        'types/bodemsite/wfsgetfeature.xml',
+        build_dov_url(
+            'geoserver/ows?service=WFS'
+            '&version=1.1.0&request=GetFeature&typeName=bodem:bodemsites'
+            '&maxFeatures=1&CQL_Filter=Bodemsitefiche=%27' +
+            build_dov_url('data/bodemsite/2013-000180%27')))
+
+    update_file(
+        'types/bodemsite/feature.xml',
+        build_dov_url(
+            'geoserver/ows?service=WFS'
+            '&version=1.1.0&request=GetFeature&typeName=bodem:bodemsites'
+            '&maxFeatures=1&CQL_Filter=Bodemsitefiche=%27' +
+            build_dov_url('data/bodemsite/2013-000180%27')),
+        get_first_featuremember)
+
+    update_file(
+        'types/bodemsite/fc_featurecatalogue.xml',
+        build_dov_url(
+            'geonetwork/srv/dut/csw'
+            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+            '&outputSchema=http://www.isotc211.org/2005/gfc'
+            '&elementSetName=full&id=955d4bc8-9d78-4af6-9782-85698caae0aa'))
+
+    update_file(
+        'types/bodemsite/md_metadata.xml',
+        build_dov_url(
+            'geonetwork/srv/dut/csw'
+            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+            '&outputSchema=http://www.isotc211.org/2005/gmd'
+            '&elementSetName=full&id=27142078-f0d0-46e3-b97e-2ffc2c6bdd41'))
+
+    update_file(
+        'types/bodemsite/wfsdescribefeaturetype.xml',
+        build_dov_url(
+            'geoserver/bodem/bodemsites'
+            '/ows?service=wfs&version=1.1.0&request=DescribeFeatureType'))
+
+    for xsd_schema in Bodemsite.get_xsd_schemas():
+        update_file(
+            'types/bodemsite/xsd_{}.xml'.format(xsd_schema.split('/')[-1]),
+            xsd_schema)
+
 
     pool.join()

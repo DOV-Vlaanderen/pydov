@@ -469,20 +469,6 @@ BodemLocaties
 	invoerdatum,10,date,nan
 	educatieve_waarde,10,string,ZEER
 
-
-Bodem diepteintervallen
---------------------------------
-  .. csv-table:: Bodem diepteintervallen
-    :header-rows: 1
-	
-    Field,Cost,Datatype,Example
-	pkey_diepteinterval,1,string,https://www.dov.vlaanderen.be/data/bodemdiepteinterval/2018-000003
-	pkey_bodemlocatie,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/2014-000001
-	nummer,1,float,3
-	type,1,string,horizont
-	naam,1,string,Bg
-	beschrijving,1,string,verweringshorizont met gleyverschijnselen
-
 	
 Bodemmonsters
 --------------------------------
@@ -512,6 +498,9 @@ Bodemobservaties
 	
     Field,Cost,Datatype,Example
 	pkey_bodemobservatie,1,string,https://www.dov.vlaanderen.be/data/bodemobservatie/2019-349078
+	pkey_bodemlocatie,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/1952-007078
+	Aan,1,string,bodemlocatie/1952-007078
+	pkey_parent,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/1952-007078
 	parameter,1,string,organische_c_perc
 	parametergroep,10,string
 	waarde,1,string,0.38
@@ -525,5 +514,4 @@ Bodemobservaties
 	diepte_tot,1,float,45
 	observatiedatum,10,date,1964-11-12
 	invoerdatum,10,date,NaN
-	auteur,10,string,Appelmans Frans
 

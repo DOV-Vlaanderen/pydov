@@ -55,7 +55,7 @@ class Bodemobservatie(AbstractDovType):
         XmlField(name='auteur',
                  source_xpath='/bodemobservatie/auteur',
                  definition='Auteur van de bodemobservatie.',
-                 datatype='string')        
+                 datatype='string')
     ]
 
     def __init__(self, pkey):
@@ -72,7 +72,8 @@ class Bodemobservatie(AbstractDovType):
 
     @classmethod
     def from_wfs_element(cls, feature, namespace):
-        b = cls(feature.findtext('./{{{}}}Bodemobservatiefiche'.format(namespace)))
+        b = cls(feature.findtext('./{{{}}}Bodemobservatiefiche'
+                                 .format(namespace)))
 
         for field in cls.get_fields(source=('wfs',)).values():
             b.data[field['name']] = cls._parse(

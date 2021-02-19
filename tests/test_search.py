@@ -1,4 +1,4 @@
-"""Module grouping tests for the boring search module."""
+"""Module grouping common tests for all search modules."""
 
 import pytest
 
@@ -6,6 +6,7 @@ from pydov.search.boring import BoringSearch
 from pydov.search.grondmonster import GrondmonsterSearch
 from pydov.search.grondwaterfilter import GrondwaterFilterSearch
 from pydov.search.grondwatermonster import GrondwaterMonsterSearch
+from pydov.search.grondwatervergunning import GrondwaterVergunningSearch
 from pydov.search.interpretaties import (
     FormeleStratigrafieSearch, GecodeerdeLithologieSearch,
     GeotechnischeCoderingSearch, HydrogeologischeStratigrafieSearch,
@@ -20,6 +21,7 @@ search_objects = [BoringSearch(),
                   SonderingSearch(),
                   GrondwaterFilterSearch(),
                   GrondwaterMonsterSearch(),
+                  GrondwaterVergunningSearch(),
                   FormeleStratigrafieSearch(),
                   InformeleHydrogeologischeStratigrafieSearch(),
                   GeotechnischeCoderingSearch(),

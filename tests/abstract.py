@@ -342,7 +342,7 @@ class AbstractTestSearch(object):
             Monkeypatch the call to get WFS features.
 
         """
-        if not self.valid_returnfields_subtype:
+        if self.valid_returnfields_subtype is None:
             return
 
         df = self.search_instance.search(
@@ -594,9 +594,6 @@ class AbstractTestSearch(object):
             Monkeypatch the call to get XSD schemas.
 
         """
-        if self.xml_field is None:
-            return
-
         xsd_schemas = self.datatype_class.get_xsd_schemas()
 
         if len(xsd_schemas) > 0:
@@ -610,9 +607,6 @@ class AbstractTestSearch(object):
     def test_get_fields_no_xsd(self):
         """Test whether no XML fields have an XSD type when no XSD schemas
         are available."""
-        if self.xml_field is None:
-            return
-
         xsd_schemas = self.datatype_class.get_xsd_schemas()
 
         if len(xsd_schemas) == 0:
@@ -628,9 +622,6 @@ class AbstractTestSearch(object):
         needed.
 
         """
-        if self.xml_field is None:
-            return
-
         xsd_schemas = self.datatype_class.get_xsd_schemas()
 
         xsd_type_count = 0
@@ -765,7 +756,7 @@ class AbstractTestTypes(object):
         Test whether an InvalidFieldError is raised.
 
         """
-        if not self.valid_returnfields_subtype:
+        if self.valid_returnfields_subtype is None:
             return
 
         with pytest.raises(InvalidFieldError):
@@ -836,6 +827,9 @@ class AbstractTestTypes(object):
         Test whether fields provides by subtypes are not listed in the output.
 
         """
+        if self.field_names_subtypes is None:
+            return
+
         fields = self.datatype_class.get_fields(include_subtypes=False)
         for field in fields:
             assert field not in self.field_names_subtypes
@@ -857,10 +851,11 @@ class AbstractTestTypes(object):
 
         assert isinstance(feature, self.datatype_class)
 
-        assert feature.pkey.startswith(self.pkey_base)
+        if self.pkey_base is not None:
+            assert feature.pkey.startswith(self.pkey_base)
 
-        assert feature.pkey.startswith(
-            build_dov_url('data/{}/'.format(feature.typename)))
+            assert feature.pkey.startswith(
+                build_dov_url('data/{}/'.format(feature.typename)))
 
         assert isinstance(feature.data, dict)
         assert isinstance(feature.subdata, dict)

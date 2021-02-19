@@ -2,49 +2,48 @@
 from owslib.fes import PropertyIsEqualTo
 from pandas import DataFrame
 
-from pydov.search.gwvergunningen import GwvergunningenSearch
-from pydov.types.gwvergunningen import Gwvergunningen
+from pydov.search.grondwatervergunning import GrondwaterVergunningSearch
+from pydov.types.grondwatervergunning import GrondwaterVergunning
 from tests.abstract import AbstractTestSearch
 
 location_md_metadata = \
-    'tests/data/types/gwvergunningen/md_metadata.xml'
+    'tests/data/types/grondwatervergunning/md_metadata.xml'
 location_fc_featurecatalogue = \
-    'tests/data/types/gwvergunningen/fc_featurecatalogue.xml'
+    'tests/data/types/grondwatervergunning/fc_featurecatalogue.xml'
 location_wfs_describefeaturetype = \
-    'tests/data/types/gwvergunningen/wfsdescribefeaturetype.xml'
-location_wfs_getfeature = 'tests/data/types/gwvergunningen/' \
+    'tests/data/types/grondwatervergunning/wfsdescribefeaturetype.xml'
+location_wfs_getfeature = 'tests/data/types/grondwatervergunning/' \
                           'wfsgetfeature.xml'
 location_wfs_feature = \
-    'tests/data/types/gwvergunningen/feature.xml'
-location_dov_xml = \
-    'tests/data/types/gwvergunningen/gwvergunningen.xml'
-location_xsd_base = 'tests/data/types/gwvergunningen/xsd_*.xml'
+    'tests/data/types/grondwatervergunning/feature.xml'
+location_dov_xml = None
+location_xsd_base = 'tests/data/types/grondwatervergunning/xsd_*.xml'
 
 
-class TestGwvergunningenSearch(AbstractTestSearch):
+class TestGrondwaterVergunningSearch(AbstractTestSearch):
 
-    search_instance = GwvergunningenSearch()
-    datatype_class = Gwvergunningen
+    search_instance = GrondwaterVergunningSearch()
+    datatype_class = GrondwaterVergunning
 
-    valid_query_single = PropertyIsEqualTo(propertyname='installatie',
+    valid_query_single = PropertyIsEqualTo(
+        propertyname='installatie',
         literal='https://www.dov.vlaanderen.be/data/installatie/2019-088045')
 
     inexistent_field = 'onbestaand'
     xml_field = None
     wfs_field = 'installatie'
 
-    valid_returnfields = ('pkey_vergunning',
-                          'diepte')
+    valid_returnfields = ('id_vergunning', 'diepte')
     valid_returnfields_subtype = None
     valid_returnfields_extra = ('inrichtingsnummer', 'vergund_aantal_putten')
 
-    df_default_columns = ['pkey_vergunning', 'pkey_installatie', 'x', 'y',
-                          'diepte', 'exploitant_naam', 'watnr', 'vlaremrubriek',
-                          'vergund_jaardebiet', 'vergund_dagdebiet',
-                          'van_datum_termijn', 'tot_datum_termijn',
-                          'aquifer_vergunning', 'inrichtingsklasse', 'nacebelcode',
-                          'actie_waakgebied', 'cbbnr', 'kbonr']
-
+    df_default_columns = [
+        'id_vergunning', 'pkey_installatie', 'x', 'y',
+        'diepte', 'exploitant_naam', 'watnr', 'vlaremrubriek',
+        'vergund_jaardebiet', 'vergund_dagdebiet',
+        'van_datum_termijn', 'tot_datum_termijn',
+        'aquifer_vergunning', 'inrichtingsklasse', 'nacebelcode',
+        'actie_waakgebied', 'cbbnr', 'kbonr']
 
     def test_search_customreturnfields(self, mp_get_schema,
                                        mp_remote_describefeaturetype,
@@ -67,13 +66,11 @@ class TestGwvergunningenSearch(AbstractTestSearch):
         """
         df = self.search_instance.search(
             query=self.valid_query_single,
-            return_fields=('pkey_vergunning', 'pkey_installatie',
-                           ))
+            return_fields=('id_vergunning', 'pkey_installatie'))
 
         assert isinstance(df, DataFrame)
 
-        assert list(df) == ['pkey_vergunning', 'pkey_installatie',
-                            ]
+        assert list(df) == ['id_vergunning', 'pkey_installatie']
 
     def test_search_wfs_resolve(self, mp_get_schema,
                                 mp_remote_describefeaturetype,
@@ -95,6 +92,6 @@ class TestGwvergunningenSearch(AbstractTestSearch):
         """
         df = self.search_instance.search(
             query=self.valid_query_single,
-            return_fields=('pkey_vergunning', 'diepte'))
+            return_fields=('id_vergunning', 'diepte'))
 
         assert df.diepte[0] == 32.0

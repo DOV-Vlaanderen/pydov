@@ -53,8 +53,8 @@ class GwvergunningenSearch(AbstractSearch):
                     GwvergunningenSearch.__md_metadata)
 
                 GwvergunningenSearch.__fc_featurecatalogue = \
-                owsutil.get_remote_featurecatalogue(csw_url,
-                                                    fc_uuid)
+                owsutil.get_remote_featurecatalogue(
+                    csw_url, fc_uuid)
 
             if GwvergunningenSearch.__xsd_schemas is None:
                 GwvergunningenSearch.__xsd_schemas = \
@@ -72,14 +72,12 @@ class GwvergunningenSearch(AbstractSearch):
                         include_wfs_injected=True):
                     self._type.fields.append(
                         _WfsInjectedField(name=field['name'],
-                                          datatype=
-                                          field['type']))
+                                          datatype=field['type']))
 
             self._fields = self._build_fields(
                 GwvergunningenSearch.__wfs_schema,
                 GwvergunningenSearch.__fc_featurecatalogue,
                 GwvergunningenSearch.__xsd_schemas)
-
 
     def search(self, location=None, query=None, sort_by=None,
                return_fields=None, max_features=None):

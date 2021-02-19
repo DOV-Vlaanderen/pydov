@@ -11,38 +11,59 @@ class Gwvergunningen(AbstractDovType):
     subtypes = []
 
     fields = [
-        WfsField(name='pkey_vergunning', source_field='id',
+        WfsField(name='pkey_vergunning',
+                 source_field='id',
                  datatype='string'),
-        WfsField(name='pkey_installatie', source_field='installatie',
+        WfsField(name='pkey_installatie',
+                 source_field='installatie',
                  datatype='string'),
-        WfsField(name='x', source_field='installatie_X_mL72', datatype='float'),
-        WfsField(name='y', source_field='installatie_Y_mL72', datatype='float'),
-        WfsField(name='diepte', source_field='vergunde_diepte_m', datatype='float'),
-        WfsField(name='exploitant_naam', source_field='exploitant_naam',
-                 datatype='string'),
-        WfsField(name='watnr', source_field='watnr',
-                 datatype='string'),
-        WfsField(name='vlaremrubriek', source_field='vlaremrubriek',
-                 datatype='string'),
-        WfsField(name='vergund_jaardebiet', source_field='vergund_jaardebiet',
+        WfsField(name='x',
+                 source_field='installatie_X_mL72',
                  datatype='float'),
-        WfsField(name='vergund_dagdebiet', source_field='vergund_dagdebiet',
+        WfsField(name='y',
+                 source_field='installatie_Y_mL72',
                  datatype='float'),
-        WfsField(name='van_datum_termijn', source_field='van_datum_termijn',
+        WfsField(name='diepte',
+                 source_field='vergunde_diepte_m',
+                 datatype='float'),
+        WfsField(name='exploitant_naam',
+                 source_field='exploitant_naam',
+                 datatype='string'),
+        WfsField(name='watnr',
+                 source_field='watnr',
+                 datatype='string'),
+        WfsField(name='vlaremrubriek',
+                 source_field='vlaremrubriek',
+                 datatype='string'),
+        WfsField(name='vergund_jaardebiet',
+                 source_field='vergund_jaardebiet',
+                 datatype='float'),
+        WfsField(name='vergund_dagdebiet',
+                 source_field='vergund_dagdebiet',
+                 datatype='float'),
+        WfsField(name='van_datum_termijn',
+                 source_field='van_datum_termijn',
                  datatype='date'),
-        WfsField(name='tot_datum_termijn', source_field='tot_datum_termijn',
+        WfsField(name='tot_datum_termijn',
+                 source_field='tot_datum_termijn',
                  datatype='date'),
-        WfsField(name='aquifer_vergunning', source_field='aquifer_vergunning',
+        WfsField(name='aquifer_vergunning',
+                 source_field='aquifer_vergunning',
                  datatype='string'),
-        WfsField(name='inrichtingsklasse', source_field='inrichtingsklasse',
+        WfsField(name='inrichtingsklasse',
+                 source_field='inrichtingsklasse',
                  datatype='string'),
-        WfsField(name='nacebelcode', source_field='IIOA_nacebelcode',
+        WfsField(name='nacebelcode',
+                 source_field='IIOA_nacebelcode',
                  datatype='string'),
-        WfsField(name='actie_waakgebied', source_field='actie_waakgebied',
+        WfsField(name='actie_waakgebied',
+                 source_field='actie_waakgebied',
                  datatype='string'),
-        WfsField(name='cbbnr', source_field='exploitant_CBBnr',
+        WfsField(name='cbbnr',
+                 source_field='exploitant_CBBnr',
                  datatype='string'),
-        WfsField(name='kbonr', source_field='exploitant_KBOnr',
+        WfsField(name='kbonr',
+                 source_field='exploitant_KBOnr',
                  datatype='string'),
     ]
 
@@ -52,12 +73,13 @@ class Gwvergunningen(AbstractDovType):
         Parameters
         ----------
         pkey : str
-            Permanent key of the Gwvergunningen (permits), being a URI
-            of the form
+            Permanent key of the Gwvergunningen (permits),
+            being a URI of the form
             `https://www.dov.vlaanderen.be/data/installatie/<id>`.
 
         """
-        super(Gwvergunningen, self).__init__('gwvergunningen', pkey=r'to_be_defined')
+        super(Gwvergunningen, self).__init__('gwvergunningen',
+                                             pkey=r'to_be_defined')
 
     @classmethod
     def from_wfs_element(cls, feature, namespace):

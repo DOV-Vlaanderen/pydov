@@ -335,7 +335,8 @@ class AbstractSearch(AbstractCommon):
                         'http://www.w3.org/2001/XMLSchema}documentation')
         return values
 
-    def _build_fields(self, wfs_schema, feature_catalogue, xsd_schemas, source=('wfs', 'xml')):
+    def _build_fields(self, wfs_schema, feature_catalogue,
+                      xsd_schemas, source=('wfs', 'xml')):
         """Build the dictionary containing the metadata about the available
         fields.
 
@@ -379,14 +380,16 @@ class AbstractSearch(AbstractCommon):
         self._wfs_fields = []
         self._geometry_column = wfs_schema.get('geometry_column', None)
 
-        for f in self._type.get_fields(source=source, include_subtypes=False).values():
+        for f in self._type.get_fields(source=source,
+                                       include_subtypes=False).values():
             if not isinstance(f, pydov.types.fields.AbstractField):
                 raise RuntimeError(
                     "Type '{}' fields should be instances of "
                     "pydov.types.fields.AbstractField, found {}.".format(
                         self._type.__name__, str(type(f))))
 
-        for f in self._type.get_fields(source=source, include_subtypes=True).values():
+        for f in self._type.get_fields(source=source,
+                                       include_subtypes=True).values():
             if not isinstance(f, pydov.types.fields.AbstractField):
                 raise RuntimeError(
                     "Fields of subtype of '{}' should be instances of "

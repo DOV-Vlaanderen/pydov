@@ -34,15 +34,18 @@ class GwvergunningenSearch(AbstractSearch):
 
     def _init_namespace(self):
         if GwvergunningenSearch.__wfs_namespace is None:
-            GwvergunningenSearch.__wfs_namespace = self._get_namespace()
+            GwvergunningenSearch.__wfs_namespace = \
+                self._get_namespace()
 
     def _init_fields(self):
         if self._fields is None:
             if GwvergunningenSearch.__wfs_schema is None:
-                GwvergunningenSearch.__wfs_schema = self._get_schema()
+                GwvergunningenSearch.__wfs_schema = \
+                    self._get_schema()
 
             if GwvergunningenSearch.__md_metadata is None:
-                GwvergunningenSearch.__md_metadata = self._get_remote_metadata()
+                GwvergunningenSearch.__md_metadata = \
+                    self._get_remote_metadata()
 
             if GwvergunningenSearch.__fc_featurecatalogue is None:
                 csw_url = self._get_csw_base_url()
@@ -50,7 +53,8 @@ class GwvergunningenSearch(AbstractSearch):
                     GwvergunningenSearch.__md_metadata)
 
                 GwvergunningenSearch.__fc_featurecatalogue = \
-                owsutil.get_remote_featurecatalogue(csw_url, fc_uuid)
+                owsutil.get_remote_featurecatalogue(csw_url,
+                                                    fc_uuid)
 
             if GwvergunningenSearch.__xsd_schemas is None:
                 GwvergunningenSearch.__xsd_schemas = \
@@ -63,11 +67,13 @@ class GwvergunningenSearch(AbstractSearch):
             )
 
             for field in fields.values():
-                if field['name'] not in self._type.get_field_names(
+                if field['name'] not in \
+                    self._type.get_field_names(
                         include_wfs_injected=True):
                     self._type.fields.append(
                         _WfsInjectedField(name=field['name'],
-                                          datatype=field['type']))
+                                          datatype=
+                                          field['type']))
 
             self._fields = self._build_fields(
                 GwvergunningenSearch.__wfs_schema,
@@ -77,13 +83,17 @@ class GwvergunningenSearch(AbstractSearch):
 
     def search(self, location=None, query=None, sort_by=None,
                return_fields=None, max_features=None):
-        fts = self._search(location=location, query=query, sort_by=sort_by,
+        fts = self._search(location=location,
+                           query=query,
+                           sort_by=sort_by,
                            return_fields=return_fields,
                            max_features=max_features)
 
-        Gwvergunningen = self._type.from_wfs(fts, self.__wfs_namespace)
+        Gwvergunningen = self._type.from_wfs(fts,
+                                             self.__wfs_namespace)
 
         df = pd.DataFrame(
-            data=self._type.to_df_array(Gwvergunningen, return_fields),
+            data=self._type.to_df_array(Gwvergunningen,
+                                        return_fields),
             columns=self._type.get_field_names(return_fields))
         return df

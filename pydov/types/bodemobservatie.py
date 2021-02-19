@@ -12,11 +12,24 @@ class Bodemobservatie(AbstractDovType):
     subtypes = []
 
     fields = [
-        WfsField(name='pkey_bodemlocatie', source_field='Bodemobservatiefiche', datatype='string'),
-        WfsField(name='parameter', source_field='Parameter', datatype='string'),
+        WfsField(name='pkey_bodemobservatie',
+                 source_field='Bodemobservatiefiche',
+                 datatype='string'),
+        WfsField(name='pkey_bodemlocatie',
+                 source_field='Bodemlocatiefiche',
+                 datatype='string'),
+        WfsField(name='Aan',
+                 source_field='Aan',
+                 datatype='string'),
+        WfsField(name='pkey_parent',
+                 source_field='Parentfiche',
+                 datatype='string'),
+        WfsField(name='parameter', source_field='Parameter',
+                 datatype='string'),
         XmlField(name='parametergroep',
                  source_xpath='/bodemobservatie/parametergroep',
-                 definition='Indeling van de parameter naar groep, bvb anionen, kationen, .... Is indicatief.',
+                 definition='Indeling van de parameter naar groep, '
+                 + 'bvb anionen, kationen, .... Is indicatief.',
                  datatype='string'),
         WfsField(name='waarde', source_field='Waarde', datatype='string'),
         WfsField(name='eenheid', source_field='Eenheid', datatype='string'),
@@ -28,14 +41,18 @@ class Bodemobservatie(AbstractDovType):
                  source_xpath='/bodemobservatie/bovengrens',
                  definition='Het mogelijke maximum van de meting.',
                  datatype='float'),
-        WfsField(name='methode', source_field='Observatiemethode', datatype='string'),
+        WfsField(name='methode', source_field='Observatiemethode',
+                 datatype='string'),
         XmlField(name='betrouwbaarheid',
                  source_xpath='/bodemobservatie/betrouwbaarheid',
                  definition='Betrouwbaarheid van de meting.',
                  datatype='string'),
-        WfsField(name='veld_labo', source_field='Labo_of_veld', datatype='string'),
-        WfsField(name='diepte_van', source_field='Diepte_van', datatype='float'),
-        WfsField(name='diepte_tot', source_field='Diepte_tot', datatype='float'),
+        WfsField(name='veld_labo', source_field='Labo_of_veld',
+                 datatype='string'),
+        WfsField(name='diepte_van', source_field='Diepte_van',
+                 datatype='float'),
+        WfsField(name='diepte_tot', source_field='Diepte_tot',
+                 datatype='float'),
         XmlField(name='observatiedatum',
                  source_xpath='/bodemobservatie/observatiedatum',
                  definition='Observatiedatum van de bodemobservatie',
@@ -43,11 +60,7 @@ class Bodemobservatie(AbstractDovType):
         XmlField(name='invoerdatum',
                  source_xpath='/bodemobservatie/invoerdatum',
                  definition='Invoerdatum van de bodemobservatie.',
-                 datatype='date'),
-        XmlField(name='auteur',
-                 source_xpath='/bodemobservatie/auteur',
-                 definition='Auteur van de bodemobservatie.',
-                 datatype='string')        
+                 datatype='date')
     ]
 
     def __init__(self, pkey):
@@ -64,7 +77,8 @@ class Bodemobservatie(AbstractDovType):
 
     @classmethod
     def from_wfs_element(cls, feature, namespace):
-        b = cls(feature.findtext('./{{{}}}Bodemobservatiefiche'.format(namespace)))
+        b = cls(feature.findtext('./{{{}}}Bodemobservatiefiche'
+                                 .format(namespace)))
 
         for field in cls.get_fields(source=('wfs',)).values():
             b.data[field['name']] = cls._parse(

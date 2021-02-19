@@ -12,7 +12,8 @@ class Bodemlocatie(AbstractDovType):
     subtypes = []
 
     fields = [
-        WfsField(name='pkey_bodemlocatie', source_field='Bodemlocatiefiche', datatype='string'),
+        WfsField(name='pkey_bodemlocatie', source_field='Bodemlocatiefiche',
+                 datatype='string'),
         WfsField(name='naam', source_field='Naam', datatype='string'),
         WfsField(name='type', source_field='Type', datatype='string'),
         WfsField(name='datum', source_field='Datum', datatype='date'),
@@ -21,7 +22,8 @@ class Bodemlocatie(AbstractDovType):
         WfsField(name='y', source_field='Y_mL72', datatype='float'),
         WfsField(name='z', source_field='Z_mTAW', datatype='float'),
         WfsField(name='erfgoed', source_field='Erfgoed', datatype='boolean'),
-        WfsField(name='bodemstreek', source_field='Bodemstreek', datatype='string'),
+        WfsField(name='bodemstreek', source_field='Bodemstreek',
+                 datatype='string'),
         XmlField(name='waarnemingsdatum',
                  source_xpath='/bodemlocatie/waarnemingsdatum',
                  definition='Datum van waarneming van de bodemlocatie.',
@@ -50,7 +52,8 @@ class Bodemlocatie(AbstractDovType):
 
     @classmethod
     def from_wfs_element(cls, feature, namespace):
-        b = cls(feature.findtext('./{{{}}}Bodemlocatiefiche'.format(namespace)))
+        b = cls(
+            feature.findtext('./{{{}}}Bodemlocatiefiche'.format(namespace)))
 
         for field in cls.get_fields(source=('wfs',)).values():
             b.data[field['name']] = cls._parse(

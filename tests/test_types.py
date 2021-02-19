@@ -2,6 +2,7 @@
 
 import pytest
 
+from pydov.types.bodemsite import Bodemsite
 from pydov.types.bodemlocatie import Bodemlocatie
 from pydov.types.bodemobservatie import Bodemobservatie
 from pydov.types.bodemmonster import Bodemmonster
@@ -22,7 +23,9 @@ from pydov.types.interpretaties import (
 )
 from pydov.types.sondering import Sondering
 
-type_objects = [Bodemlocatie,
+
+type_objects = [Bodemsite,
+                Bodemlocatie,
                 Bodemobservatie,
                 Bodemmonster,
                 Boring,

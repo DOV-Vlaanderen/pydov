@@ -12,17 +12,23 @@ class Bodemmonster(AbstractDovType):
     subtypes = []
 
     fields = [
-        WfsField(name='pkey_bodemmonster', source_field='Bodemmonsterfiche', datatype='string'),
-        WfsField(name='identificatie', source_field='Bodemmonster', datatype='string'),
-        WfsField(name='datum_monstername', source_field='Datum_monsterafname', datatype='date'),
+        WfsField(name='pkey_bodemmonster', source_field='Bodemmonsterfiche',
+                 datatype='string'),
+        WfsField(name='identificatie', source_field='Bodemmonster',
+                 datatype='string'),
+        WfsField(name='datum_monstername', source_field='Datum_monsterafname',
+                 datatype='date'),
         XmlField(name='tijdstip_monstername',
                  source_xpath='/bodemmonster/tijdstip_monstername',
                  definition='Tijdstip waarop het monster werd genomen.',
                  datatype='time'),
         WfsField(name='type', source_field='Type', datatype='string'),
-        WfsField(name='monsternamedoor', source_field='Monsterafname_door', datatype='string'),
-        WfsField(name='techniek', source_field='Techniek_monsterafname', datatype='string'),
-        WfsField(name='condities', source_field='Condities_monsterafname', datatype='string'),
+        WfsField(name='monsternamedoor', source_field='Monsterafname_door',
+                 datatype='string'),
+        WfsField(name='techniek', source_field='Techniek_monsterafname',
+                 datatype='string'),
+        WfsField(name='condities', source_field='Condities_monsterafname',
+                 datatype='string'),
         WfsField(name='van', source_field='Diepte_van', datatype='float'),
         WfsField(name='tot', source_field='Diepte_tot', datatype='float'),
         WfsField(name='labo', source_field='Labo', datatype='string'),
@@ -50,7 +56,8 @@ class Bodemmonster(AbstractDovType):
 
     @classmethod
     def from_wfs_element(cls, feature, namespace):
-        b = cls(feature.findtext('./{{{}}}Bodemmonsterfiche'.format(namespace)))
+        b = cls(
+            feature.findtext('./{{{}}}Bodemmonsterfiche'.format(namespace)))
 
         for field in cls.get_fields(source=('wfs',)).values():
             b.data[field['name']] = cls._parse(

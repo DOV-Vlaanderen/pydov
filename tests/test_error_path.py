@@ -24,7 +24,8 @@ from tests.abstract import ServiceCheck
 @pytest.fixture(scope="module", autouse=True)
 def dov_proxy_no_xdov():
     process = Popen([sys.executable,
-                     os.path.join('tests', 'stub', 'dov_proxy.py'),
+                     os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                  'stub', 'dov_proxy.py'),
                      '--no-xdov'])
     time.sleep(2)
 
@@ -38,7 +39,8 @@ def dov_proxy_no_xdov():
         process.send_signal(signal.CTRL_C_EVENT)
     else:
         process.send_signal(signal.SIGINT)
-    time.sleep(2)
+
+    process.communicate()
 
 
 @pytest.fixture(scope="module", autouse=True)

@@ -338,6 +338,7 @@ class AbstractDovType(AbstractTypeCommon):
             warnings.warn(("Failed to parse XML for object '{}'. Resulting "
                            "dataframe will be incomplete.").format(self.pkey),
                           XmlParseWarning)
+            raise XmlParseError
 
     @classmethod
     def from_wfs_element(cls, feature, namespace):
@@ -664,7 +665,10 @@ class AbstractDovType(AbstractTypeCommon):
         subfields = [f for f in fields if f not in ownfields]
 
         if len(subfields) > 0:
-            self._parse_xml_data(session)
+            try:
+                self._parse_xml_data(session)
+            except XmlParseError:
+                pass
 
         datadicts = []
         datarecords = []
@@ -687,8 +691,13 @@ class AbstractDovType(AbstractTypeCommon):
 
         for d in datarecords:
             if self._UNRESOLVED in d:
-                self._parse_xml_data(session)
-                datarecords = self.get_df_array(return_fields)
+                try:
+                    self._parse_xml_data(session)
+                except XmlParseError:
+                    pass
+                else:
+                    datarecords = self.get_df_array(return_fields)
                 break
 
-        return datarecords
+        return [[c if c != self._UNRESOLVED else np.nan for c in r]
+                for r in datarecords]

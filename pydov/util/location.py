@@ -26,6 +26,7 @@ class AbstractLocation(object):
     initialisation.
 
     """
+
     def get_element(self):
         """Return the GML representation of the location.
 
@@ -52,6 +53,7 @@ class AbstractLocationFilter(object):
     `set_geometry_column` method.
 
     """
+
     def set_geometry_column(self, geometry_column):
         """Set the name of the geometry column to query.
 
@@ -93,6 +95,7 @@ class AbstractBinarySpatialFilter(AbstractLocationFilter):
     Contains.
 
     """
+
     def __init__(self, type, location):
         """Initialise a Binary spatial filter.
 
@@ -133,6 +136,7 @@ class AbstractBinarySpatialFilter(AbstractLocationFilter):
 class Box(AbstractLocation):
     """Class representing a box location, also known as bounding box,
     envelope, extent."""
+
     def __init__(self, minx, miny, maxx, maxy, epsg=31370):
         """Initialise a Box.
 
@@ -193,6 +197,7 @@ class Box(AbstractLocation):
 
 class Point(AbstractLocation):
     """Class representing a point location."""
+
     def __init__(self, x, y, epsg=31370):
         """Initialise a Point.
 
@@ -231,6 +236,7 @@ class Point(AbstractLocation):
 class GmlObject(AbstractLocation):
     """Class representing a raw GML location, f.ex. gml:Surface or
     gml:MultiSurface."""
+
     def __init__(self, gml_element):
         """Initialise a GmlObject.
 
@@ -244,9 +250,9 @@ class GmlObject(AbstractLocation):
             string representation.
 
         """
-        if type(gml_element) is str:
+        if isinstance(gml_element, str):
             self.element = etree.fromstring(gml_element.encode('utf8'))
-        elif type(gml_element) is bytes:
+        elif isinstance(gml_element, bytes):
             self.element = etree.fromstring(gml_element)
         else:
             self.element = gml_element
@@ -261,6 +267,7 @@ class Equals(AbstractBinarySpatialFilter):
     A spatial Equals will return all points that are equal to another point.
 
     """
+
     def __init__(self, location):
         """Initialise an Equals filter.
 
@@ -283,6 +290,7 @@ class Disjoint(AbstractBinarySpatialFilter):
     A spatial Disjoint is the inverse of a spatial Intersects.
 
     """
+
     def __init__(self, location):
         """Initialise a Disjoint filter.
 
@@ -303,6 +311,7 @@ class Touches(AbstractBinarySpatialFilter):
     location: i.e. that are on the boundary but not inside.
 
     """
+
     def __init__(self, location):
         """Initialise a Touches filter.
 
@@ -323,6 +332,7 @@ class Within(AbstractBinarySpatialFilter):
     polygon or box location (i.e. are not on the boundary).
 
     """
+
     def __init__(self, location):
         """Initialise a Within filter.
 
@@ -345,6 +355,7 @@ class Intersects(AbstractBinarySpatialFilter):
     A spatial Intersects is the inverse of a spatial Disjoint.
 
     """
+
     def __init__(self, location):
         """Initialise an Intersects filter.
 
@@ -365,6 +376,7 @@ class WithinDistance(AbstractLocationFilter):
     distance of a certain location.
 
     """
+
     def __init__(self, location, distance, distance_unit='meter'):
         """Initialise a WithinDistance filter.
 
@@ -498,9 +510,9 @@ class GmlFilter(AbstractLocationFilter):
         """
         gml_tree = None
         try:
-            if type(self.gml) is str:
+            if isinstance(self.gml, str):
                 gml_tree = etree.fromstring(self.gml.encode('utf8'))
-            elif type(self.gml) is bytes:
+            elif isinstance(self.gml, bytes):
                 gml_tree = etree.fromstring(self.gml)
         except etree.ParseError as error:
             if os.path.isfile(self.gml):

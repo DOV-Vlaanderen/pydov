@@ -841,7 +841,7 @@ if __name__ == '__main__':
     response = wfs11.getfeature(typename='gw_vergunningen:alle_verg',
                                 filter=filterxml)
     with open(filepath, 'w') as file:
-        file.write(response.read())
+        file.write(response.read().decode("utf-8"))
 
     filepath = 'types/gwvergunningen/wfsgetfeature.xml'
     sys.stdout.write('Updating {} ...'.format(filepath))
@@ -849,7 +849,7 @@ if __name__ == '__main__':
     response = wfs11.getfeature(typename='gw_vergunningen:alle_verg',
                                 filter=filterxml)
     with open(filepath, 'w') as file:
-        file.write(response.read())
+        file.write(response.read().decode("utf-8"))
 
     update_file(
         'types/gwvergunningen/fc_featurecatalogue.xml',

@@ -130,21 +130,13 @@ class AbstractSearch(AbstractCommon):
         to all subclasses and instances.
         """
         if self._wfs is None:
-            url = self._get_wfs_endpoint()
+            wfs_endpoint_url = self._get_wfs_endpoint()
 
-            capabilities = HookRunner.execute_inject_meta_response(
-                url + '?version=1.1.0')
+            capabilities = owsutil.get_url(
+                wfs_endpoint_url + '?request=GetCapabilities&version=1.1.0')
 
-            if capabilities is None:
-                self._wfs = WebFeatureService(url=url, version="1.1.0")
-            else:
-                self._wfs = WebFeatureService(url=url, version="1.1.0",
-                                              xml=capabilities)
-
-            HookRunner.execute_meta_received(
-                url + '?version=1.1.0',
-                etree.tostring(self._wfs._capabilities, encoding='utf8')
-            )
+            self._wfs = WebFeatureService(
+                url=wfs_endpoint_url, version="1.1.0", xml=capabilities)
 
     def _init_namespace(self):
         """Initialise the WFS namespace associated with the layer.

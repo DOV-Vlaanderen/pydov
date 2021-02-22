@@ -36,6 +36,17 @@ you through the process.
 
         pip install pydov[vectorfile]
 
+    Installing these package on Windows can be cumborsome. Please consult the installation guides of the
+    different packages. If you are using conda, pre-install them with `conda install -c conda-forge fiona geopandas`
+    in your pydov conda environment before running the pydov installation. If you are not using conda,
+    give the following a try:
+
+    #. Download the latest wheel (choose the approptiate version, based on your python distribution and operating system)
+       from `www.lfd.uci.edu`_ for both `Fiona`_ and `GDAL`_. For example `Fiona‑1.8.17‑cp38‑cp38‑win_amd64.whl` will
+       allow you to install `Fiona`_ for your python 3.8 distribution on a 64bit Windows system.
+    #. Install the wheels using :code:`pip install <your wheel>`
+    #. Install `GeoPandas`_ using :code:`pip install geopandas`
+
 .. _Fiona: https://pypi.org/project/Fiona/
 .. _GDAL: https://gdal.org/
 .. _GeoPandas: https://geopandas.org/

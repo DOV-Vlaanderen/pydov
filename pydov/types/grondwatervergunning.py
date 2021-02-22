@@ -67,6 +67,8 @@ class GrondwaterVergunning(AbstractDovType):
                  datatype='string'),
     ]
 
+    pkey_fieldname = 'id'
+
     def __init__(self, pkey):
         """Initialisation.
 
@@ -79,17 +81,3 @@ class GrondwaterVergunning(AbstractDovType):
 
         """
         super(GrondwaterVergunning, self).__init__('gwvergunning', pkey)
-
-    @classmethod
-    def from_wfs_element(cls, feature, namespace):
-        gwvergunning = cls(feature.findtext('./{{{}}}id'.format(namespace)))
-
-        for field in cls.get_fields(source=('wfs',)).values():
-            gwvergunning.data[field['name']] = cls._parse(
-                func=feature.findtext,
-                xpath=field['sourcefield'],
-                namespace=namespace,
-                returntype=field.get('type', None)
-            )
-
-        return gwvergunning

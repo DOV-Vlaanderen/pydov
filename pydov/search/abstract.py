@@ -676,15 +676,14 @@ class AbstractSearch(AbstractCommon):
 
             filter_request = etree.tostring(filter_request, encoding='unicode')
 
+        wfs_property_names = [self._type.pkey_fieldname]
+
         if return_fields is None:
-            wfs_property_names = [
+            wfs_property_names.extend([
                 f['sourcefield'] for f in self._type.get_fields(
                     source=('wfs',)).values() if not f.get(
-                    'wfs_injected', False)]
+                    'wfs_injected', False)])
         else:
-            wfs_property_names = [self._map_df_wfs_source[i]
-                                  for i in self._map_df_wfs_source
-                                  if i.startswith('pkey')]
             wfs_property_names.extend([self._map_df_wfs_source[i]
                                        for i in self._map_df_wfs_source
                                        if i in return_fields])

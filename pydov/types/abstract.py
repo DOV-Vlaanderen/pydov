@@ -259,9 +259,11 @@ class AbstractDovType(AbstractTypeCommon):
 
     """
 
-    subtypes = []
-
     _UNRESOLVED = "{UNRESOLVED}"
+
+    subtypes = []
+    fields = []
+    pkey_fieldname = None
 
     def __init__(self, typename, pkey):
         """Initialisation.
@@ -363,7 +365,18 @@ class AbstractDovType(AbstractTypeCommon):
             subclass.
 
         """
-        raise NotImplementedError('This should be implemented in a subclass.')
+        instance = cls(feature.findtext(
+            './{{{}}}{}'.format(namespace, cls.pkey_fieldname)))
+
+        for field in cls.get_fields(source=('wfs',)).values():
+            instance.data[field['name']] = cls._parse(
+                func=feature.findtext,
+                xpath=field['sourcefield'],
+                namespace=namespace,
+                returntype=field.get('type', None)
+            )
+
+        return instance
 
     @classmethod
     def from_wfs(cls, response, namespace):

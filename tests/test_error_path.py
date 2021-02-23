@@ -1,8 +1,6 @@
 import datetime
 import gzip
 import os
-import platform
-import signal
 import sys
 import tempfile
 import time
@@ -35,11 +33,7 @@ def dov_proxy_no_xdov():
 
     del os.environ['PYDOV_BASE_URL']
 
-    if platform.system() == 'Windows':
-        process.send_signal(signal.CTRL_C_EVENT)
-    else:
-        process.send_signal(signal.SIGINT)
-
+    process.terminate()
     process.communicate()
 
 

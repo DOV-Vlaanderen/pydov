@@ -150,7 +150,7 @@ class TestErrorPaths(object):
                 'pkey_boring',
                 'https://www.dov.vlaanderen.be/data/boring/2004-103984'))
 
-        assert df.iloc[0].boorgatmeting is False
+        assert not df.iloc[0].boorgatmeting
         assert df.iloc[0].boormethode == 'spade'
 
     @pytest.mark.online

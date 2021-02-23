@@ -99,7 +99,6 @@ class TestErrorPaths(object):
         assert not os.path.exists(os.path.join(
             pydov.cache.cachedir, 'boring', '2004-103984.xml.gz'
         ))
-        assert False
 
     @pytest.mark.online
     @pytest.mark.skipif(not ServiceCheck.service_ok(),
@@ -151,7 +150,7 @@ class TestErrorPaths(object):
                 'pkey_boring',
                 'https://www.dov.vlaanderen.be/data/boring/2004-103984'))
 
-        assert df.iloc[0].boorgatmeting == False
+        assert df.iloc[0].boorgatmeting is False
         assert df.iloc[0].boormethode == 'spade'
 
     @pytest.mark.online

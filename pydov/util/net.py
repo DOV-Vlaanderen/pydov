@@ -166,6 +166,7 @@ class WorkerResult:
     def __init__(self):
         """Initialisation. """
         self.result = None
+        self.error = None
 
     def set_result(self, value):
         """Set the result of this job.
@@ -183,9 +184,29 @@ class WorkerResult:
         Returns
         -------
         any
-            The result of the exectution of the job.
+            The result of the execution of the job.
         """
         return self.result
+
+    def set_error(self, error):
+        """Set the error, in case the jobs fails with an exception.
+
+        Parameters
+        ----------
+        error : Exception
+            The exception raised while executing this job.
+        """
+        self.error = error
+
+    def get_error(self):
+        """Retrieve the error, if any, of this job.
+
+        Returns
+        -------
+        Exception
+            The exception raised while executing this job.
+        """
+        return self.error
 
 
 class LocalSessionThread(Thread):
@@ -226,9 +247,8 @@ class LocalSessionThread(Thread):
 
                 try:
                     result = fn(*args)
-                except BaseException:
-                    pass
-                    # r.set_error(e)
+                except BaseException as e:
+                    r.set_error(e)
                 else:
                     r.set_result(result)
                 finally:

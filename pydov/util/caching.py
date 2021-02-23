@@ -6,9 +6,10 @@ import os
 import re
 import shutil
 import tempfile
+import warnings
 
 from pydov.util.dovutil import build_dov_url, get_dov_xml
-from pydov.util.errors import RemoteFetchError
+from pydov.util.errors import RemoteFetchError, XmlStaleWarning
 from pydov.util.hooks import HookRunner
 
 
@@ -281,9 +282,17 @@ class AbstractFileCache(AbstractCache):
         except RemoteFetchError:
             if self._is_stale(datatype, key):
                 # self._emit_stale_hit(url)
+                warnings.warn((
+                    "Failed to fetch remote XML document for "
+                    "object '{}', using older stale version from cache. "
+                    "Resulting dataframe will be out-of-date.".format(url)),
+                    XmlStaleWarning)
+
                 data = self._load(datatype, key).encode('utf-8')
                 HookRunner.execute_xml_received(url, data)
                 return data
+            else:
+                raise RemoteFetchError
         else:
             try:
                 self._save(datatype, key, data)

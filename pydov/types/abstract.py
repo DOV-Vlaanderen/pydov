@@ -319,6 +319,11 @@ class AbstractDovType(AbstractTypeCommon):
             Session to use to perform HTTP requests for data. Defaults to None,
             which means a new session will be created for each request.
 
+        Returns
+        -------
+        success : boolean
+            Whether or not the XML data could be fetched and parsed.
+
         """
         try:
             xml = self._get_xml_data(session)
@@ -326,24 +331,28 @@ class AbstractDovType(AbstractTypeCommon):
             warnings.warn(("Failed to fetch remote XML document for "
                            "object '{}'. Resulting dataframe will be "
                            "incomplete.".format(self.pkey)), XmlFetchWarning)
-        else:
-            try:
-                tree = parse_dov_xml(xml)
+            return False
 
-                for field in self.get_fields(source=('xml',),
-                                             include_subtypes=False).values():
-                    self.data[field['name']] = self._parse(
-                        func=tree.findtext,
-                        xpath=field['sourcefield'],
-                        namespace=None,
-                        returntype=field.get('type', None)
-                    )
+        try:
+            tree = parse_dov_xml(xml)
 
-                self._parse_subtypes(xml)
-            except XmlParseError:
-                warnings.warn(("Failed to parse XML for object '{}'. Resulting "
-                               "dataframe will be incomplete.").format(self.pkey),
-                              XmlParseWarning)
+            for field in self.get_fields(source=('xml',),
+                                         include_subtypes=False).values():
+                self.data[field['name']] = self._parse(
+                    func=tree.findtext,
+                    xpath=field['sourcefield'],
+                    namespace=None,
+                    returntype=field.get('type', None)
+                )
+
+            self._parse_subtypes(xml)
+            return True
+        except XmlParseError:
+            warnings.warn(
+                ("Failed to parse XML for object '{}'. Resulting "
+                    "dataframe will be incomplete.").format(self.pkey),
+                XmlParseWarning)
+            return False
 
     @ classmethod
     def from_wfs_element(cls, feature, namespace):
@@ -670,10 +679,7 @@ class AbstractDovType(AbstractTypeCommon):
         subfields = [f for f in fields if f not in ownfields]
 
         if len(subfields) > 0:
-            try:
-                self._parse_xml_data(session)
-            except XmlParseError:
-                pass
+            self._parse_xml_data(session)
 
         datadicts = []
         datarecords = []
@@ -696,13 +702,9 @@ class AbstractDovType(AbstractTypeCommon):
 
         for d in datarecords:
             if self._UNRESOLVED in d:
-                try:
-                    self._parse_xml_data(session)
-                except XmlParseError:
-                    pass
-                else:
+                parsed = self._parse_xml_data(session)
+                if parsed is True:
                     datarecords = self.get_df_array(return_fields)
-                break
 
         return [[c if c != self._UNRESOLVED else np.nan for c in r]
                 for r in datarecords]

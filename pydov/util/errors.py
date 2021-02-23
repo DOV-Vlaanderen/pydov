@@ -7,6 +7,11 @@ class DOVError(Exception):
     pass
 
 
+class RemoteFetchError(DOVError):
+    """General error while fetching remote data from DOV webservices."""
+    pass
+
+
 class OWSError(DOVError):
     """Error regarding the OGC web services."""
     pass

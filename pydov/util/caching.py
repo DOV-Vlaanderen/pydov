@@ -8,6 +8,7 @@ import shutil
 import tempfile
 
 from pydov.util.dovutil import build_dov_url, get_dov_xml
+from pydov.util.errors import RemoteFetchError
 from pydov.util.hooks import HookRunner
 
 
@@ -220,6 +221,10 @@ class AbstractFileCache(AbstractCache):
         else:
             return True
 
+    def _is_stale(self, datatype, key):
+        filepath = self._get_filepath(datatype, key)
+        return os.path.exists(filepath)
+
     def _load(self, datatype, key):
         """Read a cached version from disk.
 
@@ -271,11 +276,19 @@ class AbstractFileCache(AbstractCache):
             except Exception:
                 pass
 
-        data = self._get_remote(url, session)
         try:
-            self._save(datatype, key, data)
-        except Exception:
-            pass
+            data = self._get_remote(url, session)
+        except RemoteFetchError:
+            if self._is_stale(datatype, key):
+                # self._emit_stale_hit(url)
+                data = self._load(datatype, key).encode('utf-8')
+                HookRunner.execute_xml_received(url, data)
+                return data
+        else:
+            try:
+                self._save(datatype, key, data)
+            except Exception:
+                pass
 
         return data
 

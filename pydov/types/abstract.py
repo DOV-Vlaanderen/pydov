@@ -12,6 +12,7 @@ import pydov
 from pydov.search.abstract import AbstractCommon
 from pydov.types.fields import AbstractField
 from pydov.util.dovutil import get_dov_xml, parse_dov_xml
+from pydov.util.errors import RemoteFetchError, XmlFetchWarning
 from pydov.util.net import LocalSessionThreadPool
 
 from ..util.errors import InvalidFieldError, XmlParseError, XmlParseWarning
@@ -319,28 +320,32 @@ class AbstractDovType(AbstractTypeCommon):
             which means a new session will be created for each request.
 
         """
-        xml = self._get_xml_data(session)
-
         try:
-            tree = parse_dov_xml(xml)
+            xml = self._get_xml_data(session)
+        except RemoteFetchError:
+            warnings.warn(("Failed to fetch remote XML document for "
+                           "object '{}'. Resulting dataframe will be "
+                           "incomplete.".format(self.pkey)), XmlFetchWarning)
+        else:
+            try:
+                tree = parse_dov_xml(xml)
 
-            for field in self.get_fields(source=('xml',),
-                                         include_subtypes=False).values():
-                self.data[field['name']] = self._parse(
-                    func=tree.findtext,
-                    xpath=field['sourcefield'],
-                    namespace=None,
-                    returntype=field.get('type', None)
-                )
+                for field in self.get_fields(source=('xml',),
+                                             include_subtypes=False).values():
+                    self.data[field['name']] = self._parse(
+                        func=tree.findtext,
+                        xpath=field['sourcefield'],
+                        namespace=None,
+                        returntype=field.get('type', None)
+                    )
 
-            self._parse_subtypes(xml)
-        except XmlParseError:
-            warnings.warn(("Failed to parse XML for object '{}'. Resulting "
-                           "dataframe will be incomplete.").format(self.pkey),
-                          XmlParseWarning)
-            raise XmlParseError
+                self._parse_subtypes(xml)
+            except XmlParseError:
+                warnings.warn(("Failed to parse XML for object '{}'. Resulting "
+                               "dataframe will be incomplete.").format(self.pkey),
+                              XmlParseWarning)
 
-    @classmethod
+    @ classmethod
     def from_wfs_element(cls, feature, namespace):
         """Build an instance of this type from a WFS feature element.
 
@@ -366,7 +371,7 @@ class AbstractDovType(AbstractTypeCommon):
         """
         raise NotImplementedError('This should be implemented in a subclass.')
 
-    @classmethod
+    @ classmethod
     def from_wfs(cls, response, namespace):
         """Build instances of this type from a WFS response.
 
@@ -411,7 +416,7 @@ class AbstractDovType(AbstractTypeCommon):
             for el in response:
                 yield (cls.from_wfs_element(el, namespace))
 
-    @classmethod
+    @ classmethod
     def get_field_names(cls, return_fields=None, include_subtypes=True,
                         include_wfs_injected=False):
         """Return the names of the fields available for this type.
@@ -470,7 +475,7 @@ class AbstractDovType(AbstractTypeCommon):
                         "Unknown return field: '{}'".format(rf))
         return fields
 
-    @classmethod
+    @ classmethod
     def get_fields(cls, source=('wfs', 'xml'), include_subtypes=True):
         """Return the metadata of the fields available for this type.
 
@@ -529,7 +534,7 @@ class AbstractDovType(AbstractTypeCommon):
 
         return fields
 
-    @classmethod
+    @ classmethod
     def get_xsd_schemas(cls):
         """Get a set of distinct XSD schema URLs for this type and its
         subtypes.
@@ -550,7 +555,7 @@ class AbstractDovType(AbstractTypeCommon):
 
         return xsd_schemas
 
-    @classmethod
+    @ classmethod
     def to_df_array(cls, iterable, return_fields=None):
         """Returns a dataframe array with one or more arrays (rows) for each
         instance in the given iterable.

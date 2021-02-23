@@ -278,8 +278,8 @@ class AbstractSearch(AbstractCommon):
             List of parsed XSD schemas associated with this type.
 
         """
-        return [etree.fromstring(get_xsd_schema(i)) for i in
-                self._type.get_xsd_schemas()]
+        xsd_schemas = [get_xsd_schema(i) for i in self._type.get_xsd_schemas()]
+        return [etree.fromstring(i) for i in xsd_schemas if i is not None]
 
     def _get_csw_base_url(self):
         """Get the CSW base url for the remote metadata associated with the
@@ -333,6 +333,8 @@ class AbstractSearch(AbstractCommon):
                     values[value] = e.findtext(
                         './{http://www.w3.org/2001/XMLSchema}annotation/{'
                         'http://www.w3.org/2001/XMLSchema}documentation')
+            if len(values) == 0:
+                values = None
         return values
 
     def _build_fields(self, wfs_schema, feature_catalogue, xsd_schemas):

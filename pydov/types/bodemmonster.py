@@ -31,15 +31,7 @@ class Bodemmonster(AbstractDovType):
                  datatype='string'),
         WfsField(name='van', source_field='Diepte_van', datatype='float'),
         WfsField(name='tot', source_field='Diepte_tot', datatype='float'),
-        WfsField(name='labo', source_field='Labo', datatype='string'),
-        XmlField(name='laboreferentie',
-                 source_xpath='/bodemmonster/laboreferentie',
-                 definition='Referentie laboverslag.',
-                 datatype='string'),
-        XmlField(name='opmerking',
-                 source_xpath='/bodemmonster/opmerking',
-                 definition='Opmerking aan het bodemmonster.',
-                 datatype='string')
+        WfsField(name='labo', source_field='Labo', datatype='string')
     ]
 
     def __init__(self, pkey):

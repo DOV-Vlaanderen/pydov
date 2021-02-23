@@ -31,16 +31,15 @@ class TestBodemmonsterSearch(AbstractTestSearch):
     wfs_field = 'identificatie'
     xml_field = 'opmerking'
 
-    valid_returnfields = ('pkey_bodemmonster', 'identificatie', 'opmerking')
-    valid_returnfields_subtype = ('pkey_bodemmonster', 'identificatie', 'opmerking')
+    valid_returnfields = ('pkey_bodemmonster', 'identificatie')
+    valid_returnfields_subtype = ('pkey_bodemmonster', 'identificatie')
     valid_returnfields_extra = ('pkey_bodemmonster', 'identificatie')
 
 
     df_default_columns = ['pkey_bodemmonster', 'identificatie',
                           'datum_monstername', 'tijdstip_monstername',
-                          'type', 'monsternamedoor', 'techniek', 
-                          'condities', 'van', 'tot', 'labo',
-                          'laboreferentie', 'opmerking']
+                          'type', 'monsternamedoor', 'techniek',
+                          'condities', 'van', 'tot', 'labo']
 
     def test_search_date(self, mp_wfs, mp_get_schema,
                          mp_remote_describefeaturetype, mp_remote_md,
@@ -71,4 +70,4 @@ class TestBodemmonsterSearch(AbstractTestSearch):
             query=self.valid_query_single)
 
         # specific test for the Zulu time wfs 1.1.0 issue
-        assert df.datum_monstername.unique()[0] == datetime.date(1964, 1, 1)
+        assert df.datum_monstername.unique()[0] == datetime.date(1964, 11, 12)

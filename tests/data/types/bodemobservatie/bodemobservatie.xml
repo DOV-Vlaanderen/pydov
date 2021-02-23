@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ns3:dov-schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns3="http://kern.schemas.dov.vlaanderen.be" xsi:schemaLocation="http://kern.schemas.dov.vlaanderen.be https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/dov.xsd">
     <bodemobservatie>
-        <parameter>organische_c_perc</parameter>
-        <parametergroep>Bodem_chemisch</parametergroep>
-        <waarde_numeriek>1.25</waarde_numeriek>
-        <eenheid>%</eenheid>
-        <methode>Aardewerk nieuwe methode organische koolstof</methode>
+        <parameter>structuur_type_aardewerk</parameter>
+        <parametergroep>Bodem_fysisch_structuur</parametergroep>
+        <waarde_text>7 - kruimel</waarde_text>
+        <eenheid>-</eenheid>
         <betrouwbaarheid>onbekend</betrouwbaarheid>
-        <veld_labo>LABO</veld_labo>
+        <veld_labo>VELD</veld_labo>
         <permkey>2019-333913</permkey>
-        <diepte_van>0.0</diepte_van>
-        <diepte_tot>20.0</diepte_tot>
-        <observatiedatum>1964-01-01</observatiedatum>
+        <diepte_van>30.0</diepte_van>
+        <diepte_tot>64.0</diepte_tot>
+        <observatiedatum>1949-07-13</observatiedatum>
         <status>publiek</status>
         <auteur>
-            <bedrijf>
-                <naam>Centrum voor Grondonderzoek (C.V.G.)</naam>
-            </bedrijf>
+            <persoon>
+                <naam>Lamberts</naam>
+                <voornaam>D.</voornaam>
+            </persoon>
         </auteur>
-        <ref_bodemmonster>
+        <ref_diepteinterval>
             <ref_bodemlocatie>
-                <naam>KART_OPP_072W/021</naam>
+                <naam>KART_PROF_105W/18</naam>
             </ref_bodemlocatie>
-            <identificatie>KART_OPP_072W/021</identificatie>
-        </ref_bodemmonster>
+            <type>ALG</type>
+            <volgnummer>2</volgnummer>
+        </ref_diepteinterval>
     </bodemobservatie>
 </ns3:dov-schema>

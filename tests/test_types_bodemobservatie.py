@@ -17,21 +17,19 @@ class TestBodemobservatie(AbstractTestTypes):
     namespace = 'https://www.dov.vlaanderen.be/bodem'
     pkey_base = build_dov_url('data/bodemobservatie/')
 
-    field_names = [
-            'pkey_bodemobservatie', 'parameter', 'parametergroep', 
-            'waarde', 'eenheid', 'ondergrens', 'bovengrens',
-            'methode', 'betrouwbaarheid', 'veld_labo',
-            'diepte_van', 'diepte_tot',
-            'observatiedatum', 'invoerdatum'
-        ]
+    field_names = ['pkey_bodemobservatie', 'pkey_bodemlocatie', 'Aan',
+                   'pkey_parent', 'parameter', 'parametergroep',
+                   'waarde', 'eenheid', 'ondergrens', 'bovengrens',
+                   'methode', 'betrouwbaarheid', 'veld_labo',
+                   'diepte_van', 'diepte_tot',
+                   'observatiedatum', 'invoerdatum']
     field_names_subtypes = []
-    field_names_nosubtypes = [
-            'pkey_bodemobservatie', 'parameter', 'parametergroep', 
-            'waarde', 'eenheid', 'ondergrens', 'bovengrens',
-            'methode', 'betrouwbaarheid', 'veld_labo',
-            'diepte_van', 'diepte_tot',
-            'observatiedatum', 'invoerdatum'
-    ]
+    field_names_nosubtypes = ['pkey_bodemobservatie', 'pkey_bodemlocatie', 'Aan',
+                              'pkey_parent', 'parameter', 'parametergroep',
+                              'waarde', 'eenheid', 'ondergrens', 'bovengrens',
+                              'methode', 'betrouwbaarheid', 'veld_labo',
+                              'diepte_van', 'diepte_tot',
+                              'observatiedatum', 'invoerdatum']
 
     valid_returnfields = ('pkey_bodemobservatie', 'parameter')
     valid_returnfields_subtype = ('pkey_bodemobservatie', 'parameter')

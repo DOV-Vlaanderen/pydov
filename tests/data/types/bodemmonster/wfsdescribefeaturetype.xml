@@ -26,5 +26,5 @@
       </xsd:extension>
     </xsd:complexContent>
   </xsd:complexType>
-  <xsd:element name="bodemmonsters" substitutionGroup="gml:AbstractFeature" type="bodem:bodemmonstersType"/>
+  <xsd:element name="bodemmonsters" substitutionGroup="gml:_Feature" type="bodem:bodemmonstersType"/>
 </xsd:schema>

@@ -19,7 +19,7 @@ location_dov_xml = 'tests/data/types/bodemobservatie/bodemobservatie.xml'
 location_xsd_base = 'tests/data/types/bodemobservatie/xsd_*.xml'
 
 
-class TestBodemlocatieSearch(AbstractTestSearch):
+class TestBodemobservatieSearch(AbstractTestSearch):
 
     search_instance = BodemobservatieSearch()
     datatype_class = Bodemobservatie
@@ -36,7 +36,8 @@ class TestBodemlocatieSearch(AbstractTestSearch):
     valid_returnfields_extra = ('pkey_bodemobservatie', 'parameter')
 
 
-    df_default_columns = ['pkey_bodemobservatie', 'parameter', 'parametergroep', 
+    df_default_columns = ['pkey_bodemobservatie', 'pkey_bodemlocatie', 'Aan',
+                          'pkey_parent', 'parameter', 'parametergroep',
                           'waarde', 'eenheid', 'ondergrens', 'bovengrens',
                           'methode', 'betrouwbaarheid', 'veld_labo',
                           'diepte_van', 'diepte_tot',
@@ -71,4 +72,4 @@ class TestBodemlocatieSearch(AbstractTestSearch):
             query=self.valid_query_single)
 
         # specific test for the Zulu time wfs 1.1.0 issue
-        assert df.observatiedatum.unique()[0] == datetime.date(2015, 12, 10)
+        assert df.observatiedatum.unique()[0] == datetime.date(1949, 7, 13)

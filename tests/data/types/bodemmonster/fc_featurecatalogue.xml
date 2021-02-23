@@ -1,637 +1,636 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<gfc:FC_FeatureCatalogue xmlns:gfc="http://www.isotc211.org/2005/gfc"
-                         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                         uuid="7d69c092-fa5a-4399-86ed-003877f5899e"
-                         xsi:schemaLocation="http://www.isotc211.org/2005/gfc http://www.isotc211.org/2005/gfc/gfc.xsd">
-  <gmx:name xmlns:gmx="http://www.isotc211.org/2005/gmx">
+<csw:GetRecordByIdResponse xmlns:csw="http://www.opengis.net/cat/csw/2.0.2">
+  <gfc:FC_FeatureCatalogue xmlns:gfc="http://www.isotc211.org/2005/gfc" xmlns:geonet="http://www.fao.org/geonetwork" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="7d69c092-fa5a-4399-86ed-003877f5899e" xsi:schemaLocation="http://www.isotc211.org/2005/gfc http://www.isotc211.org/2005/gfc/gfc.xsd">
+    <gmx:name xmlns:gmx="http://www.isotc211.org/2005/gmx">
       <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Bodemmonsters (objectencatalogus)</gco:CharacterString>
-  </gmx:name>
-  <gmx:scope xmlns:gmx="http://www.isotc211.org/2005/gmx">
+    </gmx:name>
+    <gmx:scope xmlns:gmx="http://www.isotc211.org/2005/gmx">
       <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">geoscientificInformation</gco:CharacterString>
-  </gmx:scope>
-  <gmx:versionNumber xmlns:gmx="http://www.isotc211.org/2005/gmx">
+    </gmx:scope>
+    <gmx:versionNumber xmlns:gmx="http://www.isotc211.org/2005/gmx">
       <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">1</gco:CharacterString>
-  </gmx:versionNumber>
-  <gmx:versionDate xmlns:gmx="http://www.isotc211.org/2005/gmx">
+    </gmx:versionNumber>
+    <gmx:versionDate xmlns:gmx="http://www.isotc211.org/2005/gmx">
       <gco:DateTime xmlns:gco="http://www.isotc211.org/2005/gco">2020-12-08T16:39:21</gco:DateTime>
-  </gmx:versionDate>
-  <gfc:producer>
+    </gmx:versionDate>
+    <gfc:producer>
       <gmd:CI_ResponsibleParty xmlns:gmd="http://www.isotc211.org/2005/gmd">
-         <gmd:organisationName>
-            <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Vlaamse overheid, Departement Omgeving, Vlaams Planbureau voor Omgeving (VPO)</gco:CharacterString>
-         </gmd:organisationName>
-         <gmd:contactInfo>
-            <gmd:CI_Contact>
-               <gmd:address>
-                  <gmd:CI_Address>
-                     <gmd:deliveryPoint>
-                        <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Koning Albert II-laan 20 bus 8</gco:CharacterString>
-                     </gmd:deliveryPoint>
-                     <gmd:city>
-                        <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Brussel</gco:CharacterString>
-                     </gmd:city>
-                     <gmd:postalCode>
-                        <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">1000</gco:CharacterString>
-                     </gmd:postalCode>
-                     <gmd:country>
-                        <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">België</gco:CharacterString>
-                     </gmd:country>
-                     <gmd:electronicMailAddress>
-                        <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">vpo.omgeving@vlaanderen.be</gco:CharacterString>
-                     </gmd:electronicMailAddress>
-                  </gmd:CI_Address>
-               </gmd:address>
-               <gmd:onlineResource>
-                  <gmd:CI_OnlineResource>
-                     <gmd:linkage>
-                        <gmd:URL>https://www.omgevingvlaanderen.be</gmd:URL>
-                     </gmd:linkage>
-                  </gmd:CI_OnlineResource>
-               </gmd:onlineResource>
-            </gmd:CI_Contact>
-         </gmd:contactInfo>
-         <gmd:role>
-            <gmd:CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode"
-                             codeListValue="pointOfContact">pointOfContact</gmd:CI_RoleCode>
-         </gmd:role>
+        <gmd:organisationName>
+          <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Vlaamse overheid, Departement Omgeving, Vlaams Planbureau voor Omgeving (VPO)</gco:CharacterString>
+        </gmd:organisationName>
+        <gmd:contactInfo>
+          <gmd:CI_Contact>
+            <gmd:address>
+              <gmd:CI_Address>
+                <gmd:deliveryPoint>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Koning Albert II-laan 20 bus 8</gco:CharacterString>
+                </gmd:deliveryPoint>
+                <gmd:city>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Brussel</gco:CharacterString>
+                </gmd:city>
+                <gmd:postalCode>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">1000</gco:CharacterString>
+                </gmd:postalCode>
+                <gmd:country>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">België</gco:CharacterString>
+                </gmd:country>
+                <gmd:electronicMailAddress>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">vpo.omgeving@vlaanderen.be</gco:CharacterString>
+                </gmd:electronicMailAddress>
+              </gmd:CI_Address>
+            </gmd:address>
+            <gmd:onlineResource>
+              <gmd:CI_OnlineResource>
+                <gmd:linkage>
+                  <gmd:URL>https://www.omgevingvlaanderen.be</gmd:URL>
+                </gmd:linkage>
+              </gmd:CI_OnlineResource>
+            </gmd:onlineResource>
+          </gmd:CI_Contact>
+        </gmd:contactInfo>
+        <gmd:role>
+          <gmd:CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode" codeListValue="pointOfContact">pointOfContact</gmd:CI_RoleCode>
+        </gmd:role>
       </gmd:CI_ResponsibleParty>
-  </gfc:producer>
-  <gfc:featureType>
+    </gfc:producer>
+    <gfc:featureType>
       <gfc:FC_FeatureType>
-         <gfc:typeName>
-            <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">bodemmonstersType</gco:LocalName>
-         </gfc:typeName>
-         <gfc:definition>
-            <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Een bodemmonster is een staal van de bodem dat genomen wordt voor verdere analyse in het veld of in een labo. Een monster wordt steeds genomen op een bepaalde diepte (van/tot). Er kan optioneel een bepaalde techniek beschreven worden (bijvoorbeeld gestoord of ongestoord), evenals de condities van de monstername (bijvoorbeeld atmosferische condities, etc.).  &#xD;
+        <gfc:typeName>
+          <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">bodemmonstersType</gco:LocalName>
+        </gfc:typeName>
+        <gfc:definition>
+          <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Een bodemmonster is een staal van de bodem dat genomen wordt voor verdere analyse in het veld of in een labo. Een monster wordt steeds genomen op een bepaalde diepte (van/tot). Er kan optioneel een bepaalde techniek beschreven worden (bijvoorbeeld gestoord of ongestoord), evenals de condities van de monstername (bijvoorbeeld atmosferische condities, etc.).  &#xD;
 &#xD;
 De resultaten van analyses uitgevoerd op het monster worden bewaard als observaties die gekoppeld worden aan het monster.  &#xD;
 &#xD;
 Een monster kan eventueel gekoppeld worden met één of meer opdrachten en aan een monster kunnen ook bijlagen gekoppeld worden (bijvoorbeeld analyseresultaten of rapporten). &#xD;
 &#xD;
 Een bodemmonster is ofwel een enkelvoudig monster, ofwel een mengmonster (dit is het type). Een enkelvoudig monster is steeds gekoppeld aan één bodemlocatie of één diepteinterval. Een bodemlocatie of diepteinterval kan 0 of meer enkelvoudige monsters hebben. Een mengmonster kan gekoppeld worden aan één bodemsite, één bodemlocatie of één bodemdiepteinterval. Deze kunnen 0 of meer mengmonsters hebben.</gco:CharacterString>
-         </gfc:definition>
-         <gfc:isAbstract>
-            <gco:Boolean xmlns:gco="http://www.isotc211.org/2005/gco">false</gco:Boolean>
-         </gfc:isAbstract>
-         <gfc:featureCatalogue uuidref="7d69c092-fa5a-4399-86ed-003877f5899e"/>
-         <gfc:carrierOfCharacteristics>
-            <gfc:FC_FeatureAttribute>
-               <gfc:memberName>
-                  <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Bodemmonster</gco:LocalName>
-               </gfc:memberName>
-               <gfc:definition>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Naam van het bodemmonster.</gco:CharacterString>
-               </gfc:definition>
-               <gfc:cardinality>
-                  <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
-                     <gco:range>
-                        <gco:MultiplicityRange>
-                           <gco:lower>
-                              <gco:Integer>0</gco:Integer>
-                           </gco:lower>
-                           <gco:upper>
-                              <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
-                           </gco:upper>
-                        </gco:MultiplicityRange>
-                     </gco:range>
-                  </gco:Multiplicity>
-               </gfc:cardinality>
-               <gfc:valueType>
-                  <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
-                     <gco:aName>
-                        <gco:CharacterString>String</gco:CharacterString>
-                     </gco:aName>
-                  </gco:TypeName>
-               </gfc:valueType>
-            </gfc:FC_FeatureAttribute>
-         </gfc:carrierOfCharacteristics>
-         <gfc:carrierOfCharacteristics>
-            <gfc:FC_FeatureAttribute>
-               <gfc:memberName>
-                  <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Bodemmonsterfiche</gco:LocalName>
-               </gfc:memberName>
-               <gfc:definition>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Permanente URL die verwijst naar de bodemmonsterfiche op de website.</gco:CharacterString>
-               </gfc:definition>
-               <gfc:cardinality>
-                  <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
-                     <gco:range>
-                        <gco:MultiplicityRange>
-                           <gco:lower>
-                              <gco:Integer>0</gco:Integer>
-                           </gco:lower>
-                           <gco:upper>
-                              <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
-                           </gco:upper>
-                        </gco:MultiplicityRange>
-                     </gco:range>
-                  </gco:Multiplicity>
-               </gfc:cardinality>
-               <gfc:valueType>
-                  <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
-                     <gco:aName>
-                        <gco:CharacterString>String</gco:CharacterString>
-                     </gco:aName>
-                  </gco:TypeName>
-               </gfc:valueType>
-            </gfc:FC_FeatureAttribute>
-         </gfc:carrierOfCharacteristics>
-         <gfc:carrierOfCharacteristics>
-            <gfc:FC_FeatureAttribute>
-               <gfc:memberName>
-                  <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Aan</gco:LocalName>
-               </gfc:memberName>
-               <gfc:definition>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Bodemsite, bodemlocatie of diepte-interval waaraan het monster hangt.</gco:CharacterString>
-               </gfc:definition>
-               <gfc:cardinality>
-                  <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
-                     <gco:range>
-                        <gco:MultiplicityRange>
-                           <gco:lower>
-                              <gco:Integer>0</gco:Integer>
-                           </gco:lower>
-                           <gco:upper>
-                              <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
-                           </gco:upper>
-                        </gco:MultiplicityRange>
-                     </gco:range>
-                  </gco:Multiplicity>
-               </gfc:cardinality>
-               <gfc:valueType>
-                  <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
-                     <gco:aName>
-                        <gco:CharacterString>String</gco:CharacterString>
-                     </gco:aName>
-                  </gco:TypeName>
-               </gfc:valueType>
-            </gfc:FC_FeatureAttribute>
-         </gfc:carrierOfCharacteristics>
-         <gfc:carrierOfCharacteristics>
-            <gfc:FC_FeatureAttribute>
-               <gfc:memberName>
-                  <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Parentfiche</gco:LocalName>
-               </gfc:memberName>
-               <gfc:definition>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Permanente URL die verwijst naar de fiche van bij het monster horende bodemsite, bodemlocatie of diepteinterval.</gco:CharacterString>
-               </gfc:definition>
-               <gfc:cardinality>
-                  <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
-                     <gco:range>
-                        <gco:MultiplicityRange>
-                           <gco:lower>
-                              <gco:Integer>0</gco:Integer>
-                           </gco:lower>
-                           <gco:upper>
-                              <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
-                           </gco:upper>
-                        </gco:MultiplicityRange>
-                     </gco:range>
-                  </gco:Multiplicity>
-               </gfc:cardinality>
-               <gfc:valueType>
-                  <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
-                     <gco:aName>
-                        <gco:CharacterString>String</gco:CharacterString>
-                     </gco:aName>
-                  </gco:TypeName>
-               </gfc:valueType>
-            </gfc:FC_FeatureAttribute>
-         </gfc:carrierOfCharacteristics>
-         <gfc:carrierOfCharacteristics>
-            <gfc:FC_FeatureAttribute>
-               <gfc:memberName>
-                  <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Diepte_van</gco:LocalName>
-               </gfc:memberName>
-               <gfc:definition>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Begindiepte of diepte van de monstername (in cm).</gco:CharacterString>
-               </gfc:definition>
-               <gfc:cardinality>
-                  <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
-                     <gco:range>
-                        <gco:MultiplicityRange>
-                           <gco:lower>
-                              <gco:Integer>0</gco:Integer>
-                           </gco:lower>
-                           <gco:upper>
-                              <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
-                           </gco:upper>
-                        </gco:MultiplicityRange>
-                     </gco:range>
-                  </gco:Multiplicity>
-               </gfc:cardinality>
-               <gfc:valueType>
-                  <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
-                     <gco:aName>
-                        <gco:CharacterString>Number</gco:CharacterString>
-                     </gco:aName>
-                  </gco:TypeName>
-               </gfc:valueType>
-            </gfc:FC_FeatureAttribute>
-         </gfc:carrierOfCharacteristics>
-         <gfc:carrierOfCharacteristics>
-            <gfc:FC_FeatureAttribute>
-               <gfc:memberName>
-                  <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Diepte_tot</gco:LocalName>
-               </gfc:memberName>
-               <gfc:definition>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Einddiepte van de monstername (in cm).</gco:CharacterString>
-               </gfc:definition>
-               <gfc:cardinality>
-                  <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
-                     <gco:range>
-                        <gco:MultiplicityRange>
-                           <gco:lower>
-                              <gco:Integer>0</gco:Integer>
-                           </gco:lower>
-                           <gco:upper>
-                              <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
-                           </gco:upper>
-                        </gco:MultiplicityRange>
-                     </gco:range>
-                  </gco:Multiplicity>
-               </gfc:cardinality>
-               <gfc:valueType>
-                  <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
-                     <gco:aName>
-                        <gco:CharacterString>Number</gco:CharacterString>
-                     </gco:aName>
-                  </gco:TypeName>
-               </gfc:valueType>
-            </gfc:FC_FeatureAttribute>
-         </gfc:carrierOfCharacteristics>
-         <gfc:carrierOfCharacteristics>
-            <gfc:FC_FeatureAttribute>
-               <gfc:memberName>
-                  <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Type</gco:LocalName>
-               </gfc:memberName>
-               <gfc:definition>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Type van bodemmonster (enkelvoudig monster of mengmonster).</gco:CharacterString>
-               </gfc:definition>
-               <gfc:cardinality>
-                  <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
-                     <gco:range>
-                        <gco:MultiplicityRange>
-                           <gco:lower>
-                              <gco:Integer>0</gco:Integer>
-                           </gco:lower>
-                           <gco:upper>
-                              <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
-                           </gco:upper>
-                        </gco:MultiplicityRange>
-                     </gco:range>
-                  </gco:Multiplicity>
-               </gfc:cardinality>
-               <gfc:valueType>
-                  <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
-                     <gco:aName>
-                        <gco:CharacterString>String</gco:CharacterString>
-                     </gco:aName>
-                  </gco:TypeName>
-               </gfc:valueType>
-            </gfc:FC_FeatureAttribute>
-         </gfc:carrierOfCharacteristics>
-         <gfc:carrierOfCharacteristics>
-            <gfc:FC_FeatureAttribute>
-               <gfc:memberName>
-                  <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Datum_monsterafname</gco:LocalName>
-               </gfc:memberName>
-               <gfc:definition>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Datum waarop het monster werd genomen.</gco:CharacterString>
-               </gfc:definition>
-               <gfc:cardinality>
-                  <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
-                     <gco:range>
-                        <gco:MultiplicityRange>
-                           <gco:lower>
-                              <gco:Integer>0</gco:Integer>
-                           </gco:lower>
-                           <gco:upper>
-                              <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
-                           </gco:upper>
-                        </gco:MultiplicityRange>
-                     </gco:range>
-                  </gco:Multiplicity>
-               </gfc:cardinality>
-               <gfc:valueType>
-                  <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
-                     <gco:aName>
-                        <gco:CharacterString>Date</gco:CharacterString>
-                     </gco:aName>
-                  </gco:TypeName>
-               </gfc:valueType>
-            </gfc:FC_FeatureAttribute>
-         </gfc:carrierOfCharacteristics>
-         <gfc:carrierOfCharacteristics>
-            <gfc:FC_FeatureAttribute>
-               <gfc:memberName>
-                  <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Monsterafname_door</gco:LocalName>
-               </gfc:memberName>
-               <gfc:definition>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Persoon en/of organisatie die monstername uitvoerde.</gco:CharacterString>
-               </gfc:definition>
-               <gfc:cardinality>
-                  <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
-                     <gco:range>
-                        <gco:MultiplicityRange>
-                           <gco:lower>
-                              <gco:Integer>0</gco:Integer>
-                           </gco:lower>
-                           <gco:upper>
-                              <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
-                           </gco:upper>
-                        </gco:MultiplicityRange>
-                     </gco:range>
-                  </gco:Multiplicity>
-               </gfc:cardinality>
-               <gfc:valueType>
-                  <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
-                     <gco:aName>
-                        <gco:CharacterString>String</gco:CharacterString>
-                     </gco:aName>
-                  </gco:TypeName>
-               </gfc:valueType>
-            </gfc:FC_FeatureAttribute>
-         </gfc:carrierOfCharacteristics>
-         <gfc:carrierOfCharacteristics>
-            <gfc:FC_FeatureAttribute>
-               <gfc:memberName>
-                  <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Techniek_monsterafname</gco:LocalName>
-               </gfc:memberName>
-               <gfc:definition>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Techniek monstername.</gco:CharacterString>
-               </gfc:definition>
-               <gfc:cardinality>
-                  <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
-                     <gco:range>
-                        <gco:MultiplicityRange>
-                           <gco:lower>
-                              <gco:Integer>0</gco:Integer>
-                           </gco:lower>
-                           <gco:upper>
-                              <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
-                           </gco:upper>
-                        </gco:MultiplicityRange>
-                     </gco:range>
-                  </gco:Multiplicity>
-               </gfc:cardinality>
-               <gfc:valueType>
-                  <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
-                     <gco:aName>
-                        <gco:CharacterString>String</gco:CharacterString>
-                     </gco:aName>
-                  </gco:TypeName>
-               </gfc:valueType>
-            </gfc:FC_FeatureAttribute>
-         </gfc:carrierOfCharacteristics>
-         <gfc:carrierOfCharacteristics>
-            <gfc:FC_FeatureAttribute>
-               <gfc:memberName>
-                  <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Condities_monsterafname</gco:LocalName>
-               </gfc:memberName>
-               <gfc:definition>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Condities monstername zoals bv. de weersomstandigheden, bodemgesteldheid,...</gco:CharacterString>
-               </gfc:definition>
-               <gfc:cardinality>
-                  <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
-                     <gco:range>
-                        <gco:MultiplicityRange>
-                           <gco:lower>
-                              <gco:Integer>0</gco:Integer>
-                           </gco:lower>
-                           <gco:upper>
-                              <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
-                           </gco:upper>
-                        </gco:MultiplicityRange>
-                     </gco:range>
-                  </gco:Multiplicity>
-               </gfc:cardinality>
-               <gfc:valueType>
-                  <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
-                     <gco:aName>
-                        <gco:CharacterString>String</gco:CharacterString>
-                     </gco:aName>
-                  </gco:TypeName>
-               </gfc:valueType>
-            </gfc:FC_FeatureAttribute>
-         </gfc:carrierOfCharacteristics>
-         <gfc:carrierOfCharacteristics>
-            <gfc:FC_FeatureAttribute>
-               <gfc:memberName>
-                  <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Datum_laboverslag</gco:LocalName>
-               </gfc:memberName>
-               <gfc:definition>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Datum laboverslag.</gco:CharacterString>
-               </gfc:definition>
-               <gfc:cardinality>
-                  <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
-                     <gco:range>
-                        <gco:MultiplicityRange>
-                           <gco:lower>
-                              <gco:Integer>0</gco:Integer>
-                           </gco:lower>
-                           <gco:upper>
-                              <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
-                           </gco:upper>
-                        </gco:MultiplicityRange>
-                     </gco:range>
-                  </gco:Multiplicity>
-               </gfc:cardinality>
-               <gfc:valueType>
-                  <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
-                     <gco:aName>
-                        <gco:CharacterString>Date</gco:CharacterString>
-                     </gco:aName>
-                  </gco:TypeName>
-               </gfc:valueType>
-            </gfc:FC_FeatureAttribute>
-         </gfc:carrierOfCharacteristics>
-         <gfc:carrierOfCharacteristics>
-            <gfc:FC_FeatureAttribute>
-               <gfc:memberName>
-                  <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Labo</gco:LocalName>
-               </gfc:memberName>
-               <gfc:definition>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Labo dat verwerking van het monsters doet.</gco:CharacterString>
-               </gfc:definition>
-               <gfc:cardinality>
-                  <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
-                     <gco:range>
-                        <gco:MultiplicityRange>
-                           <gco:lower>
-                              <gco:Integer>0</gco:Integer>
-                           </gco:lower>
-                           <gco:upper>
-                              <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
-                           </gco:upper>
-                        </gco:MultiplicityRange>
-                     </gco:range>
-                  </gco:Multiplicity>
-               </gfc:cardinality>
-               <gfc:valueType>
-                  <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
-                     <gco:aName>
-                        <gco:CharacterString>String</gco:CharacterString>
-                     </gco:aName>
-                  </gco:TypeName>
-               </gfc:valueType>
-            </gfc:FC_FeatureAttribute>
-         </gfc:carrierOfCharacteristics>
-         <gfc:carrierOfCharacteristics>
-            <gfc:FC_FeatureAttribute>
-               <gfc:memberName>
-                  <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Bevat_observaties</gco:LocalName>
-               </gfc:memberName>
-               <gfc:definition>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Aantal observaties aan monster.</gco:CharacterString>
-               </gfc:definition>
-               <gfc:cardinality>
-                  <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
-                     <gco:range>
-                        <gco:MultiplicityRange>
-                           <gco:lower>
-                              <gco:Integer>0</gco:Integer>
-                           </gco:lower>
-                           <gco:upper>
-                              <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
-                           </gco:upper>
-                        </gco:MultiplicityRange>
-                     </gco:range>
-                  </gco:Multiplicity>
-               </gfc:cardinality>
-               <gfc:valueType>
-                  <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
-                     <gco:aName>
-                        <gco:CharacterString>String</gco:CharacterString>
-                     </gco:aName>
-                  </gco:TypeName>
-               </gfc:valueType>
-            </gfc:FC_FeatureAttribute>
-         </gfc:carrierOfCharacteristics>
-         <gfc:carrierOfCharacteristics>
-            <gfc:FC_FeatureAttribute>
-               <gfc:memberName>
-                  <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Bodemlocatie</gco:LocalName>
-               </gfc:memberName>
-               <gfc:definition>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Bodemlocatie waarop het monster betrekking heeft.</gco:CharacterString>
-               </gfc:definition>
-               <gfc:cardinality>
-                  <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
-                     <gco:range>
-                        <gco:MultiplicityRange>
-                           <gco:lower>
-                              <gco:Integer>0</gco:Integer>
-                           </gco:lower>
-                           <gco:upper>
-                              <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
-                           </gco:upper>
-                        </gco:MultiplicityRange>
-                     </gco:range>
-                  </gco:Multiplicity>
-               </gfc:cardinality>
-               <gfc:valueType>
-                  <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
-                     <gco:aName>
-                        <gco:CharacterString>String</gco:CharacterString>
-                     </gco:aName>
-                  </gco:TypeName>
-               </gfc:valueType>
-            </gfc:FC_FeatureAttribute>
-         </gfc:carrierOfCharacteristics>
-         <gfc:carrierOfCharacteristics>
-            <gfc:FC_FeatureAttribute>
-               <gfc:memberName>
-                  <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Bodemlocatiefiche</gco:LocalName>
-               </gfc:memberName>
-               <gfc:definition>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Permanente URL die verwijst naar de gegevens van de bodemlocatie op de website.</gco:CharacterString>
-               </gfc:definition>
-               <gfc:cardinality>
-                  <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
-                     <gco:range>
-                        <gco:MultiplicityRange>
-                           <gco:lower>
-                              <gco:Integer>0</gco:Integer>
-                           </gco:lower>
-                           <gco:upper>
-                              <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
-                           </gco:upper>
-                        </gco:MultiplicityRange>
-                     </gco:range>
-                  </gco:Multiplicity>
-               </gfc:cardinality>
-               <gfc:valueType>
-                  <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
-                     <gco:aName>
-                        <gco:CharacterString>String</gco:CharacterString>
-                     </gco:aName>
-                  </gco:TypeName>
-               </gfc:valueType>
-            </gfc:FC_FeatureAttribute>
-         </gfc:carrierOfCharacteristics>
-         <gfc:carrierOfCharacteristics>
-            <gfc:FC_FeatureAttribute>
-               <gfc:memberName>
-                  <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Opdrachten</gco:LocalName>
-               </gfc:memberName>
-               <gfc:definition>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Opdracht/opdrachten waaraan de monstername gekoppeld is.</gco:CharacterString>
-               </gfc:definition>
-               <gfc:cardinality>
-                  <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
-                     <gco:range>
-                        <gco:MultiplicityRange>
-                           <gco:lower>
-                              <gco:Integer>0</gco:Integer>
-                           </gco:lower>
-                           <gco:upper>
-                              <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
-                           </gco:upper>
-                        </gco:MultiplicityRange>
-                     </gco:range>
-                  </gco:Multiplicity>
-               </gfc:cardinality>
-               <gfc:valueType>
-                  <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
-                     <gco:aName>
-                        <gco:CharacterString>String</gco:CharacterString>
-                     </gco:aName>
-                  </gco:TypeName>
-               </gfc:valueType>
-            </gfc:FC_FeatureAttribute>
-         </gfc:carrierOfCharacteristics>
-         <gfc:carrierOfCharacteristics>
-            <gfc:FC_FeatureAttribute>
-               <gfc:memberName>
-                  <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">geom</gco:LocalName>
-               </gfc:memberName>
-               <gfc:definition>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Geometry</gco:CharacterString>
-               </gfc:definition>
-               <gfc:cardinality>
-                  <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
-                     <gco:range>
-                        <gco:MultiplicityRange>
-                           <gco:lower>
-                              <gco:Integer>0</gco:Integer>
-                           </gco:lower>
-                           <gco:upper>
-                              <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
-                           </gco:upper>
-                        </gco:MultiplicityRange>
-                     </gco:range>
-                  </gco:Multiplicity>
-               </gfc:cardinality>
-               <gfc:valueType>
-                  <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
-                     <gco:aName>
-                        <gco:CharacterString>Geometry</gco:CharacterString>
-                     </gco:aName>
-                  </gco:TypeName>
-               </gfc:valueType>
-            </gfc:FC_FeatureAttribute>
-         </gfc:carrierOfCharacteristics>
+        </gfc:definition>
+        <gfc:isAbstract>
+          <gco:Boolean xmlns:gco="http://www.isotc211.org/2005/gco">false</gco:Boolean>
+        </gfc:isAbstract>
+        <gfc:featureCatalogue uuidref="7d69c092-fa5a-4399-86ed-003877f5899e" />
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Bodemmonster</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Naam van het bodemmonster.</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>0</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:valueType>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:aName>
+                  <gco:CharacterString>String</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Bodemmonsterfiche</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Permanente URL die verwijst naar de bodemmonsterfiche op de website.</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>0</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:valueType>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:aName>
+                  <gco:CharacterString>String</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Aan</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Bodemsite, bodemlocatie of diepte-interval waaraan het monster hangt.</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>0</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:valueType>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:aName>
+                  <gco:CharacterString>String</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Parentfiche</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Permanente URL die verwijst naar de fiche van bij het monster horende bodemsite, bodemlocatie of diepteinterval.</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>0</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:valueType>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:aName>
+                  <gco:CharacterString>String</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Diepte_van</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Begindiepte of diepte van de monstername (in cm).</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>0</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:valueType>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:aName>
+                  <gco:CharacterString>Number</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Diepte_tot</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Einddiepte van de monstername (in cm).</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>0</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:valueType>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:aName>
+                  <gco:CharacterString>Number</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Type</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Type van bodemmonster (enkelvoudig monster of mengmonster).</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>0</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:valueType>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:aName>
+                  <gco:CharacterString>String</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Datum_monsterafname</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Datum waarop het monster werd genomen.</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>0</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:valueType>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:aName>
+                  <gco:CharacterString>Date</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Monsterafname_door</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Persoon en/of organisatie die monstername uitvoerde.</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>0</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:valueType>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:aName>
+                  <gco:CharacterString>String</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Techniek_monsterafname</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Techniek monstername.</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>0</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:valueType>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:aName>
+                  <gco:CharacterString>String</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Condities_monsterafname</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Condities monstername zoals bv. de weersomstandigheden, bodemgesteldheid,...</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>0</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:valueType>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:aName>
+                  <gco:CharacterString>String</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Datum_laboverslag</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Datum laboverslag.</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>0</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:valueType>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:aName>
+                  <gco:CharacterString>Date</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Labo</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Labo dat verwerking van het monsters doet.</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>0</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:valueType>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:aName>
+                  <gco:CharacterString>String</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Bevat_observaties</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Aantal observaties aan monster.</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>0</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:valueType>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:aName>
+                  <gco:CharacterString>String</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Bodemlocatie</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Bodemlocatie waarop het monster betrekking heeft.</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>0</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:valueType>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:aName>
+                  <gco:CharacterString>String</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Bodemlocatiefiche</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Permanente URL die verwijst naar de gegevens van de bodemlocatie op de website.</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>0</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:valueType>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:aName>
+                  <gco:CharacterString>String</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Opdrachten</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Opdracht/opdrachten waaraan de monstername gekoppeld is.</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>0</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:valueType>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:aName>
+                  <gco:CharacterString>String</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">geom</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Geometry</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>0</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:valueType>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:aName>
+                  <gco:CharacterString>Geometry</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
       </gfc:FC_FeatureType>
-  </gfc:featureType>
-</gfc:FC_FeatureCatalogue>
+    </gfc:featureType>
+  </gfc:FC_FeatureCatalogue>
+</csw:GetRecordByIdResponse>
+

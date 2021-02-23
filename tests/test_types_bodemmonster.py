@@ -5,9 +5,9 @@ from pydov.types.bodemmonster import Bodemmonster
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes
 
-location_wfs_getfeature = 'tests/data/types/bodemobservatie/wfsgetfeature.xml'
-location_wfs_feature = 'tests/data/types/bodemobservatie/feature.xml'
-location_dov_xml = 'tests/data/types/bodemobservatie/bodemobservatie.xml'
+location_wfs_getfeature = 'tests/data/types/bodemmonster/wfsgetfeature.xml'
+location_wfs_feature = 'tests/data/types/bodemmonster/feature.xml'
+location_dov_xml = 'tests/data/types/bodemmonster/bodemmonster.xml'
 
 
 class TestBodemmonster(AbstractTestTypes):
@@ -20,17 +20,15 @@ class TestBodemmonster(AbstractTestTypes):
     field_names = [
             'pkey_bodemmonster', 'identificatie',
             'datum_monstername', 'tijdstip_monstername',
-            'type', 'monsternamedoor', 'techniek', 
-            'condities', 'van', 'tot', 'labo',
-            'laboreferentie', 'opmerking'
+            'type', 'monsternamedoor', 'techniek',
+            'condities', 'van', 'tot', 'labo'
         ]
     field_names_subtypes = []
     field_names_nosubtypes = [
             'pkey_bodemmonster', 'identificatie',
             'datum_monstername', 'tijdstip_monstername',
-            'type', 'monsternamedoor', 'techniek', 
-            'condities', 'van', 'tot', 'labo',
-            'laboreferentie', 'opmerking'
+            'type', 'monsternamedoor', 'techniek',
+            'condities', 'van', 'tot', 'labo'
     ]
 
     valid_returnfields = ('pkey_bodemmonster', 'identificatie')

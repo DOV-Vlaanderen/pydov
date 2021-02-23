@@ -439,7 +439,7 @@ Bodemsites
 --------------------------------
   .. csv-table:: Bodemsites
     :header-rows: 1
-	
+
     Field,Cost,Datatype,Example
 	pkey_bodemsite,1,string,https://www.dov.vlaanderen.be/data/bodemsite/2013-000180
 	naam,1,string,Meise_Neerpoorten
@@ -447,13 +447,13 @@ Bodemsites
 	beschrijving,1,string,grasland
 	waarnemingsdatum,10,date,nan
 	invoerdatum,10,date,nan
-		
+
 
 BodemLocaties
 --------------------------------
   .. csv-table:: Bodemlocaties
     :header-rows: 1
-	
+
     Field,Cost,Datatype,Example
 	pkey_bodemlocatie,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/2011-000002
 	naam,1,string,STARC_4
@@ -469,12 +469,12 @@ BodemLocaties
 	invoerdatum,10,date,nan
 	educatieve_waarde,10,string,ZEER
 
-	
+
 Bodemmonsters
 --------------------------------
   .. csv-table:: Bodemmonsters
     :header-rows: 1
-	
+
     Field,Cost,Datatype,Example
 	pkey_bodemmonster,1,string,https://www.dov.vlaanderen.be/data/bodemmonster/1964-264869
 	identificatie,1,string,KART_PROF_073E/12_H2_M1
@@ -487,15 +487,13 @@ Bodemmonsters
 	van,1,float,30
 	tot,1,float,45
 	labo,1,string,Centrum voor Grondonderzoek (C.V.G.)
-	laboreferentie,10,string,NaN
-	opmerking,10,string,NaN
-	
+
 
 Bodemobservaties
 --------------------------------
   .. csv-table:: Bodemobservaties
     :header-rows: 1
-	
+
     Field,Cost,Datatype,Example
 	pkey_bodemobservatie,1,string,https://www.dov.vlaanderen.be/data/bodemobservatie/2019-349078
 	pkey_bodemlocatie,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/1952-007078

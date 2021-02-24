@@ -5,6 +5,7 @@ from flask import Flask, request
 
 app = Flask(__name__)
 
+dov_base_url = 'https://www.dov.vlaanderen.be/'
 no_xdov = False
 
 error_404 = """<!-- THEME DEBUG -->
@@ -22,8 +23,7 @@ x html.html.twig
 
 def rewrite_content_reverse(content):
     def rewrite(content):
-        return content.replace('https://www.dov.vlaanderen.be/',
-                               'http://localhost:1337/')
+        return content.replace(dov_base_url, 'http://localhost:1337/')
 
     if isinstance(content, bytes):
         return rewrite(content.decode('utf8')).encode('utf8')
@@ -33,8 +33,7 @@ def rewrite_content_reverse(content):
 
 def rewrite_content_forward(content):
     def rewrite(content):
-        return content.replace('http://localhost:1337/',
-                               'https://www.dov.vlaanderen.be/')
+        return content.replace('http://localhost:1337/', dov_base_url)
 
     if isinstance(content, bytes):
         return rewrite(content.decode('utf8')).encode('utf8')
@@ -46,7 +45,7 @@ def rewrite_content_forward(content):
 @app.route('/<path:path>', methods=['HEAD'])
 def proxy_head(path):
     full_path = request.full_path
-    r = requests.head(f'https://www.dov.vlaanderen.be{full_path}')
+    r = requests.head(f'{dov_base_url.rstrip("/")}{full_path}')
     return r.content
 
 
@@ -59,7 +58,7 @@ def proxy_get(path):
                     or full_path.startswith('/xdov')):
         return error_404, 404
 
-    r = requests.get(f'https://www.dov.vlaanderen.be{full_path}')
+    r = requests.get(f'{dov_base_url.rstrip("/")}{full_path}')
     return rewrite_content_reverse(r.content)
 
 
@@ -68,17 +67,25 @@ def proxy_get(path):
 def proxy_post(path):
     full_path = request.full_path
     data = rewrite_content_forward(request.data)
-    r = requests.post(f'https://www.dov.vlaanderen.be{full_path}', data)
+    r = requests.post(f'{dov_base_url.rstrip("/")}{full_path}', data)
     return rewrite_content_reverse(r.content)
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='DOV proxy')
+
     parser.add_argument(
-        '--no-xdov', dest='no_xdov', default=False, action='store_true',
+        '--dov-base-url', dest='dov_base_url',
+        default='https://www.dov.vlaanderen.be/', action='store',
+        help='DOV base URL to proxy to'
+    )
+    parser.add_argument(
+        '--no-xdov', dest='no_xdov', action='store_true',
         help='XDOV requests return 404')
+
     args = parser.parse_args()
 
     no_xdov = args.no_xdov
+    dov_base_url = args.dov_base_url
 
     app.run(host='127.0.0.1', port=1337)

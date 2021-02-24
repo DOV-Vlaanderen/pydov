@@ -15,6 +15,7 @@ import pydov
 from pydov.search.boring import BoringSearch
 from pydov.search.grondwaterfilter import GrondwaterFilterSearch
 from pydov.util.caching import GzipTextFileCache
+from pydov.util.dovutil import build_dov_url
 from pydov.util.errors import XmlFetchWarning, XmlStaleWarning, XsdFetchWarning
 from tests.abstract import ServiceCheck
 
@@ -24,6 +25,7 @@ def dov_proxy_no_xdov():
     process = Popen([sys.executable,
                      os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                   'stub', 'dov_proxy.py'),
+                     '--dov-base-url', build_dov_url('/'),
                      '--no-xdov'])
     time.sleep(2)
 
@@ -87,8 +89,7 @@ class TestErrorPaths(object):
         bs = BoringSearch(objecttype=pydov.types.boring.Boring)
 
         bs.search(query=PropertyIsEqualTo(
-            'pkey_boring',
-            'https://www.dov.vlaanderen.be/data/boring/2004-103984'))
+            'pkey_boring', build_dov_url('data/boring/2004-103984')))
 
         assert not os.path.exists(os.path.join(
             pydov.cache.cachedir, 'boring', '2004-103984.xml.gz'
@@ -114,8 +115,7 @@ class TestErrorPaths(object):
         time.sleep(0.5)
 
         bs.search(query=PropertyIsEqualTo(
-            'pkey_boring',
-            'https://www.dov.vlaanderen.be/data/boring/2004-103984'))
+            'pkey_boring', build_dov_url('data/boring/2004-103984')))
 
         with gzip.open(cache_path, 'rb') as cached_data:
             assert 'GEO-04/169-BNo-B1' in cached_data.read().decode('utf8')
@@ -141,8 +141,7 @@ class TestErrorPaths(object):
 
         with pytest.warns(XmlStaleWarning):
             df = bs.search(query=PropertyIsEqualTo(
-                'pkey_boring',
-                'https://www.dov.vlaanderen.be/data/boring/2004-103984'))
+                'pkey_boring', build_dov_url('data/boring/2004-103984')))
 
         assert not df.iloc[0].boorgatmeting
         assert df.iloc[0].boormethode == 'spade'
@@ -154,8 +153,7 @@ class TestErrorPaths(object):
         bs = BoringSearch(objecttype=pydov.types.boring.Boring)
 
         df = bs.search(query=PropertyIsEqualTo(
-            'pkey_boring',
-            'https://www.dov.vlaanderen.be/data/boring/2016-122561'))
+            'pkey_boring', build_dov_url('data/boring/2016-122561')))
 
         assert df.iloc[0].gemeente == 'Wortegem-Petegem'
 
@@ -167,8 +165,7 @@ class TestErrorPaths(object):
 
         with pytest.warns(XmlFetchWarning):
             df = bs.search(query=PropertyIsEqualTo(
-                'pkey_boring',
-                'https://www.dov.vlaanderen.be/data/boring/2016-122561'))
+                'pkey_boring', build_dov_url('data/boring/2016-122561')))
 
         assert np.isnan(df.iloc[0].boorgatmeting)
 

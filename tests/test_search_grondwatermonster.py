@@ -5,6 +5,7 @@ from owslib.fes import PropertyIsEqualTo
 
 from pydov.search.grondwatermonster import GrondwaterMonsterSearch
 from pydov.types.grondwatermonster import GrondwaterMonster
+from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestSearch
 
 location_md_metadata = 'tests/data/types/grondwatermonster/md_metadata.xml'
@@ -26,8 +27,7 @@ class TestGrondwaterMonsterSearch(AbstractTestSearch):
 
     valid_query_single = PropertyIsEqualTo(
         propertyname='grondwatermonsterfiche',
-        literal='https://www.dov.vlaanderen.be/data/'
-        'watermonster/2006-115684')
+        literal=build_dov_url('data/watermonster/2006-115684'))
 
     inexistent_field = 'onbestaand'
     wfs_field = 'kationen'

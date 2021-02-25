@@ -29,12 +29,15 @@ def dov_proxy_no_xdov():
                      '--no-xdov'])
     time.sleep(2)
 
-    orig_base_url = os.environ['PYDOV_BASE_URL']
+    orig_base_url = os.environ.get('PYDOV_BASE_URL', None)
     os.environ['PYDOV_BASE_URL'] = 'http://localhost:1337/'
 
     yield
 
-    os.environ['PYDOV_BASE_URL'] = orig_base_url
+    if orig_base_url is not None:
+        os.environ['PYDOV_BASE_URL'] = orig_base_url
+    else:
+        del(os.environ['PYDOV_BASE_URL'])
 
     process.terminate()
     process.communicate()

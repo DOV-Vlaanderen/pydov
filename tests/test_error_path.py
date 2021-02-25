@@ -22,6 +22,12 @@ from tests.abstract import ServiceCheck
 
 @pytest.fixture(scope="module", autouse=True)
 def dov_proxy_no_xdov():
+    """Fixture to start the DOV proxy and set PYDOV_BASE_URL to route
+    traffic through it.
+
+    The DOV proxy behaves as the XDOV server would be unavailable.
+
+    """
     process = Popen([sys.executable,
                      os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                   'stub', 'dov_proxy.py'),
@@ -45,6 +51,17 @@ def dov_proxy_no_xdov():
 
 @pytest.fixture(scope="module", autouse=True)
 def reload_modules(dov_proxy_no_xdov):
+    """Reload the boring and grondwaterfilter modules after setting
+    PYDOV_BASE_URL.
+
+    These need to be reloaded because they use the PYDOV_BASE_URL at import
+    time to set the location of XSD schemas.
+
+    Parameters
+    ----------
+    dov_proxy_no_xdov : pytest.fixture
+        Fixture starting the DOV proxy and setting PYDOV_BASE_URL accordingly.
+    """
     reload(pydov.types.boring)
     reload(pydov.types.grondwaterfilter)
 
@@ -66,8 +83,7 @@ def reset_cache(dov_proxy_no_xdov):
     Parameters
     ----------
     dov_proxy_no_xdov : pytest.fixture
-        Fixture starting up the DOV proxy stub and setting PYDOV_BASE_URL
-        accordingly.
+        Fixture starting the DOV proxy and setting PYDOV_BASE_URL accordingly.
     """
     gziptext_cache = GzipTextFileCache(
         cachedir=os.path.join(tempfile.gettempdir(), 'pydov_tests_error'),
@@ -83,13 +99,14 @@ def reset_cache(dov_proxy_no_xdov):
     pydov.cache = orig_cache
 
 
-class TestErrorPaths(object):
+class TestNoXDOV(object):
     """Class grouping tests related failing DOV services."""
 
     @pytest.mark.online
     @pytest.mark.skipif(not ServiceCheck.service_ok(),
                         reason="DOV service is unreachable")
     def test_do_not_cache_error(self):
+        """Test whether the 404 error page does not end up being cached."""
         bs = BoringSearch(objecttype=pydov.types.boring.Boring)
 
         bs.search(query=PropertyIsEqualTo(
@@ -103,6 +120,8 @@ class TestErrorPaths(object):
     @pytest.mark.skipif(not ServiceCheck.service_ok(),
                         reason="DOV service is unreachable")
     def test_do_not_overwrite_stale_cache(self):
+        """Test whether a stale copy of the data which exists in the cache is
+        not overwritten by the 404 error page."""
         bs = BoringSearch(objecttype=pydov.types.boring.Boring)
 
         testdata_path = os.path.join(
@@ -128,6 +147,8 @@ class TestErrorPaths(object):
     @pytest.mark.skipif(not ServiceCheck.service_ok(),
                         reason="DOV service is unreachable")
     def test_stale_warning(self):
+        """Test whether a stale version of the data from the cache is used in
+        case of a service error, and if a warning is issued to the user."""
         bs = BoringSearch(objecttype=pydov.types.boring.Boring)
 
         testdata_path = os.path.join(
@@ -154,6 +175,8 @@ class TestErrorPaths(object):
     @pytest.mark.skipif(not ServiceCheck.service_ok(),
                         reason="DOV service is unreachable")
     def test_wfs_data_present(self):
+        """Test whether data available in the WFS is present in the dataframe
+        in case of a service error in XDOV."""
         bs = BoringSearch(objecttype=pydov.types.boring.Boring)
 
         df = bs.search(query=PropertyIsEqualTo(
@@ -165,6 +188,9 @@ class TestErrorPaths(object):
     @pytest.mark.skipif(not ServiceCheck.service_ok(),
                         reason="DOV service is unreachable")
     def test_nan_and_fetch_warning(self):
+        """Test whether the XML data is set tot NaN in case of an error and
+        no stale cache is available. Also test if a warning is given to the
+        user."""
         bs = BoringSearch(objecttype=pydov.types.boring.Boring)
 
         with pytest.warns(XmlFetchWarning):
@@ -177,6 +203,9 @@ class TestErrorPaths(object):
     @pytest.mark.skipif(not ServiceCheck.service_ok(),
                         reason="DOV service is unreachable")
     def test_no_xsd_warning(self):
+        """Test whether the metadata can still be retrieved, and that the
+        XSD values are unavailable. Also test if a warning is given to the
+        user."""
         with pytest.warns(XsdFetchWarning):
             gwf = GrondwaterFilterSearch(
                 objecttype=pydov.types.grondwaterfilter.GrondwaterFilter)
@@ -188,6 +217,8 @@ class TestErrorPaths(object):
     @pytest.mark.skipif(not ServiceCheck.service_ok(),
                         reason="DOV service is unreachable")
     def test_no_xsd_wfs_only(self):
+        """Test whether the WFS data is available, even if XSD schemas cannot
+        be resolved."""
         gwf = GrondwaterFilterSearch(
             objecttype=pydov.types.grondwaterfilter.GrondwaterFilter)
 

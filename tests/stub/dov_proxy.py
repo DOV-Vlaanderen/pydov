@@ -22,6 +22,19 @@ x html.html.twig
 
 
 def rewrite_content_reverse(content):
+    """Rewrite content coming from DOV.
+
+    Parameters
+    ----------
+    content : str or bytes
+        The content to rewrite.
+
+    Returns
+    -------
+    str or bytes
+        The content where all URLs starting with DOV_BASE_URL are rewritten
+        to localhost.
+    """
     def rewrite(content):
         return content.replace(dov_base_url, 'http://localhost:1337/')
 
@@ -32,6 +45,19 @@ def rewrite_content_reverse(content):
 
 
 def rewrite_content_forward(content):
+    """Rewrite content going to DOV.
+
+    Parameters
+    ----------
+    content : str or bytes
+        The content to rewrite.
+
+    Returns
+    -------
+    str or bytes
+        The content where all URLs starting with DOV_BASE_URL are rewritten
+        to localhost.
+    """
     def rewrite(content):
         return content.replace('http://localhost:1337/', dov_base_url)
 
@@ -44,6 +70,18 @@ def rewrite_content_forward(content):
 @app.route('/', defaults={'path': ''}, methods=['HEAD'])
 @app.route('/<path:path>', methods=['HEAD'])
 def proxy_head(path):
+    """Proxy HEAD requests.
+
+    Parameters
+    ----------
+    path : str
+        The path on the DOV server to proxy to.
+
+    Returns
+    -------
+    flask.Response
+        The response of the DOV service.
+    """
     full_path = request.full_path
     r = requests.head(f'{dov_base_url.rstrip("/")}{full_path}')
     return r.content
@@ -52,6 +90,22 @@ def proxy_head(path):
 @app.route('/', defaults={'path': ''}, methods=['GET'])
 @app.route('/<path:path>', methods=['GET'])
 def proxy_get(path):
+    """Proxy GET requests.
+
+    Parameters
+    ----------
+    path : str
+        The path on the DOV server to proxy to.
+
+    Returns
+    -------
+    flask.Response
+        The response from the DOV service, content adjusted according to proxy
+        rewrites.
+
+        If --no-xdov was specified, returns 404 on all requests headed for
+        XDOV.
+    """
     full_path = request.full_path
 
     if no_xdov and (full_path.startswith('/data')
@@ -65,6 +119,19 @@ def proxy_get(path):
 @app.route('/', defaults={'path': ''}, methods=['POST'])
 @app.route('/<path:path>', methods=['POST'])
 def proxy_post(path):
+    """Proxy GET requests.
+
+    Parameters
+    ----------
+    path : str
+        The path on the DOV server to proxy to.
+
+    Returns
+    -------
+    flask.Response
+        The response from the DOV service, content adjusted according to proxy
+        rewrites.
+    """
     full_path = request.full_path
     data = rewrite_content_forward(request.data)
     r = requests.post(f'{dov_base_url.rstrip("/")}{full_path}', data)

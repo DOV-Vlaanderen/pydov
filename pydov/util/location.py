@@ -647,7 +647,7 @@ class GeometryFilter(GmlFilter):
                 with fiona.open(gml_blob, 'w', layer=layer, driver='GML',
                                 schema=c.schema, crs=c.crs,
                                 FORMAT='GML3') as gml:
-                    for r in list(c):
+                    for r in c:
                         gml.write(r)
                 gml_blob.seek(0)
                 # Set the gml attribute used by the parent class

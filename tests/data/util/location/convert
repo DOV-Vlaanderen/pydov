@@ -1,2 +1,0 @@
-!#/bin/bash
-ogr2ogr -f "ESRI Shapefile" "${f%.gml}.shp" "$f"

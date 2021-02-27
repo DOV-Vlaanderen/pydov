@@ -157,9 +157,32 @@ class HookRunner(object):
         ----------
         pkey_object : str
             Permanent key of the requested object.
-
         """
         HookRunner.__execute_read('xml_cache_hit', [pkey_object])
+
+    @staticmethod
+    def execute_xml_stale_hit(pkey_object):
+        """Execute the xml_stale_hit method for all registered hooks.
+
+        Parameters
+        ----------
+        pkey_object : str
+            Permanent key of the requested object.
+
+        """
+        HookRunner.__execute_read('xml_stale_hit', [pkey_object])
+
+    @staticmethod
+    def execute_xml_fetch_error(pkey_object):
+        """Execute the xml_fetch_error method for all registered hooks.
+
+        Parameters
+        ----------
+        pkey_object : str
+            Permanent key of the requested object.
+
+        """
+        HookRunner.__execute_read('xml_fetch_error', [pkey_object])
 
     @staticmethod
     def execute_xml_downloaded(pkey_object):
@@ -324,6 +347,40 @@ class AbstractReadHook(object):
 
     def xml_cache_hit(self, pkey_object):
         """Called when the XML document of an object is retrieved from the
+        cache.
+
+        Because of parallel processing, this method will be called
+        simultaneously from multiple threads. Make sure your implementation is
+        threadsafe or uses locking.
+
+        Parameters
+        ----------
+        pkey_object : str
+            Permanent key of the requested object.
+
+        """
+        pass
+
+    def xml_stale_hit(self, pkey_object):
+        """Called when the XML document of an object failed to be retrieved
+        from the DOV service and a stale version has been returned from the
+        cache.
+
+        Because of parallel processing, this method will be called
+        simultaneously from multiple threads. Make sure your implementation is
+        threadsafe or uses locking.
+
+        Parameters
+        ----------
+        pkey_object : str
+            Permanent key of the requested object.
+
+        """
+        pass
+
+    def xml_fetch_error(self, pkey_object):
+        """Called when the XML document of an object failed to be retrieved
+        from the DOV service and no stale version could be returned from the
         cache.
 
         Because of parallel processing, this method will be called
@@ -547,6 +604,32 @@ class SimpleStatusHook(AbstractReadHook):
         """
         with self.lock:
             self._write_progress('c')
+
+    def xml_stale_hit(self, pkey_object):
+        """When a stale XML document is retrieved from the cache, print 'S' to
+        the progress output.
+
+        Parameters
+        ----------
+        pkey_object : str
+            Permanent key of the requested object.
+
+        """
+        with self.lock:
+            self._write_progress('S')
+
+    def xml_fetch_error(self, pkey_object):
+        """When an XML document failed to be fetched from DOV, print 'E' to
+        the progress output.
+
+        Parameters
+        ----------
+        pkey_object : str
+            Permanent key of the requested object.
+
+        """
+        with self.lock:
+            self._write_progress('E')
 
     def xml_downloaded(self, pkey_object):
         """When an XML document is downloaded from the DOV services,

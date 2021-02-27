@@ -677,9 +677,10 @@ class AbstractDovType(AbstractTypeCommon):
         ownfields = self.get_field_names(include_subtypes=False,
                                          include_wfs_injected=True)
         subfields = [f for f in fields if f not in ownfields]
+        parsed = None
 
         if len(subfields) > 0:
-            self._parse_xml_data(session)
+            parsed = self._parse_xml_data(session)
 
         datadicts = []
         datarecords = []
@@ -701,7 +702,7 @@ class AbstractDovType(AbstractTypeCommon):
             datarecords.append([d.get(field, np.nan) for field in fields])
 
         for d in datarecords:
-            if self._UNRESOLVED in d:
+            if parsed is None and self._UNRESOLVED in d:
                 parsed = self._parse_xml_data(session)
                 if parsed is True:
                     datarecords = self.get_df_array(return_fields)

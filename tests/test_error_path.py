@@ -17,7 +17,9 @@ from pydov.search.grondwaterfilter import GrondwaterFilterSearch
 from pydov.util.caching import GzipTextFileCache
 from pydov.util.dovutil import build_dov_url
 from pydov.util.errors import XmlFetchWarning, XmlStaleWarning, XsdFetchWarning
+from pydov.util.hooks import Hooks
 from tests.abstract import ServiceCheck
+from tests.test_util_hooks import HookCounter
 
 
 @pytest.fixture(scope="module", autouse=True)
@@ -99,6 +101,20 @@ def reset_cache(dov_proxy_no_xdov):
     pydov.cache = orig_cache
 
 
+@pytest.fixture
+def test_hook_count():
+    """PyTest fixture temporarily disabling default hooks and installing
+    HookCounter."""
+    orig_hooks = pydov.hooks
+
+    pydov.hooks = Hooks(
+        (HookCounter(),)
+    )
+    yield
+
+    pydov.hooks = orig_hooks
+
+
 class TestNoXDOV(object):
     """Class grouping tests related failing DOV services."""
 
@@ -174,6 +190,36 @@ class TestNoXDOV(object):
     @pytest.mark.online
     @pytest.mark.skipif(not ServiceCheck.service_ok(),
                         reason="DOV service is unreachable")
+    def test_stale_disabled(self):
+        """Test whether no stale version of the data from the cache is used
+        when disabled, and if a warning is issued to the user."""
+        pydov.cache.stale_on_error = False
+
+        bs = BoringSearch(objecttype=pydov.types.boring.Boring)
+
+        testdata_path = os.path.join(
+            'tests', 'data', 'types', 'boring', 'boring.xml')
+
+        cache_path = os.path.join(
+            pydov.cache.cachedir, 'boring', '2004-103984.xml.gz'
+        )
+        os.makedirs(os.path.dirname(cache_path))
+
+        with open(testdata_path, 'r') as testdata:
+            with gzip.open(cache_path, 'wb') as cached_data:
+                cached_data.write(testdata.read().encode('utf8'))
+        time.sleep(0.5)
+
+        with pytest.warns(XmlFetchWarning):
+            df = bs.search(query=PropertyIsEqualTo(
+                'pkey_boring', build_dov_url('data/boring/2004-103984')))
+
+        assert np.isnan(df.iloc[0].boorgatmeting)
+        assert np.isnan(df.iloc[0].boormethode)
+
+    @pytest.mark.online
+    @pytest.mark.skipif(not ServiceCheck.service_ok(),
+                        reason="DOV service is unreachable")
     def test_wfs_data_present(self):
         """Test whether data available in the WFS is present in the dataframe
         in case of a service error in XDOV."""
@@ -224,3 +270,76 @@ class TestNoXDOV(object):
 
         df = gwf.search(max_features=1)
         assert df.iloc[0].pkey_filter is not None
+
+    @pytest.mark.online
+    @pytest.mark.skipif(not ServiceCheck.service_ok(),
+                        reason="DOV service is unreachable")
+    def test_hooks_fetch_error(self, test_hook_count):
+        """Test if the correct hooks are fired when the XML fails to be
+        fetched from DOV.
+
+        Parameters
+        ----------
+        test_hook_count : pytest.fixture
+            Fixture removing default hooks and installing HookCounter.
+        """
+        bs = BoringSearch(objecttype=pydov.types.boring.Boring)
+
+        bs.search(query=PropertyIsEqualTo(
+            'pkey_boring', build_dov_url('data/boring/2004-103984')))
+
+        assert pydov.hooks[0].count_wfs_search_init == 1
+        assert pydov.hooks[0].count_wfs_search_result == 1
+        assert pydov.hooks[0].count_wfs_search_result_received == 1
+
+        assert pydov.hooks[0].count_xml_received == 0
+        assert pydov.hooks[0].count_xml_cache_hit == 0
+        assert pydov.hooks[0].count_xml_downloaded == 0
+        assert pydov.hooks[0].count_xml_stale_hit == 0
+        assert pydov.hooks[0].count_xml_fetch_error == 1
+
+        assert pydov.hooks[0].count_meta_received > 0
+        assert pydov.hooks[0].count_inject_meta_response > 0
+
+    @pytest.mark.online
+    @pytest.mark.skipif(not ServiceCheck.service_ok(),
+                        reason="DOV service is unreachable")
+    def test_hooks_stale(self, test_hook_count):
+        """Test if the correct hooks are fired when a stale XML document is
+        returned from the cache.
+
+        Parameters
+        ----------
+        test_hook_count : pytest.fixture
+            Fixture removing default hooks and installing HookCounter.
+        """
+        bs = BoringSearch(objecttype=pydov.types.boring.Boring)
+
+        testdata_path = os.path.join(
+            'tests', 'data', 'types', 'boring', 'boring.xml')
+
+        cache_path = os.path.join(
+            pydov.cache.cachedir, 'boring', '2004-103984.xml.gz'
+        )
+        os.makedirs(os.path.dirname(cache_path))
+
+        with open(testdata_path, 'r') as testdata:
+            with gzip.open(cache_path, 'wb') as cached_data:
+                cached_data.write(testdata.read().encode('utf8'))
+        time.sleep(0.5)
+
+        bs.search(query=PropertyIsEqualTo(
+            'pkey_boring', build_dov_url('data/boring/2004-103984')))
+
+        assert pydov.hooks[0].count_wfs_search_init == 1
+        assert pydov.hooks[0].count_wfs_search_result == 1
+        assert pydov.hooks[0].count_wfs_search_result_received == 1
+
+        assert pydov.hooks[0].count_xml_received == 0
+        assert pydov.hooks[0].count_xml_cache_hit == 0
+        assert pydov.hooks[0].count_xml_downloaded == 0
+        assert pydov.hooks[0].count_xml_stale_hit == 1
+        assert pydov.hooks[0].count_xml_fetch_error == 0
+
+        assert pydov.hooks[0].count_meta_received > 0
+        assert pydov.hooks[0].count_inject_meta_response > 0

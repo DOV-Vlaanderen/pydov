@@ -75,6 +75,8 @@ class HookCounter(AbstractReadHook, AbstractInjectHook):
         self.count_xml_received = 0
         self.count_inject_xml_response = 0
         self.count_xml_cache_hit = 0
+        self.count_xml_stale_hit = 0
+        self.count_xml_fetch_error = 0
         self.count_xml_downloaded = 0
 
     def meta_received(self, url, response):
@@ -104,8 +106,14 @@ class HookCounter(AbstractReadHook, AbstractInjectHook):
     def xml_cache_hit(self, pkey_object):
         self.count_xml_cache_hit += 1
 
+    def xml_stale_hit(self, pkey_object):
+        self.count_xml_stale_hit += 1
+
     def xml_downloaded(self, pkey_object):
         self.count_xml_downloaded += 1
+
+    def xml_fetch_error(self, pkey_object):
+        self.count_xml_fetch_error += 1
 
 
 class HookTypeTester(AbstractReadHook, AbstractInjectHook):
@@ -152,7 +160,15 @@ class HookTypeTester(AbstractReadHook, AbstractInjectHook):
         assert pkey_object is not None
         assert isinstance(pkey_object, str)
 
+    def xml_stale_hit(self, pkey_object):
+        assert pkey_object is not None
+        assert isinstance(pkey_object, str)
+
     def xml_downloaded(self, pkey_object):
+        assert pkey_object is not None
+        assert isinstance(pkey_object, str)
+
+    def xml_fetch_error(self, pkey_object):
         assert pkey_object is not None
         assert isinstance(pkey_object, str)
 
@@ -242,6 +258,8 @@ class TestHookCount(object):
         assert pydov.hooks[0].count_inject_xml_response == 0
         assert pydov.hooks[0].count_xml_cache_hit == 0
         assert pydov.hooks[0].count_xml_downloaded == 0
+        assert pydov.hooks[0].count_xml_stale_hit == 0
+        assert pydov.hooks[0].count_xml_fetch_error == 0
 
         assert pydov.hooks[0].count_meta_received > 0
         assert pydov.hooks[0].count_inject_meta_response > 0
@@ -281,6 +299,8 @@ class TestHookCount(object):
         assert pydov.hooks[0].count_inject_xml_response == 1
         assert pydov.hooks[0].count_xml_cache_hit == 0
         assert pydov.hooks[0].count_xml_downloaded == 1
+        assert pydov.hooks[0].count_xml_stale_hit == 0
+        assert pydov.hooks[0].count_xml_fetch_error == 0
 
         assert pydov.hooks[0].count_meta_received > 0
         assert pydov.hooks[0].count_inject_meta_response > 0
@@ -297,6 +317,8 @@ class TestHookCount(object):
         assert pydov.hooks[0].count_inject_xml_response == 2
         assert pydov.hooks[0].count_xml_cache_hit == 0
         assert pydov.hooks[0].count_xml_downloaded == 2
+        assert pydov.hooks[0].count_xml_stale_hit == 0
+        assert pydov.hooks[0].count_xml_fetch_error == 0
 
         assert pydov.hooks[0].count_meta_received > 0
         assert pydov.hooks[0].count_inject_meta_response > 0
@@ -340,6 +362,8 @@ class TestHookCount(object):
         assert pydov.hooks[0].count_inject_xml_response == 2
         assert pydov.hooks[0].count_xml_cache_hit == 0
         assert pydov.hooks[0].count_xml_downloaded == 1
+        assert pydov.hooks[0].count_xml_stale_hit == 0
+        assert pydov.hooks[0].count_xml_fetch_error == 0
 
         assert pydov.hooks[0].count_meta_received > 0
         assert pydov.hooks[0].count_inject_meta_response > 0
@@ -356,6 +380,8 @@ class TestHookCount(object):
         assert pydov.hooks[0].count_inject_xml_response == 3
         assert pydov.hooks[0].count_xml_cache_hit == 1
         assert pydov.hooks[0].count_xml_downloaded == 1
+        assert pydov.hooks[0].count_xml_stale_hit == 0
+        assert pydov.hooks[0].count_xml_fetch_error == 0
 
         assert pydov.hooks[0].count_meta_received > 0
         assert pydov.hooks[0].count_inject_meta_response > 0

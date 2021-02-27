@@ -771,6 +771,36 @@ class TestGeometryFilter(object):
             '196741.544404921</gml311:posList></gml311:LinearRing>'
             '</gml311:exterior></gml311:Polygon></ogc:Within></ogc:Or>')
 
+    def test_geopackage(self):
+        """Test the conversion of a geopackage to GML using fiona,
+        Within operator.
+
+        Test whether the generated XML is correct and stable.
+        """
+        gpkg = 'tests/data/util/location/polygon_multiple_31370.gpkg'
+
+        f = GeometryFilter(gpkg, Within)
+        f.set_geometry_column('geom')
+        xml = f.toXML()
+
+        assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
+            '<ogc:Or xmlns:ogc="http://www.opengis.net/ogc"><ogc:Within>'
+            '<ogc:PropertyName>geom</ogc:PropertyName><gml:Polygon '
+            'xmlns:gml="http://www.opengis.net/gml" '
+            'srsName="urn:ogc:def:crs:EPSG::31370"><gml:exterior>'
+            '<gml:LinearRing><gml:posList>108636.150020818 194960.844295764 '
+            '108911.922161617 194291.111953824 109195.573506438 '
+            '195118.42837622 108636.150020818 194960.844295764</gml:posList>'
+            '</gml:LinearRing></gml:exterior></gml:Polygon></ogc:Within>'
+            '<ogc:Within><ogc:PropertyName>geom</ogc:PropertyName>'
+            '<gml:Polygon xmlns:gml="http://www.opengis.net/gml" '
+            'srsName="urn:ogc:def:crs:EPSG::31370"><gml:exterior>'
+            '<gml:LinearRing><gml:posList>107485.786233486 196741.544404921 '
+            '107840.350414513 196339.704999757 108297.344247837 '
+            '196843.974057217 107485.786233486 196741.544404921</gml:posList>'
+            '</gml:LinearRing></gml:exterior></gml:Polygon></ogc:Within>'
+            '</ogc:Or>')
+
 
 class TestGeopandasFilter:
     def test_geopandas_dataframe(self):

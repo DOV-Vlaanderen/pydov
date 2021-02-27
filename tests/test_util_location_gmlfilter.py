@@ -1,22 +1,13 @@
 """Module grouping tests for the pydov.util.location.GmlFilter class."""
-from owslib.fes import (
-    And,
-    Or,
-)
-from pydov.util.location import (
-    GmlFilter,
-    GeometryFilter,
-    GeopandasFilter,
-    WithinDistance,
-    Within,
-    Disjoint,
-    Box,
-)
+import pytest
 from owslib.etree import etree
+from owslib.fes import And, Or
+
+from pydov.util.location import (Box, Disjoint, GeometryFilter,
+                                 GeopandasFilter, GmlFilter, Within,
+                                 WithinDistance)
 from pydov.util.owsutil import set_geometry_column
 from tests.abstract import clean_xml
-
-import pytest
 
 
 class TestPoint(object):
@@ -747,10 +738,11 @@ class TestCombination(object):
             ':Within></ogc:Or>')
 
 
-class TestGeometry(object):
+class TestGeometryFilter(object):
+    """Class grouping tests for the GeometryFilter."""
 
     def test_shapefile(self):
-        """Test the conversion of a vector file to GML using fiona,
+        """Test the conversion of a shapefile to GML using fiona,
         Within operator.
 
         Test whether the generated XML is correct and stable.
@@ -765,18 +757,22 @@ class TestGeometry(object):
             '<ogc:Or xmlns:gml311="http://www.opengis.net/gml" '
             'xmlns:ogc="http://www.opengis.net/ogc"><ogc:Within><ogc:'
             'PropertyName>geom</ogc:PropertyName><gml311:Polygon srsName='
-            '"urn:ogc:def:crs:EPSG::31370"><gml311:exterior><gml311:LinearRing>'
-            '<gml311:posList>108636.150020818 194960.844295764 109195.573506438 '
-            '195118.42837622 108911.922161617 194291.111953824 108636.150020818 '
-            '194960.844295764</gml311:posList></gml311:LinearRing></gml311:exterior>'
-            '</gml311:Polygon></ogc:Within><ogc:Within><ogc:PropertyName>'
-            'geom</ogc:PropertyName><gml311:Polygon srsName="urn:ogc:def:crs:'
-            'EPSG::31370"><gml311:exterior><gml311:LinearRing><gml311:posList>'
-            '107485.786233486 196741.544404921 108297.344247837 196843.974057217 '
-            '107840.350414513 196339.704999757 107485.786233486 196741.544404921'
-            '</gml311:posList></gml311:LinearRing></gml311:exterior></gml311:Polygon>'
-            '</ogc:Within></ogc:Or>')
+            '"urn:ogc:def:crs:EPSG::31370"><gml311:exterior>'
+            '<gml311:LinearRing><gml311:posList>108636.150020818 '
+            '194960.844295764 109195.573506438 195118.42837622 '
+            '108911.922161617 194291.111953824 108636.150020818 '
+            '194960.844295764</gml311:posList></gml311:LinearRing>'
+            '</gml311:exterior></gml311:Polygon></ogc:Within><ogc:Within>'
+            '<ogc:PropertyName>geom</ogc:PropertyName><gml311:Polygon '
+            'srsName="urn:ogc:def:crs:EPSG::31370"><gml311:exterior>'
+            '<gml311:LinearRing><gml311:posList>107485.786233486 '
+            '196741.544404921 108297.344247837 196843.974057217 '
+            '107840.350414513 196339.704999757 107485.786233486 '
+            '196741.544404921</gml311:posList></gml311:LinearRing>'
+            '</gml311:exterior></gml311:Polygon></ogc:Within></ogc:Or>')
 
+
+class TestGeopandasFilter:
     def test_geopandas_dataframe(self):
         """Test the conversion of a GeoPandas GeoDataFrame
 
@@ -794,17 +790,28 @@ class TestGeometry(object):
             '<ogc:Or xmlns:gml311="http://www.opengis.net/gml" '
             'xmlns:ogc="http://www.opengis.net/ogc"><ogc:Within><ogc:'
             'PropertyName>geom</ogc:PropertyName><gml311:Polygon srsName='
-            '"urn:ogc:def:crs:EPSG::31370"><gml311:exterior><gml311:LinearRing>'
-            '<gml311:posList>108636.150020818 194960.844295764 109195.573506438 '
-            '195118.42837622 108911.922161617 194291.111953824 108636.150020818 '
-            '194960.844295764</gml311:posList></gml311:LinearRing></gml311:exterior>'
-            '</gml311:Polygon></ogc:Within><ogc:Within><ogc:PropertyName>'
-            'geom</ogc:PropertyName><gml311:Polygon srsName="urn:ogc:def:crs:'
-            'EPSG::31370"><gml311:exterior><gml311:LinearRing><gml311:posList>'
-            '107485.786233486 196741.544404921 108297.344247837 196843.974057217 '
-            '107840.350414513 196339.704999757 107485.786233486 196741.544404921'
-            '</gml311:posList></gml311:LinearRing></gml311:exterior></gml311:Polygon>'
-            '</ogc:Within></ogc:Or>')
+            '"urn:ogc:def:crs:EPSG::31370"><gml311:exterior>'
+            '<gml311:LinearRing><gml311:posList>108636.150020818 '
+            '194960.844295764 109195.573506438 195118.42837622 '
+            '108911.922161617 194291.111953824 108636.150020818 '
+            '194960.844295764</gml311:posList></gml311:LinearRing>'
+            '</gml311:exterior></gml311:Polygon></ogc:Within><ogc:Within>'
+            '<ogc:PropertyName>geom</ogc:PropertyName><gml311:Polygon '
+            'srsName="urn:ogc:def:crs:EPSG::31370"><gml311:exterior>'
+            '<gml311:LinearRing><gml311:posList>107485.786233486 '
+            '196741.544404921 108297.344247837 196843.974057217 '
+            '107840.350414513 196339.704999757 107485.786233486 '
+            '196741.544404921</gml311:posList></gml311:LinearRing>'
+            '</gml311:exterior></gml311:Polygon></ogc:Within></ogc:Or>')
+
+    def test_geopandas_dataframe_subset(self):
+        """Test the conversion of a GeoPandas GeoDataFrame subset.
+
+        Test whether the generated XML is correct and stable.
+        """
+        shapefile = 'tests/data/util/location/polygon_multiple_31370.shp'
+        import geopandas as gpd
+        gdf = gpd.read_file(shapefile)
 
         # geopandas subselection to single feature line geodataframe
         f = GeopandasFilter(gdf.iloc[[0]], Within)
@@ -816,10 +823,11 @@ class TestGeometry(object):
             'xmlns:ogc="http://www.opengis.net/ogc"><ogc:PropertyName>'
             'geom</ogc:PropertyName><gml311:Polygon srsName="urn:ogc:def:crs:'
             'EPSG::31370"><gml311:exterior><gml311:LinearRing><gml311:posList>'
-            '108636.150020818 194960.844295764 109195.573506438 195118.42837622 '
-            '108911.922161617 194291.111953824 108636.150020818 194960.844295764'
-            '</gml311:posList></gml311:LinearRing></gml311:exterior></gml311:'
-            'Polygon></ogc:Within>')
+            '108636.150020818 194960.844295764 109195.573506438 '
+            '195118.42837622 108911.922161617 194291.111953824 '
+            '108636.150020818 194960.844295764</gml311:posList>'
+            '</gml311:LinearRing></gml311:exterior></gml311:Polygon>'
+            '</ogc:Within>')
 
     def test_geopandas_series(self):
         """Test GeoPandas GeoSeries not supported by pydov spatial filter

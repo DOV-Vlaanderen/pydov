@@ -6,13 +6,12 @@ Filter Encoding 1.1 and GML 3.1.1.
 
 """
 import os
-from io import BytesIO
 from collections import OrderedDict
+from distutils.version import LooseVersion
+from io import BytesIO
 
 from owslib.etree import etree
 from owslib.fes import Or
-
-from distutils.version import LooseVersion
 
 
 class AbstractLocation(object):
@@ -593,8 +592,7 @@ class GeometryFilter(GmlFilter):
         Parameters
         ----------
         geometry : str
-            Either a string representation of the geometry to parse,
-            or a path to a file on disk.
+            A path to a vector file on disk.
         location_filter : class<AbstractLocationFilter>
             Location filter to use for the geometries in the GML document.
         location_filter_kwargs : dict, optional
@@ -628,6 +626,7 @@ class GeometryFilter(GmlFilter):
         """
         try:
             import fiona
+
             # Check if the GML driver and write mode are supported and check
             # if version of Fiona supports GML 3.1.1 output (Fiona >= 1.8.18)
             drivers = fiona.supported_drivers

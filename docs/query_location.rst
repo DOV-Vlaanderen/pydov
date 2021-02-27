@@ -152,3 +152,92 @@ GmlFilter
 
         GmlFilter('points.gml', WithinDistance, {'distance': 5, 'distance_unit': 'kilometer'}, combinator=And)
 
+
+Using other vector formats
+**************************
+
+To make it easy to use other vector formats for spatial queries, there is a special location filter class for creating location filter expressions from vector files: GeometryFilter.
+
+This filter uses Fiona for reading the files and requires the `fiona` package to be installed. Check the :ref:`installation` guide for details.
+
+GeometryFilter
+    Build a location filter expression using a vector document supported by Fiona.
+
+    Instead of a single location filter, this class builds a location filter expression from a given vector document (`geometry`), location filter (`location_filter`, optionally with `location_filter_kwargs`) and a logical `combinator` (by default this is `Or`).
+
+    Example: given a shapefile containing polygons, this GeometryFilter will return all results that are completely within *any one* of the polygons (using the default `Or` combinator, the equivalent of a spatial union):
+
+    ::
+
+        GeometryFilter('polygons.shp', Within)
+
+    Example: given a shapefile containing polygons, this GeometryFilter will return all results that are completely within *all* of the polygons (using the `And` combinator, the equivalent of a spatial intersection):
+
+    ::
+
+        GeometryFilter('polygons.shp', Within, combinator=And)
+
+    Example: given a shapefile containing polygons (f.ex. Belgian communities), this GeometryFilter will return all results that are completely disjoint from any of the polygons (i.e. are not inside of Belgium):
+
+    ::
+
+        GeometryFilter('polygons.shp', Disjoint, combinator=And)
+
+
+    Example: given a shapefile containing linestrings, this GeometryFilter will return all results that are within 500 meters of any one of the linestrings (using the default `Or` combinator, this is the equivalent of a spatial buffer followed by a spatial union):
+
+    ::
+
+        GeometryFilter('lines.shp', WithinDistance, {'distance': 500})
+
+    Example: given a shapefile containing points, this GeometryFilter will return all results that are within 5 kilometers of each of the points (using the `And` combinator, this is the equivalent of a spatial buffer followed by a spatial intersection):
+
+    ::
+
+        GeometryFilter('points.shp', WithinDistance, {'distance': 5, 'distance_unit': 'kilometer'}, combinator=And)
+
+
+Using GeoPandas geodataframes
+*****************************
+
+Integration with `GeoPandas`_ is available using the GeopandasFilter. It accepts a Geodataframe and builds a location filter out of it, ready to be used in a pydov query.
+
+This filter uses Geopandas and requires the `geopandas` package to be installed. Check the :ref:`installation` guide for details.
+
+GeopandasFilter
+    Build a location filter expression using a GeoPandas Geodataframe.
+
+    Instead of a single location filter, this class builds a location filter expression from a given Geodataframe (`geodataframe`), location filter (`location_filter`, optionally with `location_filter_kwargs`) and a logical `combinator` (by default this is `Or`).
+
+    Example: given a geodataframe containing polygons, this GeopandasFilter will return all results that are completely within *any one* of the polygons (using the default `Or` combinator, the equivalent of a spatial union):
+
+    ::
+
+        GeopandasFilter(geodataframe, Within)
+
+    Example: given a geodataframe containing polygons, this GeopandasFilter will return all results that are completely within *all* of the polygons (using the `And` combinator, the equivalent of a spatial intersection):
+
+    ::
+
+        GeopandasFilter(geodataframe, Within, combinator=And)
+
+    Example: given a geodataframe containing polygons (f.ex. Belgian communities), this GeopandasFilter will return all results that are completely disjoint from any of the polygons (i.e. are not inside of Belgium):
+
+    ::
+
+        GeopandasFilter(geodataframe, Disjoint, combinator=And)
+
+
+    Example: given a geodataframe containing linestrings, this GeopandasFilter will return all results that are within 500 meters of any one of the linestrings (using the default `Or` combinator, this is the equivalent of a spatial buffer followed by a spatial union):
+
+    ::
+
+        GeopandasFilter(geodataframe, WithinDistance, {'distance': 500})
+
+    Example: given a geodataframe containing points, this GeopandasFilter will return all results that are within 5 kilometers of each of the points (using the `And` combinator, this is the equivalent of a spatial buffer followed by a spatial intersection):
+
+    ::
+
+        GeopandasFilter(geodataframe, WithinDistance, {'distance': 5, 'distance_unit': 'kilometer'}, combinator=And)
+
+.. _GeoPandas: https://geopandas.org/

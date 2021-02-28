@@ -1,7 +1,6 @@
 """Script to update the testdata based on DOV webservices."""
 import os
 import sys
-from multiprocessing import Lock
 
 from owslib.etree import etree
 
@@ -21,8 +20,6 @@ from pydov.types.sondering import Sondering
 from pydov.util.dovutil import build_dov_url, get_remote_url
 from pydov.util.net import LocalSessionThreadPool
 from tests.abstract import ServiceCheck
-
-lock = Lock()
 
 
 def get_first_featuremember(wfs_response):
@@ -45,7 +42,6 @@ def update_file_real(filepath, url, process_fn=None, session=None):
             data = data.decode('utf-8')
     except Exception as e:
         output += ' FAILED:\n   {}.\n'.format(e)
-        return
     else:
         with open(filepath, 'wb') as f:
             if process_fn:
@@ -53,8 +49,9 @@ def update_file_real(filepath, url, process_fn=None, session=None):
             f.write(data.encode('utf-8'))
             output += ' OK.\n'
 
-    with lock:
-        sys.stdout.write(output)
+    return output
+    # with lock:
+    #     sys.stdout.write(output)
 
 
 if __name__ == '__main__':
@@ -338,8 +335,8 @@ if __name__ == '__main__':
         'types/interpretaties/hydrogeologische_stratigrafie/'
         'wfsdescribefeaturetype.xml', build_dov_url(
             'geoserver/interpretaties'
-            '/hydrogeologische_stratigrafie/ows?service=wfs&version=1.1.0&request'
-            '=DescribeFeatureType'))
+            '/hydrogeologische_stratigrafie/ows?service=wfs&version=1.1.0'
+            '&request=DescribeFeatureType'))
 
     for xsd_schema in HydrogeologischeStratigrafie.get_xsd_schemas():
         update_file(
@@ -377,7 +374,8 @@ if __name__ == '__main__':
         get_first_featuremember)
 
     update_file(
-        'types/interpretaties/lithologische_beschrijvingen/fc_featurecatalogue.xml',
+        'types/interpretaties/lithologische_beschrijvingen/'
+        'fc_featurecatalogue.xml',
         build_dov_url(
             'geonetwork/srv/dut/csw'
             '?Service=CSW&Request=GetRecordById&Version=2.0.2'
@@ -394,11 +392,11 @@ if __name__ == '__main__':
             '-af099e399f3b'))
 
     update_file(
-        'types/interpretaties/lithologische_beschrijvingen/wfsdescribefeaturetype'
-        '.xml', build_dov_url(
+        'types/interpretaties/lithologische_beschrijvingen/'
+        'wfsdescribefeaturetype.xml', build_dov_url(
             'geoserver/interpretaties'
-            '/lithologische_beschrijvingen/ows?service=wfs&version=1.1.0&request'
-            '=DescribeFeatureType'))
+            '/lithologische_beschrijvingen/ows?service=wfs&version=1.1.0'
+            '&request=DescribeFeatureType'))
 
     for xsd_schema in LithologischeBeschrijvingen.get_xsd_schemas():
         update_file(
@@ -822,4 +820,5 @@ if __name__ == '__main__':
             'types/grondmonster/xsd_%s.xml' %
             xsd_schema.split('/')[-1], xsd_schema)
 
-    pool.join()
+    for r in pool.join():
+        sys.stdout.write(r.get_result())

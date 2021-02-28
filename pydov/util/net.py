@@ -140,19 +140,17 @@ class LocalSessionThreadPool:
         """Wait for all the jobs to be executed and return the results of all
         jobs in a list.
 
-        Returns
-        -------
-        list
-            List of the result of all executed function in the order they were
+        Yields
+        ------
+        WorkerResult
+            Results of the executed functions in the order they were
             submitted.
         """
         self.input_queue.join()
         self.stop()
 
-        results = []
         while not self.result_queue.empty():
-            results.append(self.result_queue.get().get_result())
-        return results
+            yield self.result_queue.get()
 
 
 class WorkerResult:

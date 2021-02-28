@@ -604,11 +604,9 @@ class AbstractDovType(AbstractTypeCommon):
         for item in iterable:
             pool.execute(item.get_df_array, (return_fields,))
 
-        result_list = pool.join()
-
         df_result = []
-        for res in result_list:
-            unnest_result(res, df_result)
+        for res in pool.join():
+            unnest_result(res.get_result(), df_result)
 
         return df_result
 

@@ -636,7 +636,7 @@ class GeometryFilter(GmlFilter):
                                   'or higher')
         except ImportError:
             raise ImportError('No module named fiona. GeometryFilter '
-                              'requires fiona to be installed')
+                              'requires fiona to be installed.')
         else:
             # Open the geometry as a collection containing multiple records
             with fiona.open(geometry, 'r') as c:
@@ -702,7 +702,7 @@ class GeopandasFilter(GmlFilter):
         try:
             import geopandas
         except ImportError:
-            raise ImportError('No module named GeoPandas. GeoPandasFilter '
+            raise ImportError('No module named GeoPandas. GeopandasFilter '
                               'requires geopandas to be installed.')
         else:
             if not isinstance(gdf, geopandas.geodataframe.GeoDataFrame):

@@ -443,9 +443,8 @@ Bodemsites
     Field,Cost,Datatype,Example
 	pkey_bodemsite,1,string,https://www.dov.vlaanderen.be/data/bodemsite/2013-000180
 	naam,1,string,Meise_Neerpoorten
-	datum,1,date,nan
+	waarnemingsdatum,1,date,nan
 	beschrijving,1,string,grasland
-	waarnemingsdatum,10,date,nan
 	invoerdatum,10,date,nan
 
 
@@ -458,14 +457,13 @@ BodemLocaties
 	pkey_bodemlocatie,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/2011-000002
 	naam,1,string,STARC_4
 	type,1,string,profielput
-	datum,1,date,nan
+	waarnemingsdatum,1,date,nan
 	doel,1,string,archeologische landschappelijke profielputten
 	x,1,float,206553.85
 	y,1,float,168891.11
-	z,1,float,44.00
+	mv_mtaw,1,float,44.00
 	erfgoed,1,boolean,true
 	bodemstreek,1,string,Zandleemstreek
-	waarnemingsdatum,10,date,nan
 	invoerdatum,10,date,nan
 	educatieve_waarde,10,string,ZEER
 
@@ -477,15 +475,16 @@ Bodemmonsters
 
     Field,Cost,Datatype,Example
 	pkey_bodemmonster,1,string,https://www.dov.vlaanderen.be/data/bodemmonster/1964-264869
+	pkey_parent,1,string,https://www.dov.vlaanderen.be/data/diepteinterval/2019-003366
 	identificatie,1,string,KART_PROF_073E/12_H2_M1
 	datum_monstername,1,date,1964-11-12
-	tijdstip_monstername,10,time,NaN
+	tijdstip_monstername,10,string,NaN
 	type,1,string,ENK
-	monsternamedoor,1,string,Centrum voor Grondonderzoek (C.V.G.)
+	monstername_door,1,string,Centrum voor Grondonderzoek (C.V.G.)
 	techniek,1,string,NaN
 	condities,1,string,Zie scan analoge profielbeschrijving
-	van,1,float,30
-	tot,1,float,45
+	diepte_van_cm,1,float,30
+	diepte_tot_cm,1,float,45
 	labo,1,string,Centrum voor Grondonderzoek (C.V.G.)
 
 
@@ -497,19 +496,16 @@ Bodemobservaties
     Field,Cost,Datatype,Example
 	pkey_bodemobservatie,1,string,https://www.dov.vlaanderen.be/data/bodemobservatie/2019-349078
 	pkey_bodemlocatie,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/1952-007078
-	Aan,1,string,bodemlocatie/1952-007078
 	pkey_parent,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/1952-007078
 	parameter,1,string,organische_c_perc
 	parametergroep,10,string
 	waarde,1,string,0.38
 	eenheid,1,string,%
-	ondergrens,10,float,NaN
-	bovengrens,10,float,NaN
 	methode,1,string,Aardewerk nieuwe methode organische koolstof
 	betrouwbaarheid,10,string,onbekend
 	veld_labo,1,string,VELD
-	diepte_van,1,float,30
-	diepte_tot,1,float,45
+	diepte_van_cm,1,float,30
+	diepte_tot_cm,1,float,45
 	observatiedatum,10,date,1964-11-12
 	invoerdatum,10,date,NaN
 

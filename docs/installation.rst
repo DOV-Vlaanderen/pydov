@@ -41,11 +41,11 @@ you through the process.
     in your pydov conda environment before running the pydov installation. If you are not using conda,
     give the following a try:
 
-    #. Download the latest wheel (choose the approptiate version, based on your python distribution and operating system)
-       from `www.lfd.uci.edu`_ for both `Fiona`_ and `GDAL`_. For example `Fiona‑1.8.17‑cp38‑cp38‑win_amd64.whl` will
-       allow you to install `Fiona`_ for your python 3.8 distribution on a 64bit Windows system.
-    #. Install the wheels using :code:`pip install <your wheel>`
-    #. Install `GeoPandas`_ using :code:`pip install geopandas`
+    #. Install [pipwin](https://pypi.org/project/pipwin/) using `pip install pipwin`
+    #. Download the latest Windows binaries for both `Fiona`_, `GDAL`_ and `GeoPandas`_ provided by `www.lfd.uci.edu`_:
+      #. Install `GDAL`_:code:`pipwin install gdal`
+      #. Install `Fiona`_:code:`pipwin install fiona`
+      #. Install `GeoPandas`_:code:`pipwin install geopandas`
 
 .. _Fiona: https://pypi.org/project/Fiona/
 .. _GDAL: https://gdal.org/

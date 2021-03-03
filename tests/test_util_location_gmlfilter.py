@@ -1,5 +1,7 @@
 """Module grouping tests for the pydov.util.location.GmlFilter class."""
 import pytest
+import platform
+import subprocess
 from owslib.etree import etree
 from owslib.fes import And, Or
 
@@ -741,12 +743,23 @@ class TestCombination(object):
 class TestGeometryFilter(object):
     """Class grouping tests for the GeometryFilter."""
 
+    def initialisation(self):
+        if platform.system() != 'Windows':
+            subprocess.run(['pip', 'install', 'fiona>=1.8.18'])
+            subprocess.run(['pip', 'install', 'geopandas'])
+        else:
+            subprocess.run(['pip', 'install', 'pipwin'])
+            subprocess.run(['pipwin', 'install', 'gdal'])
+            subprocess.run(['pipwin', 'install', 'fiona'])
+            subprocess.run(['pipwin', 'install', 'geopandas'])
+
     def test_shapefile(self):
         """Test the conversion of a shapefile to GML using fiona,
         Within operator.
 
         Test whether the generated XML is correct and stable.
         """
+        self.initialisation()
         shapefile = 'tests/data/util/location/polygon_multiple_31370.shp'
 
         f = GeometryFilter(shapefile, Within)
@@ -777,6 +790,7 @@ class TestGeometryFilter(object):
 
         Test whether the generated XML is correct and stable.
         """
+        self.initialisation()
         gpkg = 'tests/data/util/location/polygon_multiple_31370.gpkg'
 
         f = GeometryFilter(gpkg, Within)
@@ -803,13 +817,29 @@ class TestGeometryFilter(object):
 
 
 class TestGeopandasFilter:
+
+    def initialisation(self):
+        if platform.system() != 'Windows':
+            subprocess.run(['pip', 'install', 'fiona>=1.8.18'])
+            subprocess.run(['pip', 'install', 'geopandas'])
+        else:
+            subprocess.run(['pip', 'install', 'pipwin'])
+            subprocess.run(['pipwin', 'install', 'gdal'])
+            subprocess.run(['pipwin', 'install', 'fiona'])
+            subprocess.run(['pipwin', 'install', 'geopandas'])
+
     def test_geopandas_dataframe(self):
         """Test the conversion of a GeoPandas GeoDataFrame
 
         Test whether the generated XML is correct and stable.
         """
+        self.initialisation()
         shapefile = 'tests/data/util/location/polygon_multiple_31370.shp'
         import geopandas as gpd
+        # Disable C-binding for shapely on Windows
+        if platform.system() == 'Windows':
+            from shapely import speedups
+            speedups.disable()
         gdf = gpd.read_file(shapefile)
 
         f = GeopandasFilter(gdf, Within)
@@ -839,8 +869,13 @@ class TestGeopandasFilter:
 
         Test whether the generated XML is correct and stable.
         """
+        self.initialisation()
         shapefile = 'tests/data/util/location/polygon_multiple_31370.shp'
         import geopandas as gpd
+        # Disable C-binding for shapely on Windows
+        if platform.system() == 'Windows':
+            from shapely import speedups
+            speedups.disable()
         gdf = gpd.read_file(shapefile)
 
         # geopandas subselection to single feature line geodataframe
@@ -862,8 +897,13 @@ class TestGeopandasFilter:
     def test_geopandas_series(self):
         """Test GeoPandas GeoSeries not supported by pydov spatial filter
         """
+        self.initialisation()
         shapefile = 'tests/data/util/location/polygon_multiple_31370.shp'
         import geopandas as gpd
+        # Disable C-binding for shapely on Windows
+        if platform.system() == 'Windows':
+            from shapely import speedups
+            speedups.disable()
         gdf = gpd.read_file(shapefile)
 
         # geopandas geometry not supported Type
@@ -877,8 +917,13 @@ class TestGeopandasFilter:
     def test_geopandas_nocrs(self):
         """Test GeoPandas GeoSeries not supported by pydov spatial filter
         """
+        self.initialisation()
         shapefile = 'tests/data/util/location/polygon_multiple_31370.shp'
         import geopandas as gpd
+        # Disable C-binding for shapely on Windows
+        if platform.system() == 'Windows':
+            from shapely import speedups
+            speedups.disable()
         gdf = gpd.read_file(shapefile)
         gdf.crs = None
 

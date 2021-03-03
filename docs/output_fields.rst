@@ -252,6 +252,8 @@ Groundwater samples (grondwatermonsters)
     parametergroep,10,string,Zware metalen
     parameter,10,string,Hg
     detectie,10,string,<
+	ondergrens,10,float,0
+	bovengrens,10,float,10
     waarde,10,float,0.5
     eenheid,10,string,µg/l
     veld_labo,10,string,LABO
@@ -508,4 +510,7 @@ Bodemobservaties
 	diepte_tot_cm,1,float,45
 	observatiedatum,10,date,1964-11-12
 	invoerdatum,10,date,NaN
+	detectie,10,string,<
+	ondergrens,10,float,0
+	bovengrens,10,float,10
 

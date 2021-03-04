@@ -133,6 +133,8 @@ class Grondmonster(AbstractDovType):
                  datatype='float')
     ]
 
+    pkey_fieldname = 'grondmonsterfiche'
+
     def __init__(self, pkey):
         """Initialisation.
 
@@ -144,18 +146,3 @@ class Grondmonster(AbstractDovType):
 
         """
         super().__init__('grondmonster', pkey)
-
-    @classmethod
-    def from_wfs_element(cls, feature, namespace):
-        grondmonster = cls(feature.findtext(
-            './{{{}}}grondmonsterfiche'.format(namespace)))
-
-        for field in cls.get_fields(source=('wfs',)).values():
-            grondmonster.data[field['name']] = cls._parse(
-                func=feature.findtext,
-                xpath=field['sourcefield'],
-                namespace=namespace,
-                returntype=field.get('type', None)
-            )
-
-        return grondmonster

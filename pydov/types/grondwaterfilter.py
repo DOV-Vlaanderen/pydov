@@ -119,6 +119,8 @@ class GrondwaterFilter(AbstractDovType):
                  datatype='float')
     ]
 
+    pkey_fieldname = 'filterfiche'
+
     def __init__(self, pkey):
         """Initialisation.
 
@@ -130,18 +132,3 @@ class GrondwaterFilter(AbstractDovType):
 
         """
         super().__init__('filter', pkey)
-
-    @classmethod
-    def from_wfs_element(cls, feature, namespace):
-        gwfilter = cls(
-            feature.findtext('./{{{}}}filterfiche'.format(namespace)))
-
-        for field in cls.get_fields(source=('wfs',)).values():
-            gwfilter.data[field['name']] = cls._parse(
-                func=feature.findtext,
-                xpath=field['sourcefield'],
-                namespace=namespace,
-                returntype=field.get('type', None)
-            )
-
-        return gwfilter

@@ -342,6 +342,9 @@ class AbstractTestSearch(object):
             Monkeypatch the call to get WFS features.
 
         """
+        if self.valid_returnfields_subtype is None:
+            return
+
         df = self.search_instance.search(
             query=self.valid_query_single,
             return_fields=self.valid_returnfields_subtype)
@@ -423,6 +426,9 @@ class AbstractTestSearch(object):
         Test whether an InvalidFieldError is raised.
 
         """
+        if self.xml_field is None:
+            return
+
         query = PropertyIsEqualTo(propertyname=self.xml_field,
                                   literal='Geotechnisch onderzoek')
 
@@ -502,6 +508,9 @@ class AbstractTestSearch(object):
             Monkeypatch the call to get the remote XML data.
 
         """
+        if self.xml_field is None:
+            return
+
         with pytest.raises(InvalidFieldError):
             self.search_instance.search(
                 query=self.valid_query_single,
@@ -747,6 +756,9 @@ class AbstractTestTypes(object):
         Test whether an InvalidFieldError is raised.
 
         """
+        if self.valid_returnfields_subtype is None:
+            return
+
         with pytest.raises(InvalidFieldError):
             self.datatype_class.get_field_names(
                 return_fields=self.valid_returnfields_subtype,
@@ -815,6 +827,9 @@ class AbstractTestTypes(object):
         Test whether fields provides by subtypes are not listed in the output.
 
         """
+        if self.field_names_subtypes is None:
+            return
+
         fields = self.datatype_class.get_fields(include_subtypes=False)
         for field in fields:
             assert field not in self.field_names_subtypes
@@ -836,10 +851,11 @@ class AbstractTestTypes(object):
 
         assert isinstance(feature, self.datatype_class)
 
-        assert feature.pkey.startswith(self.pkey_base)
+        if self.pkey_base is not None:
+            assert feature.pkey.startswith(self.pkey_base)
 
-        assert feature.pkey.startswith(
-            build_dov_url('data/{}/'.format(feature.typename)))
+            assert feature.pkey.startswith(
+                build_dov_url('data/{}/'.format(feature.typename)))
 
         assert isinstance(feature.data, dict)
         assert isinstance(feature.subdata, dict)

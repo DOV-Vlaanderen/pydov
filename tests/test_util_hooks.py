@@ -6,7 +6,6 @@ from owslib.etree import etree
 from owslib.fes import PropertyIsEqualTo
 
 import pydov
-from pydov.search.abstract import AbstractSearch
 from pydov.search.boring import BoringSearch
 from pydov.util.hooks import (AbstractInjectHook, AbstractReadHook, Hooks,
                               SimpleStatusHook)
@@ -53,13 +52,6 @@ def test_hook_inject():
     yield
 
     pydov.hooks = orig_hooks
-
-
-@pytest.fixture
-def force_rebuild_wfs():
-    """PyTest fixture to temporarily reset the cached WFS instance to force
-    reevaluation of the initialisation code and recall meta events."""
-    AbstractSearch._AbstractSearch__wfs = None
 
 
 class HookCounter(AbstractReadHook, AbstractInjectHook):
@@ -179,18 +171,6 @@ class HookInjecter(AbstractReadHook, AbstractInjectHook):
     def __init__(self):
         self.wfs_features = None
         self.dov_xml = None
-        self.wfs_capabilities = None
-
-    def meta_received(self, url, response):
-        """Save the WFS capabilities document in order to inject later."""
-        if 'geoserver/wfs' in url.lower():
-            self.wfs_capabilities = response
-
-    def inject_meta_response(self, url):
-        """Inject the previously saved WFS capabilities document."""
-        if 'geoserver/wfs' in url.lower() and \
-                self.wfs_capabilities is not None:
-            return self.wfs_capabilities
 
     def wfs_search_result_received(self, query, features):
         """Save the WFS GetFeature response in order to adjust and inject
@@ -229,15 +209,13 @@ class TestHookCount(object):
     @pytest.mark.online
     @pytest.mark.skipif(not ServiceCheck.service_ok(),
                         reason="DOV service is unreachable")
-    def test_wfs_only(self, force_rebuild_wfs, test_hook_count):
+    def test_wfs_only(self, test_hook_count):
         """Test the search method providing both a location and a query.
 
         Test whether a dataframe is returned.
 
         Parameters
         ----------
-        force_rebuild_wfs : pytest.fixture
-            Fixture removing cached WFS capabilities document.
         test_hook_count : pytest.fixture
             Fixture removing default hooks and installing HookCounter.
 
@@ -267,16 +245,13 @@ class TestHookCount(object):
     @pytest.mark.online
     @pytest.mark.skipif(not ServiceCheck.service_ok(),
                         reason="DOV service is unreachable")
-    def test_wfs_and_xml_nocache(self, force_rebuild_wfs, test_hook_count,
-                                 nocache):
+    def test_wfs_and_xml_nocache(self, test_hook_count, nocache):
         """Test the search method providing both a location and a query.
 
         Test whether a dataframe is returned.
 
         Parameters
         ----------
-        force_rebuild_wfs : pytest.fixture
-            Fixture removing cached WFS capabilities document.
         test_hook_count : pytest.fixture
             Fixture removing default hooks and installing HookCounter.
         nocache : pytest.fixture
@@ -329,16 +304,13 @@ class TestHookCount(object):
     @pytest.mark.parametrize('plaintext_cache',
                              [[datetime.timedelta(minutes=15)]],
                              indirect=['plaintext_cache'])
-    def test_wfs_and_xml_cache(self, force_rebuild_wfs, test_hook_count,
-                               plaintext_cache):
+    def test_wfs_and_xml_cache(self, test_hook_count, plaintext_cache):
         """Test the search method providing both a location and a query.
 
         Test whether a dataframe is returned.
 
         Parameters
         ----------
-        force_rebuild_wfs : pytest.fixture
-            Fixture removing cached WFS capabilities document.
         test_hook_count : pytest.fixture
             Fixture removing default hooks and installing HookCounter.
         plaintext_cache : pytest.fixture
@@ -415,13 +387,11 @@ class TestHookTypes(object):
     @pytest.mark.online
     @pytest.mark.skipif(not ServiceCheck.service_ok(),
                         reason="DOV service is unreachable")
-    def test_hooks(self, force_rebuild_wfs, test_hook_types):
+    def test_hooks(self, test_hook_types):
         """Test the argument types of the hook events.
 
         Parameters
         ----------
-        force_rebuild_wfs : pytest.fixture
-            Fixture removing cached WFS capabilities document.
         test_hook_types : pytest.fixture
             Fixture removing default hooks and installing HookTester.
 
@@ -437,15 +407,13 @@ class TestHookInject(object):
     @pytest.mark.online
     @pytest.mark.skipif(not ServiceCheck.service_ok(),
                         reason="DOV service is unreachable")
-    def test_hooks_inject(self, force_rebuild_wfs, test_hook_inject):
+    def test_hooks_inject(self, test_hook_inject):
         """Test the of the hook inject events.
 
         Test whether the requests are intercepted correctly.
 
         Parameters
         ----------
-        force_rebuild_wfs : pytest.fixture
-            Fixture removing cached WFS capabilities document.
         test_hook_types : pytest.fixture
             Fixture removing default hooks and installing HookTester.
 

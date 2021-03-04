@@ -33,6 +33,8 @@ class AbstractCommonInterpretatie(AbstractDovType):
         WfsField(name='y', source_field='Y_mL72', datatype='float')
     ]
 
+    pkey_fieldname = 'Interpretatiefiche'
+
     def __init__(self, pkey):
         """Initialisation.
 
@@ -49,7 +51,8 @@ class AbstractCommonInterpretatie(AbstractDovType):
     @classmethod
     def from_wfs_element(cls, feature, namespace):
         instance = cls(
-            feature.findtext('./{{{}}}Interpretatiefiche'.format(namespace)))
+            feature.findtext('./{{{}}}{}'.format(
+                namespace, cls.pkey_fieldname)))
 
         typeproef = cls._parse(
             func=feature.findtext,
@@ -107,6 +110,8 @@ class AbstractBoringInterpretatie(AbstractDovType):
         WfsField(name='y', source_field='Y_mL72', datatype='float')
     ]
 
+    pkey_fieldname = 'Interpretatiefiche'
+
     def __init__(self, pkey):
         """Initialisation.
 
@@ -123,7 +128,8 @@ class AbstractBoringInterpretatie(AbstractDovType):
     @classmethod
     def from_wfs_element(cls, feature, namespace):
         instance = cls(
-            feature.findtext('./{{{}}}Interpretatiefiche'.format(namespace)))
+            feature.findtext('./{{{}}}{}'.format(
+                namespace, cls.pkey_fieldname)))
 
         for field in cls.get_fields(source=('wfs',)).values():
             instance.data[field['name']] = cls._parse(

@@ -18,6 +18,7 @@ Currently, we support the following datasets:
     CPT measurements (with CPT data),Sonderingen (met sondeergegevens),:class:`pydov.search.sondering.SonderingSearch`
     Groundwater screens (with water head levels),Grondwaterfilters (met peilmetingen),:class:`pydov.search.grondwaterfilter.GrondwaterFilterSearch`
     Groundwater samples (with quality measurements),Grondwatermonsters (met kwaliteitsmetingen),:class:`pydov.search.grondwatermonster.GrondwaterMonsterSearch`
+    Groundwater permits,Grondwatervergunningen,:class:`pydov.search.grondwatervergunning.GrondwaterVergunningSearch`
     Formal stratigraphy (with layers),Formele stratigrafie (met lagen),:class:`pydov.search.interpretaties.FormeleStratigrafieSearch`
     Informal stratigraphy (with layers),Informele stratigrafie (met lagen),:class:`pydov.search.interpretaties.InformeleStratigrafieSearch`
     Hydrogeological stratigraphy (with layers),Hydrogeologische stratigrafie (met lagen),:class:`pydov.search.interpretaties.HydrogeologischeStratigrafieSearch`

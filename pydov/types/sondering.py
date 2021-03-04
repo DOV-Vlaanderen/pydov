@@ -83,6 +83,8 @@ class Sondering(AbstractDovType):
                  datatype='float')
     ]
 
+    pkey_fieldname = 'fiche'
+
     def __init__(self, pkey):
         """Initialisation.
 
@@ -94,17 +96,3 @@ class Sondering(AbstractDovType):
 
         """
         super(Sondering, self).__init__('sondering', pkey)
-
-    @classmethod
-    def from_wfs_element(cls, feature, namespace):
-        s = cls(feature.findtext('./{{{}}}fiche'.format(namespace)))
-
-        for field in cls.get_fields(source=('wfs',)).values():
-            s.data[field['name']] = cls._parse(
-                func=feature.findtext,
-                xpath=field['sourcefield'],
-                namespace=namespace,
-                returntype=field.get('type', None)
-            )
-
-        return s

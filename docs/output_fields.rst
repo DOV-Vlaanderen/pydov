@@ -435,3 +435,31 @@ Borehole samples (grondmonsters)
     fractie,10,float,0
     methode,10,string,ZEEFPROEF
 
+Groundwater permits (grondwatervergunningen)
+---------------------------------------------
+  .. csv-table:: Groundwater permits (grondwatervergunningen)
+    :header-rows: 1
+
+    Field,Cost,Datatype,Example
+    id_vergunning,1,string,66229
+    pkey_installatie,1,string,https://www.dov.vlaanderen.be/data/installatie/2020-093103
+    x,1,float,157403.75
+    y,1,float,214471.32
+    diepte,1,float,10.0
+    exploitant_naam,1,string,AQUAFIN
+    watnr,1,string,VLA-0019-A
+    vlaremrubriek,1,string,53.2.2.b)2
+    vergund_jaardebiet,1,float,493000.0
+    vergund_dagdebiet,1,float,nan
+    van_datum_termijn,1,date,2019-08-09
+    tot_datum_termijn,1,date,nan
+    aquifer_vergunning,1,string,0200: Kempens Aquifersysteem
+    inrichtingsklasse,1,string,Klasse 1 - Vlaams project
+    nacebelcode,1,string,37000: Afvalwaterafvoer
+    actie_waakgebied,1,string,nan
+    cbbnr,1,string,00418870000022
+    kbonr,1,string,044691388
+
+
+
+

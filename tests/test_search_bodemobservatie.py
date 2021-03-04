@@ -36,9 +36,10 @@ class TestBodemobservatieSearch(AbstractTestSearch):
     valid_returnfields_extra = ('pkey_bodemobservatie', 'parameter')
 
 
-    df_default_columns = ['pkey_bodemobservatie', 'pkey_bodemlocatie', 'Aan',
+    df_default_columns = ['pkey_bodemobservatie', 'pkey_bodemlocatie',
                           'pkey_parent', 'parameter', 'parametergroep',
                           'waarde', 'eenheid', 'ondergrens', 'bovengrens',
+                          'detectie',
                           'methode', 'betrouwbaarheid', 'veld_labo',
                           'diepte_van', 'diepte_tot',
                           'observatiedatum', 'invoerdatum']

@@ -18,17 +18,19 @@ class TestBodemmonster(AbstractTestTypes):
     pkey_base = build_dov_url('data/bodemmonster/')
 
     field_names = [
-            'pkey_bodemmonster', 'identificatie',
+            'pkey_bodemmonster', 'pkey_bodemlocatie', 'pkey_parent',
+            'identificatie',
             'datum_monstername', 'tijdstip_monstername',
-            'type', 'monsternamedoor', 'techniek',
-            'condities', 'van', 'tot', 'labo'
+            'type', 'monstername_door', 'techniek',
+            'condities', 'diepte_van_cm', 'diepte_tot_cm', 'labo'
         ]
     field_names_subtypes = []
     field_names_nosubtypes = [
-            'pkey_bodemmonster', 'identificatie',
+            'pkey_bodemmonster', 'pkey_bodemlocatie', 'pkey_parent',
+            'identificatie',
             'datum_monstername', 'tijdstip_monstername',
-            'type', 'monsternamedoor', 'techniek',
-            'condities', 'van', 'tot', 'labo'
+            'type', 'monstername_door', 'techniek',
+            'condities', 'diepte_van_cm', 'diepte_tot_cm', 'labo'
     ]
 
     valid_returnfields = ('pkey_bodemmonster', 'identificatie')

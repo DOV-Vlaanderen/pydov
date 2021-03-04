@@ -17,17 +17,17 @@ class TestBodemlocatie(AbstractTestTypes):
     pkey_base = build_dov_url('data/bodemlocatie/')
 
     field_names = [
-        'pkey_bodemlocatie', 'naam', 'type', 'datum', 'doel',
-        'x', 'y', 'z',
+        'pkey_bodemlocatie', 'naam', 'type', 'waarnemingsdatum', 'doel',
+        'x', 'y', 'mv_mtaw',
         'erfgoed', 'bodemstreek',
-        'waarnemingsdatum', 'invoerdatum','educatieve_waarde'
+        'invoerdatum','educatieve_waarde'
         ]
     field_names_subtypes = []
     field_names_nosubtypes = [
-        'pkey_bodemlocatie', 'naam', 'type', 'datum', 'doel',
-        'x', 'y', 'z',
+        'pkey_bodemlocatie', 'naam', 'type', 'waarnemingsdatum', 'doel',
+        'x', 'y', 'mv_mtaw',
         'erfgoed', 'bodemstreek',
-        'waarnemingsdatum', 'invoerdatum','educatieve_waarde'
+        'invoerdatum','educatieve_waarde'
     ]
 
     valid_returnfields = ('pkey_bodemlocatie', 'naam')

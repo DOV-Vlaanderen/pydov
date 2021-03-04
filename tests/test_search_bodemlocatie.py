@@ -28,16 +28,16 @@ class TestBodemlocatieSearch(AbstractTestSearch):
 
     inexistent_field = 'onbestaand'
     wfs_field = 'naam'
-    xml_field = 'waarnemingsdatum'
+    xml_field = 'invoerdatum'
 
     valid_returnfields = ('pkey_bodemlocatie', 'naam', 'waarnemingsdatum')
     valid_returnfields_subtype = ('pkey_bodemlocatie', 'naam', 'waarnemingsdatum')
     valid_returnfields_extra = ('pkey_bodemlocatie', 'naam')
 
 
-    df_default_columns = ['pkey_bodemlocatie', 'naam', 'type', 'datum', 'doel', 'x', 'y', 'z',
+    df_default_columns = ['pkey_bodemlocatie', 'naam', 'type', 'waarnemingsdatum', 'doel', 'x', 'y', 'mv_mtaw',
                           'erfgoed', 'bodemstreek',
-                          'waarnemingsdatum', 'invoerdatum',
+                          'invoerdatum',
                           'educatieve_waarde']
 
     def test_search_date(self, mp_wfs, mp_get_schema,

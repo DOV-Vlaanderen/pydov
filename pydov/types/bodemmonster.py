@@ -14,6 +14,12 @@ class Bodemmonster(AbstractDovType):
     fields = [
         WfsField(name='pkey_bodemmonster', source_field='Bodemmonsterfiche',
                  datatype='string'),
+        WfsField(name='pkey_bodemlocatie',
+                 source_field='Bodemlocatiefiche',
+                 datatype='string'),
+        WfsField(name='pkey_parent',
+                 source_field='Parentfiche',
+                 datatype='string'),
         WfsField(name='identificatie', source_field='Bodemmonster',
                  datatype='string'),
         WfsField(name='datum_monstername', source_field='Datum_monsterafname',
@@ -21,16 +27,16 @@ class Bodemmonster(AbstractDovType):
         XmlField(name='tijdstip_monstername',
                  source_xpath='/bodemmonster/tijdstip_monstername',
                  definition='Tijdstip waarop het monster werd genomen.',
-                 datatype='time'),
+                 datatype='string'),
         WfsField(name='type', source_field='Type', datatype='string'),
-        WfsField(name='monsternamedoor', source_field='Monsterafname_door',
+        WfsField(name='monstername_door', source_field='Monsterafname_door',
                  datatype='string'),
         WfsField(name='techniek', source_field='Techniek_monsterafname',
                  datatype='string'),
         WfsField(name='condities', source_field='Condities_monsterafname',
                  datatype='string'),
-        WfsField(name='van', source_field='Diepte_van', datatype='float'),
-        WfsField(name='tot', source_field='Diepte_tot', datatype='float'),
+        WfsField(name='diepte_van_cm', source_field='Diepte_van', datatype='float'),
+        WfsField(name='diepte_tot_cm', source_field='Diepte_tot', datatype='float'),
         WfsField(name='labo', source_field='Labo', datatype='string')
     ]
 

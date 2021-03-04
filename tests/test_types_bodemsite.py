@@ -17,13 +17,13 @@ class TestBodemsite(AbstractTestTypes):
     pkey_base = build_dov_url('data/bodemsite/')
 
     field_names = [
-        'pkey_bodemsite', 'naam', 'datum', 'beschrijving',
-        'waarnemingsdatum', 'invoerdatum'
+        'pkey_bodemsite', 'naam', 'waarnemingsdatum', 'beschrijving',
+        'invoerdatum'
         ]
     field_names_subtypes = []
     field_names_nosubtypes = [
-        'pkey_bodemsite', 'naam', 'datum', 'beschrijving',
-        'waarnemingsdatum', 'invoerdatum'
+        'pkey_bodemsite', 'naam', 'waarnemingsdatum', 'beschrijving',
+        'invoerdatum'
     ]
 
     valid_returnfields = ('pkey_bodemsite', 'naam')

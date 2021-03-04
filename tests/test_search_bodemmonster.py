@@ -36,10 +36,11 @@ class TestBodemmonsterSearch(AbstractTestSearch):
     valid_returnfields_extra = ('pkey_bodemmonster', 'identificatie')
 
 
-    df_default_columns = ['pkey_bodemmonster', 'identificatie',
+    df_default_columns = ['pkey_bodemmonster', 'pkey_bodemlocatie',
+                          'pkey_parent', 'identificatie',
                           'datum_monstername', 'tijdstip_monstername',
-                          'type', 'monsternamedoor', 'techniek',
-                          'condities', 'van', 'tot', 'labo']
+                          'type', 'monstername_door', 'techniek',
+                          'condities', 'diepte_van_cm', 'diepte_tot_cm', 'labo']
 
     def test_search_date(self, mp_wfs, mp_get_schema,
                          mp_remote_describefeaturetype, mp_remote_md,

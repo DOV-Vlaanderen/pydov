@@ -17,16 +17,18 @@ class TestBodemobservatie(AbstractTestTypes):
     namespace = 'https://www.dov.vlaanderen.be/bodem'
     pkey_base = build_dov_url('data/bodemobservatie/')
 
-    field_names = ['pkey_bodemobservatie', 'pkey_bodemlocatie', 'Aan',
+    field_names = ['pkey_bodemobservatie', 'pkey_bodemlocatie',
                    'pkey_parent', 'parameter', 'parametergroep',
                    'waarde', 'eenheid', 'ondergrens', 'bovengrens',
+                   'detectie',
                    'methode', 'betrouwbaarheid', 'veld_labo',
                    'diepte_van', 'diepte_tot',
                    'observatiedatum', 'invoerdatum']
     field_names_subtypes = []
-    field_names_nosubtypes = ['pkey_bodemobservatie', 'pkey_bodemlocatie', 'Aan',
+    field_names_nosubtypes = ['pkey_bodemobservatie', 'pkey_bodemlocatie',
                               'pkey_parent', 'parameter', 'parametergroep',
                               'waarde', 'eenheid', 'ondergrens', 'bovengrens',
+                              'detectie',
                               'methode', 'betrouwbaarheid', 'veld_labo',
                               'diepte_van', 'diepte_tot',
                               'observatiedatum', 'invoerdatum']

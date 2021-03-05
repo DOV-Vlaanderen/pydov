@@ -511,6 +511,4 @@ Bodemobservaties
 	observatiedatum,10,date,1964-11-12
 	invoerdatum,10,date,NaN
 	detectie,10,string,<
-	ondergrens,10,float,0
-	bovengrens,10,float,10
 

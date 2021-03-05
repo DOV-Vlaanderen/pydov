@@ -813,10 +813,6 @@ class TestGeopandasFilter:
         """
         shapefile = 'tests/data/util/location/polygon_multiple_31370.shp'
         import geopandas as gpd
-        # Disable C-binding for shapely on Windows
-        if platform.system() == 'Windows':
-            from shapely import speedups
-            speedups.disable()
         gdf = gpd.read_file(shapefile)
 
         f = GeopandasFilter(gdf, Within)
@@ -848,10 +844,6 @@ class TestGeopandasFilter:
         """
         shapefile = 'tests/data/util/location/polygon_multiple_31370.shp'
         import geopandas as gpd
-        # Disable C-binding for shapely on Windows
-        if platform.system() == 'Windows':
-            from shapely import speedups
-            speedups.disable()
         gdf = gpd.read_file(shapefile)
 
         # geopandas subselection to single feature line geodataframe
@@ -875,10 +867,6 @@ class TestGeopandasFilter:
         """
         shapefile = 'tests/data/util/location/polygon_multiple_31370.shp'
         import geopandas as gpd
-        # Disable C-binding for shapely on Windows
-        if platform.system() == 'Windows':
-            from shapely import speedups
-            speedups.disable()
         gdf = gpd.read_file(shapefile)
 
         # geopandas geometry not supported Type
@@ -894,10 +882,6 @@ class TestGeopandasFilter:
         """
         shapefile = 'tests/data/util/location/polygon_multiple_31370.shp'
         import geopandas as gpd
-        # Disable C-binding for shapely on Windows
-        if platform.system() == 'Windows':
-            from shapely import speedups
-            speedups.disable()
         gdf = gpd.read_file(shapefile)
         gdf.crs = None
 

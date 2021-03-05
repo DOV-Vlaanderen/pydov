@@ -1,3 +1,4 @@
 gdal
+shapely
 fiona>=1.8.18
 geopandas

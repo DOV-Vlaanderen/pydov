@@ -89,6 +89,16 @@ jobs:
         run: |
           pip install -r requirements_dev.txt
           conda list
+      - name: Install development dependencies on Windows
+        if: ${{ matrix.os == 'windows-latest' }}
+        shell: pwsh
+        run: |
+          pip install pipwin
+          pipwin install -r requirements_win.txt
+      - name: Install development dependencies on Ubuntu
+        if: ${{ matrix.os == 'ubuntu-latest' }}
+        shell: pwsh
+        run: pip install -r requirements_win.txt
       - name: Run unit tests
         shell: pwsh
         run: |

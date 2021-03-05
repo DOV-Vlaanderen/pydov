@@ -38,8 +38,7 @@ class TestBodemobservatieSearch(AbstractTestSearch):
 
     df_default_columns = ['pkey_bodemobservatie', 'pkey_bodemlocatie',
                           'pkey_parent', 'parameter', 'parametergroep',
-                          'waarde', 'eenheid', 'ondergrens', 'bovengrens',
-                          'detectie',
+                          'waarde', 'eenheid', 'detectie',
                           'methode', 'betrouwbaarheid', 'veld_labo',
                           'diepte_van', 'diepte_tot',
                           'observatiedatum', 'invoerdatum']

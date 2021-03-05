@@ -1,5 +1,7 @@
 """Module grouping tests for the pydov.util.location.GmlFilter class."""
 import pytest
+import platform
+import subprocess
 from owslib.etree import etree
 from owslib.fes import And, Or
 
@@ -803,6 +805,7 @@ class TestGeometryFilter(object):
 
 
 class TestGeopandasFilter:
+
     def test_geopandas_dataframe(self):
         """Test the conversion of a GeoPandas GeoDataFrame
 

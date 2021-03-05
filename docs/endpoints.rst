@@ -279,7 +279,10 @@ A short overview of the map layers including permanent URL's can be found below.
      - `Grondwatermeetnetten fc <https://www.dov.vlaanderen.be/geonetwork/?uuid=b142965f-b2aa-429e-86ff-a7cb0e065d48>`_
      - gw_meetnetten:meetnetten
      - ``https://www.dov.vlaanderen.be/data/put``\ , ``https://www.dov.vlaanderen.be/data/filter``
-
+   * - No XML defined
+     - `Grondwatervergunningen (historische en huidige) fc <https://dov.vlaanderen.be/geonetwork/srv/eng/catalog.search#/metadata/1b8d9dce-40b2-450c-81ed-decb453b3143>`_
+     - gw_vergunningen:alle_verg
+     - No permanent URL base
 
 Examples
 """"""""

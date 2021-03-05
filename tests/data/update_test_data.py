@@ -9,6 +9,7 @@ from pydov.types.boring import Boring
 from pydov.types.grondmonster import Grondmonster
 from pydov.types.grondwaterfilter import GrondwaterFilter
 from pydov.types.grondwatermonster import GrondwaterMonster
+from pydov.types.grondwatervergunning import GrondwaterVergunning
 from pydov.types.interpretaties import (FormeleStratigrafie,
                                         GecodeerdeLithologie,
                                         GeotechnischeCodering,
@@ -338,8 +339,8 @@ if __name__ == '__main__':
         'types/interpretaties/hydrogeologische_stratigrafie/'
         'wfsdescribefeaturetype.xml', build_dov_url(
             'geoserver/interpretaties'
-            '/hydrogeologische_stratigrafie/ows?service=wfs&version=1.1.0&request'
-            '=DescribeFeatureType'))
+            '/hydrogeologische_stratigrafie/ows?service=wfs&version=1.1.0'
+            '&request=DescribeFeatureType'))
 
     for xsd_schema in HydrogeologischeStratigrafie.get_xsd_schemas():
         update_file(
@@ -377,7 +378,8 @@ if __name__ == '__main__':
         get_first_featuremember)
 
     update_file(
-        'types/interpretaties/lithologische_beschrijvingen/fc_featurecatalogue.xml',
+        'types/interpretaties/lithologische_beschrijvingen/'
+        'fc_featurecatalogue.xml',
         build_dov_url(
             'geonetwork/srv/dut/csw'
             '?Service=CSW&Request=GetRecordById&Version=2.0.2'
@@ -394,11 +396,12 @@ if __name__ == '__main__':
             '-af099e399f3b'))
 
     update_file(
-        'types/interpretaties/lithologische_beschrijvingen/wfsdescribefeaturetype'
+        'types/interpretaties/lithologische_beschrijvingen/'
+        'wfsdescribefeaturetype'
         '.xml', build_dov_url(
             'geoserver/interpretaties'
-            '/lithologische_beschrijvingen/ows?service=wfs&version=1.1.0&request'
-            '=DescribeFeatureType'))
+            '/lithologische_beschrijvingen/ows?service=wfs&version=1.1.0'
+            '&request=DescribeFeatureType'))
 
     for xsd_schema in LithologischeBeschrijvingen.get_xsd_schemas():
         update_file(
@@ -820,6 +823,51 @@ if __name__ == '__main__':
     for xsd_schema in Grondmonster.get_xsd_schemas():
         update_file(
             'types/grondmonster/xsd_%s.xml' %
+            xsd_schema.split('/')[-1], xsd_schema)
+
+    # types/gw_vergunningen
+
+    update_file(
+        'types/grondwatervergunning/wfsgetfeature.xml',
+        build_dov_url(
+            'geoserver/ows?service=WFS'
+            '&version=1.1.0&request=GetFeature&typeName='
+            'gw_vergunningen:alle_verg&maxFeatures=1&CQL_Filter'
+            '=id=38598'))
+
+    update_file(
+        'types/grondwatervergunning/feature.xml',
+        build_dov_url(
+            'geoserver/ows?service=WFS'
+            '&version=1.1.0&request=GetFeature&typeName='
+            'gw_vergunningen:alle_verg&maxFeatures=1&CQL_Filter'
+            '=id=38598'), get_first_featuremember)
+
+    update_file(
+        'types/grondwatervergunning/fc_featurecatalogue.xml',
+        build_dov_url('geonetwork/srv/dut/csw'
+                      '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+                      '&outputSchema=http://www.isotc211.org/2005/gfc'
+                      '&elementSetName=full&id=5e605651-'
+                      '6b2e-406f-863f-d2eda4d3e534'))
+
+    update_file('types/grondwatervergunning/md_metadata.xml',
+                build_dov_url(
+                    'geonetwork/srv/dut/csw'
+                    '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+                    '&outputSchema=http://www.isotc211.org/2005/gmd'
+                    '&elementSetName=full&id=1b8d9dce-40b2-450c-81ed-'
+                    'decb453b3143'))
+
+    update_file('types/grondwatervergunning/wfsdescribefeaturetype.xml',
+                build_dov_url(
+                    'geoserver/gw_vergunningen/alle_verg'
+                    '/ows?service=wfs&version=1.1.0'
+                    '&request=DescribeFeatureType'))
+
+    for xsd_schema in GrondwaterVergunning.get_xsd_schemas():
+        update_file(
+            'types/grondwatervergunning/xsd_%s.xml' %
             xsd_schema.split('/')[-1], xsd_schema)
 
     pool.join()

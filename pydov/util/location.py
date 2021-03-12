@@ -705,7 +705,7 @@ class GeopandasFilter(GmlFilter):
             raise ImportError('No module named GeoPandas. GeopandasFilter '
                               'requires geopandas to be installed.')
         else:
-            if not isinstance(gdf, geopandas.geodataframe.GeoDataFrame):
+            if not isinstance(gdf, geopandas.GeoDataFrame):
                 raise TypeError("pydov only supports geopandas.GeoDataFrame "
                                 "to define a spatial query.")
 

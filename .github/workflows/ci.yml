@@ -94,11 +94,11 @@ jobs:
         shell: pwsh
         run: |
           pip install pipwin
-          pipwin install -r requirements_windows.txt
+          pipwin install -r requirements_vectorfile.txt
       - name: Install development dependencies on Ubuntu
         if: ${{ matrix.os == 'ubuntu-latest' }}
         shell: pwsh
-        run: pip install -r requirements_others.txt
+        run: pip install -r requirements_vectorfile.txt
       - name: Run unit tests
         shell: pwsh
         run: |

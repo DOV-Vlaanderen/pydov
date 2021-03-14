@@ -48,6 +48,7 @@ class TestFormeleStratigrafieSearch(AbstractTestSearch):
     df_default_columns = ['pkey_interpretatie', 'pkey_boring',
                           'pkey_sondering',
                           'betrouwbaarheid_interpretatie', 'x', 'y',
+                          'start_interpretatie_mtaw',
                           'diepte_laag_van', 'diepte_laag_tot',
                           'lid1', 'relatie_lid1_lid2', 'lid2']
 

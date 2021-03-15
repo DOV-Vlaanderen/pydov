@@ -43,7 +43,7 @@ class TestSonderingSearch(AbstractTestSearch):
         'start_sondering_mtaw', 'diepte_sondering_van',
         'diepte_sondering_tot', 'datum_aanvang', 'uitvoerder',
         'sondeermethode', 'apparaat', 'datum_gw_meting',
-        'diepte_gw_m', 'z', 'qc', 'Qt', 'fs', 'u', 'i']
+        'diepte_gw_m', 'z', 'lengte', 'diepte', 'qc', 'Qt', 'fs', 'u', 'i']
 
     def test_search_date(self, mp_wfs, mp_get_schema,
                          mp_remote_describefeaturetype, mp_remote_md,

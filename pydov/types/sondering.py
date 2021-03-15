@@ -16,6 +16,16 @@ class Meetdata(AbstractDovSubType):
                             'werden, uitgedrukt in meter ten opzicht van het '
                             'aanvangspeil.',
                  datatype='float'),
+        XmlField(name='lengte',
+                 source_xpath='/lengte',
+                 definition='Geregistreerde sondeerlengte, uitgedrukt in meter.',
+                 datatype='float'),
+        XmlField(name='diepte',
+                 source_xpath='/diepte',
+                 definition='Diepte waarop sondeerparameters geregistreerd werden, '
+                             'berekend uit de sondeerlengte en de geregistreerde '
+                             'hellingsmeting, uitgedrukt in meter.',
+                 datatype='float'),
         XmlField(name='qc',
                  source_xpath='/qc',
                  definition='Opgemeten waarde van de conusweerstand, '

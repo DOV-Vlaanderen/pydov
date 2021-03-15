@@ -19,14 +19,14 @@ class Meetdata(AbstractDovSubType):
         XmlField(name='lengte',
                  source_xpath='/lengte',
                  definition='Geregistreerde sondeerlengte, '
-                             'uitgedrukt in meter.',
+                            'uitgedrukt in meter.',
                  datatype='float'),
         XmlField(name='diepte',
                  source_xpath='/diepte',
                  definition='Diepte waarop sondeerparameters geregistreerd '
-                             'werden, berekend uit de sondeerlengte en de '
-                             'geregistreerde hellingsmeting, '
-                             'uitgedrukt in meter.',
+                            'werden, berekend uit de sondeerlengte en de '
+                            'geregistreerde hellingsmeting, '
+                            'uitgedrukt in meter.',
                  datatype='float'),
         XmlField(name='qc',
                  source_xpath='/qc',

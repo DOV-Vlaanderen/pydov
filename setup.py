@@ -18,6 +18,8 @@ with open('requirements_dev.txt') as f:
     requirements_dev = f.read().splitlines()[1:]
 with open('requirements_doc.txt') as f:
     requirements_doc = f.read().splitlines()
+with open('requirements_vectorfile.txt') as f:
+    requirements_vectorfile = f.read().splitlines()
 
 setup(
     name='pydov',
@@ -55,6 +57,6 @@ setup(
     extras_require={
         'docs': requirements_doc,
         'devs': requirements_dev,
-        'vectorfile': ['geopandas', 'fiona>=1.8.18']
+        'vectorfile': requirements_vectorfile
     }
 )

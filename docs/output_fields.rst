@@ -457,6 +457,7 @@ BodemLocaties
 
     Field,Cost,Datatype,Example
 	pkey_bodemlocatie,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/2011-000002
+	pkey_bodemsite,1,string,https://www.dov.vlaanderen.be/data/bodemsite/2011-000245
 	naam,1,string,STARC_4
 	type,1,string,profielput
 	waarnemingsdatum,1,date,nan
@@ -478,6 +479,10 @@ Bodemmonsters
     Field,Cost,Datatype,Example
 	pkey_bodemmonster,1,string,https://www.dov.vlaanderen.be/data/bodemmonster/1964-264869
 	pkey_parent,1,string,https://www.dov.vlaanderen.be/data/diepteinterval/2019-003366
+	pkey_bodemlocatie,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/2015-000745
+	x,1,float,206553.85
+	y,1,float,168891.11
+	mv_mtaw,1,float,44.00
 	identificatie,1,string,KART_PROF_073E/12_H2_M1
 	datum_monstername,1,date,1964-11-12
 	tijdstip_monstername,10,string,NaN
@@ -497,13 +502,16 @@ Bodemobservaties
 
     Field,Cost,Datatype,Example
 	pkey_bodemobservatie,1,string,https://www.dov.vlaanderen.be/data/bodemobservatie/2019-349078
-	pkey_bodemlocatie,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/1952-007078
 	pkey_parent,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/1952-007078
+	pkey_bodemlocatie,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/1952-007078
 	parameter,1,string,organische_c_perc
 	parametergroep,10,string
 	waarde,1,string,0.38
 	eenheid,1,string,%
 	methode,1,string,Aardewerk nieuwe methode organische koolstof
+	x,1,float,206553.85
+	y,1,float,168891.11
+	mv_mtaw,1,float,44.00
 	betrouwbaarheid,10,string,onbekend
 	veld_labo,1,string,VELD
 	diepte_van_cm,1,float,30

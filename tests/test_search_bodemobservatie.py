@@ -39,8 +39,9 @@ class TestBodemobservatieSearch(AbstractTestSearch):
     df_default_columns = ['pkey_bodemobservatie', 'pkey_bodemlocatie',
                           'pkey_parent', 'parameter', 'parametergroep',
                           'waarde', 'eenheid', 'detectie',
-                          'methode', 'betrouwbaarheid', 'veld_labo',
-                          'diepte_van', 'diepte_tot',
+                          'methode', 'x', 'y', 'mv_mtaw',
+                          'betrouwbaarheid', 'veld_labo',
+                          'diepte_van_cm', 'diepte_tot_cm',
                           'observatiedatum', 'invoerdatum']
 
     def test_search_date(self, mp_wfs, mp_get_schema,
@@ -72,4 +73,4 @@ class TestBodemobservatieSearch(AbstractTestSearch):
             query=self.valid_query_single)
 
         # specific test for the Zulu time wfs 1.1.0 issue
-        assert df.observatiedatum.unique()[0] == datetime.date(1949, 7, 13)
+        assert df.observatiedatum.unique()[0] == datetime.date(1965, 7, 30)

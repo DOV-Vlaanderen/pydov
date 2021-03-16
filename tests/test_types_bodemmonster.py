@@ -19,7 +19,7 @@ class TestBodemmonster(AbstractTestTypes):
 
     field_names = [
             'pkey_bodemmonster', 'pkey_bodemlocatie', 'pkey_parent',
-            'identificatie',
+            'x', 'y', 'mv_mtaw', 'identificatie',
             'datum_monstername', 'tijdstip_monstername',
             'type', 'monstername_door', 'techniek',
             'condities', 'diepte_van_cm', 'diepte_tot_cm', 'labo'
@@ -27,7 +27,7 @@ class TestBodemmonster(AbstractTestTypes):
     field_names_subtypes = []
     field_names_nosubtypes = [
             'pkey_bodemmonster', 'pkey_bodemlocatie', 'pkey_parent',
-            'identificatie',
+            'x', 'y', 'mv_mtaw', 'identificatie',
             'datum_monstername', 'tijdstip_monstername',
             'type', 'monstername_door', 'techniek',
             'condities', 'diepte_van_cm', 'diepte_tot_cm', 'labo'

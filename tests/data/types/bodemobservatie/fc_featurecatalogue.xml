@@ -11,7 +11,7 @@
       <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">1</gco:CharacterString>
     </gmx:versionNumber>
     <gmx:versionDate xmlns:gmx="http://www.isotc211.org/2005/gmx">
-      <gco:DateTime xmlns:gco="http://www.isotc211.org/2005/gco">2020-12-01T12:21:16</gco:DateTime>
+      <gco:DateTime xmlns:gco="http://www.isotc211.org/2005/gco">2021-03-13T09:29:49</gco:DateTime>
     </gmx:versionDate>
     <gfc:producer>
       <gmd:CI_ResponsibleParty xmlns:gmd="http://www.isotc211.org/2005/gmd">
@@ -556,6 +556,99 @@
               <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:aName>
                   <gco:CharacterString>Geometry</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">X_mL72</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">De x-coördinaat van de observatie in het Lambert72 coördinaatsysteem (in meter, EPSG:31370).</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>1</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:valueType>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:aName>
+                  <gco:CharacterString>Number</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Y_mL72</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">De y-coördinaat van de observatie in het Lambert72 coördinaatsysteem (in meter, EPSG:31370).</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>1</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:valueType>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:aName>
+                  <gco:CharacterString>Number</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">mv_mTAW</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">De hoogte van het maaiveld in het TAW stelsel (in meter).</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>0</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:valueType>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:aName>
+                  <gco:CharacterString>Number</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>

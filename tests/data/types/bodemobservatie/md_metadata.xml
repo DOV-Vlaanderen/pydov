@@ -57,7 +57,7 @@
       </gmd:CI_ResponsibleParty>
     </gmd:contact>
     <gmd:dateStamp>
-      <gco:DateTime xmlns:gco="http://www.isotc211.org/2005/gco">2020-12-01T12:21:16</gco:DateTime>
+      <gco:DateTime xmlns:gco="http://www.isotc211.org/2005/gco">2021-03-15T02:06:44</gco:DateTime>
     </gmd:dateStamp>
     <gmd:metadataStandardName>
       <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">ISO 19115/2003/Cor.1:2006</gco:CharacterString>
@@ -109,7 +109,7 @@
             <gmd:date>
               <gmd:CI_Date>
                 <gmd:date>
-                  <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2020-08-24</gco:Date>
+                  <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2021-03-15</gco:Date>
                 </gmd:date>
                 <gmd:dateType>
                   <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="revision">revision</gmd:CI_DateTypeCode>
@@ -637,7 +637,7 @@ Het doel van elke bodemobservatie op zich kan sterk verschillen: bodemkartering,
             <gmd:date>
               <gmd:CI_Date>
                 <gmd:date>
-                  <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2020-12-01</gco:Date>
+                  <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2021-03-15</gco:Date>
                 </gmd:date>
                 <gmd:dateType>
                   <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation">creation</gmd:CI_DateTypeCode>

@@ -14,6 +14,8 @@ class Bodemlocatie(AbstractDovType):
     fields = [
         WfsField(name='pkey_bodemlocatie', source_field='Bodemlocatiefiche',
                  datatype='string'),
+        WfsField(name='pkey_bodemsite', source_field='Bodemsitefiche',
+                 datatype='string'),
         WfsField(name='naam', source_field='Naam', datatype='string'),
         WfsField(name='type', source_field='Type', datatype='string'),
         WfsField(name='waarnemingsdatum', source_field='Datum', datatype='date'),

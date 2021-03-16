@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ns3:dov-schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns3="http://kern.schemas.dov.vlaanderen.be" xsi:schemaLocation="http://kern.schemas.dov.vlaanderen.be https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/dov.xsd">
     <bodemmonster>
-        <identificatie>KART_PROF_073E/12_H2_M1</identificatie>
-        <datum_monstername>1964-11-12</datum_monstername>
+        <identificatie>A0055738</identificatie>
+        <permkey>2015-211807</permkey>
+        <datum_monstername>2015-06-30</datum_monstername>
         <type>ENK</type>
         <monsternamedoor>
-            <naam>Centrum voor Grondonderzoek (C.V.G.)</naam>
+            <naam>Bodemkundige Dienst van België vzw</naam>
         </monsternamedoor>
         <status>publiek</status>
-        <condities>Zie scan analoge profielbeschrijving</condities>
-        <van>30.0</van>
-        <tot>45.0</tot>
+        <techniek>Edelmanboor</techniek>
+        <van>36.0</van>
+        <tot>85.0</tot>
         <labo>
             <labo>
-                <naam>Centrum voor Grondonderzoek (C.V.G.)</naam>
+                <naam>Bodemkundige Dienst van België vzw</naam>
             </labo>
         </labo>
         <ref_diepteinterval>
             <ref_bodemlocatie>
-                <naam>KART_PROF_073E/12</naam>
+                <naam>VMM_INF_3</naam>
             </ref_bodemlocatie>
             <type>ALG</type>
             <volgnummer>2</volgnummer>

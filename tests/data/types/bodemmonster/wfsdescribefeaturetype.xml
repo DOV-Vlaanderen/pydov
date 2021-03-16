@@ -8,6 +8,9 @@
           <xsd:element maxOccurs="1" minOccurs="0" name="Bodemmonsterfiche" nillable="true" type="xsd:string"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="Aan" nillable="true" type="xsd:string"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="Parentfiche" nillable="true" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="X_mL72" nillable="true" type="xsd:double"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="Y_mL72" nillable="true" type="xsd:double"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="mv_mTAW" nillable="true" type="xsd:decimal"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="Diepte_van" nillable="true" type="xsd:decimal"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="Diepte_tot" nillable="true" type="xsd:decimal"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="Type" nillable="true" type="xsd:string"/>

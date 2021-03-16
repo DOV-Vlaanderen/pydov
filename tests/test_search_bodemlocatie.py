@@ -35,8 +35,9 @@ class TestBodemlocatieSearch(AbstractTestSearch):
     valid_returnfields_extra = ('pkey_bodemlocatie', 'naam')
 
 
-    df_default_columns = ['pkey_bodemlocatie', 'naam', 'type', 'waarnemingsdatum', 'doel', 'x', 'y', 'mv_mtaw',
-                          'erfgoed', 'bodemstreek',
+    df_default_columns = ['pkey_bodemlocatie', 'pkey_bodemsite',
+                          'naam', 'type', 'waarnemingsdatum', 'doel', 'x', 'y',
+                          'mv_mtaw', 'erfgoed', 'bodemstreek',
                           'invoerdatum',
                           'educatieve_waarde']
 

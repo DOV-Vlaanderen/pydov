@@ -25,7 +25,7 @@ class TestBodemmonsterSearch(AbstractTestSearch):
     datatype_class = Bodemmonster
 
     valid_query_single = PropertyIsEqualTo(propertyname='identificatie',
-                                           literal='KART_OPP_072W/021')
+                                           literal='A0055738')
 
     inexistent_field = 'onbestaand'
     wfs_field = 'identificatie'
@@ -37,10 +37,12 @@ class TestBodemmonsterSearch(AbstractTestSearch):
 
 
     df_default_columns = ['pkey_bodemmonster', 'pkey_bodemlocatie',
-                          'pkey_parent', 'identificatie',
+                          'pkey_parent', 
+                          'x', 'y', 'mv_mtaw', 'identificatie',
                           'datum_monstername', 'tijdstip_monstername',
                           'type', 'monstername_door', 'techniek',
-                          'condities', 'diepte_van_cm', 'diepte_tot_cm', 'labo']
+                          'condities', 'diepte_van_cm', 'diepte_tot_cm',
+                          'labo']
 
     def test_search_date(self, mp_wfs, mp_get_schema,
                          mp_remote_describefeaturetype, mp_remote_md,
@@ -71,4 +73,4 @@ class TestBodemmonsterSearch(AbstractTestSearch):
             query=self.valid_query_single)
 
         # specific test for the Zulu time wfs 1.1.0 issue
-        assert df.datum_monstername.unique()[0] == datetime.date(1964, 11, 12)
+        assert df.datum_monstername.unique()[0] == datetime.date(2015, 6, 30)

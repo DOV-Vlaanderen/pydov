@@ -11,7 +11,7 @@
       <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">1</gco:CharacterString>
     </gmx:versionNumber>
     <gmx:versionDate xmlns:gmx="http://www.isotc211.org/2005/gmx">
-      <gco:DateTime xmlns:gco="http://www.isotc211.org/2005/gco">2020-12-01T12:20:55</gco:DateTime>
+      <gco:DateTime xmlns:gco="http://www.isotc211.org/2005/gco">2021-03-03T18:17:37</gco:DateTime>
     </gmx:versionDate>
     <gfc:producer>
       <gmd:CI_ResponsibleParty xmlns:gmd="http://www.isotc211.org/2005/gmd">
@@ -616,6 +616,37 @@
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
               <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Bodemsite</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">De naam van de bodemsite waaraan de bodemlocatie gekoppeld is.</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>0</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:valueType>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:aName>
+                  <gco:CharacterString>String</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Bodemsitefiche</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
               <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Permanente URL die verwijst naar de gegevens van de bodemsite waaraan de bodemlocatie gekoppeld is, op de website.</gco:CharacterString>

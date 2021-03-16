@@ -8,5 +8,5 @@ ipykernel
 folium
 pyproj
 matplotlib
-fiona
+fiona>=1.8.18
 geopandas

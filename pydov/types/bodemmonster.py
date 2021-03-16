@@ -38,8 +38,10 @@ class Bodemmonster(AbstractDovType):
                  datatype='string'),
         WfsField(name='condities', source_field='Condities_monsterafname',
                  datatype='string'),
-        WfsField(name='diepte_van_cm', source_field='Diepte_van', datatype='float'),
-        WfsField(name='diepte_tot_cm', source_field='Diepte_tot', datatype='float'),
+        WfsField(name='diepte_van_cm', source_field='Diepte_van',
+                 datatype='float'),
+        WfsField(name='diepte_tot_cm', source_field='Diepte_tot',
+                 datatype='float'),
         WfsField(name='labo', source_field='Labo', datatype='string')
     ]
 

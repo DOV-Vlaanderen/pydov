@@ -876,7 +876,7 @@ if __name__ == '__main__':
         
     # types/bodemobservatie
     update_file('types/bodemobservatie/bodemobservatie.xml',
-                build_dov_url('data/bodemobservatie/2019-319483.xml'))
+                build_dov_url('data/bodemobservatie/2019-333913.xml'))
 
     update_file(
         'types/bodemobservatie/wfsgetfeature.xml',
@@ -884,7 +884,7 @@ if __name__ == '__main__':
             'geoserver/ows?service=WFS'
             '&version=1.1.0&request=GetFeature&typeName=bodem:bodemobservaties'
             '&maxFeatures=1&CQL_Filter=Bodemobservatiefiche=%27' +
-            build_dov_url('data/bodemobservatie/2019-319483%27')))
+            build_dov_url('data/bodemobservatie/2019-333913%27')))
 
     update_file(
         'types/bodemobservatie/feature.xml',
@@ -892,7 +892,7 @@ if __name__ == '__main__':
             'geoserver/ows?service=WFS'
             '&version=1.1.0&request=GetFeature&typeName=bodem:bodemobservaties'
             '&maxFeatures=1&CQL_Filter=Bodemobservatiefiche=%27' +
-            build_dov_url('data/bodemobservatie/2019-319483%27')),
+            build_dov_url('data/bodemobservatie/2019-333913%27')),
         get_first_featuremember)
 
     update_file(
@@ -924,7 +924,7 @@ if __name__ == '__main__':
         
     # types/bodemmonster
     update_file('types/bodemmonster/bodemmonster.xml',
-                build_dov_url('data/bodemmonster/2015-211807.xml'))
+                build_dov_url('data/bodemmonster/1964-264869.xml'))
 
     update_file(
         'types/bodemmonster/wfsgetfeature.xml',
@@ -932,7 +932,7 @@ if __name__ == '__main__':
             'geoserver/ows?service=WFS'
             '&version=1.1.0&request=GetFeature&typeName=bodem:bodemmonsters'
             '&maxFeatures=1&CQL_Filter=Bodemmonsterfiche=%27' +
-            build_dov_url('data/bodemmonster/2015-211807%27')))
+            build_dov_url('data/bodemmonster/1964-264869%27')))
 
     update_file(
         'types/bodemmonster/feature.xml',
@@ -940,7 +940,7 @@ if __name__ == '__main__':
             'geoserver/ows?service=WFS'
             '&version=1.1.0&request=GetFeature&typeName=bodem:bodemmonsters'
             '&maxFeatures=1&CQL_Filter=Bodemmonsterfiche=%27' +
-            build_dov_url('data/bodemmonster/2015-211807%27')),
+            build_dov_url('data/bodemmonster/1964-264869%27')),
         get_first_featuremember)
 
     update_file(

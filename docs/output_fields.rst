@@ -192,7 +192,8 @@ CPT measurements (sonderingen)
     apparaat,1,string,200kN - RUPS
     datum_gw_meting,10,datetime,2002-07-04 13:50:00
     diepte_gw_m,10,float,1.2
-    z,10,float,1.2
+    lengte,10,float,1.2
+	diepte,10,float,1.2
     qc,10,float,0.68
     Qt,10,float,NaN
     fs,10,float,10

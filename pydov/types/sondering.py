@@ -10,12 +10,6 @@ class Meetdata(AbstractDovSubType):
     rootpath = './/sondering/sondeonderzoek/penetratietest/meetdata'
 
     fields = [
-        XmlField(name='z',
-                 source_xpath='/sondeerdiepte',
-                 definition='Diepte waarop sondeerparameters geregistreerd '
-                            'werden, uitgedrukt in meter ten opzicht van het '
-                            'aanvangspeil.',
-                 datatype='float'),
         XmlField(name='lengte',
                  source_xpath='/lengte',
                  definition='Geregistreerde sondeerlengte, '

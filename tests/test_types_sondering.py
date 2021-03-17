@@ -23,7 +23,7 @@ class TestSondering(AbstractTestTypes):
         'sondeermethode', 'apparaat', 'datum_gw_meting',
         'diepte_gw_m', 'lengte', 'diepte', 'qc', 'Qt', 'fs', 'u', 'i']
     field_names_subtypes = [
-        'lengte', 'qc', 'Qt', 'fs', 'u', 'i']
+        'lengte', 'diepte', 'qc', 'Qt', 'fs', 'u', 'i']
     field_names_nosubtypes = [
         'pkey_sondering', 'sondeernummer', 'x', 'y',
         'start_sondering_mtaw', 'diepte_sondering_van',

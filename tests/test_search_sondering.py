@@ -39,7 +39,7 @@ class TestSonderingSearch(AbstractTestSearch):
     valid_returnfields_extra = ('pkey_sondering', 'conus')
 
     df_default_columns = [
-        'pkey_sondering', 'sondeernummer', 'x', 'y',
+        'pkey_sondering', 'sondeernummer', 'x', 'y', 'mv_mtaw',
         'start_sondering_mtaw', 'diepte_sondering_van',
         'diepte_sondering_tot', 'datum_aanvang', 'uitvoerder',
         'sondeermethode', 'apparaat', 'datum_gw_meting',

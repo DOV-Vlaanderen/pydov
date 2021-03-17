@@ -184,6 +184,7 @@ CPT measurements (sonderingen)
     sondeernummer,1,string,GEO-02/079-S3
     x,1,float,142767
     y,1,float,221907
+    mv_mtaw,10,float,NaN
     start_sondering_mtaw,1,float,2.39
     diepte_sondering_van,1,float,0
     diepte_sondering_tot,1,float,16

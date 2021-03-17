@@ -181,6 +181,7 @@ CPT measurements (sonderingen)
 
     Field,Cost,Datatype,Example
     pkey_sondering,1,string,https://www.dov.vlaanderen.be/data/sondering/2002-010317
+    sondeernummer,1,string,GEO-02/079-S3
     x,1,float,142767
     y,1,float,221907
     start_sondering_mtaw,1,float,2.39

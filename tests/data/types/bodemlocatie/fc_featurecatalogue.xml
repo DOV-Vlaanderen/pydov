@@ -367,7 +367,7 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Z_mTAW</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">mv_mTAW</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
               <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">De hoogte van het aanvangspeil van (het startpunt van) de bodemlocatie in het TAW stelsel (in meter).</gco:CharacterString>

@@ -23,7 +23,7 @@ class Bodemlocatie(AbstractDovType):
         WfsField(name='doel', source_field='Doel', datatype='string'),
         WfsField(name='x', source_field='X_mL72', datatype='float'),
         WfsField(name='y', source_field='Y_mL72', datatype='float'),
-        WfsField(name='mv_mtaw', source_field='Z_mTAW', datatype='float'),
+        WfsField(name='mv_mtaw', source_field='mv_mTAW', datatype='float'),
         WfsField(name='erfgoed', source_field='Erfgoed', datatype='boolean'),
         WfsField(name='bodemstreek', source_field='Bodemstreek',
                  datatype='string'),

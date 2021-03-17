@@ -65,7 +65,7 @@ class Sondering(AbstractDovType):
         XmlField(name='mv_mtaw',
                  source_xpath='/sondering/sondeerpositie/'
                               'oorspronkelijk_maaiveld/waarde',
-                 definition='Maaiveldhoogte in mTAW op dag dat de boring '
+                 definition='Maaiveldhoogte in mTAW op dag dat de sondering '
                             'uitgevoerd werd.',
                  datatype='float'),
         WfsField(name='start_sondering_mtaw', source_field='Z_mTAW',

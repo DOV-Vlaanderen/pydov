@@ -252,8 +252,6 @@ Groundwater samples (grondwatermonsters)
     parametergroep,10,string,Zware metalen
     parameter,10,string,Hg
     detectie,10,string,<
-	ondergrens,10,float,0
-	bovengrens,10,float,10
     waarde,10,float,0.5
     eenheid,10,string,µg/l
     veld_labo,10,string,LABO
@@ -504,19 +502,18 @@ Bodemobservaties
 	pkey_bodemobservatie,1,string,https://www.dov.vlaanderen.be/data/bodemobservatie/2019-349078
 	pkey_parent,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/1952-007078
 	pkey_bodemlocatie,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/1952-007078
-	parameter,1,string,organische_c_perc
-	parametergroep,10,string
-	waarde,1,string,0.38
-	eenheid,1,string,%
-	methode,1,string,Aardewerk nieuwe methode organische koolstof
 	x,1,float,206553.85
 	y,1,float,168891.11
 	mv_mtaw,1,float,44.00
-	betrouwbaarheid,10,string,onbekend
-	veld_labo,1,string,VELD
 	diepte_van_cm,1,float,30
 	diepte_tot_cm,1,float,45
 	observatiedatum,10,date,1964-11-12
 	invoerdatum,10,date,NaN
+	parametergroep,10,string
+	parameter,1,string,organische_c_perc
 	detectie,10,string,<
-
+	waarde,1,string,0.38
+	eenheid,1,string,%
+	veld_labo,1,string,VELD
+	methode,1,string,Aardewerk nieuwe methode organische koolstof
+	betrouwbaarheid,10,string,onbekend

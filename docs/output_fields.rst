@@ -435,3 +435,85 @@ Borehole samples (grondmonsters)
     fractie,10,float,0
     methode,10,string,ZEEFPROEF
 
+Bodemsites
+--------------------------------
+  .. csv-table:: Bodemsites
+    :header-rows: 1
+
+    Field,Cost,Datatype,Example
+	pkey_bodemsite,1,string,https://www.dov.vlaanderen.be/data/bodemsite/2013-000180
+	naam,1,string,Meise_Neerpoorten
+	waarnemingsdatum,1,date,nan
+	beschrijving,1,string,grasland
+	invoerdatum,10,date,nan
+
+
+BodemLocaties
+--------------------------------
+  .. csv-table:: Bodemlocaties
+    :header-rows: 1
+
+    Field,Cost,Datatype,Example
+	pkey_bodemlocatie,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/2011-000002
+	pkey_bodemsite,1,string,https://www.dov.vlaanderen.be/data/bodemsite/2011-000245
+	naam,1,string,STARC_4
+	type,1,string,profielput
+	waarnemingsdatum,1,date,nan
+	doel,1,string,archeologische landschappelijke profielputten
+	x,1,float,206553.85
+	y,1,float,168891.11
+	mv_mtaw,1,float,44.00
+	erfgoed,1,boolean,true
+	bodemstreek,1,string,Zandleemstreek
+	invoerdatum,10,date,nan
+	educatieve_waarde,10,string,ZEER
+
+
+Bodemmonsters
+--------------------------------
+  .. csv-table:: Bodemmonsters
+    :header-rows: 1
+
+    Field,Cost,Datatype,Example
+	pkey_bodemmonster,1,string,https://www.dov.vlaanderen.be/data/bodemmonster/1964-264869
+	pkey_parent,1,string,https://www.dov.vlaanderen.be/data/diepteinterval/2019-003366
+	pkey_bodemlocatie,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/2015-000745
+	x,1,float,206553.85
+	y,1,float,168891.11
+	mv_mtaw,1,float,44.00
+	identificatie,1,string,KART_PROF_073E/12_H2_M1
+	datum_monstername,1,date,1964-11-12
+	tijdstip_monstername,10,string,NaN
+	type,1,string,ENK
+	monstername_door,1,string,Centrum voor Grondonderzoek (C.V.G.)
+	techniek,1,string,NaN
+	condities,1,string,Zie scan analoge profielbeschrijving
+	diepte_van_cm,1,float,30
+	diepte_tot_cm,1,float,45
+	labo,1,string,Centrum voor Grondonderzoek (C.V.G.)
+
+
+Bodemobservaties
+--------------------------------
+  .. csv-table:: Bodemobservaties
+    :header-rows: 1
+
+    Field,Cost,Datatype,Example
+	pkey_bodemobservatie,1,string,https://www.dov.vlaanderen.be/data/bodemobservatie/2019-349078
+	pkey_parent,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/1952-007078
+	pkey_bodemlocatie,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/1952-007078
+	x,1,float,206553.85
+	y,1,float,168891.11
+	mv_mtaw,1,float,44.00
+	diepte_van_cm,1,float,30
+	diepte_tot_cm,1,float,45
+	observatiedatum,10,date,1964-11-12
+	invoerdatum,10,date,NaN
+	parametergroep,10,string,Bodem_fysisch_structuur
+	parameter,1,string,organische_c_perc
+	detectie,10,string,<
+	waarde,1,string,0.38
+	eenheid,1,string,%
+	veld_labo,1,string,VELD
+	methode,1,string,Aardewerk nieuwe methode organische koolstof
+	betrouwbaarheid,10,string,onbekend

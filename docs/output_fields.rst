@@ -509,7 +509,7 @@ Bodemobservaties
 	diepte_tot_cm,1,float,45
 	observatiedatum,10,date,1964-11-12
 	invoerdatum,10,date,NaN
-	parametergroep,10,string
+	parametergroep,10,string,Bodem_fysisch_structuur
 	parameter,1,string,organische_c_perc
 	detectie,10,string,<
 	waarde,1,string,0.38

@@ -269,6 +269,7 @@ Formal stratigraphy (Formele stratigrafie)
     betrouwbaarheid_interpretatie,1,string,goed
     x,1,float,108455
     y,1,float,194565
+    start_interpretatie_mtaw,1,float,6.62
     diepte_laag_van,10,float,0
     diepte_laag_tot,10,float,13
     lid1,10,string,Q
@@ -287,6 +288,7 @@ Informal stratigraphy (Informele stratigrafie)
     betrouwbaarheid_interpretatie,1,string,onbekend
     x,1,float,108900
     y,1,float,194425
+    start_interpretatie_mtaw,1,float,6.00
     diepte_laag_van,10,float,0
     diepte_laag_tot,10,float,18.58
     beschrijving,10,string,Q
@@ -302,6 +304,7 @@ Hydrogeological stratigraphy (Hydrogeologische stratigrafie)
     betrouwbaarheid_interpretatie,1,string,goed
     x,1,float,108773
     y,1,float,194124
+    start_interpretatie_mtaw,1,float,7.00
     diepte_laag_van,10,float,0
     diepte_laag_tot,10,float,8
     aquifer,10,string,0110
@@ -317,6 +320,7 @@ Informal hydrogeological stratigraphy (Informele hydrogeologische stratigrafie)
     betrouwbaarheid_interpretatie,1,string,goed
     x,1,float,208607
     y,1,float,210792
+    start_interpretatie_mtaw,1,float,38.94
     diepte_laag_van,10,float,0
     diepte_laag_tot,10,float,1.5
     beschrijving,10,string,Quartair
@@ -332,6 +336,7 @@ Coded lithology (Gecodeerde lithologie)
     betrouwbaarheid_interpretatie,1,string,goed
     x,1,float,110601
     y,1,float,196625
+    start_interpretatie_mtaw,1,float,6.38
     diepte_laag_van,10,float,4
     diepte_laag_tot,10,float,4.5
     hoofdnaam1_grondsoort,10,string,MZ
@@ -357,6 +362,7 @@ Geotechnical encoding (Geotechnische codering)
     betrouwbaarheid_interpretatie,1,string,goed
     x,1,float,108851
     y,1,float,196510
+    start_interpretatie_mtaw,1,float,10.55
     diepte_laag_van,10,float,1
     diepte_laag_tot,10,float,1.5
     hoofdnaam1_grondsoort,10,string,XZ
@@ -382,6 +388,7 @@ Lithological descriptions (Lithologische beschrijvingen)
     betrouwbaarheid_interpretatie,1,string,onbekend
     x,1,float,109491
     y,1,float,196700
+    start_interpretatie_mtaw,1,float,7.90
     diepte_laag_van,10,float,0
     diepte_laag_tot,10,float,1
     beschrijving,10,string,klei/zand
@@ -397,6 +404,7 @@ Quaternary stratigraphy (Quartaire stratigrafie)
     betrouwbaarheid_interpretatie,1,string,onbekend
     x,1,float,128277
     y,1,float,178987
+    start_interpretatie_mtaw,1,float,9.56
     diepte_laag_van,10,float,0
     diepte_laag_tot,10,float,8
     lid1,10,string,F1

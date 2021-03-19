@@ -31,6 +31,13 @@ Grondwatermonster
 .. automodule:: pydov.search.grondwatermonster
     :members:
 
+Grondwatervergunning
+********************
+
+.. automodule:: pydov.search.grondwatervergunning
+    :members:
+
+
 Interpretaties
 **************
 
@@ -77,6 +84,13 @@ Grondwatermonster
     :members:
     :show-inheritance:
 
+Grondwatervergunning
+********************
+
+.. automodule:: pydov.types.grondwatervergunning
+    :members:
+    :show-inheritance:
+
 Interpretaties
 **************
 
@@ -90,6 +104,7 @@ Grondmonster
 .. automodule:: pydov.types.grondmonster
     :members:
     :show-inheritance:
+
 
 Fields
 ------

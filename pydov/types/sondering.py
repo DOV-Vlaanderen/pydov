@@ -10,11 +10,17 @@ class Meetdata(AbstractDovSubType):
     rootpath = './/sondering/sondeonderzoek/penetratietest/meetdata'
 
     fields = [
-        XmlField(name='z',
-                 source_xpath='/sondeerdiepte',
+        XmlField(name='lengte',
+                 source_xpath='/lengte',
+                 definition='Geregistreerde sondeerlengte, '
+                            'uitgedrukt in meter.',
+                 datatype='float'),
+        XmlField(name='diepte',
+                 source_xpath='/diepte',
                  definition='Diepte waarop sondeerparameters geregistreerd '
-                            'werden, uitgedrukt in meter ten opzicht van het '
-                            'aanvangspeil.',
+                            'werden, berekend uit de sondeerlengte en de '
+                            'geregistreerde hellingsmeting, '
+                            'uitgedrukt in meter.',
                  datatype='float'),
         XmlField(name='qc',
                  source_xpath='/qc',
@@ -83,6 +89,8 @@ class Sondering(AbstractDovType):
                  datatype='float')
     ]
 
+    pkey_fieldname = 'fiche'
+
     def __init__(self, pkey):
         """Initialisation.
 
@@ -94,17 +102,3 @@ class Sondering(AbstractDovType):
 
         """
         super(Sondering, self).__init__('sondering', pkey)
-
-    @classmethod
-    def from_wfs_element(cls, feature, namespace):
-        s = cls(feature.findtext('./{{{}}}fiche'.format(namespace)))
-
-        for field in cls.get_fields(source=('wfs',)).values():
-            s.data[field['name']] = cls._parse(
-                func=feature.findtext,
-                xpath=field['sourcefield'],
-                namespace=namespace,
-                returntype=field.get('type', None)
-            )
-
-        return s

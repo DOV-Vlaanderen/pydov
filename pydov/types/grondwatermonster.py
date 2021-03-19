@@ -77,6 +77,8 @@ class GrondwaterMonster(AbstractDovType):
                  datatype='date'),
     ]
 
+    pkey_fieldname = 'grondwatermonsterfiche'
+
     def __init__(self, pkey):
         """Initialisation.
 
@@ -89,19 +91,3 @@ class GrondwaterMonster(AbstractDovType):
 
         """
         super(GrondwaterMonster, self).__init__('watermonster', pkey)
-
-    @classmethod
-    def from_wfs_element(cls, feature, namespace):
-        gwmonster = cls(
-            feature.findtext(
-                './{{{}}}grondwatermonsterfiche'.format(namespace)))
-
-        for field in cls.get_fields(source=('wfs',)).values():
-            gwmonster.data[field['name']] = cls._parse(
-                func=feature.findtext,
-                xpath=field['sourcefield'],
-                namespace=namespace,
-                returntype=field.get('type', None)
-            )
-
-        return gwmonster

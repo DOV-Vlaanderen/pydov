@@ -48,8 +48,9 @@ class TestLithologischeBeschrijvingenSearch(AbstractTestSearch):
 
     df_default_columns = [
         'pkey_interpretatie', 'pkey_boring',
-        'betrouwbaarheid_interpretatie', 'x', 'y', 'diepte_laag_van',
-        'diepte_laag_tot', 'beschrijving']
+        'betrouwbaarheid_interpretatie', 'x', 'y',
+        'start_interpretatie_mtaw',
+        'diepte_laag_van', 'diepte_laag_tot', 'beschrijving']
 
     def test_search_customreturnfields(self, mp_get_schema,
                                        mp_remote_describefeaturetype,

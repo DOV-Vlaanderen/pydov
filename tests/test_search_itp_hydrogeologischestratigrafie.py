@@ -49,6 +49,7 @@ class TestHydrogeologischeStratigrafieSearch(AbstractTestSearch):
 
     df_default_columns = ['pkey_interpretatie', 'pkey_boring',
                           'betrouwbaarheid_interpretatie', 'x', 'y',
+                          'start_interpretatie_mtaw',
                           'diepte_laag_van', 'diepte_laag_tot',
                           'aquifer']
 

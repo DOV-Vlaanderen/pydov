@@ -17,7 +17,7 @@ class TestSondering(AbstractTestTypes):
     pkey_base = build_dov_url('data/sondering/')
 
     field_names = [
-        'pkey_sondering', 'sondeernummer', 'x', 'y',
+        'pkey_sondering', 'sondeernummer', 'x', 'y', 'mv_mtaw',
         'start_sondering_mtaw', 'diepte_sondering_van',
         'diepte_sondering_tot', 'datum_aanvang', 'uitvoerder',
         'sondeermethode', 'apparaat', 'datum_gw_meting',
@@ -25,7 +25,7 @@ class TestSondering(AbstractTestTypes):
     field_names_subtypes = [
         'lengte', 'diepte', 'qc', 'Qt', 'fs', 'u', 'i']
     field_names_nosubtypes = [
-        'pkey_sondering', 'sondeernummer', 'x', 'y',
+        'pkey_sondering', 'sondeernummer', 'x', 'y', 'mv_mtaw',
         'start_sondering_mtaw', 'diepte_sondering_van',
         'diepte_sondering_tot', 'datum_aanvang', 'uitvoerder',
         'sondeermethode', 'apparaat', 'datum_gw_meting',

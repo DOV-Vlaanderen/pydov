@@ -62,6 +62,12 @@ class Sondering(AbstractDovType):
                  datatype='string'),
         WfsField(name='x', source_field='X_mL72', datatype='float'),
         WfsField(name='y', source_field='Y_mL72', datatype='float'),
+        XmlField(name='mv_mtaw',
+                 source_xpath='/sondering/sondeerpositie/'
+                              'oorspronkelijk_maaiveld/waarde',
+                 definition='Maaiveldhoogte in mTAW op dag dat de sondering '
+                            'uitgevoerd werd.',
+                 datatype='float'),
         WfsField(name='start_sondering_mtaw', source_field='Z_mTAW',
                  datatype='float'),
         WfsField(name='diepte_sondering_van', source_field='diepte_van_m',

@@ -4,6 +4,13 @@
 History
 =======
 
+v2.0.1
+------
+
+* Fixes and improvements
+
+  * Fix the 'z' field of the Sondering type, it is replaced by 'lengte' and 'diepte' following the DOV XSD schema update.
+
 v2.0.0
 ------
 

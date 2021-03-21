@@ -31,12 +31,14 @@ class TestBodemsiteSearch(AbstractTestSearch):
     xml_field = 'invoerdatum'
 
     valid_returnfields = ('pkey_bodemsite', 'naam', 'waarnemingsdatum')
-    valid_returnfields_subtype = ('pkey_bodemsite', 'naam', 'waarnemingsdatum')
-    valid_returnfields_extra = ('pkey_bodemsite', 'naam')
+    valid_returnfields_subtype = ('pkey_bodemsite', 'naam', 'invoerdatum')
+    valid_returnfields_extra = (
+        'pkey_bodemsite',
+        'naam',
+        'Aantal_bodemlocaties')
 
-
-    df_default_columns = ['pkey_bodemsite', 'naam', 'waarnemingsdatum', 'beschrijving',
-                          'invoerdatum']
+    df_default_columns = ['pkey_bodemsite', 'naam', 'waarnemingsdatum',
+                          'beschrijving', 'invoerdatum']
 
     def test_search_date(self, mp_wfs, mp_get_schema,
                          mp_remote_describefeaturetype, mp_remote_md,

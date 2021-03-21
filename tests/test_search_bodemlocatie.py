@@ -31,9 +31,11 @@ class TestBodemlocatieSearch(AbstractTestSearch):
     xml_field = 'invoerdatum'
 
     valid_returnfields = ('pkey_bodemlocatie', 'naam', 'waarnemingsdatum')
-    valid_returnfields_subtype = ('pkey_bodemlocatie', 'naam', 'waarnemingsdatum')
-    valid_returnfields_extra = ('pkey_bodemlocatie', 'naam')
-
+    valid_returnfields_subtype = (
+        'pkey_bodemlocatie',
+        'naam',
+        'educatieve_waarde')
+    valid_returnfields_extra = ('pkey_bodemlocatie', 'naam', 'erfgoed')
 
     df_default_columns = ['pkey_bodemlocatie', 'pkey_bodemsite',
                           'naam', 'type', 'waarnemingsdatum', 'doel', 'x', 'y',

@@ -32,12 +32,17 @@ class TestBodemmonsterSearch(AbstractTestSearch):
     xml_field = 'opmerking'
 
     valid_returnfields = ('pkey_bodemmonster', 'identificatie')
-    valid_returnfields_subtype = ('pkey_bodemmonster', 'identificatie')
-    valid_returnfields_extra = ('pkey_bodemmonster', 'identificatie')
-
+    valid_returnfields_subtype = (
+        'pkey_bodemmonster',
+        'identificatie',
+        'tijdstip_monstername')
+    valid_returnfields_extra = (
+        'pkey_bodemmonster',
+        'identificatie',
+        'Opdrachten')
 
     df_default_columns = ['pkey_bodemmonster', 'pkey_bodemlocatie',
-                          'pkey_parent', 
+                          'pkey_parent',
                           'x', 'y', 'mv_mtaw', 'identificatie',
                           'datum_monstername', 'tijdstip_monstername',
                           'type', 'monstername_door', 'techniek',

@@ -24,17 +24,24 @@ class TestBodemobservatieSearch(AbstractTestSearch):
     search_instance = BodemobservatieSearch()
     datatype_class = Bodemobservatie
 
-    valid_query_single = PropertyIsEqualTo(propertyname='parameter',
-                                           literal='Ksat')
+    valid_query_single = PropertyIsEqualTo(propertyname='Bodemobservatie',
+                                           literal='2019-1027345')
 
     inexistent_field = 'onbestaand'
     wfs_field = 'parameter'
     xml_field = 'observatiedatum'
 
-    valid_returnfields = ('pkey_bodemobservatie', 'parameter', 'observatiedatum')
-    valid_returnfields_subtype = ('pkey_bodemobservatie', 'parameter', 'observatiedatum')
-    valid_returnfields_extra = ('pkey_bodemobservatie', 'parameter')
-
+    valid_returnfields = (
+        'pkey_bodemobservatie',
+        'parameter')
+    valid_returnfields_subtype = (
+        'pkey_bodemobservatie',
+        'parameter',
+        'observatiedatum')
+    valid_returnfields_extra = (
+        'pkey_bodemobservatie',
+        'parameter',
+        'Opmerkingen')
 
     df_default_columns = ['pkey_bodemobservatie', 'pkey_bodemlocatie',
                           'pkey_parent', 'parameter', 'parametergroep',

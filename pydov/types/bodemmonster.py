@@ -45,6 +45,8 @@ class Bodemmonster(AbstractDovType):
         WfsField(name='labo', source_field='Labo', datatype='string')
     ]
 
+    pkey_fieldname = 'Bodemmonsterfiche'
+
     def __init__(self, pkey):
         """Initialisation.
 
@@ -56,18 +58,3 @@ class Bodemmonster(AbstractDovType):
 
         """
         super(Bodemmonster, self).__init__('bodemmonster', pkey)
-
-    @classmethod
-    def from_wfs_element(cls, feature, namespace):
-        b = cls(
-            feature.findtext('./{{{}}}Bodemmonsterfiche'.format(namespace)))
-
-        for field in cls.get_fields(source=('wfs',)).values():
-            b.data[field['name']] = cls._parse(
-                func=feature.findtext,
-                xpath=field['sourcefield'],
-                namespace=namespace,
-                returntype=field.get('type', None)
-            )
-
-        return b

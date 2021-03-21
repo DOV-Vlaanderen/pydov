@@ -37,6 +37,8 @@ class Bodemlocatie(AbstractDovType):
                  datatype='string')
     ]
 
+    pkey_fieldname = 'Bodemlocatiefiche'
+
     def __init__(self, pkey):
         """Initialisation.
 
@@ -48,18 +50,3 @@ class Bodemlocatie(AbstractDovType):
 
         """
         super(Bodemlocatie, self).__init__('bodemlocatie', pkey)
-
-    @classmethod
-    def from_wfs_element(cls, feature, namespace):
-        b = cls(
-            feature.findtext('./{{{}}}Bodemlocatiefiche'.format(namespace)))
-
-        for field in cls.get_fields(source=('wfs',)).values():
-            b.data[field['name']] = cls._parse(
-                func=feature.findtext,
-                xpath=field['sourcefield'],
-                namespace=namespace,
-                returntype=field.get('type', None)
-            )
-
-        return b

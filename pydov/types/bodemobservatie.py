@@ -59,6 +59,8 @@ class Bodemobservatie(AbstractDovType):
                  datatype='date')
     ]
 
+    pkey_fieldname = 'Bodemobservatiefiche'
+
     def __init__(self, pkey):
         """Initialisation.
 
@@ -70,18 +72,3 @@ class Bodemobservatie(AbstractDovType):
 
         """
         super(Bodemobservatie, self).__init__('bodemobservatie', pkey)
-
-    @classmethod
-    def from_wfs_element(cls, feature, namespace):
-        b = cls(feature.findtext('./{{{}}}Bodemobservatiefiche'
-                                 .format(namespace)))
-
-        for field in cls.get_fields(source=('wfs',)).values():
-            b.data[field['name']] = cls._parse(
-                func=feature.findtext,
-                xpath=field['sourcefield'],
-                namespace=namespace,
-                returntype=field.get('type', None)
-            )
-
-        return b

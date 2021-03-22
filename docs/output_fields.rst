@@ -508,8 +508,8 @@ Bodemmonsters
 
     Field,Cost,Datatype,Example
     pkey_bodemmonster,1,string,https://www.dov.vlaanderen.be/data/bodemmonster/1964-264869
-    pkey_parent,1,string,https://www.dov.vlaanderen.be/data/diepteinterval/2019-003366
     pkey_bodemlocatie,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/2015-000745
+    pkey_parent,1,string,https://www.dov.vlaanderen.be/data/diepteinterval/2019-003366
     x,1,float,206553.85
     y,1,float,168891.11
     mv_mtaw,1,float,44.00
@@ -531,8 +531,8 @@ Bodemobservaties
 
     Field,Cost,Datatype,Example
     pkey_bodemobservatie,1,string,https://www.dov.vlaanderen.be/data/bodemobservatie/2019-349078
-    pkey_parent,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/1952-007078
     pkey_bodemlocatie,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/1952-007078
+    pkey_parent,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/1952-007078
     x,1,float,206553.85
     y,1,float,168891.11
     mv_mtaw,1,float,44.00

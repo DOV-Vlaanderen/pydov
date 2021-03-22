@@ -11,27 +11,25 @@ location_dov_xml = 'tests/data/types/bodemobservatie/bodemobservatie.xml'
 
 
 class TestBodemobservatie(AbstractTestTypes):
-    """Class grouping tests for the pydov.types.bodemobservatie.Bodemobservatie class."""
+    """Class grouping tests for the
+    pydov.types.bodemobservatie.Bodemobservatie class."""
 
     datatype_class = Bodemobservatie
     namespace = 'https://www.dov.vlaanderen.be/bodem'
     pkey_base = build_dov_url('data/bodemobservatie/')
 
     field_names = ['pkey_bodemobservatie', 'pkey_bodemlocatie',
-                   'pkey_parent', 'parameter', 'parametergroep',
-                   'waarde', 'eenheid', 'detectie',
-                   'methode', 'x', 'y', 'mv_mtaw',
-                   'betrouwbaarheid', 'veld_labo',
-                   'diepte_van_cm', 'diepte_tot_cm',
-                   'observatiedatum', 'invoerdatum']
+                   'pkey_parent', 'x', 'y', 'mv_mtaw', 'diepte_van_cm',
+                   'diepte_tot_cm', 'observatiedatum', 'invoerdatum',
+                   'parametergroep', 'parameter', 'detectie', 'waarde',
+                   'eenheid', 'veld_labo', 'methode', 'betrouwbaarheid']
     field_names_subtypes = []
-    field_names_nosubtypes = ['pkey_bodemobservatie', 'pkey_bodemlocatie',
-                              'pkey_parent', 'parameter', 'parametergroep',
-                              'waarde', 'eenheid', 'detectie',
-                              'methode', 'x', 'y', 'mv_mtaw',
-                              'betrouwbaarheid', 'veld_labo',
-                              'diepte_van_cm', 'diepte_tot_cm',
-                              'observatiedatum', 'invoerdatum']
+    field_names_nosubtypes = [
+        'pkey_bodemobservatie', 'pkey_bodemlocatie',
+        'pkey_parent', 'x', 'y', 'mv_mtaw', 'diepte_van_cm',
+        'diepte_tot_cm', 'observatiedatum', 'invoerdatum',
+        'parametergroep', 'parameter', 'detectie', 'waarde',
+        'eenheid', 'veld_labo', 'methode', 'betrouwbaarheid']
 
     valid_returnfields = ('pkey_bodemobservatie', 'parameter')
     valid_returnfields_subtype = ('pkey_bodemobservatie', 'parameter')

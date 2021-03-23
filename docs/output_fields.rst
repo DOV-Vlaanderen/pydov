@@ -259,6 +259,31 @@ Groundwater samples (grondwatermonsters)
     eenheid,10,string,µg/l
     veld_labo,10,string,LABO
 
+Groundwater permits (grondwatervergunningen)
+---------------------------------------------
+  .. csv-table:: Groundwater permits (grondwatervergunningen)
+    :header-rows: 1
+
+    Field,Cost,Datatype,Example
+    id_vergunning,1,string,66229
+    pkey_installatie,1,string,https://www.dov.vlaanderen.be/data/installatie/2020-093103
+    x,1,float,157403.75
+    y,1,float,214471.32
+    diepte,1,float,10.0
+    exploitant_naam,1,string,AQUAFIN
+    watnr,1,string,VLA-0019-A
+    vlaremrubriek,1,string,53.2.2.b)2
+    vergund_jaardebiet,1,float,493000.0
+    vergund_dagdebiet,1,float,nan
+    van_datum_termijn,1,date,2019-08-09
+    tot_datum_termijn,1,date,nan
+    aquifer_vergunning,1,string,0200: Kempens Aquifersysteem
+    inrichtingsklasse,1,string,Klasse 1 - Vlaams project
+    nacebelcode,1,string,37000: Afvalwaterafvoer
+    actie_waakgebied,1,string,nan
+    cbbnr,1,string,00418870000022
+    kbonr,1,string,044691388
+
 Formal stratigraphy (Formele stratigrafie)
 ------------------------------------------
   .. csv-table:: Formal stratigraphy (Formele stratigrafie)
@@ -446,31 +471,82 @@ Borehole samples (grondmonsters)
     fractie,10,float,0
     methode,10,string,ZEEFPROEF
 
-Groundwater permits (grondwatervergunningen)
----------------------------------------------
-  .. csv-table:: Groundwater permits (grondwatervergunningen)
+Bodemsites
+--------------------------------
+  .. csv-table:: Bodemsites
     :header-rows: 1
 
     Field,Cost,Datatype,Example
-    id_vergunning,1,string,66229
-    pkey_installatie,1,string,https://www.dov.vlaanderen.be/data/installatie/2020-093103
-    x,1,float,157403.75
-    y,1,float,214471.32
-    diepte,1,float,10.0
-    exploitant_naam,1,string,AQUAFIN
-    watnr,1,string,VLA-0019-A
-    vlaremrubriek,1,string,53.2.2.b)2
-    vergund_jaardebiet,1,float,493000.0
-    vergund_dagdebiet,1,float,nan
-    van_datum_termijn,1,date,2019-08-09
-    tot_datum_termijn,1,date,nan
-    aquifer_vergunning,1,string,0200: Kempens Aquifersysteem
-    inrichtingsklasse,1,string,Klasse 1 - Vlaams project
-    nacebelcode,1,string,37000: Afvalwaterafvoer
-    actie_waakgebied,1,string,nan
-    cbbnr,1,string,00418870000022
-    kbonr,1,string,044691388
+    pkey_bodemsite,1,string,https://www.dov.vlaanderen.be/data/bodemsite/2013-000180
+    naam,1,string,Meise_Neerpoorten
+    waarnemingsdatum,1,date,nan
+    beschrijving,1,string,grasland
+    invoerdatum,10,date,nan
 
+Bodemlocaties
+--------------------------------
+  .. csv-table:: Bodemlocaties
+    :header-rows: 1
 
+    Field,Cost,Datatype,Example
+    pkey_bodemlocatie,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/2011-000002
+    pkey_bodemsite,1,string,https://www.dov.vlaanderen.be/data/bodemsite/2011-000245
+    naam,1,string,STARC_4
+    type,1,string,profielput
+    waarnemingsdatum,1,date,nan
+    doel,1,string,archeologische landschappelijke profielputten
+    x,1,float,206553.85
+    y,1,float,168891.11
+    mv_mtaw,1,float,44.00
+    erfgoed,1,boolean,true
+    bodemstreek,1,string,Zandleemstreek
+    invoerdatum,10,date,nan
+    educatieve_waarde,10,string,ZEER
 
+Bodemmonsters
+--------------------------------
+  .. csv-table:: Bodemmonsters
+    :header-rows: 1
 
+    Field,Cost,Datatype,Example
+    pkey_bodemmonster,1,string,https://www.dov.vlaanderen.be/data/bodemmonster/1964-264869
+    pkey_bodemlocatie,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/2015-000745
+    pkey_parent,1,string,https://www.dov.vlaanderen.be/data/diepteinterval/2019-003366
+    x,1,float,206553.85
+    y,1,float,168891.11
+    mv_mtaw,1,float,44.00
+    identificatie,1,string,KART_PROF_073E/12_H2_M1
+    datum_monstername,1,date,1964-11-12
+    tijdstip_monstername,10,string,NaN
+    type,1,string,ENK
+    monstername_door,1,string,Centrum voor Grondonderzoek (C.V.G.)
+    techniek,1,string,NaN
+    condities,1,string,Zie scan analoge profielbeschrijving
+    diepte_van_cm,1,float,30
+    diepte_tot_cm,1,float,45
+    labo,1,string,Centrum voor Grondonderzoek (C.V.G.)
+
+Bodemobservaties
+--------------------------------
+  .. csv-table:: Bodemobservaties
+    :header-rows: 1
+
+    Field,Cost,Datatype,Example
+    pkey_bodemobservatie,1,string,https://www.dov.vlaanderen.be/data/bodemobservatie/2019-349078
+    pkey_bodemlocatie,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/1952-007078
+    pkey_parent,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/1952-007078
+    x,1,float,206553.85
+    y,1,float,168891.11
+    mv_mtaw,1,float,44.00
+    diepte_van_cm,1,float,30
+    diepte_tot_cm,1,float,45
+    observatiedatum,10,date,1964-11-12
+    invoerdatum,10,date,NaN
+    parametergroep,10,string,Bodem_fysisch_structuur
+    parameter,1,string,organische_c_perc
+    detectie,10,string,<
+    waarde,1,string,0.38
+    eenheid,1,string,%
+    veld_labo,1,string,VELD
+    methode,1,string,Aardewerk nieuwe methode organische koolstof
+    betrouwbaarheid,10,string,onbekend

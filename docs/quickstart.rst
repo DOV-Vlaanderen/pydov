@@ -27,6 +27,10 @@ Currently, we support the following datasets:
     Geotechnical encoding (with layers),Geotechnische codering (met lagen),:class:`pydov.search.interpretaties.GeotechnischeCoderingSearch`
     Lithological descriptions (with layers),Lithologische beschrijvingen (met lagen),:class:`pydov.search.interpretaties.LithologischeBeschrijvingenSearch`
     Quaternary stratigraphy (with layers),Quartair stratigrafie (met lagen),:class:`pydov.search.interpretaties.QuartairStratigrafieSearch`
+    Soil sites,Bodemsites,:class:`pydov.search.bodemsite.BodemsiteSearch`
+    Soil plots,Bodemlocaties,:class:`pydov.search.bodemlocatie.BodemlocatieSearch`
+    Soil samples,Bodemmonster,:class:`pydov.search.bodemmonster.BodemmonsterSearch`
+    Soil observations,Bodemobservatie,:class:`pydov.search.bodemobservatie.BodemobservatieSearch`
 
 Each of the datasets can be queried using a search object for this dataset. While the search objects are different, the workflow is the same for each dataset. Relevant classes can be imported from the pydov.search package, for example if we'd like to query the boreholes dataset:
 

@@ -471,9 +471,9 @@ Borehole samples (grondmonsters)
     fractie,10,float,0
     methode,10,string,ZEEFPROEF
 
-Bodemsites
+Soil sites (Bodemsites)
 --------------------------------
-  .. csv-table:: Bodemsites
+  .. csv-table:: Soil sites (Bodemsites)
     :header-rows: 1
 
     Field,Cost,Datatype,Example
@@ -483,9 +483,9 @@ Bodemsites
     beschrijving,1,string,grasland
     invoerdatum,10,date,nan
 
-Bodemlocaties
+Soil plots (Bodemlocaties)
 --------------------------------
-  .. csv-table:: Bodemlocaties
+  .. csv-table:: Soil sites (Bodemlocaties)
     :header-rows: 1
 
     Field,Cost,Datatype,Example
@@ -503,9 +503,9 @@ Bodemlocaties
     invoerdatum,10,date,nan
     educatieve_waarde,10,string,ZEER
 
-Bodemmonsters
+Soil samples (Bodemmonsters)
 --------------------------------
-  .. csv-table:: Bodemmonsters
+  .. csv-table:: Soil samples (Bodemmonsters)
     :header-rows: 1
 
     Field,Cost,Datatype,Example
@@ -526,9 +526,9 @@ Bodemmonsters
     diepte_tot_cm,1,float,45
     labo,1,string,Centrum voor Grondonderzoek (C.V.G.)
 
-Bodemobservaties
+Soil observations (Bodemobservaties)
 --------------------------------
-  .. csv-table:: Bodemobservaties
+  .. csv-table:: Soil observations (Bodemobservaties)
     :header-rows: 1
 
     Field,Cost,Datatype,Example

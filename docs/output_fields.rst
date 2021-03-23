@@ -485,7 +485,7 @@ Soil sites (Bodemsites)
 
 Soil plots (Bodemlocaties)
 --------------------------------
-  .. csv-table:: Soil sites (Bodemlocaties)
+  .. csv-table:: Soil plots (Bodemlocaties)
     :header-rows: 1
 
     Field,Cost,Datatype,Example

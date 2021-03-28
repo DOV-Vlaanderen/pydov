@@ -57,4 +57,4 @@ class Bodemmonster(AbstractDovType):
             `https://www.dov.vlaanderen.be/data/bodemmonster/<id>`.
 
         """
-        super(Bodemmonster, self).__init__('bodemmonster', pkey)
+        super().__init__('bodemmonster', pkey)

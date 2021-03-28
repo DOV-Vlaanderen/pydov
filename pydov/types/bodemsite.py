@@ -37,4 +37,4 @@ class Bodemsite(AbstractDovType):
             `https://www.dov.vlaanderen.be/data/bodemsite/<id>`.
 
         """
-        super(Bodemsite, self).__init__('bodemsite', pkey)
+        super().__init__('bodemsite', pkey)

@@ -71,4 +71,4 @@ class Bodemobservatie(AbstractDovType):
             `https://www.dov.vlaanderen.be/data/bodemobservatie/<id>`.
 
         """
-        super(Bodemobservatie, self).__init__('bodemobservatie', pkey)
+        super().__init__('bodemobservatie', pkey)

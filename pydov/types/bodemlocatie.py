@@ -49,4 +49,4 @@ class Bodemlocatie(AbstractDovType):
             `https://www.dov.vlaanderen.be/data/bodemlocatie/<id>`.
 
         """
-        super(Bodemlocatie, self).__init__('bodemlocatie', pkey)
+        super().__init__('bodemlocatie', pkey)

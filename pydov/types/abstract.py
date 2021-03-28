@@ -12,6 +12,7 @@ import pydov
 from pydov.search.abstract import AbstractCommon
 from pydov.types.fields import AbstractField
 from pydov.util.dovutil import get_dov_xml, parse_dov_xml
+from pydov.util.errors import RemoteFetchError, XmlFetchWarning
 from pydov.util.net import LocalSessionThreadPool
 
 from ..util.errors import InvalidFieldError, XmlParseError, XmlParseWarning
@@ -320,8 +321,19 @@ class AbstractDovType(AbstractTypeCommon):
             Session to use to perform HTTP requests for data. Defaults to None,
             which means a new session will be created for each request.
 
+        Returns
+        -------
+        success : boolean
+            Whether or not the XML data could be fetched and parsed.
+
         """
-        xml = self._get_xml_data(session)
+        try:
+            xml = self._get_xml_data(session)
+        except RemoteFetchError:
+            warnings.warn(("Failed to fetch remote XML document for "
+                           "object '{}'. Resulting dataframe will be "
+                           "incomplete.".format(self.pkey)), XmlFetchWarning)
+            return False
 
         try:
             tree = parse_dov_xml(xml)
@@ -336,10 +348,13 @@ class AbstractDovType(AbstractTypeCommon):
                 )
 
             self._parse_subtypes(xml)
+            return True
         except XmlParseError:
-            warnings.warn(("Failed to parse XML for object '{}'. Resulting "
-                           "dataframe will be incomplete.").format(self.pkey),
-                          XmlParseWarning)
+            warnings.warn(
+                ("Failed to parse XML for object '{}'. Resulting "
+                    "dataframe will be incomplete.").format(self.pkey),
+                XmlParseWarning)
+            return False
 
     @classmethod
     def from_wfs_element(cls, feature, namespace):
@@ -590,7 +605,7 @@ class AbstractDovType(AbstractTypeCommon):
         def unnest_result(result, df_result):
             """Unnest the result into multiple rows (lists) if necessary. Rows
             are appended to the df_result list."""
-            if len(result) > 0:
+            if result is not None and len(result) > 0:
                 if isinstance(result[0], list):
                     for r in result:
                         df_result.append(r)
@@ -602,11 +617,9 @@ class AbstractDovType(AbstractTypeCommon):
         for item in iterable:
             pool.execute(item.get_df_array, (return_fields,))
 
-        result_list = pool.join()
-
         df_result = []
-        for res in result_list:
-            unnest_result(res, df_result)
+        for res in pool.join():
+            unnest_result(res.get_result(), df_result)
 
         return df_result
 
@@ -675,9 +688,10 @@ class AbstractDovType(AbstractTypeCommon):
         ownfields = self.get_field_names(include_subtypes=False,
                                          include_wfs_injected=True)
         subfields = [f for f in fields if f not in ownfields]
+        parsed = None
 
         if len(subfields) > 0:
-            self._parse_xml_data(session)
+            parsed = self._parse_xml_data(session)
 
         datadicts = []
         datarecords = []
@@ -699,9 +713,10 @@ class AbstractDovType(AbstractTypeCommon):
             datarecords.append([d.get(field, np.nan) for field in fields])
 
         for d in datarecords:
-            if self._UNRESOLVED in d:
-                self._parse_xml_data(session)
-                datarecords = self.get_df_array(return_fields)
-                break
+            if parsed is None and self._UNRESOLVED in d:
+                parsed = self._parse_xml_data(session)
+                if parsed is True:
+                    datarecords = self.get_df_array(return_fields)
 
-        return datarecords
+        return [[c if c != self._UNRESOLVED else np.nan for c in r]
+                for r in datarecords]

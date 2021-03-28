@@ -107,4 +107,4 @@ class Sondering(AbstractDovType):
             the form `https://www.dov.vlaanderen.be/data/sondering/<id>`.
 
         """
-        super(Sondering, self).__init__('sondering', pkey)
+        super().__init__('sondering', pkey)

@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 """Module grouping utility functions for DOV XML services."""
 import os
+import warnings
 
 from owslib.etree import etree
 
-from pydov.util.errors import XmlParseError
+from pydov.util.errors import RemoteFetchError, XmlParseError, XsdFetchWarning
 from pydov.util.hooks import HookRunner
 from pydov.util.net import SessionFactory
 
@@ -48,6 +49,9 @@ def get_remote_url(url, session=None):
         session = SessionFactory.get_session()
 
     request = session.get(url)
+    if request.status_code != 200:
+        raise RemoteFetchError("Failed to fetch data at {}".format(url))
+
     request.encoding = 'utf-8'
     return request.text.encode('utf8')
 
@@ -69,7 +73,12 @@ def get_xsd_schema(url):
     response = HookRunner.execute_inject_meta_response(url)
 
     if response is None:
-        response = get_remote_url(url)
+        try:
+            response = get_remote_url(url)
+        except RemoteFetchError:
+            warnings.warn("Failed to fetch remote XSD schema, metadata will "
+                          "be incomplete.", XsdFetchWarning)
+            response = None
 
     HookRunner.execute_meta_received(url, response)
 

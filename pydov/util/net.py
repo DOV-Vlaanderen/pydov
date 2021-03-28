@@ -140,19 +140,17 @@ class LocalSessionThreadPool:
         """Wait for all the jobs to be executed and return the results of all
         jobs in a list.
 
-        Returns
-        -------
-        list
-            List of the result of all executed function in the order they were
+        Yields
+        ------
+        WorkerResult
+            Results of the executed functions in the order they were
             submitted.
         """
         self.input_queue.join()
         self.stop()
 
-        results = []
         while not self.result_queue.empty():
-            results.append(self.result_queue.get().get_result())
-        return results
+            yield self.result_queue.get()
 
 
 class WorkerResult:
@@ -166,6 +164,7 @@ class WorkerResult:
     def __init__(self):
         """Initialisation. """
         self.result = None
+        self.error = None
 
     def set_result(self, value):
         """Set the result of this job.
@@ -183,9 +182,29 @@ class WorkerResult:
         Returns
         -------
         any
-            The result of the exectution of the job.
+            The result of the execution of the job.
         """
         return self.result
+
+    def set_error(self, error):
+        """Set the error, in case the jobs fails with an exception.
+
+        Parameters
+        ----------
+        error : Exception
+            The exception raised while executing this job.
+        """
+        self.error = error
+
+    def get_error(self):
+        """Retrieve the error, if any, of this job.
+
+        Returns
+        -------
+        Exception
+            The exception raised while executing this job.
+        """
+        return self.error
 
 
 class LocalSessionThread(Thread):
@@ -223,8 +242,14 @@ class LocalSessionThread(Thread):
                 fn, args, r = self.input_queue.get(timeout=0.5)
                 args = list(args)
                 args.append(self.session)
-                result = fn(*args)
-                r.set_result(result)
-                self.input_queue.task_done()
+
+                try:
+                    result = fn(*args)
+                except BaseException as e:
+                    r.set_error(e)
+                else:
+                    r.set_result(result)
+                finally:
+                    self.input_queue.task_done()
             except Empty:
                 pass

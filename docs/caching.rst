@@ -113,6 +113,25 @@ by issuing::
 This will erase the entire cache, not only the records older than the
 maximum age.
 
+Disabling stale responses on error
+**********************************
+
+By default, pydov will return stale data (i.e. XML documents still present in
+the cache, but no longer considered valid) in case it fails to download a fresh
+copy from the DOV webservices. We believe this behaviour to benefit most users,
+as we think stale data is still better than no data at all.
+
+If your application cannot afford stale data, you can switch the default
+behaviour by issuing::
+
+    import pydov
+    
+    pydov.cache.stale_on_error = False
+
+This will cause pydov not to return stale data and instead set the XML fields
+to NaN, as if the stale data wasn't available.
+
+
 Custom caching
 **************
 

@@ -145,4 +145,4 @@ class Grondmonster(AbstractDovType):
             `https://www.dov.vlaanderen.be/data/grondmonster/<id>`.
 
         """
-        super(Grondmonster, self).__init__('grondmonster', pkey)
+        super().__init__('grondmonster', pkey)

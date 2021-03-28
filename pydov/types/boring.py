@@ -76,4 +76,4 @@ class Boring(AbstractDovType):
             `https://www.dov.vlaanderen.be/data/boring/<id>`.
 
         """
-        super(Boring, self).__init__('boring', pkey)
+        super().__init__('boring', pkey)

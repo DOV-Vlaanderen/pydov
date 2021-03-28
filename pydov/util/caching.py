@@ -6,13 +6,26 @@ import os
 import re
 import shutil
 import tempfile
+import warnings
 
 from pydov.util.dovutil import build_dov_url, get_dov_xml
+from pydov.util.errors import RemoteFetchError, XmlStaleWarning
 from pydov.util.hooks import HookRunner
 
 
 class AbstractCache(object):
-    """Abstract base class for caching of downloaded XML files from DOV."""
+    """Abstract base class for caching of downloaded XML files from DOV.
+
+    Attributes
+    ----------
+    stale_on_error : bool, default to True
+        Whether to return stale responses from the cache in case of a network
+        error prevents downloading a fresh copy.
+    """
+
+    def __init__(self):
+        """Initialisation."""
+        self.stale_on_error = True
 
     def _get_remote(self, url, session=None):
         """Get the XML data by requesting it from the given URL.
@@ -38,13 +51,28 @@ class AbstractCache(object):
     def _emit_cache_hit(self, url):
         """Emit the XML cache hit event for all registered hooks.
 
+        This notifies hooks that a valid XML document has been returned from
+        the cache.
+
         Parameters
         ----------
         url : str
             Permanent URL to a DOV object.
-
         """
         HookRunner.execute_xml_cache_hit(url.rstrip('.xml'))
+
+    def _emit_stale_hit(self, url):
+        """Emit the XML stale hit event for all registered hooks.
+
+        This notifies hooks that a stale XML document has been returned from
+        the cache.
+
+        Parameters
+        ----------
+        url : str
+            Permanent URL to a DOV object.
+        """
+        HookRunner.execute_xml_stale_hit(url.rstrip('.xml'))
 
     def get(self, url, session=None):
         """Get the XML data for the DOV object referenced by the given URL.
@@ -112,6 +140,8 @@ class AbstractFileCache(AbstractCache):
             the operating system.
 
         """
+        super().__init__()
+
         if cachedir:
             self.cachedir = cachedir
         else:
@@ -220,6 +250,31 @@ class AbstractFileCache(AbstractCache):
         else:
             return True
 
+    def _is_stale(self, datatype, key):
+        """Check if a stale version of the given DOV object exists in the
+        cache.
+
+        A cached version is stale if it exists and the last modification
+        time of the file is before the maximum age defined on initialisation.
+
+        Parameters
+        ----------
+        datatype : str
+            Datatype of the DOV object.
+        key : str
+            Unique and permanent object key of the DOV object.
+
+        Returns
+        -------
+        bool
+            True if a stale cached version exists, False otherwise.
+        """
+        if self._is_valid(datatype, key):
+            return False
+
+        filepath = self._get_filepath(datatype, key)
+        return os.path.exists(filepath)
+
     def _load(self, datatype, key):
         """Read a cached version from disk.
 
@@ -267,15 +322,30 @@ class AbstractFileCache(AbstractCache):
 
                 HookRunner.execute_xml_received(url, data)
                 return data
-
             except Exception:
                 pass
 
-        data = self._get_remote(url, session)
         try:
-            self._save(datatype, key, data)
-        except Exception:
-            pass
+            data = self._get_remote(url, session)
+        except RemoteFetchError:
+            if self.stale_on_error and self._is_stale(datatype, key):
+                self._emit_stale_hit(url)
+                warnings.warn((
+                    "Failed to fetch remote XML document for "
+                    "object '{}', using older stale version from cache. "
+                    "Resulting dataframe will be out-of-date.".format(url)),
+                    XmlStaleWarning)
+
+                data = self._load(datatype, key).encode('utf-8')
+                return data
+            else:
+                HookRunner.execute_xml_fetch_error(url)
+                raise RemoteFetchError
+        else:
+            try:
+                self._save(datatype, key, data)
+            except Exception:
+                pass
 
         return data
 

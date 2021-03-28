@@ -99,10 +99,30 @@ xml_cache_hit (pkey_object: str)
     from multiple threads. Make sure your implementation is threadsafe or uses
     locking.
 
+xml_stale_hit (pkey_object: str)
+    This method will be called whenever a fresh XML document fails to be
+    retrieved from the DOV webservices, but instead a stale document is
+    returned from the cache. There is one parameter `pkey_object` with the
+    permanent key of the DOV object.
+
+    Because of parallel processing, this method will be called simultaneously
+    from multiple threads. Make sure your implementation is threadsafe or uses
+    locking.
+
 xml_downloaded (pkey_object: str)
     This method will be called whenever an XML document is downloaded from
     the DOV webservices. There is one parameter `pkey_object` with the
     permanent key of the DOV object.
+
+    Because of parallel processing, this method will be called simultaneously
+    from multiple threads. Make sure your implementation is threadsafe or uses
+    locking.
+
+xml_fetch_error (pkey_object: str)
+    This method will be called whenever a fresh XML document failes to be
+    downloaded from the DOV webservices and no stale version is returned from
+    the cache. There is one parameter `pkey_object` with the permanent key of
+    the DOV object.
 
     Because of parallel processing, this method will be called simultaneously
     from multiple threads. Make sure your implementation is threadsafe or uses

@@ -18,6 +18,7 @@ Currently, we support the following datasets:
     CPT measurements (with CPT data),Sonderingen (met sondeergegevens),:class:`pydov.search.sondering.SonderingSearch`
     Groundwater screens (with water head levels),Grondwaterfilters (met peilmetingen),:class:`pydov.search.grondwaterfilter.GrondwaterFilterSearch`
     Groundwater samples (with quality measurements),Grondwatermonsters (met kwaliteitsmetingen),:class:`pydov.search.grondwatermonster.GrondwaterMonsterSearch`
+    Groundwater permits,Grondwatervergunningen,:class:`pydov.search.grondwatervergunning.GrondwaterVergunningSearch`
     Formal stratigraphy (with layers),Formele stratigrafie (met lagen),:class:`pydov.search.interpretaties.FormeleStratigrafieSearch`
     Informal stratigraphy (with layers),Informele stratigrafie (met lagen),:class:`pydov.search.interpretaties.InformeleStratigrafieSearch`
     Hydrogeological stratigraphy (with layers),Hydrogeologische stratigrafie (met lagen),:class:`pydov.search.interpretaties.HydrogeologischeStratigrafieSearch`
@@ -26,6 +27,10 @@ Currently, we support the following datasets:
     Geotechnical encoding (with layers),Geotechnische codering (met lagen),:class:`pydov.search.interpretaties.GeotechnischeCoderingSearch`
     Lithological descriptions (with layers),Lithologische beschrijvingen (met lagen),:class:`pydov.search.interpretaties.LithologischeBeschrijvingenSearch`
     Quaternary stratigraphy (with layers),Quartair stratigrafie (met lagen),:class:`pydov.search.interpretaties.QuartairStratigrafieSearch`
+    Soil sites,Bodemsites,:class:`pydov.search.bodemsite.BodemsiteSearch`
+    Soil plots,Bodemlocaties,:class:`pydov.search.bodemlocatie.BodemlocatieSearch`
+    Soil samples,Bodemmonster,:class:`pydov.search.bodemmonster.BodemmonsterSearch`
+    Soil observations,Bodemobservatie,:class:`pydov.search.bodemobservatie.BodemobservatieSearch`
 
 Each of the datasets can be queried using a search object for this dataset. While the search objects are different, the workflow is the same for each dataset. Relevant classes can be imported from the pydov.search package, for example if we'd like to query the boreholes dataset:
 

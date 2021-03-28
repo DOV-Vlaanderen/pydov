@@ -35,15 +35,15 @@ class TestSonderingSearch(AbstractTestSearch):
         'pkey_sondering', 'sondeernummer', 'diepte_sondering_tot',
                           'datum_aanvang')
     valid_returnfields_subtype = (
-        'pkey_sondering', 'sondeernummer', 'z', 'qc', 'Qt')
+        'pkey_sondering', 'sondeernummer', 'lengte', 'qc', 'Qt')
     valid_returnfields_extra = ('pkey_sondering', 'conus')
 
     df_default_columns = [
-        'pkey_sondering', 'sondeernummer', 'x', 'y',
+        'pkey_sondering', 'sondeernummer', 'x', 'y', 'mv_mtaw',
         'start_sondering_mtaw', 'diepte_sondering_van',
         'diepte_sondering_tot', 'datum_aanvang', 'uitvoerder',
         'sondeermethode', 'apparaat', 'datum_gw_meting',
-        'diepte_gw_m', 'z', 'qc', 'Qt', 'fs', 'u', 'i']
+        'diepte_gw_m', 'lengte', 'diepte', 'qc', 'Qt', 'fs', 'u', 'i']
 
     def test_search_date(self, mp_wfs, mp_get_schema,
                          mp_remote_describefeaturetype, mp_remote_md,

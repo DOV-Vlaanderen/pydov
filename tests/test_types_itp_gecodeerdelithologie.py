@@ -25,6 +25,7 @@ class TestGecodeerdeLithologie(AbstractTestTypes):
     field_names = [
         'pkey_interpretatie', 'pkey_boring',
         'betrouwbaarheid_interpretatie', 'x', 'y',
+        'start_interpretatie_mtaw',
         'diepte_laag_van', 'diepte_laag_tot',
         'hoofdnaam1_grondsoort', 'hoofdnaam2_grondsoort',
         'bijmenging1_plaatselijk', 'bijmenging1_hoeveelheid',
@@ -44,7 +45,8 @@ class TestGecodeerdeLithologie(AbstractTestTypes):
         'bijmenging3_grondsoort']
     field_names_nosubtypes = [
         'pkey_interpretatie', 'pkey_boring',
-        'betrouwbaarheid_interpretatie', 'x', 'y']
+        'betrouwbaarheid_interpretatie', 'x', 'y',
+        'start_interpretatie_mtaw']
 
     valid_returnfields = ('pkey_interpretatie', 'pkey_boring')
     valid_returnfields_subtype = (

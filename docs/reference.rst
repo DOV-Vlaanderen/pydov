@@ -50,6 +50,30 @@ Grondmonster
 .. automodule:: pydov.search.grondmonster
     :members:
 
+Bodemsite
+*********
+
+.. automodule:: pydov.search.bodemsite
+    :members:
+
+Bodemlocatie
+************
+
+.. automodule:: pydov.search.bodemlocatie
+    :members:
+
+Bodemmonster
+************
+
+.. automodule:: pydov.search.bodemmonster
+    :members:
+
+Bodemobservatie
+***************
+
+.. automodule:: pydov.search.bodemobservatie
+    :members:
+
 Object types
 ------------
 
@@ -105,6 +129,33 @@ Grondmonster
     :members:
     :show-inheritance:
 
+Bodemsite
+*********
+
+.. automodule:: pydov.types.bodemsite
+    :members:
+    :show-inheritance:
+
+Bodemlocatie
+************
+
+.. automodule:: pydov.types.bodemlocatie
+    :members:
+    :show-inheritance:
+
+Bodemmonster
+************
+
+.. automodule:: pydov.types.bodemmonster
+    :members:
+    :show-inheritance:
+
+Bodemobservatie
+***************
+
+.. automodule:: pydov.types.bodemobservatie
+    :members:
+    :show-inheritance:
 
 Fields
 ------

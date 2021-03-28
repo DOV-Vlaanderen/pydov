@@ -181,8 +181,10 @@ CPT measurements (sonderingen)
 
     Field,Cost,Datatype,Example
     pkey_sondering,1,string,https://www.dov.vlaanderen.be/data/sondering/2002-010317
+    sondeernummer,1,string,GEO-02/079-S3
     x,1,float,142767
     y,1,float,221907
+    mv_mtaw,10,float,NaN
     start_sondering_mtaw,1,float,2.39
     diepte_sondering_van,1,float,0
     diepte_sondering_tot,1,float,16
@@ -192,7 +194,8 @@ CPT measurements (sonderingen)
     apparaat,1,string,200kN - RUPS
     datum_gw_meting,10,datetime,2002-07-04 13:50:00
     diepte_gw_m,10,float,1.2
-    z,10,float,1.2
+    lengte,10,float,1.2
+    diepte,10,float,1.2
     qc,10,float,0.68
     Qt,10,float,NaN
     fs,10,float,10
@@ -256,6 +259,31 @@ Groundwater samples (grondwatermonsters)
     eenheid,10,string,µg/l
     veld_labo,10,string,LABO
 
+Groundwater permits (grondwatervergunningen)
+---------------------------------------------
+  .. csv-table:: Groundwater permits (grondwatervergunningen)
+    :header-rows: 1
+
+    Field,Cost,Datatype,Example
+    id_vergunning,1,string,66229
+    pkey_installatie,1,string,https://www.dov.vlaanderen.be/data/installatie/2020-093103
+    x,1,float,157403.75
+    y,1,float,214471.32
+    diepte,1,float,10.0
+    exploitant_naam,1,string,AQUAFIN
+    watnr,1,string,VLA-0019-A
+    vlaremrubriek,1,string,53.2.2.b)2
+    vergund_jaardebiet,1,float,493000.0
+    vergund_dagdebiet,1,float,nan
+    van_datum_termijn,1,date,2019-08-09
+    tot_datum_termijn,1,date,nan
+    aquifer_vergunning,1,string,0200: Kempens Aquifersysteem
+    inrichtingsklasse,1,string,Klasse 1 - Vlaams project
+    nacebelcode,1,string,37000: Afvalwaterafvoer
+    actie_waakgebied,1,string,nan
+    cbbnr,1,string,00418870000022
+    kbonr,1,string,044691388
+
 Formal stratigraphy (Formele stratigrafie)
 ------------------------------------------
   .. csv-table:: Formal stratigraphy (Formele stratigrafie)
@@ -268,6 +296,7 @@ Formal stratigraphy (Formele stratigrafie)
     betrouwbaarheid_interpretatie,1,string,goed
     x,1,float,108455
     y,1,float,194565
+    start_interpretatie_mtaw,1,float,6.62
     diepte_laag_van,10,float,0
     diepte_laag_tot,10,float,13
     lid1,10,string,Q
@@ -286,6 +315,7 @@ Informal stratigraphy (Informele stratigrafie)
     betrouwbaarheid_interpretatie,1,string,onbekend
     x,1,float,108900
     y,1,float,194425
+    start_interpretatie_mtaw,1,float,6.00
     diepte_laag_van,10,float,0
     diepte_laag_tot,10,float,18.58
     beschrijving,10,string,Q
@@ -301,6 +331,7 @@ Hydrogeological stratigraphy (Hydrogeologische stratigrafie)
     betrouwbaarheid_interpretatie,1,string,goed
     x,1,float,108773
     y,1,float,194124
+    start_interpretatie_mtaw,1,float,7.00
     diepte_laag_van,10,float,0
     diepte_laag_tot,10,float,8
     aquifer,10,string,0110
@@ -316,6 +347,7 @@ Informal hydrogeological stratigraphy (Informele hydrogeologische stratigrafie)
     betrouwbaarheid_interpretatie,1,string,goed
     x,1,float,208607
     y,1,float,210792
+    start_interpretatie_mtaw,1,float,38.94
     diepte_laag_van,10,float,0
     diepte_laag_tot,10,float,1.5
     beschrijving,10,string,Quartair
@@ -331,6 +363,7 @@ Coded lithology (Gecodeerde lithologie)
     betrouwbaarheid_interpretatie,1,string,goed
     x,1,float,110601
     y,1,float,196625
+    start_interpretatie_mtaw,1,float,6.38
     diepte_laag_van,10,float,4
     diepte_laag_tot,10,float,4.5
     hoofdnaam1_grondsoort,10,string,MZ
@@ -356,6 +389,7 @@ Geotechnical encoding (Geotechnische codering)
     betrouwbaarheid_interpretatie,1,string,goed
     x,1,float,108851
     y,1,float,196510
+    start_interpretatie_mtaw,1,float,10.55
     diepte_laag_van,10,float,1
     diepte_laag_tot,10,float,1.5
     hoofdnaam1_grondsoort,10,string,XZ
@@ -381,6 +415,7 @@ Lithological descriptions (Lithologische beschrijvingen)
     betrouwbaarheid_interpretatie,1,string,onbekend
     x,1,float,109491
     y,1,float,196700
+    start_interpretatie_mtaw,1,float,7.90
     diepte_laag_van,10,float,0
     diepte_laag_tot,10,float,1
     beschrijving,10,string,klei/zand
@@ -396,6 +431,7 @@ Quaternary stratigraphy (Quartaire stratigrafie)
     betrouwbaarheid_interpretatie,1,string,onbekend
     x,1,float,128277
     y,1,float,178987
+    start_interpretatie_mtaw,1,float,9.56
     diepte_laag_van,10,float,0
     diepte_laag_tot,10,float,8
     lid1,10,string,F1
@@ -435,31 +471,82 @@ Borehole samples (grondmonsters)
     fractie,10,float,0
     methode,10,string,ZEEFPROEF
 
-Groundwater permits (grondwatervergunningen)
----------------------------------------------
-  .. csv-table:: Groundwater permits (grondwatervergunningen)
+Soil sites (Bodemsites)
+--------------------------------
+  .. csv-table:: Soil sites (Bodemsites)
     :header-rows: 1
 
     Field,Cost,Datatype,Example
-    id_vergunning,1,string,66229
-    pkey_installatie,1,string,https://www.dov.vlaanderen.be/data/installatie/2020-093103
-    x,1,float,157403.75
-    y,1,float,214471.32
-    diepte,1,float,10.0
-    exploitant_naam,1,string,AQUAFIN
-    watnr,1,string,VLA-0019-A
-    vlaremrubriek,1,string,53.2.2.b)2
-    vergund_jaardebiet,1,float,493000.0
-    vergund_dagdebiet,1,float,nan
-    van_datum_termijn,1,date,2019-08-09
-    tot_datum_termijn,1,date,nan
-    aquifer_vergunning,1,string,0200: Kempens Aquifersysteem
-    inrichtingsklasse,1,string,Klasse 1 - Vlaams project
-    nacebelcode,1,string,37000: Afvalwaterafvoer
-    actie_waakgebied,1,string,nan
-    cbbnr,1,string,00418870000022
-    kbonr,1,string,044691388
+    pkey_bodemsite,1,string,https://www.dov.vlaanderen.be/data/bodemsite/2013-000180
+    naam,1,string,Meise_Neerpoorten
+    waarnemingsdatum,1,date,nan
+    beschrijving,1,string,grasland
+    invoerdatum,10,date,nan
 
+Soil plots (Bodemlocaties)
+--------------------------------
+  .. csv-table:: Soil plots (Bodemlocaties)
+    :header-rows: 1
 
+    Field,Cost,Datatype,Example
+    pkey_bodemlocatie,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/2011-000002
+    pkey_bodemsite,1,string,https://www.dov.vlaanderen.be/data/bodemsite/2011-000245
+    naam,1,string,STARC_4
+    type,1,string,profielput
+    waarnemingsdatum,1,date,nan
+    doel,1,string,archeologische landschappelijke profielputten
+    x,1,float,206553.85
+    y,1,float,168891.11
+    mv_mtaw,1,float,44.00
+    erfgoed,1,boolean,true
+    bodemstreek,1,string,Zandleemstreek
+    invoerdatum,10,date,nan
+    educatieve_waarde,10,string,ZEER
 
+Soil samples (Bodemmonsters)
+--------------------------------
+  .. csv-table:: Soil samples (Bodemmonsters)
+    :header-rows: 1
 
+    Field,Cost,Datatype,Example
+    pkey_bodemmonster,1,string,https://www.dov.vlaanderen.be/data/bodemmonster/1964-264869
+    pkey_bodemlocatie,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/2015-000745
+    pkey_parent,1,string,https://www.dov.vlaanderen.be/data/diepteinterval/2019-003366
+    x,1,float,206553.85
+    y,1,float,168891.11
+    mv_mtaw,1,float,44.00
+    identificatie,1,string,KART_PROF_073E/12_H2_M1
+    datum_monstername,1,date,1964-11-12
+    tijdstip_monstername,10,string,NaN
+    type,1,string,ENK
+    monstername_door,1,string,Centrum voor Grondonderzoek (C.V.G.)
+    techniek,1,string,NaN
+    condities,1,string,Zie scan analoge profielbeschrijving
+    diepte_van_cm,1,float,30
+    diepte_tot_cm,1,float,45
+    labo,1,string,Centrum voor Grondonderzoek (C.V.G.)
+
+Soil observations (Bodemobservaties)
+--------------------------------
+  .. csv-table:: Soil observations (Bodemobservaties)
+    :header-rows: 1
+
+    Field,Cost,Datatype,Example
+    pkey_bodemobservatie,1,string,https://www.dov.vlaanderen.be/data/bodemobservatie/2019-349078
+    pkey_bodemlocatie,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/1952-007078
+    pkey_parent,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/1952-007078
+    x,1,float,206553.85
+    y,1,float,168891.11
+    mv_mtaw,1,float,44.00
+    diepte_van_cm,1,float,30
+    diepte_tot_cm,1,float,45
+    observatiedatum,10,date,1964-11-12
+    invoerdatum,10,date,NaN
+    parametergroep,10,string,Bodem_fysisch_structuur
+    parameter,1,string,organische_c_perc
+    detectie,10,string,<
+    waarde,1,string,0.38
+    eenheid,1,string,%
+    veld_labo,1,string,VELD
+    methode,1,string,Aardewerk nieuwe methode organische koolstof
+    betrouwbaarheid,10,string,onbekend

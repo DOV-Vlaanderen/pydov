@@ -10,11 +10,17 @@ class Meetdata(AbstractDovSubType):
     rootpath = './/sondering/sondeonderzoek/penetratietest/meetdata'
 
     fields = [
-        XmlField(name='z',
-                 source_xpath='/sondeerdiepte',
+        XmlField(name='lengte',
+                 source_xpath='/lengte',
+                 definition='Geregistreerde sondeerlengte, '
+                            'uitgedrukt in meter.',
+                 datatype='float'),
+        XmlField(name='diepte',
+                 source_xpath='/diepte',
                  definition='Diepte waarop sondeerparameters geregistreerd '
-                            'werden, uitgedrukt in meter ten opzicht van het '
-                            'aanvangspeil.',
+                            'werden, berekend uit de sondeerlengte en de '
+                            'geregistreerde hellingsmeting, '
+                            'uitgedrukt in meter.',
                  datatype='float'),
         XmlField(name='qc',
                  source_xpath='/qc',
@@ -56,6 +62,12 @@ class Sondering(AbstractDovType):
                  datatype='string'),
         WfsField(name='x', source_field='X_mL72', datatype='float'),
         WfsField(name='y', source_field='Y_mL72', datatype='float'),
+        XmlField(name='mv_mtaw',
+                 source_xpath='/sondering/sondeerpositie/'
+                              'oorspronkelijk_maaiveld/waarde',
+                 definition='Maaiveldhoogte in mTAW op dag dat de sondering '
+                            'uitgevoerd werd.',
+                 datatype='float'),
         WfsField(name='start_sondering_mtaw', source_field='Z_mTAW',
                  datatype='float'),
         WfsField(name='diepte_sondering_van', source_field='diepte_van_m',

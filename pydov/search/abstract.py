@@ -389,6 +389,7 @@ class AbstractSearch(AbstractCommon):
 
         _map_wfs_datatypes = {
             'int': 'integer',
+            'long': 'integer',
             'decimal': 'float',
             'double': 'float',
             'dateTime': 'datetime'

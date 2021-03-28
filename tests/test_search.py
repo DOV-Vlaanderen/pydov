@@ -3,6 +3,10 @@
 import numpy as np
 import pytest
 
+from pydov.search.bodemlocatie import BodemlocatieSearch
+from pydov.search.bodemmonster import BodemmonsterSearch
+from pydov.search.bodemobservatie import BodemobservatieSearch
+from pydov.search.bodemsite import BodemsiteSearch
 from pydov.search.boring import BoringSearch
 from pydov.search.grondmonster import GrondmonsterSearch
 from pydov.search.grondwaterfilter import GrondwaterFilterSearch
@@ -18,7 +22,11 @@ from pydov.util.errors import InvalidSearchParameterError
 from pydov.util.location import Point, WithinDistance
 from tests.abstract import ServiceCheck
 
-search_objects = [BoringSearch(),
+search_objects = [BodemsiteSearch(),
+                  BodemlocatieSearch(),
+                  BodemobservatieSearch(),
+                  BodemmonsterSearch(),
+                  BoringSearch(),
                   SonderingSearch(),
                   GrondwaterFilterSearch(),
                   GrondwaterMonsterSearch(),
@@ -177,5 +185,13 @@ def test_search_wfs_no_primary_key(objectsearch):
 
     Test whether the output dataframe contains the resolved WFS data.
     """
-    df = objectsearch.search(max_features=1, return_fields=('x',))
-    assert not np.isnan(df.x[0])
+    wfs_return_fields = [
+        f['name'] for f in objectsearch.get_fields().values()
+        if f['cost'] == 1 and f['type'] == 'float' and f['notnull']
+        and 'pkey' not in f['name']]
+
+    if len(wfs_return_fields) > 0:
+        field = wfs_return_fields[0]
+
+        df = objectsearch.search(max_features=1, return_fields=(field,))
+        assert not np.isnan(df[field][0])

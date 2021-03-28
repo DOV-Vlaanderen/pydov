@@ -48,6 +48,7 @@ class TestGecodeerdeLithologieSearch(AbstractTestSearch):
 
     df_default_columns = ['pkey_interpretatie', 'pkey_boring',
                           'betrouwbaarheid_interpretatie', 'x', 'y',
+                          'start_interpretatie_mtaw',
                           'diepte_laag_van', 'diepte_laag_tot',
                           'hoofdnaam1_grondsoort', 'hoofdnaam2_grondsoort',
                           'bijmenging1_plaatselijk', 'bijmenging1_hoeveelheid',

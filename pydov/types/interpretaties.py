@@ -30,7 +30,9 @@ class AbstractCommonInterpretatie(AbstractDovType):
         WfsField(name='betrouwbaarheid_interpretatie',
                  source_field='Betrouwbaarheid', datatype='string'),
         WfsField(name='x', source_field='X_mL72', datatype='float'),
-        WfsField(name='y', source_field='Y_mL72', datatype='float')
+        WfsField(name='y', source_field='Y_mL72', datatype='float'),
+        WfsField(name='start_interpretatie_mtaw', source_field='Z_mTAW',
+                 datatype='float')
     ]
 
     pkey_fieldname = 'Interpretatiefiche'
@@ -107,7 +109,9 @@ class AbstractBoringInterpretatie(AbstractDovType):
         WfsField(name='betrouwbaarheid_interpretatie',
                  source_field='Betrouwbaarheid', datatype='string'),
         WfsField(name='x', source_field='X_mL72', datatype='float'),
-        WfsField(name='y', source_field='Y_mL72', datatype='float')
+        WfsField(name='y', source_field='Y_mL72', datatype='float'),
+        WfsField(name='start_interpretatie_mtaw', source_field='Z_mTAW',
+                 datatype='float')
     ]
 
     pkey_fieldname = 'Interpretatiefiche'

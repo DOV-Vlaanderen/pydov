@@ -133,13 +133,14 @@ To start developing, make sure to setup a development environment, provided
 in the development installation instructions :ref:`for package contributors <devinstallation>`.
 
 .. note::
-   The repository contains multiple ``requirement_*.txt`` files:
+   The repository contains multiple ``requirements_*.txt`` files:
 
-   * ``requirement.txt`` required packages to use the pydov API
-   * ``requirement_dev.txt`` required packages to contribute to pydov code
-   * ``requirement_doc.txt`` required packages to contribute to the pydov documentation. This environmnet is used by the readthedocs service for building/hosting the documentation.
+   * ``requirements.txt`` required packages to use pydov
+   * ``requirements_vectorfile.txt`` required packages to use vectorfiles (GeometryFilter and GeopandasFilter) in pydov
+   * ``requirements_dev.txt`` required packages to run the pydov test suite and contribute to pydov code
+   * ``requirements_doc.txt`` required packages to build the pydov documentation and contribute to the pydov documentation
    * ``docs/requirements_rtd.txt`` requirement specific for building the documentation website on `readthedocs <https://readthedocs.org/>`_
-   * ``binder/requirement.txt`` requirements setup to setup a Binder environment
+   * ``binder/requirements.txt`` requirements setup to setup a Binder environment
 
    When adding dependencies, make sure to make the appropriate adjustments in the individual file!
 

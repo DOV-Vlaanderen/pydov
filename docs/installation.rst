@@ -23,6 +23,34 @@ you through the process.
 .. _pip: https://pip.pypa.io
 .. _Python installation guide: http://docs.python-guide.org/en/latest/starting/installation/
 
+.. note::
+
+    To be able to use vector files not defined as GML (for example ESRI Shape files), some additional dependencies
+    are required which are not installed by default. One of the dependencies is `Fiona`_, it is described as "`GDAL`_’s
+    neat and nimble vector API for Python programmers". `GDAL`_ is a translator library for raster and vector
+    geospatial data formats. Fiona is also required by `GeoPandas`_. Combining these three packages, vector files like
+    ESRI Shape files can be converted to GML files and used in spatial queries to DOV. To install the required
+    dependencies to handle vector files, add the `vectorfile` option to the installation instruction:
+
+    .. code-block:: console
+
+        pip install pydov[vectorfile]
+
+    Installing these package on Windows can be cumborsome. Please consult the installation guides of the
+    different packages. If you are using conda, pre-install them with `conda install -c conda-forge fiona geopandas`
+    in your pydov conda environment before running the pydov installation. If you are not using conda,
+    give the following a try:
+
+    #. Install [pipwin](https://pypi.org/project/pipwin/) using `pip install pipwin`
+    #. Download the latest Windows binaries for both `Fiona`_, `GDAL`_ and `GeoPandas`_ provided by `www.lfd.uci.edu`_:
+      #. Install `GDAL`_:code:`pipwin install gdal`
+      #. Install `Fiona`_:code:`pipwin install fiona`
+      #. Install `GeoPandas`_:code:`pipwin install geopandas`
+
+.. _Fiona: https://pypi.org/project/Fiona/
+.. _GDAL: https://gdal.org/
+.. _GeoPandas: https://geopandas.org/
+
 From sources
 ------------
 

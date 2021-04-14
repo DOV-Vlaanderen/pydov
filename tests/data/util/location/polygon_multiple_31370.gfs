@@ -1,0 +1,16 @@
+<GMLFeatureClassList>
+  <GMLFeatureClass>
+    <Name>polygon_multiple_31370</Name>
+    <ElementPath>polygon_multiple_31370</ElementPath>
+    <!--POLYGON-->
+    <GeometryType>3</GeometryType>
+    <SRSName>urn:ogc:def:crs:EPSG::31370</SRSName>
+    <DatasetSpecificInfo>
+      <FeatureCount>2</FeatureCount>
+      <ExtentXMin>107485.78623</ExtentXMin>
+      <ExtentXMax>109195.57351</ExtentXMax>
+      <ExtentYMin>194291.11195</ExtentYMin>
+      <ExtentYMax>196843.97406</ExtentYMax>
+    </DatasetSpecificInfo>
+  </GMLFeatureClass>
+</GMLFeatureClassList>

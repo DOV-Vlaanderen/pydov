@@ -68,6 +68,9 @@ jobs:
       matrix:
         os: ["ubuntu-latest", "windows-latest"]
         python-version: ["3.6", "3.7", "3.8", "3.9"]
+        exclude:
+          - os: "windows-latest"
+            python-version: "3.6"
     steps:
       - uses: "actions/checkout@v2"
       - uses: conda-incubator/setup-miniconda@v2
@@ -83,6 +86,7 @@ jobs:
         run: |
           conda update -n base -c defaults conda
           conda install --name pydov --file requirements.txt
+          conda install --name pydov fiona>=1.8.18 geopandas
           conda list
       - name: Install development dependencies with pip
         shell: pwsh

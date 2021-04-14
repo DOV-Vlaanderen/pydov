@@ -7,7 +7,7 @@ Tutorials
 
 These tutorials illustrate use cases the pydov package supports, split
 up by different topics each setup as a `jupyter notebook`_
-you can run yourself. The introductory tutorial bundles most 
+you can run yourself. The introductory tutorial bundles most
 of the interesting features and methods of pydov and would be a good
 start.
 
@@ -21,7 +21,6 @@ start.
     ::
 
         pip install -r binder/requirements.txt
-
 
 .. _folium: https://pypi.org/project/folium/
 
@@ -51,5 +50,5 @@ To run these interactively online without installation, use the following binder
    notebooks/search_grondmonsters.ipynb
    notebooks/search_bodem.ipynb
    notebooks/customizing_object_types.ipynb
-   notebooks/remote_wfs_gml_query.ipynb
+   notebooks/spatial_querying.ipynb
    notebooks/caching.ipynb

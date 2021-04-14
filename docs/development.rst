@@ -136,7 +136,7 @@ in the development installation instructions :ref:`for package contributors <dev
    The repository contains multiple ``requirements_*.txt`` files:
 
    * ``requirements.txt`` required packages to use pydov
-   * ``requirements_vectorfile.txt`` required packages to use vectorfiles (GeometryFilter and GeopandasFilter) in pydov
+   * ``requirements_vectorfile.txt`` required packages to use vector files (GeometryFilter and GeopandasFilter) in pydov
    * ``requirements_dev.txt`` required packages to run the pydov test suite and contribute to pydov code
    * ``requirements_doc.txt`` required packages to build the pydov documentation and contribute to the pydov documentation
    * ``docs/requirements_rtd.txt`` requirement specific for building the documentation website on `readthedocs <https://readthedocs.org/>`_

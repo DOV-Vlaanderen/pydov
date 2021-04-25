@@ -23,7 +23,7 @@ with open('requirements_vectorfile.txt') as f:
 
 setup(
     name='pydov',
-    version='2.0.0',
+    version='2.1.0',
     description=("A Python package to download data from Databank Ondergrond "
                  "Vlaanderen (DOV)."),
     long_description=readme,

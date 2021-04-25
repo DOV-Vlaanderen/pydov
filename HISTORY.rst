@@ -4,6 +4,52 @@
 History
 =======
 
+v2.1.0
+------
+
+* News
+
+  * This version adds support for Python 3.9.
+
+  * This version is supported on Python 3.6, 3.7, 3.8 and 3.9.
+
+  * We are proud to be a part of the growing `pyOpenSci <https://www.pyopensci.org/>`_ community promoting open and reproducible research.
+
+* New features
+
+  * Add support for location-based searching using vectorfiles (f.ex. Shapefile, Geopackage) and Geopandas dataframes.
+
+  * Add new object type for groundwater permits (GrondwaterVergunning)
+
+  * Add new object types for soil data, including:
+
+    * Soil sites (Bodemsite)
+
+    * Soil plots (Bodemlocatie)
+
+    * Soil samples (Bodemmonster)
+
+    * Soil observations (Bodemobservatie)
+
+* Fixes and improvements
+
+  * Fix bugs that occur when the XML webservice is unavailable, i.e. prevent caching errors and return stale data if available.
+
+  * Retry failed network requests to make pydov more resilient to bad network connections.
+
+  * Switched from the main DOV WFS endpoint to workspace-level endpoints, this is more efficient and allows a cleaner codebase.
+
+  * Add the `start_interpretatie_mtaw` field to the interpretatie types.
+
+  * Add the `mv_mtaw` field to the Sondering type.
+
+v2.0.1
+------
+
+* Fixes and improvements
+
+  * Fix the 'z' field of the Sondering type, it is replaced by 'lengte' and 'diepte' following the DOV XSD schema update.
+
 v2.0.0
 ------
 

@@ -27,6 +27,8 @@ class Bodemclassificatie(AbstractDovType):
                  datatype='string')
     ]
 
+    pkey_fieldname = 'Bodemclassificatiefiche'
+
     def __init__(self, pkey):
         """Initialisation.
 
@@ -37,19 +39,5 @@ class Bodemclassificatie(AbstractDovType):
             `https://www.dov.vlaanderen.be/data/**classificatie/<id>`.
 
         """
-        super(Bodemclassificatie, self).__init__('bodemclassificatie', pkey)
+        super().__init__('bodemclassificatie', pkey)
 
-    @classmethod
-    def from_wfs_element(cls, feature, namespace):
-        b = cls(feature.findtext('./{{{}}}Bodemclassificatiefiche'
-                                 .format(namespace)))
-
-        for field in cls.get_fields(source=('wfs',)).values():
-            b.data[field['name']] = cls._parse(
-                func=feature.findtext,
-                xpath=field['sourcefield'],
-                namespace=namespace,
-                returntype=field.get('type', None)
-            )
-
-        return b

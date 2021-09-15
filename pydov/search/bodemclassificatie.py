@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Module containing the search classes to retrieve DOV
-bodemclassificatie data."""
+"""Module containing the search classes to retrieve DOV bodemclassificatie data."""
 from ..types.bodemclassificatie import Bodemclassificatie
 from .abstract import AbstractSearch
 

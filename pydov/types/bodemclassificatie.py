@@ -6,7 +6,7 @@ from .abstract import AbstractDovType
 
 
 class Bodemclassificatie(AbstractDovType):
-    """Class representing the DOV data type for bodemobservaties."""
+    """Class representing the DOV data type for bodemclassificaties."""
 
     subtypes = []
 
@@ -22,8 +22,7 @@ class Bodemclassificatie(AbstractDovType):
         WfsField(name='mv_mtaw', source_field='mv_mTAW', datatype='float'),
         WfsField(name='classificatietype', source_field='Classificatietype', datatype='string'),
         WfsField(name='bodemtype', source_field='Bodemtype', datatype='string'),
-        WfsField(name='auteurs', source_field='Auteurs',
-                 datatype='string')
+        WfsField(name='auteurs', source_field='Auteurs', datatype='string')
     ]
 
     pkey_fieldname = 'Bodemclassificatiefiche'

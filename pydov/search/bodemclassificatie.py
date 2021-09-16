@@ -18,5 +18,4 @@ class BodemclassificatieSearch(AbstractSearch):
             fields described in the documentation.
 
         """
-        super(BodemclassificatieSearch, self).__init__('bodem:bodemclassificaties',
-                                                    objecttype)
+        super(BodemclassificatieSearch, self).__init__('bodem:bodemclassificaties',objecttype)

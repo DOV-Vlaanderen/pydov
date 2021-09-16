@@ -2,7 +2,6 @@
 """Module containing the DOV data type for bodemclassificatie, including
 subtypes."""
 from pydov.types.fields import WfsField, XmlField
-
 from .abstract import AbstractDovType
 
 
@@ -40,4 +39,3 @@ class Bodemclassificatie(AbstractDovType):
 
         """
         super().__init__('bodemclassificatie', pkey)
-

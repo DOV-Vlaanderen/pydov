@@ -3,13 +3,34 @@
 subtypes."""
 from pydov.types.fields import WfsField, XmlField
 
-from .abstract import AbstractDovType
+from .abstract import AbstractDovSubType, AbstractDovType
 
+
+class Fractiemeting(AbstractDovSubType):
+    rootpath = './/bodemobservatie/fractiemeting'
+
+    fields = [
+        XmlField(name='fractiemeting_ondergrens',
+                 source_xpath='ondergrens',
+                 definition='.',
+                 datatype='float',
+                 notnull=False),
+        XmlField(name='fractiemeting_bovengrens',
+                 source_xpath='bovengrens',
+                 definition='.',
+                 datatype='float',
+                 notnull=False),
+        XmlField(name='fractiemeting_waarde',
+                 source_xpath='waarde',
+                 definition='.',
+                 datatype='float',
+                 notnull=False)
+    ]
 
 class Bodemobservatie(AbstractDovType):
     """Class representing the DOV data type for bodemobservaties."""
 
-    subtypes = []
+    subtypes = [Fractiemeting]
 
     fields = [
         WfsField(name='pkey_bodemobservatie',
@@ -42,10 +63,6 @@ class Bodemobservatie(AbstractDovType):
                  + 'bvb anionen, kationen, .... Is indicatief.',
                  datatype='string'),
         WfsField(name='parameter', source_field='Parameter',
-                 datatype='string'),
-        XmlField(name='detectie',
-                 source_xpath='/bodemobservatie/detectieconditie',
-                 definition='boven/onder detectielimiet',
                  datatype='string'),
         WfsField(name='waarde', source_field='Waarde', datatype='string'),
         WfsField(name='eenheid', source_field='Eenheid', datatype='string'),

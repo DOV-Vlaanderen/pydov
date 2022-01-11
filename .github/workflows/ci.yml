@@ -27,7 +27,7 @@ jobs:
       - name: "Install GDAL"
         if: ${{ matrix.python-version == '3.10' }}
         run: |
-          sudo apt-add-repository ppa:ubuntugis/ubuntugis-unstable
+          sudo apt-add-repository ppa:ubuntugis/ubuntugis-stable
           sudo apt-get update
           sudo apt-get install gdal-bin libgdal-dev
       - name: "Install dependencies"

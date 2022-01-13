@@ -31,7 +31,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install gdal-bin libgdal-dev
           python -m pip install --upgrade cython
-          python -m pip install --no-binary fiona fiona
+          python -m pip install --force-reinstall --no-binary fiona fiona
       - name: "Install dependencies"
         run: |
           set -xe

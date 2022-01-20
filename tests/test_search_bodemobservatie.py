@@ -43,11 +43,14 @@ class TestBodemobservatieSearch(AbstractTestSearch):
         'parameter',
         'Opmerkingen')
 
-    df_default_columns = ['pkey_bodemobservatie', 'pkey_bodemlocatie',
-                          'pkey_parent', 'x', 'y', 'mv_mtaw', 'diepte_van_cm',
-                          'diepte_tot_cm', 'observatiedatum', 'invoerdatum',
-                          'parametergroep', 'parameter', 'detectie', 'waarde',
-                          'eenheid', 'veld_labo', 'methode', 'betrouwbaarheid']
+    df_default_columns = [
+        'pkey_bodemobservatie', 'pkey_bodemlocatie',
+        'pkey_parent', 'x', 'y', 'mv_mtaw', 'diepte_van_cm',
+        'diepte_tot_cm', 'observatiedatum', 'invoerdatum',
+        'parametergroep', 'parameter', 'detectie', 'waarde',
+        'eenheid', 'veld_labo', 'methode', 'betrouwbaarheid',
+        'fractiemeting_ondergrens', 'fractiemeting_bovengrens',
+        'fractiemeting_waarde']
 
     def test_search_date(self, mp_wfs, mp_get_schema,
                          mp_remote_describefeaturetype, mp_remote_md,

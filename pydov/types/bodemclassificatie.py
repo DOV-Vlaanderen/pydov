@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
-"""Module containing the DOV data type for bodemclassificatie, including
-subtypes."""
-from pydov.types.fields import WfsField, XmlField
+"""Module containing the DOV data type for bodemclassificatie."""
+from pydov.types.fields import WfsField
 from .abstract import AbstractDovType
 
 
@@ -20,8 +19,10 @@ class Bodemclassificatie(AbstractDovType):
         WfsField(name='x', source_field='X_mL72', datatype='float'),
         WfsField(name='y', source_field='Y_mL72', datatype='float'),
         WfsField(name='mv_mtaw', source_field='mv_mTAW', datatype='float'),
-        WfsField(name='classificatietype', source_field='Classificatietype', datatype='string'),
-        WfsField(name='bodemtype', source_field='Bodemtype', datatype='string'),
+        WfsField(name='classificatietype',
+                 source_field='Classificatietype', datatype='string'),
+        WfsField(name='bodemtype', source_field='Bodemtype',
+                 datatype='string'),
         WfsField(name='auteurs', source_field='Auteurs', datatype='string')
     ]
 

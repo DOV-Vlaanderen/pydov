@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-"""Module containing the search classes to retrieve DOV bodemclassificatie data."""
+"""Module containing the search classes to retrieve DOV bodemclassificatie
+data."""
 from ..types.bodemclassificatie import Bodemclassificatie
 from .abstract import AbstractSearch
 
@@ -18,4 +19,5 @@ class BodemclassificatieSearch(AbstractSearch):
             fields described in the documentation.
 
         """
-        super(BodemclassificatieSearch, self).__init__('bodem:bodemclassificaties', objecttype)
+        super(BodemclassificatieSearch, self).__init__(
+            'bodem:bodemclassificaties', objecttype)

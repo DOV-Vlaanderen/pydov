@@ -12,20 +12,21 @@ class Fractiemeting(AbstractDovSubType):
     fields = [
         XmlField(name='fractiemeting_ondergrens',
                  source_xpath='ondergrens',
-                 definition='.',
+                 definition='ondergrens van de fractiemeting in µm',
                  datatype='float',
                  notnull=False),
         XmlField(name='fractiemeting_bovengrens',
                  source_xpath='bovengrens',
-                 definition='.',
+                 definition='bovengrens van de fractiemeting in µm',
                  datatype='float',
                  notnull=False),
         XmlField(name='fractiemeting_waarde',
                  source_xpath='waarde',
-                 definition='.',
+                 definition='gemeten massaprocent van de fractie',
                  datatype='float',
                  notnull=False)
     ]
+
 
 class Bodemobservatie(AbstractDovType):
     """Class representing the DOV data type for bodemobservaties."""

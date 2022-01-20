@@ -31,6 +31,7 @@ Currently, we support the following datasets:
     Soil plots,Bodemlocaties,:class:`pydov.search.bodemlocatie.BodemlocatieSearch`
     Soil samples,Bodemmonster,:class:`pydov.search.bodemmonster.BodemmonsterSearch`
     Soil observations,Bodemobservatie,:class:`pydov.search.bodemobservatie.BodemobservatieSearch`
+    Soil classifications,Bodemclassificaties,:class:`pydov.search.bodemclassificatie.BodemclassificatieSearch`
 
 Each of the datasets can be queried using a search object for this dataset. While the search objects are different, the workflow is the same for each dataset. Relevant classes can be imported from the pydov.search package, for example if we'd like to query the boreholes dataset:
 

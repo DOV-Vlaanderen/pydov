@@ -185,8 +185,14 @@ class HookInjecter(AbstractReadHook, AbstractInjectHook):
             gemeentes = tree.findall(
                 './/{http://dov.vlaanderen.be/ocdov/dov-pub}Boringen/'
                 '{http://dov.vlaanderen.be/ocdov/dov-pub}gemeente')
-            for g in gemeentes:
-                g.text = 'Bevergem'
+            if len(gemeentes) == 0:
+                gemeente = etree.Element('{http://dov.vlaanderen.be/ocdov/dov-pub}gemeente')
+                gemeente.text = 'Bevergem'
+                boring = tree.find('.//{http://dov.vlaanderen.be/ocdov/dov-pub}Boringen')
+                boring.append(gemeente)
+            else:
+                for g in gemeentes:
+                    g.text = 'Bevergem'
             return etree.tostring(tree, encoding='utf-8')
 
     def xml_received(self, pkey_object, xml):

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Module containing the DOV data type for bodemdiepteintervallen, including
 subtypes."""
-from pydov.types.fields import WfsField, XmlField
+from pydov.types.fields import WfsField
 
 from .abstract import AbstractDovType
 

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-"""Module containing the search classes to retrieve DOV bodemdiepteinterval data."""
+"""Module containing the search classes to retrieve DOV
+bodemdiepteinterval data."""
 from ..types.bodemdiepteinterval import Bodemdiepteinterval
 from .abstract import AbstractSearch
 
@@ -18,5 +19,5 @@ class BodemdiepteintervalSearch(AbstractSearch):
             fields described in the documentation.
 
         """
-        super(BodemdiepteintervalSearch, self).__init__('bodem:bodemdiepteintervallen',
-                                                    objecttype)
+        super(BodemdiepteintervalSearch, self).__init__(
+            'bodem:bodemdiepteintervallen', objecttype)

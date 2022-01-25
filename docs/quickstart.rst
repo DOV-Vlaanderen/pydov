@@ -29,6 +29,7 @@ Currently, we support the following datasets:
     Quaternary stratigraphy (with layers),Quartair stratigrafie (met lagen),:class:`pydov.search.interpretaties.QuartairStratigrafieSearch`
     Soil sites,Bodemsites,:class:`pydov.search.bodemsite.BodemsiteSearch`
     Soil plots,Bodemlocaties,:class:`pydov.search.bodemlocatie.BodemlocatieSearch`
+    Soil intervals,Bodemdiepteintervallen,:class:`pydov.search.bodemdiepteinterval.BodemdiepteintervalSearch`
     Soil samples,Bodemmonster,:class:`pydov.search.bodemmonster.BodemmonsterSearch`
     Soil observations,Bodemobservatie,:class:`pydov.search.bodemobservatie.BodemobservatieSearch`
 

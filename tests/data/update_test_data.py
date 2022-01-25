@@ -5,6 +5,7 @@ import sys
 from owslib.etree import etree
 
 from pydov.types.bodemlocatie import Bodemlocatie
+from pydov.types.bodemdiepteinterval import Bodemdiepteinterval
 from pydov.types.bodemmonster import Bodemmonster
 from pydov.types.bodemobservatie import Bodemobservatie
 from pydov.types.bodemsite import Bodemsite
@@ -871,6 +872,54 @@ if __name__ == '__main__':
     for xsd_schema in Bodemlocatie.get_xsd_schemas():
         update_file(
             'types/bodemlocatie/xsd_{}.xml'.format(xsd_schema.split('/')[-1]),
+            xsd_schema)
+
+    # types/bodemdiepteinterval
+    update_file(
+        'types/bodemdiepteinterval/wfsgetfeature.xml',
+        build_dov_url(
+            'geoserver/ows?service=WFS'
+            '&version=1.1.0&request=GetFeature&typeName='
+            'bodem:bodemdiepteintervallen&maxFeatures=1&'
+            'CQL_Filter=Diepteintervalfiche=%27' +
+            build_dov_url('data/bodemdiepteinterval/2018-000004%27')))
+
+    update_file(
+        'types/bodemdiepteinterval/feature.xml',
+        build_dov_url(
+            'geoserver/ows?service=WFS'
+            '&version=1.1.0&request=GetFeature&typeName='
+            'bodem:bodemdiepteintervallen&maxFeatures=1&'
+            'CQL_Filter=Diepteintervalfiche=%27' +
+            build_dov_url('data/bodemdiepteinterval/2018-000004%27')),
+        get_first_featuremember)
+
+    update_file(
+        'types/bodemdiepteinterval/fc_featurecatalogue.xml',
+        build_dov_url(
+            'geonetwork/srv/dut/csw'
+            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+            '&outputSchema=http://www.isotc211.org/2005/gfc'
+            '&elementSetName=full&id=859ad05d-d6fc-4850-b040-1bdac3641ff5'))
+
+    update_file(
+        'types/bodemdiepteinterval/md_metadata.xml',
+        build_dov_url(
+            'geonetwork/srv/dut/csw'
+            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+            '&outputSchema=http://www.isotc211.org/2005/gmd'
+            '&elementSetName=full&id=96a1127f-d7d0-4a33-b24c-04d982b63dce'))
+
+    update_file(
+        'types/bodemdiepteinterval/wfsdescribefeaturetype.xml',
+        build_dov_url(
+            'geoserver/bodem/bodemdiepteintervallen'
+            '/ows?service=wfs&version=1.1.0&request=DescribeFeatureType'))
+
+    for xsd_schema in Bodemdiepteinterval.get_xsd_schemas():
+        update_file(
+            'types/bodemdiepteinterval/xsd_{}.xml'.format(
+                xsd_schema.split('/')[-1]),
             xsd_schema)
 
     # types/bodemobservatie

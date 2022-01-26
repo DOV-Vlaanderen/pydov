@@ -81,4 +81,4 @@ class TestBodemobservatieSearch(AbstractTestSearch):
             query=self.valid_query_single)
 
         # specific test for the Zulu time wfs 1.1.0 issue
-        assert df.observatiedatum.unique()[0] == datetime.date(1965, 7, 30)
+        assert df.observatiedatum.unique()[0] == datetime.date(2015, 12, 10)

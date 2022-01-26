@@ -1,39 +1,81 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ns3:dov-schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns3="http://kern.schemas.dov.vlaanderen.be" xsi:schemaLocation="http://kern.schemas.dov.vlaanderen.be https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/dov.xsd">
     <bodemobservatie>
-        <parameter>mineralen_andere</parameter>
-        <parametergroep>Bodem_fysisch_structuur</parametergroep>
-        <waarde_numeriek>1.0</waarde_numeriek>
+        <parameter>textuurmeting</parameter>
+        <parametergroep>Bodem_fysisch_textuur</parametergroep>
+        <waarde_text>-</waarde_text>
         <eenheid>%</eenheid>
-        <methode>Mineralogisch onderzoek Fract. groter dan 50 µm</methode>
-        <betrouwbaarheid>onbekend</betrouwbaarheid>
-        <veld_labo>VELD</veld_labo>
-        <permkey>2019-319483</permkey>
-        <diepte_van>55.0</diepte_van>
-        <diepte_tot>70.0</diepte_tot>
-        <observatiedatum>1965-07-30</observatiedatum>
+        <methode>Textuur pipetmethode Robinson-Köhn</methode>
+        <betrouwbaarheid>goed</betrouwbaarheid>
+        <veld_labo>LABO</veld_labo>
+        <dataidentifier>
+            <permkey>2019-001221</permkey>
+            <uri>https://www.dov.vlaanderen.be/data/bodemobservatie/2019-001221</uri>
+        </dataidentifier>
+        <diepte_van>30.0</diepte_van>
+        <diepte_tot>80.0</diepte_tot>
+        <observatiedatum>2015-12-10</observatiedatum>
+        <invoerdatum>2019-02-18</invoerdatum>
         <status>publiek</status>
+        <fractiemeting>
+            <ondergrens>0.0</ondergrens>
+            <bovengrens>2.0</bovengrens>
+            <waarde>3.99</waarde>
+        </fractiemeting>
+        <fractiemeting>
+            <ondergrens>2.0</ondergrens>
+            <bovengrens>10.0</bovengrens>
+            <waarde>1.97</waarde>
+        </fractiemeting>
+        <fractiemeting>
+            <ondergrens>10.0</ondergrens>
+            <bovengrens>20.0</bovengrens>
+            <waarde>2.56</waarde>
+        </fractiemeting>
+        <fractiemeting>
+            <ondergrens>20.0</ondergrens>
+            <bovengrens>50.0</bovengrens>
+            <waarde>4.99</waarde>
+        </fractiemeting>
+        <fractiemeting>
+            <ondergrens>50.0</ondergrens>
+            <bovengrens>100.0</bovengrens>
+            <waarde>4.7</waarde>
+        </fractiemeting>
+        <fractiemeting>
+            <ondergrens>100.0</ondergrens>
+            <bovengrens>200.0</bovengrens>
+            <waarde>18.0</waarde>
+        </fractiemeting>
+        <fractiemeting>
+            <ondergrens>200.0</ondergrens>
+            <bovengrens>500.0</bovengrens>
+            <waarde>54.46</waarde>
+        </fractiemeting>
+        <fractiemeting>
+            <ondergrens>500.0</ondergrens>
+            <bovengrens>1000.0</bovengrens>
+            <waarde>7.5</waarde>
+        </fractiemeting>
+        <fractiemeting>
+            <ondergrens>1000.0</ondergrens>
+            <bovengrens>2000.0</bovengrens>
+            <waarde>1.93</waarde>
+        </fractiemeting>
         <auteur>
-            <persoon>
-                <naam>Vandamme</naam>
-                <voornaam>Jozef</voornaam>
-            </persoon>
-        </auteur>
-        <auteur>
-            <persoon>
-                <naam>Deckers</naam>
-                <voornaam>Joseph</voornaam>
-            </persoon>
+            <bedrijf>
+                <naam>Bodemkundige Dienst van België vzw</naam>
+            </bedrijf>
         </auteur>
         <ref_bodemmonster>
             <ref_diepteinterval>
                 <ref_bodemlocatie>
-                    <naam>KART_PROF_031E/18</naam>
+                    <naam>VMM_INF_1</naam>
                 </ref_bodemlocatie>
                 <type>ALG</type>
-                <volgnummer>3</volgnummer>
+                <volgnummer>2</volgnummer>
             </ref_diepteinterval>
-            <identificatie>KART_PROF_031E/18_H3_M1</identificatie>
+            <identificatie>A0057352</identificatie>
         </ref_bodemmonster>
     </bodemobservatie>
 </ns3:dov-schema>

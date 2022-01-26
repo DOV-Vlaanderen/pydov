@@ -11,7 +11,7 @@
       <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">1</gco:CharacterString>
     </gmx:versionNumber>
     <gmx:versionDate xmlns:gmx="http://www.isotc211.org/2005/gmx">
-      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2022-01-24</gco:Date>
+      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2022-01-25</gco:Date>
     </gmx:versionDate>
     <gfc:producer>
       <gmd:CI_ResponsibleParty xmlns:gmd="http://www.isotc211.org/2005/gmd">
@@ -161,6 +161,37 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Bodemopbouwfiche</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Permanente URL die verwijst naar de gegevens van de bodemkundige opbouw waartoe dit bodemdiepteinterval behoort.</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>1</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:valueType>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:aName>
+                  <gco:CharacterString>String</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
               <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Naam</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
@@ -192,10 +223,72 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Bovengrens1</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Eerste bovengrens van het bodemdiepteinterval in centimeter onder maaiveld.</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>0</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:valueType>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:aName>
+                  <gco:CharacterString>Number</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Bovengrens2</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Tweede bovengrens van het bodemdiepteinterval in centimeter onder maaiveld.</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>0</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:valueType>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:aName>
+                  <gco:CharacterString>Number</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
               <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Bovengrenzen</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Eén of 2 bovengrenzen van het bodemdiepteinterval</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Eén of 2 bovengrenzen van het bodemdiepteinterval, in centimeter onder maaiveld.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
@@ -223,10 +316,72 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Ondergrens1</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Eerste ondergrens van het bodemdiepteinterval in centimeter onder maaiveld.</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>0</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:valueType>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:aName>
+                  <gco:CharacterString>Number</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Ondergrens2</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Tweede ondergrens van het bodemdiepteinterval in centimeter onder maaiveld.</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>0</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:valueType>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:aName>
+                  <gco:CharacterString>Number</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
               <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Ondergrenzen</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Eén of 2 ondergrenzen van het bodemdiepteinterval</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Eén of 2 ondergrenzen van het bodemdiepteinterval, in centimeter onder maaiveld.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
@@ -249,6 +404,76 @@
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Ondergrens_bereikt</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Geeft aan of de ondergrens van het bodemdiepteinterval bereikt is</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>1</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:valueType>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:aName>
+                  <gco:CharacterString>String</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+            <gfc:listedValue>
+              <gfc:FC_ListedValue>
+                <gfc:label>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">ja</gco:CharacterString>
+                </gfc:label>
+                <gfc:code>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">JA</gco:CharacterString>
+                </gfc:code>
+                <gfc:definition>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">ondergrens werd bereikt</gco:CharacterString>
+                </gfc:definition>
+              </gfc:FC_ListedValue>
+            </gfc:listedValue>
+            <gfc:listedValue>
+              <gfc:FC_ListedValue>
+                <gfc:label>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">nee</gco:CharacterString>
+                </gfc:label>
+                <gfc:code>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">NEE</gco:CharacterString>
+                </gfc:code>
+                <gfc:definition>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">ondergrens werd niet bereikt</gco:CharacterString>
+                </gfc:definition>
+              </gfc:FC_ListedValue>
+            </gfc:listedValue>
+            <gfc:listedValue>
+              <gfc:FC_ListedValue>
+                <gfc:label>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">niet van toepassing</gco:CharacterString>
+                </gfc:label>
+                <gfc:code>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">NVT</gco:CharacterString>
+                </gfc:code>
+                <gfc:definition>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">bodemdiepteinterval is niet het onderste interval van het profiel</gco:CharacterString>
+                </gfc:definition>
+              </gfc:FC_ListedValue>
+            </gfc:listedValue>
           </gfc:FC_FeatureAttribute>
         </gfc:carrierOfCharacteristics>
         <gfc:carrierOfCharacteristics>
@@ -595,6 +820,99 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">X_mL72</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">X coördinaat van de bodemlocatie van dit diepteinterval in meter Lambert72.</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>1</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:valueType>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:aName>
+                  <gco:CharacterString>Number</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Y_mL72</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Y coördinaat van de bodemlocatie van dit diepteinterval in meter Lambert72.</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>1</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:valueType>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:aName>
+                  <gco:CharacterString>Number</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">mv_mTAW</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Hoogte van het maaiveld op de locatie van de bodemlocatie van dit diepteinterval, in meter TAW.</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>1</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:valueType>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:aName>
+                  <gco:CharacterString>Number</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
               <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">geom</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
@@ -618,231 +936,6 @@
               <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:aName>
                   <gco:CharacterString>Geometry</gco:CharacterString>
-                </gco:aName>
-              </gco:TypeName>
-            </gfc:valueType>
-          </gfc:FC_FeatureAttribute>
-        </gfc:carrierOfCharacteristics>
-        <gfc:carrierOfCharacteristics>
-          <gfc:FC_FeatureAttribute>
-            <gfc:memberName>
-              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Bovengrens1</gco:LocalName>
-            </gfc:memberName>
-            <gfc:definition>
-              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">eerste bovengrens van het bodemdiepteinterval</gco:CharacterString>
-            </gfc:definition>
-            <gfc:cardinality>
-              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
-                <gco:range>
-                  <gco:MultiplicityRange>
-                    <gco:lower>
-                      <gco:Integer>0</gco:Integer>
-                    </gco:lower>
-                    <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
-                    </gco:upper>
-                  </gco:MultiplicityRange>
-                </gco:range>
-              </gco:Multiplicity>
-            </gfc:cardinality>
-            <gfc:valueType>
-              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
-                <gco:aName>
-                  <gco:CharacterString>Number</gco:CharacterString>
-                </gco:aName>
-              </gco:TypeName>
-            </gfc:valueType>
-          </gfc:FC_FeatureAttribute>
-        </gfc:carrierOfCharacteristics>
-        <gfc:carrierOfCharacteristics>
-          <gfc:FC_FeatureAttribute>
-            <gfc:memberName>
-              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Bovengrens2</gco:LocalName>
-            </gfc:memberName>
-            <gfc:definition>
-              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">tweede bovengrens van het bodemdiepteinterval</gco:CharacterString>
-            </gfc:definition>
-            <gfc:cardinality>
-              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
-                <gco:range>
-                  <gco:MultiplicityRange>
-                    <gco:lower>
-                      <gco:Integer>0</gco:Integer>
-                    </gco:lower>
-                    <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
-                    </gco:upper>
-                  </gco:MultiplicityRange>
-                </gco:range>
-              </gco:Multiplicity>
-            </gfc:cardinality>
-            <gfc:valueType>
-              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
-                <gco:aName>
-                  <gco:CharacterString>Number</gco:CharacterString>
-                </gco:aName>
-              </gco:TypeName>
-            </gfc:valueType>
-          </gfc:FC_FeatureAttribute>
-        </gfc:carrierOfCharacteristics>
-        <gfc:carrierOfCharacteristics>
-          <gfc:FC_FeatureAttribute>
-            <gfc:memberName>
-              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Ondergrens1</gco:LocalName>
-            </gfc:memberName>
-            <gfc:definition>
-              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">eerste ondergrens van het bodemdiepteinterval</gco:CharacterString>
-            </gfc:definition>
-            <gfc:cardinality>
-              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
-                <gco:range>
-                  <gco:MultiplicityRange>
-                    <gco:lower>
-                      <gco:Integer>0</gco:Integer>
-                    </gco:lower>
-                    <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
-                    </gco:upper>
-                  </gco:MultiplicityRange>
-                </gco:range>
-              </gco:Multiplicity>
-            </gfc:cardinality>
-            <gfc:valueType>
-              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
-                <gco:aName>
-                  <gco:CharacterString>Number</gco:CharacterString>
-                </gco:aName>
-              </gco:TypeName>
-            </gfc:valueType>
-          </gfc:FC_FeatureAttribute>
-        </gfc:carrierOfCharacteristics>
-        <gfc:carrierOfCharacteristics>
-          <gfc:FC_FeatureAttribute>
-            <gfc:memberName>
-              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Ondergrens2</gco:LocalName>
-            </gfc:memberName>
-            <gfc:definition>
-              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">tweede ondergrens van het bodemdiepteinterval</gco:CharacterString>
-            </gfc:definition>
-            <gfc:cardinality>
-              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
-                <gco:range>
-                  <gco:MultiplicityRange>
-                    <gco:lower>
-                      <gco:Integer>0</gco:Integer>
-                    </gco:lower>
-                    <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
-                    </gco:upper>
-                  </gco:MultiplicityRange>
-                </gco:range>
-              </gco:Multiplicity>
-            </gfc:cardinality>
-            <gfc:valueType>
-              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
-                <gco:aName>
-                  <gco:CharacterString>Number</gco:CharacterString>
-                </gco:aName>
-              </gco:TypeName>
-            </gfc:valueType>
-          </gfc:FC_FeatureAttribute>
-        </gfc:carrierOfCharacteristics>
-        <gfc:carrierOfCharacteristics>
-          <gfc:FC_FeatureAttribute>
-            <gfc:memberName>
-              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Ondergrens_bereikt</gco:LocalName>
-            </gfc:memberName>
-            <gfc:definition>
-              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Geeft aan of de ondergrens van het bodemdiepteinterval bereikt is</gco:CharacterString>
-            </gfc:definition>
-            <gfc:cardinality>
-              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
-                <gco:range>
-                  <gco:MultiplicityRange>
-                    <gco:lower>
-                      <gco:Integer>1</gco:Integer>
-                    </gco:lower>
-                    <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
-                    </gco:upper>
-                  </gco:MultiplicityRange>
-                </gco:range>
-              </gco:Multiplicity>
-            </gfc:cardinality>
-            <gfc:valueType>
-              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
-                <gco:aName>
-                  <gco:CharacterString>String</gco:CharacterString>
-                </gco:aName>
-              </gco:TypeName>
-            </gfc:valueType>
-            <gfc:listedValue>
-              <gfc:FC_ListedValue>
-                <gfc:label>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">ja</gco:CharacterString>
-                </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">JA</gco:CharacterString>
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">ondergrens werd bereikt</gco:CharacterString>
-                </gfc:definition>
-              </gfc:FC_ListedValue>
-            </gfc:listedValue>
-            <gfc:listedValue>
-              <gfc:FC_ListedValue>
-                <gfc:label>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">nee</gco:CharacterString>
-                </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">NEE</gco:CharacterString>
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">ondergrens werd niet bereikt</gco:CharacterString>
-                </gfc:definition>
-              </gfc:FC_ListedValue>
-            </gfc:listedValue>
-            <gfc:listedValue>
-              <gfc:FC_ListedValue>
-                <gfc:label>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">niet van toepassing</gco:CharacterString>
-                </gfc:label>
-                <gfc:code>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">NVT</gco:CharacterString>
-                </gfc:code>
-                <gfc:definition>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">bodemdiepteinterval is niet het onderste interval van het profiel</gco:CharacterString>
-                </gfc:definition>
-              </gfc:FC_ListedValue>
-            </gfc:listedValue>
-          </gfc:FC_FeatureAttribute>
-        </gfc:carrierOfCharacteristics>
-        <gfc:carrierOfCharacteristics>
-          <gfc:FC_FeatureAttribute>
-            <gfc:memberName>
-              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Bodemopbouwfiche</gco:LocalName>
-            </gfc:memberName>
-            <gfc:definition>
-              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Permanente URL die verwijst naar de gegevens van de bodemkundige opbouw waartoe dit bodemdiepteinterval behoort.</gco:CharacterString>
-            </gfc:definition>
-            <gfc:cardinality>
-              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
-                <gco:range>
-                  <gco:MultiplicityRange>
-                    <gco:lower>
-                      <gco:Integer>1</gco:Integer>
-                    </gco:lower>
-                    <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
-                    </gco:upper>
-                  </gco:MultiplicityRange>
-                </gco:range>
-              </gco:Multiplicity>
-            </gfc:cardinality>
-            <gfc:valueType>
-              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
-                <gco:aName>
-                  <gco:CharacterString>String</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>

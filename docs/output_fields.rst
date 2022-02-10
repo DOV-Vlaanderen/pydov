@@ -503,6 +503,31 @@ Soil plots (Bodemlocaties)
     invoerdatum,10,date,nan
     educatieve_waarde,10,string,ZEER
 
+Soil intervals (Bodemdiepteintervallen)
+---------------------------------------
+  .. csv-table:: Soil intervals (Bodemdiepteintervallen)
+    :header-rows: 1
+
+    Field,Cost,Datatype,Example
+    pkey_diepteinterval,1,string,https://www.dov.vlaanderen.be/data/bodemdiepteinterval/2018-000003
+    pkey_bodemopbouw,1,string,https://www.dov.vlaanderen.be/data/bodemopbouw/2018-000001
+    pkey_bodemlocatie,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/2014-000001
+    nr,1,integer,3
+    type,1,string,horizont
+    naam,1,string,Bg
+    bovengrens1_cm,1,float,40.0
+    bovengrens2_cm,1,float,NaN
+    ondergrens1_cm,1,float,65.0
+    ondergrens2_cm,1,float,NaN
+    ondergrens_bereikt,1,string,NVT
+    grensduidelijkheid,1,string,abrupt - overgang 0-2 cm breed
+    grensregelmatigheid,1,string,bijna vlak
+    beschrijving,1,string,onverweerd moedermateriaal met gleyverschijnselen
+    x,1,float,187237.11
+    y,1,float,163028.83
+    mv_mtaw,1,float,49.0
+
+
 Soil samples (Bodemmonsters)
 --------------------------------
   .. csv-table:: Soil samples (Bodemmonsters)

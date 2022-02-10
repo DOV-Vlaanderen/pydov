@@ -4,6 +4,7 @@ import numpy as np
 import pytest
 
 from pydov.search.bodemlocatie import BodemlocatieSearch
+from pydov.search.bodemdiepteinterval import BodemdiepteintervalSearch
 from pydov.search.bodemmonster import BodemmonsterSearch
 from pydov.search.bodemobservatie import BodemobservatieSearch
 from pydov.search.bodemsite import BodemsiteSearch
@@ -25,6 +26,7 @@ from tests.abstract import ServiceCheck
 
 search_objects = [BodemsiteSearch(),
                   BodemlocatieSearch(),
+                  BodemdiepteintervalSearch(),
                   BodemobservatieSearch(),
                   BodemmonsterSearch(),
                   BodemclassificatieSearch(),

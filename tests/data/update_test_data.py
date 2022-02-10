@@ -928,7 +928,7 @@ if __name__ == '__main__':
 
     # types/bodemobservatie
     update_file('types/bodemobservatie/bodemobservatie.xml',
-                build_dov_url('data/bodemobservatie/2019-319483.xml'))
+                build_dov_url('data/bodemobservatie/2019-001221.xml'))
 
     update_file(
         'types/bodemobservatie/wfsgetfeature.xml',
@@ -936,7 +936,7 @@ if __name__ == '__main__':
             'geoserver/ows?service=WFS'
             '&version=1.1.0&request=GetFeature&typeName=bodem:bodemobservaties'
             '&maxFeatures=1&CQL_Filter=Bodemobservatiefiche=%27' +
-            build_dov_url('data/bodemobservatie/2019-319483%27')))
+            build_dov_url('data/bodemobservatie/2019-001221%27')))
 
     update_file(
         'types/bodemobservatie/feature.xml',
@@ -944,7 +944,7 @@ if __name__ == '__main__':
             'geoserver/ows?service=WFS'
             '&version=1.1.0&request=GetFeature&typeName=bodem:bodemobservaties'
             '&maxFeatures=1&CQL_Filter=Bodemobservatiefiche=%27' +
-            build_dov_url('data/bodemobservatie/2019-319483%27')),
+            build_dov_url('data/bodemobservatie/2019-001221%27')),
         get_first_featuremember)
 
     update_file(

@@ -575,6 +575,9 @@ Soil observations (Bodemobservaties)
     veld_labo,1,string,VELD
     methode,1,string,Aardewerk nieuwe methode organische koolstof
     betrouwbaarheid,10,string,onbekend
+    fractiemeting_ondergrens,10,float,NaN
+    fractiemeting_bovengrens,10,float,NaN
+    fractiemeting_waarde,10,float,NaN
 
 Soil classifications (Bodemclassificaties)
 ------------------------------------------

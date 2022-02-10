@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Module grouping network-related utilities and functions."""
 
+import os
 from queue import Empty, Queue
 from threading import Thread
 
@@ -11,6 +12,29 @@ from requests.adapters import HTTPAdapter
 import pydov
 
 request_timeout = 300
+
+
+def proxy_autoconfiguration():
+    """Try proxy autoconfiguration via PAC.
+
+    This function tries to autodetect the required proxy server using PAC, and
+    sets the HTTP_PROXY and HTTPS_PROXY environment variables accordingly.
+
+    These variables should subsequently be picked up by the requests sessions
+    used by pydov and owslib.
+    """
+    try:
+        import pypac
+    except ImportError:
+        return
+
+    from pydov.util.dovutil import build_dov_url
+    with pypac.pac_context_for_url(build_dov_url('/')):
+        http_proxy = os.environ.get("HTTP_PROXY", "")
+        https_proxy = os.environ.get("HTTPS_PROXY", "")
+
+    os.environ['HTTP_PROXY'] = http_proxy
+    os.environ['HTTPS_PROXY'] = https_proxy
 
 
 class TimeoutHTTPAdapter(HTTPAdapter):

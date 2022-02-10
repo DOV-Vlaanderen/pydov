@@ -57,6 +57,7 @@ setup(
     extras_require={
         'docs': requirements_doc,
         'devs': requirements_dev,
-        'vectorfile': requirements_vectorfile
+        'vectorfile': requirements_vectorfile,
+        'proxy': ['pypac']
     }
 )

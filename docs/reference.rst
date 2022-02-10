@@ -74,6 +74,12 @@ Bodemobservatie
 .. automodule:: pydov.search.bodemobservatie
     :members:
 
+Bodemclassificatie
+******************
+
+.. automodule:: pydov.search.bodemclassificatie
+    :members:
+
 Object types
 ------------
 
@@ -154,6 +160,13 @@ Bodemobservatie
 ***************
 
 .. automodule:: pydov.types.bodemobservatie
+    :members:
+    :show-inheritance:
+
+Bodemclassificatie
+******************
+
+.. automodule:: pydov.types.bodemclassificatie
     :members:
     :show-inheritance:
 

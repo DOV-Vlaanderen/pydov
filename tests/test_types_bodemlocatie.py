@@ -1,4 +1,4 @@
-"""Module grouping tests for the pydov.types.boring module."""
+"""Module grouping tests for the pydov.types.bodemlocatie module."""
 
 from pydov.types.bodemlocatie import Bodemlocatie
 from pydov.util.dovutil import build_dov_url
@@ -21,15 +21,15 @@ class TestBodemlocatie(AbstractTestTypes):
         'naam', 'type', 'waarnemingsdatum', 'doel',
         'x', 'y', 'mv_mtaw',
         'erfgoed', 'bodemstreek',
-        'invoerdatum','educatieve_waarde'
-        ]
+        'invoerdatum', 'educatieve_waarde'
+    ]
     field_names_subtypes = []
     field_names_nosubtypes = [
         'pkey_bodemlocatie', 'pkey_bodemsite',
         'naam', 'type', 'waarnemingsdatum', 'doel',
         'x', 'y', 'mv_mtaw',
         'erfgoed', 'bodemstreek',
-        'invoerdatum','educatieve_waarde'
+        'invoerdatum', 'educatieve_waarde'
     ]
 
     valid_returnfields = ('pkey_bodemlocatie', 'naam')

@@ -6,6 +6,7 @@ from pydov.types.bodemsite import Bodemsite
 from pydov.types.bodemlocatie import Bodemlocatie
 from pydov.types.bodemobservatie import Bodemobservatie
 from pydov.types.bodemmonster import Bodemmonster
+from pydov.types.bodemclassificatie import Bodemclassificatie
 from pydov.types.boring import Boring
 from pydov.types.fields import XmlField
 from pydov.types.grondwaterfilter import GrondwaterFilter
@@ -28,6 +29,7 @@ type_objects = [Bodemsite,
                 Bodemlocatie,
                 Bodemobservatie,
                 Bodemmonster,
+                Bodemclassificatie,
                 Boring,
                 Sondering,
                 GrondwaterFilter,

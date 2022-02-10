@@ -7,6 +7,7 @@ from pydov.search.bodemlocatie import BodemlocatieSearch
 from pydov.search.bodemmonster import BodemmonsterSearch
 from pydov.search.bodemobservatie import BodemobservatieSearch
 from pydov.search.bodemsite import BodemsiteSearch
+from pydov.search.bodemclassificatie import BodemclassificatieSearch
 from pydov.search.boring import BoringSearch
 from pydov.search.grondmonster import GrondmonsterSearch
 from pydov.search.grondwaterfilter import GrondwaterFilterSearch
@@ -26,6 +27,7 @@ search_objects = [BodemsiteSearch(),
                   BodemlocatieSearch(),
                   BodemobservatieSearch(),
                   BodemmonsterSearch(),
+                  BodemclassificatieSearch(),
                   BoringSearch(),
                   SonderingSearch(),
                   GrondwaterFilterSearch(),

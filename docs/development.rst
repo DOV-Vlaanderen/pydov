@@ -139,7 +139,6 @@ in the development installation instructions :ref:`for package contributors <dev
    * ``requirements_vectorfile.txt`` required packages to use vector files (GeometryFilter and GeopandasFilter) in pydov
    * ``requirements_dev.txt`` required packages to run the pydov test suite and contribute to pydov code
    * ``requirements_doc.txt`` required packages to build the pydov documentation and contribute to the pydov documentation
-   * ``docs/requirements_rtd.txt`` requirement specific for building the documentation website on `readthedocs <https://readthedocs.org/>`_
    * ``binder/requirements.txt`` requirements setup to setup a Binder environment
 
    When adding dependencies, make sure to make the appropriate adjustments in the individual file!

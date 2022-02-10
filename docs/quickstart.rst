@@ -29,8 +29,10 @@ Currently, we support the following datasets:
     Quaternary stratigraphy (with layers),Quartair stratigrafie (met lagen),:class:`pydov.search.interpretaties.QuartairStratigrafieSearch`
     Soil sites,Bodemsites,:class:`pydov.search.bodemsite.BodemsiteSearch`
     Soil plots,Bodemlocaties,:class:`pydov.search.bodemlocatie.BodemlocatieSearch`
+    Soil intervals,Bodemdiepteintervallen,:class:`pydov.search.bodemdiepteinterval.BodemdiepteintervalSearch`
     Soil samples,Bodemmonster,:class:`pydov.search.bodemmonster.BodemmonsterSearch`
     Soil observations (with fraction measurements),Bodemobservaties (met fractiemetingen),:class:`pydov.search.bodemobservatie.BodemobservatieSearch`
+    Soil classifications,Bodemclassificaties,:class:`pydov.search.bodemclassificatie.BodemclassificatieSearch`
 
 Each of the datasets can be queried using a search object for this dataset. While the search objects are different, the workflow is the same for each dataset. Relevant classes can be imported from the pydov.search package, for example if we'd like to query the boreholes dataset:
 

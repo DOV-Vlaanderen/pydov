@@ -43,6 +43,7 @@ you through the process.
 
     #. Install `pipwin`_ using :code:`pip install pipwin`
     #. Using pipwin, download the latest Windows binaries for GDAL, Fiona and GeoPandas provided by `Christoph Gohlke`_:
+
       #. Install `GDAL`_ with :code:`pipwin install gdal`
       #. Install `Fiona`_ with :code:`pipwin install fiona`
       #. Install `GeoPandas`_ with :code:`pipwin install geopandas`

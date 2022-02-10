@@ -552,7 +552,7 @@ Soil samples (Bodemmonsters)
     labo,1,string,Centrum voor Grondonderzoek (C.V.G.)
 
 Soil observations (Bodemobservaties)
---------------------------------
+------------------------------------
   .. csv-table:: Soil observations (Bodemobservaties)
     :header-rows: 1
 
@@ -575,3 +575,18 @@ Soil observations (Bodemobservaties)
     veld_labo,1,string,VELD
     methode,1,string,Aardewerk nieuwe methode organische koolstof
     betrouwbaarheid,10,string,onbekend
+
+Soil classifications (Bodemclassificaties)
+------------------------------------------
+  .. csv-table:: Soil classifications (Bodemclassificaties)
+    :header-rows: 1
+
+    Field,Cost,Datatype,Example
+    pkey_bodemclassificatie,1,string,https://www.dov.vlaanderen.be/data/belgischebodemclassificatie/2018-000146
+    pkey_bodemlocatie,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/2015-000146
+    x,1,float,248905.67
+    y,1,float,200391.29
+    mv_mtaw,1,float,32.9
+    classificatietype,1,string,Algemene Belgische classificatie
+    bodemtype,1,string,Scbz
+    auteurs,1,string,Dondeyne, Stefaan (KULeuven)

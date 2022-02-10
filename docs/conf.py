@@ -13,6 +13,8 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
+import sphinx_rtd_theme
+import pydov
 import sys
 import os
 
@@ -31,8 +33,6 @@ project_root = os.path.dirname(cwd)
 # version is used.
 sys.path.insert(0, project_root)
 
-import pydov
-import sphinx_rtd_theme
 
 # -- General configuration ---------------------------------------------
 
@@ -63,7 +63,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'pydov'
-copyright = u"2017-2020, DOV and contributors"
+copyright = u"2017-2022, DOV and contributors"
 
 # The version info for the project you're documenting, acts as replacement
 # for |version| and |release|, also used in various other places throughout
@@ -209,20 +209,20 @@ nbsphinx_execute = 'never'
 
 # Interpshinx settings
 intersphinx_mapping = {'pandas':
-        ('http://pandas.pydata.org/pandas-docs/stable/', None)}
+                       ('http://pandas.pydata.org/pandas-docs/stable/', None)}
 
 
 # -- Options for LaTeX output ------------------------------------------
 
 latex_elements = {
     # The paper size ('letterpaper' or 'a4paper').
-    #'papersize': 'letterpaper',
+    # 'papersize': 'letterpaper',
 
     # The font size ('10pt', '11pt' or '12pt').
-    #'pointsize': '10pt',
+    # 'pointsize': '10pt',
 
     # Additional stuff for the LaTeX preamble.
-    #'preamble': '',
+    # 'preamble': '',
 }
 
 # Grouping the document tree into LaTeX files. List of tuples

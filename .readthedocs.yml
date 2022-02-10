@@ -2,7 +2,10 @@ version: 2
 
 python:
     install:
-        - requirements: docs/requirements_rtd.txt
+        - requirements: requirements.txt
+        - requirements: requirements_doc.txt
+        - method: pip
+          path: .
 
 build:
     os: ubuntu-20.04

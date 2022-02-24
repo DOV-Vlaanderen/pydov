@@ -5,8 +5,6 @@ import os
 from queue import Empty, Queue
 from threading import Thread
 
-from owslib.util import ResponseWrapper
-import owslib
 import requests
 import urllib3
 from requests.adapters import HTTPAdapter
@@ -147,8 +145,6 @@ class SessionFactory:
     session is used per thread executing XML requests in parallel.
     """
 
-    http_auth = None
-
     @staticmethod
     def get_session():
         """Request a new session.
@@ -159,32 +155,6 @@ class SessionFactory:
             pydov configured requests Session.
         """
         session = requests.Session()
-
-        if SessionFactory.http_auth:
-            session.auth = SessionFactory.http_auth
-
-            def _openURL(*args, **kwargs):
-                """Patch function for owslib.util.openURL using our custom pydov
-                requests session.
-
-                Parameters
-                ----------
-                url : str
-                    URL to open.
-
-                Returns
-                -------
-                ResponseWrapper
-                    Wrapped response of the request.
-                """
-                url = args[0]
-                return ResponseWrapper(pydov.session.get(url))
-
-            owslib.util.openURL \
-                = owslib.feature.common.openURL \
-                = owslib.feature.schema.openURL \
-                = owslib.feature.wfs110.openURL \
-                = _openURL
 
         session.headers.update(
             {'user-agent': 'pydov/{}'.format(pydov.__version__)})

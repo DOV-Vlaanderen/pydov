@@ -5,6 +5,8 @@ import os
 from queue import Empty, Queue
 from threading import Thread
 
+from owslib.util import ResponseWrapper
+import owslib
 import requests
 import urllib3
 from requests.adapters import HTTPAdapter
@@ -23,18 +25,86 @@ def proxy_autoconfiguration():
     These variables should subsequently be picked up by the requests sessions
     used by pydov and owslib.
     """
+    def get_orig_proxy():
+        """Get the proxy from current environment, if available.
+
+        Returns
+        -------
+        tuple(str, str)
+            The HTTP and HTTPS proxy respectively.
+        """
+        return (os.environ.get('HTTP_PROXY', None),
+                os.environ.get('HTTPS_PROXY', None))
+
+    def set_proxy_for_url(url):
+        """Use PAC to discover the required proxy for the given URL and
+        set the environment accordingly.
+
+        Parameters
+        ----------
+        url : str
+            The URL to pass to the PAC to determine the required proxy.
+        """
+        with pypac.pac_context_for_url(url):
+            http_proxy = os.environ.get("HTTP_PROXY", "")
+            https_proxy = os.environ.get("HTTPS_PROXY", "")
+
+        os.environ['HTTP_PROXY'] = http_proxy
+        os.environ['HTTPS_PROXY'] = https_proxy
+
+    def revert_to_orig_proxy(orig_http_proxy, orig_https_proxy):
+        """Revert the proxy environment to the given values.
+
+        Parameters
+        ----------
+        orig_http_proxy : str
+            Proxy server to use for HTTP, or None to disable.
+        orig_https_proxy : str
+            Proxy server to use for HTTPS, ot None to disable.
+        """
+        if orig_http_proxy is None:
+            del(os.environ['HTTP_PROXY'])
+        else:
+            os.environ['HTTP_PROXY'] = orig_http_proxy
+
+        if orig_https_proxy is None:
+            del(os.environ['HTTPS_PROXY'])
+        else:
+            os.environ['HTTPS_PROXY'] = orig_https_proxy
+
     try:
         import pypac
     except ImportError:
-        return
+        # do nothing if PAC not available
+        pass
+    else:
+        # save original proxy from environment
+        orig_http_proxy, orig_https_proxy = get_orig_proxy()
 
-    from pydov.util.dovutil import build_dov_url
-    with pypac.pac_context_for_url(build_dov_url('/')):
-        http_proxy = os.environ.get("HTTP_PROXY", "")
-        https_proxy = os.environ.get("HTTPS_PROXY", "")
+        from pydov.util.dovutil import build_dov_url
+        dov_url = build_dov_url('/')
+        public_url = 'https://pydov.readthedocs.io'
 
-    os.environ['HTTP_PROXY'] = http_proxy
-    os.environ['HTTPS_PROXY'] = https_proxy
+        # set proxy using PAC for DOV URL
+        set_proxy_for_url(dov_url)
+        try:
+            # try if it works
+            r = requests.get(dov_url)
+            if not r.ok:
+                raise RuntimeError
+        except Exception:
+            # fallback
+
+            # set proxy using PAC for a public URL
+            set_proxy_for_url(public_url)
+            try:
+                # try if it works
+                r = requests.get(dov_url)
+                if not r.ok:
+                    raise RuntimeError
+            except Exception:
+                # if it does not, revert to original environment
+                revert_to_orig_proxy(orig_http_proxy, orig_https_proxy)
 
 
 class TimeoutHTTPAdapter(HTTPAdapter):
@@ -76,6 +146,9 @@ class SessionFactory:
     One global session is used for all requests, and additionally one
     session is used per thread executing XML requests in parallel.
     """
+
+    http_auth = None
+
     @staticmethod
     def get_session():
         """Request a new session.
@@ -86,6 +159,32 @@ class SessionFactory:
             pydov configured requests Session.
         """
         session = requests.Session()
+
+        if SessionFactory.http_auth:
+            session.auth = SessionFactory.http_auth
+
+            def _openURL(*args, **kwargs):
+                """Patch function for owslib.util.openURL using our custom pydov
+                requests session.
+
+                Parameters
+                ----------
+                url : str
+                    URL to open.
+
+                Returns
+                -------
+                ResponseWrapper
+                    Wrapped response of the request.
+                """
+                url = args[0]
+                return ResponseWrapper(pydov.session.get(url))
+
+            owslib.util.openURL \
+                = owslib.feature.common.openURL \
+                = owslib.feature.schema.openURL \
+                = owslib.feature.wfs110.openURL \
+                = _openURL
 
         session.headers.update(
             {'user-agent': 'pydov/{}'.format(pydov.__version__)})

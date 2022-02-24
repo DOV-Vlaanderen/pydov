@@ -20,6 +20,8 @@ with open('requirements_doc.txt') as f:
     requirements_doc = f.read().splitlines()
 with open('requirements_vectorfile.txt') as f:
     requirements_vectorfile = f.read().splitlines()
+with open('requirements_proxy.txt') as f:
+    requirements_proxy = f.read().splitlines()
 
 setup(
     name='pydov',
@@ -58,6 +60,6 @@ setup(
         'docs': requirements_doc,
         'devs': requirements_dev,
         'vectorfile': requirements_vectorfile,
-        'proxy': ['pypac']
+        'proxy': requirements_proxy
     }
 )

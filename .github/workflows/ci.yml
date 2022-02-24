@@ -85,6 +85,12 @@ jobs:
           conda install --name pydov --file requirements.txt
           conda install --name pydov fiona>=1.8.18 geopandas
           conda list
+      - name: Install proxy dependencies with pip
+        if: ${{ matrix.os == 'windows-latest' }}
+        shell: pwsh
+        run: |
+          pip install -r requirements_proxy.txt
+          conda list
       - name: Install development dependencies with pip
         shell: pwsh
         run: |

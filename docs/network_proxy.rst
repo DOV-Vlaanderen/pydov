@@ -1,0 +1,35 @@
+.. _network_proxy:
+
+========================
+Network access via proxy
+========================
+
+If your network requires accessing the internet via a proxy server, there are several ways of configuring this so that pydov uses the correct proxy server in order to access online resources.
+
+Environment variables
+---------------------
+
+If the required proxy server(s) are available in the correct environment variables, pydov will honor this and use them to connect to the internet.
+They should be set using the environment variables ``HTTP_PROXY`` and ``HTTPS_PROXY`` for access to HTTP and HTTPS resources respectively.
+
+Preferably these environment variables are set in your operating system or Python environment, so that they are transparently applied.
+Should you however not be in the possility to add them at a higher lever, it is always possible to configure the proxy servers manually by adding
+the following statements *at the top* of your pydov script::
+
+    import os
+    os.environ['HTTP_PROXY'] = 'http://url.of.proxy.server'
+    os.environ['HTTPS_PROXY'] = 'http://url.of.proxy.server'
+
+Proxy autoconfiguration via PAC
+-------------------------------
+
+It is possible that your company network or organisation is using a more complex proxy setup and allows auto discovery of the required proxy servers using PAC.
+While not included in the base pydov dependencies, pydov can support this proxy autodiscovery when it is installed additionally.
+
+It can be installed using::
+
+    pip install pydov[proxy]
+
+When installed, pydov will autodiscover and use the required proxy server when connecting to the internet. This also allows the proxy to be enabled only
+when required by the network you are currently using.
+

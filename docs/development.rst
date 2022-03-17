@@ -137,6 +137,7 @@ in the development installation instructions :ref:`for package contributors <dev
 
    * ``requirements.txt`` required packages to use pydov
    * ``requirements_vectorfile.txt`` required packages to use vector files (GeometryFilter and GeopandasFilter) in pydov
+   * ``requirements_proxy.txt`` required packages to use proxy server autodiscovery in pydov
    * ``requirements_dev.txt`` required packages to run the pydov test suite and contribute to pydov code
    * ``requirements_doc.txt`` required packages to build the pydov documentation and contribute to the pydov documentation
    * ``binder/requirements.txt`` requirements setup to setup a Binder environment

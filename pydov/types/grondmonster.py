@@ -111,10 +111,10 @@ class Grondmonster(AbstractDovType):
                               'parameter="VLOEIGRENS"]/waarde_numeriek',
                  definition='Vloeigrens',
                  datatype='float'),
-        XmlField(name='glauconiet',
+        XmlField(name='glauconiet_totaal',
                  source_xpath='/grondmonster/observatieData/observatie['
                               'parameter="GLAUCONIET_TOTAAL"]/waarde_numeriek',
-                 definition='Glauconiet totaal',
+                 definition='Glauconiet totaal in percent',
                  datatype='float'),
         XmlField(name='korrelvolumemassa',
                  source_xpath='/grondmonster/observatieData/observatie['

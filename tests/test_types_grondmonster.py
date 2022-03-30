@@ -22,7 +22,7 @@ class TestGrondmonster(AbstractTestTypes):
         'datum', 'x', 'y', 'gemeente', 'diepte_van_m', 'diepte_tot_m',
         'peil_van_mtaw', 'peil_tot_mtaw', 'monstertype', 'astm_naam',
         'grondsoort_bggg', 'humusgehalte', 'kalkgehalte',
-        'uitrolgrens', 'vloeigrens', 'glauconiet',
+        'uitrolgrens', 'vloeigrens', 'glauconiet_totaal',
         'korrelvolumemassa', 'volumemassa', 'watergehalte',
         'diameter', 'fractie', 'methode']
     field_names_subtypes = [
@@ -32,7 +32,7 @@ class TestGrondmonster(AbstractTestTypes):
         'datum', 'x', 'y', 'gemeente', 'diepte_van_m', 'diepte_tot_m',
         'peil_van_mtaw', 'peil_tot_mtaw', 'monstertype', 'astm_naam',
         'grondsoort_bggg', 'humusgehalte', 'kalkgehalte',
-        'uitrolgrens', 'vloeigrens', 'glauconiet',
+        'uitrolgrens', 'vloeigrens', 'glauconiet_totaal',
         'korrelvolumemassa', 'volumemassa', 'watergehalte']
 
     valid_returnfields = ('pkey_grondmonster', 'diepte_tot_m')

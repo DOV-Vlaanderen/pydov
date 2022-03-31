@@ -13,12 +13,12 @@ jobs:
   tests-linux:
     name: "Tests on ${{ matrix.python-version }} on ${{ matrix.os }}"
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 20
+    timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        python-version: ["3.6", "3.7", "3.8", "3.9"]
+        python-version: ["3.7", "3.8", "3.9", "3.10"]
     steps:
       - uses: "actions/checkout@v2"
       - uses: "actions/setup-python@v1"
@@ -38,12 +38,12 @@ jobs:
   tests-windows:
     name: "Tests on ${{ matrix.python-version }} on ${{ matrix.os }}"
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 20
+    timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:
         os: [windows-latest]
-        python-version: ["3.6", "3.7", "3.8", "3.9"]
+        python-version: ["3.7", "3.8", "3.9", "3.10"]
     steps:
       - uses: "actions/checkout@v2"
       - uses: "actions/setup-python@v1"
@@ -62,15 +62,12 @@ jobs:
   tests-conda:
     name: "Tests with conda (${{ matrix.python-version }} on ${{ matrix.os }})"
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 20
+    timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:
         os: ["ubuntu-latest", "windows-latest"]
-        python-version: ["3.6", "3.7", "3.8", "3.9"]
-        exclude:
-          - os: "windows-latest"
-            python-version: "3.6"
+        python-version: ["3.7", "3.8", "3.9", "3.10"]
     steps:
       - uses: "actions/checkout@v2"
       - uses: conda-incubator/setup-miniconda@v2
@@ -88,6 +85,12 @@ jobs:
           conda install --name pydov --file requirements.txt
           conda install --name pydov fiona>=1.8.18 geopandas
           conda list
+      - name: Install proxy dependencies with pip
+        if: ${{ matrix.os == 'windows-latest' }}
+        shell: pwsh
+        run: |
+          pip install -r requirements_proxy.txt
+          conda list
       - name: Install development dependencies with pip
         shell: pwsh
         run: |
@@ -101,7 +104,7 @@ jobs:
   update-data:
     name: "Updated data on ${{ matrix.python-version }} on ${{ matrix.os }}"
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 20
+    timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:
@@ -126,7 +129,7 @@ jobs:
   flake8:
     name: "Flake8 on ${{ matrix.python-version }} on ${{ matrix.os }}"
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 20
+    timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:
@@ -151,7 +154,7 @@ jobs:
   docs:
     name: "Docs on ${{ matrix.python-version }} on ${{ matrix.os }}"
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 20
+    timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:

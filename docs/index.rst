@@ -85,6 +85,7 @@ Contents:
    performance
    caching
    hooks
+   network_proxy
 
 .. toctree::
    :caption: Developer guide

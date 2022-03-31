@@ -20,6 +20,8 @@ with open('requirements_doc.txt') as f:
     requirements_doc = f.read().splitlines()
 with open('requirements_vectorfile.txt') as f:
     requirements_vectorfile = f.read().splitlines()
+with open('requirements_proxy.txt') as f:
+    requirements_proxy = f.read().splitlines()
 
 setup(
     name='pydov',
@@ -46,10 +48,10 @@ setup(
             'Natural Language :: English',
             'Natural Language :: Dutch',
             'Programming Language :: Python :: 3',
-            'Programming Language :: Python :: 3.6',
             'Programming Language :: Python :: 3.7',
             'Programming Language :: Python :: 3.8',
             'Programming Language :: Python :: 3.9',
+            'Programming Language :: Python :: 3.10',
             'Topic :: Scientific/Engineering',
     ],
     test_suite='tests',
@@ -57,6 +59,7 @@ setup(
     extras_require={
         'docs': requirements_doc,
         'devs': requirements_dev,
-        'vectorfile': requirements_vectorfile
+        'vectorfile': requirements_vectorfile,
+        'proxy': requirements_proxy
     }
 )

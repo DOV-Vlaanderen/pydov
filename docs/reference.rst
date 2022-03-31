@@ -62,6 +62,12 @@ Bodemlocatie
 .. automodule:: pydov.search.bodemlocatie
     :members:
 
+Bodemdiepteinterval
+*******************
+
+.. automodule:: pydov.search.bodemdiepteinterval
+    :members:
+
 Bodemmonster
 ************
 
@@ -72,6 +78,12 @@ Bodemobservatie
 ***************
 
 .. automodule:: pydov.search.bodemobservatie
+    :members:
+
+Bodemclassificatie
+******************
+
+.. automodule:: pydov.search.bodemclassificatie
     :members:
 
 Object types
@@ -143,6 +155,13 @@ Bodemlocatie
     :members:
     :show-inheritance:
 
+Bodemdiepteinterval
+*******************
+
+.. automodule:: pydov.types.bodemdiepteinterval
+    :members:
+    :show-inheritance:
+
 Bodemmonster
 ************
 
@@ -154,6 +173,13 @@ Bodemobservatie
 ***************
 
 .. automodule:: pydov.types.bodemobservatie
+    :members:
+    :show-inheritance:
+
+Bodemclassificatie
+******************
+
+.. automodule:: pydov.types.bodemclassificatie
     :members:
     :show-inheritance:
 

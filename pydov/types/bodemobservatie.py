@@ -3,13 +3,35 @@
 subtypes."""
 from pydov.types.fields import WfsField, XmlField
 
-from .abstract import AbstractDovType
+from .abstract import AbstractDovSubType, AbstractDovType
+
+
+class Fractiemeting(AbstractDovSubType):
+    rootpath = './/bodemobservatie/fractiemeting'
+
+    fields = [
+        XmlField(name='fractiemeting_ondergrens',
+                 source_xpath='ondergrens',
+                 definition='ondergrens van de fractiemeting in µm',
+                 datatype='float',
+                 notnull=False),
+        XmlField(name='fractiemeting_bovengrens',
+                 source_xpath='bovengrens',
+                 definition='bovengrens van de fractiemeting in µm',
+                 datatype='float',
+                 notnull=False),
+        XmlField(name='fractiemeting_waarde',
+                 source_xpath='waarde',
+                 definition='gemeten massaprocent van de fractie',
+                 datatype='float',
+                 notnull=False)
+    ]
 
 
 class Bodemobservatie(AbstractDovType):
     """Class representing the DOV data type for bodemobservaties."""
 
-    subtypes = []
+    subtypes = [Fractiemeting]
 
     fields = [
         WfsField(name='pkey_bodemobservatie',

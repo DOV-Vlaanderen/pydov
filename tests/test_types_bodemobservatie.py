@@ -22,7 +22,9 @@ class TestBodemobservatie(AbstractTestTypes):
                    'pkey_parent', 'x', 'y', 'mv_mtaw', 'diepte_van_cm',
                    'diepte_tot_cm', 'observatiedatum', 'invoerdatum',
                    'parametergroep', 'parameter', 'detectie', 'waarde',
-                   'eenheid', 'veld_labo', 'methode', 'betrouwbaarheid']
+                   'eenheid', 'veld_labo', 'methode', 'betrouwbaarheid',
+                   'fractiemeting_ondergrens', 'fractiemeting_bovengrens',
+                   'fractiemeting_waarde']
     field_names_subtypes = []
     field_names_nosubtypes = [
         'pkey_bodemobservatie', 'pkey_bodemlocatie',
@@ -32,16 +34,7 @@ class TestBodemobservatie(AbstractTestTypes):
         'eenheid', 'veld_labo', 'methode', 'betrouwbaarheid']
 
     valid_returnfields = ('pkey_bodemobservatie', 'parameter')
-    valid_returnfields_subtype = ('pkey_bodemobservatie', 'parameter')
+    valid_returnfields_subtype = ('pkey_bodemobservatie', 'parameter',
+                                  'fractiemeting_ondergrens')
 
     inexistent_field = 'onbestaand'
-
-    def test_get_field_names_wrongreturnfields_nosubtypes(self):
-        """Test the get_field_names method when disabling subtypes
-        and including an otherwise valid return field.
-
-        Test whether an InvalidFieldError is raised.
-
-        Override because bodemobservatie has no subtypes.
-        """
-        assert True

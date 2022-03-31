@@ -453,6 +453,9 @@ class AbstractTestSearch(object):
             Monkeypatch the call to get the remote XML data.
 
         """
+        if self.valid_returnfields_extra is None:
+            return
+
         df = self.search_instance.search(
             query=self.valid_query_single,
             return_fields=self.valid_returnfields_extra)
@@ -484,7 +487,7 @@ class AbstractTestSearch(object):
         df = self.search_instance.search(
             query=self.valid_query_single,
             sort_by=SortBy([SortProperty(
-                self.valid_returnfields_extra[0])]))
+                self.valid_returnfields[-1])]))
 
         assert isinstance(df, DataFrame)
 

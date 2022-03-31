@@ -2,7 +2,7 @@
 <csw:GetRecordByIdResponse xmlns:csw="http://www.opengis.net/cat/csw/2.0.2">
   <gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:geonet="http://www.fao.org/geonetwork" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://schemas.opengis.net/csw/2.0.2/profiles/apiso/1.0.0/apiso.xsd">
     <gmd:fileIdentifier>
-      <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">dd327fef-62c7-4980-9788-9fac047a1553</gco:CharacterString>
+      <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">7f668812-edc3-464b-870c-08e964f884b6</gco:CharacterString>
     </gmd:fileIdentifier>
     <gmd:language>
       <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="dut">Nederlands</gmd:LanguageCode>
@@ -57,7 +57,7 @@
       </gmd:CI_ResponsibleParty>
     </gmd:contact>
     <gmd:dateStamp>
-      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2022-01-25</gco:Date>
+      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2022-01-17</gco:Date>
     </gmd:dateStamp>
     <gmd:metadataStandardName>
       <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">ISO 19115/2003/Cor.1:2006/INSPIRE-TG2.0</gco:CharacterString>
@@ -77,19 +77,19 @@
       </gmd:MD_ReferenceSystem>
     </gmd:referenceSystemInfo>
     <gmd:identificationInfo>
-      <gmd:MD_DataIdentification id="be-dov-8800241b-4b8e-439f-b9a3-423cd5f05123">
+      <gmd:MD_DataIdentification id="be-dov-afe7a6a2-646b-4b49-8787-6d7b88e9b357">
         <gmd:citation>
           <gmd:CI_Citation>
             <gmd:title>
-              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Bodemobservaties</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Bodemclassificaties</gco:CharacterString>
             </gmd:title>
             <gmd:alternateTitle>
-              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Bodemobservaties</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Bodemclassificaties</gco:CharacterString>
             </gmd:alternateTitle>
             <gmd:date>
               <gmd:CI_Date>
                 <gmd:date>
-                  <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2018-11-20</gco:Date>
+                  <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2020-03-12</gco:Date>
                 </gmd:date>
                 <gmd:dateType>
                   <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation">creation</gmd:CI_DateTypeCode>
@@ -99,7 +99,7 @@
             <gmd:date>
               <gmd:CI_Date>
                 <gmd:date>
-                  <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2018-11-20</gco:Date>
+                  <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2020-03-12</gco:Date>
                 </gmd:date>
                 <gmd:dateType>
                   <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</gmd:CI_DateTypeCode>
@@ -109,7 +109,7 @@
             <gmd:date>
               <gmd:CI_Date>
                 <gmd:date>
-                  <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2022-01-25</gco:Date>
+                  <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2022-01-17</gco:Date>
                 </gmd:date>
                 <gmd:dateType>
                   <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="revision">revision</gmd:CI_DateTypeCode>
@@ -119,30 +119,17 @@
             <gmd:identifier>
               <gmd:MD_Identifier>
                 <gmd:code>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">https://www.dov.vlaanderen.be/dataset/8800241b-4b8e-439f-b9a3-423cd5f05123</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">https://www.dov.vlaanderen.be/dataset/afe7a6a2-646b-4b49-8787-6d7b88e9b357</gco:CharacterString>
                 </gmd:code>
               </gmd:MD_Identifier>
             </gmd:identifier>
           </gmd:CI_Citation>
         </gmd:citation>
         <gmd:abstract>
-          <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Meer informatie over de bodem op een bepaalde locatie wordt vaak verkregen door observaties.
-
-Er zijn twee soorten observaties: enkelvoudige en meervoudige observaties. In het eerste geval komt één parameter overeen met één meetwaarde; in het tweede geval met meerdere meetpunten en -waarden.
-
-Een enkelvoudige of meervoudige observatie is steeds gekoppeld aan één bodemlocatie, één diepteinterval, één bodemsite of één bodemmonster. Een bodemlocatie, bodemsite, diepte-interval of bodemmonster kan 0 of meer observaties hebben. 
-
-Er zijn drie verschillende types enkelvoudige observaties: er wordt een onderscheid gemaakt tussen observaties van een numerieke waarde (dit zijn metingen), observaties met een vrije tekstwaarde (dit zijn waarnemingen) en observaties die gecategoriseerd worden via een keuzelijst (dit zijn gecodeerde observaties). Elk van deze enkelvoudige observaties wordt gekenmerkt door één parameter en één meetwaarde (hetzij numeriek, vrije tekst of een item uit een keuzelijst).
-
-Meervoudige observaties zijn reeksen van metingen – in dit geval wordt één parameter beschreven door meerdere numerieke meetwaarden.
-
-Observaties die gekoppeld worden aan een diepteinterval of bodemmonster gelden altijd voor de volledige diepte van dit diepteinterval of monster. Observaties gekoppeld aan een bodemlocatie of een bodemsite kunnen 0, één of twee dieptes hebben voor respectievelijk observaties onafhankelijk van de diepte, observaties op een bepaalde diepte of in een bepaald interval.
-
-Observaties kunnen optioneel gekoppeld worden met een observatiemethode, die de methode beschrijft waarmee de waarde bepaald werd, bijvoorbeeld door te verwijzen naar de procedure of norm die gevolgd werd.</gco:CharacterString>
+          <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco" />
         </gmd:abstract>
         <gmd:purpose>
-          <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Door de kaartlaag bodemobservaties te ontsluiten kan gebruiksvriendelijker gezocht worden op specifieke bodemobservaties die anders verspreid zitten over bodemlocaties, bodemsites, bodemdiepteintervallen en bodemmonsters.
-Het doel van elke bodemobservatie op zich kan sterk verschillen: bodemkartering, ruilverkaveling, natuurinrichting, infrastructuurwerken, archeologische context, monitoring, monstername, ...</gco:CharacterString>
+          <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Het doel van elke bodemlocatie op zich kan sterk verschillen: bodemkartering, ruilverkaveling, infrastructuurwerken, archeologische context, bodemobservaties, monstername, ...</gco:CharacterString>
         </gmd:purpose>
         <gmd:status>
           <gmd:MD_ProgressCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode" codeListValue="onGoing">onGoing</gmd:MD_ProgressCode>
@@ -321,17 +308,10 @@ Het doel van elke bodemobservatie op zich kan sterk verschillen: bodemkartering,
             </gmd:role>
           </gmd:CI_ResponsibleParty>
         </gmd:pointOfContact>
-        <gmd:resourceMaintenance>
-          <gmd:MD_MaintenanceInformation>
-            <gmd:maintenanceAndUpdateFrequency>
-              <gmd:MD_MaintenanceFrequencyCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode" codeListValue="asNeeded">asNeeded</gmd:MD_MaintenanceFrequencyCode>
-            </gmd:maintenanceAndUpdateFrequency>
-          </gmd:MD_MaintenanceInformation>
-        </gmd:resourceMaintenance>
         <gmd:graphicOverview>
           <gmd:MD_BrowseGraphic>
             <gmd:fileName>
-              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">https://www.dov.vlaanderen.be/geoserver/wms?SERVICE=WMS&amp;VERSION=1.1.1&amp;REQUEST=GetMap&amp;FORMAT=image%2Fpng&amp;TRANSPARENT=false&amp;STYLES&amp;LAYERS=bodem:bodemobservaties&amp;SRS=EPSG%3A31370&amp;WIDTH=858&amp;HEIGHT=330&amp;BBOX=9518.482229747839%2C148172.73525929108%2C271454.8939534676%2C248854.86152133934</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">https://www.dov.vlaanderen.be/geoserver/wms?SERVICE=WMS&amp;VERSION=1.1.1&amp;REQUEST=GetMap&amp;FORMAT=image%2Fpng&amp;TRANSPARENT=false&amp;STYLES&amp;LAYERS=bodem:bodemclassificaties&amp;SRS=EPSG%3A31370&amp;WIDTH=858&amp;HEIGHT=330&amp;BBOX=9518.482229747839%2C148172.73525929108%2C271454.8939534676%2C248854.86152133934</gco:CharacterString>
             </gmd:fileName>
             <gmd:fileType>
               <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">png</gco:CharacterString>
@@ -493,9 +473,6 @@ Het doel van elke bodemobservatie op zich kan sterk verschillen: bodemkartering,
             <gmd:keyword>
               <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Bodemprofielgegevens</gco:CharacterString>
             </gmd:keyword>
-            <gmd:keyword>
-              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Bodemobservaties</gco:CharacterString>
-            </gmd:keyword>
           </gmd:MD_Keywords>
         </gmd:descriptiveKeywords>
         <gmd:descriptiveKeywords>
@@ -570,6 +547,9 @@ Het doel van elke bodemobservatie op zich kan sterk verschillen: bodemkartering,
             <gmd:otherConstraints>
               <gmx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://codex.vlaanderen.be/PrintDocument.ashx?id=1020931">Toegang en gebruik voor het uitvoeren van taken van algemeen belang door niet-Vlaamse overheidsinstanties is geregeld door het Besluit van de Vlaamse Regering met de regels voor toegang en gebruik van geografische gegevensbronnen toegevoegd aan de GDI, door overheidsdiensten die geen deelnemer zijn aan GDI-Vlaanderen. Dit gebruik is kosteloos.</gmx:Anchor>
             </gmd:otherConstraints>
+            <gmd:otherConstraints>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">De dataset bodemlocaties is nog in ontwikkeling waardoor sommige bestaande technische beschrijvingen of observaties van bepaalde bodemprofielen nog niet opgenomen zijn in de DOV-databank. Deze gegevens zijn al wel te raadplegen via de bijlagen bij de bodemprofielen.</gco:CharacterString>
+            </gmd:otherConstraints>
           </gmd:MD_LegalConstraints>
         </gmd:resourceConstraints>
         <gmd:spatialRepresentationType>
@@ -580,7 +560,7 @@ Het doel van elke bodemobservatie op zich kan sterk verschillen: bodemkartering,
             <gmd:equivalentScale>
               <gmd:MD_RepresentativeFraction>
                 <gmd:denominator>
-                  <gco:Integer xmlns:gco="http://www.isotc211.org/2005/gco">50000</gco:Integer>
+                  <gco:Integer xmlns:gco="http://www.isotc211.org/2005/gco">20000</gco:Integer>
                 </gmd:denominator>
               </gmd:MD_RepresentativeFraction>
             </gmd:equivalentScale>
@@ -630,17 +610,17 @@ Het doel van elke bodemobservatie op zich kan sterk verschillen: bodemkartering,
           <gco:Boolean xmlns:gco="http://www.isotc211.org/2005/gco">true</gco:Boolean>
         </gmd:includedWithDataset>
         <gmd:featureTypes>
-          <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">bodemobservatiesType</gco:LocalName>
+          <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">bodemclassificatiesType</gco:LocalName>
         </gmd:featureTypes>
-        <gmd:featureCatalogueCitation uuidref="44df1272-6b57-471b-9f7a-2dc82f760137">
+        <gmd:featureCatalogueCitation uuidref="9ace8d74-8daa-461f-86bb-273573bc7fa9">
           <gmd:CI_Citation>
             <gmd:title>
-              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Bodemobservaties (objectencatalogus)</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Bodemclassificaties (objectencatalogus)</gco:CharacterString>
             </gmd:title>
             <gmd:date>
               <gmd:CI_Date>
                 <gmd:date>
-                  <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2022-01-25</gco:Date>
+                  <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2022-01-17</gco:Date>
                 </gmd:date>
                 <gmd:dateType>
                   <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation">creation</gmd:CI_DateTypeCode>
@@ -735,10 +715,10 @@ Het doel van elke bodemobservatie op zich kan sterk verschillen: bodemkartering,
                   <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">OGC:WMS</gco:CharacterString>
                 </gmd:protocol>
                 <gmd:name>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">bodem:bodemobservaties</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">bodem:bodemclassificaties</gco:CharacterString>
                 </gmd:name>
                 <gmd:description>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">WMS-endpoint Bodemobservaties</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">WMS-endpoint Bodemclassificaties</gco:CharacterString>
                 </gmd:description>
               </gmd:CI_OnlineResource>
             </gmd:onLine>
@@ -751,10 +731,10 @@ Het doel van elke bodemobservatie op zich kan sterk verschillen: bodemkartering,
                   <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">OGC:WMS-1.3.0-http-get-capabilities</gco:CharacterString>
                 </gmd:protocol>
                 <gmd:name>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">bodem:bodemobservaties</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">bodem:bodemclassificaties</gco:CharacterString>
                 </gmd:name>
                 <gmd:description>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">WMS-capabilities Bodemobservaties</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">WMS-capabilities Bodemclassificaties</gco:CharacterString>
                 </gmd:description>
               </gmd:CI_OnlineResource>
             </gmd:onLine>
@@ -767,10 +747,10 @@ Het doel van elke bodemobservatie op zich kan sterk verschillen: bodemkartering,
                   <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">OGC:WMS-1.3.0-http-get-map</gco:CharacterString>
                 </gmd:protocol>
                 <gmd:name>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">bodem:bodemobservaties</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">bodem:bodemclassificaties</gco:CharacterString>
                 </gmd:name>
                 <gmd:description>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">WMS-map Bodemobservaties</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">WMS-map Bodemclassificaties</gco:CharacterString>
                 </gmd:description>
               </gmd:CI_OnlineResource>
             </gmd:onLine>
@@ -783,10 +763,10 @@ Het doel van elke bodemobservatie op zich kan sterk verschillen: bodemkartering,
                   <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">OGC:WFS</gco:CharacterString>
                 </gmd:protocol>
                 <gmd:name>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">bodem:bodemobservaties</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">bodem:bodemclassificaties</gco:CharacterString>
                 </gmd:name>
                 <gmd:description>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">WFS-endpoint Bodemobservaties</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">WFS-endpoint Bodemclassificaties</gco:CharacterString>
                 </gmd:description>
                 <gmd:function>
                   <gmd:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode" codeListValue="download">download</gmd:CI_OnLineFunctionCode>
@@ -802,10 +782,10 @@ Het doel van elke bodemobservatie op zich kan sterk verschillen: bodemkartering,
                   <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">OGC:WFS-2.0.0-http-get-capabilities</gco:CharacterString>
                 </gmd:protocol>
                 <gmd:name>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">bodem:bodemobservaties</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">bodem:bodemclassificaties</gco:CharacterString>
                 </gmd:name>
                 <gmd:description>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">WFS-capabilities Bodemobservaties</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">WFS-capabilities Bodemclassificaties</gco:CharacterString>
                 </gmd:description>
                 <gmd:function>
                   <gmd:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode" codeListValue="download">download</gmd:CI_OnLineFunctionCode>
@@ -821,10 +801,10 @@ Het doel van elke bodemobservatie op zich kan sterk verschillen: bodemkartering,
                   <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">OGC:WFS-2.0.0-http-get-feature</gco:CharacterString>
                 </gmd:protocol>
                 <gmd:name>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">bodem:bodemobservaties</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">bodem:bodemclassificaties</gco:CharacterString>
                 </gmd:name>
                 <gmd:description>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">WFS-feature Bodemobservaties</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">WFS-feature Bodemclassificaties</gco:CharacterString>
                 </gmd:description>
                 <gmd:function>
                   <gmd:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode" codeListValue="download">download</gmd:CI_OnLineFunctionCode>
@@ -834,16 +814,16 @@ Het doel van elke bodemobservatie op zich kan sterk verschillen: bodemkartering,
             <gmd:onLine>
               <gmd:CI_OnlineResource>
                 <gmd:linkage>
-                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/wms/kml?layers=bodem:bodemobservaties</gmd:URL>
+                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/wms/kml?layers=bodem:bodemclassificaties</gmd:URL>
                 </gmd:linkage>
                 <gmd:protocol>
                   <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">GLG:KML-2.0-http-get-map</gco:CharacterString>
                 </gmd:protocol>
                 <gmd:name>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">bodem:bodemobservaties</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">bodem:bodemclassificaties</gco:CharacterString>
                 </gmd:name>
                 <gmd:description>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">KML Bodemobservaties</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">KML Bodemclassificaties</gco:CharacterString>
                 </gmd:description>
               </gmd:CI_OnlineResource>
             </gmd:onLine>
@@ -910,9 +890,9 @@ Het doel van elke bodemobservatie op zich kan sterk verschillen: bodemkartering,
         <gmd:lineage>
           <gmd:LI_Lineage>
             <gmd:statement>
-              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">De in de databank aanwezige bodemobservaties zijn een verzameling van door de overheid en door diverse instellingen en firma's beschikbaar gestelde gegevens.
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">De in de databank aanwezige bodemlocaties zijn een verzameling van door de overheid en door diverse instellingen en firma's beschikbaar gestelde gegevens.
 De medegedeelde gegevens moeten steeds worden bevestigd door verder onderzoek. De gebruiker dient in te staan voor dit verder onderzoek waarbij hij rekening moet houden met het specifieke aspect van zijn project, studie of interesse. Dit verder onderzoek kan bestaan uit het uitvoeren van bijkomende metingen, eigen waarnemingen, verder opzoekingswerk, raadplegen van historische gegevens, raadplegen van experten, e.a. 
-In een verzameling van gegevens welke door de meest uiteenlopende auteurs, diensten, instellingen en firma's werden genoteerd, uitgevoerd, geïnterpreteerd en verwerkt is een onvolledigheid of fout of tegenspraak steeds mogelijk. Aan de verstrekte gegevens mag evenmin een absolute nauwkeurigheid worden toegekend omwille van interpollaties en extrapollaties welke bij het beschrijven ervan werden gemaakt.</gco:CharacterString>
+In een verzameling van gegevens welke door de meest uiteenlopende auteurs, diensten, instellingen en firma's werden genoteerd, uitgevoerd, geïnterpreteerd en verwerkt is een onvolledigheid of fout of tegenspraak steeds mogelijk. Aan de verstrekte gegevens mag evenmin een absolute nauwkeurigheid worden toegekend omwille van interpollaties en extrapollaties welke bij het beschrijven ervan werden gemaakt. Ook was het niet mogelijk voor alle bodemlocaties de coördinaten en hoogtepeilen nauwkeurig te bepalen.</gco:CharacterString>
             </gmd:statement>
           </gmd:LI_Lineage>
         </gmd:lineage>

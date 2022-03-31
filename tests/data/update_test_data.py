@@ -5,9 +5,11 @@ import sys
 from owslib.etree import etree
 
 from pydov.types.bodemlocatie import Bodemlocatie
+from pydov.types.bodemdiepteinterval import Bodemdiepteinterval
 from pydov.types.bodemmonster import Bodemmonster
 from pydov.types.bodemobservatie import Bodemobservatie
 from pydov.types.bodemsite import Bodemsite
+from pydov.types.bodemclassificatie import Bodemclassificatie
 from pydov.types.boring import Boring
 from pydov.types.grondmonster import Grondmonster
 from pydov.types.grondwaterfilter import GrondwaterFilter
@@ -48,6 +50,9 @@ def update_file_real(filepath, url, process_fn=None, session=None):
     except Exception as e:
         output += ' FAILED:\n   {}.\n'.format(e)
     else:
+        if not os.path.isdir(os.path.dirname(filepath)):
+            os.makedirs(os.path.dirname(filepath))
+
         with open(filepath, 'wb') as f:
             if process_fn:
                 data = process_fn(data)
@@ -873,9 +878,57 @@ if __name__ == '__main__':
             'types/bodemlocatie/xsd_{}.xml'.format(xsd_schema.split('/')[-1]),
             xsd_schema)
 
+    # types/bodemdiepteinterval
+    update_file(
+        'types/bodemdiepteinterval/wfsgetfeature.xml',
+        build_dov_url(
+            'geoserver/ows?service=WFS'
+            '&version=1.1.0&request=GetFeature&typeName='
+            'bodem:bodemdiepteintervallen&maxFeatures=1&'
+            'CQL_Filter=Diepteintervalfiche=%27' +
+            build_dov_url('data/bodemdiepteinterval/2018-000004%27')))
+
+    update_file(
+        'types/bodemdiepteinterval/feature.xml',
+        build_dov_url(
+            'geoserver/ows?service=WFS'
+            '&version=1.1.0&request=GetFeature&typeName='
+            'bodem:bodemdiepteintervallen&maxFeatures=1&'
+            'CQL_Filter=Diepteintervalfiche=%27' +
+            build_dov_url('data/bodemdiepteinterval/2018-000004%27')),
+        get_first_featuremember)
+
+    update_file(
+        'types/bodemdiepteinterval/fc_featurecatalogue.xml',
+        build_dov_url(
+            'geonetwork/srv/dut/csw'
+            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+            '&outputSchema=http://www.isotc211.org/2005/gfc'
+            '&elementSetName=full&id=859ad05d-d6fc-4850-b040-1bdac3641ff5'))
+
+    update_file(
+        'types/bodemdiepteinterval/md_metadata.xml',
+        build_dov_url(
+            'geonetwork/srv/dut/csw'
+            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+            '&outputSchema=http://www.isotc211.org/2005/gmd'
+            '&elementSetName=full&id=96a1127f-d7d0-4a33-b24c-04d982b63dce'))
+
+    update_file(
+        'types/bodemdiepteinterval/wfsdescribefeaturetype.xml',
+        build_dov_url(
+            'geoserver/bodem/bodemdiepteintervallen'
+            '/ows?service=wfs&version=1.1.0&request=DescribeFeatureType'))
+
+    for xsd_schema in Bodemdiepteinterval.get_xsd_schemas():
+        update_file(
+            'types/bodemdiepteinterval/xsd_{}.xml'.format(
+                xsd_schema.split('/')[-1]),
+            xsd_schema)
+
     # types/bodemobservatie
     update_file('types/bodemobservatie/bodemobservatie.xml',
-                build_dov_url('data/bodemobservatie/2019-319483.xml'))
+                build_dov_url('data/bodemobservatie/2019-001221.xml'))
 
     update_file(
         'types/bodemobservatie/wfsgetfeature.xml',
@@ -883,7 +936,7 @@ if __name__ == '__main__':
             'geoserver/ows?service=WFS'
             '&version=1.1.0&request=GetFeature&typeName=bodem:bodemobservaties'
             '&maxFeatures=1&CQL_Filter=Bodemobservatiefiche=%27' +
-            build_dov_url('data/bodemobservatie/2019-319483%27')))
+            build_dov_url('data/bodemobservatie/2019-001221%27')))
 
     update_file(
         'types/bodemobservatie/feature.xml',
@@ -891,7 +944,7 @@ if __name__ == '__main__':
             'geoserver/ows?service=WFS'
             '&version=1.1.0&request=GetFeature&typeName=bodem:bodemobservaties'
             '&maxFeatures=1&CQL_Filter=Bodemobservatiefiche=%27' +
-            build_dov_url('data/bodemobservatie/2019-319483%27')),
+            build_dov_url('data/bodemobservatie/2019-001221%27')),
         get_first_featuremember)
 
     update_file(
@@ -1018,8 +1071,54 @@ if __name__ == '__main__':
             'types/bodemsite/xsd_{}.xml'.format(xsd_schema.split('/')[-1]),
             xsd_schema)
 
-    # types/gw_vergunningen
+    # types/bodemclassificatie
+    update_file(
+        'types/bodemclassificatie/wfsgetfeature.xml',
+        build_dov_url(
+            'geoserver/ows?service=WFS'
+            '&version=1.1.0&request=GetFeature&typeName='
+            'bodem:bodemclassificaties&maxFeatures=1&'
+            'CQL_Filter=Bodemclassificatiefiche=%27' +
+            build_dov_url('data/belgischebodemclassificatie/2018-000146%27')))
 
+    update_file(
+        'types/bodemclassificatie/feature.xml',
+        build_dov_url(
+            'geoserver/ows?service=WFS'
+            '&version=1.1.0&request=GetFeature&typeName='
+            'bodem:bodemclassificaties&maxFeatures=1&'
+            'CQL_Filter=Bodemclassificatiefiche=%27' +
+            build_dov_url('data/belgischebodemclassificatie/2018-000146%27')),
+        get_first_featuremember)
+
+    update_file(
+        'types/bodemclassificatie/fc_featurecatalogue.xml',
+        build_dov_url('geonetwork/srv/dut/csw'
+                      '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+                      '&outputSchema=http://www.isotc211.org/2005/gfc'
+                      '&elementSetName=full&'
+                      'id=9ace8d74-8daa-461f-86bb-273573bc7fa9'))
+
+    update_file('types/bodemclassificatie/md_metadata.xml',
+                build_dov_url(
+                    'geonetwork/srv/dut/csw'
+                    '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+                    '&outputSchema=http://www.isotc211.org/2005/gmd'
+                    '&elementSetName=full&'
+                    'id=7f668812-edc3-464b-870c-08e964f884b6'))
+
+    update_file('types/bodemclassificatie/wfsdescribefeaturetype.xml',
+                build_dov_url(
+                    'geoserver/bodem/bodemclassificaties'
+                    '/ows?service=wfs&version=1.1.0'
+                    '&request=DescribeFeatureType'))
+
+    for xsd_schema in Bodemclassificatie.get_xsd_schemas():
+        update_file(
+            'types/bodemclassificatie/xsd_%s.xml' %
+            xsd_schema.split('/')[-1], xsd_schema)
+
+    # types/gw_vergunningen
     update_file(
         'types/grondwatervergunning/wfsgetfeature.xml',
         build_dov_url(

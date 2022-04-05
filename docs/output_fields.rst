@@ -463,7 +463,7 @@ Borehole samples (grondmonsters)
     kalkgehalte,10,float,4.4
     uitrolgrens,10,float,50.4
     vloeigrens,10,float,86.4
-    glauconiet,10,float,NaN
+    glauconiet_totaal,10,float,NaN
     korrelvolumemassa,10,float,NaN
     volumemassa,10,float,NaN
     watergehalte,10,float,NaN

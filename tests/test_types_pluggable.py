@@ -69,7 +69,10 @@ class MyGrondwaterFilterOpbouw(GrondwaterFilter):
 
 class TestMyWrongGrondwaterFilter(object):
     """Class grouping tests for the MyWrongGrondwaterFilter custom type."""
-    def test_get_fields(self):
+
+    def test_get_fields(self, mp_wfs, mp_remote_describefeaturetype,
+                        mp_remote_md, mp_remote_fc, mp_remote_wfs_feature,
+                        mp_dov_xml):
         """Test the get_fields method.
 
         Test whether a RuntimeError is raised.
@@ -113,7 +116,10 @@ class TestMyWrongGrondwaterFilter(object):
 
 class TestMyGrondwaterFilter(object):
     """Class grouping tests for the MyGrondwaterFilter custom type."""
-    def test_get_fields(self):
+
+    def test_get_fields(self, mp_wfs, mp_remote_describefeaturetype,
+                        mp_remote_md, mp_remote_fc, mp_remote_wfs_feature,
+                        mp_dov_xml):
         """Test the get_fields method.
 
         Test whether the extra field is available in the output of the
@@ -162,7 +168,10 @@ class TestMyGrondwaterFilter(object):
 class TestMyGrondwaterFilterOpbouw(object):
     """Class grouping tests for the MyGrondwaterFilterOpbouw and
     MyFilterOpbouw custom type."""
-    def test_get_fields(self):
+
+    def test_get_fields(self, mp_wfs, mp_remote_describefeaturetype,
+                        mp_remote_md, mp_remote_fc, mp_remote_wfs_feature,
+                        mp_dov_xml):
         """Test the get_fields method.
 
         Test whether the extra field is available in the output of the

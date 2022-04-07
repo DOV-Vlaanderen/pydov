@@ -4,6 +4,32 @@
 History
 =======
 
+v2.2.0
+------
+
+* News
+
+  * This version adds support for Python 3.10.
+
+  * This version drops support for Python 3.6.
+
+  * This version is supported on Python 3.7, 3.8, 3.9 and 3.10.
+
+* New features
+
+  * Add new object types for soil data, including:
+
+    * Soil depth intervals (bodemdiepteintervallen)
+
+    * Soil classifications (bodemclassificaties)
+
+  * Added `Fractiemeting` as a subtype to the `Bodemobservatie` type.
+
+  * Renamed `glauconiet` to `glauconiet_totaal` in Grondmonster and added example on how to retrieve detailed glauconite values.
+
+  * Added support for proxy server autodiscovery using PAC.
+
+
 v2.1.0
 ------
 

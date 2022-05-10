@@ -26,7 +26,10 @@ Proxy autoconfiguration via PAC
 It is possible that your company network or organisation is using a more complex proxy setup and allows auto discovery of the required proxy servers using PAC.
 While not included in the base pydov dependencies, pydov can support this proxy autodiscovery when it is installed additionally.
 
-It can be installed using::
+When installed, pydov will autodiscover and use the required proxy server when connecting to the internet. This also makes sure the proxy will be enabled only when required by the network
+you are currently using.
+
+You can install pydov and the optional proxy autodiscovery with a single command::
 
     pip install pydov[proxy]
 
@@ -34,6 +37,21 @@ Or, when you need the proxy to install remote packages via pip as well::
 
     pip install --proxy http://url-of-proxy.server:port pydov[proxy]
 
-When installed, pydov will autodiscover and use the required proxy server when connecting to the internet. This also makes sure the proxy will be enabled only
-when required by the network you are currently using.
+.. note::
+
+    On Windows, it might be easier to install the dukpy JavaScript interpreter from a binary wheel using pipwin rather than building it from source.
+
+        #. First, install pipwin with :code:`pip install --proxy http://url-of-proxy.server:port pipwin`
+        #. Then, install dukpy with pipwin: :code:`pipwin install --proxy http://url-of-proxy.server:port dukpy`
+        #. Lastly, install pydov with proxy support using :code:`pip install --proxy http://url-of-proxy.server:port pydov[proxy]`
+
+    Or, if you are using conda:
+
+        #. Configure proxy servers in conda::
+
+            conda config --add proxy_servers.http http://url-of-proxy.server:port
+            conda config --add proxy_servers.https http://url-of-proxy.server:port
+
+        #. Install dukpy via conda: :code:`conda install -c conda-forge dukpy`
+        #. Then install pydov with proxy support using :code:`pip install --proxy http://url-of-proxy.server:port pydov[proxy]`
 

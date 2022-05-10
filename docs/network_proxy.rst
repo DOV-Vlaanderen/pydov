@@ -26,8 +26,8 @@ Proxy autoconfiguration via PAC
 It is possible that your company network or organisation is using a more complex proxy setup and allows auto discovery of the required proxy servers using PAC.
 While not included in the base pydov dependencies, pydov can support this proxy autodiscovery when it is installed additionally.
 
-When installed, pydov will autodiscover and use the required proxy server when connecting to the internet. This also makes sure the proxy will be enabled only when required by the network
-you are currently using.
+When installed, pydov will autodiscover and use the required proxy server when connecting to the internet.
+This also makes sure the proxy will be enabled only when required by the network you are currently using.
 
 You can install pydov and the optional proxy autodiscovery with a single command::
 

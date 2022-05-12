@@ -97,6 +97,6 @@ class TestGrondmonsterSearch(AbstractTestSearch):
                 'volumemassa',
                 'watergehalte'))
 
-        assert df.korrelvolumemassa[0] == 2.65
-        assert df.volumemassa[0] == 1.627
-        assert df.watergehalte[0] == 57.7
+        assert round(df.korrelvolumemassa[0], 1) == 2.6
+        assert round(df.volumemassa[0], 1) == 1.6
+        assert round(df.watergehalte[0], 1) == 57.7

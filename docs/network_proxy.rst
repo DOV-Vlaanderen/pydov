@@ -49,8 +49,8 @@ Or, when you need the proxy to install remote packages via pip as well::
 
         #. Configure proxy servers in conda::
 
-            conda config --add proxy_servers.http http://url-of-proxy.server:port
-            conda config --add proxy_servers.https http://url-of-proxy.server:port
+            conda config --set proxy_servers.http http://url-of-proxy.server:port
+            conda config --set proxy_servers.https http://url-of-proxy.server:port
 
         #. Install dukpy via conda: :code:`conda install -c conda-forge dukpy`
         #. Then install pydov with proxy support using :code:`pip install --proxy http://url-of-proxy.server:port pydov[proxy]`

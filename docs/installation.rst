@@ -13,7 +13,7 @@ To install pydov, run this command in your terminal:
 
 .. code-block:: console
 
-    $ pip install pydov
+    pip install pydov
 
 This is the preferred method to install pydov, as it will always install the most recent stable release.
 

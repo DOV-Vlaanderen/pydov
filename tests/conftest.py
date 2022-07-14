@@ -10,6 +10,7 @@ import pytest
 from _pytest.monkeypatch import MonkeyPatch
 from owslib.etree import etree
 from owslib.feature.schema import _construct_schema, _get_elements
+from owslib.feature.wfs110 import ContentMetadata
 from owslib.iso import MD_Metadata
 from owslib.util import ResponseWrapper, findall
 from owslib.wfs import WebFeatureService
@@ -340,6 +341,25 @@ def mp_dov_xml_broken(monkeypatch):
 
     monkeypatch.setattr(pydov.types.abstract.AbstractDovType,
                         '_get_xml_data', _get_xml_data)
+
+
+@pytest.fixture()
+def mp_geonetwork_broken(monkeypatch):
+    """Monkeypatch the parsing of remote metadata to simulate the case where
+    this would fail.
+
+    Parameters
+    ----------
+    monkeypatch : pytest.fixture
+        PyTest monkeypatch fixture.
+    """
+
+    def _parse_remote_metadata(self, *args, **kwargs):
+        for metadataUrl in self.metadataUrls:
+            metadataUrl["metadata"] = None
+
+    monkeypatch.setattr(ContentMetadata,
+                        'parse_remote_metadata', _parse_remote_metadata)
 
 
 @pytest.fixture()

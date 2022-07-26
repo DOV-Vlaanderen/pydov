@@ -39,13 +39,7 @@ Or, when you need the proxy to install remote packages via pip as well::
 
 .. note::
 
-    On Windows, it might be easier to install the dukpy JavaScript interpreter from a binary wheel using pipwin rather than building it from source.
-
-        #. First, install pipwin with :code:`pip install --proxy http://url-of-proxy.server:port pipwin`
-        #. Then, install dukpy with pipwin: :code:`pipwin install --proxy http://url-of-proxy.server:port dukpy`
-        #. Lastly, install pydov with proxy support using :code:`pip install --proxy http://url-of-proxy.server:port pydov[proxy]`
-
-    Or, if you are using conda:
+    If you are using conda you can also install the dukpy dependency through conda first:
 
         #. Configure proxy servers in conda::
 

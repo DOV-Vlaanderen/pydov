@@ -36,23 +36,12 @@ you through the process.
 
         pip install pydov[vectorfile]
 
-    Installing these package on Windows can be cumbersome. Please consult the installation guides of the
-    different packages. If you are using conda, pre-install them with :code:`conda install -c conda-forge fiona geopandas`
-    in your pydov conda environment before running the pydov installation. If you are not using conda,
-    give the following a try:
-
-    #. Install `pipwin`_ using :code:`pip install pipwin`
-    #. Using pipwin, download the latest Windows binaries for GDAL, Fiona and GeoPandas provided by `Christoph Gohlke`_:
-
-      #. Install `GDAL`_ with :code:`pipwin install gdal`
-      #. Install `Fiona`_ with :code:`pipwin install fiona`
-      #. Install `GeoPandas`_ with :code:`pipwin install geopandas`
+    If you are using conda, you can also pre-install them with :code:`conda install -c conda-forge fiona geopandas`
+    in your pydov conda environment before running the pydov installation.
 
 .. _Fiona: https://pypi.org/project/Fiona/
 .. _GDAL: https://gdal.org/
 .. _GeoPandas: https://geopandas.org/
-.. _Pipwin: https://pypi.org/project/pipwin/
-.. _Christoph Gohlke: https://www.lfd.uci.edu/~gohlke/pythonlibs/
 
 From sources
 ------------

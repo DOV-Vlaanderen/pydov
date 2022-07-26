@@ -6,7 +6,7 @@ import time
 
 import pandas as pd
 import pytest
-from owslib.fes import PropertyIsEqualTo
+from owslib.fes2 import PropertyIsEqualTo
 
 from pydov.search.boring import BoringSearch
 from pydov.search.interpretaties import LithologischeBeschrijvingenSearch

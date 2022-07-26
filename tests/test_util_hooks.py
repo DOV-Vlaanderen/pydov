@@ -3,7 +3,7 @@ import datetime
 
 import pytest
 from owslib.etree import etree
-from owslib.fes import PropertyIsEqualTo
+from owslib.fes2 import PropertyIsEqualTo
 
 import pydov
 from pydov.search.boring import BoringSearch

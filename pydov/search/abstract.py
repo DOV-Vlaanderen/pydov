@@ -5,11 +5,12 @@ import datetime
 from distutils.util import strtobool
 
 import owslib
-import pandas as pd
+import owslib.fes2
 from owslib.etree import etree
 from owslib.feature import get_schema
-from owslib.fes import FilterRequest
+from owslib.fes2 import FilterRequest
 from owslib.wfs import WebFeatureService
+import pandas as pd
 
 import pydov
 from pydov.types.fields import _WfsInjectedField
@@ -492,16 +493,16 @@ class AbstractSearch(AbstractCommon):
             )
 
         if query is not None:
-            if not isinstance(query, owslib.fes.OgcExpression):
+            if not isinstance(query, owslib.fes2.OgcExpression):
                 raise InvalidSearchParameterError(
-                    "Query should be an owslib.fes.OgcExpression.")
+                    "Query should be an owslib.fes2.OgcExpression.")
 
             filter_request = FilterRequest()
             filter_request = filter_request.setConstraint(query)
 
             self._init_fields()
             for property_name in filter_request.findall(
-                    './/{http://www.opengis.net/ogc}PropertyName'):
+                    './/{http://www.opengis.net/fes/2.0}ValueReference'):
                 name = property_name.text
                 if name not in self._map_df_wfs_source \
                         and name not in self._wfs_fields:
@@ -516,13 +517,13 @@ class AbstractSearch(AbstractCommon):
             self._init_fields()
 
         if sort_by is not None:
-            if not isinstance(sort_by, owslib.fes.SortBy):
+            if not isinstance(sort_by, owslib.fes2.SortBy):
                 raise InvalidSearchParameterError(
-                    "SortBy should be an owslib.fes.SortBy")
+                    "SortBy should be an owslib.fes2.SortBy")
 
             self._init_fields()
             for property_name in sort_by.toXML().findall(
-                    './/{http://www.opengis.net/ogc}PropertyName'):
+                    './/{http://www.opengis.net/fes/2.0}ValueReference'):
                 name = property_name.text
                 if name not in self._map_df_wfs_source \
                         and name not in self._wfs_fields:
@@ -586,7 +587,6 @@ class AbstractSearch(AbstractCommon):
             Response of the WFS service.
 
         """
-        breakpoint()
         wfs_getfeature_xml = owsutil.wfs_build_getfeature_request(
             version=wfs.version,
             geometry_column=geometry_column,
@@ -674,7 +674,7 @@ class AbstractSearch(AbstractCommon):
 
         if filter_request is not None:
             for property_name in filter_request.findall(
-                    './/{http://www.opengis.net/ogc}PropertyName'):
+                    './/{http://www.opengis.net/fes/2.0}ValueReference'):
                 property_name.text = self._map_df_wfs_source.get(
                     property_name.text, property_name.text)
 

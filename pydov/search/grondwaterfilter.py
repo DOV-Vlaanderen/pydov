@@ -2,7 +2,7 @@
 """Module containing the search classes to retrieve DOV groundwater screen
  data."""
 import pandas as pd
-from owslib.fes import And, Not, PropertyIsNull
+from owslib.fes2 import And, Not, PropertyIsNull
 
 from ..types.grondwaterfilter import GrondwaterFilter
 from .abstract import AbstractSearch

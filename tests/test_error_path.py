@@ -9,7 +9,7 @@ from subprocess import Popen
 
 import numpy as np
 import pytest
-from owslib.fes import PropertyIsEqualTo
+from owslib.fes2 import PropertyIsEqualTo
 
 import pydov
 from pydov.search.boring import BoringSearch

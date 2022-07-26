@@ -1,6 +1,6 @@
 """Module grouping tests for the search grondmonster module."""
 
-from owslib.fes import PropertyIsEqualTo
+from owslib.fes2 import PropertyIsEqualTo
 
 from pydov.search.grondmonster import GrondmonsterSearch
 from pydov.types.grondmonster import Grondmonster

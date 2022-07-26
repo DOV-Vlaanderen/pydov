@@ -1,5 +1,5 @@
 """Tests for grondwatervergunningen"""
-from owslib.fes import PropertyIsEqualTo
+from owslib.fes2 import PropertyIsEqualTo
 from pandas import DataFrame
 
 from pydov.search.grondwatervergunning import GrondwaterVergunningSearch

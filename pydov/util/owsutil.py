@@ -4,7 +4,7 @@ import warnings
 from urllib.parse import urlparse
 
 from owslib.etree import etree
-from owslib.fes import BinaryLogicOpType, UnaryLogicOpType
+from owslib.fes2 import BinaryLogicOpType, UnaryLogicOpType
 from owslib.namespaces import Namespaces
 from owslib.util import nspath_eval
 

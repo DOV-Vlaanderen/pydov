@@ -8,7 +8,7 @@ import pandas as pd
 import pytest
 import requests
 from owslib.etree import etree
-from owslib.fes import PropertyIsEqualTo, SortBy, SortProperty
+from owslib.fes2 import PropertyIsEqualTo, SortBy, SortProperty
 from pandas import DataFrame
 
 import pydov

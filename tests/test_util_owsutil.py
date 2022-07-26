@@ -3,7 +3,7 @@ import copy
 
 import pytest
 from owslib.etree import etree
-from owslib.fes import FilterRequest, PropertyIsEqualTo, SortBy, SortProperty
+from owslib.fes2 import FilterRequest, PropertyIsEqualTo, SortBy, SortProperty
 from owslib.iso import MD_Metadata
 from owslib.util import nspath_eval
 

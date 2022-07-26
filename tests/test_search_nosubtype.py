@@ -1,6 +1,7 @@
 """Module for test for features without subtype values."""
 
-from owslib.fes import PropertyIsEqualTo
+
+from owslib.fes2 import PropertyIsEqualTo
 
 from pydov.search.grondwaterfilter import GrondwaterFilterSearch
 from pydov.util.dovutil import build_dov_url

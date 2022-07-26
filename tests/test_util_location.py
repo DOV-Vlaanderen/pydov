@@ -1,7 +1,7 @@
 """Module grouping tests for the pydov.util.location module."""
 import pytest
 
-from owslib.fes import (
+from owslib.fes2 import (
     And,
     Or,
     Not,
@@ -196,7 +196,7 @@ class TestBinarySpatialFilters(object):
         xml = equals.toXML()
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<ogc:Equals><ogc:PropertyName>geom</ogc:PropertyName>'
+            '<ogc:Equals><fes:ValueReference>geom</fes:ValueReference>'
             '<gml:Point srsDimension="2" '
             'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370">'
             '<gml:pos>150000.000000 150000.000000</gml:pos></gml:Point>'
@@ -224,7 +224,7 @@ class TestBinarySpatialFilters(object):
         xml = disjoint.toXML()
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<ogc:Disjoint><ogc:PropertyName>geom</ogc:PropertyName>'
+            '<ogc:Disjoint><fes:ValueReference>geom</fes:ValueReference>'
             '<gml:Envelope srsDimension="2" '
             'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370">'
             '<gml:lowerCorner>94720.000000 186910.000000</gml:lowerCorner>'
@@ -253,7 +253,7 @@ class TestBinarySpatialFilters(object):
         xml = touches.toXML()
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<ogc:Touches><ogc:PropertyName>geom</ogc:PropertyName>'
+            '<ogc:Touches><fes:ValueReference>geom</fes:ValueReference>'
             '<gml:Envelope srsDimension="2" '
             'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370">'
             '<gml:lowerCorner>94720.000000 186910.000000</gml:lowerCorner>'
@@ -282,7 +282,7 @@ class TestBinarySpatialFilters(object):
         xml = within.toXML()
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<ogc:Within><ogc:PropertyName>geom</ogc:PropertyName>'
+            '<ogc:Within><fes:ValueReference>geom</fes:ValueReference>'
             '<gml:Envelope srsDimension="2" '
             'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370">'
             '<gml:lowerCorner>94720.000000 186910.000000</gml:lowerCorner>'
@@ -311,7 +311,7 @@ class TestBinarySpatialFilters(object):
         xml = intersects.toXML()
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<ogc:Intersects><ogc:PropertyName>geom</ogc:PropertyName>'
+            '<ogc:Intersects><fes:ValueReference>geom</fes:ValueReference>'
             '<gml:Envelope srsDimension="2" '
             'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370">'
             '<gml:lowerCorner>94720.000000 186910.000000</gml:lowerCorner>'
@@ -345,7 +345,7 @@ class TestLocationFilters(object):
         xml = withindistance.toXML()
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<ogc:DWithin><ogc:PropertyName>geom</ogc:PropertyName>'
+            '<ogc:DWithin><fes:ValueReference>geom</fes:ValueReference>'
             '<gml:Point srsDimension="2" '
             'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370">'
             '<gml:pos>150000.000000 150000.000000</gml:pos></gml:Point>'
@@ -364,7 +364,7 @@ class TestLocationFilters(object):
         xml = withindistance.toXML()
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<ogc:DWithin><ogc:PropertyName>geom</ogc:PropertyName>'
+            '<ogc:DWithin><fes:ValueReference>geom</fes:ValueReference>'
             '<gml:Point srsDimension="2" '
             'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370">'
             '<gml:pos>150000.000000 150000.000000</gml:pos></gml:Point>'
@@ -395,7 +395,7 @@ class TestLocationFilters(object):
         xml = withindistance.toXML()
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<ogc:DWithin><ogc:PropertyName>geom</ogc:PropertyName>'
+            '<ogc:DWithin><fes:ValueReference>geom</fes:ValueReference>'
             '<gml:Point srsDimension="2" '
             'srsName="http://www.opengis.net/gml/srs/epsg.xml#4326">'
             '<gml:pos>51.127000 3.807100</gml:pos></gml:Point>'
@@ -418,13 +418,13 @@ class TestLocationFilterExpressions(object):
         xml = set_geometry_column(point_and_box, 'geom')
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<ogc:And><ogc:DWithin><ogc:PropertyName>geom</ogc:PropertyName'
+            '<ogc:And><ogc:DWithin><fes:ValueReference>geom</fes:ValueReference'
             '><gml:Point srsDimension="2" '
             'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370"><gml'
             ':pos>150000.000000 '
             '150000.000000</gml:pos></gml:Point><gml:Distance '
             'units="meter">100.000000</gml:Distance></ogc:DWithin><ogc'
-            ':Within><ogc:PropertyName>geom</ogc:PropertyName><gml'
+            ':Within><fes:ValueReference>geom</fes:ValueReference><gml'
             ':Envelope srsDimension="2" '
             'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370"><gml'
             ':lowerCorner>94720.000000 '
@@ -445,15 +445,15 @@ class TestLocationFilterExpressions(object):
         xml = set_geometry_column(box_or_box, 'geom')
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<ogc:Or><ogc:Intersects><ogc:PropertyName>geom</ogc'
+            '<ogc:Or><ogc:Intersects><fes:ValueReference>geom</ogc'
             ':PropertyName><gml:Envelope srsDimension="2" '
             'srsName="http://www.opengis.net/gml/srs/epsg.xml#4326"><gml'
             ':lowerCorner>50.985000 '
             '3.621400</gml:lowerCorner><gml:upperCorner>51.127000 '
             '3.807100</gml:upperCorner></gml:Envelope></ogc:Intersects><ogc'
-            ':Within><ogc:PropertyName>geom</ogc:PropertyName><gml:Envelope '
+            ':Within><fes:ValueReference>geom</fes:ValueReference><gml:Envelope '
             'srsDimension="2" '
-            'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370"><gml '
+            'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370"><gml'
             ':lowerCorner>94720.000000 '
             '186910.000000</gml:lowerCorner><gml:upperCorner>112220.000000 '
             '202870.000000</gml:upperCorner></gml:Envelope></ogc:Within'
@@ -471,13 +471,13 @@ class TestLocationFilterExpressions(object):
         xml = set_geometry_column(point_and_box, 'geom')
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<ogc:And><ogc:Not><ogc:DWithin><ogc:PropertyName>geom</ogc'
+            '<ogc:And><ogc:Not><ogc:DWithin><fes:ValueReference>geom</ogc'
             ':PropertyName><gml:Point srsDimension="2" '
             'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370"><gml'
             ':pos>150000.000000 '
             '150000.000000</gml:pos></gml:Point><gml:Distance '
             'units="meter">100.000000</gml:Distance></ogc:DWithin></ogc:Not'
-            '><ogc:Within><ogc:PropertyName>geom</ogc:PropertyName><gml'
+            '><ogc:Within><fes:ValueReference>geom</fes:ValueReference><gml'
             ':Envelope srsDimension="2" '
             'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370"><gml'
             ':lowerCorner>94720.000000 '

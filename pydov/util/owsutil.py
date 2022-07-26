@@ -413,7 +413,8 @@ def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
         location = set_geometry_column(location, geometry_column)
         filter_parent.append(location)
 
-    query.append(filter_xml)
+    if filter is not None or location is not None:
+        query.append(filter_xml)
 
     if sort_by is not None:
         query.append(etree.fromstring(sort_by))

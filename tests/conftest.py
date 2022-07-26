@@ -78,7 +78,7 @@ def wfs(mp_wfs):
 
     """
     return WebFeatureService(
-        url=build_dov_url('geoserver/wfs'), version="1.1.0")
+        url=build_dov_url('geoserver/wfs'), version="2.0.0")
 
 
 @pytest.fixture()

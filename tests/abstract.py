@@ -984,8 +984,8 @@ class AbstractTestTypes(object):
 
         """
         tree = etree.fromstring(wfs_getfeature.encode('utf8'))
-        feature_members = tree.find('.//{http://www.opengis.net/gml}'
-                                    'featureMembers')
+        feature_members = tree.find(
+            './/{http://www.opengis.net/wfs/2.0}member')
 
         if feature_members is not None:
             fts = [ft for ft in feature_members]

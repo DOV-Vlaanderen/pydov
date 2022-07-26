@@ -716,17 +716,17 @@ class AbstractSearch(AbstractCommon):
 
         tree = etree.fromstring(fts)
 
-        if tree.get('numberOfFeatures') is None:
+        if tree.get('numberReturned') is None:
             raise WfsGetFeatureError(
                 'Error retrieving features from DOV WFS server:\n{}'.format(
                     etree.tostring(tree).decode('utf8')))
 
-        if int(tree.get('numberOfFeatures')) == 10000:
+        if int(tree.get('numberReturned')) == 10000:
             raise FeatureOverflowError(
                 'Reached the limit of {:d} returned features. Please split up '
                 'the query to ensure getting all results.'.format(10000))
 
-        HookRunner.execute_wfs_search_result(int(tree.get('numberOfFeatures')))
+        HookRunner.execute_wfs_search_result(int(tree.get('numberReturned')))
         HookRunner.execute_wfs_search_result_received(getfeature, tree)
 
         return tree

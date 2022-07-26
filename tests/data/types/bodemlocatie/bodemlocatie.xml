@@ -2,7 +2,10 @@
 <ns3:dov-schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns3="http://kern.schemas.dov.vlaanderen.be" xsi:schemaLocation="http://kern.schemas.dov.vlaanderen.be https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/dov.xsd">
     <bodemlocatie>
         <naam>STARC_4</naam>
-        <permkey>2011-000002</permkey>
+        <dataidentifier>
+            <permkey>2011-000002</permkey>
+            <uri>https://www.dov.vlaanderen.be/data/bodemlocatie/2011-000002</uri>
+        </dataidentifier>
         <type>PROF</type>
         <waarnemingsdatum>2011-09-16</waarnemingsdatum>
         <invoerdatum>2011-09-16</invoerdatum>

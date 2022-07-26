@@ -3,6 +3,10 @@
     <interpretaties>
         <quartairstratigrafie>
             <boring>GEO-42/190-B14</boring>
+            <dataidentifier>
+                <permkey>1999-057087</permkey>
+                <uri>https://www.dov.vlaanderen.be/data/interpretatie/1999-057087</uri>
+            </dataidentifier>
             <auteur>
                 <persoon>
                     <naam>Vermeire</naam>

@@ -29,3 +29,20 @@ class TestOwsutilNoMP(object):
         contentmetadata.metadataUrls = []
         with pytest.raises(MetadataNotFoundError):
             owsutil.get_remote_metadata(contentmetadata)
+
+    def test_get_remote_metadata_nometadata(self, wfs, mp_geonetwork_broken):
+        """Test the owsutil.get_remote_metadata method when the remote metadata
+        could not be found.
+
+        Test whether a MetadataNotFoundError is raised.
+
+        Parameters
+        ----------
+        wfs : pytest.fixture returning owslib.wfs.WebFeatureService
+            WebFeatureService based on the local GetCapabilities.
+
+        """
+        contents = copy.deepcopy(wfs.contents)
+        contentmetadata = contents['dov-pub:Boringen']
+        with pytest.raises(MetadataNotFoundError):
+            owsutil.get_remote_metadata(contentmetadata)

@@ -1,18 +1,13 @@
 # -*- coding: utf-8 -*-
 """Module containing the DOV data type for groundwater samples
 (GrondwaterMonsters), including subtypes."""
-from pydov.types.fields import (
-    XmlField,
-    XsdType,
-    WfsField,
-)
-from .abstract import (
-    AbstractDovType,
-    AbstractDovSubType,
-)
+from pydov.types.fields import WfsField, XmlField, XsdType
+from pydov.util.dovutil import build_dov_url
 
-_observatieDataCodes_xsd = 'https://www.dov.vlaanderen.be/xdov/schema/' \
-                       'latest/xsd/kern/observatie/ObservatieDataCodes.xsd'
+from .abstract import AbstractDovSubType, AbstractDovType
+
+_observatieDataCodes_xsd = build_dov_url(
+    'xdov/schema/latest/xsd/kern/observatie/ObservatieDataCodes.xsd')
 
 
 class Observatie(AbstractDovSubType):
@@ -82,6 +77,8 @@ class GrondwaterMonster(AbstractDovType):
                  datatype='date'),
     ]
 
+    pkey_fieldname = 'grondwatermonsterfiche'
+
     def __init__(self, pkey):
         """Initialisation.
 
@@ -93,36 +90,4 @@ class GrondwaterMonster(AbstractDovType):
             `https://www.dov.vlaanderen.be/data/watermonster/<id>`.
 
         """
-        super(GrondwaterMonster, self).__init__('watermonster', pkey)
-
-    @classmethod
-    def from_wfs_element(cls, feature, namespace):
-        """Build `GrondwaterMonster` instance from a WFS feature element.
-
-        Parameters
-        ----------
-        feature : etree.Element
-            XML element representing a single record of the WFS layer.
-        namespace : str
-            Namespace associated with this WFS featuretype.
-
-        Returns
-        -------
-        gwmonster : GrondwaterMonster
-            An instance of this class populated with the data from the WFS
-            element.
-
-        """
-        gwmonster = cls(
-            feature.findtext(
-                './{{{}}}grondwatermonsterfiche'.format(namespace)))
-
-        for field in cls.get_fields(source=('wfs',)).values():
-            gwmonster.data[field['name']] = cls._parse(
-                func=feature.findtext,
-                xpath=field['sourcefield'],
-                namespace=namespace,
-                returntype=field.get('type', None)
-            )
-
-        return gwmonster
+        super().__init__('watermonster', pkey)

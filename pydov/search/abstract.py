@@ -1,28 +1,24 @@
 # -*- coding: utf-8 -*-
 """Module containing the abstract search classes to retrieve DOV data."""
+
 import datetime
 from distutils.util import strtobool
 
 import owslib
-import pydov
+import pandas as pd
 from owslib.etree import etree
-from owslib.fes import (
-    FilterRequest,
-)
+from owslib.feature import get_schema
+from owslib.fes import FilterRequest
 from owslib.wfs import WebFeatureService
+
+import pydov
+from pydov.types.fields import _WfsInjectedField
 from pydov.util import owsutil
-from pydov.util.dovutil import (
-    get_xsd_schema,
-    build_dov_url,
-)
-from pydov.util.errors import (
-    LayerNotFoundError,
-    InvalidSearchParameterError,
-    FeatureOverflowError,
-    InvalidFieldError,
-    WfsGetFeatureError,
-)
-from ..util.owsutil import get_remote_schema
+from pydov.util.dovutil import build_dov_url, get_xsd_schema
+from pydov.util.errors import (FeatureOverflowError, InvalidFieldError,
+                               InvalidSearchParameterError, LayerNotFoundError,
+                               WfsGetFeatureError)
+from pydov.util.hooks import HookRunner
 
 
 class AbstractCommon(object):
@@ -62,15 +58,15 @@ class AbstractCommon(object):
                 # Patch for Zulu-time issue of geoserver for WFS 1.1.0
                 if x.endswith('Z'):
                     return datetime.datetime.strptime(x, '%Y-%m-%dZ').date() \
-                           + datetime.timedelta(days=1)
+                        + datetime.timedelta(days=1)
                 else:
                     return datetime.datetime.strptime(x, '%Y-%m-%d').date()
         elif returntype == 'datetime':
             def typeconvert(x):
                 if x.endswith('Z'):
                     return datetime.datetime.strptime(
-                            x, '%Y-%m-%dT%H:%M:%SZ').date() \
-                           + datetime.timedelta(days=1)
+                        x, '%Y-%m-%dT%H:%M:%SZ').date() \
+                        + datetime.timedelta(days=1)
                 else:
                     return datetime.datetime.strptime(
                         x.split('.')[0], '%Y-%m-%dT%H:%M:%S')
@@ -87,8 +83,6 @@ class AbstractCommon(object):
 class AbstractSearch(AbstractCommon):
     """Abstract search class grouping methods common to all DOV search
     classes. Not to be instantiated or used directly."""
-
-    __wfs = None
 
     def __init__(self, layer, objecttype):
         """Initialisation.
@@ -111,14 +105,38 @@ class AbstractSearch(AbstractCommon):
         self._map_wfs_source_df = {}
         self._map_df_wfs_source = {}
 
+        self._wfs = None
+        self._wfs_schema = None
+        self._wfs_namespace = None
+        self._md_metadata = None
+        self._fc_featurecatalogue = None
+        self._xsd_schemas = None
+
+    def _get_wfs_endpoint(self):
+        """Get the WFS endpoint URL to use for accessing the feature type.
+
+        Returns
+        -------
+        str
+            The WFS endpoint URL.
+        """
+        base_url = build_dov_url('geoserver/')
+        workspace = self._layer.split(':')[0]
+        return base_url + workspace + '/wfs'
+
     def _init_wfs(self):
         """Initialise the WFS service. If the WFS service is not
-        instanciated yet, do so and save it in a static variable available
+        instantiated yet, do so and save it in a static variable available
         to all subclasses and instances.
         """
-        if AbstractSearch.__wfs is None:
-            AbstractSearch.__wfs = WebFeatureService(
-                url=build_dov_url('geoserver/wfs'), version="2.0.0")
+        if self._wfs is None:
+            wfs_endpoint_url = self._get_wfs_endpoint()
+
+            capabilities = owsutil.get_url(
+                wfs_endpoint_url + '?request=GetCapabilities&version=2.0.0')
+
+            self._wfs = WebFeatureService(
+                url=wfs_endpoint_url, version="2.0.0", xml=capabilities)
 
     def _init_namespace(self):
         """Initialise the WFS namespace associated with the layer.
@@ -130,7 +148,8 @@ class AbstractSearch(AbstractCommon):
             subclass.
 
         """
-        raise NotImplementedError('This should be implemented in a subclass.')
+        if self._wfs_namespace is None:
+            self._wfs_namespace = self._get_namespace()
 
     def _init_fields(self):
         """Initialise the fields and their metadata available in this search
@@ -143,7 +162,38 @@ class AbstractSearch(AbstractCommon):
             subclass.
 
         """
-        raise NotImplementedError('This should be implemented in a subclass.')
+        if self._fields is None:
+            if self._wfs_schema is None:
+                self._wfs_schema = self._get_schema()
+
+            if self._md_metadata is None:
+                self._md_metadata = self._get_remote_metadata()
+
+            if self._fc_featurecatalogue is None:
+                csw_url = self._get_csw_base_url()
+                fc_uuid = owsutil.get_featurecatalogue_uuid(self._md_metadata)
+                self._fc_featurecatalogue = \
+                    owsutil.get_remote_featurecatalogue(csw_url, fc_uuid)
+
+            if self._xsd_schemas is None:
+                self._xsd_schemas = self._get_remote_xsd_schemas()
+
+            fields = self._build_fields(
+                self._wfs_schema,
+                self._fc_featurecatalogue,
+                self._xsd_schemas)
+
+            for field in fields.values():
+                if field['name'] not in self._type.get_field_names(
+                        include_wfs_injected=True):
+                    self._type.fields.append(
+                        _WfsInjectedField(name=field['name'],
+                                          datatype=field['type']))
+
+            self._fields = self._build_fields(
+                self._wfs_schema,
+                self._fc_featurecatalogue,
+                self._xsd_schemas)
 
     def _get_layer(self):
         """Get the WFS metadata for the layer.
@@ -162,11 +212,11 @@ class AbstractSearch(AbstractCommon):
         """
         self._init_wfs()
 
-        if self._layer not in self.__wfs.contents:
+        if self._layer not in self._wfs.contents:
             raise LayerNotFoundError(
                 'Layer {} could not be found'.format(self._layer))
         else:
-            return self.__wfs.contents[self._layer]
+            return self._wfs.contents[self._layer]
 
     def _get_schema(self):
         """Get the WFS schema (i.e. the output of the DescribeFeatureType
@@ -181,7 +231,7 @@ class AbstractSearch(AbstractCommon):
         self._init_wfs()
         layername = self._layer.split(':')[1] if ':' in self._layer else \
             self._layer
-        return get_remote_schema(
+        return get_schema(
             build_dov_url('geoserver/wfs'), layername, '2.0.0')
 
     def _get_namespace(self):
@@ -196,7 +246,7 @@ class AbstractSearch(AbstractCommon):
 
         """
         self._init_wfs()
-        return owsutil.get_namespace(self.__wfs, self._layer)
+        return owsutil.get_namespace(self._wfs, self._layer)
 
     def _get_remote_metadata(self):
         """Request and parse the remote metadata associated with the layer.
@@ -220,8 +270,8 @@ class AbstractSearch(AbstractCommon):
             List of parsed XSD schemas associated with this type.
 
         """
-        return [etree.fromstring(get_xsd_schema(i)) for i in
-                self._type.get_xsd_schemas()]
+        xsd_schemas = [get_xsd_schema(i) for i in self._type.get_xsd_schemas()]
+        return [etree.fromstring(i) for i in xsd_schemas if i is not None]
 
     def _get_csw_base_url(self):
         """Get the CSW base url for the remote metadata associated with the
@@ -275,6 +325,8 @@ class AbstractSearch(AbstractCommon):
                     values[value] = e.findtext(
                         './{http://www.w3.org/2001/XMLSchema}annotation/{'
                         'http://www.w3.org/2001/XMLSchema}documentation')
+            if len(values) == 0:
+                values = None
         return values
 
     def _build_fields(self, wfs_schema, feature_catalogue, xsd_schemas):
@@ -337,6 +389,7 @@ class AbstractSearch(AbstractCommon):
 
         _map_wfs_datatypes = {
             'int': 'integer',
+            'long': 'integer',
             'decimal': 'float',
             'double': 'float',
             'dateTime': 'datetime'
@@ -529,7 +582,7 @@ class AbstractSearch(AbstractCommon):
 
         Returns
         -------
-        bytes
+        wfs_response, wfs_getfeature_request : bytes, etree.Element
             Response of the WFS service.
 
         """
@@ -545,13 +598,18 @@ class AbstractSearch(AbstractCommon):
             propertyname=propertyname
         )
 
-        for hook in pydov.hooks:
-            hook.wfs_search_init(typename)
+        HookRunner.execute_wfs_search_init(typename)
+
+        tree = HookRunner.execute_inject_wfs_getfeature_response(
+            wfs_getfeature_xml)
+
+        if tree is not None:
+            return tree, wfs_getfeature_xml
 
         return owsutil.wfs_get_feature(
             baseurl=wfs.url,
             get_feature_request=wfs_getfeature_xml
-        )
+        ), wfs_getfeature_xml
 
     def _search(self, location=None, query=None, return_fields=None,
                 sort_by=None, max_features=None, extra_wfs_fields=[]):
@@ -620,23 +678,16 @@ class AbstractSearch(AbstractCommon):
                 property_name.text = self._map_df_wfs_source.get(
                     property_name.text, property_name.text)
 
-            try:
-                filter_request = etree.tostring(filter_request,
-                                                encoding='unicode')
-            except LookupError:
-                # Python2.7 without lxml uses 'utf-8' instead.
-                filter_request = etree.tostring(filter_request,
-                                                encoding='utf-8')
+            filter_request = etree.tostring(filter_request, encoding='unicode')
+
+        wfs_property_names = [self._type.pkey_fieldname]
 
         if return_fields is None:
-            wfs_property_names = [
+            wfs_property_names.extend([
                 f['sourcefield'] for f in self._type.get_fields(
                     source=('wfs',)).values() if not f.get(
-                    'wfs_injected', False)]
+                    'wfs_injected', False)])
         else:
-            wfs_property_names = [self._map_df_wfs_source[i]
-                                  for i in self._map_df_wfs_source
-                                  if i.startswith('pkey')]
             wfs_property_names.extend([self._map_df_wfs_source[i]
                                        for i in self._map_df_wfs_source
                                        if i in return_fields])
@@ -651,14 +702,10 @@ class AbstractSearch(AbstractCommon):
                 property_name.text = self._map_df_wfs_source.get(
                     property_name.text, property_name.text)
 
-            try:
-                sort_by = etree.tostring(sort_by_xml, encoding='unicode')
-            except LookupError:
-                # Python2.7 without lxml uses 'utf-8' instead.
-                sort_by = etree.tostring(sort_by_xml, encoding='utf-8')
+            sort_by = etree.tostring(sort_by_xml, encoding='unicode')
 
-        fts = self._get_remote_wfs_feature(
-            wfs=self.__wfs,
+        fts, getfeature = self._get_remote_wfs_feature(
+            wfs=self._wfs,
             typename=self._layer,
             location=location,
             filter=filter_request,
@@ -679,8 +726,8 @@ class AbstractSearch(AbstractCommon):
                 'Reached the limit of {:d} returned features. Please split up '
                 'the query to ensure getting all results.'.format(10000))
 
-        for hook in pydov.hooks:
-            hook.wfs_search_result(int(tree.get('numberOfFeatures')))
+        HookRunner.execute_wfs_search_result(int(tree.get('numberOfFeatures')))
+        HookRunner.execute_wfs_search_result_received(getfeature, tree)
 
         return tree
 
@@ -789,5 +836,18 @@ class AbstractSearch(AbstractCommon):
             When the argument supplied as return_fields is not a list,
             tuple or set.
 
+        NotImplementedError
+            This is an abstract method that should be implemented in a
+            subclass.
+
         """
-        raise NotImplementedError
+        fts = self._search(location=location, query=query, sort_by=sort_by,
+                           return_fields=return_fields,
+                           max_features=max_features)
+
+        features = self._type.from_wfs(fts, self._wfs_namespace)
+
+        df = pd.DataFrame(
+            data=self._type.to_df_array(features, return_fields),
+            columns=self._type.get_field_names(return_fields))
+        return df

@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 """Module grouping utility functions for DOV XML services."""
 import os
+import warnings
 
 from owslib.etree import etree
-from pydov.util.errors import XmlParseError
-import pydov
+
+from pydov.util.errors import RemoteFetchError, XmlParseError, XsdFetchWarning
+from pydov.util.hooks import HookRunner
+from pydov.util.net import SessionFactory
 
 
 def build_dov_url(path):
@@ -25,13 +28,16 @@ def build_dov_url(path):
     return base_url + path.lstrip('/')
 
 
-def get_remote_url(url):
+def get_remote_url(url, session=None):
     """Request the URL from the remote service and return its contents.
 
     Parameters
     ----------
     url : str
         URL to download.
+    session : requests.Session
+        Session to use to perform HTTP requests for data. Defaults to None,
+        which means a new session will be created for each request.
 
     Returns
     -------
@@ -39,8 +45,13 @@ def get_remote_url(url):
         The raw XML data as bytes.
 
     """
+    if session is None:
+        session = SessionFactory.get_session()
 
-    request = pydov.session.get(url, timeout=pydov.request_timeout)
+    request = session.get(url)
+    if request.status_code != 200:
+        raise RemoteFetchError("Failed to fetch data at {}".format(url))
+
     request.encoding = 'utf-8'
     return request.text.encode('utf8')
 
@@ -59,16 +70,31 @@ def get_xsd_schema(url):
         The raw XML data of this XSD schema as bytes.
 
     """
-    return get_remote_url(url)
+    response = HookRunner.execute_inject_meta_response(url)
+
+    if response is None:
+        try:
+            response = get_remote_url(url)
+        except RemoteFetchError:
+            warnings.warn("Failed to fetch remote XSD schema, metadata will "
+                          "be incomplete.", XsdFetchWarning)
+            response = None
+
+    HookRunner.execute_meta_received(url, response)
+
+    return response
 
 
-def get_dov_xml(url):
+def get_dov_xml(url, session=None):
     """Request the XML from the remote DOV webservices and return it.
 
     Parameters
     ----------
     url : str
         URL of the DOV object to download.
+    session : requests.Session
+        Session to use to perform HTTP requests for data. Defaults to None,
+        which means a new session will be created for each request.
 
     Returns
     -------
@@ -76,7 +102,14 @@ def get_dov_xml(url):
         The raw XML data of this DOV object as bytes.
 
     """
-    return get_remote_url(url)
+    response = HookRunner.execute_inject_xml_response(url)
+
+    if response is None:
+        response = get_remote_url(url, session)
+
+    HookRunner.execute_xml_received(url, response)
+
+    return response
 
 
 def parse_dov_xml(xml_data):

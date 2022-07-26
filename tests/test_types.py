@@ -2,6 +2,12 @@
 
 import pytest
 
+from pydov.types.bodemsite import Bodemsite
+from pydov.types.bodemlocatie import Bodemlocatie
+from pydov.types.bodemdiepteinterval import Bodemdiepteinterval
+from pydov.types.bodemobservatie import Bodemobservatie
+from pydov.types.bodemmonster import Bodemmonster
+from pydov.types.bodemclassificatie import Bodemclassificatie
 from pydov.types.boring import Boring
 from pydov.types.fields import XmlField
 from pydov.types.grondwaterfilter import GrondwaterFilter
@@ -19,7 +25,14 @@ from pydov.types.interpretaties import (
 )
 from pydov.types.sondering import Sondering
 
-type_objects = [Boring,
+
+type_objects = [Bodemsite,
+                Bodemlocatie,
+                Bodemdiepteinterval,
+                Bodemobservatie,
+                Bodemmonster,
+                Bodemclassificatie,
+                Boring,
                 Sondering,
                 GrondwaterFilter,
                 GrondwaterMonster,

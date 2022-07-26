@@ -4,24 +4,19 @@
 import types
 import warnings
 from collections import OrderedDict
-from multiprocessing.dummy import Pool
+
+import numpy as np
+from owslib.etree import etree
 
 import pydov
-import numpy as np
-
-from owslib.etree import etree
 from pydov.search.abstract import AbstractCommon
 from pydov.types.fields import AbstractField
-from pydov.util.dovutil import (
-    get_dov_xml,
-    parse_dov_xml,
-)
+from pydov.util.dovutil import get_dov_xml, parse_dov_xml
+from pydov.util.errors import RemoteFetchError, XmlFetchWarning
+from pydov.util.net import LocalSessionThreadPool
 
-from ..util.errors import (
-    InvalidFieldError,
-    XmlParseError,
-    XmlParseWarning,
-)
+from ..util.errors import InvalidFieldError, XmlParseError, XmlParseWarning
+from ..util.hooks import HookRunner
 
 
 class AbstractTypeCommon(AbstractCommon):
@@ -149,7 +144,7 @@ class AbstractDovSubType(AbstractTypeCommon):
 
         Yields
         ------
-            An instance of this type for each occurence of the rootpath in
+            An instance of this type for each occurrence of the rootpath in
             the XML document.
 
         """
@@ -265,9 +260,11 @@ class AbstractDovType(AbstractTypeCommon):
 
     """
 
-    subtypes = []
-
     _UNRESOLVED = "{UNRESOLVED}"
+
+    subtypes = []
+    fields = []
+    pkey_fieldname = None
 
     def __init__(self, typename, pkey):
         """Initialisation.
@@ -314,18 +311,29 @@ class AbstractDovType(AbstractTypeCommon):
 
         self.data['pkey_{}'.format(self.typename)] = self.pkey
 
-    def _parse_xml_data(self):
+    def _parse_xml_data(self, session=None):
         """Get remote XML data for this DOV object, parse the raw XML and
         save the results in the data object.
 
-        Raises
-        ------
-        NotImplementedError
-            This is an abstract method that should be implemented in a
-            subclass.
+        Parameters
+        ----------
+        session : requests.Session
+            Session to use to perform HTTP requests for data. Defaults to None,
+            which means a new session will be created for each request.
+
+        Returns
+        -------
+        success : boolean
+            Whether or not the XML data could be fetched and parsed.
 
         """
-        xml = self._get_xml_data()
+        try:
+            xml = self._get_xml_data(session)
+        except RemoteFetchError:
+            warnings.warn(("Failed to fetch remote XML document for "
+                           "object '{}'. Resulting dataframe will be "
+                           "incomplete.".format(self.pkey)), XmlFetchWarning)
+            return False
 
         try:
             tree = parse_dov_xml(xml)
@@ -340,10 +348,13 @@ class AbstractDovType(AbstractTypeCommon):
                 )
 
             self._parse_subtypes(xml)
+            return True
         except XmlParseError:
-            warnings.warn(("Failed to parse XML for object '{}'. Resulting "
-                          "dataframe will be incomplete.").format(self.pkey),
-                          XmlParseWarning)
+            warnings.warn(
+                ("Failed to parse XML for object '{}'. Resulting "
+                    "dataframe will be incomplete.").format(self.pkey),
+                XmlParseWarning)
+            return False
 
     @classmethod
     def from_wfs_element(cls, feature, namespace):
@@ -356,6 +367,12 @@ class AbstractDovType(AbstractTypeCommon):
         namespace : str
             Namespace associated with this WFS featuretype.
 
+        Returns
+        -------
+        cls
+            An instance of this class populated with the data from the WFS
+            element.
+
         Raises
         ------
         NotImplementedError
@@ -363,7 +380,18 @@ class AbstractDovType(AbstractTypeCommon):
             subclass.
 
         """
-        raise NotImplementedError('This should be implemented in a subclass.')
+        instance = cls(feature.findtext(
+            './{{{}}}{}'.format(namespace, cls.pkey_fieldname)))
+
+        for field in cls.get_fields(source=('wfs',)).values():
+            instance.data[field['name']] = cls._parse(
+                func=feature.findtext,
+                xpath=field['sourcefield'],
+                namespace=namespace,
+                returntype=field.get('type', None)
+            )
+
+        return instance
 
     @classmethod
     def from_wfs(cls, response, namespace):
@@ -390,10 +418,10 @@ class AbstractDovType(AbstractTypeCommon):
             An instance of this type for each record in the WFS response.
 
         """
-        if type(response) is str:
+        if isinstance(response, str):
             response = response.encode('utf-8')
 
-        if type(response) is bytes:
+        if isinstance(response, bytes):
             response = etree.fromstring(response)
 
         element_type = type(etree.Element(b'xml'))
@@ -577,31 +605,32 @@ class AbstractDovType(AbstractTypeCommon):
         def unnest_result(result, df_result):
             """Unnest the result into multiple rows (lists) if necessary. Rows
             are appended to the df_result list."""
-            if len(result) > 0:
+            if result is not None and len(result) > 0:
                 if isinstance(result[0], list):
                     for r in result:
                         df_result.append(r)
                 else:
                     df_result.append(result)
 
-        pool = Pool(4)
-        result_obj = []
+        pool = LocalSessionThreadPool()
 
         for item in iterable:
-            res = pool.apply_async(item.get_df_array, (return_fields,))
-            result_obj.append(res)
-
-        pool.close()
-        pool.join()
+            pool.execute(item.get_df_array, (return_fields,))
 
         df_result = []
-        for res in result_obj:
-            unnest_result(res.get(), df_result)
+        for res in pool.join():
+            unnest_result(res.get_result(), df_result)
 
         return df_result
 
-    def _get_xml_data(self):
+    def _get_xml_data(self, session=None):
         """Return the raw XML data for this DOV object.
+
+        Parameters
+        ----------
+        session : requests.Session
+            Session to use to perform HTTP requests for data. Defaults to None,
+            which means a new session will be created for each request.
 
         Returns
         -------
@@ -609,15 +638,11 @@ class AbstractDovType(AbstractTypeCommon):
             The raw XML data of this DOV object as bytes.
 
         """
-        for hook in pydov.hooks:
-            hook.xml_requested(self.pkey)
-
         if pydov.cache:
-            return pydov.cache.get(self.pkey + '.xml')
+            return pydov.cache.get(self.pkey + '.xml', session)
         else:
-            xml = get_dov_xml(self.pkey + '.xml')
-            for hook in pydov.hooks:
-                hook.xml_downloaded(self.pkey)
+            xml = get_dov_xml(self.pkey + '.xml', session)
+            HookRunner.execute_xml_downloaded(self.pkey)
             return xml
 
     def _parse_subtypes(self, xml):
@@ -637,7 +662,7 @@ class AbstractDovType(AbstractTypeCommon):
             for subitem in subtype.from_xml(xml):
                 self.subdata[st_name].append(subitem)
 
-    def get_df_array(self, return_fields=None):
+    def get_df_array(self, return_fields=None, session=None):
         """Return the data array of the instance of this type for inclusion
         in the resulting output dataframe of a search operation.
 
@@ -647,6 +672,9 @@ class AbstractDovType(AbstractTypeCommon):
             List of fields to include in the data array. The order is
             ignored, the default order of the fields of the datatype is used
             instead. Defaults to None, which will include all fields.
+        session : requests.Session
+            Session to use to perform HTTP requests for data. Defaults to None,
+            which means a new session will be created for each request.
 
         Returns
         -------
@@ -660,9 +688,10 @@ class AbstractDovType(AbstractTypeCommon):
         ownfields = self.get_field_names(include_subtypes=False,
                                          include_wfs_injected=True)
         subfields = [f for f in fields if f not in ownfields]
+        parsed = None
 
         if len(subfields) > 0:
-            self._parse_xml_data()
+            parsed = self._parse_xml_data(session)
 
         datadicts = []
         datarecords = []
@@ -684,9 +713,10 @@ class AbstractDovType(AbstractTypeCommon):
             datarecords.append([d.get(field, np.nan) for field in fields])
 
         for d in datarecords:
-            if self._UNRESOLVED in d:
-                self._parse_xml_data()
-                datarecords = self.get_df_array(return_fields)
-                break
+            if parsed is None and self._UNRESOLVED in d:
+                parsed = self._parse_xml_data(session)
+                if parsed is True:
+                    datarecords = self.get_df_array(return_fields)
 
-        return datarecords
+        return [[c if c != self._UNRESOLVED else np.nan for c in r]
+                for r in datarecords]

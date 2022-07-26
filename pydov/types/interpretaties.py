@@ -3,16 +3,8 @@
 subtypes."""
 import numpy as np
 
-from pydov.types.abstract import (
-    AbstractDovType,
-    AbstractDovSubType,
-)
-from pydov.types.fields import (
-    WfsField,
-    _CustomField,
-    XmlField,
-    XsdType,
-)
+from pydov.types.abstract import AbstractDovSubType, AbstractDovType
+from pydov.types.fields import WfsField, XmlField, XsdType, _CustomField
 from pydov.util.dovutil import build_dov_url
 
 
@@ -38,8 +30,12 @@ class AbstractCommonInterpretatie(AbstractDovType):
         WfsField(name='betrouwbaarheid_interpretatie',
                  source_field='Betrouwbaarheid', datatype='string'),
         WfsField(name='x', source_field='X_mL72', datatype='float'),
-        WfsField(name='y', source_field='Y_mL72', datatype='float')
+        WfsField(name='y', source_field='Y_mL72', datatype='float'),
+        WfsField(name='start_interpretatie_mtaw', source_field='Z_mTAW',
+                 datatype='float')
     ]
+
+    pkey_fieldname = 'Interpretatiefiche'
 
     def __init__(self, pkey):
         """Initialisation.
@@ -52,29 +48,13 @@ class AbstractCommonInterpretatie(AbstractDovType):
             `https://www.dov.vlaanderen.be/data/interpretatie/<id>`.
 
         """
-        super(AbstractCommonInterpretatie, self).__init__(
-            'interpretatie', pkey)
+        super().__init__('interpretatie', pkey)
 
     @classmethod
     def from_wfs_element(cls, feature, namespace):
-        """Build an instance from a WFS feature element.
-
-        Parameters
-        ----------
-        feature : etree.Element
-            XML element representing a single record of the WFS layer.
-        namespace : str
-            Namespace associated with this WFS featuretype.
-
-        Returns
-        -------
-        instance of this class
-            An instance of this class populated with the data from the WFS
-            element.
-
-        """
         instance = cls(
-            feature.findtext('./{{{}}}Interpretatiefiche'.format(namespace)))
+            feature.findtext('./{{{}}}{}'.format(
+                namespace, cls.pkey_fieldname)))
 
         typeproef = cls._parse(
             func=feature.findtext,
@@ -129,8 +109,12 @@ class AbstractBoringInterpretatie(AbstractDovType):
         WfsField(name='betrouwbaarheid_interpretatie',
                  source_field='Betrouwbaarheid', datatype='string'),
         WfsField(name='x', source_field='X_mL72', datatype='float'),
-        WfsField(name='y', source_field='Y_mL72', datatype='float')
+        WfsField(name='y', source_field='Y_mL72', datatype='float'),
+        WfsField(name='start_interpretatie_mtaw', source_field='Z_mTAW',
+                 datatype='float')
     ]
+
+    pkey_fieldname = 'Interpretatiefiche'
 
     def __init__(self, pkey):
         """Initialisation.
@@ -143,29 +127,13 @@ class AbstractBoringInterpretatie(AbstractDovType):
             `https://www.dov.vlaanderen.be/data/interpretatie/<id>`.
 
         """
-        super(AbstractBoringInterpretatie, self).__init__(
-            'interpretatie', pkey)
+        super().__init__('interpretatie', pkey)
 
     @classmethod
     def from_wfs_element(cls, feature, namespace):
-        """Build an instance from a WFS feature element.
-
-        Parameters
-        ----------
-        feature : etree.Element
-            XML element representing a single record of the WFS layer.
-        namespace : str
-            Namespace associated with this WFS featuretype.
-
-        Returns
-        -------
-        instance of this class
-            An instance of this class populated with the data from the WFS
-            element.
-
-        """
         instance = cls(
-            feature.findtext('./{{{}}}Interpretatiefiche'.format(namespace)))
+            feature.findtext('./{{{}}}{}'.format(
+                namespace, cls.pkey_fieldname)))
 
         for field in cls.get_fields(source=('wfs',)).values():
             instance.data[field['name']] = cls._parse(
@@ -516,12 +484,7 @@ class GeotechnischeCoderingLaag(AbstractDovSubType):
 
 class GeotechnischeCodering(AbstractBoringInterpretatie):
     """Class representing the DOV data type for 'geotechnische
-    codering' interpretations.
-
-    In Dutch: Een geotechnische codering van een boring is een
-    codering opgesteld vanuit geotechnisch oogpunt,
-    rekening houdend met informatie uit de lithologie,
-    laboproeven en bijhorende sondering(en)."""
+    codering' interpretations."""
 
     subtypes = [GeotechnischeCoderingLaag]
 
@@ -576,16 +539,7 @@ class QuartairStratigrafieLaag(AbstractDovSubType):
 
 class QuartairStratigrafie(AbstractBoringInterpretatie):
     """Class representing the DOV data type for 'Quartairstratigrafie'
-    interpretations.
-
-    In Dutch: Afgeleid type van interpretatie, specifiek voor de quartair-
-    stratigrafie. Een Quartair interpretatie omvat een discrete formele
-    interpretatie van het materiaal in de ondergrond, al dan niet aan
-    de hand van monsters, op basis van een door DOV gestandaardiseerde
-    codering. De Quartair interpretatie gebeurt in tegenstelling tot de
-    formele interpretatie op basis van sedimentgenetische profieltypen
-    ipv lithostratigrafie
-    """
+    interpretations."""
 
     subtypes = [QuartairStratigrafieLaag]
 

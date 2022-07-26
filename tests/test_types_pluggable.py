@@ -1,27 +1,11 @@
 import pytest
-
 from owslib.fes import PropertyIsEqualTo
+
 from pydov.search.grondwaterfilter import GrondwaterFilterSearch
-from pydov.types.abstract import (
-    AbstractDovSubType,
-)
+from pydov.types.abstract import AbstractDovSubType
 from pydov.types.fields import XmlField
 from pydov.types.grondwaterfilter import GrondwaterFilter
 from pydov.util.dovutil import build_dov_url
-
-from tests.test_search import (
-    mp_wfs,
-    wfs,
-    mp_remote_md,
-    mp_remote_fc,
-    mp_remote_describefeaturetype,
-    mp_remote_wfs_feature,
-    mp_remote_xsd,
-    mp_dov_xml,
-    mp_dov_xml_broken,
-    wfs_getfeature,
-    wfs_feature,
-)
 
 location_md_metadata = 'tests/data/types/grondwaterfilter/md_metadata.xml'
 location_fc_featurecatalogue = \
@@ -85,7 +69,10 @@ class MyGrondwaterFilterOpbouw(GrondwaterFilter):
 
 class TestMyWrongGrondwaterFilter(object):
     """Class grouping tests for the MyWrongGrondwaterFilter custom type."""
-    def test_get_fields(self):
+
+    def test_get_fields(self, mp_wfs, mp_remote_describefeaturetype,
+                        mp_remote_md, mp_remote_fc, mp_remote_wfs_feature,
+                        mp_dov_xml):
         """Test the get_fields method.
 
         Test whether a RuntimeError is raised.
@@ -129,7 +116,10 @@ class TestMyWrongGrondwaterFilter(object):
 
 class TestMyGrondwaterFilter(object):
     """Class grouping tests for the MyGrondwaterFilter custom type."""
-    def test_get_fields(self):
+
+    def test_get_fields(self, mp_wfs, mp_remote_describefeaturetype,
+                        mp_remote_md, mp_remote_fc, mp_remote_wfs_feature,
+                        mp_dov_xml):
         """Test the get_fields method.
 
         Test whether the extra field is available in the output of the
@@ -178,7 +168,10 @@ class TestMyGrondwaterFilter(object):
 class TestMyGrondwaterFilterOpbouw(object):
     """Class grouping tests for the MyGrondwaterFilterOpbouw and
     MyFilterOpbouw custom type."""
-    def test_get_fields(self):
+
+    def test_get_fields(self, mp_wfs, mp_remote_describefeaturetype,
+                        mp_remote_md, mp_remote_fc, mp_remote_wfs_feature,
+                        mp_dov_xml):
         """Test the get_fields method.
 
         Test whether the extra field is available in the output of the

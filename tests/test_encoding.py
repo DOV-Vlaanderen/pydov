@@ -2,54 +2,30 @@
 import datetime
 import gzip
 import os
+import time
 
 import pandas as pd
-import time
-from io import open
-
 import pytest
-
 from owslib.fes import PropertyIsEqualTo
+
 from pydov.search.boring import BoringSearch
 from pydov.search.interpretaties import LithologischeBeschrijvingenSearch
 from pydov.util.dovutil import build_dov_url
 from pydov.util.errors import XmlParseWarning
-
-from tests.abstract import (
-    service_ok,
-)
-
-from tests.test_search import (
-    mp_wfs,
-    wfs,
-    mp_remote_describefeaturetype,
-    mp_remote_md,
-    mp_remote_fc,
-    mp_remote_wfs_feature,
-    mp_dov_xml
-)
-
+from tests.abstract import ServiceCheck
 from tests.test_search_itp_lithologischebeschrijvingen import (
-    location_wfs_describefeaturetype,
-    location_md_metadata,
-    location_fc_featurecatalogue,
-    location_wfs_getfeature
-)
+    location_fc_featurecatalogue, location_md_metadata,
+    location_wfs_describefeaturetype, location_wfs_getfeature)
 
 location_dov_xml = 'tests/data/encoding/invalidcharacters.xml'
-
-from tests.test_util_caching import (
-    plaintext_cache,
-    gziptext_cache,
-    nocache,
-)
 
 
 class TestEncoding(object):
     """Class grouping tests related to encoding issues."""
 
     @pytest.mark.online
-    @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
+    @pytest.mark.skipif(not ServiceCheck.service_ok(),
+                        reason="DOV service is unreachable")
     def test_search(self, nocache):
         """Test the search method with strange character in the output.
 
@@ -72,7 +48,8 @@ class TestEncoding(object):
         assert df.uitvoerder[0] == u'Societé Belge des Bétons'
 
     @pytest.mark.online
-    @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
+    @pytest.mark.skipif(not ServiceCheck.service_ok(),
+                        reason="DOV service is unreachable")
     @pytest.mark.parametrize('plaintext_cache',
                              [[datetime.timedelta(minutes=15)]],
                              indirect=['plaintext_cache'])
@@ -111,7 +88,8 @@ class TestEncoding(object):
         assert df.uitvoerder[0] == u'Societé Belge des Bétons'
 
     @pytest.mark.online
-    @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
+    @pytest.mark.skipif(not ServiceCheck.service_ok(),
+                        reason="DOV service is unreachable")
     @pytest.mark.parametrize('gziptext_cache',
                              [[datetime.timedelta(minutes=15)]],
                              indirect=['gziptext_cache'])
@@ -150,7 +128,8 @@ class TestEncoding(object):
         assert df.uitvoerder[0] == u'Societé Belge des Bétons'
 
     @pytest.mark.online
-    @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
+    @pytest.mark.skipif(not ServiceCheck.service_ok(),
+                        reason="DOV service is unreachable")
     @pytest.mark.parametrize('plaintext_cache',
                              [[datetime.timedelta(minutes=15)]],
                              indirect=['plaintext_cache'])
@@ -190,7 +169,8 @@ class TestEncoding(object):
         assert os.path.getmtime(cached_file) == first_download_time
 
     @pytest.mark.online
-    @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
+    @pytest.mark.skipif(not ServiceCheck.service_ok(),
+                        reason="DOV service is unreachable")
     @pytest.mark.parametrize('gziptext_cache',
                              [[datetime.timedelta(minutes=15)]],
                              indirect=['gziptext_cache'])
@@ -230,7 +210,8 @@ class TestEncoding(object):
         assert os.path.getmtime(cached_file) == first_download_time
 
     @pytest.mark.online
-    @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
+    @pytest.mark.skipif(not ServiceCheck.service_ok(),
+                        reason="DOV service is unreachable")
     @pytest.mark.parametrize('plaintext_cache',
                              [[datetime.timedelta(minutes=15)]],
                              indirect=['plaintext_cache'])
@@ -264,7 +245,8 @@ class TestEncoding(object):
         assert cached_data == ref_data
 
     @pytest.mark.online
-    @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
+    @pytest.mark.skipif(not ServiceCheck.service_ok(),
+                        reason="DOV service is unreachable")
     @pytest.mark.parametrize('gziptext_cache',
                              [[datetime.timedelta(minutes=15)]],
                              indirect=['gziptext_cache'])
@@ -298,7 +280,8 @@ class TestEncoding(object):
         assert cached_data == ref_data
 
     @pytest.mark.online
-    @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
+    @pytest.mark.skipif(not ServiceCheck.service_ok(),
+                        reason="DOV service is unreachable")
     @pytest.mark.parametrize('plaintext_cache',
                              [[datetime.timedelta(minutes=15)]],
                              indirect=['plaintext_cache'])
@@ -332,7 +315,8 @@ class TestEncoding(object):
         assert cached_data == ref_data
 
     @pytest.mark.online
-    @pytest.mark.skipif(not service_ok(), reason="DOV service is unreachable")
+    @pytest.mark.skipif(not ServiceCheck.service_ok(),
+                        reason="DOV service is unreachable")
     @pytest.mark.parametrize('gziptext_cache',
                              [[datetime.timedelta(minutes=15)]],
                              indirect=['gziptext_cache'])
@@ -366,8 +350,9 @@ class TestEncoding(object):
         assert cached_data == ref_data
 
     def test_search_invalidxml_single(
-            self, mp_wfs, mp_remote_describefeaturetype, mp_remote_md,
-            mp_remote_fc, mp_remote_wfs_feature, mp_dov_xml, nocache):
+            self, mp_wfs, mp_remote_describefeaturetype, mp_get_schema,
+            mp_remote_md, mp_remote_fc, mp_remote_wfs_feature, mp_dov_xml,
+            nocache):
         """Test the search method when the XML is invalid.
 
         If lxml is installed, the XML should parse regardless of invalid
@@ -380,6 +365,8 @@ class TestEncoding(object):
             Monkeypatch the call to the remote GetCapabilities request.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_md : pytest.fixture
             Monkeypatch the call to get the remote metadata.
         mp_remote_fc : pytest.fixture

@@ -1,16 +1,10 @@
 # -*- coding: utf-8 -*-
 """Module containing the DOV data type for screens (Filter), including
 subtypes."""
-from pydov.types.fields import (
-    XmlField,
-    XsdType,
-    WfsField,
-)
+from pydov.types.fields import WfsField, XmlField, XsdType
 from pydov.util.dovutil import build_dov_url
-from .abstract import (
-    AbstractDovType,
-    AbstractDovSubType,
-)
+
+from .abstract import AbstractDovSubType, AbstractDovType
 
 _filterDataCodes_xsd = build_dov_url(
     'xdov/schema/latest/xsd/kern/gwmeetnet/FilterDataCodes.xsd')
@@ -84,6 +78,12 @@ class GrondwaterFilter(AbstractDovType):
         WfsField(name='y', source_field='Y_mL72', datatype='float'),
         WfsField(name='start_grondwaterlocatie_mtaw', source_field='Z_mTAW',
                  datatype='float'),
+        XmlField(name='mv_mtaw',
+                 source_xpath='/grondwaterlocatie/puntligging/'
+                              'oorspronkelijk_maaiveld/waarde',
+                 definition='Maaiveldhoogte in mTAW op dag '
+                            'dat de put/boring uitgevoerd werd',
+                 datatype='float'),
         WfsField(name='gemeente', source_field='gemeente', datatype='string'),
         XmlField(name='meetnet_code',
                  source_xpath='/filter/meetnet',
@@ -119,6 +119,8 @@ class GrondwaterFilter(AbstractDovType):
                  datatype='float')
     ]
 
+    pkey_fieldname = 'filterfiche'
+
     def __init__(self, pkey):
         """Initialisation.
 
@@ -129,35 +131,4 @@ class GrondwaterFilter(AbstractDovType):
             `https://www.dov.vlaanderen.be/data/filter/<id>`.
 
         """
-        super(GrondwaterFilter, self).__init__('filter', pkey)
-
-    @classmethod
-    def from_wfs_element(cls, feature, namespace):
-        """Build `GrondwaterFilter` instance from a WFS feature element.
-
-        Parameters
-        ----------
-        feature : etree.Element
-            XML element representing a single record of the WFS layer.
-        namespace : str
-            Namespace associated with this WFS featuretype.
-
-        Returns
-        -------
-        filter : GrondwaterFilter
-            An instance of this class populated with the data from the WFS
-            element.
-
-        """
-        gwfilter = cls(
-            feature.findtext('./{{{}}}filterfiche'.format(namespace)))
-
-        for field in cls.get_fields(source=('wfs',)).values():
-            gwfilter.data[field['name']] = cls._parse(
-                func=feature.findtext,
-                xpath=field['sourcefield'],
-                namespace=namespace,
-                returntype=field.get('type', None)
-            )
-
-        return gwfilter
+        super().__init__('filter', pkey)

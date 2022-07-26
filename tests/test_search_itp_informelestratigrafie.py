@@ -1,37 +1,21 @@
 """Module grouping tests for the interpretaties search module."""
-import pandas as pd
 import numpy as np
-import pytest
+import pandas as pd
+from owslib.fes import PropertyIsEqualTo
 from pandas import DataFrame
 
-import pydov
-from owslib.fes import PropertyIsEqualTo
 from pydov.search.interpretaties import InformeleStratigrafieSearch
 from pydov.types.interpretaties import InformeleStratigrafie
-from tests.abstract import (
-    AbstractTestSearch,
-)
-
-from tests.test_search import (
-    mp_wfs,
-    wfs,
-    mp_remote_md,
-    mp_remote_fc,
-    mp_remote_describefeaturetype,
-    mp_remote_wfs_feature,
-    mp_remote_xsd,
-    mp_dov_xml,
-    mp_dov_xml_broken,
-    wfs_getfeature,
-    wfs_feature,
-)
+from tests.abstract import AbstractTestSearch
 
 location_md_metadata = \
     'tests/data/types/interpretaties/informele_stratigrafie/md_metadata.xml'
 location_fc_featurecatalogue = \
-    'tests/data/types/interpretaties/informele_stratigrafie/fc_featurecatalogue.xml'
+    'tests/data/types/interpretaties/informele_stratigrafie/' \
+    'fc_featurecatalogue.xml'
 location_wfs_describefeaturetype = \
-    'tests/data/types/interpretaties/informele_stratigrafie/wfsdescribefeaturetype.xml'
+    'tests/data/types/interpretaties/informele_stratigrafie/' \
+    'wfsdescribefeaturetype.xml'
 location_wfs_getfeature = \
     'tests/data/types/interpretaties/informele_stratigrafie/wfsgetfeature.xml'
 location_wfs_feature = \
@@ -44,128 +28,33 @@ location_xsd_base = \
 
 
 class TestInformeleStratigrafieSearch(AbstractTestSearch):
-    def get_search_object(self):
-        """Get an instance of the search object for this type.
 
-        Returns
-        -------
-        pydov.search.interpretaties.InformeleStratigrafieSearch
-            Instance of InformeleStratigrafieSearch used for searching.
+    search_instance = InformeleStratigrafieSearch()
+    datatype_class = InformeleStratigrafie
 
-        """
-        return InformeleStratigrafieSearch()
+    valid_query_single = PropertyIsEqualTo(propertyname='Proefnummer',
+                                           literal='kb21d54e-B45')
 
-    def get_type(self):
-        """Get the class reference for this datatype.
+    inexistent_field = 'onbestaand'
+    wfs_field = 'Proefnummer'
+    xml_field = 'diepte_laag_van'
 
-        Returns
-        -------
-        pydov.types.interpretaties.InformeleStratigrafie
-            Class reference for the InformeleStratigrafie class.
+    valid_returnfields = ('pkey_interpretatie',
+                          'betrouwbaarheid_interpretatie')
+    valid_returnfields_subtype = (
+        'pkey_interpretatie', 'diepte_laag_van', 'diepte_laag_tot')
+    valid_returnfields_extra = ('pkey_interpretatie', 'gemeente')
 
-        """
-        return InformeleStratigrafie
+    df_default_columns = ['pkey_interpretatie', 'pkey_boring',
+                          'pkey_sondering',
+                          'betrouwbaarheid_interpretatie', 'x', 'y',
+                          'start_interpretatie_mtaw',
+                          'diepte_laag_van', 'diepte_laag_tot',
+                          'beschrijving']
 
-    def get_valid_query_single(self):
-        """Get a valid query returning a single feature.
-
-        Returns
-        -------
-        owslib.fes.OgcExpression
-            OGC expression of the query.
-
-        """
-        return PropertyIsEqualTo(propertyname='Proefnummer',
-                                 literal='kb21d54e-B45')
-
-    def get_inexistent_field(self):
-        """Get the name of a field that doesn't exist.
-
-        Returns
-        -------
-        str
-            The name of an inexistent field.
-
-        """
-        return 'onbestaand'
-
-    def get_xml_field(self):
-        """Get the name of a field defined in XML only.
-
-        Returns
-        -------
-        str
-            The name of the XML field.
-
-        """
-        return 'diepte_laag_van'
-
-    def get_wfs_field(self):
-        """Get the name of a WFS field.
-
-        Returns
-        -------
-        str
-            The name of the WFS field.
-
-        """
-        return 'Proefnummer'
-
-    def get_valid_returnfields(self):
-        """Get a list of valid return fields from the main type.
-
-        Returns
-        -------
-        tuple
-            A tuple containing only valid return fields.
-
-        """
-        return ('pkey_interpretatie', 'betrouwbaarheid_interpretatie')
-
-    def get_valid_returnfields_subtype(self):
-        """Get a list of valid return fields, including fields from a subtype.
-
-        Returns
-        -------
-        tuple
-            A tuple containing valid return fields, including fields from a
-            subtype.
-
-        """
-        return ('pkey_interpretatie', 'diepte_laag_van', 'diepte_laag_tot')
-
-    def get_valid_returnfields_extra(self):
-        """Get a list of valid return fields, including extra WFS only
-        fields not present in the default dataframe.
-
-        Returns
-        -------
-        tuple
-            A tuple containing valid return fields, including extra fields
-            from WFS, not present in the default dataframe.
-
-        """
-        return ('pkey_interpretatie', 'gemeente')
-
-    def get_df_default_columns(self):
-        """Get a list of the column names (and order) from the default
-        dataframe.
-
-        Returns
-        -------
-        list
-            A list of the column names of the default dataframe.
-
-        """
-        return ['pkey_interpretatie', 'pkey_boring',
-                'pkey_sondering',
-                'betrouwbaarheid_interpretatie', 'x', 'y',
-                'diepte_laag_van', 'diepte_laag_tot',
-                'beschrijving']
-
-    def test_search_nan(self, mp_wfs, mp_remote_describefeaturetype,
-                        mp_remote_md, mp_remote_fc, mp_remote_wfs_feature,
-                        mp_dov_xml):
+    def test_search_nan(self, mp_wfs, mp_get_schema,
+                        mp_remote_describefeaturetype, mp_remote_md,
+                        mp_remote_fc, mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with only the query parameter.
 
         Test whether the result is correct.
@@ -174,6 +63,8 @@ class TestInformeleStratigrafieSearch(AbstractTestSearch):
         ----------
         mp_wfs : pytest.fixture
             Monkeypatch the call to the remote GetCapabilities request.
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_md : pytest.fixture
@@ -186,12 +77,13 @@ class TestInformeleStratigrafieSearch(AbstractTestSearch):
             Monkeypatch the call to get the remote XML data.
 
         """
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single())
+        df = self.search_instance.search(
+            query=self.valid_query_single)
 
         assert df.pkey_sondering.hasnans
 
-    def test_search_customreturnfields(self, mp_remote_describefeaturetype,
+    def test_search_customreturnfields(self, mp_get_schema,
+                                       mp_remote_describefeaturetype,
                                        mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with custom return fields.
 
@@ -199,6 +91,8 @@ class TestInformeleStratigrafieSearch(AbstractTestSearch):
 
         Parameters
         ----------
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType .
         mp_remote_wfs_feature : pytest.fixture
@@ -207,12 +101,12 @@ class TestInformeleStratigrafieSearch(AbstractTestSearch):
             Monkeypatch the call to get the remote XML data.
 
         """
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single(),
+        df = self.search_instance.search(
+            query=self.valid_query_single,
             return_fields=('pkey_interpretatie', 'pkey_boring',
                            'pkey_sondering'))
 
-        assert type(df) is DataFrame
+        assert isinstance(df, DataFrame)
 
         assert list(df) == ['pkey_interpretatie', 'pkey_boring',
                             'pkey_sondering']
@@ -220,7 +114,8 @@ class TestInformeleStratigrafieSearch(AbstractTestSearch):
         assert not pd.isnull(df.pkey_boring[0])
         assert np.isnan(df.pkey_sondering[0])
 
-    def test_search_xml_resolve(self, mp_remote_describefeaturetype,
+    def test_search_xml_resolve(self, mp_get_schema,
+                                mp_remote_describefeaturetype,
                                 mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with return fields from XML but not from a
         subtype.
@@ -229,6 +124,8 @@ class TestInformeleStratigrafieSearch(AbstractTestSearch):
 
         Parameters
         ----------
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_wfs_feature : pytest.fixture
@@ -237,8 +134,8 @@ class TestInformeleStratigrafieSearch(AbstractTestSearch):
             Monkeypatch the call to get the remote XML data.
 
         """
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single(),
+        df = self.search_instance.search(
+            query=self.valid_query_single,
             return_fields=('pkey_interpretatie', 'diepte_laag_tot'))
 
         assert df.diepte_laag_tot[0] == 15.5

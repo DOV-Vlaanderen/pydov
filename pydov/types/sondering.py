@@ -1,14 +1,8 @@
 # -*- coding: utf-8 -*-
 """Module containing the DOV data type for CPT measurements (Sonderingen),
 including subtypes."""
-from pydov.types.abstract import (
-    AbstractDovType,
-    AbstractDovSubType,
-)
-from pydov.types.fields import (
-    XmlField,
-    WfsField,
-)
+from pydov.types.abstract import AbstractDovSubType, AbstractDovType
+from pydov.types.fields import WfsField, XmlField
 
 
 class Meetdata(AbstractDovSubType):
@@ -16,11 +10,17 @@ class Meetdata(AbstractDovSubType):
     rootpath = './/sondering/sondeonderzoek/penetratietest/meetdata'
 
     fields = [
-        XmlField(name='z',
-                 source_xpath='/sondeerdiepte',
+        XmlField(name='lengte',
+                 source_xpath='/lengte',
+                 definition='Geregistreerde sondeerlengte, '
+                            'uitgedrukt in meter.',
+                 datatype='float'),
+        XmlField(name='diepte',
+                 source_xpath='/diepte',
                  definition='Diepte waarop sondeerparameters geregistreerd '
-                            'werden, uitgedrukt in meter ten opzicht van het '
-                            'aanvangspeil.',
+                            'werden, berekend uit de sondeerlengte en de '
+                            'geregistreerde hellingsmeting, '
+                            'uitgedrukt in meter.',
                  datatype='float'),
         XmlField(name='qc',
                  source_xpath='/qc',
@@ -62,6 +62,12 @@ class Sondering(AbstractDovType):
                  datatype='string'),
         WfsField(name='x', source_field='X_mL72', datatype='float'),
         WfsField(name='y', source_field='Y_mL72', datatype='float'),
+        XmlField(name='mv_mtaw',
+                 source_xpath='/sondering/sondeerpositie/'
+                              'oorspronkelijk_maaiveld/waarde',
+                 definition='Maaiveldhoogte in mTAW op dag dat de sondering '
+                            'uitgevoerd werd.',
+                 datatype='float'),
         WfsField(name='start_sondering_mtaw', source_field='Z_mTAW',
                  datatype='float'),
         WfsField(name='diepte_sondering_van', source_field='diepte_van_m',
@@ -89,6 +95,8 @@ class Sondering(AbstractDovType):
                  datatype='float')
     ]
 
+    pkey_fieldname = 'fiche'
+
     def __init__(self, pkey):
         """Initialisation.
 
@@ -99,34 +107,4 @@ class Sondering(AbstractDovType):
             the form `https://www.dov.vlaanderen.be/data/sondering/<id>`.
 
         """
-        super(Sondering, self).__init__('sondering', pkey)
-
-    @classmethod
-    def from_wfs_element(cls, feature, namespace):
-        """Build `Sondering` instance from a WFS feature element.
-
-        Parameters
-        ----------
-        feature : etree.Element
-            XML element representing a single record of the WFS layer.
-        namespace : str
-            Namespace associated with this WFS featuretype.
-
-        Returns
-        -------
-        sondering : Sondering
-            An instance of this class populated with the data from the WFS
-            element.
-
-        """
-        s = cls(feature.findtext('./{{{}}}fiche'.format(namespace)))
-
-        for field in cls.get_fields(source=('wfs',)).values():
-            s.data[field['name']] = cls._parse(
-                func=feature.findtext,
-                xpath=field['sourcefield'],
-                namespace=namespace,
-                returntype=field.get('type', None)
-            )
-
-        return s
+        super().__init__('sondering', pkey)

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Module grouping all classes related to pydov field definitions."""
 
 
@@ -66,13 +67,13 @@ class WfsField(AbstractField):
 
 
 class _WfsInjectedField(WfsField):
-    """Class for a field avaible in the WFS service, but not included in the
+    """Class for a field available in the WFS service, but not included in the
     default dataframe output."""
 
     def __init__(self, name, datatype):
         """Initialise a WFS injected field.
 
-        This is a field not normally present in the dataframe, but useable as
+        This is a field not normally present in the dataframe, but usable as
         a query and returnfield as it is available in the WFS service.
 
         Parameters

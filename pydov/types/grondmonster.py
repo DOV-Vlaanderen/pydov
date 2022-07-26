@@ -1,21 +1,15 @@
 # -*- coding: utf-8 -*-
 """Module containing the DOV data type for grondmonster, including
 subtypes."""
-from .abstract import (
-    AbstractDovType,
-    AbstractDovSubType,
-)
-from pydov.types.fields import (
-    WfsField,
-    XmlField,
-    XsdType,
-)
+from pydov.types.fields import WfsField, XmlField, XsdType
+
+from .abstract import AbstractDovSubType, AbstractDovType
 
 
 class Korrelverdeling(AbstractDovSubType):
 
     rootpath = './/grondmonster/observatieReeksData/' \
-                'korrelverdeling_reeks/korrelverdeling'
+        'korrelverdeling_reeks/korrelverdeling'
 
     fields = [
         XmlField(name='diameter',
@@ -117,27 +111,29 @@ class Grondmonster(AbstractDovType):
                               'parameter="VLOEIGRENS"]/waarde_numeriek',
                  definition='Vloeigrens',
                  datatype='float'),
-        XmlField(name='glauconiet',
+        XmlField(name='glauconiet_totaal',
                  source_xpath='/grondmonster/observatieData/observatie['
                               'parameter="GLAUCONIET_TOTAAL"]/waarde_numeriek',
-                 definition='Glauconiet totaal',
+                 definition='Glauconiet totaal in percent',
                  datatype='float'),
         XmlField(name='korrelvolumemassa',
                  source_xpath='/grondmonster/observatieData/observatie['
-                              'parameter="korrelvolumemassa"]/waarde_numeriek',
+                              'parameter="KORRELVOLUMEMASSA"]/waarde_numeriek',
                  definition='',
                  datatype='float'),
         XmlField(name='volumemassa',
                  source_xpath='/grondmonster/observatieData/observatie['
-                              'parameter="volumemassa"]/waarde_numeriek',
+                              'parameter="VOLUMEMASSA"]/waarde_numeriek',
                  definition='',
                  datatype='float'),
         XmlField(name='watergehalte',
                  source_xpath='/grondmonster/observatieData/observatie['
-                              'parameter="watergehalte"]/waarde_numeriek',
+                              'parameter="WATERGEHALTE"]/waarde_numeriek',
                  definition='',
                  datatype='float')
     ]
+
+    pkey_fieldname = 'grondmonsterfiche'
 
     def __init__(self, pkey):
         """Initialisation.
@@ -149,35 +145,4 @@ class Grondmonster(AbstractDovType):
             `https://www.dov.vlaanderen.be/data/grondmonster/<id>`.
 
         """
-        super(Grondmonster, self).__init__('grondmonster', pkey)
-
-    @classmethod
-    def from_wfs_element(cls, feature, namespace):
-        """Build `Grondmonster` instance from a WFS feature element.
-
-        Parameters
-        ----------
-        feature : etree.Element
-            XML element representing a single record of the WFS layer.
-        namespace : str
-            Namespace associated with this WFS featuretype.
-
-        Returns
-        -------
-        grondmonster : Grondmonster
-            An instance of this class populated with the data from the WFS
-            element.
-
-        """
-        grondmonster = cls(feature.findtext(
-            './{{{}}}grondmonsterfiche'.format(namespace)))
-
-        for field in cls.get_fields(source=('wfs',)).values():
-            grondmonster.data[field['name']] = cls._parse(
-                func=feature.findtext,
-                xpath=field['sourcefield'],
-                namespace=namespace,
-                returntype=field.get('type', None)
-            )
-
-        return grondmonster
+        super().__init__('grondmonster', pkey)

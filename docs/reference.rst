@@ -31,6 +31,13 @@ Grondwatermonster
 .. automodule:: pydov.search.grondwatermonster
     :members:
 
+Grondwatervergunning
+********************
+
+.. automodule:: pydov.search.grondwatervergunning
+    :members:
+
+
 Interpretaties
 **************
 
@@ -41,6 +48,42 @@ Grondmonster
 ************
 
 .. automodule:: pydov.search.grondmonster
+    :members:
+
+Bodemsite
+*********
+
+.. automodule:: pydov.search.bodemsite
+    :members:
+
+Bodemlocatie
+************
+
+.. automodule:: pydov.search.bodemlocatie
+    :members:
+
+Bodemdiepteinterval
+*******************
+
+.. automodule:: pydov.search.bodemdiepteinterval
+    :members:
+
+Bodemmonster
+************
+
+.. automodule:: pydov.search.bodemmonster
+    :members:
+
+Bodemobservatie
+***************
+
+.. automodule:: pydov.search.bodemobservatie
+    :members:
+
+Bodemclassificatie
+******************
+
+.. automodule:: pydov.search.bodemclassificatie
     :members:
 
 Object types
@@ -77,6 +120,13 @@ Grondwatermonster
     :members:
     :show-inheritance:
 
+Grondwatervergunning
+********************
+
+.. automodule:: pydov.types.grondwatervergunning
+    :members:
+    :show-inheritance:
+
 Interpretaties
 **************
 
@@ -88,6 +138,48 @@ Grondmonster
 ************
 
 .. automodule:: pydov.types.grondmonster
+    :members:
+    :show-inheritance:
+
+Bodemsite
+*********
+
+.. automodule:: pydov.types.bodemsite
+    :members:
+    :show-inheritance:
+
+Bodemlocatie
+************
+
+.. automodule:: pydov.types.bodemlocatie
+    :members:
+    :show-inheritance:
+
+Bodemdiepteinterval
+*******************
+
+.. automodule:: pydov.types.bodemdiepteinterval
+    :members:
+    :show-inheritance:
+
+Bodemmonster
+************
+
+.. automodule:: pydov.types.bodemmonster
+    :members:
+    :show-inheritance:
+
+Bodemobservatie
+***************
+
+.. automodule:: pydov.types.bodemobservatie
+    :members:
+    :show-inheritance:
+
+Bodemclassificatie
+******************
+
+.. automodule:: pydov.types.bodemclassificatie
     :members:
     :show-inheritance:
 
@@ -140,6 +232,13 @@ Hooks
 -----
 
 .. automodule:: pydov.util.hooks
+    :members:
+    :show-inheritance:
+
+Network utilities
+-----------------
+
+.. automodule:: pydov.util.net
     :members:
     :show-inheritance:
 

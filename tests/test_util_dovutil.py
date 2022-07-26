@@ -57,29 +57,29 @@ class TestDovutil(object):
     def test_get_dov_base_url_slash(self, pydov_base_url_environment):
         assert env_var in os.environ
         assert dovutil.build_dov_url('/geonetwork') == \
-               'https://dov/geonetwork'
+            'https://dov/geonetwork'
 
     def test_get_dov_base_url_multislash(self, pydov_base_url_environment):
         assert env_var in os.environ
         assert dovutil.build_dov_url('/geonetwork/srv') == \
-               'https://dov/geonetwork/srv'
+            'https://dov/geonetwork/srv'
 
     def test_get_dov_base_url_endslash(self, pydov_base_url_environment):
         assert env_var in os.environ
         assert dovutil.build_dov_url('/geonetwork/') == \
-               'https://dov/geonetwork/'
+            'https://dov/geonetwork/'
 
     def test_get_dov_base_url_noslash(self, pydov_base_url_environment):
         assert env_var in os.environ
         assert dovutil.build_dov_url('geonetwork') == \
-               'https://dov/geonetwork'
+            'https://dov/geonetwork'
 
     def test_get_dov_base_url_noslash_multi(self, pydov_base_url_environment):
         assert env_var in os.environ
         assert dovutil.build_dov_url('geonetwork/srv') == \
-               'https://dov/geonetwork/srv'
+            'https://dov/geonetwork/srv'
 
     def test_get_dov_base_url_noslash_end(self, pydov_base_url_environment):
         assert env_var in os.environ
         assert dovutil.build_dov_url('geonetwork/') == \
-               'https://dov/geonetwork/'
+            'https://dov/geonetwork/'

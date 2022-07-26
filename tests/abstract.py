@@ -1,71 +1,67 @@
 import datetime
 import random
 import re
-import sys
-
-import numpy as np
 from collections import OrderedDict
 
+import numpy as np
 import pandas as pd
 import pytest
 import requests
-from numpy.compat import (
-    unicode,
-    long,
-)
-from pandas import DataFrame
-from pandas.api.types import (
-    is_int64_dtype, is_object_dtype,
-    is_bool_dtype, is_float_dtype)
-
-from owslib.fes import (
-    PropertyIsEqualTo,
-    SortBy,
-    SortProperty,
-)
 from owslib.etree import etree
+from owslib.fes import PropertyIsEqualTo, SortBy, SortProperty
+from pandas import DataFrame
+
+import pydov
 from pydov.types.abstract import AbstractField
 from pydov.util.dovutil import build_dov_url
 from pydov.util.errors import InvalidFieldError
-from pydov.util.location import (
-    Within,
-    Box,
-)
-from pydov.util.query import (
-    PropertyInList,
-    Join,
-)
+from pydov.util.location import Box, Within
+from pydov.util.query import Join, PropertyInList
 
 
-def service_ok(timeout=5):
-    """Check whether DOV services are accessible.
+class ServiceCheck:
 
-    Used to skip online tests when the service is unavailable or unreachable.
+    is_service_ok = None
 
-    Parameters
-    ----------
-    timeout : int, optional
-        Timeout in seconds. Defaults to 5.
+    @staticmethod
+    def service_ok(timeout=5):
+        """Check whether DOV services are accessible.
 
-    Returns
-    -------
-    bool
-        True if the DOV services are reachable, False otherwise.
+        Used to skip online tests when the service is unavailable or
+        unreachable.
 
-    """
-    def check_url(url, timeout):
-        try:
-            ok = requests.get(url, timeout=timeout).ok
-        except requests.exceptions.ReadTimeout:
-            ok = False
-        except requests.exceptions.ConnectTimeout:
-            ok = False
-        except Exception:
-            ok = False
-        return ok
+        Parameters
+        ----------
+        timeout : int, optional
+            Timeout in seconds. Defaults to 5.
 
-    return check_url(build_dov_url('geoserver'), timeout) and\
-        check_url(build_dov_url('geonetwork'), timeout)
+        Returns
+        -------
+        bool
+            True if the DOV services are reachable, False otherwise.
+
+        """
+        def check_url(url, timeout):
+            try:
+                ok = pydov.session.head(
+                    url, allow_redirects=True, timeout=timeout).ok
+            except requests.exceptions.ReadTimeout:
+                ok = False
+            except requests.exceptions.ConnectTimeout:
+                ok = False
+            except Exception:
+                ok = False
+            return ok
+
+        if ServiceCheck.is_service_ok is None:
+            ServiceCheck.is_service_ok = (
+                check_url(build_dov_url('geoserver'), timeout) and
+                check_url(build_dov_url('geonetwork'), timeout) and
+                check_url(
+                    build_dov_url('xdov/schema/latest/xsd/kern/dov.xsd'),
+                    timeout))
+
+        return ServiceCheck.is_service_ok
 
 
 def clean_xml(xml):
@@ -99,130 +95,48 @@ def clean_xml(xml):
 
 
 class AbstractTestSearch(object):
-    """Class grouping common test code for search classes."""
-    def get_search_object(self):
-        """Get an instance of the search object for this type.
+    """Class grouping common test code for search classes.
 
-        Returns
-        -------
-        pydov.search.abstract.AbstractSearch
-            Instance of subclass of this type used for searching.
+    Subclasses should implement at least the following public attributes
+    in order for the tests defined here to be executed.
 
-        """
-        raise NotImplementedError
-
-    def get_type(self):
-        """Get the class reference for this datatype.
-
-        Returns
-        -------
-        pydov.types.abstract.AbstractDovType
+    Attributes
+    ----------
+    search_instance : pydov.search.abstract.AbstractSearch
+        Instance of subclass of this type used for searching.
+    datatype_class : pydov.types.abstract.AbstractDovType
             Class reference for the corresponding datatype.
-
-        """
-        raise NotImplementedError
-
-    def get_valid_query_single(self):
-        """Get a valid query returning a single feature.
-
-        Returns
-        -------
-        owslib.fes.OgcExpression
-            OGC expression of the query.
-
-        """
-        raise NotImplementedError
-
-    def get_inexistent_field(self):
-        """Get the name of a field that doesn't exist.
-
-        Returns
-        -------
-        str
+    valid_query_single : owslib.fes.OgcExpression
+        OGC expression of a valid query returning a single result.
+    inexistent_field : str
             The name of an inexistent field.
-
-        """
-        raise NotImplementedError
-
-    def get_wfs_field(self):
-        """Get the name of a WFS field.
-
-        Returns
-        -------
-        str
-            The name of the WFS field.
-
-        """
-        raise NotImplementedError
-
-    def get_xml_field(self):
-        """Get the name of a field defined in XML only.
-
-        Returns
-        -------
-        str
-            The name of the XML field.
-
-        """
-        raise NotImplementedError
-
-    def get_valid_returnfields(self):
-        """Get a list of valid return fields from the main type.
-
-        Returns
-        -------
-        tuple
-            A tuple containing only valid return fields.
-
-        """
-        raise NotImplementedError
-
-    def get_valid_returnfields_subtype(self):
-        """Get a list of valid return fields, including fields from a subtype.
-
-        Returns
-        -------
-        tuple
+    wfs_field : str
+        The name of a WFS field.
+    xml_field : str
+        The name of an XML field.
+    valid_returnfields : tuple of str
+        A tuple of valid return fields from the main type.
+    valid_returnfields_subtype : typle of str
             A tuple containing valid return fields, including fields from a
             subtype.
-
-        """
-        raise NotImplementedError
-
-    def get_valid_returnfields_extra(self):
-        """Get a list of valid return fields, including extra WFS only
-        fields not present in the default dataframe.
-
-        Returns
-        -------
-        tuple
+    valid_returnfields_extra : tuple of str
             A tuple containing valid return fields, including extra fields
             from WFS, not present in the default dataframe.
-
-        """
-        raise NotImplementedError
-
-    def get_df_default_columns(self):
-        """Get a list of the column names (and order) from the default
-        dataframe.
-
-        Returns
-        -------
-        list
+    df_default_columns : list of str
             A list of the column names of the default dataframe.
 
-        """
-        raise NotImplementedError
+    """
 
     def test_pluggable_type(self):
         """Test whether the search object can be initialised by explicitly
         giving the objecttype.
         """
-        datatype = self.get_type()
-        self.get_search_object().__class__(objecttype=datatype)
+        datatype = self.datatype_class
+        self.search_instance.__class__(objecttype=datatype)
 
-    def test_get_fields(self, mp_wfs, mp_remote_describefeaturetype,
-                        mp_remote_md, mp_remote_fc, mp_remote_xsd):
+    def test_get_fields(self, mp_wfs, mp_get_schema,
+                        mp_remote_describefeaturetype, mp_remote_md,
+                        mp_remote_fc, mp_remote_xsd):
         """Test the get_fields method.
 
         Test whether the returned fields match the format specified
@@ -232,6 +146,8 @@ class AbstractTestSearch(object):
         ----------
         mp_wfs : pytest.fixture
             Monkeypatch the call to the remote GetCapabilities request.
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_md : pytest.fixture
@@ -240,36 +156,36 @@ class AbstractTestSearch(object):
             Monkeypatch the call to get the remote feature catalogue.
 
         """
-        fields = self.get_search_object().get_fields()
+        fields = self.search_instance.get_fields()
 
-        assert type(fields) is dict
+        assert isinstance(fields, dict)
 
         for field in fields:
-            assert type(field) in (str, unicode)
+            assert isinstance(field, str)
 
             f = fields[field]
-            assert type(f) is dict
+            assert isinstance(f, dict)
 
             assert 'name' in f
-            assert type(f['name']) in (str, unicode)
+            assert isinstance(f['name'], str)
             assert f['name'] == field
 
             assert 'definition' in f
-            assert type(f['name']) in (str, unicode)
+            assert isinstance(f['name'], str)
 
             assert 'type' in f
-            assert type(f['type']) in (str, unicode)
+            assert isinstance(f['type'], str)
             assert f['type'] in ['string', 'float', 'integer', 'date',
                                  'datetime', 'boolean']
 
             assert 'notnull' in f
-            assert type(f['notnull']) is bool
+            assert isinstance(f['notnull'], bool)
 
             assert 'query' in f
-            assert type(f['query']) is bool
+            assert isinstance(f['query'], bool)
 
             assert 'cost' in f
-            assert type(f['cost']) is int
+            assert isinstance(f['cost'], int)
             assert f['cost'] > 0
 
             if 'values' in f:
@@ -277,27 +193,28 @@ class AbstractTestSearch(object):
                     'cost', 'definition', 'name', 'notnull', 'query', 'type',
                     'values']
 
-                assert type(f['values']) is dict
+                assert isinstance(f['values'], dict)
 
                 for v in f['values'].keys():
-                    assert type(f['values'][v]) in (str, unicode) or f[
+                    assert isinstance(f['values'][v], str) or f[
                         'values'][v] is None
 
                     if f['type'] == 'string':
-                        assert type(v) in (str, unicode)
+                        assert isinstance(v, str)
                     elif f['type'] == 'float':
-                        assert type(v) is float
+                        assert isinstance(v, float)
                     elif f['type'] == 'integer':
-                        assert type(v) is int
+                        assert isinstance(v, int)
                     elif f['type'] == 'date':
-                        assert type(v) is datetime.date
+                        assert isinstance(v, datetime.date)
                     elif f['type'] == 'boolean':
-                        assert type(v) is bool
+                        assert isinstance(v, bool)
             else:
                 assert sorted(f.keys()) == ['cost', 'definition', 'name',
                                             'notnull', 'query', 'type']
 
-    def test_search_both_location_query(self, mp_remote_describefeaturetype,
+    def test_search_both_location_query(self, mp_get_schema,
+                                        mp_remote_describefeaturetype,
                                         mp_remote_wfs_feature):
         """Test the search method providing both a location and a query.
 
@@ -305,21 +222,24 @@ class AbstractTestSearch(object):
 
         Parameters
         ----------
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_wfs_feature : pytest.fixture
             Monkeypatch the call to get WFS features.
 
         """
-        df = self.get_search_object().search(
+        df = self.search_instance.search(
             location=Within(Box(1, 2, 3, 4)),
-            query=self.get_valid_query_single(),
-            return_fields=self.get_valid_returnfields())
+            query=self.valid_query_single,
+            return_fields=self.valid_returnfields)
 
-        assert type(df) is DataFrame
+        assert isinstance(df, DataFrame)
 
-    def test_search(self, mp_wfs, mp_remote_describefeaturetype, mp_remote_md,
-                    mp_remote_fc, mp_remote_wfs_feature, mp_dov_xml):
+    def test_search(self, mp_wfs, mp_get_schema, mp_remote_describefeaturetype,
+                    mp_remote_md, mp_remote_fc, mp_remote_wfs_feature,
+                    mp_dov_xml):
         """Test the search method with only the query parameter.
 
         Test whether the result is correct.
@@ -328,6 +248,8 @@ class AbstractTestSearch(object):
         ----------
         mp_wfs : pytest.fixture
             Monkeypatch the call to the remote GetCapabilities request.
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_md : pytest.fixture
@@ -340,14 +262,14 @@ class AbstractTestSearch(object):
             Monkeypatch the call to get the remote XML data.
 
         """
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single())
+        df = self.search_instance.search(
+            query=self.valid_query_single)
 
-        assert type(df) is DataFrame
+        assert isinstance(df, DataFrame)
 
-        assert list(df) == self.get_df_default_columns()
+        assert list(df) == self.df_default_columns
 
-        datatype = self.get_type()
+        datatype = self.datatype_class
         allfields = datatype.get_field_names()
         ownfields = datatype.get_field_names(include_subtypes=False)
         subfields = [f for f in allfields if f not in ownfields]
@@ -361,7 +283,7 @@ class AbstractTestSearch(object):
                 assert len(df[field].unique()) >= 1
 
         # dtype checks of the resulting df columns
-        fields = self.get_search_object().get_fields()
+        fields = self.search_instance.get_fields()
 
         for field in list(df):
             mandatory = fields[field]['notnull']
@@ -376,12 +298,11 @@ class AbstractTestSearch(object):
 
             if len(datatypes) > 0:
                 if field_datatype == 'string':
-                    assert (str in datatypes or unicode in datatypes)
+                    assert (str in datatypes)
                 elif field_datatype == 'float':
                     assert float in datatypes
                 elif field_datatype == 'integer':
-                    # in Python2 Panda's int64 dtype is translated into 'long'
-                    assert (int in datatypes or long in datatypes)
+                    assert (int in datatypes)
                 elif field_datatype == 'date':
                     assert datetime.date in datatypes
                 elif field_datatype == 'boolean':
@@ -400,13 +321,13 @@ class AbstractTestSearch(object):
             Monkeypatch the call to get WFS features.
 
         """
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single(),
-            return_fields=self.get_valid_returnfields())
+        df = self.search_instance.search(
+            query=self.valid_query_single,
+            return_fields=self.valid_returnfields)
 
-        assert type(df) is DataFrame
+        assert isinstance(df, DataFrame)
 
-        assert list(df) == list(self.get_valid_returnfields())
+        assert list(df) == list(self.valid_returnfields)
 
     def test_search_returnfields_subtype(self, mp_remote_wfs_feature):
         """Test the search method with the query parameter and a selection of
@@ -421,13 +342,16 @@ class AbstractTestSearch(object):
             Monkeypatch the call to get WFS features.
 
         """
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single(),
-            return_fields=self.get_valid_returnfields_subtype())
+        if self.valid_returnfields_subtype is None:
+            return
 
-        assert type(df) is DataFrame
+        df = self.search_instance.search(
+            query=self.valid_query_single,
+            return_fields=self.valid_returnfields_subtype)
 
-        assert list(df) == list(self.get_valid_returnfields_subtype())
+        assert isinstance(df, DataFrame)
+
+        assert list(df) == list(self.valid_returnfields_subtype)
 
     def test_search_returnfields_order(self, mp_remote_wfs_feature):
         """Test the search method with the query parameter and a selection of
@@ -442,16 +366,16 @@ class AbstractTestSearch(object):
             Monkeypatch the call to get WFS features.
 
         """
-        rf = list(self.get_valid_returnfields())
+        rf = list(self.valid_returnfields)
 
-        while rf == list(self.get_valid_returnfields()):
+        while rf == list(self.valid_returnfields):
             random.shuffle(rf)
 
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single(),
+        df = self.search_instance.search(
+            query=self.valid_query_single,
             return_fields=rf)
 
-        assert type(df) is DataFrame
+        assert isinstance(df, DataFrame)
         assert list(df) == rf
 
     def test_search_wrongreturnfields(self):
@@ -461,12 +385,12 @@ class AbstractTestSearch(object):
         Test whether an InvalidFieldError is raised.
 
         """
-        return_fields = list(self.get_valid_returnfields())
-        return_fields.append(self.get_inexistent_field())
+        return_fields = list(self.valid_returnfields)
+        return_fields.append(self.inexistent_field)
 
         with pytest.raises(InvalidFieldError):
-            self.get_search_object().search(
-                query=self.get_valid_query_single(),
+            self.search_instance.search(
+                query=self.valid_query_single,
                 return_fields=return_fields)
 
     def test_search_wrongreturnfieldstype(self):
@@ -477,9 +401,9 @@ class AbstractTestSearch(object):
 
         """
         with pytest.raises(AttributeError):
-            self.get_search_object().search(
-                query=self.get_valid_query_single(),
-                return_fields=self.get_valid_returnfields()[0])
+            self.search_instance.search(
+                query=self.valid_query_single,
+                return_fields=self.valid_returnfields[0])
 
     def test_search_query_wrongfield(self):
         """Test the search method with the query parameter using an
@@ -488,11 +412,11 @@ class AbstractTestSearch(object):
         Test whether an InvalidFieldError is raised.
 
         """
-        query = PropertyIsEqualTo(propertyname=self.get_inexistent_field(),
+        query = PropertyIsEqualTo(propertyname=self.inexistent_field,
                                   literal='The cat is out of the bag.')
 
         with pytest.raises(InvalidFieldError):
-            self.get_search_object().search(
+            self.search_instance.search(
                 query=query)
 
     def test_search_query_wrongfield_returnfield(self):
@@ -502,19 +426,25 @@ class AbstractTestSearch(object):
         Test whether an InvalidFieldError is raised.
 
         """
-        query = PropertyIsEqualTo(propertyname=self.get_xml_field(),
+        if self.xml_field is None:
+            return
+
+        query = PropertyIsEqualTo(propertyname=self.xml_field,
                                   literal='Geotechnisch onderzoek')
 
         with pytest.raises(InvalidFieldError):
-            self.get_search_object().search(query=query)
+            self.search_instance.search(query=query)
 
-    def test_search_extrareturnfields(self, mp_remote_describefeaturetype,
+    def test_search_extrareturnfields(self, mp_get_schema,
+                                      mp_remote_describefeaturetype,
                                       mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with the query parameter and an extra WFS
         field as return field.
 
         Parameters
         ----------
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_wfs_feature : pytest.fixture
@@ -523,15 +453,19 @@ class AbstractTestSearch(object):
             Monkeypatch the call to get the remote XML data.
 
         """
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single(),
-            return_fields=self.get_valid_returnfields_extra())
+        if self.valid_returnfields_extra is None:
+            return
 
-        assert type(df) is DataFrame
+        df = self.search_instance.search(
+            query=self.valid_query_single,
+            return_fields=self.valid_returnfields_extra)
 
-        assert list(df) == list(self.get_valid_returnfields_extra())
+        assert isinstance(df, DataFrame)
 
-    def test_search_sortby_valid(self, mp_remote_describefeaturetype,
+        assert list(df) == list(self.valid_returnfields_extra)
+
+    def test_search_sortby_valid(self, mp_get_schema,
+                                 mp_remote_describefeaturetype,
                                  mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with the query parameter and the sort_by
         parameter with a valid sort field.
@@ -540,6 +474,8 @@ class AbstractTestSearch(object):
 
         Parameters
         ----------
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_wfs_feature : pytest.fixture
@@ -548,14 +484,15 @@ class AbstractTestSearch(object):
             Monkeypatch the call to get the remote XML data.
 
         """
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single(),
+        df = self.search_instance.search(
+            query=self.valid_query_single,
             sort_by=SortBy([SortProperty(
-                self.get_valid_returnfields_extra()[0])]))
+                self.valid_returnfields[-1])]))
 
-        assert type(df) is DataFrame
+        assert isinstance(df, DataFrame)
 
-    def test_search_sortby_invalid(self, mp_remote_describefeaturetype,
+    def test_search_sortby_invalid(self, mp_get_schema,
+                                   mp_remote_describefeaturetype,
                                    mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with the query parameter and the sort_by
         parameter with an invalid sort field.
@@ -564,6 +501,8 @@ class AbstractTestSearch(object):
 
         Parameters
         ----------
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_wfs_feature : pytest.fixture
@@ -572,13 +511,17 @@ class AbstractTestSearch(object):
             Monkeypatch the call to get the remote XML data.
 
         """
-        with pytest.raises(InvalidFieldError):
-            df = self.get_search_object().search(
-                query=self.get_valid_query_single(),
-                sort_by=SortBy([SortProperty(
-                    self.get_xml_field())]))
+        if self.xml_field is None:
+            return
 
-    def test_search_xml_noresolve(self, mp_remote_describefeaturetype,
+        with pytest.raises(InvalidFieldError):
+            self.search_instance.search(
+                query=self.valid_query_single,
+                sort_by=SortBy([SortProperty(
+                    self.xml_field)]))
+
+    def test_search_xml_noresolve(self, mp_get_schema,
+                                  mp_remote_describefeaturetype,
                                   mp_remote_wfs_feature, mp_dov_xml_broken):
         """Test the search method with return fields from WFS only.
 
@@ -586,6 +529,8 @@ class AbstractTestSearch(object):
 
         Parameters
         ----------
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_wfs_feature : pytest.fixture
@@ -594,16 +539,19 @@ class AbstractTestSearch(object):
             Monkeypatch the call to break fetching of remote XML data.
 
         """
-        df = self.get_search_object().search(
-            query=self.get_valid_query_single(),
-            return_fields=self.get_valid_returnfields_extra())
+        self.search_instance.search(
+            query=self.valid_query_single,
+            return_fields=self.valid_returnfields_extra)
 
-    def test_search_propertyinlist(self, mp_remote_describefeaturetype,
+    def test_search_propertyinlist(self, mp_get_schema,
+                                   mp_remote_describefeaturetype,
                                    mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with a PropertyInList query.
 
         Parameters
         ----------
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_wfs_feature : pytest.fixture
@@ -612,15 +560,17 @@ class AbstractTestSearch(object):
             Monkeypatch the call to get the remote XML data.
 
         """
-        self.get_search_object().search(
-            query=PropertyInList(self.get_wfs_field(), ['a', 'b']))
+        self.search_instance.search(
+            query=PropertyInList(self.wfs_field, ['a', 'b']))
 
-    def test_search_join(self, mp_remote_describefeaturetype,
+    def test_search_join(self, mp_get_schema, mp_remote_describefeaturetype,
                          mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with a Join query.
 
         Parameters
         ----------
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_wfs_feature : pytest.fixture
@@ -629,11 +579,11 @@ class AbstractTestSearch(object):
             Monkeypatch the call to get the remote XML data.
 
         """
-        df1 = self.get_search_object().search(
-            query=self.get_valid_query_single())
+        df1 = self.search_instance.search(
+            query=self.valid_query_single)
 
-        df2 = self.get_search_object().search(
-            query=Join(df1, self.get_df_default_columns()[0]))
+        self.search_instance.search(
+            query=Join(df1, self.df_default_columns[0]))
 
     def test_get_fields_xsd_values(self, mp_remote_xsd):
         """Test the result of get_fields when the XML field has an XSD type.
@@ -647,23 +597,23 @@ class AbstractTestSearch(object):
             Monkeypatch the call to get XSD schemas.
 
         """
-        xsd_schemas = self.get_type().get_xsd_schemas()
+        xsd_schemas = self.datatype_class.get_xsd_schemas()
 
         if len(xsd_schemas) > 0:
-            xml_fields = self.get_type().get_fields(source='xml')
-            fields = self.get_search_object().get_fields()
+            xml_fields = self.datatype_class.get_fields(source='xml')
+            fields = self.search_instance.get_fields()
             for f in xml_fields.values():
                 if 'xsd_type' in f:
                     assert 'values' in fields[f['name']]
-                    assert type(fields[f['name']]['values']) is dict
+                    assert isinstance(fields[f['name']]['values'], dict)
 
     def test_get_fields_no_xsd(self):
         """Test whether no XML fields have an XSD type when no XSD schemas
         are available."""
-        xsd_schemas = self.get_type().get_xsd_schemas()
+        xsd_schemas = self.datatype_class.get_xsd_schemas()
 
         if len(xsd_schemas) == 0:
-            xml_fields = self.get_type().get_fields(source='xml')
+            xml_fields = self.datatype_class.get_fields(source='xml')
             for f in xml_fields.values():
                 assert 'xsd_type' not in f
 
@@ -675,12 +625,12 @@ class AbstractTestSearch(object):
         needed.
 
         """
-        xsd_schemas = self.get_type().get_xsd_schemas()
+        xsd_schemas = self.datatype_class.get_xsd_schemas()
 
         xsd_type_count = 0
 
         if len(xsd_schemas) > 0:
-            xml_fields = self.get_type().get_fields(source='xml')
+            xml_fields = self.datatype_class.get_fields(source='xml')
             for f in xml_fields.values():
                 if 'xsd_type' in f:
                     xsd_type_count += 1
@@ -688,109 +638,36 @@ class AbstractTestSearch(object):
 
 
 class AbstractTestTypes(object):
-    """Class grouping common test code for datatype classes."""
-    def get_type(self):
-        """Get the class reference for this datatype.
+    """Class grouping common test code for datatype classes.
 
-        Returns
-        -------
-        pydov.types.abstract.AbstractDovType
-            Class reference for the corresponding datatype.
+    Subclasses should implement at least the following public attributes
+    in order for the tests defined here to be executed.
 
-        """
-        raise NotImplementedError
-
-    def get_namespace(self):
-        """Get the WFS namespace associated with this datatype.
-
-        Returns
-        -------
-        str
-            WFS namespace for this type.
-
-        """
-        raise NotImplementedError
-
-    def get_pkey_base(self):
-        """Get the base URL for the permanent keys of this datatype.
-
-        Returns
-        -------
-        str
-            Base URL for the permanent keys of this datatype. For example
-            "https://www.dov.vlaanderen.be/data/boring/"
-
-        """
-        raise NotImplementedError
-
-    def get_field_names(self):
-        """Get the field names for this type as listed in the documentation in
+    Attributes
+    ----------
+    datatype_class : pydov.types.abstract.AbstractDovType
+        Class reference for the corresponding datatype.
+    namespace : str
+        WFS namespace for this type.
+    pkey_base : str
+        Base URL for the permanent keys of this datatype.
+    field_names : list of str
+        The field names for this type as listed in the documentation in
         docs/description_output_dataframes.rst
-
-        Returns
-        -------
-        list<str>
-            List of field names.
-
-        """
-        raise NotImplementedError
-
-    def get_field_names_subtypes(self):
-        """Get the field names of this type that originate from subtypes only.
-
-        Returns
-        -------
-        list<str>
-            List of field names from subtypes.
-
-        """
-        raise NotImplementedError
-
-    def get_field_names_nosubtypes(self):
-        """Get the field names for this type, without including fields from
+    field_names_subtypes : list of str
+        The field names of this type that originate from subtypes only.
+    field_names_nosubtypes : list of str
+        The field names for this type, without including fields from
         subtypes.
-
-        Returns
-        -------
-        list<str>
-            List of field names.
-
-        """
-        raise NotImplementedError
-
-    def get_valid_returnfields(self):
-        """Get a list of valid return fields from the main type.
-
-        Returns
-        -------
-        tuple
-            A tuple containing only valid return fields.
-
-        """
-        raise NotImplementedError
-
-    def get_valid_returnfields_subtype(self):
-        """Get a list of valid return fields, including fields from a subtype.
-
-        Returns
-        -------
-        tuple
+    valid_returnfields : tuple of str
+        A tuple of valid return fields from the main type.
+    valid_returnfields_subtype : typle of str
             A tuple containing valid return fields, including fields from a
             subtype.
-
-        """
-        raise NotImplementedError
-
-    def get_inexistent_field(self):
-        """Get the name of a field that doesn't exist.
-
-        Returns
-        -------
-        str
+    inexistent_field : str
             The name of an inexistent field.
 
-        """
-        raise NotImplementedError
+    """
 
     def test_get_field_names(self):
         """Test the get_field_names method.
@@ -799,8 +676,8 @@ class AbstractTestTypes(object):
         ones we list in docs/description_output_dataframes.rst.
 
         """
-        fields = self.get_type().get_field_names()
-        assert fields == self.get_field_names()
+        fields = self.datatype_class.get_field_names()
+        assert fields == self.field_names
 
     def test_get_field_names_nosubtypes(self):
         """Test the get_field_names method without including subtypes.
@@ -809,10 +686,10 @@ class AbstractTestTypes(object):
         disabling subtypes.
 
         """
-        fields = self.get_type().get_field_names(
+        fields = self.datatype_class.get_field_names(
             return_fields=None, include_subtypes=False)
 
-        assert fields == self.get_field_names_nosubtypes()
+        assert fields == self.field_names_nosubtypes
 
     def test_get_field_names_returnfields_nosubtypes(self):
         """Test the get_field_names method when specifying return
@@ -822,11 +699,11 @@ class AbstractTestTypes(object):
         fields.
 
         """
-        fields = self.get_type().get_field_names(
-            return_fields=self.get_valid_returnfields(),
+        fields = self.datatype_class.get_field_names(
+            return_fields=self.valid_returnfields,
             include_subtypes=False)
 
-        assert fields == list(self.get_valid_returnfields())
+        assert fields == list(self.valid_returnfields)
 
     def test_get_field_names_returnfields_order(self):
         """Test the get_field_names method when specifying return
@@ -837,12 +714,12 @@ class AbstractTestTypes(object):
         parameter.
 
         """
-        rf = list(self.get_valid_returnfields())
+        rf = list(self.valid_returnfields)
 
-        while rf == list(self.get_valid_returnfields()):
+        while rf == list(self.valid_returnfields):
             random.shuffle(rf)
 
-        fields = self.get_type().get_field_names(
+        fields = self.datatype_class.get_field_names(
             return_fields=rf,
             include_subtypes=False)
 
@@ -855,11 +732,11 @@ class AbstractTestTypes(object):
         Test whether an InvalidFieldError is raised.
 
         """
-        return_fields = list(self.get_valid_returnfields())
-        return_fields.append(self.get_inexistent_field())
+        return_fields = list(self.valid_returnfields)
+        return_fields.append(self.inexistent_field)
 
         with pytest.raises(InvalidFieldError):
-            self.get_type().get_field_names(
+            self.datatype_class.get_field_names(
                 return_fields=return_fields,
                 include_subtypes=False)
 
@@ -871,8 +748,8 @@ class AbstractTestTypes(object):
 
         """
         with pytest.raises(AttributeError):
-            self.get_type().get_field_names(
-                return_fields=self.get_valid_returnfields()[0],
+            self.datatype_class.get_field_names(
+                return_fields=self.valid_returnfields[0],
                 include_subtypes=False)
 
     def test_get_field_names_wrongreturnfields_nosubtypes(self):
@@ -882,9 +759,12 @@ class AbstractTestTypes(object):
         Test whether an InvalidFieldError is raised.
 
         """
+        if self.valid_returnfields_subtype is None:
+            return
+
         with pytest.raises(InvalidFieldError):
-            self.get_type().get_field_names(
-                return_fields=self.get_valid_returnfields_subtype(),
+            self.datatype_class.get_field_names(
+                return_fields=self.valid_returnfields_subtype,
                 include_subtypes=False)
 
     def test_get_fields(self):
@@ -894,29 +774,29 @@ class AbstractTestTypes(object):
         requirements and the format listed in the docs.
 
         """
-        fields = self.get_type().get_fields()
+        fields = self.datatype_class.get_fields()
 
         assert isinstance(fields, OrderedDict)
 
         for f in fields.keys():
-            assert type(f) in (str, unicode)
+            assert isinstance(f, str)
 
             field = fields[f]
             assert isinstance(field, AbstractField)
 
             assert 'name' in field
-            assert type(field['name']) in (str, unicode)
+            assert isinstance(field['name'], str)
             assert field['name'] == f
 
             assert 'source' in field
-            assert type(field['source']) in (str, unicode)
+            assert isinstance(field['source'], str)
             assert field['source'] in ('wfs', 'xml')
 
             assert 'sourcefield' in field
-            assert type(field['sourcefield']) in (str, unicode)
+            assert isinstance(field['sourcefield'], str)
 
             assert 'type' in field
-            assert type(field['type']) in (str, unicode)
+            assert isinstance(field['type'], str)
             assert field['type'] in ['string', 'float', 'integer', 'date',
                                      'datetime', 'boolean']
 
@@ -930,10 +810,10 @@ class AbstractTestTypes(object):
                         'name', 'source', 'sourcefield', 'type']
             elif field['source'] == 'xml':
                 assert 'definition' in field
-                assert type(field['definition']) in (str, unicode)
+                assert isinstance(field['definition'], str)
 
                 assert 'notnull' in field
-                assert type(field['notnull']) is bool
+                assert isinstance(field['notnull'], bool)
 
                 if 'xsd_type' in field:
                     assert sorted(field.keys()) == [
@@ -950,9 +830,12 @@ class AbstractTestTypes(object):
         Test whether fields provides by subtypes are not listed in the output.
 
         """
-        fields = self.get_type().get_fields(include_subtypes=False)
+        if self.field_names_subtypes is None:
+            return
+
+        fields = self.datatype_class.get_fields(include_subtypes=False)
         for field in fields:
-            assert field not in self.get_field_names_subtypes()
+            assert field not in self.field_names_subtypes
 
     def test_from_wfs_element(self, wfs_feature):
         """Test the from_wfs_element method.
@@ -966,18 +849,19 @@ class AbstractTestTypes(object):
             the WFS layer.
 
         """
-        feature = self.get_type().from_wfs_element(
-            wfs_feature, self.get_namespace())
+        feature = self.datatype_class.from_wfs_element(
+            wfs_feature, self.namespace)
 
-        assert type(feature) is self.get_type()
+        assert isinstance(feature, self.datatype_class)
 
-        assert feature.pkey.startswith(self.get_pkey_base())
+        if self.pkey_base is not None:
+            assert feature.pkey.startswith(self.pkey_base)
 
-        assert feature.pkey.startswith(
-            build_dov_url('data/{}/'.format(feature.typename)))
+            assert feature.pkey.startswith(
+                build_dov_url('data/{}/'.format(feature.typename)))
 
-        assert type(feature.data) is dict
-        assert type(feature.subdata) is dict
+        assert isinstance(feature.data, dict)
+        assert isinstance(feature.subdata, dict)
 
     def test_get_df_array(self, wfs_feature, mp_dov_xml):
         """Test the get_df_array method.
@@ -993,31 +877,31 @@ class AbstractTestTypes(object):
             Monkeypatch the call to get the remote XML data.
 
         """
-        feature = self.get_type().from_wfs_element(
-            wfs_feature, self.get_namespace())
+        feature = self.datatype_class.from_wfs_element(
+            wfs_feature, self.namespace)
 
-        fields = [f for f in self.get_type().get_fields(
+        fields = [f for f in self.datatype_class.get_fields(
             source=('wfs', 'xml', 'custom')).values() if not
             f.get('wfs_injected', False)]
 
         df_array = feature.get_df_array()
 
-        assert type(df_array) is list
+        assert isinstance(df_array, list)
 
         for record in df_array:
             assert len(record) == len(fields)
 
             for value, field in zip(record, fields):
                 if field['type'] == 'string':
-                    assert type(value) in (str, unicode) or np.isnan(value)
+                    assert isinstance(value, str) or np.isnan(value)
                 elif field['type'] == 'float':
-                    assert type(value) is float or np.isnan(value)
+                    assert isinstance(value, float) or np.isnan(value)
                 elif field['type'] == 'integer':
-                    assert type(value) is int or np.isnan(value)
+                    assert isinstance(value, int) or np.isnan(value)
                 elif field['type'] == 'date':
-                    assert type(value) is datetime.date or np.isnan(value)
+                    assert isinstance(value, datetime.date) or np.isnan(value)
                 elif field['type'] == 'boolean':
-                    assert type(value) is bool or np.isnan(value)
+                    assert isinstance(value, bool) or np.isnan(value)
 
                 if field['name'].startswith('pkey') and not pd.isnull(value):
                     assert value.startswith(build_dov_url('data/'))
@@ -1035,11 +919,11 @@ class AbstractTestTypes(object):
             the WFS layer.
 
         """
-        feature = self.get_type().from_wfs_element(
-            wfs_feature, self.get_namespace())
+        feature = self.datatype_class.from_wfs_element(
+            wfs_feature, self.namespace)
 
         with pytest.raises(InvalidFieldError):
-            feature.get_df_array(return_fields=(self.get_inexistent_field(),))
+            feature.get_df_array(return_fields=(self.inexistent_field,))
 
     def test_from_wfs_str(self, wfs_getfeature):
         """Test the from_wfs method to construct objects from a WFS response,
@@ -1047,15 +931,15 @@ class AbstractTestTypes(object):
 
         Parameters
         ----------
-        wfs_getfeature : pytest.fixture returing str
+        wfs_getfeature : pytest.fixture returning str
             Fixture providing a WFS GetFeature response.
 
         """
-        features = self.get_type().from_wfs(wfs_getfeature,
-                                            self.get_namespace())
+        features = self.datatype_class.from_wfs(wfs_getfeature,
+                                                self.namespace)
 
         for feature in features:
-            assert type(feature) is self.get_type()
+            assert isinstance(feature, self.datatype_class)
 
     def test_from_wfs_bytes(self, wfs_getfeature):
         """Test the from_wfs method to construct objects from a WFS response,
@@ -1063,15 +947,15 @@ class AbstractTestTypes(object):
 
         Parameters
         ----------
-        wfs_getfeature : pytest.fixture returing str
+        wfs_getfeature : pytest.fixture returning str
             Fixture providing a WFS GetFeature response.
 
         """
-        features = self.get_type().from_wfs(wfs_getfeature.encode('utf-8'),
-                                            self.get_namespace())
+        features = self.datatype_class.from_wfs(wfs_getfeature.encode('utf-8'),
+                                                self.namespace)
 
         for feature in features:
-            assert type(feature) is self.get_type()
+            assert isinstance(feature, self.datatype_class)
 
     def test_from_wfs_tree(self, wfs_getfeature):
         """Test the from_wfs method to construct objects from a WFS response,
@@ -1079,15 +963,15 @@ class AbstractTestTypes(object):
 
         Parameters
         ----------
-        wfs_getfeature : pytest.fixture returing str
+        wfs_getfeature : pytest.fixture returning str
             Fixture providing a WFS GetFeature response.
 
         """
         tree = etree.fromstring(wfs_getfeature.encode('utf8'))
-        features = self.get_type().from_wfs(tree, self.get_namespace())
+        features = self.datatype_class.from_wfs(tree, self.namespace)
 
         for feature in features:
-            assert type(feature) is self.get_type()
+            assert isinstance(feature, self.datatype_class)
 
     def test_from_wfs_list(self, wfs_getfeature):
         """Test the from_wfs method to construct objects from a WFS response,
@@ -1095,7 +979,7 @@ class AbstractTestTypes(object):
 
         Parameters
         ----------
-        wfs_getfeature : pytest.fixture returing str
+        wfs_getfeature : pytest.fixture returning str
             Fixture providing a WFS GetFeature response.
 
         """
@@ -1106,10 +990,10 @@ class AbstractTestTypes(object):
         if feature_members is not None:
             fts = [ft for ft in feature_members]
 
-            features = self.get_type().from_wfs(fts, self.get_namespace())
+            features = self.datatype_class.from_wfs(fts, self.namespace)
 
             for feature in features:
-                assert type(feature) is self.get_type()
+                assert isinstance(feature, self.datatype_class)
 
     def test_missing_pkey(self):
         """Test initialising an object type with a pkey of 'None'.
@@ -1118,4 +1002,4 @@ class AbstractTestTypes(object):
 
         """
         with pytest.raises(ValueError):
-            instance = self.get_type()(None)
+            self.datatype_class(None)

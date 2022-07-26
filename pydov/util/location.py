@@ -6,13 +6,12 @@ Filter Encoding 1.1 and GML 3.1.1.
 
 """
 import os
-
-from numpy.compat import unicode
+from collections import OrderedDict
+from distutils.version import LooseVersion
+from io import BytesIO
 
 from owslib.etree import etree
-from owslib.fes import (
-    Or,
-)
+from owslib.fes import Or
 
 
 class AbstractLocation(object):
@@ -27,6 +26,7 @@ class AbstractLocation(object):
     initialisation.
 
     """
+
     def get_element(self):
         """Return the GML representation of the location.
 
@@ -35,7 +35,7 @@ class AbstractLocation(object):
         etree.Element
             XML element of the GML representation of this location.
         """
-        raise NotImplementedError
+        raise NotImplementedError('This should be implemented in a subclass.')
 
 
 class AbstractLocationFilter(object):
@@ -53,6 +53,7 @@ class AbstractLocationFilter(object):
     `set_geometry_column` method.
 
     """
+
     def set_geometry_column(self, geometry_column):
         """Set the name of the geometry column to query.
 
@@ -62,7 +63,7 @@ class AbstractLocationFilter(object):
             The name of the geometry column to query.
 
         """
-        raise NotImplementedError
+        raise NotImplementedError('This should be implemented in a subclass.')
 
     def toXML(self):
         """Return the XML representation of the location filter.
@@ -83,7 +84,7 @@ class AbstractLocationFilter(object):
             filters without the geometry column name are invalid.
 
         """
-        raise NotImplementedError
+        raise NotImplementedError('This should be implemented in a subclass.')
 
 
 class AbstractBinarySpatialFilter(AbstractLocationFilter):
@@ -94,6 +95,7 @@ class AbstractBinarySpatialFilter(AbstractLocationFilter):
     Contains.
 
     """
+
     def __init__(self, type, location):
         """Initialise a Binary spatial filter.
 
@@ -103,7 +105,7 @@ class AbstractBinarySpatialFilter(AbstractLocationFilter):
             Type of this filter: one of Equals, Disjoint, Touches, Within,
             Overlaps, Crosses, Intersects or Contains.
         location : AbstractLocation
-            An instance of a location to use as location for the Within
+            An instance of a location to use as location for the spatial
             filter.
 
         """
@@ -120,33 +122,11 @@ class AbstractBinarySpatialFilter(AbstractLocationFilter):
         self.element.append(location.get_element())
 
     def set_geometry_column(self, geometry_column):
-        """Set the name of the geometry column to query.
-
-        Parameters
-        ----------
-        geometry_column : str
-            The name of the geometry column to query.
-
-        """
         self.geom_column = geometry_column
         geom = self.element.find('.//{http://www.opengis.net/fes/2.0}ValueReference')
         geom.text = geometry_column
 
     def toXML(self):
-        """Return the XML representation of the Within filter.
-
-        Returns
-        -------
-        etree.Element
-            XML element of this Within filter.
-
-        Raises
-        ------
-        RuntimeError
-            When called before the geometry column name is set: location
-            filters without the geometry column name are invalid.
-
-        """
         if self.geom_column == '':
             raise RuntimeError('Geometry column has not been set. Use '
                                '"set_geometry_column" to set it.')
@@ -156,6 +136,7 @@ class AbstractBinarySpatialFilter(AbstractLocationFilter):
 class Box(AbstractLocation):
     """Class representing a box location, also known as bounding box,
     envelope, extent."""
+
     def __init__(self, minx, miny, maxx, maxy, epsg=31370):
         """Initialise a Box.
 
@@ -211,19 +192,12 @@ class Box(AbstractLocation):
         self.element.append(upper_corner)
 
     def get_element(self):
-        """Return the GML representation of the box.
-
-        Returns
-        -------
-        etree.Element
-            XML element of the GML representation of this box.
-
-        """
         return self.element
 
 
 class Point(AbstractLocation):
     """Class representing a point location."""
+
     def __init__(self, x, y, epsg=31370):
         """Initialise a Point.
 
@@ -256,19 +230,13 @@ class Point(AbstractLocation):
         self.element.append(coordinates)
 
     def get_element(self):
-        """Return the GML representation of the point.
-
-        Returns
-        -------
-        etree.Element
-            XML element of the GML representation of this point.
-        """
         return self.element
 
 
 class GmlObject(AbstractLocation):
     """Class representing a raw GML location, f.ex. gml:Surface or
     gml:MultiSurface."""
+
     def __init__(self, gml_element):
         """Initialise a GmlObject.
 
@@ -282,21 +250,14 @@ class GmlObject(AbstractLocation):
             string representation.
 
         """
-        if type(gml_element) in (str, unicode):
+        if isinstance(gml_element, str):
             self.element = etree.fromstring(gml_element.encode('utf8'))
-        elif type(gml_element) is bytes:
+        elif isinstance(gml_element, bytes):
             self.element = etree.fromstring(gml_element)
         else:
             self.element = gml_element
 
     def get_element(self):
-        """Return the GML representation of this location.
-
-        Returns
-        -------
-        etree.Element
-            XML element of the GML representation of this location.
-        """
         return self.element
 
 
@@ -306,6 +267,7 @@ class Equals(AbstractBinarySpatialFilter):
     A spatial Equals will return all points that are equal to another point.
 
     """
+
     def __init__(self, location):
         """Initialise an Equals filter.
 
@@ -328,6 +290,7 @@ class Disjoint(AbstractBinarySpatialFilter):
     A spatial Disjoint is the inverse of a spatial Intersects.
 
     """
+
     def __init__(self, location):
         """Initialise a Disjoint filter.
 
@@ -348,6 +311,7 @@ class Touches(AbstractBinarySpatialFilter):
     location: i.e. that are on the boundary but not inside.
 
     """
+
     def __init__(self, location):
         """Initialise a Touches filter.
 
@@ -368,6 +332,7 @@ class Within(AbstractBinarySpatialFilter):
     polygon or box location (i.e. are not on the boundary).
 
     """
+
     def __init__(self, location):
         """Initialise a Within filter.
 
@@ -390,6 +355,7 @@ class Intersects(AbstractBinarySpatialFilter):
     A spatial Intersects is the inverse of a spatial Disjoint.
 
     """
+
     def __init__(self, location):
         """Initialise an Intersects filter.
 
@@ -410,6 +376,7 @@ class WithinDistance(AbstractLocationFilter):
     distance of a certain location.
 
     """
+
     def __init__(self, location, distance, distance_unit='meter'):
         """Initialise a WithinDistance filter.
 
@@ -443,33 +410,11 @@ class WithinDistance(AbstractLocationFilter):
         self.element.append(distance)
 
     def set_geometry_column(self, geometry_column):
-        """Set the name of the geometry column to query.
-
-        Parameters
-        ----------
-        geometry_column : str
-            The name of the geometry column to query.
-
-        """
         self.geom_column = geometry_column
         geom = self.element.find('.//{http://www.opengis.net/fes/2.0}ValueReference')
         geom.text = geometry_column
 
     def toXML(self):
-        """Return the XML representation of the WithinDistance filter.
-
-        Returns
-        -------
-        etree.Element
-            XML element of this WithinDistance filter.
-
-        Raises
-        ------
-        RuntimeError
-            When called before the geometry column name is set: location
-            filters without the geometry column name are invalid.
-
-        """
         if self.geom_column == '':
             raise RuntimeError('Geometry column has not been set. Use '
                                '"set_geometry_column" to set it.')
@@ -509,7 +454,7 @@ class GmlFilter(AbstractLocationFilter):
 
         """
         self.gml = gml
-        self.subelements = set()
+        self.subelements = OrderedDict()
 
         if location_filter_kwargs is None:
             location_filter_kwargs = {}
@@ -545,11 +490,12 @@ class GmlFilter(AbstractLocationFilter):
             Sets of the parsed single and multi geometry Elements.
 
         """
-        single = set(tree.findall(xpath_single))
-        multi = set(tree.findall(xpath_multi))
+        single = OrderedDict.fromkeys(tree.findall(xpath_single))
+        multi = OrderedDict.fromkeys(tree.findall(xpath_multi))
 
         for m in multi:
-            single -= set(m.findall(xpath_single))
+            s_in_m = OrderedDict.fromkeys(m.findall(xpath_single))
+            single = OrderedDict.fromkeys(e for e in single if e not in s_in_m)
 
         return single, multi
 
@@ -564,9 +510,9 @@ class GmlFilter(AbstractLocationFilter):
         """
         gml_tree = None
         try:
-            if type(self.gml) in (str, unicode):
+            if isinstance(self.gml, str):
                 gml_tree = etree.fromstring(self.gml.encode('utf8'))
-            elif type(self.gml) is bytes:
+            elif isinstance(self.gml, bytes):
                 gml_tree = etree.fromstring(self.gml)
         except etree.ParseError as error:
             if os.path.isfile(self.gml):
@@ -624,14 +570,6 @@ class GmlFilter(AbstractLocationFilter):
             raise ValueError('Failed to extract geometries from GML file.')
 
     def set_geometry_column(self, geometry_column):
-        """Set the name of the geometry column to query.
-
-        Parameters
-        ----------
-        geometry_column : str
-            The name of the geometry column to query.
-
-        """
         if len(self.subelements) == 1:
             self.element.set_geometry_column(geometry_column)
         else:
@@ -639,18 +577,145 @@ class GmlFilter(AbstractLocationFilter):
                 sub_element.set_geometry_column(geometry_column)
 
     def toXML(self):
-        """Return the XML representation of the GML filter.
+        return self.element.toXML()
 
-        Returns
-        -------
-        etree.Element
-            XML element of this GML filter.
+
+class GeometryFilter(GmlFilter):
+    """Class for construction a spatial filter expression from any Geometry
+    Fiona can convert to a GML 3.1.1 document.
+    """
+
+    def __init__(self, geometry, location_filter,
+                 location_filter_kwargs=None, combinator=Or):
+        """Initialise a spatial filter expression from a given Geometry.
+
+        Parameters
+        ----------
+        geometry : str
+            A path to a vector file on disk.
+        location_filter : class<AbstractLocationFilter>
+            Location filter to use for the geometries in the GML document.
+        location_filter_kwargs : dict, optional
+            Keyword-based arguments to pass to the `location_filter` on
+            initialisation (with the exception of the `location` parameter,
+            which is automatically parsed from the geomery). Can be skipped in
+            cases where the location_filter takes no extra arguments besides
+            location.
+        combinator : class<BinaryLogicOpType>, optional, defaults to Or
+            One of (Or, And) used to combine filters for different geometries
+            in the geometry document.
 
         Raises
         ------
-        RuntimeError
-            When called before the geometry column name is set: location
-            filters without the geometry column name are invalid.
-
+        ValueError
+            When no geometries could be parsed from the given geometry.
         """
-        return self.element.toXML()
+        gml = self._parse_geometry(geometry)
+
+        super().__init__(gml, location_filter, location_filter_kwargs,
+                         combinator)
+
+    @staticmethod
+    def _parse_geometry(geometry):
+        """Checks the geometry and parse the file if possible.
+
+        Raises
+        ------
+        ValueError
+            When the file could not be parsed.
+        """
+        try:
+            import fiona
+
+            # Check if the GML driver and write mode are supported and check
+            # if version of Fiona supports GML 3.1.1 output (Fiona >= 1.8.18)
+            drivers = fiona.supported_drivers
+            if 'w' not in drivers.get('GML', '') or \
+                    LooseVersion(fiona.__version__) < LooseVersion('1.8.18'):
+                raise UserWarning('Please use module Fiona version 1.8.18 '
+                                  'or higher')
+        except ImportError:
+            raise ImportError('No module named fiona. GeometryFilter '
+                              'requires fiona to be installed.')
+        else:
+            # Open the geometry as a collection containing multiple records
+            with fiona.open(geometry, 'r') as c:
+                gml_blob = BytesIO()
+                # Assume the geometry is loaded from file
+                layer = os.path.basename(os.path.splitext(geometry)[0])
+                with fiona.open(gml_blob, 'w', layer=layer, driver='GML',
+                                schema=c.schema, crs=c.crs,
+                                FORMAT='GML3') as gml:
+                    for r in c:
+                        gml.write(r)
+                gml_blob.seek(0)
+                # Set the gml attribute used by the parent class
+                gml = gml_blob.read()
+                return gml
+
+
+class GeopandasFilter(GmlFilter):
+    """Class for construction a spatial filter expression from a
+    GeoPandas object.
+    """
+
+    def __init__(self, geodataframe, location_filter,
+                 location_filter_kwargs=None, combinator=Or):
+        """Initialise a spatial filter expression from a GeoPandas
+        GeoDataFrame.
+
+        Parameters
+        ----------
+        geodataframe : GeoPandas.GeoDataFrame
+            A GeoDataFrame with a valid crs.
+        location_filter : class<AbstractLocationFilter>
+            Location filter to use for the geometries in the GML document.
+        location_filter_kwargs : dict, optional
+            Keyword-based arguments to pass to the `location_filter` on
+            initialisation (with the exception of the `location` parameter,
+            which is automatically parsed from the geomery). Can be skipped in
+            cases where the location_filter takes no extra arguments besides
+            location.
+        combinator : class<BinaryLogicOpType>, optional, defaults to Or
+            One of (Or, And) used to combine filters for different geometries
+            in the geometry document.
+
+        Raises
+        ------
+        ValueError
+            When no geometries could be parsed from the given geometry.
+        """
+        gml = self._parse_geometry(geodataframe)
+
+        super().__init__(gml, location_filter, location_filter_kwargs,
+                         combinator)
+
+    @staticmethod
+    def _parse_geometry(gdf):
+        """Checks the geometry and parse the file if possible.
+
+        Raises
+        ------
+        ValueError
+            When the file could not be parsed.
+        """
+        try:
+            import geopandas
+        except ImportError:
+            raise ImportError('No module named GeoPandas. GeopandasFilter '
+                              'requires geopandas to be installed.')
+        else:
+            if not isinstance(gdf, geopandas.GeoDataFrame):
+                raise TypeError("pydov only supports geopandas.GeoDataFrame "
+                                "to define a spatial query.")
+
+            if not gdf.crs:
+                raise AttributeError("geopandas.GeoDataFrame is missing a "
+                                     "CRS definition")
+
+            with BytesIO() as gml_blob:
+                gdf.to_file(gml_blob, driver="GML", FORMAT="GML3",
+                            layer="geodataframe")
+                gml_blob.seek(0)
+                gml = gml_blob.read()
+            return gml

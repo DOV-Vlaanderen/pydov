@@ -1,14 +1,9 @@
 # -*- coding: utf-8 -*-
 """Module containing the DOV data type for boreholes (Boring), including
 subtypes."""
-from pydov.types.fields import (
-    XmlField,
-    WfsField,
-)
-from .abstract import (
-    AbstractDovType,
-    AbstractDovSubType,
-)
+from pydov.types.fields import WfsField, XmlField
+
+from .abstract import AbstractDovSubType, AbstractDovType
 
 
 class BoorMethode(AbstractDovSubType):
@@ -69,6 +64,8 @@ class Boring(AbstractDovType):
                  datatype='boolean')
     ]
 
+    pkey_fieldname = 'fiche'
+
     def __init__(self, pkey):
         """Initialisation.
 
@@ -79,34 +76,4 @@ class Boring(AbstractDovType):
             `https://www.dov.vlaanderen.be/data/boring/<id>`.
 
         """
-        super(Boring, self).__init__('boring', pkey)
-
-    @classmethod
-    def from_wfs_element(cls, feature, namespace):
-        """Build `Boring` instance from a WFS feature element.
-
-        Parameters
-        ----------
-        feature : etree.Element
-            XML element representing a single record of the WFS layer.
-        namespace : str
-            Namespace associated with this WFS featuretype.
-
-        Returns
-        -------
-        boring : Boring
-            An instance of this class populated with the data from the WFS
-            element.
-
-        """
-        b = cls(feature.findtext('./{{{}}}fiche'.format(namespace)))
-
-        for field in cls.get_fields(source=('wfs',)).values():
-            b.data[field['name']] = cls._parse(
-                func=feature.findtext,
-                xpath=field['sourcefield'],
-                namespace=namespace,
-                returntype=field.get('type', None)
-            )
-
-        return b
+        super().__init__('boring', pkey)

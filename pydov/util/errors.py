@@ -1,5 +1,14 @@
+# -*- coding: utf-8 -*-
+"""Module grouping Exception classes."""
+
+
 class DOVError(Exception):
     """General error within PyDOV."""
+    pass
+
+
+class RemoteFetchError(DOVError):
+    """General error while fetching remote data from DOV webservices."""
     pass
 
 
@@ -52,6 +61,22 @@ class XmlParseError(DOVError):
 class DOVWarning(Warning):
     """General warning in PyDOV."""
     pass
+
+
+class XsdFetchWarning(DOVWarning):
+    """Emitted when an XSD document fails to be fetched from the DOV
+    webservice, resulting in the fields metadata to be incomplete."""
+
+
+class XmlFetchWarning(DOVWarning):
+    """Emitted when an XML document fails to be fetched from the DOV
+    webservice, resulting in an incomplete dataframe."""
+
+
+class XmlStaleWarning(DOVWarning):
+    """Emitted when an XML document fails to be fetched from the DOV
+    webservice and an older stale version is used from the cache, resulting
+    in an out-of-date dataframe."""
 
 
 class XmlParseWarning(DOVWarning):

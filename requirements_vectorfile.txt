@@ -1,0 +1,2 @@
+fiona==1.9a2
+geopandas

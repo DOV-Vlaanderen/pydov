@@ -31,10 +31,11 @@ class TestPoint(object):
         xml = f.toXML()
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<ogc:DWithin><fes:ValueReference>geom</fes:ValueReference><gml'
-            ':Point srsName="urn:ogc:def:crs:EPSG::31370"><gml:pos>109124'
+            '<fes:DWithin><fes:ValueReference>geom</fes:ValueReference><gml'
+            ':Point srsName="urn:ogc:def:crs:EPSG::31370" gml:id="point_single'
+            '_31370.geom.0"><gml:pos>109124'
             '.660670233 194937.206683695</gml:pos></gml:Point><gml:Distance '
-            'units="meter">100.000000</gml:Distance></ogc:DWithin>')
+            'units="meter">100.000000</gml:Distance></fes:DWithin>')
 
     def test_point_multiple_31370(self):
         """Test the WithinDistance filter with a GML containing multiple
@@ -51,19 +52,19 @@ class TestPoint(object):
         f.set_geometry_column('geom')
         xml = f.toXML()
 
-        assert xml.tag == '{http://www.opengis.net/ogc}Or'
+        assert xml.tag == '{http://www.opengis.net/fes/2.0}Or'
         assert len(list(xml)) == 2
 
         points = ['109124.660670233 194937.206683695',
                   '109234.969526552 195772.402310114']
 
         for f in xml:
-            assert f.tag == '{http://www.opengis.net/ogc}DWithin'
+            assert f.tag == '{http://www.opengis.net/fes/2.0}DWithin'
 
-            point = f.find('./{http://www.opengis.net/gml}Point')
+            point = f.find('./{http://www.opengis.net/gml/3.2}Point')
             assert point.get('srsName') == 'urn:ogc:def:crs:EPSG::31370'
 
-            posList = point.find('./{http://www.opengis.net/gml}pos').text
+            posList = point.find('./{http://www.opengis.net/gml/3.2}pos').text
             assert posList in points
 
             points.remove(posList)
@@ -87,17 +88,19 @@ class TestPoint(object):
             xml = f.toXML()
 
             assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-                '<ogc:Or><ogc:DWithin><fes:ValueReference>geom</ogc'
-                ':PropertyName><gml:Point '
-                'srsName="urn:ogc:def:crs:EPSG::31370"><gml:pos>109124'
+                '<fes:Or><fes:DWithin><fes:ValueReference>geom</fes'
+                ':ValueReference><gml:Point '
+                'srsName="urn:ogc:def:crs:EPSG::31370" gml:id="point_multiple'
+                '_31370.geom.0"><gml:pos>109124'
                 '.660670233 194937.206683695</gml:pos></gml:Point><gml'
-                ':Distance units="meter">100.000000</gml:Distance></ogc'
-                ':DWithin><ogc:DWithin><fes:ValueReference>geom</ogc'
-                ':PropertyName><gml:Point '
-                'srsName="urn:ogc:def:crs:EPSG::31370"><gml:pos>109234'
+                ':Distance units="meter">100.000000</gml:Distance></fes'
+                ':DWithin><fes:DWithin><fes:ValueReference>geom</fes'
+                ':ValueReference><gml:Point '
+                'srsName="urn:ogc:def:crs:EPSG::31370" gml:id="point_multiple'
+                '_31370.geom.1"><gml:pos>109234'
                 '.969526552 195772.402310114</gml:pos></gml:Point><gml'
                 ':Distance units="meter">100.000000</gml:Distance>'
-                '</ogc:DWithin></ogc:Or>')
+                '</fes:DWithin></fes:Or>')
 
     def test_point_single_4326(self):
         """Test the WithinDistance filter with a GML containing a single
@@ -115,11 +118,11 @@ class TestPoint(object):
         xml = f.toXML()
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<ogc:DWithin><fes:ValueReference>geom</fes:ValueReference><gml'
-            ':Point srsName="urn:ogc:def:crs:EPSG::4326"><gml:pos>51'
-            '.0631382448644 '
+            '<fes:DWithin><fes:ValueReference>geom</fes:ValueReference><gml'
+            ':Point srsName="urn:ogc:def:crs:EPSG::4326" gml:id="point_single'
+            '_4326.geom.0"><gml:pos>51.0631382448644 '
             '3.7856620304411</gml:pos></gml:Point><gml:Distance '
-            'units="meter">100.000000</gml:Distance></ogc:DWithin>')
+            'units="meter">100.000000</gml:Distance></fes:DWithin>')
 
 
 class TestMultipoint(object):
@@ -141,14 +144,17 @@ class TestMultipoint(object):
         xml = f.toXML()
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<ogc:DWithin><fes:ValueReference>geom</fes:ValueReference><gml'
-            ':MultiPoint srsName="urn:ogc:def:crs:EPSG::31370"><gml'
-            ':pointMember><gml:Point><gml:pos>108770.096489206 '
+            '<fes:DWithin><fes:ValueReference>geom</fes:ValueReference><gml'
+            ':MultiPoint srsName="urn:ogc:def:crs:EPSG::31370" gml:id="multipo'
+            'int_single_31370.geom.0"><gml'
+            ':pointMember><gml:Point gml:id="multipo'
+            'int_single_31370.geom.0.0"><gml:pos>108770.096489206 '
             '194992.361111855</gml:pos></gml:Point></gml:pointMember><gml'
-            ':pointMember><gml:Point><gml:pos>109045.868630005 '
+            ':pointMember><gml:Point gml:id="multipo'
+            'int_single_31370.geom.0.1"><gml:pos>109045.868630005 '
             '194929.327479672</gml:pos></gml:Point></gml:pointMember></gml'
             ':MultiPoint><gml:Distance '
-            'units="meter">100.000000</gml:Distance></ogc:DWithin>')
+            'units="meter">100.000000</gml:Distance></fes:DWithin>')
 
     def test_multipoint_multiple_31370(self):
         """Test the WithinDistance filter with a GML containing multiple
@@ -165,7 +171,7 @@ class TestMultipoint(object):
         f.set_geometry_column('geom')
         xml = f.toXML()
 
-        assert xml.tag == '{http://www.opengis.net/ogc}Or'
+        assert xml.tag == '{http://www.opengis.net/fes/2.0}Or'
         assert len(list(xml)) == 2
 
         multipoints = [['108770.096489206 194992.361111855',
@@ -174,13 +180,13 @@ class TestMultipoint(object):
                         '108738.579673115 195614.818229658']]
 
         for f in xml:
-            assert f.tag == '{http://www.opengis.net/ogc}DWithin'
+            assert f.tag == '{http://www.opengis.net/fes/2.0}DWithin'
 
-            multipoint = f.find('./{http://www.opengis.net/gml}MultiPoint')
+            multipoint = f.find('./{http://www.opengis.net/gml/3.2}MultiPoint')
             assert multipoint.get('srsName') == 'urn:ogc:def:crs:EPSG::31370'
 
             posList = [p.text for p in multipoint.findall(
-                './/{http://www.opengis.net/gml}pos')]
+                './/{http://www.opengis.net/gml/3.2}pos')]
             multipoints.remove(posList)
 
         assert len(multipoints) == 0
@@ -202,25 +208,31 @@ class TestMultipoint(object):
             xml = f.toXML()
 
             assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-                '<ogc:Or><ogc:DWithin><fes:ValueReference>geom</ogc'
-                ':PropertyName><gml:MultiPoint '
-                'srsName="urn:ogc:def:crs:EPSG::31370"><gml:pointMember><gml'
-                ':Point><gml:pos>108770.096489206 '
+                '<fes:Or><fes:DWithin><fes:ValueReference>geom</fes'
+                ':ValueReference><gml:MultiPoint '
+                'srsName="urn:ogc:def:crs:EPSG::31370" gml:id="multipo'
+                'int_multiple_31370.geom.0"><gml:pointMember><gml'
+                ':Point gml:id="multipo'
+                'int_multiple_31370.geom.0.0"><gml:pos>108770.096489206 '
                 '194992.361111855</gml:pos></gml:Point></gml:pointMember'
-                '><gml:pointMember><gml:Point><gml:pos>109045.868630005 '
+                '><gml:pointMember><gml:Point gml:id="multipo'
+                'int_multiple_31370.geom.0.1"><gml:pos>109045.868630005 '
                 '194929.327479672</gml:pos></gml:Point></gml:pointMember'
                 '></gml:MultiPoint><gml:Distance '
-                'units="meter">100.000000</gml:Distance></ogc:DWithin><ogc'
+                'units="meter">100.000000</gml:Distance></fes:DWithin><fes'
                 ':DWithin><fes:ValueReference>geom</fes:ValueReference><gml'
                 ':MultiPoint '
-                'srsName="urn:ogc:def:crs:EPSG::31370"><gml:pointMember><gml'
-                ':Point><gml:pos>108825.250917366 '
+                'srsName="urn:ogc:def:crs:EPSG::31370" gml:id="multipo'
+                'int_multiple_31370.geom.1"><gml:pointMember><gml'
+                ':Point gml:id="multipo'
+                'int_multiple_31370.geom.1.0"><gml:pos>108825.250917366 '
                 '195433.596537133</gml:pos></gml:Point></gml:pointMember'
-                '><gml:pointMember><gml:Point><gml:pos>108738.579673115 '
+                '><gml:pointMember><gml:Point gml:id="multipo'
+                'int_multiple_31370.geom.1.1"><gml:pos>108738.579673115 '
                 '195614.818229658</gml:pos></gml:Point></gml:pointMember'
                 '></gml:MultiPoint><gml:Distance '
-                'units="meter">100.000000</gml:Distance></ogc:DWithin>'
-                '</ogc:Or>')
+                'units="meter">100.000000</gml:Distance></fes:DWithin>'
+                '</fes:Or>')
 
 
 class TestLine(object):
@@ -242,12 +254,13 @@ class TestLine(object):
         xml = f.toXML()
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<ogc:DWithin><fes:ValueReference>geom</fes:ValueReference><gml'
-            ':LineString srsName="urn:ogc:def:crs:EPSG::31370"><gml:posList'
+            '<fes:DWithin><fes:ValueReference>geom</fes:ValueReference><gml'
+            ':LineString srsName="urn:ogc:def:crs:EPSG::31370" gml:id="line_'
+                'single_31370.geom.0"><gml:posList'
             '>108344.619471974 195008.119519901 108801.613305297 '
             '194842.656235421 109077.385446096 '
             '195094.790764152</gml:posList></gml:LineString><gml:Distance '
-            'units="meter">100.000000</gml:Distance></ogc:DWithin>')
+            'units="meter">100.000000</gml:Distance></fes:DWithin>')
 
     def test_line_multiple_31370(self):
         """Test the WithinDistance filter with a GML containing multiple
@@ -264,7 +277,7 @@ class TestLine(object):
         f.set_geometry_column('geom')
         xml = f.toXML()
 
-        assert xml.tag == '{http://www.opengis.net/ogc}Or'
+        assert xml.tag == '{http://www.opengis.net/fes/2.0}Or'
         assert len(list(xml)) == 2
 
         lines = [
@@ -274,12 +287,12 @@ class TestLine(object):
             '195528.146985407 108911.922161617 195528.146985407']
 
         for f in xml:
-            assert f.tag == '{http://www.opengis.net/ogc}DWithin'
+            assert f.tag == '{http://www.opengis.net/fes/2.0}DWithin'
 
-            point = f.find('./{http://www.opengis.net/gml}LineString')
+            point = f.find('./{http://www.opengis.net/gml/3.2}LineString')
             assert point.get('srsName') == 'urn:ogc:def:crs:EPSG::31370'
 
-            posList = point.find('./{http://www.opengis.net/gml}posList').text
+            posList = point.find('./{http://www.opengis.net/gml/3.2}posList').text
             assert posList in lines
 
             lines.remove(posList)
@@ -303,21 +316,23 @@ class TestLine(object):
             xml = f.toXML()
 
             assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-                '<ogc:Or><ogc:DWithin><fes:ValueReference>geom</ogc'
-                ':PropertyName><gml :LineString '
-                'srsName="urn:ogc:def:crs:EPSG::31370"><gml:posList>108344'
+                '<fes:Or><fes:DWithin><fes:ValueReference>geom</fes'
+                ':ValueReference><gml:LineString '
+                'srsName="urn:ogc:def:crs:EPSG::31370" gml:id="line_'
+                'multiple_31370.geom.0"><gml:posList>108344'
                 '.619471974 195008.119519901 108801.613305297 '
                 '194842.656235421 109077.385446096 '
                 '195094.790764152</gml:posList></gml:LineString><gml'
-                ':Distance units="meter">100.000000</gml:Distance></ogc'
-                ':DWithin><ogc:DWithin><fes:ValueReference>geom</ogc'
-                ':PropertyName><gml :LineString '
-                'srsName="urn:ogc:def:crs:EPSG::31370"><gml:posList>108194'
+                ':Distance units="meter">100.000000</gml:Distance></fes'
+                ':DWithin><fes:DWithin><fes:ValueReference>geom</fes'
+                ':ValueReference><gml:LineString '
+                'srsName="urn:ogc:def:crs:EPSG::31370" gml:id="line_'
+                'multiple_31370.geom.1"><gml:posList>108194'
                 '.91459554 196032.416042867 108714.942061046 '
                 '195528.146985407 108911.922161617 '
                 '195528.146985407</gml:posList></gml:LineString><gml'
                 ':Distance units="meter">100.000000</gml:Distance>'
-                '</ogc:DWithin></ogc:Or>')
+                '</fes:DWithin></fes:Or>')
 
 
 class TestMultiline(object):
@@ -339,17 +354,20 @@ class TestMultiline(object):
         xml = f.toXML()
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<ogc:DWithin><fes:ValueReference>geom</fes:ValueReference><gml'
-            ':MultiCurve srsName="urn:ogc:def:crs:EPSG::31370"><gml'
-            ':curveMember><gml:LineString><gml:posList>108210.673003586 '
+            '<fes:DWithin><fes:ValueReference>geom</fes:ValueReference><gml'
+            ':MultiCurve srsName="urn:ogc:def:crs:EPSG::31370" gml:id="multi'
+            'line_single_31370.geom.0"><gml'
+            ':curveMember><gml:LineString gml:id="multi'
+            'line_single_31370.geom.0.0"><gml:posList>108210.673003586 '
             '194850.535439444 108454.928328293 195031.757131969 '
             '108746.458877137 194834.777031398</gml:posList></gml:LineString'
-            '></gml:curveMember><gml:curveMember><gml:LineString><gml'
+            '></gml:curveMember><gml:curveMember><gml:LineString gml:id="multi'
+            'line_single_31370.geom.0.1"><gml'
             ':posList>109164.056690347 195055.394744037 109211.331914484 '
             '194661.434542896 109416.191219077 '
             '194440.816830258</gml:posList></gml:LineString></gml'
             ':curveMember></gml:MultiCurve><gml:Distance '
-            'units="meter">100.000000</gml:Distance></ogc:DWithin>')
+            'units="meter">100.000000</gml:Distance></fes:DWithin>')
 
     def test_multiline_multiple_31370(self):
         """Test the WithinDistance filter with a GML containing multiple
@@ -366,7 +384,7 @@ class TestMultiline(object):
         f.set_geometry_column('geom')
         xml = f.toXML()
 
-        assert xml.tag == '{http://www.opengis.net/ogc}Or'
+        assert xml.tag == '{http://www.opengis.net/fes/2.0}Or'
         assert len(list(xml)) == 2
 
         multilines = [
@@ -380,13 +398,13 @@ class TestMultiline(object):
              '196552.443508373 109282.244750689 196607.597936533']]
 
         for f in xml:
-            assert f.tag == '{http://www.opengis.net/ogc}DWithin'
+            assert f.tag == '{http://www.opengis.net/fes/2.0}DWithin'
 
-            multicurve = f.find('./{http://www.opengis.net/gml}MultiCurve')
+            multicurve = f.find('./{http://www.opengis.net/gml/3.2}MultiCurve')
             assert multicurve.get('srsName') == 'urn:ogc:def:crs:EPSG::31370'
 
             posList = [p.text for p in multicurve.findall(
-                './/{http://www.opengis.net/gml}posList')]
+                './/{http://www.opengis.net/gml/3.2}posList')]
             multilines.remove(posList)
 
         assert len(multilines) == 0
@@ -408,31 +426,39 @@ class TestMultiline(object):
             xml = f.toXML()
 
             assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-                '<ogc:Or><ogc:DWithin><fes:ValueReference>geom</ogc'
-                ':PropertyName><gml:MultiCurve '
-                'srsName="urn:ogc:def:crs:EPSG::31370"><gml:curveMember><gml'
-                ':LineString><gml:posList>108210.673003586 194850.535439444 '
+                '<fes:Or><fes:DWithin><fes:ValueReference>geom</fes'
+                ':ValueReference><gml:MultiCurve '
+                'srsName="urn:ogc:def:crs:EPSG::31370" gml:id="multi'
+                'line_multiple_31370.geom.0"><gml:curveMember><gml'
+                ':LineString gml:id="multi'
+                'line_multiple_31370.geom.0.0"><gml:posList>108210.673003586'
+                ' 194850.535439444 '
                 '108454.928328293 195031.757131969 108746.458877137 '
                 '194834.777031398</gml:posList></gml:LineString></gml'
-                ':curveMember><gml:curveMember><gml:LineString><gml:posList'
+                ':curveMember><gml:curveMember><gml:LineString gml:id="multi'
+                'line_multiple_31370.geom.0.1"><gml:posList'
                 '>109164.056690347 195055.394744037 109211.331914484 '
                 '194661.434542896 109416.191219077 '
                 '194440.816830258</gml:posList></gml:LineString></gml'
                 ':curveMember></gml:MultiCurve><gml:Distance '
-                'units="meter">100.000000</gml:Distance></ogc:DWithin><ogc'
+                'units="meter">100.000000</gml:Distance></fes:DWithin><fes'
                 ':DWithin><fes:ValueReference>geom</fes:ValueReference><gml'
                 ':MultiCurve '
-                'srsName="urn:ogc:def:crs:EPSG::31370"><gml:curveMember><gml'
-                ':LineString><gml:posList>108226.431411631 196095.44967505 '
+                'srsName="urn:ogc:def:crs:EPSG::31370" gml:id="multi'
+                'line_multiple_31370.geom.1"><gml:curveMember><gml'
+                ':LineString gml:id="multi'
+                'line_multiple_31370.geom.1.0"><gml:posList>108226.431411631'
+                ' 196095.44967505 '
                 '108384.015492088 196276.671367574 108580.995592658 '
                 '196048.174450913</gml:posList></gml:LineString></gml'
-                ':curveMember><gml:curveMember><gml:LineString><gml:posList'
+                ':curveMember><gml:curveMember><gml:LineString gml:id="multi'
+                'line_multiple_31370.geom.1.1"><gml:posList'
                 '>108911.922161617 196379.101019871 109030.110221959 '
                 '196552.443508373 109282.244750689 '
                 '196607.597936533</gml:posList></gml:LineString></gml'
                 ':curveMember></gml:MultiCurve><gml:Distance '
-                'units="meter">100.000000</gml:Distance></ogc:DWithin>'
-                '</ogc:Or>')
+                'units="meter">100.000000</gml:Distance></fes:DWithin>'
+                '</fes:Or>')
 
 
 class TestPolygon(object):
@@ -454,13 +480,14 @@ class TestPolygon(object):
         xml = f.toXML()
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<ogc:Within><fes:ValueReference>geom</fes:ValueReference><gml'
-            ':Polygon srsName="urn:ogc:def:crs:EPSG::31370"><gml:exterior'
+            '<fes:Within><fes:ValueReference>geom</fes:ValueReference><gml'
+            ':Polygon srsName="urn:ogc:def:crs:EPSG::31370" gml:id="polygon_'
+            'single_31370.geom.0"><gml:exterior'
             '><gml:LinearRing><gml:posList>108636.150020818 194960.844295764 '
             '108911.922161617 194291.111953824 109195.573506438 '
             '195118.42837622 108636.150020818 '
             '194960.844295764</gml:posList></gml:LinearRing></gml:exterior'
-            '></gml:Polygon></ogc:Within>')
+            '></gml:Polygon></fes:Within>')
 
     def test_polyon_multiple_31370(self):
         """Test the Within filter with a GML containing multiple
@@ -477,7 +504,7 @@ class TestPolygon(object):
         f.set_geometry_column('geom')
         xml = f.toXML()
 
-        assert xml.tag == '{http://www.opengis.net/ogc}Or'
+        assert xml.tag == '{http://www.opengis.net/fes/2.0}Or'
         assert len(list(xml)) == 2
 
         polygons = [
@@ -489,13 +516,13 @@ class TestPolygon(object):
             '107485.786233486 196741.544404921']
 
         for f in xml:
-            assert f.tag == '{http://www.opengis.net/ogc}Within'
+            assert f.tag == '{http://www.opengis.net/fes/2.0}Within'
 
-            point = f.find('./{http://www.opengis.net/gml}Polygon')
+            point = f.find('./{http://www.opengis.net/gml/3.2}Polygon')
             assert point.get('srsName') == 'urn:ogc:def:crs:EPSG::31370'
 
             posList = point.find(
-                './/{http://www.opengis.net/gml}posList').text
+                './/{http://www.opengis.net/gml/3.2}posList').text
             assert posList in polygons
 
             polygons.remove(posList)
@@ -519,21 +546,23 @@ class TestPolygon(object):
             xml = f.toXML()
 
             assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-                '<ogc:Or><ogc:Within><fes:ValueReference>geom</ogc'
-                ':PropertyName><gml:Polygon '
-                'srsName="urn:ogc:def:crs:EPSG::31370"><gml:exterior'
+                '<fes:Or><fes:Within><fes:ValueReference>geom</fes'
+                ':ValueReference><gml:Polygon '
+                'srsName="urn:ogc:def:crs:EPSG::31370" gml:id="polygon_'
+                'multiple_31370.geom.0"><gml:exterior'
                 '><gml:LinearRing><gml:posList>108636.150020818 '
                 '194960.844295764 108911.922161617 194291.111953824 '
                 '109195.573506438 195118.42837622 108636.150020818 '
                 '194960.844295764</gml:posList></gml:LinearRing></gml'
-                ':exterior></gml:Polygon></ogc:Within><ogc:Within><ogc'
-                ':PropertyName>geom</fes:ValueReference><gml:Polygon '
-                'srsName="urn:ogc:def:crs:EPSG::31370"><gml:exterior'
+                ':exterior></gml:Polygon></fes:Within><fes:Within><fes'
+                ':ValueReference>geom</fes:ValueReference><gml:Polygon '
+                'srsName="urn:ogc:def:crs:EPSG::31370" gml:id="polygon_'
+                'multiple_31370.geom.1"><gml:exterior'
                 '><gml:LinearRing><gml:posList>107485.786233486 '
                 '196741.544404921 107840.350414513 196339.704999757 '
                 '108297.344247837 196843.974057217 107485.786233486 '
                 '196741.544404921</gml:posList></gml:LinearRing></gml'
-                ':exterior></gml:Polygon></ogc:Within></ogc:Or>')
+                ':exterior></gml:Polygon></fes:Within></fes:Or>')
 
     def test_polyon_multiple_disjoint_31370(self):
         """Test the Disjoint filter with the And combinator with a GML
@@ -550,7 +579,7 @@ class TestPolygon(object):
         f.set_geometry_column('geom')
         xml = f.toXML()
 
-        assert xml.tag == '{http://www.opengis.net/ogc}And'
+        assert xml.tag == '{http://www.opengis.net/fes/2.0}And'
         assert len(list(xml)) == 2
 
         polygons = [
@@ -562,13 +591,13 @@ class TestPolygon(object):
             '107485.786233486 196741.544404921']
 
         for f in xml:
-            assert f.tag == '{http://www.opengis.net/ogc}Disjoint'
+            assert f.tag == '{http://www.opengis.net/fes/2.0}Disjoint'
 
-            point = f.find('./{http://www.opengis.net/gml}Polygon')
+            point = f.find('./{http://www.opengis.net/gml/3.2}Polygon')
             assert point.get('srsName') == 'urn:ogc:def:crs:EPSG::31370'
 
             posList = point.find(
-                './/{http://www.opengis.net/gml}posList').text
+                './/{http://www.opengis.net/gml/3.2}posList').text
             assert posList in polygons
 
             polygons.remove(posList)
@@ -595,19 +624,22 @@ class TestMultipolygon(object):
         xml = f.toXML()
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<ogc:Within><fes:ValueReference>geom</fes:ValueReference><gml'
-            ':MultiSurface srsName="urn:ogc:def:crs:EPSG::31370"><gml'
-            ':surfaceMember><gml:Polygon><gml:exterior><gml:LinearRing><gml'
+            '<fes:Within><fes:ValueReference>geom</fes:ValueReference><gml'
+            ':MultiSurface srsName="urn:ogc:def:crs:EPSG::31370" gml:id="multi'
+            'polygon_single_31370.geom.0"><gml'
+            ':surfaceMember><gml:Polygon gml:id="multi'
+            'polygon_single_31370.geom.0.0"><gml:exterior><gml:LinearRing><gml'
             ':posList>108588.874796681 195015.998723923 108911.922161617 '
             '194251.71593371 109195.573506438 195134.186784266 '
             '108588.874796681 195015.998723923</gml:posList></gml:LinearRing'
             '></gml:exterior></gml:Polygon></gml:surfaceMember><gml'
-            ':surfaceMember><gml:Polygon><gml:exterior><gml:LinearRing><gml'
+            ':surfaceMember><gml:Polygon gml:id="multi'
+            'polygon_single_31370.geom.0.1"><gml:exterior><gml:LinearRing><gml'
             ':posList>109140.419078278 195748.764698045 109400.432811031 '
             '195307.529272768 109597.412911602 195772.402310114 '
             '109140.419078278 195748.764698045</gml:posList></gml:LinearRing'
             '></gml:exterior></gml:Polygon></gml:surfaceMember></gml'
-            ':MultiSurface></ogc:Within>')
+            ':MultiSurface></fes:Within>')
 
     def test_multipolygon_multiple_31370(self):
         """Test the Within filter with a GML containing multiple
@@ -624,7 +656,7 @@ class TestMultipolygon(object):
         f.set_geometry_column('geom')
         xml = f.toXML()
 
-        assert xml.tag == '{http://www.opengis.net/ogc}Or'
+        assert xml.tag == '{http://www.opengis.net/fes/2.0}Or'
         assert len(list(xml)) == 2
 
         multipolygons = [
@@ -642,13 +674,14 @@ class TestMultipolygon(object):
              '109140.419078278 195748.764698045']]
 
         for f in xml:
-            assert f.tag == '{http://www.opengis.net/ogc}Within'
+            assert f.tag == '{http://www.opengis.net/fes/2.0}Within'
 
-            multicurve = f.find('./{http://www.opengis.net/gml}MultiSurface')
+            multicurve = f.find(
+                './{http://www.opengis.net/gml/3.2}MultiSurface')
             assert multicurve.get('srsName') == 'urn:ogc:def:crs:EPSG::31370'
 
             posList = [p.text for p in multicurve.findall(
-                './/{http://www.opengis.net/gml}posList')]
+                './/{http://www.opengis.net/gml/3.2}posList')]
             multipolygons.remove(posList)
 
         assert len(multipolygons) == 0
@@ -670,43 +703,51 @@ class TestMultipolygon(object):
             xml = f.toXML()
 
             assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-                '<ogc:Or><ogc:Within><fes:ValueReference>geom</ogc'
-                ':PropertyName><gml:MultiSurface '
-                'srsName="urn:ogc:def:crs:EPSG::31370"><gml:surfaceMember'
-                '><gml:Polygon><gml:exterior><gml:LinearRing><gml:posList'
+                '<fes:Or><fes:Within><fes:ValueReference>geom</fes'
+                ':ValueReference><gml:MultiSurface '
+                'srsName="urn:ogc:def:crs:EPSG::31370" gml:id="multi'
+                'polygon_multiple_31370.geom.0"><gml:surfaceMember'
+                '><gml:Polygon gml:id="multi'
+                'polygon_multiple_31370.geom.0.0"><gml:exterior>'
+                '<gml:LinearRing><gml:posList'
                 '>107564.578273715 196646.993956647 107785.195986354 '
                 '196386.980223894 107966.417678878 197143.383810084 '
                 '107564.578273715 '
                 '196646.993956647</gml:posList></gml:LinearRing'
                 '></gml:exterior></gml:Polygon></gml:surfaceMember><gml'
-                ':surfaceMember><gml:Polygon><gml:exterior><gml:LinearRing'
+                ':surfaceMember><gml:Polygon gml:id="multi'
+                'polygon_multiple_31370.geom.0.1"><gml:exterior><gml:LinearRing'
                 '><gml:posList>108384.015492088 197214.29664629 '
                 '108447.04912427 196489.40987619 108785.854897252 '
                 '197269.45107445 108384.015492088 '
                 '197214.29664629</gml:posList></gml:LinearRing'
                 '></gml:exterior></gml:Polygon></gml:surfaceMember></gml'
-                ':MultiSurface></ogc:Within><ogc:Within><fes:ValueReference'
+                ':MultiSurface></fes:Within><fes:Within><fes:ValueReference'
                 '>geom</fes:ValueReference><gml:MultiSurface '
-                'srsName="urn:ogc:def:crs:EPSG::31370"><gml:surfaceMember'
-                '><gml:Polygon><gml:exterior><gml:LinearRing><gml:posList'
+                'srsName="urn:ogc:def:crs:EPSG::31370" gml:id="multi'
+                'polygon_multiple_31370.geom.1"><gml:surfaceMember'
+                '><gml:Polygon gml:id="multi'
+                'polygon_multiple_31370.geom.1.0"><gml:exterior>'
+                '<gml:LinearRing><gml:posList'
                 '>108588.874796681 195015.998723923 108911.922161617 '
                 '194251.71593371 109195.573506438 195134.186784266 '
                 '108588.874796681 '
                 '195015.998723923</gml:posList></gml:LinearRing'
                 '></gml:exterior></gml:Polygon></gml:surfaceMember><gml'
-                ':surfaceMember><gml:Polygon><gml:exterior><gml:LinearRing'
+                ':surfaceMember><gml:Polygon gml:id="multi'
+                'polygon_multiple_31370.geom.1.1"><gml:exterior><gml:LinearRing'
                 '><gml:posList>109140.419078278 195748.764698045 '
                 '109400.432811031 195307.529272768 109597.412911602 '
                 '195772.402310114 109140.419078278 '
                 '195748.764698045</gml:posList></gml:LinearRing'
                 '></gml:exterior></gml:Polygon></gml:surfaceMember></gml'
-                ':MultiSurface></ogc:Within></ogc:Or>')
+                ':MultiSurface></fes:Within></fes:Or>')
 
 
 class TestCombination(object):
     """Class grouping tests for combinations of locations."""
 
-    def test_polygon_and_box(self):
+    def test_polygon_and_box(self, mp_gml_id):
         """Test the combination of a Within filter with a GML containing a
         single polygon geometry in EPSG:31370 and a Box.
 
@@ -725,19 +766,20 @@ class TestCombination(object):
         xml = location_filter.toXML()
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<ogc:Or><ogc:Within><fes:ValueReference>geom</fes:ValueReference'
-            '><gml:Polygon srsName="urn:ogc:def:crs:EPSG::31370"><gml'
+            '<fes:Or><fes:Within><fes:ValueReference>geom</fes:ValueReference'
+            '><gml:Polygon srsName="urn:ogc:def:crs:EPSG::31370" gml:id="'
+            'polygon_single_31370.geom.0"><gml'
             ':exterior><gml:LinearRing><gml:posList>108636.150020818 '
             '194960.844295764 108911.922161617 194291.111953824 '
             '109195.573506438 195118.42837622 108636.150020818 '
             '194960.844295764</gml:posList></gml:LinearRing></gml:exterior'
             '></gml:Polygon></ogc:Within><ogc:Within><fes:ValueReference>geom'
             '</fes:ValueReference><gml:Envelope srsDimension="2" '
-            'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370"><gml'
-            ':lowerCorner>94720.000000 '
+            'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370" gml32:id='
+            '"pydov.gmlid"><gml:lowerCorner>94720.000000 '
             '186910.000000</gml:lowerCorner><gml:upperCorner>112220.000000 '
-            '202870.000000</gml:upperCorner></gml:Envelope></ogc'
-            ':Within></ogc:Or>')
+            '202870.000000</gml:upperCorner></gml:Envelope></fes'
+            ':Within></fes:Or>')
 
 
 class TestGeometryFilter(object):
@@ -756,22 +798,24 @@ class TestGeometryFilter(object):
         xml = f.toXML()
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<ogc:Or xmlns:gml311="http://www.opengis.net/gml" '
-            'xmlns:ogc="http://www.opengis.net/ogc"><ogc:Within><ogc:'
-            'PropertyName>geom</fes:ValueReference><gml311:Polygon srsName='
-            '"urn:ogc:def:crs:EPSG::31370"><gml311:exterior>'
-            '<gml311:LinearRing><gml311:posList>108636.150020818 '
+            '<fes:Or xmlns:gml="http://www.opengis.net/gml/3.2" '
+            'xmlns:fes="http://www.opengis.net/fes/2.0"><fes:Within><fes:'
+            'ValueReference>geom</fes:ValueReference><gml:Polygon srsName='
+            '"urn:ogc:def:crs:EPSG::31370" gml:id="polygon_multiple_31370'
+            '.geom.0"><gml:exterior>'
+            '<gml:LinearRing><gml:posList>108636.150020818 '
             '194960.844295764 109195.573506438 195118.42837622 '
             '108911.922161617 194291.111953824 108636.150020818 '
-            '194960.844295764</gml311:posList></gml311:LinearRing>'
-            '</gml311:exterior></gml311:Polygon></ogc:Within><ogc:Within>'
-            '<fes:ValueReference>geom</fes:ValueReference><gml311:Polygon '
-            'srsName="urn:ogc:def:crs:EPSG::31370"><gml311:exterior>'
-            '<gml311:LinearRing><gml311:posList>107485.786233486 '
+            '194960.844295764</gml:posList></gml:LinearRing>'
+            '</gml:exterior></gml:Polygon></fes:Within><fes:Within>'
+            '<fes:ValueReference>geom</fes:ValueReference><gml:Polygon '
+            'srsName="urn:ogc:def:crs:EPSG::31370" gml:id="polygon_multiple'
+            '_31370.geom.1"><gml:exterior>'
+            '<gml:LinearRing><gml:posList>107485.786233486 '
             '196741.544404921 108297.344247837 196843.974057217 '
             '107840.350414513 196339.704999757 107485.786233486 '
-            '196741.544404921</gml311:posList></gml311:LinearRing>'
-            '</gml311:exterior></gml311:Polygon></ogc:Within></ogc:Or>')
+            '196741.544404921</gml:posList></gml:LinearRing>'
+            '</gml:exterior></gml:Polygon></fes:Within></fes:Or>')
 
     def test_geopackage(self):
         """Test the conversion of a geopackage to GML using fiona,
@@ -786,22 +830,24 @@ class TestGeometryFilter(object):
         xml = f.toXML()
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<ogc:Or xmlns:ogc="http://www.opengis.net/ogc"><ogc:Within>'
+            '<fes:Or xmlns:fes="http://www.opengis.net/fes/2.0"><fes:Within>'
             '<fes:ValueReference>geom</fes:ValueReference><gml:Polygon '
-            'xmlns:gml="http://www.opengis.net/gml" '
-            'srsName="urn:ogc:def:crs:EPSG::31370"><gml:exterior>'
+            'xmlns:gml="http://www.opengis.net/gml/3.2" '
+            'srsName="urn:ogc:def:crs:EPSG::31370" gml:id="polygon_multiple_'
+            '31370.geom.0"><gml:exterior>'
             '<gml:LinearRing><gml:posList>108636.150020818 194960.844295764 '
             '108911.922161617 194291.111953824 109195.573506438 '
             '195118.42837622 108636.150020818 194960.844295764</gml:posList>'
-            '</gml:LinearRing></gml:exterior></gml:Polygon></ogc:Within>'
-            '<ogc:Within><fes:ValueReference>geom</fes:ValueReference>'
-            '<gml:Polygon xmlns:gml="http://www.opengis.net/gml" '
-            'srsName="urn:ogc:def:crs:EPSG::31370"><gml:exterior>'
+            '</gml:LinearRing></gml:exterior></gml:Polygon></fes:Within>'
+            '<fes:Within><fes:ValueReference>geom</fes:ValueReference>'
+            '<gml:Polygon xmlns:gml="http://www.opengis.net/gml/3.2" '
+            'srsName="urn:ogc:def:crs:EPSG::31370" gml:id="polygon_multiple_'
+            '31370.geom.1"><gml:exterior>'
             '<gml:LinearRing><gml:posList>107485.786233486 196741.544404921 '
             '107840.350414513 196339.704999757 108297.344247837 '
             '196843.974057217 107485.786233486 196741.544404921</gml:posList>'
-            '</gml:LinearRing></gml:exterior></gml:Polygon></ogc:Within>'
-            '</ogc:Or>')
+            '</gml:LinearRing></gml:exterior></gml:Polygon></fes:Within>'
+            '</fes:Or>')
 
 
 class TestGeopandasFilter:
@@ -820,22 +866,24 @@ class TestGeopandasFilter:
         xml = f.toXML()
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<ogc:Or xmlns:gml311="http://www.opengis.net/gml" '
-            'xmlns:ogc="http://www.opengis.net/ogc"><ogc:Within><ogc:'
-            'PropertyName>geom</fes:ValueReference><gml311:Polygon srsName='
-            '"urn:ogc:def:crs:EPSG::31370"><gml311:exterior>'
-            '<gml311:LinearRing><gml311:posList>108636.150020818 '
+            '<fes:Or xmlns:gml="http://www.opengis.net/gml/3.2" '
+            'xmlns:fes="http://www.opengis.net/fes/2.0"><fes:Within><fes:'
+            'ValueReference>geom</fes:ValueReference><gml:Polygon srsName='
+            '"urn:ogc:def:crs:EPSG::31370" gml:id="geodataframe.geom.0"'
+            '><gml:exterior>'
+            '<gml:LinearRing><gml:posList>108636.150020818 '
             '194960.844295764 109195.573506438 195118.42837622 '
             '108911.922161617 194291.111953824 108636.150020818 '
-            '194960.844295764</gml311:posList></gml311:LinearRing>'
-            '</gml311:exterior></gml311:Polygon></ogc:Within><ogc:Within>'
-            '<fes:ValueReference>geom</fes:ValueReference><gml311:Polygon '
-            'srsName="urn:ogc:def:crs:EPSG::31370"><gml311:exterior>'
-            '<gml311:LinearRing><gml311:posList>107485.786233486 '
+            '194960.844295764</gml:posList></gml:LinearRing>'
+            '</gml:exterior></gml:Polygon></fes:Within><fes:Within>'
+            '<fes:ValueReference>geom</fes:ValueReference><gml:Polygon '
+            'srsName="urn:ogc:def:crs:EPSG::31370" gml:id="geodataframe.geom.1"'
+            '><gml:exterior>'
+            '<gml:LinearRing><gml:posList>107485.786233486 '
             '196741.544404921 108297.344247837 196843.974057217 '
             '107840.350414513 196339.704999757 107485.786233486 '
-            '196741.544404921</gml311:posList></gml311:LinearRing>'
-            '</gml311:exterior></gml311:Polygon></ogc:Within></ogc:Or>')
+            '196741.544404921</gml:posList></gml:LinearRing>'
+            '</gml:exterior></gml:Polygon></fes:Within></fes:Or>')
 
     def test_geopandas_dataframe_subset(self):
         """Test the conversion of a GeoPandas GeoDataFrame subset.
@@ -851,16 +899,20 @@ class TestGeopandasFilter:
         f.set_geometry_column('geom')
         xml = f.toXML()
 
+        print(clean_xml(etree.tostring(xml).decode('utf8')))
+
+
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<ogc:Within xmlns:gml311="http://www.opengis.net/gml" '
-            'xmlns:ogc="http://www.opengis.net/ogc"><fes:ValueReference>'
-            'geom</fes:ValueReference><gml311:Polygon srsName="urn:ogc:def:crs:'
-            'EPSG::31370"><gml311:exterior><gml311:LinearRing><gml311:posList>'
+            '<fes:Within xmlns:gml="http://www.opengis.net/gml/3.2" '
+            'xmlns:fes="http://www.opengis.net/fes/2.0"><fes:ValueReference>'
+            'geom</fes:ValueReference><gml:Polygon srsName="urn:ogc:def:crs:'
+            'EPSG::31370" gml:id="geodataframe.geom.0"><gml:exterior><gml:'
+            'LinearRing><gml:posList>'
             '108636.150020818 194960.844295764 109195.573506438 '
             '195118.42837622 108911.922161617 194291.111953824 '
-            '108636.150020818 194960.844295764</gml311:posList>'
-            '</gml311:LinearRing></gml311:exterior></gml311:Polygon>'
-            '</ogc:Within>')
+            '108636.150020818 194960.844295764</gml:posList>'
+            '</gml:LinearRing></gml:exterior></gml:Polygon>'
+            '</fes:Within>')
 
     def test_geopandas_series(self):
         """Test GeoPandas GeoSeries not supported by pydov spatial filter

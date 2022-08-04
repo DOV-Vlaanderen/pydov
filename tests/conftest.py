@@ -10,7 +10,7 @@ import pytest
 from _pytest.monkeypatch import MonkeyPatch
 from owslib.etree import etree
 from owslib.feature.schema import _construct_schema, _get_elements
-from owslib.feature.wfs110 import ContentMetadata
+from owslib.feature.wfs200 import ContentMetadata
 from owslib.iso import MD_Metadata
 from owslib.util import ResponseWrapper, findall
 from owslib.wfs import WebFeatureService
@@ -439,6 +439,22 @@ def mp_remote_xml(monkeypatch):
 
     monkeypatch.setattr(pydov.util.caching.AbstractFileCache,
                         '_get_remote', _get_remote_data)
+
+
+@pytest.fixture
+def mp_gml_id(monkeypatch):
+    """Monkeypatch the call to generate a predictable GML id.
+
+    Parameters
+    ----------
+    monkeymodule : pytest.fixture
+        PyTest monkeypatch fixture with module scope.
+    """
+    def _get_id(*args, **kwargs):
+        return 'pydov.gmlid'
+
+    monkeypatch.setattr(pydov.util.location.AbstractLocation,
+                         '_get_id', _get_id)
 
 
 @pytest.fixture

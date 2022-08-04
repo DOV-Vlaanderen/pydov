@@ -25,7 +25,18 @@ from tests.abstract import clean_xml
 class TestLocation(object):
     """Class grouping tests for the AbstractLocation subtypes."""
 
-    def test_box(self):
+    def test_gml_id(self):
+        box1 = Box(94720, 186910, 112220, 202870)
+        id1 = box1.get_element().get('{http://www.opengis.net/gml/3.2}id')
+
+        box2 = Box(94721, 186911, 112221, 202871)
+        id2 = box2.get_element().get('{http://www.opengis.net/gml/3.2}id')
+
+        assert id1.startswith('pydov')
+        assert id2.startswith('pydov')
+        assert id1 != id2
+
+    def test_box(self, mp_gml_id):
         """Test the default Box type.
 
         Test whether the generated XML is correct.
@@ -36,12 +47,13 @@ class TestLocation(object):
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
             '<gml:Envelope srsDimension="2" '
-            'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370">'
+            'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370" gml32:id='
+            '"pydov.gmlid">'
             '<gml:lowerCorner>94720.000000 186910.000000</gml:lowerCorner>'
             '<gml:upperCorner>112220.000000 202870.000000</gml:upperCorner>'
             '</gml:Envelope>')
 
-    def test_box_wgs84(self):
+    def test_box_wgs84(self, mp_gml_id):
         """Test the Box type with WGS84 coordinates.
 
         Test whether the generated XML is correct.
@@ -52,7 +64,8 @@ class TestLocation(object):
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
             '<gml:Envelope srsDimension="2" '
-            'srsName="http://www.opengis.net/gml/srs/epsg.xml#4326">'
+            'srsName="http://www.opengis.net/gml/srs/epsg.xml#4326" gml32:id='
+            '"pydov.gmlid">'
             '<gml:lowerCorner>3.621400 50.985000</gml:lowerCorner>'
             '<gml:upperCorner>3.807100 51.127000</gml:upperCorner>'
             '</gml:Envelope>')
@@ -75,7 +88,7 @@ class TestLocation(object):
         with pytest.raises(ValueError):
             Box(50.9850, 3.6214, 3.8071, 51.1270, epsg=4326)
 
-    def test_point(self):
+    def test_point(self, mp_gml_id):
         """Test the default Point type.
 
         Test whether the generated XML is correct.
@@ -86,10 +99,11 @@ class TestLocation(object):
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
             '<gml:Point srsDimension="2" '
-            'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370">'
+            'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370" gml32:id='
+            '"pydov.gmlid">'
             '<gml:pos>110680.000000 202030.000000</gml:pos></gml:Point>')
 
-    def test_point_wgs84(self):
+    def test_point_wgs84(self, mp_gml_id):
         """Test the Point type with WGS84 coordinates.
 
         Test whether the generated XML is correct.
@@ -100,7 +114,8 @@ class TestLocation(object):
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
             '<gml:Point srsDimension="2" '
-            'srsName="http://www.opengis.net/gml/srs/epsg.xml#4326">'
+            'srsName="http://www.opengis.net/gml/srs/epsg.xml#4326" gml32:id='
+            '"pydov.gmlid">'
             '<gml:pos>3.807100 51.127000</gml:pos></gml:Point>')
 
     def test_gmlobject_element(self):
@@ -115,14 +130,15 @@ class TestLocation(object):
 
             gml_element = etree.fromstring(gml.encode('utf8'))
             gml_element = gml_element.find(
-                './/{http://www.opengis.net/gml}Polygon')
+                './/{http://www.opengis.net/gml/3.2}Polygon')
 
             gml_object = GmlObject(gml_element)
 
             assert clean_xml(etree.tostring(
                 gml_object.get_element()).decode('utf8')) == clean_xml(
                 '<gml:Polygon '
-                'srsName="urn:ogc:def:crs:EPSG::31370"><gml:exterior><gml'
+                'srsName="urn:ogc:def:crs:EPSG::31370" gml:id='
+                '"polygon_single_31370.geom.0"><gml:exterior><gml'
                 ':LinearRing><gml:posList>108636.150020818 194960.844295764 '
                 '108911.922161617 194291.111953824 109195.573506438 '
                 '195118.42837622 108636.150020818 '
@@ -141,14 +157,15 @@ class TestLocation(object):
 
             gml_element = etree.fromstring(gml.encode('utf8'))
             gml_element = gml_element.find(
-                './/{http://www.opengis.net/gml}Polygon')
+                './/{http://www.opengis.net/gml/3.2}Polygon')
 
             gml_object = GmlObject(etree.tostring(gml_element))
 
             assert clean_xml(etree.tostring(
                 gml_object.get_element()).decode('utf8')) == clean_xml(
                 '<gml:Polygon '
-                'srsName="urn:ogc:def:crs:EPSG::31370"><gml:exterior><gml'
+                'srsName="urn:ogc:def:crs:EPSG::31370" gml:id='
+                '"polygon_single_31370.geom.0"><gml:exterior><gml'
                 ':LinearRing><gml:posList>108636.150020818 194960.844295764 '
                 '108911.922161617 194291.111953824 109195.573506438 '
                 '195118.42837622 108636.150020818 '
@@ -167,14 +184,15 @@ class TestLocation(object):
 
             gml_element = etree.fromstring(gml.encode('utf8'))
             gml_element = gml_element.find(
-                './/{http://www.opengis.net/gml}Polygon')
+                './/{http://www.opengis.net/gml/3.2}Polygon')
 
             gml_object = GmlObject(etree.tostring(gml_element).decode('utf8'))
 
             assert clean_xml(etree.tostring(
                 gml_object.get_element()).decode('utf8')) == clean_xml(
                 '<gml:Polygon '
-                'srsName="urn:ogc:def:crs:EPSG::31370"><gml:exterior><gml'
+                'srsName="urn:ogc:def:crs:EPSG::31370" gml:id='
+                '"polygon_single_31370.geom.0"><gml:exterior><gml'
                 ':LinearRing><gml:posList>108636.150020818 194960.844295764 '
                 '108911.922161617 194291.111953824 109195.573506438 '
                 '195118.42837622 108636.150020818 '
@@ -185,7 +203,7 @@ class TestLocation(object):
 class TestBinarySpatialFilters(object):
     """Class grouping tests for the AbstractBinarySpatialFilter subtypes."""
 
-    def test_equals_point(self):
+    def test_equals_point(self, mp_gml_id):
         """Test the Equals spatial filter with a Point location.
 
         Test whether the generated XML is correct.
@@ -196,11 +214,12 @@ class TestBinarySpatialFilters(object):
         xml = equals.toXML()
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<ogc:Equals><fes:ValueReference>geom</fes:ValueReference>'
+            '<fes:Equals><fes:ValueReference>geom</fes:ValueReference>'
             '<gml:Point srsDimension="2" '
-            'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370">'
+            'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370" gml32:id='
+            '"pydov.gmlid">'
             '<gml:pos>150000.000000 150000.000000</gml:pos></gml:Point>'
-            '</ogc:Equals>')
+            '</fes:Equals>')
 
     def test_equals_nogeom(self):
         """Test the Equals spatial filter without setting a geometry column.
@@ -213,7 +232,7 @@ class TestBinarySpatialFilters(object):
         with pytest.raises(RuntimeError):
             equals.toXML()
 
-    def test_disjoint_box(self):
+    def test_disjoint_box(self, mp_gml_id):
         """Test the Disjoint spatial filter with a Box location.
 
         Test whether the generated XML is correct.
@@ -224,12 +243,13 @@ class TestBinarySpatialFilters(object):
         xml = disjoint.toXML()
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<ogc:Disjoint><fes:ValueReference>geom</fes:ValueReference>'
+            '<fes:Disjoint><fes:ValueReference>geom</fes:ValueReference>'
             '<gml:Envelope srsDimension="2" '
-            'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370">'
+            'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370" gml32:id='
+            '"pydov.gmlid">'
             '<gml:lowerCorner>94720.000000 186910.000000</gml:lowerCorner>'
             '<gml:upperCorner>112220.000000 202870.000000</gml:upperCorner>'
-            '</gml:Envelope></ogc:Disjoint>')
+            '</gml:Envelope></fes:Disjoint>')
 
     def test_disjoint_nogeom(self):
         """Test the Disjoint spatial filter without setting a geometry column.
@@ -242,7 +262,7 @@ class TestBinarySpatialFilters(object):
         with pytest.raises(RuntimeError):
             disjoint.toXML()
 
-    def test_touches_box(self):
+    def test_touches_box(self, mp_gml_id):
         """Test the Touches spatial filter with a Box location.
 
         Test whether the generated XML is correct.
@@ -253,12 +273,13 @@ class TestBinarySpatialFilters(object):
         xml = touches.toXML()
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<ogc:Touches><fes:ValueReference>geom</fes:ValueReference>'
+            '<fes:Touches><fes:ValueReference>geom</fes:ValueReference>'
             '<gml:Envelope srsDimension="2" '
-            'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370">'
+            'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370" gml32:id='
+            '"pydov.gmlid">'
             '<gml:lowerCorner>94720.000000 186910.000000</gml:lowerCorner>'
             '<gml:upperCorner>112220.000000 202870.000000</gml:upperCorner>'
-            '</gml:Envelope></ogc:Touches>')
+            '</gml:Envelope></fes:Touches>')
 
     def test_touches_nogeom(self):
         """Test the Touches spatial filter without setting a geometry column.
@@ -271,7 +292,7 @@ class TestBinarySpatialFilters(object):
         with pytest.raises(RuntimeError):
             touches.toXML()
 
-    def test_within_box(self):
+    def test_within_box(self, mp_gml_id):
         """Test the Within spatial filter with a Box location.
 
         Test whether the generated XML is correct.
@@ -282,12 +303,13 @@ class TestBinarySpatialFilters(object):
         xml = within.toXML()
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<ogc:Within><fes:ValueReference>geom</fes:ValueReference>'
+            '<fes:Within><fes:ValueReference>geom</fes:ValueReference>'
             '<gml:Envelope srsDimension="2" '
-            'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370">'
+            'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370" gml32:id='
+            '"pydov.gmlid">'
             '<gml:lowerCorner>94720.000000 186910.000000</gml:lowerCorner>'
             '<gml:upperCorner>112220.000000 202870.000000</gml:upperCorner>'
-            '</gml:Envelope></ogc:Within>')
+            '</gml:Envelope></fes:Within>')
 
     def test_within_nogeom(self):
         """Test the Within spatial filter without setting a geometry column.
@@ -300,7 +322,7 @@ class TestBinarySpatialFilters(object):
         with pytest.raises(RuntimeError):
             within.toXML()
 
-    def test_intersects_box(self):
+    def test_intersects_box(self, mp_gml_id):
         """Test the Intersects spatial filter with a Box location.
 
         Test whether the generated XML is correct.
@@ -311,12 +333,13 @@ class TestBinarySpatialFilters(object):
         xml = intersects.toXML()
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<ogc:Intersects><fes:ValueReference>geom</fes:ValueReference>'
+            '<fes:Intersects><fes:ValueReference>geom</fes:ValueReference>'
             '<gml:Envelope srsDimension="2" '
-            'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370">'
+            'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370" gml32:id='
+            '"pydov.gmlid">'
             '<gml:lowerCorner>94720.000000 186910.000000</gml:lowerCorner>'
             '<gml:upperCorner>112220.000000 202870.000000</gml:upperCorner>'
-            '</gml:Envelope></ogc:Intersects>')
+            '</gml:Envelope></fes:Intersects>')
 
     def test_intersects_nogeom(self):
         """Test the Intersects spatial filter without setting a geometry
@@ -334,7 +357,7 @@ class TestBinarySpatialFilters(object):
 class TestLocationFilters(object):
     """Class grouping tests for the AbstractLocationFilter subtypes."""
 
-    def test_withindistance_point(self):
+    def test_withindistance_point(self, mp_gml_id):
         """Test the WithinDistance spatial filter with a Point location.
 
         Test whether the generated XML is correct.
@@ -345,14 +368,15 @@ class TestLocationFilters(object):
         xml = withindistance.toXML()
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<ogc:DWithin><fes:ValueReference>geom</fes:ValueReference>'
+            '<fes:DWithin><fes:ValueReference>geom</fes:ValueReference>'
             '<gml:Point srsDimension="2" '
-            'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370">'
+            'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370" gml32:id='
+            '"pydov.gmlid">'
             '<gml:pos>150000.000000 150000.000000</gml:pos></gml:Point>'
             '<gml:Distance units="meter">100.000000</gml:Distance>'
-            '</ogc:DWithin>')
+            '</fes:DWithin>')
 
-    def test_withindistance_point_named_args(self):
+    def test_withindistance_point_named_args(self, mp_gml_id):
         """Test the WithinDistance spatial filter with a Point location.
 
         Test whether the generated XML is correct.
@@ -364,12 +388,13 @@ class TestLocationFilters(object):
         xml = withindistance.toXML()
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<ogc:DWithin><fes:ValueReference>geom</fes:ValueReference>'
+            '<fes:DWithin><fes:ValueReference>geom</fes:ValueReference>'
             '<gml:Point srsDimension="2" '
-            'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370">'
+            'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370" gml32:id='
+            '"pydov.gmlid">'
             '<gml:pos>150000.000000 150000.000000</gml:pos></gml:Point>'
             '<gml:Distance units="meter">100.000000</gml:Distance>'
-            '</ogc:DWithin>')
+            '</fes:DWithin>')
 
     def test_withindistance_nogeom(self):
         """Test the WithinDistance spatial filter without setting a geometry
@@ -383,7 +408,7 @@ class TestLocationFilters(object):
         with pytest.raises(RuntimeError):
             withindistance.toXML()
 
-    def test_withindistance_point_wgs84(self):
+    def test_withindistance_point_wgs84(self, mp_gml_id):
         """Test the WithinDistance spatial filter with a Point location
         using WGS84 coordinates.
 
@@ -395,18 +420,19 @@ class TestLocationFilters(object):
         xml = withindistance.toXML()
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<ogc:DWithin><fes:ValueReference>geom</fes:ValueReference>'
+            '<fes:DWithin><fes:ValueReference>geom</fes:ValueReference>'
             '<gml:Point srsDimension="2" '
-            'srsName="http://www.opengis.net/gml/srs/epsg.xml#4326">'
+            'srsName="http://www.opengis.net/gml/srs/epsg.xml#4326" gml32:id='
+            '"pydov.gmlid">'
             '<gml:pos>51.127000 3.807100</gml:pos></gml:Point>'
             '<gml:Distance units="meter">100.000000</gml:Distance>'
-            '</ogc:DWithin>')
+            '</fes:DWithin>')
 
 
 class TestLocationFilterExpressions(object):
     """Class grouping tests for expressions with spatial filters."""
 
-    def test_point_and_box(self):
+    def test_point_and_box(self, mp_gml_id):
         """Test a location filter expression using a Within(Box) and a
         WithinDistance(Point) filter.
 
@@ -418,21 +444,21 @@ class TestLocationFilterExpressions(object):
         xml = set_geometry_column(point_and_box, 'geom')
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<ogc:And><ogc:DWithin><fes:ValueReference>geom</fes:ValueReference'
+            '<fes:And><fes:DWithin><fes:ValueReference>geom</fes:ValueReference'
             '><gml:Point srsDimension="2" '
-            'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370"><gml'
-            ':pos>150000.000000 '
+            'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370" gml32:id='
+            '"pydov.gmlid"><gml:pos>150000.000000 '
             '150000.000000</gml:pos></gml:Point><gml:Distance '
-            'units="meter">100.000000</gml:Distance></ogc:DWithin><ogc'
+            'units="meter">100.000000</gml:Distance></fes:DWithin><fes'
             ':Within><fes:ValueReference>geom</fes:ValueReference><gml'
             ':Envelope srsDimension="2" '
-            'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370"><gml'
-            ':lowerCorner>94720.000000 '
+            'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370" gml32:id='
+            '"pydov.gmlid"><gml:lowerCorner>94720.000000 '
             '186910.000000</gml:lowerCorner><gml:upperCorner>112220.000000 '
-            '202870.000000</gml:upperCorner></gml:Envelope></ogc:Within'
-            '></ogc:And>')
+            '202870.000000</gml:upperCorner></gml:Envelope></fes:Within'
+            '></fes:And>')
 
-    def test_box_or_box(self):
+    def test_box_or_box(self, mp_gml_id):
         """Test a location filter expression using an Intersects(Box) and a
         Within(Box) filter.
 
@@ -445,21 +471,21 @@ class TestLocationFilterExpressions(object):
         xml = set_geometry_column(box_or_box, 'geom')
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<ogc:Or><ogc:Intersects><fes:ValueReference>geom</ogc'
-            ':PropertyName><gml:Envelope srsDimension="2" '
-            'srsName="http://www.opengis.net/gml/srs/epsg.xml#4326"><gml'
-            ':lowerCorner>50.985000 '
+            '<fes:Or><fes:Intersects><fes:ValueReference>geom</fes'
+            ':ValueReference><gml:Envelope srsDimension="2" '
+            'srsName="http://www.opengis.net/gml/srs/epsg.xml#4326" gml32:id='
+            '"pydov.gmlid"><gml:lowerCorner>50.985000 '
             '3.621400</gml:lowerCorner><gml:upperCorner>51.127000 '
-            '3.807100</gml:upperCorner></gml:Envelope></ogc:Intersects><ogc'
+            '3.807100</gml:upperCorner></gml:Envelope></fes:Intersects><fes'
             ':Within><fes:ValueReference>geom</fes:ValueReference><gml:Envelope '
             'srsDimension="2" '
-            'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370"><gml'
-            ':lowerCorner>94720.000000 '
+            'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370" gml32:id='
+            '"pydov.gmlid"><gml:lowerCorner>94720.000000 '
             '186910.000000</gml:lowerCorner><gml:upperCorner>112220.000000 '
-            '202870.000000</gml:upperCorner></gml:Envelope></ogc:Within'
-            '></ogc:Or>')
+            '202870.000000</gml:upperCorner></gml:Envelope></fes:Within'
+            '></fes:Or>')
 
-    def test_recursive(self):
+    def test_recursive(self, mp_gml_id):
         """Test a location filter expression using a recursive expression
         with And(Not(WithinDistance(Point) filter.
 
@@ -471,16 +497,16 @@ class TestLocationFilterExpressions(object):
         xml = set_geometry_column(point_and_box, 'geom')
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<ogc:And><ogc:Not><ogc:DWithin><fes:ValueReference>geom</ogc'
-            ':PropertyName><gml:Point srsDimension="2" '
-            'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370"><gml'
-            ':pos>150000.000000 '
+            '<fes:And><fes:Not><fes:DWithin><fes:ValueReference>geom</fes'
+            ':ValueReference><gml:Point srsDimension="2" '
+            'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370" gml32:id='
+            '"pydov.gmlid"><gml:pos>150000.000000 '
             '150000.000000</gml:pos></gml:Point><gml:Distance '
-            'units="meter">100.000000</gml:Distance></ogc:DWithin></ogc:Not'
-            '><ogc:Within><fes:ValueReference>geom</fes:ValueReference><gml'
+            'units="meter">100.000000</gml:Distance></fes:DWithin></fes:Not'
+            '><fes:Within><fes:ValueReference>geom</fes:ValueReference><gml'
             ':Envelope srsDimension="2" '
-            'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370"><gml'
-            ':lowerCorner>94720.000000 '
+            'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370" gml32:id='
+            '"pydov.gmlid"><gml:lowerCorner>94720.000000 '
             '186910.000000</gml:lowerCorner><gml:upperCorner>112220.000000 '
-            '202870.000000</gml:upperCorner></gml:Envelope></ogc:Within'
-            '></ogc:And>')
+            '202870.000000</gml:upperCorner></gml:Envelope></fes:Within'
+            '></fes:And>')

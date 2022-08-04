@@ -1,31 +1,37 @@
 # -*- coding: utf-8 -*-
 """Module grouping classes for location based filters used for searching.
 
-This module is designed to comply with the WFS 1.1.0 standard, implying
-Filter Encoding 1.1 and GML 3.1.1.
+This module is designed to comply with the WFS 2.0.0 standard, implying
+Filter Encoding 2.0 and GML 3.2.
 
 """
 import os
 from collections import OrderedDict
 from distutils.version import LooseVersion
 from io import BytesIO
+import random
+import string
 
 from owslib.etree import etree
-from owslib.fes import Or
+from owslib.fes2 import Or
 
 
 class AbstractLocation(object):
     """Abstract base class for location types (f.ex. point, box, polygon).
 
     Locations are GML elements, for inclusion in the WFS GetFeature request.
-    As described in the Filter Encoding 1.1 standard, locations are expressed
-    using GML 3.1.1.
+    As described in the Filter Encoding 2.0 standard, locations are expressed
+    using GML 3.2.
 
     The initialisation should require all necessary parameters to construct
     a valid location of this type: i.e. all locations should be valid after
     initialisation.
 
     """
+    def _get_id(self):
+        random_id = ''.join(random.choice(
+            string.ascii_letters + string.digits) for x in range(8))
+        return f'pydov.{random_id}'
 
     def get_element(self):
         """Return the GML representation of the location.
@@ -123,7 +129,8 @@ class AbstractBinarySpatialFilter(AbstractLocationFilter):
 
     def set_geometry_column(self, geometry_column):
         self.geom_column = geometry_column
-        geom = self.element.find('.//{http://www.opengis.net/fes/2.0}ValueReference')
+        geom = self.element.find(
+            './/{http://www.opengis.net/fes/2.0}ValueReference')
         geom.text = geometry_column
 
     def toXML(self):
@@ -177,17 +184,21 @@ class Box(AbstractLocation):
         self.maxx = maxx
         self.maxy = maxy
 
-        self.element = etree.Element('{http://www.opengis.net/gml/3.2}Envelope')
+        self.element = etree.Element(
+            '{http://www.opengis.net/gml/3.2}Envelope')
         self.element.set('srsDimension', '2')
         self.element.set(
             'srsName',
             'http://www.opengis.net/gml/srs/epsg.xml#{:d}'.format(epsg))
+        self.element.set('{http://www.opengis.net/gml/3.2}id', self._get_id())
 
-        lower_corner = etree.Element('{http://www.opengis.net/gml/3.2}lowerCorner')
+        lower_corner = etree.Element(
+            '{http://www.opengis.net/gml/3.2}lowerCorner')
         lower_corner.text = '{:.06f} {:.06f}'.format(self.minx, self.miny)
         self.element.append(lower_corner)
 
-        upper_corner = etree.Element('{http://www.opengis.net/gml/3.2}upperCorner')
+        upper_corner = etree.Element(
+            '{http://www.opengis.net/gml/3.2}upperCorner')
         upper_corner.text = '{:.06f} {:.06f}'.format(self.maxx, self.maxy)
         self.element.append(upper_corner)
 
@@ -224,6 +235,7 @@ class Point(AbstractLocation):
         self.element.set(
             'srsName',
             'http://www.opengis.net/gml/srs/epsg.xml#{:d}'.format(epsg))
+        self.element.set('{http://www.opengis.net/gml/3.2}id', self._get_id())
 
         coordinates = etree.Element('{http://www.opengis.net/gml/3.2}pos')
         coordinates.text = '{:.06f} {:.06f}'.format(self.x, self.y)
@@ -411,7 +423,8 @@ class WithinDistance(AbstractLocationFilter):
 
     def set_geometry_column(self, geometry_column):
         self.geom_column = geometry_column
-        geom = self.element.find('.//{http://www.opengis.net/fes/2.0}ValueReference')
+        geom = self.element.find(
+            './/{http://www.opengis.net/fes/2.0}ValueReference')
         geom.text = geometry_column
 
     def toXML(self):
@@ -423,12 +436,12 @@ class WithinDistance(AbstractLocationFilter):
 
 class GmlFilter(AbstractLocationFilter):
     """Class for construction a spatial filter expression from a GML
-    3.1.1 document.
+    3.2 document.
     """
 
     def __init__(self, gml, location_filter, location_filter_kwargs=None,
                  combinator=Or):
-        """Initialise a spatial filter expression from a GML 3.1.1 string.
+        """Initialise a spatial filter expression from a GML 3.2 string.
 
         Parameters
         ----------
@@ -582,7 +595,7 @@ class GmlFilter(AbstractLocationFilter):
 
 class GeometryFilter(GmlFilter):
     """Class for construction a spatial filter expression from any Geometry
-    Fiona can convert to a GML 3.1.1 document.
+    Fiona can convert to a GML 3.2 document.
     """
 
     def __init__(self, geometry, location_filter,
@@ -628,7 +641,7 @@ class GeometryFilter(GmlFilter):
             import fiona
 
             # Check if the GML driver and write mode are supported and check
-            # if version of Fiona supports GML 3.1.1 output (Fiona >= 1.8.18)
+            # if version of Fiona supports GML 3.2 output (Fiona >= 1.8.18)
             drivers = fiona.supported_drivers
             if 'w' not in drivers.get('GML', '') or \
                     LooseVersion(fiona.__version__) < LooseVersion('1.8.18'):
@@ -645,7 +658,7 @@ class GeometryFilter(GmlFilter):
                 layer = os.path.basename(os.path.splitext(geometry)[0])
                 with fiona.open(gml_blob, 'w', layer=layer, driver='GML',
                                 schema=c.schema, crs=c.crs,
-                                FORMAT='GML3') as gml:
+                                FORMAT='GML3.2') as gml:
                     for r in c:
                         gml.write(r)
                 gml_blob.seek(0)
@@ -714,7 +727,7 @@ class GeopandasFilter(GmlFilter):
                                      "CRS definition")
 
             with BytesIO() as gml_blob:
-                gdf.to_file(gml_blob, driver="GML", FORMAT="GML3",
+                gdf.to_file(gml_blob, driver="GML", FORMAT="GML3.2",
                             layer="geodataframe")
                 gml_blob.seek(0)
                 gml = gml_blob.read()

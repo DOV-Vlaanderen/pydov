@@ -561,7 +561,7 @@ class AbstractSearch(AbstractCommon):
     def _get_remote_wfs_feature(wfs, typename, location, filter,
                                 sort_by, propertyname, max_features,
                                 geometry_column):
-        """Perform the WFS GetFeature call to get features from the remote
+        """Perform the WFS 2.0 GetFeature call to get features from the remote
         service.
 
         Parameters
@@ -588,7 +588,6 @@ class AbstractSearch(AbstractCommon):
 
         """
         wfs_getfeature_xml = owsutil.wfs_build_getfeature_request(
-            version=wfs.version,
             geometry_column=geometry_column,
             typename=typename,
             location=location,

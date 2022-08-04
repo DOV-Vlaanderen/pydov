@@ -332,9 +332,9 @@ def set_geometry_column(location, geometry_column):
 
 def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
                                  filter=None, sort_by=None, propertyname=None,
-                                 max_features=None, version='2.0.0'):
-    """Build a WFS GetFeature request in XML to be used as payload in a WFS
-    GetFeature request using POST.
+                                 max_features=None):
+    """Build a WFS 2.0 GetFeature request in XML to be used as payload
+    in a WFS 2.0 GetFeature request using POST.
 
     Parameters
     ----------
@@ -354,8 +354,6 @@ def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
         List of properties to return. Defaults to all properties.
     max_features : int
         Limit the maximum number of features to request.
-    version : str, optional
-        WFS version to use. Defaults to 1.1.0
 
     Raises
     ------
@@ -374,7 +372,7 @@ def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
 
     xml = etree.Element('{http://www.opengis.net/wfs/2.0}GetFeature')
     xml.set('service', 'WFS')
-    xml.set('version', version)
+    xml.set('version', '2.0.0')
 
     if max_features is not None:
         if (not isinstance(max_features, int)) or (max_features <= 0):
@@ -383,7 +381,7 @@ def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
 
     xml.set('{http://www.w3.org/2001/XMLSchema-instance}schemaLocation',
             'http://www.opengis.net/wfs/2.0 '
-            'http://schemas.opengis.net/wfs/{}/wfs.xsd'.format(version))
+            'http://schemas.opengis.net/wfs/2.0/wfs.xsd')
 
     query = etree.Element('{http://www.opengis.net/wfs/2.0}Query')
     query.set('typeNames', typename)

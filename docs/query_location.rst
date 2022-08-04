@@ -71,7 +71,7 @@ Point
     Example: ``Point(3.8071, 51.1270, epsg=4326)``
 
 GmlObject
-    A custom GML 3.1.1 object. This can be any point, multipoint, linestring, multicurve (multilinestring), polygon or multisurface (multipolygon). This needs to be valid GML 3.1.1 for inclusion in the WFS 1.1.0 GetFeature request that pydov uses internally to query the datasets.
+    A custom GML 3.2 object. This can be any point, multipoint, linestring, multicurve (multilinestring), polygon or multisurface (multipolygon). This needs to be valid GML 3.2 for inclusion in the WFS 2.0.0 GetFeature request that pydov uses internally to query the datasets.
 
     See also :ref:`gml_documents` below.
 
@@ -82,7 +82,7 @@ GmlObject
 
             gml_element = etree.fromstring(gml)
             gml_element = gml_element.find(
-                './/{http://www.opengis.net/gml}Polygon')
+                './/{http://www.opengis.net/gml/3.2}Polygon')
 
             location = GmlObject(gml_element)
 
@@ -117,7 +117,7 @@ Using GML documents
 To make it easy to use GML documents for spatial queries, there is a special location filter class for creating location filter expressions from GML documents: GmlFilter.
 
 GmlFilter
-    Build a location filter expression using a GML 3.1.1 document.
+    Build a location filter expression using a GML 3.2 document.
 
     Instead of a single location filter, this class builds a location filter expression from a given GML document (`gml`), location filter (`location_filter`, optionally with `location_filter_kwargs`) and a logical `combinator` (by default this is `Or`).
 

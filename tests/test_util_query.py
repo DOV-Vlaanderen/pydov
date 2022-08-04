@@ -24,16 +24,17 @@ class TestPropertyInList(object):
         query = PropertyInList('methode', l)
         xml = query.toXML()
 
-        assert xml.tag == '{http://www.opengis.net/ogc}Or'
+        assert xml.tag == '{http://www.opengis.net/fes/2.0}Or'
         assert len(list(xml)) == 3
 
         for f in xml:
-            assert f.tag == '{http://www.opengis.net/ogc}PropertyIsEqualTo'
+            assert f.tag == '{http://www.opengis.net/fes/2.0}PropertyIsEqualTo'
 
-            propertyname = f.find('./{http://www.opengis.net/ogc}PropertyName')
-            assert propertyname.text == 'methode'
+            valuereference = f.find(
+                './{http://www.opengis.net/fes/2.0}ValueReference')
+            assert valuereference.text == 'methode'
 
-            literal = f.find('./{http://www.opengis.net/ogc}Literal')
+            literal = f.find('./{http://www.opengis.net/fes/2.0}Literal')
             assert literal.text in l
 
             l.remove(literal.text)
@@ -53,13 +54,13 @@ class TestPropertyInList(object):
             xml = query.toXML()
 
             assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-                '<ogc:Or><ogc:PropertyIsEqualTo><ogc:PropertyName>methode</ogc'
-                ':PropertyName><ogc:Literal>a</ogc:Literal></ogc'
-                ':PropertyIsEqualTo><ogc:PropertyIsEqualTo><ogc:PropertyName'
-                '>methode</ogc:PropertyName><ogc:Literal>b</ogc:Literal></ogc'
-                ':PropertyIsEqualTo><ogc:PropertyIsEqualTo><ogc:PropertyName'
-                '>methode</ogc:PropertyName><ogc:Literal>c</ogc:Literal></ogc'
-                ':PropertyIsEqualTo></ogc:Or>')
+                '<fes:Or><fes:PropertyIsEqualTo><fes:ValueReference>methode</fes'
+                ':ValueReference><ogc:Literal>a</fes:Literal></fes'
+                ':PropertyIsEqualTo><fes:PropertyIsEqualTo><fes:ValueReference'
+                '>methode</fes:ValueReference><ogc:Literal>b</fes:Literal></fes'
+                ':PropertyIsEqualTo><fes:PropertyIsEqualTo><fes:ValueReference'
+                '>methode</fes:ValueReference><fes:Literal>c</fes:Literal></fes'
+                ':PropertyIsEqualTo></fes:Or>')
 
     def test_duplicate(self):
         """Test the PropertyInList expression with a list containing
@@ -75,16 +76,17 @@ class TestPropertyInList(object):
         query = PropertyInList('methode', l)
         xml = query.toXML()
 
-        assert xml.tag == '{http://www.opengis.net/ogc}Or'
+        assert xml.tag == '{http://www.opengis.net/fes/2.0}Or'
         assert len(list(xml)) == 3
 
         for f in xml:
-            assert f.tag == '{http://www.opengis.net/ogc}PropertyIsEqualTo'
+            assert f.tag == '{http://www.opengis.net/fes/2.0}PropertyIsEqualTo'
 
-            propertyname = f.find('./{http://www.opengis.net/ogc}PropertyName')
-            assert propertyname.text == 'methode'
+            valuereference = f.find(
+                './{http://www.opengis.net/fes/2.0}ValueReference')
+            assert valuereference.text == 'methode'
 
-            literal = f.find('./{http://www.opengis.net/ogc}Literal')
+            literal = f.find('./{http://www.opengis.net/fes/2.0}Literal')
             assert literal.text in l
 
             l_output.remove(literal.text)
@@ -104,12 +106,13 @@ class TestPropertyInList(object):
         query = PropertyInList('methode', l)
         xml = query.toXML()
 
-        assert xml.tag == '{http://www.opengis.net/ogc}PropertyIsEqualTo'
+        assert xml.tag == '{http://www.opengis.net/fes/2.0}PropertyIsEqualTo'
 
-        propertyname = xml.find('./{http://www.opengis.net/ogc}PropertyName')
-        assert propertyname.text == 'methode'
+        valuereference = xml.find(
+            './{http://www.opengis.net/fes/2.0}ValueReference')
+        assert valuereference.text == 'methode'
 
-        literal = xml.find('./{http://www.opengis.net/ogc}Literal')
+        literal = xml.find('./{http://www.opengis.net/fes/2.0}Literal')
         assert literal.text in l
 
         l.remove(literal.text)
@@ -129,12 +132,13 @@ class TestPropertyInList(object):
         query = PropertyInList('methode', l)
         xml = query.toXML()
 
-        assert xml.tag == '{http://www.opengis.net/ogc}PropertyIsEqualTo'
+        assert xml.tag == '{http://www.opengis.net/fes/2.0}PropertyIsEqualTo'
 
-        propertyname = xml.find('./{http://www.opengis.net/ogc}PropertyName')
-        assert propertyname.text == 'methode'
+        valuereference = xml.find(
+            './{http://www.opengis.net/fes/2.0}ValueReference')
+        assert valuereference.text == 'methode'
 
-        literal = xml.find('./{http://www.opengis.net/ogc}Literal')
+        literal = xml.find('./{http://www.opengis.net/fes/2.0}Literal')
         assert literal.text in l_output
 
         l_output.remove(literal.text)
@@ -181,16 +185,17 @@ class TestJoin(object):
         query = Join(df, 'pkey_boring')
         xml = query.toXML()
 
-        assert xml.tag == '{http://www.opengis.net/ogc}Or'
+        assert xml.tag == '{http://www.opengis.net/fes/2.0}Or'
         assert len(list(xml)) == 3
 
         for f in xml:
-            assert f.tag == '{http://www.opengis.net/ogc}PropertyIsEqualTo'
+            assert f.tag == '{http://www.opengis.net/fes/2.0}PropertyIsEqualTo'
 
-            propertyname = f.find('./{http://www.opengis.net/ogc}PropertyName')
-            assert propertyname.text == 'pkey_boring'
+            valuereference = f.find(
+                './{http://www.opengis.net/fes/2.0}ValueReference')
+            assert valuereference.text == 'pkey_boring'
 
-            literal = f.find('./{http://www.opengis.net/ogc}Literal')
+            literal = f.find('./{http://www.opengis.net/fes/2.0}Literal')
             assert literal.text in l
 
             l.remove(literal.text)
@@ -220,16 +225,17 @@ class TestJoin(object):
         query = Join(df, 'pkey_boring')
         xml = query.toXML()
 
-        assert xml.tag == '{http://www.opengis.net/ogc}Or'
+        assert xml.tag == '{http://www.opengis.net/fes/2.0}Or'
         assert len(list(xml)) == 2
 
         for f in xml:
-            assert f.tag == '{http://www.opengis.net/ogc}PropertyIsEqualTo'
+            assert f.tag == '{http://www.opengis.net/fes/2.0}PropertyIsEqualTo'
 
-            propertyname = f.find('./{http://www.opengis.net/ogc}PropertyName')
-            assert propertyname.text == 'pkey_boring'
+            valuereference = f.find(
+                './{http://www.opengis.net/fes/2.0}ValueReference')
+            assert valuereference.text == 'pkey_boring'
 
-            literal = f.find('./{http://www.opengis.net/ogc}Literal')
+            literal = f.find('./{http://www.opengis.net/fes/2.0}Literal')
             assert literal.text in l
 
             l_output.remove(literal.text)
@@ -272,12 +278,13 @@ class TestJoin(object):
         query = Join(df, 'pkey_boring')
         xml = query.toXML()
 
-        assert xml.tag == '{http://www.opengis.net/ogc}PropertyIsEqualTo'
+        assert xml.tag == '{http://www.opengis.net/fes/2.0}PropertyIsEqualTo'
 
-        propertyname = xml.find('./{http://www.opengis.net/ogc}PropertyName')
-        assert propertyname.text == 'pkey_boring'
+        valuereference = xml.find(
+            './{http://www.opengis.net/fes/2.0}ValueReference')
+        assert valuereference.text == 'pkey_boring'
 
-        literal = xml.find('./{http://www.opengis.net/ogc}Literal')
+        literal = xml.find('./{http://www.opengis.net/fes/2.0}Literal')
         assert literal.text in l
 
         l.remove(literal.text)
@@ -303,12 +310,13 @@ class TestJoin(object):
         query = Join(df, 'pkey_boring')
         xml = query.toXML()
 
-        assert xml.tag == '{http://www.opengis.net/ogc}PropertyIsEqualTo'
+        assert xml.tag == '{http://www.opengis.net/fes/2.0}PropertyIsEqualTo'
 
-        propertyname = xml.find('./{http://www.opengis.net/ogc}PropertyName')
-        assert propertyname.text == 'pkey_boring'
+        valuereference = xml.find(
+            './{http://www.opengis.net/fes/2.0}ValueReference')
+        assert valuereference.text == 'pkey_boring'
 
-        literal = xml.find('./{http://www.opengis.net/ogc}Literal')
+        literal = xml.find('./{http://www.opengis.net/fes/2.0}Literal')
         assert literal.text in l_output
 
         l_output.remove(literal.text)
@@ -346,16 +354,17 @@ class TestJoin(object):
         query = Join(df, on='pkey_boring')
         xml = query.toXML()
 
-        assert xml.tag == '{http://www.opengis.net/ogc}Or'
+        assert xml.tag == '{http://www.opengis.net/fes/2.0}Or'
         assert len(list(xml)) == 3
 
         for f in xml:
-            assert f.tag == '{http://www.opengis.net/ogc}PropertyIsEqualTo'
+            assert f.tag == '{http://www.opengis.net/fes/2.0}PropertyIsEqualTo'
 
-            propertyname = f.find('./{http://www.opengis.net/ogc}PropertyName')
-            assert propertyname.text == 'pkey_boring'
+            valuereference = f.find(
+                './{http://www.opengis.net/fes/2.0}ValueReference')
+            assert valuereference.text == 'pkey_boring'
 
-            literal = f.find('./{http://www.opengis.net/ogc}Literal')
+            literal = f.find('./{http://www.opengis.net/fes/2.0}Literal')
             assert literal.text in l
 
             l.remove(literal.text)
@@ -381,16 +390,17 @@ class TestJoin(object):
         query = Join(df, on='pkey_boring', using='boringfiche')
         xml = query.toXML()
 
-        assert xml.tag == '{http://www.opengis.net/ogc}Or'
+        assert xml.tag == '{http://www.opengis.net/fes/2.0}Or'
         assert len(list(xml)) == 3
 
         for f in xml:
-            assert f.tag == '{http://www.opengis.net/ogc}PropertyIsEqualTo'
+            assert f.tag == '{http://www.opengis.net/fes/2.0}PropertyIsEqualTo'
 
-            propertyname = f.find('./{http://www.opengis.net/ogc}PropertyName')
-            assert propertyname.text == 'pkey_boring'
+            valuereference = f.find(
+                './{http://www.opengis.net/fes/2.0}ValueReference')
+            assert valuereference.text == 'pkey_boring'
 
-            literal = f.find('./{http://www.opengis.net/ogc}Literal')
+            literal = f.find('./{http://www.opengis.net/fes/2.0}Literal')
             assert literal.text in l
 
             l.remove(literal.text)

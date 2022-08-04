@@ -85,6 +85,10 @@ def clean_xml(xml):
     # remove namespace prefixes in tags
     r = re.sub(r'<(/?)[^:]+:([^ >]+)([ >])', r'<\1\2\3', r)
 
+    # remove namespace prefixes in attributes
+    while re.match(r'<([^ >]+)( [^:]+ )*[^:]+:([^ >]+)([ >])', r):
+        r = re.sub(r'<([^ >]+)( [^:]+ )*[^:]+:([^ >]+)([ >])', r'<\1\2\3\4', r)
+
     # remove extra spaces in tags
     r = re.sub(r'[ ]+/>', '/>', r)
 

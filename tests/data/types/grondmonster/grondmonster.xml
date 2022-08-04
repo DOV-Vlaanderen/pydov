@@ -14,14 +14,6 @@
         </diepte>
         <observatieData>
             <observatie>
-                <parameter>ASTM_NAAM</parameter>
-                <waarde_text>Fat clay</waarde_text>
-                <eenheid>-</eenheid>
-                <methode>Onbekend</methode>
-                <betrouwbaarheid>onbekend</betrouwbaarheid>
-                <veld_labo>LABO</veld_labo>
-            </observatie>
-            <observatie>
                 <parameter>KORRELVOLUMEMASSA</parameter>
                 <waarde_numeriek>2.650</waarde_numeriek>
                 <eenheid>t/m³</eenheid>
@@ -30,7 +22,40 @@
                 <veld_labo>LABO</veld_labo>
             </observatie>
             <observatie>
+                <parameter>WATERGEHALTE</parameter>
+                <waarde_numeriek>57.7</waarde_numeriek>
+                <eenheid>%</eenheid>
+                <methode>Onbekend</methode>
+                <betrouwbaarheid>onbekend</betrouwbaarheid>
+                <veld_labo>LABO</veld_labo>
+            </observatie>
+            <observatie>
                 <parameter>ZEEFPROEF</parameter>
+                <waarde_text></waarde_text>
+                <eenheid>-</eenheid>
+                <methode>Onbekend</methode>
+                <betrouwbaarheid>onbekend</betrouwbaarheid>
+                <veld_labo>LABO</veld_labo>
+                <opmerking>proef uitgevoerd</opmerking>
+            </observatie>
+            <observatie>
+                <parameter>ASTM_NAAM</parameter>
+                <waarde_text>Fat clay</waarde_text>
+                <eenheid>-</eenheid>
+                <methode>Onbekend</methode>
+                <betrouwbaarheid>onbekend</betrouwbaarheid>
+                <veld_labo>LABO</veld_labo>
+            </observatie>
+            <observatie>
+                <parameter>ASTM_CODE</parameter>
+                <waarde_text>CH</waarde_text>
+                <eenheid>-</eenheid>
+                <methode>Onbekend</methode>
+                <betrouwbaarheid>onbekend</betrouwbaarheid>
+                <veld_labo>LABO</veld_labo>
+            </observatie>
+            <observatie>
+                <parameter>AREOMETER</parameter>
                 <waarde_text></waarde_text>
                 <eenheid>-</eenheid>
                 <methode>Onbekend</methode>
@@ -47,42 +72,9 @@
                 <veld_labo>LABO</veld_labo>
             </observatie>
             <observatie>
-                <parameter>AREOMETER</parameter>
-                <waarde_text></waarde_text>
-                <eenheid>-</eenheid>
-                <methode>Onbekend</methode>
-                <betrouwbaarheid>onbekend</betrouwbaarheid>
-                <veld_labo>LABO</veld_labo>
-                <opmerking>proef uitgevoerd</opmerking>
-            </observatie>
-            <observatie>
-                <parameter>WATERGEHALTE</parameter>
-                <waarde_numeriek>57.7</waarde_numeriek>
-                <eenheid>%</eenheid>
-                <methode>Onbekend</methode>
-                <betrouwbaarheid>onbekend</betrouwbaarheid>
-                <veld_labo>LABO</veld_labo>
-            </observatie>
-            <observatie>
                 <parameter>BGGG</parameter>
                 <waarde_text>kalkh. weinig humush. zandh. klei</waarde_text>
                 <eenheid>-</eenheid>
-                <methode>Onbekend</methode>
-                <betrouwbaarheid>onbekend</betrouwbaarheid>
-                <veld_labo>LABO</veld_labo>
-            </observatie>
-            <observatie>
-                <parameter>ASTM_CODE</parameter>
-                <waarde_text>CH</waarde_text>
-                <eenheid>-</eenheid>
-                <methode>Onbekend</methode>
-                <betrouwbaarheid>onbekend</betrouwbaarheid>
-                <veld_labo>LABO</veld_labo>
-            </observatie>
-            <observatie>
-                <parameter>VLOEIGRENS</parameter>
-                <waarde_numeriek>93</waarde_numeriek>
-                <eenheid>%</eenheid>
                 <methode>Onbekend</methode>
                 <betrouwbaarheid>onbekend</betrouwbaarheid>
                 <veld_labo>LABO</veld_labo>
@@ -98,6 +90,14 @@
             <observatie>
                 <parameter>HUMUSGEHALTE</parameter>
                 <waarde_numeriek>4.7</waarde_numeriek>
+                <eenheid>%</eenheid>
+                <methode>Onbekend</methode>
+                <betrouwbaarheid>onbekend</betrouwbaarheid>
+                <veld_labo>LABO</veld_labo>
+            </observatie>
+            <observatie>
+                <parameter>VLOEIGRENS</parameter>
+                <waarde_numeriek>93</waarde_numeriek>
                 <eenheid>%</eenheid>
                 <methode>Onbekend</methode>
                 <betrouwbaarheid>onbekend</betrouwbaarheid>

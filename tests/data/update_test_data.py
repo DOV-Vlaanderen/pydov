@@ -644,6 +644,24 @@ if __name__ == '__main__':
             'types/grondwaterfilter/xsd_%s.xml' % xsd_schema.split('/')[-1],
             xsd_schema)
 
+    update_file('types/grondwaterfilter/grondwaterfilter_geenpeilmeting.xml',
+                build_dov_url('data/filter/1976-101132.xml'))
+
+    update_file('types/grondwaterfilter/wfsgetfeature_geenpeilmeting.xml',
+                build_dov_url('geoserver/ows?service=WFS'
+                              '&version=2.0.0&request=GetFeature&typeName='
+                              'gw_meetnetten:meetnetten&maxFeatures=1&'
+                              'CQL_Filter=filterfiche=%27' + build_dov_url(
+                                  'data/filter/1976-101132%27')))
+
+    update_file('types/grondwaterfilter/feature_geenpeilmeting.xml',
+                build_dov_url('geoserver/ows?service=WFS'
+                              '&version=2.0.0&request=GetFeature&typeName='
+                              'gw_meetnetten:meetnetten&maxFeatures=1&'
+                              'CQL_Filter=filterfiche=%27' + build_dov_url(
+                                  'data/filter/1976-101132%27')),
+                get_first_featuremember)
+
     # types/grondwatermonster
 
     update_file('types/grondwatermonster/grondwatermonster.xml',

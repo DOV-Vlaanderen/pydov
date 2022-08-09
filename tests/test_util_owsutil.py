@@ -552,4 +552,4 @@ class TestOwsutil(object):
         max_features = owsutil.get_wfs_max_features(wfs_capabilities)
 
         assert isinstance(max_features, int)
-        assert max_features == 10000
+        assert max_features > 0

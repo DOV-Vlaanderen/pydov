@@ -300,6 +300,25 @@ def get_namespace(wfs, layer):
     return namespace
 
 
+def get_wfs_max_features(capabilities):
+    """Get the default maximum number of features the WFS service will return.
+
+    Parameters
+    ----------
+    capabilities : bytes
+        WFS 2.0.0 capabilities document.
+    """
+    tree = etree.fromstring(capabilities)
+
+    count_default = tree.findtext(
+        './/{http://www.opengis.net/ows/1.1}Operation[@name="GetFeature"]'
+        '/{http://www.opengis.net/ows/1.1}Constraint[@name="CountDefault"]'
+        '/{http://www.opengis.net/ows/1.1}DefaultValue')
+
+    if count_default is not None:
+        return int(count_default)
+
+
 def set_geometry_column(location, geometry_column):
     """Set the geometry column of the location query recursively.
 

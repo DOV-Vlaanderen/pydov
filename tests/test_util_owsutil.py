@@ -538,3 +538,18 @@ class TestOwsutil(object):
             ':ValueReference>datum_aanvang</fes:ValueReference><fes:SortOrder>'
             'ASC</fes:SortOrder></fes:SortProperty></fes:SortBy></wfs:Query>'
             '</wfs:GetFeature>')
+
+    def test_get_wfs_max_features(self, wfs_capabilities):
+        """Test the owsutil.get_wfs_max_features method.
+
+        Test whether the default maximum number of features can be found.
+
+        Parameters
+        ----------
+        wfs_capabilities : pytest.fixture
+            PyTest fixture providing the WFS GetCapabilities response.
+        """
+        max_features = owsutil.get_wfs_max_features(wfs_capabilities)
+
+        assert isinstance(max_features, int)
+        assert max_features == 10000

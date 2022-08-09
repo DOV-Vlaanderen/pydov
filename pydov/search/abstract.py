@@ -109,6 +109,7 @@ class AbstractSearch(AbstractCommon):
         self._wfs = None
         self._wfs_schema = None
         self._wfs_namespace = None
+        self._wfs_max_features = None
         self._md_metadata = None
         self._fc_featurecatalogue = None
         self._xsd_schemas = None
@@ -138,6 +139,8 @@ class AbstractSearch(AbstractCommon):
 
             self._wfs = WebFeatureService(
                 url=wfs_endpoint_url, version="2.0.0", xml=capabilities)
+
+            self._wfs_max_features = owsutil.get_wfs_max_features(capabilities)
 
     def _init_namespace(self):
         """Initialise the WFS namespace associated with the layer.
@@ -720,10 +723,12 @@ class AbstractSearch(AbstractCommon):
                 'Error retrieving features from DOV WFS server:\n{}'.format(
                     etree.tostring(tree).decode('utf8')))
 
-        if int(tree.get('numberReturned')) == 10000:
+        if self._wfs_max_features is not None and \
+                int(tree.get('numberReturned')) == self._wfs_max_features:
             raise FeatureOverflowError(
                 'Reached the limit of {:d} returned features. Please split up '
-                'the query to ensure getting all results.'.format(10000))
+                'the query to ensure getting all results.'.format(
+                    self._wfs_max_features))
 
         HookRunner.execute_wfs_search_result(int(tree.get('numberReturned')))
         HookRunner.execute_wfs_search_result_received(getfeature, tree)

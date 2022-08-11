@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 """Module containing the abstract search classes to retrieve DOV data."""
 
-import datetime
 from distutils.util import strtobool
+from itertools import chain
+import datetime
+import math
 
 import owslib
 import owslib.fes2
@@ -16,10 +18,10 @@ import pydov
 from pydov.types.fields import _WfsInjectedField
 from pydov.util import owsutil
 from pydov.util.dovutil import build_dov_url, get_xsd_schema
-from pydov.util.errors import (FeatureOverflowError, InvalidFieldError,
-                               InvalidSearchParameterError, LayerNotFoundError,
-                               WfsGetFeatureError)
+from pydov.util.errors import (InvalidFieldError, InvalidSearchParameterError,
+                               LayerNotFoundError, WfsGetFeatureError)
 from pydov.util.hooks import HookRunner
+from pydov.util.net import LocalSessionThreadPool
 
 
 class AbstractCommon(object):
@@ -563,7 +565,7 @@ class AbstractSearch(AbstractCommon):
     @staticmethod
     def _get_remote_wfs_feature(wfs, typename, location, filter,
                                 sort_by, propertyname, max_features,
-                                geometry_column):
+                                geometry_column, start_index=0, session=None):
         """Perform the WFS 2.0 GetFeature call to get features from the remote
         service.
 
@@ -583,6 +585,11 @@ class AbstractSearch(AbstractCommon):
             Limit the maximum number of features to request.
         geometry_column : str
             Name of the geometry column to use in the spatial filter.
+        start_index : int
+            Index of the first feature to return. Can be used for paging.
+        session : requests.Session
+            Session to use to perform HTTP requests for data. Defaults to None,
+            which means a new session will be created for each request.
 
         Returns
         -------
@@ -597,10 +604,9 @@ class AbstractSearch(AbstractCommon):
             filter=filter,
             sort_by=sort_by,
             max_features=max_features,
-            propertyname=propertyname
+            propertyname=propertyname,
+            start_index=start_index
         )
-
-        HookRunner.execute_wfs_search_init(typename)
 
         tree = HookRunner.execute_inject_wfs_getfeature_response(
             wfs_getfeature_xml)
@@ -610,7 +616,8 @@ class AbstractSearch(AbstractCommon):
 
         return owsutil.wfs_get_feature(
             baseurl=wfs.url,
-            get_feature_request=wfs_getfeature_xml
+            get_feature_request=wfs_getfeature_xml,
+            session=session
         ), wfs_getfeature_xml
 
     def _search(self, location=None, query=None, return_fields=None,
@@ -640,10 +647,10 @@ class AbstractSearch(AbstractCommon):
             defaults to an empty list.
 
         Returns
-        -------
-        etree.Element
-            XML tree of the WFS response containing the features matching
-            the location or the query.
+        ------
+        list of etree.Element
+            XML trees of the WFS responses containing the features matching
+            the location and the query.
 
         Raises
         ------
@@ -658,10 +665,6 @@ class AbstractSearch(AbstractCommon):
 
             When a field that can only be used as a query parameter is used as
             a return field.
-
-        pydov.util.errors.FeatureOverflowError
-            When the number of features to be returned is equal to the
-            maxFeatures limit of the WFS server.
 
         """
         self._pre_search_validation(location, query, sort_by, return_fields,
@@ -706,34 +709,83 @@ class AbstractSearch(AbstractCommon):
 
             sort_by = etree.tostring(sort_by_xml, encoding='unicode')
 
-        fts, getfeature = self._get_remote_wfs_feature(
-            wfs=self._wfs,
+        HookRunner.execute_wfs_search_init(params=dict(
             typename=self._layer,
             location=location,
             filter=filter_request,
             sort_by=sort_by,
             max_features=max_features,
-            propertyname=wfs_property_names,
-            geometry_column=self._geometry_column)
+            propertynames=wfs_property_names,
+            geometry_column=self._geometry_column
+        ))
 
-        tree = etree.fromstring(fts)
+        def _get_remote_wfs(start_index=0, session=None):
+            fts, getfeature = self._get_remote_wfs_feature(
+                wfs=self._wfs,
+                typename=self._layer,
+                location=location,
+                filter=filter_request,
+                sort_by=sort_by,
+                max_features=max_features,
+                propertyname=wfs_property_names,
+                geometry_column=self._geometry_column,
+                start_index=start_index,
+                session=session)
 
-        if tree.get('numberReturned') is None:
-            raise WfsGetFeatureError(
-                'Error retrieving features from DOV WFS server:\n{}'.format(
-                    etree.tostring(tree).decode('utf8')))
+            tree = etree.fromstring(fts)
 
-        if self._wfs_max_features is not None and \
-                int(tree.get('numberReturned')) == self._wfs_max_features:
-            raise FeatureOverflowError(
-                'Reached the limit of {:d} returned features. Please split up '
-                'the query to ensure getting all results.'.format(
-                    self._wfs_max_features))
+            if tree.get('numberReturned') is None:
+                raise WfsGetFeatureError(
+                    'Error retrieving features from '
+                    'DOV WFS server:\n{}'.format(
+                        etree.tostring(tree).decode('utf8')))
 
-        HookRunner.execute_wfs_search_result(int(tree.get('numberReturned')))
-        HookRunner.execute_wfs_search_result_received(getfeature, tree)
+            number_matched = int(tree.get('numberMatched'))
+            number_returned = int(tree.get('numberReturned'))
 
-        return tree
+            HookRunner.execute_wfs_search_result(
+                number_matched, number_returned)
+
+            HookRunner.execute_wfs_search_result_received(getfeature, tree)
+
+            return tree
+
+        result = []
+
+        # execute the first WFS query
+        tree = _get_remote_wfs(start_index=0, session=pydov.session)
+        result.append(tree)
+
+        number_matched = int(tree.get('numberMatched'))
+        number_returned = int(tree.get('numberReturned'))
+
+        if max_features is not None and number_returned == max_features:
+            # we asked for a limited number of features and we got all of them,
+            # we're done!
+            pass
+        elif number_matched == number_returned:
+            # all features that matched the query were returned,
+            # we're done!
+            pass
+        else:
+            # more features matched the query than were returned by the server,
+            # we need more requests to fetch the rest of the results
+            pool = LocalSessionThreadPool()
+
+            fts_to_get = number_matched - number_returned
+            fts_per_req = self._wfs_max_features or number_returned
+            extra_reqs = math.ceil(fts_to_get/fts_per_req)
+
+            for i in range(extra_reqs):
+                pool.execute(_get_remote_wfs, ((i+1)*fts_per_req,))
+
+            for r in pool.join():
+                if r.get_error():
+                    raise r.get_error()
+                elif r.get_result():
+                    result.append(r.get_result())
+
+        return result
 
     def get_description(self):
         """Get the description of this search layer.
@@ -832,10 +884,6 @@ class AbstractSearch(AbstractCommon):
             When a field that can only be used as a query parameter is used as
             a return field.
 
-        pydov.util.errors.FeatureOverflowError
-            When the number of features to be returned is equal to the
-            maxFeatures limit of the WFS server.
-
         AttributeError
             When the argument supplied as return_fields is not a list,
             tuple or set.
@@ -845,13 +893,17 @@ class AbstractSearch(AbstractCommon):
             subclass.
 
         """
-        fts = self._search(location=location, query=query, sort_by=sort_by,
-                           return_fields=return_fields,
-                           max_features=max_features)
+        trees = self._search(location=location, query=query, sort_by=sort_by,
+                             return_fields=return_fields,
+                             max_features=max_features)
 
-        features = self._type.from_wfs(fts, self._wfs_namespace)
+        feature_generators = []
+        for tree in trees:
+            feature_generators.append(
+                self._type.from_wfs(tree, self._wfs_namespace))
 
         df = pd.DataFrame(
-            data=self._type.to_df_array(features, return_fields),
+            data=self._type.to_df_array(
+                chain.from_iterable(feature_generators), return_fields),
             columns=self._type.get_field_names(return_fields))
         return df

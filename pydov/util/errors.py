@@ -37,12 +37,6 @@ class WfsGetFeatureError(OWSError):
     pass
 
 
-class FeatureOverflowError(OWSError):
-    """Error that occurs when the amount of features returned by the WFS
-    query reached the server limit."""
-    pass
-
-
 class InvalidSearchParameterError(DOVError):
     """Error that occurs when given invalid parameters to the DOV search."""
     pass

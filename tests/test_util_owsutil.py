@@ -232,11 +232,68 @@ class TestOwsutil(object):
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
             '<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs/2.0" '
             'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
-            'service="WFS" version="2.0.0" '
+            'service="WFS" version="2.0.0" startIndex="0" '
             'xsi:schemaLocation="http://www.opengis.net/wfs/2.0 '
             'http://schemas.opengis.net/wfs/2.0/wfs.xsd"><wfs:Query '
             'typeNames="dov-pub:Boringen"/></wfs'
             ':GetFeature>')
+
+    def test_wfs_build_getfeature_start_index(self):
+        """Test the owsutil.wfs_build_getfeature_request method with a
+        startIndex defined.
+
+        Test whether the XML of the WFS GetFeature call is generated correctly.
+
+        """
+        xml = owsutil.wfs_build_getfeature_request(
+            'dov-pub:Boringen', start_index=3)
+
+        assert "startIndex" in xml.attrib.keys()
+        assert xml.attrib["startIndex"] == "3"
+
+    def test_wfs_build_getfeature_start_index_negative(self):
+        """Test the owsutil.wfs_build_getfeature_request method with a
+        a negative startIndex value.
+
+        Test whether an AttributeError is raised.
+
+        """
+        with pytest.raises(AttributeError):
+            owsutil.wfs_build_getfeature_request(
+                'dov-pub:Boringen', start_index=-5)
+
+    def test_wfs_build_getfeature_start_index_none(self):
+        """Test the owsutil.wfs_build_getfeature_request method with a
+        a startIndex value of None.
+
+        Test whether an AttributeError is raised.
+
+        """
+        with pytest.raises(AttributeError):
+            owsutil.wfs_build_getfeature_request(
+                'dov-pub:Boringen', start_index=None)
+
+    def test_wfs_build_getfeature_start_index_float(self):
+        """Test the owsutil.wfs_build_getfeature_request method with a
+        a floating point startIndex value.
+
+        Test whether an AttributeError is raised.
+
+        """
+        with pytest.raises(AttributeError):
+            owsutil.wfs_build_getfeature_request(
+                'dov-pub:Boringen', start_index=1.5)
+
+    def test_wfs_build_getfeature_start_index_string(self):
+        """Test the owsutil.wfs_build_getfeature_request method with a
+        an non-integer startIndex value.
+
+        Test whether an AttributeError is raised.
+
+        """
+        with pytest.raises(AttributeError):
+            owsutil.wfs_build_getfeature_request(
+                'dov-pub:Boringen', start_index="0")
 
     def test_wfs_build_getfeature_maxfeatures(self):
         """Test the owsutil.wfs_build_getfeature_request method with a
@@ -322,7 +379,7 @@ class TestOwsutil(object):
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
             '<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs/2.0" '
             'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
-            'service="WFS" version="2.0.0" '
+            'service="WFS" version="2.0.0" startIndex="0" '
             'xsi:schemaLocation="http://www.opengis.net/wfs/2.0 '
             'http://schemas.opengis.net/wfs/2.0/wfs.xsd"><wfs:Query '
             'typeNames="dov-pub:Boringen"><fes:Filter '
@@ -348,7 +405,7 @@ class TestOwsutil(object):
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
             '<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs/2.0" '
             'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
-            'service="WFS" version="2.0.0" '
+            'service="WFS" version="2.0.0" startIndex="0" '
             'xsi:schemaLocation="http://www.opengis.net/wfs/2.0 '
             'http://schemas.opengis.net/wfs/2.0/wfs.xsd"> <wfs:Query '
             'typeNames="dov-pub:Boringen"> '
@@ -392,7 +449,7 @@ class TestOwsutil(object):
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
             '<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs/2.0" '
             'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
-            'service="WFS" version="2.0.0" '
+            'service="WFS" version="2.0.0" startIndex="0" '
             'xsi:schemaLocation="http://www.opengis.net/wfs/2.0 '
             'http://schemas.opengis.net/wfs/2.0/wfs.xsd"> <wfs:Query '
             'typeNames="dov-pub:Boringen"> <fes:Filter> '
@@ -422,7 +479,7 @@ class TestOwsutil(object):
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
             '<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs/2.0" '
             'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
-            'service="WFS" version="2.0.0" '
+            'service="WFS" version="2.0.0" startIndex="0" '
             'xsi:schemaLocation="http://www.opengis.net/wfs/2.0 '
             'http://schemas.opengis.net/wfs/2.0/wfs.xsd"> <wfs:Query '
             'typeNames="dov-pub:Boringen"> <fes:Filter> <fes:And> '
@@ -462,7 +519,7 @@ class TestOwsutil(object):
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
             '<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs/2.0" '
             'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
-            'service="WFS" version="2.0.0" '
+            'service="WFS" version="2.0.0" startIndex="0" '
             'xsi:schemaLocation="http://www.opengis.net/wfs/2.0 '
             'http://schemas.opengis.net/wfs/2.0/wfs.xsd"> <wfs:Query '
             'typeNames="dov-pub:Boringen"> '
@@ -498,7 +555,7 @@ class TestOwsutil(object):
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
             '<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs/2.0" '
             'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
-            'service="WFS" version="2.0.0" '
+            'service="WFS" version="2.0.0" startIndex="0" '
             'xsi:schemaLocation="http://www.opengis.net/wfs/2.0 '
             'http://schemas.opengis.net/wfs/2.0/wfs.xsd"><wfs:Query '
             'typeNames="dov-pub:Boringen"><wfs:PropertyName>diepte_tot_m</wfs'
@@ -527,7 +584,7 @@ class TestOwsutil(object):
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
             '<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs/2.0" '
             'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
-            'service="WFS" version="2.0.0" '
+            'service="WFS" version="2.0.0" startIndex="0" '
             'xsi:schemaLocation="http://www.opengis.net/wfs/2.0 '
             'http://schemas.opengis.net/wfs/2.0/wfs.xsd"><wfs:Query '
             'typeNames="dov-pub:Boringen"><wfs:PropertyName>diepte_tot_m</wfs'

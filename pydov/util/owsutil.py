@@ -9,6 +9,7 @@ from owslib.namespaces import Namespaces
 from owslib.util import nspath_eval
 
 import pydov
+from pydov.util.net import SessionFactory
 
 from .errors import FeatureCatalogueNotFoundError, MetadataNotFoundError
 from .hooks import HookRunner
@@ -351,7 +352,7 @@ def set_geometry_column(location, geometry_column):
 
 def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
                                  filter=None, sort_by=None, propertyname=None,
-                                 max_features=None):
+                                 max_features=None, start_index=0):
     """Build a WFS 2.0 GetFeature request in XML to be used as payload
     in a WFS 2.0 GetFeature request using POST.
 
@@ -373,6 +374,8 @@ def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
         List of properties to return. Defaults to all properties.
     max_features : int
         Limit the maximum number of features to request.
+    start_index : int
+        The index of the first feature to return.
 
     Raises
     ------
@@ -397,6 +400,10 @@ def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
         if (not isinstance(max_features, int)) or (max_features <= 0):
             raise AttributeError('max_features should be a positive integer')
         xml.set('count', str(max_features))
+
+    if (not isinstance(start_index, int)) or (start_index < 0):
+        raise AttributeError('start_index should be a positive integer or 0')
+    xml.set('startIndex', str(start_index))
 
     xml.set('{http://www.w3.org/2001/XMLSchema-instance}schemaLocation',
             'http://www.opengis.net/wfs/2.0 '
@@ -440,7 +447,7 @@ def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
     return xml
 
 
-def wfs_get_feature(baseurl, get_feature_request):
+def wfs_get_feature(baseurl, get_feature_request, session=None):
     """Perform a WFS request using POST.
 
     Parameters
@@ -449,6 +456,9 @@ def wfs_get_feature(baseurl, get_feature_request):
         Base URL of the WFS service.
     get_feature_request : etree.Element
         XML element representing the WFS GetFeature request.
+    session : requests.Session
+        Session to use to perform HTTP requests for data. Defaults to None,
+        which means a new session will be created for each request.
 
     Returns
     -------
@@ -456,9 +466,12 @@ def wfs_get_feature(baseurl, get_feature_request):
         Response of the WFS service.
 
     """
+    if session is None:
+        session = SessionFactory.get_session()
+
     data = etree.tostring(get_feature_request)
 
-    request = pydov.session.post(baseurl, data)
+    request = session.post(baseurl, data)
     request.encoding = 'utf-8'
     return request.text.encode('utf8')
 

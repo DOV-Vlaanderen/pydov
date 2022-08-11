@@ -736,8 +736,9 @@ class AbstractSearch(AbstractCommon):
 
             if tree.get('numberReturned') is None:
                 raise WfsGetFeatureError(
-                    'Error retrieving features from '
-                    'DOV WFS server:\n{}'.format(
+                    "Error retrieving features of layer '{}' from "
+                    "DOV WFS server:\n{}".format(
+                        self._layer,
                         etree.tostring(tree).decode('utf8')))
 
             number_matched = int(tree.get('numberMatched'))

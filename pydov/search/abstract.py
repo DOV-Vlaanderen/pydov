@@ -7,6 +7,7 @@ import datetime
 import math
 
 import owslib
+import owslib.fes
 import owslib.fes2
 from owslib.etree import etree
 from owslib.feature import get_schema
@@ -499,6 +500,14 @@ class AbstractSearch(AbstractCommon):
 
         if query is not None:
             if not isinstance(query, owslib.fes2.OgcExpression):
+                if isinstance(query, owslib.fes.OgcExpression):
+                    raise InvalidSearchParameterError(
+                        "Query should be an owslib.fes2.OgcExpression.\n "
+                        "Try importing your query operators, like "
+                        f"'{query.__class__.__name__}', "
+                        "from the owslib.fes2 package."
+                    )
+
                 raise InvalidSearchParameterError(
                     "Query should be an owslib.fes2.OgcExpression.")
 

@@ -28,6 +28,7 @@ class AbstractLocation(object):
     initialisation.
 
     """
+
     def _get_id(self):
         random_id = ''.join(random.choice(
             string.ascii_letters + string.digits) for x in range(8))
@@ -580,7 +581,7 @@ class GmlFilter(AbstractLocationFilter):
         self.subelements.update(multisurfaces)
 
         if len(self.subelements) == 0:
-            raise ValueError('Failed to extract geometries from GML file.')
+            raise ValueError('Failed to extract geometries from GML 3.2 file.')
 
     def set_geometry_column(self, geometry_column):
         if len(self.subelements) == 1:

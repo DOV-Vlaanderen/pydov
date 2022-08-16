@@ -326,8 +326,8 @@ def set_geometry_column(location, geometry_column):
     Parameters
     ----------
     location : pydov.util.location.AbstractLocationFilter or \
-                owslib.fes.BinaryLogicOpType<AbstractLocationFilter> or \
-                owslib.fes.UnaryLogicOpType<AbstractLocationFilter>
+                owslib.fes2.BinaryLogicOpType<AbstractLocationFilter> or \
+                owslib.fes2.UnaryLogicOpType<AbstractLocationFilter>
         Location filter limiting the features to retrieve. Can either be a
         single instance of a subclass of AbstractLocationFilter, or a
         combination using And, Or, Not of AbstractLocationFilters.
@@ -366,9 +366,9 @@ def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
     location : pydov.util.location.AbstractLocationFilter
         Location filter limiting the features to retrieve.
         Requires ``geometry_column`` to be supplied as well.
-    filter : str of owslib.fes.FilterRequest, optional
+    filter : str of owslib.fes2.FilterRequest, optional
         Filter request to search on attribute values.
-    sort_by : str of owslib.fes.SortBy, optional
+    sort_by : str of owslib.fes2.SortBy, optional
         List of properties to sort by.
     propertyname : list<str>, optional
         List of properties to return. Defaults to all properties.

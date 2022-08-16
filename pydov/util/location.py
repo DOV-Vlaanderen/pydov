@@ -612,6 +612,8 @@ class GmlFilter(AbstractLocationFilter):
 class GeometryFilter(GmlFilter):
     """Class for construction a spatial filter expression from any Geometry
     Fiona can convert to a GML 3.2 document.
+
+    This class requires the ``fiona`` package to be installed.
     """
 
     def __init__(self, geometry, location_filter,
@@ -664,7 +666,7 @@ class GeometryFilter(GmlFilter):
                 raise UserWarning('Please use module Fiona version 1.8.18 '
                                   'or higher')
         except ImportError:
-            raise ImportError('No module named fiona. GeometryFilter '
+            raise ImportError('Failed to import fiona. GeometryFilter '
                               'requires fiona to be installed.')
         else:
             # Open the geometry as a collection containing multiple records
@@ -686,6 +688,8 @@ class GeometryFilter(GmlFilter):
 class GeopandasFilter(GmlFilter):
     """Class for construction a spatial filter expression from a
     GeoPandas object.
+
+    This class requires the ``geopandas`` package to be installed.
     """
 
     def __init__(self, geodataframe, location_filter,
@@ -731,7 +735,7 @@ class GeopandasFilter(GmlFilter):
         try:
             import geopandas
         except ImportError:
-            raise ImportError('No module named GeoPandas. GeopandasFilter '
+            raise ImportError('Failed to import geopandas. GeopandasFilter '
                               'requires geopandas to be installed.')
         else:
             if not isinstance(gdf, geopandas.GeoDataFrame):

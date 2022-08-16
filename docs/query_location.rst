@@ -88,7 +88,7 @@ GmlObject
 
 Logically combining location filter expressions
 ***********************************************
-The same way you can combine multiple attribute filters in one query, you can also combine different location filter in one location query. With the same logical filters from OWSLib you can build advanced spatial queries by using the `And`, `Or` and `Not` predicates from the owslib.fes package.
+The same way you can combine multiple attribute filters in one query, you can also combine different location filter in one location query. With the same logical filters from OWSLib you can build advanced spatial queries by using the `And`, `Or` and `Not` predicates from the owslib.fes2 package.
 
 Each of `And`, `Or` and `Not` take a list as argument, in the case of `And` and `Or` the list should consist of at least two items. Each item can be a simple location filter expression, another `And`, `Or` or `Not` expression or a GmlFilter, so you can nest different levels of location filters.
 

@@ -467,12 +467,12 @@ class AbstractSearch(AbstractCommon):
         ----------
         location : pydov.util.location.AbstractLocationFilter
             Location filter limiting the features to retrieve.
-        query : owslib.fes.OgcExpression
+        query : owslib.fes2.OgcExpression
             OGC filter expression to use for searching. This can contain any
-            combination of filter elements defined in owslib.fes. The query
+            combination of filter elements defined in owslib.fes2. The query
             should use the fields provided in `get_fields()`. Note that not
             all fields are currently supported as a search parameter.
-        sort_by : owslib.fes.SortBy, optional
+        sort_by : owslib.fes2.SortBy, optional
             List of properties to sort by.
         return_fields : list<str> or tuple<str> or set<str>
             A list of fields to be returned in the output data. This should
@@ -584,9 +584,9 @@ class AbstractSearch(AbstractCommon):
             Layername to query.
         location : pydov.util.location.AbstractLocationFilter
             Location filter limiting the features to retrieve.
-        filter : str of owslib.fes.FilterRequest
+        filter : str of owslib.fes2.FilterRequest
             Filter request to search on attribute values.
-        sort_by : str of owslib.fes.SortBy, optional
+        sort_by : str of owslib.fes2.SortBy, optional
             List of properties to sort by.
         propertyname : list<str>
             List of properties to return.
@@ -637,16 +637,16 @@ class AbstractSearch(AbstractCommon):
         ----------
         location : pydov.util.location.AbstractLocationFilter
             Location filter limiting the features to retrieve.
-        query : owslib.fes.OgcExpression
+        query : owslib.fes2.OgcExpression
             OGC filter expression to use for searching. This can contain any
-            combination of filter elements defined in owslib.fes. The query
+            combination of filter elements defined in owslib.fes2. The query
             should use the fields provided in `get_fields()`. Note that not
             all fields are currently supported as a search parameter.
         return_fields : list<str>
             A list of fields to be returned in the output data. This should
             be a subset of the fields provided in `get_fields()`. Note that
             not all fields are currently supported as return fields.
-        sort_by : owslib.fes.SortBy, optional
+        sort_by : owslib.fes2.SortBy, optional
             List of properties to sort by.
         max_features : int
             Limit the maximum number of features to request.
@@ -855,17 +855,17 @@ class AbstractSearch(AbstractCommon):
         Parameters
         ----------
         location : pydov.util.location.AbstractLocationFilter or \
-                   owslib.fes.BinaryLogicOpType<AbstractLocationFilter> or \
-                   owslib.fes.UnaryLogicOpType<AbstractLocationFilter>
+                   owslib.fes2.BinaryLogicOpType<AbstractLocationFilter> or \
+                   owslib.fes2.UnaryLogicOpType<AbstractLocationFilter>
             Location filter limiting the features to retrieve. Can either be a
             single instance of a subclass of AbstractLocationFilter, or a
             combination using And, Or, Not of AbstractLocationFilters.
-        query : owslib.fes.OgcExpression
+        query : owslib.fes2.OgcExpression
             OGC filter expression to use for searching. This can contain any
-            combination of filter elements defined in owslib.fes. The query
+            combination of filter elements defined in owslib.fes2. The query
             should use the fields provided in `get_fields()`. Note that not
             all fields are currently supported as a search parameter.
-        sort_by : owslib.fes.SortBy, optional
+        sort_by : owslib.fes2.SortBy, optional
             List of properties to sort by.
         return_fields : list<str> or tuple<str> or set<str>
             A list of fields to be returned in the output data. This should

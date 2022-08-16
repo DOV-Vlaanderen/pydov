@@ -110,7 +110,7 @@ class AbstractTestSearch(object):
         Instance of subclass of this type used for searching.
     datatype_class : pydov.types.abstract.AbstractDovType
             Class reference for the corresponding datatype.
-    valid_query_single : owslib.fes.OgcExpression
+    valid_query_single : owslib.fes2.OgcExpression
         OGC expression of a valid query returning a single result.
     inexistent_field : str
             The name of an inexistent field.

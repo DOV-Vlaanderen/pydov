@@ -38,7 +38,7 @@ Read the [quick start](https://pydov.readthedocs.io/en/stable/quickstart.html) f
 from pydov.search.boring import BoringSearch
 from pydov.util.location import Within, Box
 
-from owslib.fes import PropertyIsGreaterThan
+from owslib.fes2 import PropertyIsGreaterThan
 
 boringsearch = BoringSearch()
 

@@ -681,8 +681,11 @@ class SimpleStatusHook(AbstractReadHook):
             else:
                 total_results = number_matched
 
-            self.wfs_progress.result_count = math.ceil(
-                total_results/number_returned)
+            if number_returned > 0:
+                self.wfs_progress.result_count = math.ceil(
+                    total_results/number_returned)
+            else:
+                self.wfs_progress.result_count = 0
 
             self.xml_progress.result_count = total_results
 

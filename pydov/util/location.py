@@ -592,11 +592,11 @@ class GmlFilter(AbstractLocationFilter):
         if len(self.subelements) == 0:
             if gml_tree.find('.//{http://www.opengis.net/gml}*') is not None:
                 raise ValueError(
-                    'GML file should be GML version 3.2, it appears to be '
+                    'GML document should be GML version 3.2, it appears to be '
                     'older.')
 
-            raise ValueError('Failed to extract geometries from GML3.2 file, '
-                             'is this a valid GML3.2 file?')
+            raise ValueError('Failed to extract geometries from GML3.2 '
+                             'document, is this a valid GML3.2 document?')
 
     def set_geometry_column(self, geometry_column):
         if len(self.subelements) == 1:

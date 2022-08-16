@@ -502,7 +502,7 @@ class AbstractSearch(AbstractCommon):
             if not isinstance(query, owslib.fes2.OgcExpression):
                 if isinstance(query, owslib.fes.OgcExpression):
                     raise InvalidSearchParameterError(
-                        "Query should be an owslib.fes2.OgcExpression.\n "
+                        "Query should be an owslib.fes2.OgcExpression.\n"
                         "Try importing your query operators, like "
                         f"'{query.__class__.__name__}', "
                         "from the owslib.fes2 package."

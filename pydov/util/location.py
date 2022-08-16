@@ -247,20 +247,20 @@ class Point(AbstractLocation):
 
 
 class GmlObject(AbstractLocation):
-    """Class representing a raw GML location, f.ex. gml:Surface or
-    gml:MultiSurface."""
+    """Class representing a raw GML3.2 location, f.ex. gml32:Surface or
+    gml32:MultiSurface."""
 
     def __init__(self, gml_element):
         """Initialise a GmlObject.
 
         Initialise a GmlObject from an existing XML element representing a
-        GML location.
+        GML3.2 location.
 
         Parameters
         ----------
         gml_element : etree.Element or str or bytes
-            XML element of the GML location, either as etree.Element, bytes or
-            string representation.
+            XML element of the GML3.2 location, either as etree.Element,
+            bytes or string representation.
 
         """
         if isinstance(gml_element, str):
@@ -269,6 +269,15 @@ class GmlObject(AbstractLocation):
             self.element = etree.fromstring(gml_element)
         else:
             self.element = gml_element
+
+        if self.element.find('.//{http://www.opengis.net/gml/3.2}*') is None:
+            if self.element.find(
+                    './/{http://www.opengis.net/gml}*') is not None:
+                raise ValueError(
+                    'GML element should be GML version 3.2, it appears to be '
+                    'older.')
+
+            raise ValueError('GML element appears not to be valid GML3.2')
 
     def get_element(self):
         return self.element
@@ -436,19 +445,19 @@ class WithinDistance(AbstractLocationFilter):
 
 
 class GmlFilter(AbstractLocationFilter):
-    """Class for construction a spatial filter expression from a GML
-    3.2 document.
+    """Class for construction a spatial filter expression from a GML3.2
+    document.
     """
 
     def __init__(self, gml, location_filter, location_filter_kwargs=None,
                  combinator=Or):
-        """Initialise a spatial filter expression from a GML 3.2 string.
+        """Initialise a spatial filter expression from a GML3.2 string.
 
         Parameters
         ----------
         gml : str
             Either a string representation of the GML document to parse,
-            or a path to a GML file on disk.
+            or a path to a GML3.2 file on disk.
         location_filter : class<AbstractLocationFilter>
             Location filter to use for the geometries in the GML document.
         location_filter_kwargs : dict, optional
@@ -538,7 +547,7 @@ class GmlFilter(AbstractLocationFilter):
             if gml_tree is not None:
                 self._parse_gml_tree(gml_tree)
             else:
-                raise ValueError('Failed to parse GML file.')
+                raise ValueError('Failed to parse GML3.2 file.')
 
     def _parse_gml_tree(self, gml_tree):
         """Parse the GML tree and add subelements for geometries.
@@ -581,7 +590,13 @@ class GmlFilter(AbstractLocationFilter):
         self.subelements.update(multisurfaces)
 
         if len(self.subelements) == 0:
-            raise ValueError('Failed to extract geometries from GML 3.2 file.')
+            if gml_tree.find('.//{http://www.opengis.net/gml}*') is not None:
+                raise ValueError(
+                    'GML file should be GML version 3.2, it appears to be '
+                    'older.')
+
+            raise ValueError('Failed to extract geometries from GML3.2 file, '
+                             'is this a valid GML3.2 file?')
 
     def set_geometry_column(self, geometry_column):
         if len(self.subelements) == 1:

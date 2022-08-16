@@ -124,6 +124,20 @@ class TestPoint(object):
             '3.7856620304411</gml:pos></gml:Point><gml:Distance '
             'units="meter">100.000000</gml:Distance></fes:DWithin>')
 
+    def test_gml_311(self):
+        """Test the GmlFilter with GML version 3.1.1.
+
+        Test whether a ValueError is raised.
+        """
+        with open('tests/data/util/location/point_single_31370_gml31.gml',
+                  'r') as gml_file:
+            gml = gml_file.read()
+
+        with pytest.raises(ValueError) as error:
+            GmlFilter(gml, Within)
+
+            assert 'older' in error
+
 
 class TestMultipoint(object):
     """Class grouping tests for multipoint locations."""
@@ -256,7 +270,7 @@ class TestLine(object):
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
             '<fes:DWithin><fes:ValueReference>geom</fes:ValueReference><gml'
             ':LineString srsName="urn:ogc:def:crs:EPSG::31370" gml:id="line_'
-                'single_31370.geom.0"><gml:posList'
+            'single_31370.geom.0"><gml:posList'
             '>108344.619471974 195008.119519901 108801.613305297 '
             '194842.656235421 109077.385446096 '
             '195094.790764152</gml:posList></gml:LineString><gml:Distance '
@@ -292,7 +306,8 @@ class TestLine(object):
             point = f.find('./{http://www.opengis.net/gml/3.2}LineString')
             assert point.get('srsName') == 'urn:ogc:def:crs:EPSG::31370'
 
-            posList = point.find('./{http://www.opengis.net/gml/3.2}posList').text
+            posList = point.find(
+                './{http://www.opengis.net/gml/3.2}posList').text
             assert posList in lines
 
             lines.remove(posList)
@@ -900,7 +915,6 @@ class TestGeopandasFilter:
         xml = f.toXML()
 
         print(clean_xml(etree.tostring(xml).decode('utf8')))
-
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
             '<fes:Within xmlns:gml="http://www.opengis.net/gml/3.2" '

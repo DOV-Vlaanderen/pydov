@@ -199,6 +199,35 @@ class TestLocation(object):
                 '194960.844295764</gml:posList></gml:LinearRing></gml'
                 ':exterior></gml:Polygon>')
 
+    def test_gmlobject_no_gml(self):
+        """Test the GmlObject type with XML that is not GML.
+
+        Test whether an ValueError is raised.
+
+        """
+        with open('tests/data/types/boring/boring.xml', 'r') as xmlfile:
+            xml = xmlfile.read()
+
+            with pytest.raises(ValueError) as error:
+                GmlObject(xml)
+
+                assert 'not to be valid GML3.2' in error
+
+    def test_gmlobject_old_gml(self):
+        """Test the GmlObject type with XML that is GML 3.1.1
+
+        Test whether an ValueError is raised.
+
+        """
+        with open('tests/data/util/location/point_single_31370_gml31.gml',
+                  'r') as xmlfile:
+            xml = xmlfile.read()
+
+            with pytest.raises(ValueError) as error:
+                GmlObject(xml)
+
+                assert 'older' in error
+
 
 class TestBinarySpatialFilters(object):
     """Class grouping tests for the AbstractBinarySpatialFilter subtypes."""

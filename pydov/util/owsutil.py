@@ -90,7 +90,7 @@ def get_remote_metadata(contentmetadata):
         contentmetadata.parse_remote_metadata(pydov.util.net.request_timeout)
 
     for remote_md in contentmetadata.metadataUrls:
-        if 'metadata' in remote_md:
+        if 'metadata' in remote_md and remote_md['metadata'] is not None:
             return remote_md['metadata']
 
     raise MetadataNotFoundError

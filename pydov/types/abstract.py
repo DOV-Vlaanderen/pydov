@@ -125,6 +125,56 @@ class AbstractTypeCommon(AbstractCommon):
         return fields
 
     @classmethod
+    def _get_module_classes_metadata(cls, base_class, filter_fn=None):
+        """Get metadata of the specific classes in a the same module as this
+        class.
+
+        Only returns metadata of the classes matched by the parameters.
+
+        Parameters
+        ----------
+        base_class : class
+            Only return classes that are a subclass of this class.
+        filter_fn : function accepting a single argument <class>, optional
+            Filter function to apply to matching classes to further
+            filter the results, by default None which will apply no additional
+            filtering.
+
+        Returns
+        -------
+        dict<str,dict>
+            Dictionary containing the metadata of the available classes.
+
+        """
+        classes = [
+            c[1] for c in inspect.getmembers(
+                sys.modules[cls.__module__], inspect.isclass)
+            if (issubclass(c[1], base_class)
+                and c[1] != base_class
+                and (filter_fn is None or filter_fn(c[1])))
+        ]
+
+        def get_definition(clazz):
+            if clazz.__doc__:
+                doc = [clazz.__doc__]
+            else:
+                doc = []
+
+            doc.extend(['It has the following fields: ' +
+                        ', '.join(clazz.get_field_names()) + '.'])
+
+            return ' '.join(doc)
+
+        return dict(zip(
+            [c.__name__ for c in classes],
+            [{
+                'name': c.__name__,
+                'class': c,
+                'definition': get_definition(c)
+            } for c in classes])
+        )
+
+    @classmethod
     def get_fieldsets(cls):
         """List all available fieldsets to use with this (sub)type.
 
@@ -148,32 +198,9 @@ class AbstractTypeCommon(AbstractCommon):
                 Class reference of this fieldset.
 
         """
-        fieldsets = [
-            c[1] for c in inspect.getmembers(
-                sys.modules[cls.__module__], inspect.isclass)
-            if (issubclass(c[1], AbstractDovFieldSet)
-                and c[1] != AbstractDovFieldSet
-                and c[1].intended_for == cls)
-        ]
-
-        def get_definition(fieldset):
-            if fieldset.__doc__:
-                doc = [fieldset.__doc__]
-            else:
-                doc = []
-
-            doc.extend(['It has the following fields: ' +
-                        ', '.join(fieldset.get_field_names()) + '.'])
-
-            return ' '.join(doc)
-
-        return dict(zip(
-            [fs.__name__ for fs in fieldsets],
-            [{
-                'name': fs.__name__,
-                'class': fs,
-                'definition': get_definition(fs)
-            } for fs in fieldsets])
+        return cls._get_module_classes_metadata(
+            AbstractDovFieldSet,
+            lambda c: c.intended_for == cls
         )
 
     @classmethod
@@ -491,32 +518,7 @@ class AbstractDovType(AbstractTypeCommon):
                 Class reference of this subtype.
 
         """
-        subtypes = [
-            c[1] for c in inspect.getmembers(
-                sys.modules[cls.__module__], inspect.isclass)
-            if (issubclass(c[1], AbstractDovSubType)
-                and c[1] != AbstractDovSubType)
-        ]
-
-        def get_definition(subtype):
-            if subtype.__doc__:
-                doc = [subtype.__doc__]
-            else:
-                doc = []
-
-            doc.extend(['It has the following fields: ' +
-                        ', '.join(subtype.get_field_names()) + '.'])
-
-            return ' '.join(doc)
-
-        return dict(zip(
-            [st.__name__ for st in subtypes],
-            [{
-                'name': st.__name__,
-                'class': st,
-                'definition': get_definition(st)
-            } for st in subtypes])
-        )
+        return cls._get_module_classes_metadata(AbstractDovSubType)
 
     @classmethod
     def with_subtype(cls, subtype):

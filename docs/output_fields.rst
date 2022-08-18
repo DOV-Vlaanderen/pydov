@@ -456,7 +456,7 @@ Borehole samples (grondmonsters)
     diepte_tot_m,1,float,6.05
     peil_van_mtaw,1,float,0.26
     peil_tot_mtaw,1,float,0.11
-    monstertype,10,string,ongeroerd
+    monstertype,1,string,ongeroerd
     astm_naam,10,string,Organic silt
     grondsoort_bggg,10,string,humush. klei
     humusgehalte,10,float,15.6

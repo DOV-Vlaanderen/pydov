@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """Module containing the DOV data type for grondmonster, including
 subtypes."""
-from pydov.types.fields import WfsField, XmlField, XsdType
+from pydov.types.fields import WfsField, XmlField
 
-from .abstract import AbstractDovSubType, AbstractDovType
+from .abstract import AbstractDovSubType, AbstractDovType, AbstractDovFieldSet
 
 
 class Korrelverdeling(AbstractDovSubType):
@@ -34,12 +34,6 @@ class Grondmonster(AbstractDovType):
     """Class representing the DOV data type for ground samples."""
 
     subtypes = [Korrelverdeling]
-
-    __grondmonsterDataCodesEnumType = XsdType(
-        xsd_schema='https://www.dov.vlaanderen.be/xdov/schema/latest/'
-                   'xsd/kern/grondmonster/GrondmonsterDataCodes.xsd',
-        typename='MonsterEnumType'
-    )
 
     fields = [
         WfsField(name='pkey_grondmonster',
@@ -146,3 +140,31 @@ class Grondmonster(AbstractDovType):
 
         """
         super().__init__('grondmonster', pkey)
+
+
+class GlauconietWaarden(AbstractDovFieldSet):
+    """Fieldset containing all the different glauconite values."""
+
+    intended_for = Grondmonster
+
+    fields = [
+        XmlField(name='glauconiet_gt500',
+                 source_xpath='/grondmonster/observatieData/observatie['
+                 'parameter="GLAUCONIET_GT500"]/'
+                              'waarde_numeriek',
+                 definition='Glauconiet fractie groter 500 micron (%)',
+                 datatype='float'),
+        XmlField(name='glauconiet_tss',
+                 source_xpath='/grondmonster/observatieData/observatie['
+                 'parameter="GLAUCONIET_TSS"]/'
+                              'waarde_numeriek',
+                 definition='Glauconiet fractie kleiner 500micron en '
+                 'groter 63micron (%)',
+                 datatype='float'),
+        XmlField(name='glauconiet_kl63',
+                 source_xpath='/grondmonster/observatieData/observatie['
+                 'parameter="GLAUCONIET_KL63"]/'
+                              'waarde_numeriek',
+                 definition='Glauconiet fractie kleiner 63micron (%)',
+                 datatype='float')
+    ]

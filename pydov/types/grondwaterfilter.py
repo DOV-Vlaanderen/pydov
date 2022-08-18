@@ -11,6 +11,7 @@ _filterDataCodes_xsd = build_dov_url(
 
 
 class Peilmeting(AbstractDovSubType):
+    """Subtype listing the water head level measurements."""
 
     rootpath = './/filtermeting/peilmeting'
 
@@ -56,6 +57,38 @@ class Peilmeting(AbstractDovSubType):
                  xsd_type=XsdType(
                      xsd_schema=_filterDataCodes_xsd,
                      typename='FiltertoestandEnumType'))
+    ]
+
+
+class Gxg(AbstractDovSubType):
+    """Subtype listing the GxG values or precalculated groundwaterlevel
+    statistics."""
+
+    rootpath = './/filtermeting/gxg'
+
+    fields = [
+        XmlField(name='gxg_jaar',
+                 source_xpath='/jaar',
+                 definition='jaar (hydrologisch jaar voor lg3 en hg3, ' +
+                 'kalenderjaar voor vg3)',
+                 datatype='integer'),
+        XmlField(name='gxg_hg3',
+                 source_xpath='/hg3',
+                 definition='gemiddelde van de drie hoogste grondwaterstanden '
+                 'in een hydrologisch jaar (1 april t/m 31 maart) bij een '
+                 'meetfrequentie van tweemaal per maand',
+                 datatype='float'),
+        XmlField(name='gxg_lg3',
+                 source_xpath='/lg3',
+                 definition='gemiddelde van de drie laagste grondwaterstanden '
+                 'in een hydrologisch jaar (1 april t/m 31 maart) bij een '
+                 'meetfrequentie van tweemaal per maand',
+                 datatype='float'),
+        XmlField(name='gxg_vg3',
+                 source_xpath='/vg3',
+                 definition='gemiddelde van de grondwaterstanden op '
+                 '14 maart, 28 maart en 14 april in een bepaald kalenderjaar',
+                 datatype='float')
     ]
 
 

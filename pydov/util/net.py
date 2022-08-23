@@ -61,12 +61,12 @@ def proxy_autoconfiguration():
             Proxy server to use for HTTPS, ot None to disable.
         """
         if orig_http_proxy is None:
-            del(os.environ['HTTP_PROXY'])
+            del os.environ['HTTP_PROXY']
         else:
             os.environ['HTTP_PROXY'] = orig_http_proxy
 
         if orig_https_proxy is None:
-            del(os.environ['HTTPS_PROXY'])
+            del os.environ['HTTPS_PROXY']
         else:
             os.environ['HTTPS_PROXY'] = orig_https_proxy
 

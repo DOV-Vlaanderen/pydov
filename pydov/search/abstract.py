@@ -570,6 +570,8 @@ class AbstractSearch(AbstractCommon):
                             "'{}'. Did you mean '{}'?".format(rf, sugg))
                     raise InvalidFieldError(
                         "Unknown return field: '{}'".format(rf))
+        elif len(self._type.fields) == 0:
+            self._init_fields()
 
     @staticmethod
     def _get_remote_wfs_feature(wfs, typename, location, filter,
@@ -694,13 +696,16 @@ class AbstractSearch(AbstractCommon):
 
             filter_request = etree.tostring(filter_request, encoding='unicode')
 
-        wfs_property_names = [self._type.pkey_fieldname]
+        if self._type.pkey_fieldname is not None:
+            wfs_property_names = [self._type.pkey_fieldname]
+        else:
+            wfs_property_names = []
 
         if return_fields is None:
             wfs_property_names.extend([
                 f['sourcefield'] for f in self._type.get_fields(
-                    source=('wfs',)).values() if not f.get(
-                    'wfs_injected', False)])
+                    source=('wfs',)).values() if (self._type.pkey_fieldname is None
+                                                  or not f.get('wfs_injected', False))])
         else:
             wfs_property_names.extend([self._map_df_wfs_source[i]
                                        for i in self._map_df_wfs_source
@@ -912,8 +917,28 @@ class AbstractSearch(AbstractCommon):
             feature_generators.append(
                 self._type.from_wfs(tree, self._wfs_namespace))
 
+        cols = self._type.get_field_names(return_fields)
+        if len(cols) == 0:
+            cols = self._type.get_field_names(return_fields, include_wfs_injected=True)
+
         df = pd.DataFrame(
             data=self._type.to_df_array(
                 chain.from_iterable(feature_generators), return_fields),
-            columns=self._type.get_field_names(return_fields))
+            columns=cols)
         return df
+
+
+class WfsSearch(AbstractSearch):
+    def __init__(self, layer):
+        """Initialisation.
+
+        Parameters
+        ----------
+        objecttype : subclass of pydov.types.abstract.AbstractDovType
+            Reference to a class representing the Boring type.
+            Optional: defaults to the Boring type containing the fields
+            described in the documentation.
+
+        """
+        from pydov.types.abstract import WfsType
+        super(WfsSearch, self).__init__(layer, WfsType)

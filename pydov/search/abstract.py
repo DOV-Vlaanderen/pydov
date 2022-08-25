@@ -53,7 +53,8 @@ class AbstractCommon(object):
         elif val in ('n', 'no', 'f', 'false', 'off', '0'):
             return False
         else:
-            raise ValueError("Cannot convert truth value %r to boolean." % (val,))
+            raise ValueError(
+                "Cannot convert truth value %r to boolean." % (val,))
 
     @classmethod
     def _typeconvert(cls, text, returntype):

@@ -7,7 +7,7 @@ Filter Encoding 2.0 and GML 3.2.
 """
 import os
 from collections import OrderedDict
-from distutils.version import LooseVersion
+from packaging.version import Version
 from io import BytesIO
 import random
 import string
@@ -662,7 +662,7 @@ class GeometryFilter(GmlFilter):
             # if version of Fiona supports GML 3.2 output (Fiona >= 1.8.18)
             drivers = fiona.supported_drivers
             if 'w' not in drivers.get('GML', '') or \
-                    LooseVersion(fiona.__version__) < LooseVersion('1.8.18'):
+                    Version(fiona.__version__) < Version('1.8.18'):
                 raise UserWarning('Please use module Fiona version 1.8.18 '
                                   'or higher')
         except ImportError:

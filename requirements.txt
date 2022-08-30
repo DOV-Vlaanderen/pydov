@@ -1,5 +1,4 @@
-owslib < 0.26;python_version>="3.10"
-owslib;python_version<"3.10"
+owslib
 pandas
 numpy
 requests

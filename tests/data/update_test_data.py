@@ -41,6 +41,7 @@ def get_first_featuremember(wfs_response):
 
 def update_file_real(filepath, url, process_fn=None, session=None):
     output = 'Updated {} ... '.format(filepath)
+    failed = False
     filepath = os.path.join(os.path.dirname(__file__), filepath)
     try:
         data = get_remote_url(url, session)
@@ -48,6 +49,7 @@ def update_file_real(filepath, url, process_fn=None, session=None):
             data = data.decode('utf-8')
     except Exception as e:
         output += ' FAILED:\n   {}.\n'.format(e)
+        failed = True
     else:
         if not os.path.isdir(os.path.dirname(filepath)):
             os.makedirs(os.path.dirname(filepath))
@@ -58,13 +60,14 @@ def update_file_real(filepath, url, process_fn=None, session=None):
                     data = process_fn(data)
                 except Exception as e:
                     output += ' FAILED:\n   {}.\n'.format(e)
+                    failed = True
                 else:
                     f.write(data.encode('utf-8'))
             else:
                 f.write(data.encode('utf-8'))
                 output += ' OK.\n'
 
-    return output
+    return output, failed
 
 
 if __name__ == '__main__':
@@ -1184,4 +1187,12 @@ if __name__ == '__main__':
             xsd_schema.split('/')[-1], xsd_schema)
 
     for r in pool.join():
-        sys.stdout.write(r.get_result())
+        if r.get_error() is not None:
+            sys.stdout.write('{}: {}\n'.format(
+                type(r.get_error()).__name__, r.get_error()))
+            sys.exit(1)
+        else:
+            output, failed = r.get_result()
+            sys.stdout.write(output)
+            if failed:
+                sys.exit(1)

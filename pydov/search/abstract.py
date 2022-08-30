@@ -2,7 +2,6 @@
 """Module containing the abstract search classes to retrieve DOV data."""
 
 import datetime
-from distutils.util import strtobool
 
 import owslib
 import pandas as pd
@@ -24,6 +23,38 @@ from pydov.util.hooks import HookRunner
 class AbstractCommon(object):
     """Class grouping methods common to AbstractSearch and
     AbstractTypeCommon."""
+
+    @classmethod
+    def __strtobool(cls, val):
+        """Convert a string representation of truth to true (1) or false (0).
+
+        True values are 'y', 'yes', 't', 'true', 'on', and '1'; false values
+        are 'n', 'no', 'f', 'false', 'off', and '0'.  Raises ValueError if
+        'val' is anything else.
+
+        Parameters
+        ----------
+        val : str
+            String representation to convert to boolean.
+
+        Returns
+        -------
+        boolean
+            The converted boolean value.
+
+        Raises
+        ------
+        ValueError
+            If the string cannot be converted to a boolean value.
+        """
+        val = val.lower()
+        if val in ('y', 'yes', 't', 'true', 'on', '1'):
+            return True
+        elif val in ('n', 'no', 'f', 'false', 'off', '0'):
+            return False
+        else:
+            raise ValueError(
+                "Cannot convert truth value %r to boolean." % (val,))
 
     @classmethod
     def _typeconvert(cls, text, returntype):
@@ -72,7 +103,7 @@ class AbstractCommon(object):
                         x.split('.')[0], '%Y-%m-%dT%H:%M:%S')
         elif returntype == 'boolean':
             def typeconvert(x):
-                return strtobool(x) == 1
+                return cls.__strtobool(x)
         else:
             def typeconvert(x):
                 return x

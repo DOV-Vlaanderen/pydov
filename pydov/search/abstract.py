@@ -210,8 +210,9 @@ class AbstractSearch(AbstractCommon):
             if self._fc_featurecatalogue is None:
                 csw_url = self._get_csw_base_url()
                 fc_uuid = owsutil.get_featurecatalogue_uuid(self._md_metadata)
-                self._fc_featurecatalogue = \
-                    owsutil.get_remote_featurecatalogue(csw_url, fc_uuid)
+                if fc_uuid is not None:
+                    self._fc_featurecatalogue = \
+                        owsutil.get_remote_featurecatalogue(csw_url, fc_uuid)
 
             if self._xsd_schemas is None:
                 self._xsd_schemas = self._get_remote_xsd_schemas()
@@ -439,7 +440,24 @@ class AbstractSearch(AbstractCommon):
             self._map_df_wfs_source[f['name']] = f['sourcefield']
 
         for wfs_field in wfs_schema['properties'].keys():
-            if wfs_field in feature_catalogue['attributes']:
+            if feature_catalogue is None:
+                self._wfs_fields.append(wfs_field)
+
+                name = self._map_wfs_source_df.get(wfs_field, wfs_field)
+
+                field = {
+                    'name': name,
+                    'definition': None,
+                    'type': _map_wfs_datatypes.get(
+                        wfs_schema['properties'][wfs_field],
+                        wfs_schema['properties'][wfs_field]),
+                    'notnull': False,
+                    'query': True,
+                    'cost': 1
+                }
+
+                fields[name] = field
+            elif wfs_field in feature_catalogue['attributes']:
                 fc_field = feature_catalogue['attributes'][wfs_field]
                 self._wfs_fields.append(wfs_field)
 
@@ -965,10 +983,8 @@ class WfsSearch(AbstractSearch):
 
         Parameters
         ----------
-        objecttype : subclass of pydov.types.abstract.AbstractDovType
-            Reference to a class representing the Boring type.
-            Optional: defaults to the Boring type containing the fields
-            described in the documentation.
+        layer : str
+            Workspace qualified layername of the layer to query.
 
         """
         from pydov.types.abstract import WfsType

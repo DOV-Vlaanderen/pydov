@@ -141,15 +141,9 @@ def get_featurecatalogue_uuid(md_metadata):
 
     Returns
     -------
-    uuid : str
+    uuid : str or None
         Universally unique identifier of the feature catalogue associated
-        with the metadata.
-
-    Raises
-    ------
-    pydov.util.errors.FeatureCatalogueNotFoundError
-        If there is no Feature Catalogue associated with the metadata or its
-        UUID could not be retrieved.
+        with the metadata or None when there is no feature catalogue available.
 
     """
     fc_uuid = None
@@ -160,10 +154,7 @@ def get_featurecatalogue_uuid(md_metadata):
         fc_uuid = contentinfo.featurecatalogues[0] if \
             len(contentinfo.featurecatalogues) > 0 else None
 
-    if fc_uuid is None:
-        raise FeatureCatalogueNotFoundError
-    else:
-        return fc_uuid
+    return fc_uuid
 
 
 def get_remote_featurecatalogue(csw_url, fc_uuid):

@@ -2,10 +2,22 @@
 """Module implementing a simple hooks system to allow late-binding actions to
 PyDOV events."""
 
+from hashlib import md5
+from multiprocessing import Lock
+from owslib.etree import etree
+from pathlib import Path
+import atexit
+import json
 import math
+import numpy
+import os
+import owslib
+import pandas
+import requests
 import sys
 import time
-from multiprocessing import Lock
+import uuid
+import zipfile
 
 import pydov
 
@@ -742,3 +754,407 @@ class SimpleStatusHook(AbstractReadHook):
         """
         with self.lock:
             self._write_progress(self.xml_progress, '.')
+
+
+class RepeatableLogRecorder(AbstractReadHook, AbstractInjectHook):
+    """Class for recording a pydov session into a ZIP archive.
+
+    This enables to save (the results of) all metadata and data requests from
+    the DOV services locally on disk.
+
+    The saved ZIP archive can subsequently be used in the
+    `RepeatableLogReplayer` to replay the saved session allowing fully
+    reproducible pydov runs.
+
+    """
+
+    def __init__(self, log_directory):
+        """Initialise a RepeatableLogRecorder hook.
+
+        It will save a ZIP archive with the current pydov session's data in
+        the given log directory.
+
+        Replays previously saved responses in the current session too to
+        enable full reproducibility between the session being saved and replays
+        of the saved ZIP archive. When this would be omitted they would not
+        necessarily yield the same results due to timing issues (albeit
+        quite far fetched).
+
+        Parameters
+        ----------
+        log_directory : str
+            Path to a directory on disk where the ZIP archive containing the
+            pydov session will be saved. Will be created if it does not exist.
+
+        """
+        self.log_directory = log_directory
+
+        if not os.path.exists(self.log_directory):
+            os.makedirs(self.log_directory)
+
+        self.log_archive = os.path.join(
+            self.log_directory,
+            time.strftime('pydov-archive-%Y%m%dT%H%M%S-{}.zip'.format(
+                str(uuid.uuid4())[0:6]))
+        )
+
+        self.log_archive_file = zipfile.ZipFile(
+            self.log_archive, 'w', compression=zipfile.ZIP_DEFLATED)
+
+        self.metadata = {
+            'versions': {
+                'pydov': pydov.__version__,
+                'owslib': owslib.__version__,
+                'pandas': pandas.__version__,
+                'numpy': numpy.__version__,
+                'requests': requests.__version__
+            },
+            'timings': {
+                'start': time.strftime('%Y%m%d-%H%M%S')
+            }
+        }
+        self.started_at = time.perf_counter()
+
+        self._store_pydov_code()
+
+        self.lock = Lock()
+        atexit.register(self._pydov_exit)
+
+    def _store_pydov_code(self):
+        """Store the pydov source code itself in the archive.
+
+        To get a fully reproducible pydov run, one has to a) save and replay
+        all remote DOV data and b) rerun with the same pydov version for code
+        changes can effect the result too.
+
+        One can rerun an archive with the saved code by prepending the ZIP
+        archive to the system path before importing pydov::
+
+            import sys
+            sys.path.insert(0, 'C:\\pydov-archive-20200128T134936-96bda7.zip')
+            import pydov
+
+        """
+        pydov_root = Path(pydov.__file__).parent
+        for f in pydov_root.glob('**\\*.py'):
+            self.log_archive_file.write(
+                str(f), 'pydov/' + str(f.relative_to(pydov_root)))
+
+    def _pydov_exit(self):
+        """Save metadata and close ZIP archive before ending Python session."""
+        self.metadata['timings']['end'] = time.strftime('%Y%m%d-%H%M%S')
+        self.metadata['timings']['run_time_secs'] = (
+            time.perf_counter() - self.started_at)
+
+        self.log_archive_file.writestr(
+            'metadata.json', json.dumps(self.metadata, indent=2))
+        self.log_archive_file.close()
+
+        print('pydov session was saved as {}'.format(self.log_archive))
+
+    def meta_received(self, url, response):
+        """Called when a response for a metadata requests is received.
+
+        Create a stable hash based on the URL and archive the response.
+
+        Parameters
+        ----------
+        url : str
+            URL of the metadata request.
+        response : bytes
+            The raw response as received from resolving the URL.
+
+        """
+        md5_hash = md5(url.encode('utf8')).hexdigest()
+        log_path = 'meta/' + md5_hash + '.log'
+
+        if log_path not in self.log_archive_file.namelist():
+            self.log_archive_file.writestr(log_path, response.decode('utf8'))
+
+    def inject_meta_response(self, url):
+        """Inject a response for a metadata request.
+
+        Create a stable hash based on the URL and inject a previously saved
+        response if available. If no previous response is available, return
+        None to resume normal pydov flow.
+
+        Parameters
+        ----------
+        url : str
+            URL of the metadata request.
+
+        Returns
+        -------
+        bytes, optional
+            The response to use in favor of resolving the URL. Returns None if
+            no previously recorded response is available for this request.
+
+        """
+        md5_hash = md5(url.encode('utf8')).hexdigest()
+        log_path = 'meta/' + md5_hash + '.log'
+
+        if log_path not in self.log_archive_file.namelist():
+            return None
+
+        with self.log_archive_file.open(log_path, 'r') as log_file:
+            response = log_file.read().decode('utf8')
+
+        return response
+
+    def wfs_search_result_received(self, query, features):
+        """Called after a WFS search finished.
+
+        Create a stable hash based on the query and archive the feature
+        response.
+
+        Parameters
+        ----------
+        query : etree.ElementTree
+            The WFS GetFeature request sent to the WFS server.
+        features : etree.ElementTree
+            The WFS GetFeature response containings the features.
+
+        """
+        q = etree.tostring(query, encoding='unicode')
+        md5_hash = md5(q.encode('utf8')).hexdigest()
+        log_path = 'wfs/' + md5_hash + '.log'
+
+        if log_path not in self.log_archive_file.namelist():
+            self.log_archive_file.writestr(
+                log_path,
+                etree.tostring(features, encoding='utf8').decode('utf8'))
+
+    def inject_wfs_getfeature_response(self, query):
+        """Inject a response for a WFS GetFeature request.
+
+        Create a stable hash based on the query and inject a previously saved
+        response if available. If no previous response is available, return
+        None to resume normal pydov flow.
+
+        Parameters
+        ----------
+        query : etree.ElementTree
+            The WFS GetFeature request sent to the WFS server.
+
+        Returns
+        -------
+        xml: bytes, optional
+            The GetFeature response to use in favor of resolving the URL.
+            Return None to disable this inject hook.
+
+        """
+        q = etree.tostring(query, encoding='unicode')
+        md5_hash = md5(q.encode('utf8')).hexdigest()
+        log_path = 'wfs/' + md5_hash + '.log'
+
+        if log_path not in self.log_archive_file.namelist():
+            return None
+
+        with self.log_archive_file.open(log_path, 'r') as log_file:
+            tree = log_file.read().decode('utf8')
+
+        return tree
+
+    def xml_received(self, pkey_object, xml):
+        """Called when the XML of a given object is received, either from
+        the cache or from the remote DOV service.
+
+        Create a stable hash based on the pkey_object and archive the xml
+        response.
+
+        Parameters
+        ----------
+        pkey_object : str
+            Permanent key of the retrieved object.
+        xml : bytes
+            The raw XML data of this DOV object as bytes.
+
+        """
+        with self.lock:
+            md5_hash = md5(pkey_object.encode('utf8')).hexdigest()
+            log_path = 'xml/' + md5_hash + '.log'
+
+            if log_path not in self.log_archive_file.namelist():
+                self.log_archive_file.writestr(log_path, xml.decode('utf8'))
+
+    def inject_xml_response(self, pkey_object):
+        """Inject a response for a DOV XML request.
+
+        Create a stable hash based on the pkey_object and inject a previously
+        saved response if available. If no previous response is available,
+        return None to resume normal pydov flow.
+
+        Parameters
+        ----------
+        pkey_object : str
+            The permanent key of the DOV object.
+
+        Returns
+        -------
+        xml : bytes, optional
+            The XML response to use in favor of resolving the URL. Return
+            None to disable this inject hook.
+
+        """
+        with self.lock:
+            md5_hash = md5(pkey_object.encode('utf8')).hexdigest()
+            log_path = 'xml/' + md5_hash + '.log'
+
+            if log_path not in self.log_archive_file.namelist():
+                return None
+
+            with self.log_archive_file.open(log_path, 'r') as log_file:
+                xml = log_file.read().decode('utf8')
+
+            return xml
+
+
+class RepeatableLogReplayer(AbstractInjectHook):
+    """Class for replaying a saved pydov session from a ZIP archive.
+
+    This will reroute all external requests to the saved results in the ZIP
+    archive, enabling fully reproducable pydov runs.
+
+    """
+
+    def __init__(self, log_archive):
+        """Initialise a RepeatableLogReplayer hook.
+
+        It will reroute all external requests to the saved results in the
+        given ZIP archive.
+
+        Parameters
+        ----------
+        log_archive : str
+            Path to the ZIP archive to use for replay.
+
+        """
+        self.log_archive = log_archive
+
+        self.log_archive_file = zipfile.ZipFile(
+            self.log_archive, 'r', compression=zipfile.ZIP_DEFLATED)
+
+        self.lock = Lock()
+
+        atexit.register(self._pydov_exit)
+
+    def _pydov_exit(self):
+        """Close ZIP archive before ending Python session."""
+        self.log_archive_file.close()
+
+    def inject_meta_response(self, url):
+        """Inject a response for a metadata request.
+
+        Create a stable hash based on the URL and inject the previously saved
+        response.
+
+        Parameters
+        ----------
+        url : str
+            URL of the metadata request.
+
+        Returns
+        -------
+        bytes, optional
+            The response to use in favor of resolving the URL.
+
+        Raises
+        ------
+        pydov.util.errors.LogReplayError
+            When the response required for this URL could not be found in the
+            archive. This happens for instance when replaying an archive for
+            a different pydov session than the one it was saved for.
+
+        """
+        md5_hash = md5(url.encode('utf8')).hexdigest()
+        log_path = 'meta/' + md5_hash + '.log'
+
+        if log_path not in self.log_archive_file.namelist():
+            raise LogReplayError(
+                'Failed to replay log: no entry for '
+                'meta response of {}.'.format(md5_hash)
+            )
+
+        with self.log_archive_file.open(log_path, 'r') as log_file:
+            response = log_file.read().decode('utf8')
+
+        return response
+
+    def inject_wfs_getfeature_response(self, query):
+        """Inject a response for a WFS GetFeature request.
+
+        Create a stable hash based on the query and inject the previously saved
+        response.
+
+        Parameters
+        ----------
+        query : etree.ElementTree
+            The WFS GetFeature request sent to the WFS server.
+
+        Returns
+        -------
+        xml: bytes, optional
+            The GetFeature response to use in favor of resolving the URL.
+
+        Raises
+        ------
+        pydov.util.errors.LogReplayError
+            When the response required for this URL could not be found in the
+            archive. This happens for instance when replaying an archive for
+            a different pydov session than the one it was saved for.
+
+        """
+        q = etree.tostring(query, encoding='unicode')
+        md5_hash = md5(q.encode('utf8')).hexdigest()
+        log_path = 'wfs/' + md5_hash + '.log'
+
+        if log_path not in self.log_archive_file.namelist():
+            raise LogReplayError(
+                'Failed to replay log: no entry for '
+                'WFS result of {}.'.format(md5_hash)
+            )
+
+        with self.log_archive_file.open(log_path, 'r') as log_file:
+            tree = log_file.read().decode('utf8')
+
+        return tree
+
+    def inject_xml_response(self, pkey_object):
+        """Inject a response for a DOV XML request.
+
+        Create a stable hash based on the pkey_object and inject the previously
+        saved response.
+
+        Parameters
+        ----------
+        pkey_object : str
+            The permanent key of the DOV object.
+
+        Returns
+        -------
+        xml : bytes, optional
+            The XML response to use in favor of resolving the URL. Return
+            None to disable this inject hook.
+
+        Raises
+        ------
+        pydov.util.errors.LogReplayError
+            When the response required for this URL could not be found in the
+            archive. This happens for instance when replaying an archive for
+            a different pydov session than the one it was saved for.
+
+        """
+        with self.lock:
+            md5_hash = md5(pkey_object.encode('utf8')).hexdigest()
+            log_path = 'xml/' + md5_hash + '.log'
+
+            if log_path not in self.log_archive_file.namelist():
+                raise LogReplayError(
+                    'Failed to replay log: no entry for '
+                    'XML result of {}.'.format(md5_hash)
+                )
+
+            with self.log_archive_file.open(log_path, 'r') as log_file:
+                xml = log_file.read().decode('utf8')
+
+            return xml

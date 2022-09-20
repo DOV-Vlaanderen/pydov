@@ -815,7 +815,8 @@ class AbstractSearch(AbstractCommon):
             pool = LocalSessionThreadPool()
 
             if max_features is not None:
-                fts_to_get = min(max_features, number_matched) - number_returned
+                fts_to_get = min(
+                    max_features, number_matched) - number_returned
             else:
                 fts_to_get = number_matched - number_returned
             fts_per_req = self._wfs_max_features or number_returned

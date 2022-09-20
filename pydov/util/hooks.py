@@ -20,6 +20,7 @@ import uuid
 import zipfile
 
 import pydov
+from pydov.util.errors import LogReplayError
 
 
 class Hooks(list):
@@ -836,7 +837,7 @@ class RepeatableLogRecorder(AbstractReadHook, AbstractInjectHook):
 
         """
         pydov_root = Path(pydov.__file__).parent
-        for f in pydov_root.glob('**\\*.py'):
+        for f in pydov_root.glob('**/*.py'):
             self.log_archive_file.write(
                 str(f), 'pydov/' + str(f.relative_to(pydov_root)))
 
@@ -915,14 +916,15 @@ class RepeatableLogRecorder(AbstractReadHook, AbstractInjectHook):
             The WFS GetFeature response containings the features.
 
         """
-        q = etree.tostring(query, encoding='unicode')
-        md5_hash = md5(q.encode('utf8')).hexdigest()
-        log_path = 'wfs/' + md5_hash + '.log'
+        with self.lock:
+            q = etree.tostring(query, encoding='unicode')
+            md5_hash = md5(q.encode('utf8')).hexdigest()
+            log_path = 'wfs/' + md5_hash + '.log'
 
-        if log_path not in self.log_archive_file.namelist():
-            self.log_archive_file.writestr(
-                log_path,
-                etree.tostring(features, encoding='utf8').decode('utf8'))
+            if log_path not in self.log_archive_file.namelist():
+                self.log_archive_file.writestr(
+                    log_path,
+                    etree.tostring(features, encoding='utf8').decode('utf8'))
 
     def inject_wfs_getfeature_response(self, query):
         """Inject a response for a WFS GetFeature request.
@@ -943,15 +945,16 @@ class RepeatableLogRecorder(AbstractReadHook, AbstractInjectHook):
             Return None to disable this inject hook.
 
         """
-        q = etree.tostring(query, encoding='unicode')
-        md5_hash = md5(q.encode('utf8')).hexdigest()
-        log_path = 'wfs/' + md5_hash + '.log'
+        with self.lock:
+            q = etree.tostring(query, encoding='unicode')
+            md5_hash = md5(q.encode('utf8')).hexdigest()
+            log_path = 'wfs/' + md5_hash + '.log'
 
-        if log_path not in self.log_archive_file.namelist():
-            return None
+            if log_path not in self.log_archive_file.namelist():
+                return None
 
-        with self.log_archive_file.open(log_path, 'r') as log_file:
-            tree = log_file.read().decode('utf8')
+            with self.log_archive_file.open(log_path, 'r') as log_file:
+                tree = log_file.read().decode('utf8')
 
         return tree
 

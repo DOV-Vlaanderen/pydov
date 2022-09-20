@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Module containing extra query classes to build attribute search queries."""
 
-from owslib.fes import OgcExpression, Or, PropertyIsEqualTo
+from owslib.fes2 import OgcExpression, Or, PropertyIsEqualTo
 
 
 class PropertyInList(OgcExpression):

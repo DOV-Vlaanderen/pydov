@@ -1,23 +1,27 @@
 # -*- coding: utf-8 -*-
 """Module containing the abstract search classes to retrieve DOV data."""
 
+from itertools import chain
 import datetime
+import math
 
 import owslib
-import pandas as pd
+import owslib.fes
+import owslib.fes2
 from owslib.etree import etree
 from owslib.feature import get_schema
-from owslib.fes import FilterRequest
+from owslib.fes2 import FilterRequest
 from owslib.wfs import WebFeatureService
+import pandas as pd
 
 import pydov
 from pydov.types.fields import _WfsInjectedField
 from pydov.util import owsutil
 from pydov.util.dovutil import build_dov_url, get_xsd_schema
-from pydov.util.errors import (FeatureOverflowError, InvalidFieldError,
-                               InvalidSearchParameterError, LayerNotFoundError,
-                               WfsGetFeatureError)
+from pydov.util.errors import (InvalidFieldError, InvalidSearchParameterError,
+                               LayerNotFoundError, WfsGetFeatureError)
 from pydov.util.hooks import HookRunner
+from pydov.util.net import LocalSessionThreadPool
 
 
 class AbstractCommon(object):
@@ -139,6 +143,7 @@ class AbstractSearch(AbstractCommon):
         self._wfs = None
         self._wfs_schema = None
         self._wfs_namespace = None
+        self._wfs_max_features = None
         self._md_metadata = None
         self._fc_featurecatalogue = None
         self._xsd_schemas = None
@@ -164,10 +169,12 @@ class AbstractSearch(AbstractCommon):
             wfs_endpoint_url = self._get_wfs_endpoint()
 
             capabilities = owsutil.get_url(
-                wfs_endpoint_url + '?request=GetCapabilities&version=1.1.0')
+                wfs_endpoint_url + '?request=GetCapabilities&version=2.0.0')
 
             self._wfs = WebFeatureService(
-                url=wfs_endpoint_url, version="1.1.0", xml=capabilities)
+                url=wfs_endpoint_url, version="2.0.0", xml=capabilities)
+
+            self._wfs_max_features = owsutil.get_wfs_max_features(capabilities)
 
     def _init_namespace(self):
         """Initialise the WFS namespace associated with the layer.
@@ -263,7 +270,7 @@ class AbstractSearch(AbstractCommon):
         layername = self._layer.split(':')[1] if ':' in self._layer else \
             self._layer
         return get_schema(
-            build_dov_url('geoserver/wfs'), layername, '1.1.0')
+            build_dov_url('geoserver/wfs'), layername, '2.0.0')
 
     def _get_namespace(self):
         """Get the WFS namespace of the layer.
@@ -491,12 +498,12 @@ class AbstractSearch(AbstractCommon):
         ----------
         location : pydov.util.location.AbstractLocationFilter
             Location filter limiting the features to retrieve.
-        query : owslib.fes.OgcExpression
+        query : owslib.fes2.OgcExpression
             OGC filter expression to use for searching. This can contain any
-            combination of filter elements defined in owslib.fes. The query
+            combination of filter elements defined in owslib.fes2. The query
             should use the fields provided in `get_fields()`. Note that not
             all fields are currently supported as a search parameter.
-        sort_by : owslib.fes.SortBy, optional
+        sort_by : owslib.fes2.SortBy, optional
             List of properties to sort by.
         return_fields : list<str> or tuple<str> or set<str>
             A list of fields to be returned in the output data. This should
@@ -523,16 +530,24 @@ class AbstractSearch(AbstractCommon):
             )
 
         if query is not None:
-            if not isinstance(query, owslib.fes.OgcExpression):
+            if not isinstance(query, owslib.fes2.OgcExpression):
+                if isinstance(query, owslib.fes.OgcExpression):
+                    raise InvalidSearchParameterError(
+                        "Query should be an owslib.fes2.OgcExpression.\n"
+                        "Try importing your query operators, like "
+                        f"'{query.__class__.__name__}', "
+                        "from the owslib.fes2 package."
+                    )
+
                 raise InvalidSearchParameterError(
-                    "Query should be an owslib.fes.OgcExpression.")
+                    "Query should be an owslib.fes2.OgcExpression.")
 
             filter_request = FilterRequest()
             filter_request = filter_request.setConstraint(query)
 
             self._init_fields()
             for property_name in filter_request.findall(
-                    './/{http://www.opengis.net/ogc}PropertyName'):
+                    './/{http://www.opengis.net/fes/2.0}ValueReference'):
                 name = property_name.text
                 if name not in self._map_df_wfs_source \
                         and name not in self._wfs_fields:
@@ -547,13 +562,13 @@ class AbstractSearch(AbstractCommon):
             self._init_fields()
 
         if sort_by is not None:
-            if not isinstance(sort_by, owslib.fes.SortBy):
+            if not isinstance(sort_by, owslib.fes2.SortBy):
                 raise InvalidSearchParameterError(
-                    "SortBy should be an owslib.fes.SortBy")
+                    "SortBy should be an owslib.fes2.SortBy")
 
             self._init_fields()
             for property_name in sort_by.toXML().findall(
-                    './/{http://www.opengis.net/ogc}PropertyName'):
+                    './/{http://www.opengis.net/fes/2.0}ValueReference'):
                 name = property_name.text
                 if name not in self._map_df_wfs_source \
                         and name not in self._wfs_fields:
@@ -590,8 +605,8 @@ class AbstractSearch(AbstractCommon):
     @staticmethod
     def _get_remote_wfs_feature(wfs, typename, location, filter,
                                 sort_by, propertyname, max_features,
-                                geometry_column):
-        """Perform the WFS GetFeature call to get features from the remote
+                                geometry_column, start_index=0, session=None):
+        """Perform the WFS 2.0 GetFeature call to get features from the remote
         service.
 
         Parameters
@@ -600,9 +615,9 @@ class AbstractSearch(AbstractCommon):
             Layername to query.
         location : pydov.util.location.AbstractLocationFilter
             Location filter limiting the features to retrieve.
-        filter : str of owslib.fes.FilterRequest
+        filter : str of owslib.fes2.FilterRequest
             Filter request to search on attribute values.
-        sort_by : str of owslib.fes.SortBy, optional
+        sort_by : str of owslib.fes2.SortBy, optional
             List of properties to sort by.
         propertyname : list<str>
             List of properties to return.
@@ -610,6 +625,11 @@ class AbstractSearch(AbstractCommon):
             Limit the maximum number of features to request.
         geometry_column : str
             Name of the geometry column to use in the spatial filter.
+        start_index : int
+            Index of the first feature to return. Can be used for paging.
+        session : requests.Session
+            Session to use to perform HTTP requests for data. Defaults to None,
+            which means a new session will be created for each request.
 
         Returns
         -------
@@ -618,17 +638,15 @@ class AbstractSearch(AbstractCommon):
 
         """
         wfs_getfeature_xml = owsutil.wfs_build_getfeature_request(
-            version=wfs.version,
             geometry_column=geometry_column,
             typename=typename,
             location=location,
             filter=filter,
             sort_by=sort_by,
             max_features=max_features,
-            propertyname=propertyname
+            propertyname=propertyname,
+            start_index=start_index
         )
-
-        HookRunner.execute_wfs_search_init(typename)
 
         tree = HookRunner.execute_inject_wfs_getfeature_response(
             wfs_getfeature_xml)
@@ -638,7 +656,8 @@ class AbstractSearch(AbstractCommon):
 
         return owsutil.wfs_get_feature(
             baseurl=wfs.url,
-            get_feature_request=wfs_getfeature_xml
+            get_feature_request=wfs_getfeature_xml,
+            session=session
         ), wfs_getfeature_xml
 
     def _search(self, location=None, query=None, return_fields=None,
@@ -649,16 +668,16 @@ class AbstractSearch(AbstractCommon):
         ----------
         location : pydov.util.location.AbstractLocationFilter
             Location filter limiting the features to retrieve.
-        query : owslib.fes.OgcExpression
+        query : owslib.fes2.OgcExpression
             OGC filter expression to use for searching. This can contain any
-            combination of filter elements defined in owslib.fes. The query
+            combination of filter elements defined in owslib.fes2. The query
             should use the fields provided in `get_fields()`. Note that not
             all fields are currently supported as a search parameter.
         return_fields : list<str>
             A list of fields to be returned in the output data. This should
             be a subset of the fields provided in `get_fields()`. Note that
             not all fields are currently supported as return fields.
-        sort_by : owslib.fes.SortBy, optional
+        sort_by : owslib.fes2.SortBy, optional
             List of properties to sort by.
         max_features : int
             Limit the maximum number of features to request.
@@ -668,10 +687,10 @@ class AbstractSearch(AbstractCommon):
             defaults to an empty list.
 
         Returns
-        -------
-        etree.Element
-            XML tree of the WFS response containing the features matching
-            the location or the query.
+        ------
+        list of etree.Element
+            XML trees of the WFS responses containing the features matching
+            the location and the query.
 
         Raises
         ------
@@ -687,10 +706,6 @@ class AbstractSearch(AbstractCommon):
             When a field that can only be used as a query parameter is used as
             a return field.
 
-        pydov.util.errors.FeatureOverflowError
-            When the number of features to be returned is equal to the
-            maxFeatures limit of the WFS server.
-
         """
         self._pre_search_validation(location, query, sort_by, return_fields,
                                     max_features)
@@ -704,7 +719,7 @@ class AbstractSearch(AbstractCommon):
 
         if filter_request is not None:
             for property_name in filter_request.findall(
-                    './/{http://www.opengis.net/ogc}PropertyName'):
+                    './/{http://www.opengis.net/fes/2.0}ValueReference'):
                 property_name.text = self._map_df_wfs_source.get(
                     property_name.text, property_name.text)
 
@@ -734,32 +749,84 @@ class AbstractSearch(AbstractCommon):
 
             sort_by = etree.tostring(sort_by_xml, encoding='unicode')
 
-        fts, getfeature = self._get_remote_wfs_feature(
-            wfs=self._wfs,
+        HookRunner.execute_wfs_search_init(params=dict(
             typename=self._layer,
             location=location,
             filter=filter_request,
             sort_by=sort_by,
             max_features=max_features,
-            propertyname=wfs_property_names,
-            geometry_column=self._geometry_column)
+            propertynames=wfs_property_names,
+            geometry_column=self._geometry_column
+        ))
 
-        tree = etree.fromstring(fts)
+        def _get_remote_wfs(start_index=0, session=None):
+            fts, getfeature = self._get_remote_wfs_feature(
+                wfs=self._wfs,
+                typename=self._layer,
+                location=location,
+                filter=filter_request,
+                sort_by=sort_by,
+                max_features=max_features,
+                propertyname=wfs_property_names,
+                geometry_column=self._geometry_column,
+                start_index=start_index,
+                session=session)
 
-        if tree.get('numberOfFeatures') is None:
-            raise WfsGetFeatureError(
-                'Error retrieving features from DOV WFS server:\n{}'.format(
-                    etree.tostring(tree).decode('utf8')))
+            tree = etree.fromstring(fts)
 
-        if int(tree.get('numberOfFeatures')) == 10000:
-            raise FeatureOverflowError(
-                'Reached the limit of {:d} returned features. Please split up '
-                'the query to ensure getting all results.'.format(10000))
+            if tree.get('numberReturned') is None:
+                raise WfsGetFeatureError(
+                    "Error retrieving features of layer '{}' from "
+                    "DOV WFS server:\n{}".format(
+                        self._layer,
+                        etree.tostring(tree).decode('utf8')))
 
-        HookRunner.execute_wfs_search_result(int(tree.get('numberOfFeatures')))
-        HookRunner.execute_wfs_search_result_received(getfeature, tree)
+            number_matched = int(tree.get('numberMatched'))
+            number_returned = int(tree.get('numberReturned'))
 
-        return tree
+            HookRunner.execute_wfs_search_result(
+                number_matched, number_returned)
+
+            HookRunner.execute_wfs_search_result_received(getfeature, tree)
+
+            return tree
+
+        result = []
+
+        # execute the first WFS query
+        tree = _get_remote_wfs(start_index=0, session=pydov.session)
+        result.append(tree)
+
+        number_matched = int(tree.get('numberMatched'))
+        number_returned = int(tree.get('numberReturned'))
+
+        if max_features is not None and number_returned == max_features:
+            # we asked for a limited number of features and we got all of them,
+            # we're done!
+            pass
+        elif number_matched == number_returned:
+            # all features that matched the query were returned,
+            # we're done!
+            pass
+        else:
+            # more features matched the query than were returned by the server,
+            # we need more requests to fetch the rest of the results
+            pool = LocalSessionThreadPool()
+
+            fts_to_get = number_matched - number_returned
+            fts_per_req = self._wfs_max_features or number_returned
+            extra_reqs = math.ceil(fts_to_get/fts_per_req)
+
+            for i in range(extra_reqs):
+                pool.execute(_get_remote_wfs, ((i+1)*fts_per_req,))
+
+            for r in pool.join():
+                if r.get_error():
+                    raise r.get_error()
+                elif r.get_result():
+                    result.append(r.get_result())
+
+        return result
 
     def get_description(self):
         """Get the description of this search layer.
@@ -819,17 +886,17 @@ class AbstractSearch(AbstractCommon):
         Parameters
         ----------
         location : pydov.util.location.AbstractLocationFilter or \
-                   owslib.fes.BinaryLogicOpType<AbstractLocationFilter> or \
-                   owslib.fes.UnaryLogicOpType<AbstractLocationFilter>
+                   owslib.fes2.BinaryLogicOpType<AbstractLocationFilter> or \
+                   owslib.fes2.UnaryLogicOpType<AbstractLocationFilter>
             Location filter limiting the features to retrieve. Can either be a
             single instance of a subclass of AbstractLocationFilter, or a
             combination using And, Or, Not of AbstractLocationFilters.
-        query : owslib.fes.OgcExpression
+        query : owslib.fes2.OgcExpression
             OGC filter expression to use for searching. This can contain any
-            combination of filter elements defined in owslib.fes. The query
+            combination of filter elements defined in owslib.fes2. The query
             should use the fields provided in `get_fields()`. Note that not
             all fields are currently supported as a search parameter.
-        sort_by : owslib.fes.SortBy, optional
+        sort_by : owslib.fes2.SortBy, optional
             List of properties to sort by.
         return_fields : list<str> or tuple<str> or set<str>
             A list of fields to be returned in the output data. This should
@@ -858,10 +925,6 @@ class AbstractSearch(AbstractCommon):
             When a field that can only be used as a query parameter is used as
             a return field.
 
-        pydov.util.errors.FeatureOverflowError
-            When the number of features to be returned is equal to the
-            maxFeatures limit of the WFS server.
-
         AttributeError
             When the argument supplied as return_fields is not a list,
             tuple or set.
@@ -871,13 +934,17 @@ class AbstractSearch(AbstractCommon):
             subclass.
 
         """
-        fts = self._search(location=location, query=query, sort_by=sort_by,
-                           return_fields=return_fields,
-                           max_features=max_features)
+        trees = self._search(location=location, query=query, sort_by=sort_by,
+                             return_fields=return_fields,
+                             max_features=max_features)
 
-        features = self._type.from_wfs(fts, self._wfs_namespace)
+        feature_generators = []
+        for tree in trees:
+            feature_generators.append(
+                self._type.from_wfs(tree, self._wfs_namespace))
 
         df = pd.DataFrame(
-            data=self._type.to_df_array(features, return_fields),
+            data=self._type.to_df_array(
+                chain.from_iterable(feature_generators), return_fields),
             columns=self._type.get_field_names(return_fields))
         return df

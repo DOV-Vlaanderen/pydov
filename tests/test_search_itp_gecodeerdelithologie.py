@@ -1,6 +1,6 @@
 """Module grouping tests for the interpretaties search module."""
 import pandas as pd
-from owslib.fes import PropertyIsEqualTo
+from owslib.fes2 import PropertyIsEqualTo
 from pandas import DataFrame
 
 from pydov.search.interpretaties import GecodeerdeLithologieSearch

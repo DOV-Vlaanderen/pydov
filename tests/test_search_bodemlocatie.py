@@ -1,7 +1,7 @@
 """Module grouping tests for the bodemlocatie search module."""
 import datetime
 
-from owslib.fes import PropertyIsEqualTo
+from owslib.fes2 import PropertyIsEqualTo
 
 from pydov.search.bodemlocatie import BodemlocatieSearch
 from pydov.types.bodemlocatie import Bodemlocatie

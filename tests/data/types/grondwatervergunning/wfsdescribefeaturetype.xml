@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml" xmlns:gw_vergunningen="http://dov.vlaanderen.be/grondwater/gw_vergunningen" elementFormDefault="qualified" targetNamespace="http://dov.vlaanderen.be/grondwater/gw_vergunningen">
-  <xsd:import namespace="http://www.opengis.net/gml" schemaLocation="https://www.dov.vlaanderen.be/geoserver/schemas/gml/3.1.1/base/gml.xsd"/>
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:gw_vergunningen="http://dov.vlaanderen.be/grondwater/gw_vergunningen" xmlns:wfs="http://www.opengis.net/wfs/2.0" elementFormDefault="qualified" targetNamespace="http://dov.vlaanderen.be/grondwater/gw_vergunningen">
+  <xsd:import namespace="http://www.opengis.net/gml/3.2" schemaLocation="https://www.dov.vlaanderen.be/geoserver/schemas/gml/3.2.1/gml.xsd"/>
   <xsd:complexType name="alle_vergType">
     <xsd:complexContent>
       <xsd:extension base="gml:AbstractFeatureType">
@@ -9,6 +9,7 @@
           <xsd:element maxOccurs="1" minOccurs="0" name="exploitant_naam" nillable="true" type="xsd:string"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="inrichtingsnummer" nillable="true" type="xsd:string"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="watnr" nillable="true" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="vergunning" nillable="true" type="xsd:string"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="vlaremrubriek" nillable="true" type="xsd:string"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="vergund_jaardebiet" nillable="true" type="xsd:decimal"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="vergund_dagdebiet" nillable="true" type="xsd:decimal"/>
@@ -37,5 +38,5 @@
       </xsd:extension>
     </xsd:complexContent>
   </xsd:complexType>
-  <xsd:element name="alle_verg" substitutionGroup="gml:_Feature" type="gw_vergunningen:alle_vergType"/>
+  <xsd:element name="alle_verg" substitutionGroup="gml:AbstractFeature" type="gw_vergunningen:alle_vergType"/>
 </xsd:schema>

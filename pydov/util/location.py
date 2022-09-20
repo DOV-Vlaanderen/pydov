@@ -1,31 +1,38 @@
 # -*- coding: utf-8 -*-
 """Module grouping classes for location based filters used for searching.
 
-This module is designed to comply with the WFS 1.1.0 standard, implying
-Filter Encoding 1.1 and GML 3.1.1.
+This module is designed to comply with the WFS 2.0.0 standard, implying
+Filter Encoding 2.0 and GML 3.2.
 
 """
 import os
 from collections import OrderedDict
 from packaging.version import Version
 from io import BytesIO
+import random
+import string
 
 from owslib.etree import etree
-from owslib.fes import Or
+from owslib.fes2 import Or
 
 
 class AbstractLocation(object):
     """Abstract base class for location types (f.ex. point, box, polygon).
 
     Locations are GML elements, for inclusion in the WFS GetFeature request.
-    As described in the Filter Encoding 1.1 standard, locations are expressed
-    using GML 3.1.1.
+    As described in the Filter Encoding 2.0 standard, locations are expressed
+    using GML 3.2.
 
     The initialisation should require all necessary parameters to construct
     a valid location of this type: i.e. all locations should be valid after
     initialisation.
 
     """
+
+    def _get_id(self):
+        random_id = ''.join(random.choice(
+            string.ascii_letters + string.digits) for x in range(8))
+        return f'pydov.{random_id}'
 
     def get_element(self):
         """Return the GML representation of the location.
@@ -113,9 +120,9 @@ class AbstractBinarySpatialFilter(AbstractLocationFilter):
         self.geom_column = ''
 
         self.element = etree.Element(
-            '{{http://www.opengis.net/ogc}}{}'.format(type))
+            '{{http://www.opengis.net/fes/2.0}}{}'.format(type))
 
-        geom = etree.Element('{http://www.opengis.net/ogc}PropertyName')
+        geom = etree.Element('{http://www.opengis.net/fes/2.0}ValueReference')
         geom.text = self.geom_column
 
         self.element.append(geom)
@@ -123,7 +130,8 @@ class AbstractBinarySpatialFilter(AbstractLocationFilter):
 
     def set_geometry_column(self, geometry_column):
         self.geom_column = geometry_column
-        geom = self.element.find('.//{http://www.opengis.net/ogc}PropertyName')
+        geom = self.element.find(
+            './/{http://www.opengis.net/fes/2.0}ValueReference')
         geom.text = geometry_column
 
     def toXML(self):
@@ -177,17 +185,21 @@ class Box(AbstractLocation):
         self.maxx = maxx
         self.maxy = maxy
 
-        self.element = etree.Element('{http://www.opengis.net/gml}Envelope')
+        self.element = etree.Element(
+            '{http://www.opengis.net/gml/3.2}Envelope')
         self.element.set('srsDimension', '2')
         self.element.set(
             'srsName',
             'http://www.opengis.net/gml/srs/epsg.xml#{:d}'.format(epsg))
+        self.element.set('{http://www.opengis.net/gml/3.2}id', self._get_id())
 
-        lower_corner = etree.Element('{http://www.opengis.net/gml}lowerCorner')
+        lower_corner = etree.Element(
+            '{http://www.opengis.net/gml/3.2}lowerCorner')
         lower_corner.text = '{:.06f} {:.06f}'.format(self.minx, self.miny)
         self.element.append(lower_corner)
 
-        upper_corner = etree.Element('{http://www.opengis.net/gml}upperCorner')
+        upper_corner = etree.Element(
+            '{http://www.opengis.net/gml/3.2}upperCorner')
         upper_corner.text = '{:.06f} {:.06f}'.format(self.maxx, self.maxy)
         self.element.append(upper_corner)
 
@@ -219,13 +231,14 @@ class Point(AbstractLocation):
         self.x = x
         self.y = y
 
-        self.element = etree.Element('{http://www.opengis.net/gml}Point')
+        self.element = etree.Element('{http://www.opengis.net/gml/3.2}Point')
         self.element.set('srsDimension', '2')
         self.element.set(
             'srsName',
             'http://www.opengis.net/gml/srs/epsg.xml#{:d}'.format(epsg))
+        self.element.set('{http://www.opengis.net/gml/3.2}id', self._get_id())
 
-        coordinates = etree.Element('{http://www.opengis.net/gml}pos')
+        coordinates = etree.Element('{http://www.opengis.net/gml/3.2}pos')
         coordinates.text = '{:.06f} {:.06f}'.format(self.x, self.y)
         self.element.append(coordinates)
 
@@ -234,20 +247,20 @@ class Point(AbstractLocation):
 
 
 class GmlObject(AbstractLocation):
-    """Class representing a raw GML location, f.ex. gml:Surface or
-    gml:MultiSurface."""
+    """Class representing a raw GML3.2 location, f.ex. gml32:Surface or
+    gml32:MultiSurface."""
 
     def __init__(self, gml_element):
         """Initialise a GmlObject.
 
         Initialise a GmlObject from an existing XML element representing a
-        GML location.
+        GML3.2 location.
 
         Parameters
         ----------
         gml_element : etree.Element or str or bytes
-            XML element of the GML location, either as etree.Element, bytes or
-            string representation.
+            XML element of the GML3.2 location, either as etree.Element,
+            bytes or string representation.
 
         """
         if isinstance(gml_element, str):
@@ -256,6 +269,15 @@ class GmlObject(AbstractLocation):
             self.element = etree.fromstring(gml_element)
         else:
             self.element = gml_element
+
+        if self.element.find('.//{http://www.opengis.net/gml/3.2}*') is None:
+            if self.element.find(
+                    './/{http://www.opengis.net/gml}*') is not None:
+                raise ValueError(
+                    'GML element should be GML version 3.2, it appears to be '
+                    'older.')
+
+            raise ValueError('GML element appears not to be valid GML3.2')
 
     def get_element(self):
         return self.element
@@ -396,12 +418,12 @@ class WithinDistance(AbstractLocationFilter):
         self.distance_unit = distance_unit
         self.geom_column = ''
 
-        self.element = etree.Element('{http://www.opengis.net/ogc}DWithin')
+        self.element = etree.Element('{http://www.opengis.net/fes/2.0}DWithin')
 
-        geom = etree.Element('{http://www.opengis.net/ogc}PropertyName')
+        geom = etree.Element('{http://www.opengis.net/fes/2.0}ValueReference')
         geom.text = self.geom_column
 
-        distance = etree.Element('{http://www.opengis.net/ogc}Distance')
+        distance = etree.Element('{http://www.opengis.net/fes/2.0}Distance')
         distance.set('units', self.distance_unit)
         distance.text = '{:.06f}'.format(self.distance)
 
@@ -411,7 +433,8 @@ class WithinDistance(AbstractLocationFilter):
 
     def set_geometry_column(self, geometry_column):
         self.geom_column = geometry_column
-        geom = self.element.find('.//{http://www.opengis.net/ogc}PropertyName')
+        geom = self.element.find(
+            './/{http://www.opengis.net/fes/2.0}ValueReference')
         geom.text = geometry_column
 
     def toXML(self):
@@ -422,19 +445,19 @@ class WithinDistance(AbstractLocationFilter):
 
 
 class GmlFilter(AbstractLocationFilter):
-    """Class for construction a spatial filter expression from a GML
-    3.1.1 document.
+    """Class for construction a spatial filter expression from a GML3.2
+    document.
     """
 
     def __init__(self, gml, location_filter, location_filter_kwargs=None,
                  combinator=Or):
-        """Initialise a spatial filter expression from a GML 3.1.1 string.
+        """Initialise a spatial filter expression from a GML3.2 string.
 
         Parameters
         ----------
         gml : str
             Either a string representation of the GML document to parse,
-            or a path to a GML file on disk.
+            or a path to a GML3.2 file on disk.
         location_filter : class<AbstractLocationFilter>
             Location filter to use for the geometries in the GML document.
         location_filter_kwargs : dict, optional
@@ -524,7 +547,7 @@ class GmlFilter(AbstractLocationFilter):
             if gml_tree is not None:
                 self._parse_gml_tree(gml_tree)
             else:
-                raise ValueError('Failed to parse GML file.')
+                raise ValueError('Failed to parse GML3.2 file.')
 
     def _parse_gml_tree(self, gml_tree):
         """Parse the GML tree and add subelements for geometries.
@@ -542,8 +565,8 @@ class GmlFilter(AbstractLocationFilter):
         """
         points, multipoints = self._dedup_multi(
             gml_tree,
-            './/{http://www.opengis.net/gml}Point',
-            './/{http://www.opengis.net/gml}MultiPoint'
+            './/{http://www.opengis.net/gml/3.2}Point',
+            './/{http://www.opengis.net/gml/3.2}MultiPoint'
         )
 
         self.subelements.update(points)
@@ -551,8 +574,8 @@ class GmlFilter(AbstractLocationFilter):
 
         linestrings, multicurves = self._dedup_multi(
             gml_tree,
-            './/{http://www.opengis.net/gml}LineString',
-            './/{http://www.opengis.net/gml}MultiCurve'
+            './/{http://www.opengis.net/gml/3.2}LineString',
+            './/{http://www.opengis.net/gml/3.2}MultiCurve'
         )
 
         self.subelements.update(linestrings)
@@ -560,14 +583,20 @@ class GmlFilter(AbstractLocationFilter):
 
         polygons, multisurfaces = self._dedup_multi(
             gml_tree,
-            './/{http://www.opengis.net/gml}Polygon',
-            './/{http://www.opengis.net/gml}MultiSurface')
+            './/{http://www.opengis.net/gml/3.2}Polygon',
+            './/{http://www.opengis.net/gml/3.2}MultiSurface')
 
         self.subelements.update(polygons)
         self.subelements.update(multisurfaces)
 
         if len(self.subelements) == 0:
-            raise ValueError('Failed to extract geometries from GML file.')
+            if gml_tree.find('.//{http://www.opengis.net/gml}*') is not None:
+                raise ValueError(
+                    'GML document should be GML version 3.2, it appears to be '
+                    'older.')
+
+            raise ValueError('Failed to extract geometries from GML3.2 '
+                             'document, is this a valid GML3.2 document?')
 
     def set_geometry_column(self, geometry_column):
         if len(self.subelements) == 1:
@@ -582,7 +611,9 @@ class GmlFilter(AbstractLocationFilter):
 
 class GeometryFilter(GmlFilter):
     """Class for construction a spatial filter expression from any Geometry
-    Fiona can convert to a GML 3.1.1 document.
+    Fiona can convert to a GML 3.2 document.
+
+    This class requires the ``fiona`` package to be installed.
     """
 
     def __init__(self, geometry, location_filter,
@@ -628,14 +659,14 @@ class GeometryFilter(GmlFilter):
             import fiona
 
             # Check if the GML driver and write mode are supported and check
-            # if version of Fiona supports GML 3.1.1 output (Fiona >= 1.8.18)
+            # if version of Fiona supports GML 3.2 output (Fiona >= 1.8.18)
             drivers = fiona.supported_drivers
             if 'w' not in drivers.get('GML', '') or \
                     Version(fiona.__version__) < Version('1.8.18'):
                 raise UserWarning('Please use module Fiona version 1.8.18 '
                                   'or higher')
         except ImportError:
-            raise ImportError('No module named fiona. GeometryFilter '
+            raise ImportError('Failed to import fiona. GeometryFilter '
                               'requires fiona to be installed.')
         else:
             # Open the geometry as a collection containing multiple records
@@ -645,7 +676,7 @@ class GeometryFilter(GmlFilter):
                 layer = os.path.basename(os.path.splitext(geometry)[0])
                 with fiona.open(gml_blob, 'w', layer=layer, driver='GML',
                                 schema=c.schema, crs=c.crs,
-                                FORMAT='GML3') as gml:
+                                FORMAT='GML3.2') as gml:
                     for r in c:
                         gml.write(r)
                 gml_blob.seek(0)
@@ -657,6 +688,8 @@ class GeometryFilter(GmlFilter):
 class GeopandasFilter(GmlFilter):
     """Class for construction a spatial filter expression from a
     GeoPandas object.
+
+    This class requires the ``geopandas`` package to be installed.
     """
 
     def __init__(self, geodataframe, location_filter,
@@ -702,7 +735,7 @@ class GeopandasFilter(GmlFilter):
         try:
             import geopandas
         except ImportError:
-            raise ImportError('No module named GeoPandas. GeopandasFilter '
+            raise ImportError('Failed to import geopandas. GeopandasFilter '
                               'requires geopandas to be installed.')
         else:
             if not isinstance(gdf, geopandas.GeoDataFrame):
@@ -714,7 +747,7 @@ class GeopandasFilter(GmlFilter):
                                      "CRS definition")
 
             with BytesIO() as gml_blob:
-                gdf.to_file(gml_blob, driver="GML", FORMAT="GML3",
+                gdf.to_file(gml_blob, driver="GML", FORMAT="GML3.2",
                             layer="geodataframe")
                 gml_blob.seek(0)
                 gml = gml_blob.read()

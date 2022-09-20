@@ -1,7 +1,70 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ns3:dov-schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns3="http://kern.schemas.dov.vlaanderen.be" xsi:schemaLocation="http://kern.schemas.dov.vlaanderen.be https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/dov.xsd">
+    <grondwaterlocatie>
+        <identificatie>130/21/20</identificatie>
+        <dataidentifier>
+            <permkey>2017-000566</permkey>
+            <uri>https://www.dov.vlaanderen.be/data/put/2017-000566</uri>
+        </dataidentifier>
+        <grondwaterlocatieType>PUT</grondwaterlocatieType>
+        <boring>B/130/21/20</boring>
+        <puntligging>
+            <xy>
+                <x>99509.98</x>
+                <y>195084.16</y>
+                <betrouwbaarheid>goed</betrouwbaarheid>
+                <methode_opmeten>gedigitaliseerd op topokaart</methode_opmeten>
+                <origine_opmeten>
+                    <naam>VMM - Afdeling Operationeel Waterbeheer</naam>
+                </origine_opmeten>
+            </xy>
+            <beschrijving_locatie>Bruidstraat</beschrijving_locatie>
+            <gemeente>44021</gemeente>
+            <oorspronkelijk_maaiveld>
+                <waarde>9.00</waarde>
+                <betrouwbaarheid>goed</betrouwbaarheid>
+                <methode_opmeten>DHM_v1 5m*5m</methode_opmeten>
+                <origine_opmeten>
+                    <naam>VMM - Afdeling Operationeel Waterbeheer</naam>
+                </origine_opmeten>
+            </oorspronkelijk_maaiveld>
+            <start_tov_maaiveld>
+                <gestart_op>MAAIVELD</gestart_op>
+            </start_tov_maaiveld>
+        </puntligging>
+        <diepte>6.20</diepte>
+        <datum_ingebruikname>2003-06-24</datum_ingebruikname>
+        <putsoort>niet-verbuisde boorput</putsoort>
+        <beheer>
+            <vanaf>2003-06-24</vanaf>
+            <beheerder>
+                <naam>VMM - AFDELING WATER</naam>
+            </beheerder>
+        </beheer>
+        <afwerking>
+            <beschermbuis>
+                <diameter>160</diameter>
+                <materiaal>staal, zonder verdere precisering</materiaal>
+            </beschermbuis>
+            <annulaireruimte>
+                <van>0.50</van>
+                <tot>1.70</tot>
+                <materiaal>klei</materiaal>
+            </annulaireruimte>
+            <annulaireruimte>
+                <van>2.80</van>
+                <tot>5.20</tot>
+                <materiaal>klei</materiaal>
+            </annulaireruimte>
+        </afwerking>
+        <status>publiek</status>
+    </grondwaterlocatie>
     <filter>
         <identificatie>1</identificatie>
+        <dataidentifier>
+            <permkey>2003-004471</permkey>
+            <uri>https://www.dov.vlaanderen.be/data/filter/2003-004471</uri>
+        </dataidentifier>
         <filtertype>peilfilter</filtertype>
         <grondwaterlocatie>130/21/20</grondwaterlocatie>
         <meetnet>8</meetnet>
@@ -433,6 +496,84 @@
             <zoet>N</zoet>
             <betrouwbaarheid>goed</betrouwbaarheid>
             <bron>freatisch 2018 voorjaar</bron>
+        </peilmeting>
+        <waarneming>
+            <datum>2018-10-16</datum>
+            <waarnemingtype>-910</waarnemingtype>
+            <opmeter>
+                <naam>Labo</naam>
+            </opmeter>
+            <bron>freatisch 2018 najaar</bron>
+        </waarneming>
+        <peilmeting>
+            <datum>2019-03-11</datum>
+            <diepte_tov_referentiepunt>0.72</diepte_tov_referentiepunt>
+            <peil_mtaw>8.37</peil_mtaw>
+            <methode>peillint</methode>
+            <filtertoestand>1</filtertoestand>
+            <filterstatus>in rust</filterstatus>
+            <opmeter>
+                <naam>Labo</naam>
+            </opmeter>
+            <zoet>N</zoet>
+            <betrouwbaarheid>goed</betrouwbaarheid>
+            <bron>freatisch 2019 voorjaar</bron>
+        </peilmeting>
+        <peilmeting>
+            <datum>2019-10-24</datum>
+            <diepte_tov_referentiepunt>2.18</diepte_tov_referentiepunt>
+            <peil_mtaw>6.91</peil_mtaw>
+            <methode>peillint</methode>
+            <filtertoestand>1</filtertoestand>
+            <filterstatus>in rust</filterstatus>
+            <opmeter>
+                <naam>Labo</naam>
+            </opmeter>
+            <zoet>N</zoet>
+            <betrouwbaarheid>goed</betrouwbaarheid>
+            <bron>freatisch 2019 najaar</bron>
+        </peilmeting>
+        <peilmeting>
+            <datum>2020-04-16</datum>
+            <diepte_tov_referentiepunt>0.9</diepte_tov_referentiepunt>
+            <peil_mtaw>8.19</peil_mtaw>
+            <methode>peillint</methode>
+            <filtertoestand>1</filtertoestand>
+            <filterstatus>in rust</filterstatus>
+            <opmeter>
+                <naam>Labo</naam>
+            </opmeter>
+            <zoet>N</zoet>
+            <betrouwbaarheid>goed</betrouwbaarheid>
+            <bron>freatisch 2020 voorjaar</bron>
+        </peilmeting>
+        <peilmeting>
+            <datum>2020-11-03</datum>
+            <diepte_tov_referentiepunt>1.35</diepte_tov_referentiepunt>
+            <peil_mtaw>7.74</peil_mtaw>
+            <methode>peillint</methode>
+            <filtertoestand>1</filtertoestand>
+            <filterstatus>in rust</filterstatus>
+            <opmeter>
+                <naam>Labo</naam>
+            </opmeter>
+            <zoet>N</zoet>
+            <betrouwbaarheid>goed</betrouwbaarheid>
+            <bron>freatisch 2020 najaar</bron>
+        </peilmeting>
+        <peilmeting>
+            <datum>2022-03-17</datum>
+            <diepte_tov_referentiepunt>0.81</diepte_tov_referentiepunt>
+            <peil_mtaw>8.28</peil_mtaw>
+            <methode>peillint</methode>
+            <filtertoestand>1</filtertoestand>
+            <filterstatus>in rust</filterstatus>
+            <opmeter>
+                <naam>Labo</naam>
+            </opmeter>
+            <zoet>N</zoet>
+            <betrouwbaarheid>goed</betrouwbaarheid>
+            <bron>PFAS_freatisch_VMM_2022_voorjaar</bron>
         </peilmeting>
     </filtermeting>
 </ns3:dov-schema>

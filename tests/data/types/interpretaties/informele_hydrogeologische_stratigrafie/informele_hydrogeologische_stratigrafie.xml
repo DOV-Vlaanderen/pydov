@@ -3,6 +3,10 @@
     <interpretaties>
         <informelehydrostratigrafie>
             <boring>B/7-0528</boring>
+            <dataidentifier>
+                <permkey>2003-297774</permkey>
+                <uri>https://www.dov.vlaanderen.be/data/interpretatie/2003-297774</uri>
+            </dataidentifier>
             <auteur>
                 <persoon>
                     <naam>De Jong</naam>

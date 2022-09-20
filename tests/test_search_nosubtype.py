@@ -1,6 +1,6 @@
 """Module for test for features without subtype values."""
 
-from owslib.fes import PropertyIsEqualTo
+from owslib.fes2 import PropertyIsEqualTo
 
 from pydov.search.grondwaterfilter import GrondwaterFilterSearch
 from pydov.util.dovutil import build_dov_url
@@ -54,7 +54,7 @@ class TestSearchNoSubtype(object):
         df = GrondwaterFilterSearch().search(
             query=PropertyIsEqualTo(
                 'pkey_filter',
-                build_dov_url('data/filter/2007-011302.xml')
+                build_dov_url('data/filter/1976-101132.xml')
             )
         )
 

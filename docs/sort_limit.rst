@@ -14,7 +14,7 @@ While the query and location filters restrict the features returned to the ones 
 
 Sorting is mainly useful in combination with the `max_features` parameter described below: this allows to retrieve the X latest interpretations, deepest boreholes, etc.
 
-A `sort_by` expression consists of a query field (`propertyname`) and an ordering (`ASC` for ascending or `DESC` for descending). pydov uses the SortBy expression from the OWSLib library, defined in the owslib.fes package.
+A `sort_by` expression consists of a query field (`propertyname`) and an ordering (`ASC` for ascending or `DESC` for descending). pydov uses the SortBy expression from the OWSLib library, defined in the owslib.fes2 package.
 
 SortBy
     Sort on one or multiple attributes. Takes a list of SortProperty instances for sorting.
@@ -25,7 +25,7 @@ SortBy
 Finding the 10 deepest boreholes is now straightforward::
 
     from pydov.search.boring import BoringSearch
-    from owslib.fes import SortBy, SortProperty
+    from owslib.fes2 import SortBy, SortProperty
 
     bs = BoringSearch()
     df = bs.search(sort_by=SortBy([SortProperty('diepte_boring_tot', 'DESC')]),

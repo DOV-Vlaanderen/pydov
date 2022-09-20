@@ -179,7 +179,7 @@ class SessionFactory:
 
 
 class LocalSessionThreadPool:
-    """Thread pool of LocalSessionThreads used to perform XML I/O operations
+    """Thread pool of LocalSessionThreads used to perform HTTP I/O operations
     in parallel.
     """
 
@@ -221,7 +221,8 @@ class LocalSessionThreadPool:
         Parameters
         ----------
         fn : function
-            Function to execute.
+            Function to execute. It should take all arguments from args, and
+            after that a single argument with the requests Session.
         args : tuple
             Arguments that will be passed to the function.
         """

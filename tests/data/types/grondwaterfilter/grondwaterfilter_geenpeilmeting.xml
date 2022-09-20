@@ -1,40 +1,80 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ns3:dov-schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns3="http://kern.schemas.dov.vlaanderen.be" xsi:schemaLocation="http://kern.schemas.dov.vlaanderen.be https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/dov.xsd">
+    <grondwaterlocatie>
+        <identificatie>5111-151</identificatie>
+        <dataidentifier>
+            <permkey>2021-096695</permkey>
+            <uri>https://www.dov.vlaanderen.be/data/put/2021-096695</uri>
+        </dataidentifier>
+        <putnaam>5111-151</putnaam>
+        <grondwaterlocatieType>PUT</grondwaterlocatieType>
+        <puntligging>
+            <xy>
+                <x>177740.00</x>
+                <y>217850.00</y>
+                <betrouwbaarheid>goed</betrouwbaarheid>
+                <methode_opmeten>uit dossier</methode_opmeten>
+                <origine_opmeten>
+                    <naam>Exploitant</naam>
+                </origine_opmeten>
+            </xy>
+            <oorspronkelijk_maaiveld>
+                <waarde>18.70</waarde>
+                <betrouwbaarheid>goed</betrouwbaarheid>
+                <methode_opmeten>DHM_v2</methode_opmeten>
+                <origine_opmeten>
+                    <naam>DOV - applicatief - RESTservice DHM2</naam>
+                </origine_opmeten>
+            </oorspronkelijk_maaiveld>
+            <start_tov_maaiveld>
+                <gestart_op>MAAIVELD</gestart_op>
+            </start_tov_maaiveld>
+        </puntligging>
+        <diepte>9.00</diepte>
+        <datum_ingebruikname>1976-11-01</datum_ingebruikname>
+        <putsoort>niet-verbuisde boorput</putsoort>
+        <afwerking>
+            <beschermbuis/>
+        </afwerking>
+        <status>publiek</status>
+    </grondwaterlocatie>
     <filter>
         <identificatie>1</identificatie>
+        <dataidentifier>
+            <permkey>1976-101132</permkey>
+            <uri>https://www.dov.vlaanderen.be/data/filter/1976-101132</uri>
+        </dataidentifier>
         <filtertype>peilfilter</filtertype>
-        <grondwaterlocatie>WAHP300</grondwaterlocatie>
-        <meetnet>9</meetnet>
-        <datum_ingebruikname>2007-10-31</datum_ingebruikname>
+        <grondwaterlocatie>5111-151</grondwaterlocatie>
+        <meetnet>5</meetnet>
+        <datum_ingebruikname>1976-11-01</datum_ingebruikname>
         <monsternameMogelijk>false</monsternameMogelijk>
         <ligging>
-            <aquifer>0000</aquifer>
-            <regime>onbekend</regime>
+            <aquifer>0230</aquifer>
+            <grondwaterlichaam>CKS_0200_GWL_1</grondwaterlichaam>
+            <grondwatersysteem>Centraal Kempisch Systeem</grondwatersysteem>
+            <regime>freatisch</regime>
         </ligging>
-        <meetfrequentie>
-            <aantal_peilmetingen>20</aantal_peilmetingen>
-        </meetfrequentie>
+        <meetfrequentie/>
         <opbouw>
             <onderdeel>
-                <van>-0.61</van>
-                <tot>1.18</tot>
-                <filterelement>stijgbuis</filterelement>
-                <binnendiameter>50</binnendiameter>
-            </onderdeel>
-            <onderdeel>
-                <van>1.18</van>
-                <tot>2.11</tot>
-                <filterelement>filter</filterelement>
-                <binnendiameter>50</binnendiameter>
+                <van>0.0</van>
+                <tot>9.0</tot>
+                <filterelement>onbekend</filterelement>
             </onderdeel>
         </opbouw>
         <status>publiek</status>
     </filter>
     <filtermeting>
-        <grondwaterlocatie>WAHP300</grondwaterlocatie>
+        <grondwaterlocatie>5111-151</grondwaterlocatie>
         <filter>
             <identificatie>1</identificatie>
             <filtertype>peilfilter</filtertype>
         </filter>
+        <referentiepunt>
+            <datum>1976-11-01</datum>
+            <meetpunt>18.70</meetpunt>
+            <referentie>Maaiveld</referentie>
+        </referentiepunt>
     </filtermeting>
 </ns3:dov-schema>

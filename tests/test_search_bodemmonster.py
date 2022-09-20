@@ -2,7 +2,7 @@
 """Module grouping tests for the bodemmonster search module."""
 import datetime
 
-from owslib.fes import PropertyIsEqualTo
+from owslib.fes2 import PropertyIsEqualTo
 
 from pydov.search.bodemmonster import BodemmonsterSearch
 from pydov.types.bodemmonster import Bodemmonster

@@ -3,6 +3,7 @@
 PyDOV events."""
 
 from hashlib import md5
+import importlib
 from multiprocessing import Lock
 from owslib.etree import etree
 from pathlib import Path
@@ -803,13 +804,9 @@ class RepeatableLogRecorder(AbstractReadHook, AbstractInjectHook):
             self.log_archive, 'w', compression=zipfile.ZIP_DEFLATED)
 
         self.metadata = {
-            'versions': {
-                'pydov': pydov.__version__,
-                'owslib': owslib.__version__,
-                'pandas': pandas.__version__,
-                'numpy': numpy.__version__,
-                'requests': requests.__version__
-            },
+            'versions': dict([m, self._safe_get_version(m)] for m in [
+                'pydov', 'owslib', 'pandas', 'numpy', 'requests',
+                'fiona', 'geopandas']),
             'timings': {
                 'start': time.strftime('%Y%m%d-%H%M%S')
             }
@@ -820,6 +817,29 @@ class RepeatableLogRecorder(AbstractReadHook, AbstractInjectHook):
 
         self.lock = Lock()
         atexit.register(self._pydov_exit)
+
+    def _safe_get_version(self, module):
+        """Try to get the version string of the given module and return None
+        on error or when module is not found.
+
+        Parameters
+        ----------
+        module : string
+            Name of the module.
+
+        Returns
+        -------
+        string
+            Version string of the module.
+        """
+        ms = importlib.util.find_spec(module)
+        if ms is not None:
+            try:
+                return importlib.import_module(module).__version__
+            except Exception:
+                return None
+        else:
+            return None
 
     def _store_pydov_code(self):
         """Store the pydov source code itself in the archive.

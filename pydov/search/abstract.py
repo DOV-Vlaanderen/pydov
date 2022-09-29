@@ -759,7 +759,7 @@ class AbstractSearch(AbstractCommon):
             geometry_column=self._geometry_column
         ))
 
-        def _get_remote_wfs(start_index=0, session=None):
+        def _get_remote_wfs(start_index=0, max_features=None, session=None):
             fts, getfeature = self._get_remote_wfs_feature(
                 wfs=self._wfs,
                 typename=self._layer,
@@ -794,7 +794,8 @@ class AbstractSearch(AbstractCommon):
         result = []
 
         # execute the first WFS query
-        tree = _get_remote_wfs(start_index=0, session=pydov.session)
+        tree = _get_remote_wfs(
+            start_index=0, max_features=max_features, session=pydov.session)
         result.append(tree)
 
         number_matched = int(tree.get('numberMatched'))
@@ -813,12 +814,26 @@ class AbstractSearch(AbstractCommon):
             # we need more requests to fetch the rest of the results
             pool = LocalSessionThreadPool()
 
-            fts_to_get = number_matched - number_returned
+            if max_features is not None:
+                fts_to_get = min(
+                    max_features, number_matched) - number_returned
+            else:
+                fts_to_get = number_matched - number_returned
             fts_per_req = self._wfs_max_features or number_returned
             extra_reqs = math.ceil(fts_to_get/fts_per_req)
 
             for i in range(extra_reqs):
-                pool.execute(_get_remote_wfs, ((i+1)*fts_per_req,))
+                start_index = (i+1)*fts_per_req
+                if i == extra_reqs - 1:
+                    # last request
+                    if fts_to_get == fts_per_req:
+                        max_features = None
+                    else:
+                        max_features = fts_to_get % fts_per_req
+                else:
+                    max_features = fts_per_req
+
+                pool.execute(_get_remote_wfs, (start_index, max_features))
 
             for r in pool.join():
                 if r.get_error():

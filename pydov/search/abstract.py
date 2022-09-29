@@ -826,7 +826,10 @@ class AbstractSearch(AbstractCommon):
                 start_index = (i+1)*fts_per_req
                 if i == extra_reqs - 1:
                     # last request
-                    max_features = fts_to_get % fts_per_req
+                    if fts_to_get == fts_per_req:
+                        max_features = None
+                    else:
+                        max_features = fts_to_get % fts_per_req
                 else:
                     max_features = fts_per_req
 

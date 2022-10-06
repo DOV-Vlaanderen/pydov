@@ -31,6 +31,7 @@ def temp_directory():
     yield temp_dir
 
     if os.path.exists(temp_dir):
+        time.sleep(1)
         shutil.rmtree(temp_dir)
 
 

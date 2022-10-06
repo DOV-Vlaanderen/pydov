@@ -10,11 +10,7 @@ from pathlib import Path
 import atexit
 import json
 import math
-import numpy
 import os
-import owslib
-import pandas
-import requests
 import sys
 import time
 import uuid

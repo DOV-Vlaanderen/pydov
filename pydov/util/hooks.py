@@ -918,7 +918,7 @@ class RepeatableLogRecorder(AbstractReadHook, AbstractInjectHook):
             return None
 
         with self.log_archive_file.open(log_path, 'r') as log_file:
-            response = log_file.read().decode('utf8')
+            response = log_file.read()
 
         return response
 
@@ -974,7 +974,7 @@ class RepeatableLogRecorder(AbstractReadHook, AbstractInjectHook):
                 return None
 
             with self.log_archive_file.open(log_path, 'r') as log_file:
-                tree = log_file.read().decode('utf8')
+                tree = log_file.read()
 
         return tree
 
@@ -1027,7 +1027,7 @@ class RepeatableLogRecorder(AbstractReadHook, AbstractInjectHook):
                 return None
 
             with self.log_archive_file.open(log_path, 'r') as log_file:
-                xml = log_file.read().decode('utf8')
+                xml = log_file.read()
 
             return xml
 
@@ -1099,7 +1099,7 @@ class RepeatableLogReplayer(AbstractInjectHook):
             )
 
         with self.log_archive_file.open(log_path, 'r') as log_file:
-            response = log_file.read().decode('utf8')
+            response = log_file.read()
 
         return response
 
@@ -1138,7 +1138,7 @@ class RepeatableLogReplayer(AbstractInjectHook):
             )
 
         with self.log_archive_file.open(log_path, 'r') as log_file:
-            tree = log_file.read().decode('utf8')
+            tree = log_file.read()
 
         return tree
 
@@ -1178,6 +1178,6 @@ class RepeatableLogReplayer(AbstractInjectHook):
                 )
 
             with self.log_archive_file.open(log_path, 'r') as log_file:
-                xml = log_file.read().decode('utf8')
+                xml = log_file.read()
 
             return xml

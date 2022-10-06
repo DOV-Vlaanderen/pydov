@@ -808,7 +808,7 @@ class RepeatableLogRecorder(AbstractReadHook, AbstractInjectHook):
                 'pydov', 'owslib', 'pandas', 'numpy', 'requests',
                 'fiona', 'geopandas']),
             'timings': {
-                'start': time.strftime('%Y%m%d-%H%M%S')
+                'start': time.strftime('%Y%m%dT%H%M%S')
             }
         }
         self.started_at = time.perf_counter()
@@ -863,15 +863,19 @@ class RepeatableLogRecorder(AbstractReadHook, AbstractInjectHook):
 
     def _pydov_exit(self):
         """Save metadata and close ZIP archive before ending Python session."""
-        self.metadata['timings']['end'] = time.strftime('%Y%m%d-%H%M%S')
+        self.metadata['timings']['end'] = time.strftime('%Y%m%dT%H%M%S')
         self.metadata['timings']['run_time_secs'] = (
             time.perf_counter() - self.started_at)
 
-        self.log_archive_file.writestr(
-            'metadata.json', json.dumps(self.metadata, indent=2))
-        self.log_archive_file.close()
-
-        print('pydov session was saved as {}'.format(self.log_archive))
+        try:
+            self.log_archive_file.writestr(
+                'metadata.json', json.dumps(self.metadata, indent=2))
+            self.log_archive_file.close()
+        except ValueError:
+            # already closed, this should only happen while running tests
+            pass
+        else:
+            print('pydov session was saved as {}'.format(self.log_archive))
 
     def meta_received(self, url, response):
         """Called when a response for a metadata requests is received.

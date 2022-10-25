@@ -7,6 +7,12 @@ History
 v3.0.0 (unreleased)
 -------------------
 
+* News
+
+  * This version drops support for Python 3.7.
+
+  * This version is supported on Python 3.8, 3.9 and 3.10.
+
 * Breaking changes
 
   * pydov3 uses WFS 2.0.0 instead of WFS 1.1.0, as a consequence attribute filters

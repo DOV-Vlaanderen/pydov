@@ -8,6 +8,10 @@
         </filter>
         <watermonster>
             <identificatie>3-0040/M2006</identificatie>
+            <dataidentifier>
+                <permkey>2006-115684</permkey>
+                <uri>https://www.dov.vlaanderen.be/data/watermonster/2006-115684</uri>
+            </dataidentifier>
             <monstername>
                 <datum>2006-05-19</datum>
                 <tijd>02:00:00</tijd>
@@ -22,175 +26,69 @@
                 </labo>
             </laboanalyse>
             <observatie>
-                <parameter>Eh°</parameter>
-                <parametergroep>Fysico-chemische  parameters</parametergroep>
-                <waarde_numeriek>547.0</waarde_numeriek>
-                <eenheid>mV</eenheid>
+                <parameter>Ni</parameter>
+                <parametergroep>Zware metalen</parametergroep>
+                <waarde_numeriek>19.00</waarde_numeriek>
+                <eenheid>µg/l</eenheid>
                 <betrouwbaarheid>goed</betrouwbaarheid>
                 <veld_labo>LABO</veld_labo>
             </observatie>
             <observatie>
-                <parameter>Fe</parameter>
-                <parametergroep>Kationen</parametergroep>
-                <waarde_numeriek>0.0344</waarde_numeriek>
-                <eenheid>mg/l</eenheid>
-                <betrouwbaarheid>goed</betrouwbaarheid>
-                <veld_labo>LABO</veld_labo>
-            </observatie>
-            <observatie>
-                <parameter>SO4</parameter>
-                <parametergroep>Anionen</parametergroep>
-                <waarde_numeriek>60.79999924</waarde_numeriek>
-                <eenheid>mg/l</eenheid>
-                <betrouwbaarheid>goed</betrouwbaarheid>
-                <veld_labo>LABO</veld_labo>
-            </observatie>
-            <observatie>
-                <parameter>Fe2+</parameter>
-                <parametergroep>Kationen</parametergroep>
-                <waarde_numeriek>0.02</waarde_numeriek>
-                <eenheid>mg/l</eenheid>
-                <detectieconditie>&lt;</detectieconditie>
-                <betrouwbaarheid>goed</betrouwbaarheid>
-                <veld_labo>LABO</veld_labo>
-            </observatie>
-            <observatie>
-                <parameter>Ca</parameter>
-                <parametergroep>Kationen</parametergroep>
-                <waarde_numeriek>131.0</waarde_numeriek>
-                <eenheid>mg/l</eenheid>
-                <betrouwbaarheid>goed</betrouwbaarheid>
-                <veld_labo>LABO</veld_labo>
-            </observatie>
-            <observatie>
-                <parameter>Cl</parameter>
-                <parametergroep>Anionen</parametergroep>
-                <waarde_numeriek>79.80000305</waarde_numeriek>
-                <eenheid>mg/l</eenheid>
-                <betrouwbaarheid>goed</betrouwbaarheid>
-                <veld_labo>LABO</veld_labo>
-            </observatie>
-            <observatie>
-                <parameter>O2</parameter>
-                <parametergroep>Fysico-chemische  parameters</parametergroep>
-                <waarde_numeriek>8.0</waarde_numeriek>
-                <eenheid>mg/l</eenheid>
-                <betrouwbaarheid>goed</betrouwbaarheid>
-                <veld_labo>LABO</veld_labo>
-            </observatie>
-            <observatie>
-                <parameter>Al</parameter>
+                <parameter>Hg</parameter>
                 <parametergroep>Zware metalen</parametergroep>
                 <waarde_numeriek>0.05</waarde_numeriek>
-                <eenheid>mg/l</eenheid>
-                <detectieconditie>&lt;</detectieconditie>
-                <betrouwbaarheid>goed</betrouwbaarheid>
-                <veld_labo>LABO</veld_labo>
-            </observatie>
-            <observatie>
-                <parameter>NH4</parameter>
-                <parametergroep>Kationen</parametergroep>
-                <waarde_numeriek>0.34999999</waarde_numeriek>
-                <eenheid>mg/l</eenheid>
-                <detectieconditie>&lt;</detectieconditie>
-                <betrouwbaarheid>goed</betrouwbaarheid>
-                <veld_labo>LABO</veld_labo>
-            </observatie>
-            <observatie>
-                <parameter>Cd</parameter>
-                <parametergroep>Zware metalen</parametergroep>
-                <waarde_numeriek>0.56999999</waarde_numeriek>
-                <eenheid>µg/l</eenheid>
-                <betrouwbaarheid>goed</betrouwbaarheid>
-                <veld_labo>LABO</veld_labo>
-            </observatie>
-            <observatie>
-                <parameter>pH</parameter>
-                <parametergroep>Fysico-chemische  parameters</parametergroep>
-                <waarde_numeriek>5.0</waarde_numeriek>
-                <eenheid>Sörensen</eenheid>
-                <betrouwbaarheid>goed</betrouwbaarheid>
-                <veld_labo>LABO</veld_labo>
-            </observatie>
-            <observatie>
-                <parameter>As</parameter>
-                <parametergroep>Zware metalen</parametergroep>
-                <waarde_numeriek>5.0</waarde_numeriek>
                 <eenheid>µg/l</eenheid>
                 <detectieconditie>&lt;</detectieconditie>
                 <betrouwbaarheid>goed</betrouwbaarheid>
                 <veld_labo>LABO</veld_labo>
             </observatie>
             <observatie>
-                <parameter>PO4(Tot.)</parameter>
+                <parameter>F</parameter>
                 <parametergroep>Anionen</parametergroep>
-                <waarde_numeriek>0.1</waarde_numeriek>
+                <waarde_numeriek>0.03</waarde_numeriek>
                 <eenheid>mg/l</eenheid>
                 <detectieconditie>&lt;</detectieconditie>
                 <betrouwbaarheid>goed</betrouwbaarheid>
                 <veld_labo>LABO</veld_labo>
             </observatie>
             <observatie>
-                <parameter>Mn</parameter>
+                <parameter>Mg</parameter>
                 <parametergroep>Kationen</parametergroep>
-                <waarde_numeriek>0.033</waarde_numeriek>
+                <waarde_numeriek>21.40</waarde_numeriek>
                 <eenheid>mg/l</eenheid>
                 <betrouwbaarheid>goed</betrouwbaarheid>
                 <veld_labo>LABO</veld_labo>
             </observatie>
             <observatie>
-                <parameter>TOC</parameter>
-                <parametergroep>Fysico-chemische  parameters</parametergroep>
-                <waarde_numeriek>3.0</waarde_numeriek>
-                <eenheid>mg/l</eenheid>
-                <betrouwbaarheid>goed</betrouwbaarheid>
-                <veld_labo>LABO</veld_labo>
-            </observatie>
-            <observatie>
-                <parameter>Zn</parameter>
-                <parametergroep>Zware metalen</parametergroep>
-                <waarde_numeriek>18.0</waarde_numeriek>
-                <eenheid>µg/l</eenheid>
-                <betrouwbaarheid>goed</betrouwbaarheid>
-                <veld_labo>LABO</veld_labo>
-            </observatie>
-            <observatie>
-                <parameter>Pb</parameter>
-                <parametergroep>Zware metalen</parametergroep>
-                <waarde_numeriek>5.0</waarde_numeriek>
-                <eenheid>µg/l</eenheid>
-                <detectieconditie>&lt;</detectieconditie>
-                <betrouwbaarheid>goed</betrouwbaarheid>
-                <veld_labo>LABO</veld_labo>
-            </observatie>
-            <observatie>
-                <parameter>EC</parameter>
-                <parametergroep>Fysico-chemische  parameters</parametergroep>
-                <waarde_numeriek>1080.0</waarde_numeriek>
-                <eenheid>µS/cm</eenheid>
-                <betrouwbaarheid>goed</betrouwbaarheid>
-                <veld_labo>LABO</veld_labo>
-            </observatie>
-            <observatie>
-                <parameter>Na</parameter>
-                <parametergroep>Kationen</parametergroep>
-                <waarde_numeriek>41.20000076</waarde_numeriek>
-                <eenheid>mg/l</eenheid>
-                <betrouwbaarheid>goed</betrouwbaarheid>
-                <veld_labo>LABO</veld_labo>
-            </observatie>
-            <observatie>
-                <parameter>T</parameter>
-                <parametergroep>Fysico-chemische  parameters</parametergroep>
-                <waarde_numeriek>12.69999981</waarde_numeriek>
-                <eenheid>°C</eenheid>
-                <betrouwbaarheid>goed</betrouwbaarheid>
-                <veld_labo>LABO</veld_labo>
-            </observatie>
-            <observatie>
-                <parameter>NO3</parameter>
+                <parameter>HCO3</parameter>
                 <parametergroep>Anionen</parametergroep>
-                <waarde_numeriek>466.0</waarde_numeriek>
+                <waarde_numeriek>8.50</waarde_numeriek>
+                <eenheid>mg/l</eenheid>
+                <betrouwbaarheid>goed</betrouwbaarheid>
+                <veld_labo>LABO</veld_labo>
+            </observatie>
+            <observatie>
+                <parameter>Cu</parameter>
+                <parametergroep>Zware metalen</parametergroep>
+                <waarde_numeriek>3.00</waarde_numeriek>
+                <eenheid>µg/l</eenheid>
+                <detectieconditie>&lt;</detectieconditie>
+                <betrouwbaarheid>goed</betrouwbaarheid>
+                <veld_labo>LABO</veld_labo>
+            </observatie>
+            <observatie>
+                <parameter>Cr</parameter>
+                <parametergroep>Zware metalen</parametergroep>
+                <waarde_numeriek>2.00</waarde_numeriek>
+                <eenheid>µg/l</eenheid>
+                <detectieconditie>&lt;</detectieconditie>
+                <betrouwbaarheid>goed</betrouwbaarheid>
+                <veld_labo>LABO</veld_labo>
+            </observatie>
+            <observatie>
+                <parameter>K</parameter>
+                <parametergroep>Kationen</parametergroep>
+                <waarde_numeriek>14.40</waarde_numeriek>
                 <eenheid>mg/l</eenheid>
                 <betrouwbaarheid>goed</betrouwbaarheid>
                 <veld_labo>LABO</veld_labo>
@@ -205,70 +103,176 @@
                 <veld_labo>LABO</veld_labo>
             </observatie>
             <observatie>
-                <parameter>K</parameter>
-                <parametergroep>Kationen</parametergroep>
-                <waarde_numeriek>14.39999962</waarde_numeriek>
+                <parameter>NO3</parameter>
+                <parametergroep>Anionen</parametergroep>
+                <waarde_numeriek>466.00</waarde_numeriek>
                 <eenheid>mg/l</eenheid>
                 <betrouwbaarheid>goed</betrouwbaarheid>
                 <veld_labo>LABO</veld_labo>
             </observatie>
             <observatie>
-                <parameter>Cr</parameter>
+                <parameter>T</parameter>
+                <parametergroep>Fysico-chemische  parameters</parametergroep>
+                <waarde_numeriek>12.70</waarde_numeriek>
+                <eenheid>°C</eenheid>
+                <betrouwbaarheid>goed</betrouwbaarheid>
+                <veld_labo>LABO</veld_labo>
+            </observatie>
+            <observatie>
+                <parameter>Na</parameter>
+                <parametergroep>Kationen</parametergroep>
+                <waarde_numeriek>41.20</waarde_numeriek>
+                <eenheid>mg/l</eenheid>
+                <betrouwbaarheid>goed</betrouwbaarheid>
+                <veld_labo>LABO</veld_labo>
+            </observatie>
+            <observatie>
+                <parameter>EC</parameter>
+                <parametergroep>Fysico-chemische  parameters</parametergroep>
+                <waarde_numeriek>1080.00</waarde_numeriek>
+                <eenheid>µS/cm</eenheid>
+                <betrouwbaarheid>goed</betrouwbaarheid>
+                <veld_labo>LABO</veld_labo>
+            </observatie>
+            <observatie>
+                <parameter>Pb</parameter>
                 <parametergroep>Zware metalen</parametergroep>
-                <waarde_numeriek>2.0</waarde_numeriek>
+                <waarde_numeriek>5.00</waarde_numeriek>
                 <eenheid>µg/l</eenheid>
                 <detectieconditie>&lt;</detectieconditie>
                 <betrouwbaarheid>goed</betrouwbaarheid>
                 <veld_labo>LABO</veld_labo>
             </observatie>
             <observatie>
-                <parameter>Cu</parameter>
+                <parameter>Zn</parameter>
                 <parametergroep>Zware metalen</parametergroep>
-                <waarde_numeriek>3.0</waarde_numeriek>
+                <waarde_numeriek>18.00</waarde_numeriek>
+                <eenheid>µg/l</eenheid>
+                <betrouwbaarheid>goed</betrouwbaarheid>
+                <veld_labo>LABO</veld_labo>
+            </observatie>
+            <observatie>
+                <parameter>TOC</parameter>
+                <parametergroep>Fysico-chemische  parameters</parametergroep>
+                <waarde_numeriek>3.00</waarde_numeriek>
+                <eenheid>mg/l</eenheid>
+                <betrouwbaarheid>goed</betrouwbaarheid>
+                <veld_labo>LABO</veld_labo>
+            </observatie>
+            <observatie>
+                <parameter>Mn</parameter>
+                <parametergroep>Kationen</parametergroep>
+                <waarde_numeriek>0.03</waarde_numeriek>
+                <eenheid>mg/l</eenheid>
+                <betrouwbaarheid>goed</betrouwbaarheid>
+                <veld_labo>LABO</veld_labo>
+            </observatie>
+            <observatie>
+                <parameter>PO4(Tot.)</parameter>
+                <parametergroep>Anionen</parametergroep>
+                <waarde_numeriek>0.10</waarde_numeriek>
+                <eenheid>mg/l</eenheid>
+                <detectieconditie>&lt;</detectieconditie>
+                <betrouwbaarheid>goed</betrouwbaarheid>
+                <veld_labo>LABO</veld_labo>
+            </observatie>
+            <observatie>
+                <parameter>As</parameter>
+                <parametergroep>Zware metalen</parametergroep>
+                <waarde_numeriek>5.00</waarde_numeriek>
                 <eenheid>µg/l</eenheid>
                 <detectieconditie>&lt;</detectieconditie>
                 <betrouwbaarheid>goed</betrouwbaarheid>
                 <veld_labo>LABO</veld_labo>
             </observatie>
             <observatie>
-                <parameter>HCO3</parameter>
-                <parametergroep>Anionen</parametergroep>
-                <waarde_numeriek>8.5</waarde_numeriek>
-                <eenheid>mg/l</eenheid>
+                <parameter>pH</parameter>
+                <parametergroep>Fysico-chemische  parameters</parametergroep>
+                <waarde_numeriek>5.00</waarde_numeriek>
+                <eenheid>Sörensen</eenheid>
                 <betrouwbaarheid>goed</betrouwbaarheid>
                 <veld_labo>LABO</veld_labo>
             </observatie>
             <observatie>
-                <parameter>Mg</parameter>
+                <parameter>Cd</parameter>
+                <parametergroep>Zware metalen</parametergroep>
+                <waarde_numeriek>0.57</waarde_numeriek>
+                <eenheid>µg/l</eenheid>
+                <betrouwbaarheid>goed</betrouwbaarheid>
+                <veld_labo>LABO</veld_labo>
+            </observatie>
+            <observatie>
+                <parameter>NH4</parameter>
                 <parametergroep>Kationen</parametergroep>
-                <waarde_numeriek>21.39999962</waarde_numeriek>
-                <eenheid>mg/l</eenheid>
-                <betrouwbaarheid>goed</betrouwbaarheid>
-                <veld_labo>LABO</veld_labo>
-            </observatie>
-            <observatie>
-                <parameter>F</parameter>
-                <parametergroep>Anionen</parametergroep>
-                <waarde_numeriek>0.025</waarde_numeriek>
+                <waarde_numeriek>0.35</waarde_numeriek>
                 <eenheid>mg/l</eenheid>
                 <detectieconditie>&lt;</detectieconditie>
                 <betrouwbaarheid>goed</betrouwbaarheid>
                 <veld_labo>LABO</veld_labo>
             </observatie>
             <observatie>
-                <parameter>Hg</parameter>
+                <parameter>Al</parameter>
                 <parametergroep>Zware metalen</parametergroep>
                 <waarde_numeriek>0.05</waarde_numeriek>
-                <eenheid>µg/l</eenheid>
+                <eenheid>mg/l</eenheid>
                 <detectieconditie>&lt;</detectieconditie>
                 <betrouwbaarheid>goed</betrouwbaarheid>
                 <veld_labo>LABO</veld_labo>
             </observatie>
             <observatie>
-                <parameter>Ni</parameter>
-                <parametergroep>Zware metalen</parametergroep>
-                <waarde_numeriek>19.0</waarde_numeriek>
-                <eenheid>µg/l</eenheid>
+                <parameter>O2</parameter>
+                <parametergroep>Fysico-chemische  parameters</parametergroep>
+                <waarde_numeriek>8.00</waarde_numeriek>
+                <eenheid>mg/l</eenheid>
+                <betrouwbaarheid>goed</betrouwbaarheid>
+                <veld_labo>LABO</veld_labo>
+            </observatie>
+            <observatie>
+                <parameter>Cl</parameter>
+                <parametergroep>Anionen</parametergroep>
+                <waarde_numeriek>79.80</waarde_numeriek>
+                <eenheid>mg/l</eenheid>
+                <betrouwbaarheid>goed</betrouwbaarheid>
+                <veld_labo>LABO</veld_labo>
+            </observatie>
+            <observatie>
+                <parameter>Ca</parameter>
+                <parametergroep>Kationen</parametergroep>
+                <waarde_numeriek>131.00</waarde_numeriek>
+                <eenheid>mg/l</eenheid>
+                <betrouwbaarheid>goed</betrouwbaarheid>
+                <veld_labo>LABO</veld_labo>
+            </observatie>
+            <observatie>
+                <parameter>Fe2+</parameter>
+                <parametergroep>Kationen</parametergroep>
+                <waarde_numeriek>0.02</waarde_numeriek>
+                <eenheid>mg/l</eenheid>
+                <detectieconditie>&lt;</detectieconditie>
+                <betrouwbaarheid>goed</betrouwbaarheid>
+                <veld_labo>LABO</veld_labo>
+            </observatie>
+            <observatie>
+                <parameter>SO4</parameter>
+                <parametergroep>Anionen</parametergroep>
+                <waarde_numeriek>60.80</waarde_numeriek>
+                <eenheid>mg/l</eenheid>
+                <betrouwbaarheid>goed</betrouwbaarheid>
+                <veld_labo>LABO</veld_labo>
+            </observatie>
+            <observatie>
+                <parameter>Fe</parameter>
+                <parametergroep>Kationen</parametergroep>
+                <waarde_numeriek>0.03</waarde_numeriek>
+                <eenheid>mg/l</eenheid>
+                <betrouwbaarheid>goed</betrouwbaarheid>
+                <veld_labo>LABO</veld_labo>
+            </observatie>
+            <observatie>
+                <parameter>Eh°</parameter>
+                <parametergroep>Fysico-chemische  parameters</parametergroep>
+                <waarde_numeriek>547.00</waarde_numeriek>
+                <eenheid>mV</eenheid>
                 <betrouwbaarheid>goed</betrouwbaarheid>
                 <veld_labo>LABO</veld_labo>
             </observatie>

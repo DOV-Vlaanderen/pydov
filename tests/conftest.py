@@ -10,7 +10,7 @@ import pytest
 from _pytest.monkeypatch import MonkeyPatch
 from owslib.etree import etree
 from owslib.feature.schema import _construct_schema, _get_elements
-from owslib.feature.wfs110 import ContentMetadata
+from owslib.feature.wfs200 import ContentMetadata
 from owslib.iso import MD_Metadata
 from owslib.util import ResponseWrapper, findall
 from owslib.wfs import WebFeatureService
@@ -39,7 +39,25 @@ def monkeymodule():
 
 
 @pytest.fixture(scope='module')
-def mp_wfs(monkeymodule):
+def wfs_capabilities():
+    """PyTest fixture providing the WFS GetCapabilities response based on a 
+    local copy.
+
+    Returns
+    -------
+    bytes
+        WFS 2.0.0 GetCapabilities response.
+    """
+    with open('tests/data/util/owsutil/wfscapabilities.xml', 'r',
+              encoding='utf-8') as f:
+        data = f.read()
+        if not isinstance(data, bytes):
+            data = data.encode('utf-8')
+    return data
+
+
+@pytest.fixture(scope='module')
+def mp_wfs(monkeymodule, wfs_capabilities):
     """Monkeypatch the call to the remote GetCapabilities request.
 
     Parameters
@@ -49,13 +67,7 @@ def mp_wfs(monkeymodule):
 
     """
     def read(*args, **kwargs):
-        with open('tests/data/util/owsutil/wfscapabilities.xml', 'r',
-                  encoding='utf-8') as f:
-            data = f.read()
-            if not isinstance(data, bytes):
-                data = data.encode('utf-8')
-            data = etree.fromstring(data)
-        return data
+        return etree.fromstring(wfs_capabilities)
 
     monkeymodule.setattr(
         owslib.feature.common.WFSCapabilitiesReader, 'read', read)
@@ -78,7 +90,7 @@ def wfs(mp_wfs):
 
     """
     return WebFeatureService(
-        url=build_dov_url('geoserver/wfs'), version="1.1.0")
+        url=build_dov_url('geoserver/wfs'), version="2.0.0")
 
 
 @pytest.fixture()
@@ -439,6 +451,22 @@ def mp_remote_xml(monkeypatch):
 
     monkeypatch.setattr(pydov.util.caching.AbstractFileCache,
                         '_get_remote', _get_remote_data)
+
+
+@pytest.fixture
+def mp_gml_id(monkeypatch):
+    """Monkeypatch the call to generate a predictable GML id.
+
+    Parameters
+    ----------
+    monkeymodule : pytest.fixture
+        PyTest monkeypatch fixture with module scope.
+    """
+    def _get_id(*args, **kwargs):
+        return 'pydov.gmlid'
+
+    monkeypatch.setattr(pydov.util.location.AbstractLocation,
+                         '_get_id', _get_id)
 
 
 @pytest.fixture

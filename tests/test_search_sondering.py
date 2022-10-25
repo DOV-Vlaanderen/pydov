@@ -2,7 +2,7 @@
 import datetime
 
 import pandas as pd
-from owslib.fes import PropertyIsEqualTo
+from owslib.fes2 import PropertyIsEqualTo
 
 from pydov.search.sondering import SonderingSearch
 from pydov.types.sondering import Sondering

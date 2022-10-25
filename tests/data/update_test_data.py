@@ -32,16 +32,16 @@ from tests.abstract import ServiceCheck
 def get_first_featuremember(wfs_response):
     tree = etree.fromstring(wfs_response.encode('utf-8'))
 
-    feature_members = tree.find('.//{http://www.opengis.net/gml}'
-                                'featureMembers')
+    first_feature_member = tree.find(
+        './/{http://www.opengis.net/wfs/2.0}member')
 
-    if feature_members is not None:
-        for ft in feature_members:
-            return etree.tostring(ft).decode('utf-8')
+    if first_feature_member is not None:
+        return etree.tostring(first_feature_member[0]).decode('utf-8')
 
 
 def update_file_real(filepath, url, process_fn=None, session=None):
     output = 'Updated {} ... '.format(filepath)
+    failed = False
     filepath = os.path.join(os.path.dirname(__file__), filepath)
     try:
         data = get_remote_url(url, session)
@@ -49,19 +49,25 @@ def update_file_real(filepath, url, process_fn=None, session=None):
             data = data.decode('utf-8')
     except Exception as e:
         output += ' FAILED:\n   {}.\n'.format(e)
+        failed = True
     else:
         if not os.path.isdir(os.path.dirname(filepath)):
             os.makedirs(os.path.dirname(filepath))
 
         with open(filepath, 'wb') as f:
             if process_fn:
-                data = process_fn(data)
-            f.write(data.encode('utf-8'))
-            output += ' OK.\n'
+                try:
+                    data = process_fn(data)
+                except Exception as e:
+                    output += ' FAILED:\n   {}.\n'.format(e)
+                    failed = True
+                else:
+                    f.write(data.encode('utf-8'))
+            else:
+                f.write(data.encode('utf-8'))
+                output += ' OK.\n'
 
-    return output
-    # with lock:
-    #     sys.stdout.write(output)
+    return output, failed
 
 
 if __name__ == '__main__':
@@ -82,7 +88,7 @@ if __name__ == '__main__':
         'types/boring/wfsgetfeature.xml',
         build_dov_url(
             'geoserver/ows?service=WFS'
-            '&version=1.1.0&request=GetFeature&typeName=dov-pub:Boringen'
+            '&version=2.0.0&request=GetFeature&typeName=dov-pub:Boringen'
             '&maxFeatures=1&CQL_Filter=fiche=%27' +
             build_dov_url('data/boring/2004-103984%27')))
 
@@ -90,7 +96,7 @@ if __name__ == '__main__':
         'types/boring/feature.xml',
         build_dov_url(
             'geoserver/ows?service=WFS'
-            '&version=1.1.0&request=GetFeature&typeName=dov-pub:Boringen'
+            '&version=2.0.0&request=GetFeature&typeName=dov-pub:Boringen'
             '&maxFeatures=1&CQL_Filter=fiche=%27' +
             build_dov_url('data/boring/2004-103984%27')),
         get_first_featuremember)
@@ -117,7 +123,7 @@ if __name__ == '__main__':
         'types/boring/wfsdescribefeaturetype.xml',
         build_dov_url(
             'geoserver/dov-pub/Boringen'
-            '/ows?service=wfs&version=1.1.0&request=DescribeFeatureType'))
+            '/ows?service=wfs&version=2.0.0&request=DescribeFeatureType'))
 
     for xsd_schema in Boring.get_xsd_schemas():
         update_file(
@@ -133,7 +139,7 @@ if __name__ == '__main__':
         'types/sondering/wfsgetfeature.xml',
         build_dov_url(
             'geoserver/ows?service=WFS'
-            '&version=1.1.0&request=GetFeature&typeName=dov-pub'
+            '&version=2.0.0&request=GetFeature&typeName=dov-pub'
             ':Sonderingen&maxFeatures=1&CQL_Filter=fiche=%27' +
             build_dov_url('data/sondering/2002-018435%27')))
 
@@ -141,7 +147,7 @@ if __name__ == '__main__':
         'types/sondering/feature.xml',
         build_dov_url(
             'geoserver/ows?service=WFS'
-            '&version=1.1.0&request=GetFeature&typeName=dov-pub'
+            '&version=2.0.0&request=GetFeature&typeName=dov-pub'
             ':Sonderingen&maxFeatures=1&CQL_Filter=fiche=%27' +
             build_dov_url('data/sondering/2002-018435%27')),
         get_first_featuremember)
@@ -168,7 +174,7 @@ if __name__ == '__main__':
         'types/sondering/wfsdescribefeaturetype.xml',
         build_dov_url(
             'geoserver/dov-pub/Sonderingen'
-            '/ows?service=wfs&version=1.1.0&request=DescribeFeatureType'))
+            '/ows?service=wfs&version=2.0.0&request=DescribeFeatureType'))
 
     for xsd_schema in Sondering.get_xsd_schemas():
         update_file(
@@ -186,7 +192,7 @@ if __name__ == '__main__':
         '/wfsgetfeature.xml',
         build_dov_url(
             'geoserver/ows?service=WFS'
-            '&version=1.1.0&request=GetFeature&typeName=interpretaties'
+            '&version=2.0.0&request=GetFeature&typeName=interpretaties'
             ':informele_stratigrafie&maxFeatures=1&CQL_Filter'
             '=Interpretatiefiche=%27') +
         build_dov_url(
@@ -197,7 +203,7 @@ if __name__ == '__main__':
         'types/interpretaties/informele_stratigrafie/feature.xml',
         build_dov_url(
             'geoserver/ows?service=WFS'
-            '&version=1.1.0&request=GetFeature&typeName=interpretaties'
+            '&version=2.0.0&request=GetFeature&typeName=interpretaties'
             ':informele_stratigrafie&maxFeatures=1&CQL_Filter'
             '=Interpretatiefiche=%27') +
         build_dov_url(
@@ -226,7 +232,7 @@ if __name__ == '__main__':
         'types/interpretaties/informele_stratigrafie/wfsdescribefeaturetype'
         '.xml', build_dov_url(
             'geoserver/interpretaties'
-            '/informele_stratigrafie/ows?service=wfs&version=1.1.0&request'
+            '/informele_stratigrafie/ows?service=wfs&version=2.0.0&request'
             '=DescribeFeatureType'))
 
     for xsd_schema in InformeleStratigrafie.get_xsd_schemas():
@@ -245,7 +251,7 @@ if __name__ == '__main__':
         '/wfsgetfeature.xml',
         build_dov_url(
             'geoserver/ows?service=WFS'
-            '&version=1.1.0&request=GetFeature&typeName=interpretaties'
+            '&version=2.0.0&request=GetFeature&typeName=interpretaties'
             ':formele_stratigrafie&maxFeatures=1&CQL_Filter'
             '=Interpretatiefiche=%27') +
         build_dov_url(
@@ -256,7 +262,7 @@ if __name__ == '__main__':
         'types/interpretaties/formele_stratigrafie/feature.xml',
         build_dov_url(
             'geoserver/ows?service=WFS'
-            '&version=1.1.0&request=GetFeature&typeName=interpretaties'
+            '&version=2.0.0&request=GetFeature&typeName=interpretaties'
             ':formele_stratigrafie&maxFeatures=1&CQL_Filter'
             '=Interpretatiefiche=%27') +
         build_dov_url(
@@ -285,7 +291,7 @@ if __name__ == '__main__':
         'types/interpretaties/formele_stratigrafie/wfsdescribefeaturetype'
         '.xml', build_dov_url(
             'geoserver/interpretaties'
-            '/formele_stratigrafie/ows?service=wfs&version=1.1.0&request'
+            '/formele_stratigrafie/ows?service=wfs&version=2.0.0&request'
             '=DescribeFeatureType'))
 
     for xsd_schema in FormeleStratigrafie.get_xsd_schemas():
@@ -304,7 +310,7 @@ if __name__ == '__main__':
         '/wfsgetfeature.xml',
         build_dov_url(
             'geoserver/ows?service=WFS'
-            '&version=1.1.0&request=GetFeature&typeName=interpretaties'
+            '&version=2.0.0&request=GetFeature&typeName=interpretaties'
             ':hydrogeologische_stratigrafie&maxFeatures=1&CQL_Filter'
             '=Interpretatiefiche=%27') +
         build_dov_url(
@@ -316,7 +322,7 @@ if __name__ == '__main__':
         '/feature.xml',
         build_dov_url(
             'geoserver/ows?service=WFS'
-            '&version=1.1.0&request=GetFeature&typeName=interpretaties'
+            '&version=2.0.0&request=GetFeature&typeName=interpretaties'
             ':hydrogeologische_stratigrafie&maxFeatures=1&CQL_Filter'
             '=Interpretatiefiche=%27') +
         build_dov_url(
@@ -345,7 +351,7 @@ if __name__ == '__main__':
         'types/interpretaties/hydrogeologische_stratigrafie/'
         'wfsdescribefeaturetype.xml', build_dov_url(
             'geoserver/interpretaties'
-            '/hydrogeologische_stratigrafie/ows?service=wfs&version=1.1.0'
+            '/hydrogeologische_stratigrafie/ows?service=wfs&version=2.0.0'
             '&request=DescribeFeatureType'))
 
     for xsd_schema in HydrogeologischeStratigrafie.get_xsd_schemas():
@@ -364,7 +370,7 @@ if __name__ == '__main__':
         '/wfsgetfeature.xml',
         build_dov_url(
             'geoserver/ows?service=WFS'
-            '&version=1.1.0&request=GetFeature&typeName=interpretaties'
+            '&version=2.0.0&request=GetFeature&typeName=interpretaties'
             ':lithologische_beschrijvingen&maxFeatures=1&CQL_Filter'
             '=Interpretatiefiche=%27') +
         build_dov_url(
@@ -375,7 +381,7 @@ if __name__ == '__main__':
         'types/interpretaties/lithologische_beschrijvingen/feature.xml',
         build_dov_url(
             'geoserver/ows?service=WFS'
-            '&version=1.1.0&request=GetFeature&typeName=interpretaties'
+            '&version=2.0.0&request=GetFeature&typeName=interpretaties'
             ':lithologische_beschrijvingen&maxFeatures=1&CQL_Filter'
             '=Interpretatiefiche=%27') +
         build_dov_url(
@@ -405,7 +411,7 @@ if __name__ == '__main__':
         'types/interpretaties/lithologische_beschrijvingen/'
         'wfsdescribefeaturetype.xml', build_dov_url(
             'geoserver/interpretaties'
-            '/lithologische_beschrijvingen/ows?service=wfs&version=1.1.0'
+            '/lithologische_beschrijvingen/ows?service=wfs&version=2.0.0'
             '&request=DescribeFeatureType'))
 
     for xsd_schema in LithologischeBeschrijvingen.get_xsd_schemas():
@@ -424,7 +430,7 @@ if __name__ == '__main__':
         '/wfsgetfeature.xml',
         build_dov_url(
             'geoserver/ows?service=WFS'
-            '&version=1.1.0&request=GetFeature&typeName=interpretaties'
+            '&version=2.0.0&request=GetFeature&typeName=interpretaties'
             ':gecodeerde_lithologie&maxFeatures=1&CQL_Filter'
             '=Interpretatiefiche=%27') +
         build_dov_url(
@@ -435,7 +441,7 @@ if __name__ == '__main__':
         'types/interpretaties/gecodeerde_lithologie/feature.xml',
         build_dov_url(
             'geoserver/ows?service=WFS'
-            '&version=1.1.0&request=GetFeature&typeName=interpretaties'
+            '&version=2.0.0&request=GetFeature&typeName=interpretaties'
             ':gecodeerde_lithologie&maxFeatures=1&CQL_Filter'
             '=Interpretatiefiche=%27') +
         build_dov_url(
@@ -464,7 +470,7 @@ if __name__ == '__main__':
         'types/interpretaties/gecodeerde_lithologie/wfsdescribefeaturetype'
         '.xml', build_dov_url(
             'geoserver/interpretaties'
-            '/gecodeerde_lithologie/ows?service=wfs&version=1.1.0&request'
+            '/gecodeerde_lithologie/ows?service=wfs&version=2.0.0&request'
             '=DescribeFeatureType'))
 
     for xsd_schema in GecodeerdeLithologie.get_xsd_schemas():
@@ -483,7 +489,7 @@ if __name__ == '__main__':
         '/wfsgetfeature.xml',
         build_dov_url(
             'geoserver/ows?service=WFS'
-            '&version=1.1.0&request=GetFeature&typeName=interpretaties'
+            '&version=2.0.0&request=GetFeature&typeName=interpretaties'
             ':geotechnische_coderingen&maxFeatures=1&CQL_Filter'
             '=Interpretatiefiche=%27') +
         build_dov_url(
@@ -494,7 +500,7 @@ if __name__ == '__main__':
         'types/interpretaties/geotechnische_codering/feature.xml',
         build_dov_url(
             'geoserver/ows?service=WFS'
-            '&version=1.1.0&request=GetFeature&typeName=interpretaties'
+            '&version=2.0.0&request=GetFeature&typeName=interpretaties'
             ':geotechnische_coderingen&maxFeatures=1&CQL_Filter'
             '=Interpretatiefiche=%27') +
         build_dov_url(
@@ -523,7 +529,7 @@ if __name__ == '__main__':
         'types/interpretaties/geotechnische_codering/wfsdescribefeaturetype'
         '.xml', build_dov_url(
             'geoserver/interpretaties'
-            '/geotechnische_coderingen/ows?service=wfs&version=1.1.0&request'
+            '/geotechnische_coderingen/ows?service=wfs&version=2.0.0&request'
             '=DescribeFeatureType'))
 
     for xsd_schema in GeotechnischeCodering.get_xsd_schemas():
@@ -542,7 +548,7 @@ if __name__ == '__main__':
         '/wfsgetfeature.xml',
         build_dov_url(
             'geoserver/ows?service=WFS'
-            '&version=1.1.0&request=GetFeature&typeName=interpretaties'
+            '&version=2.0.0&request=GetFeature&typeName=interpretaties'
             ':informele_hydrogeologische_stratigrafie&maxFeatures=1'
             '&CQL_Filter=Interpretatiefiche=%27') +
         build_dov_url(
@@ -554,7 +560,7 @@ if __name__ == '__main__':
         '/feature.xml',
         build_dov_url(
             'geoserver/ows?service=WFS'
-            '&version=1.1.0&request=GetFeature&typeName=interpretaties'
+            '&version=2.0.0&request=GetFeature&typeName=interpretaties'
             ':informele_hydrogeologische_stratigrafie&maxFeatures=1'
             '&CQL_Filter=Interpretatiefiche=%27') +
         build_dov_url(
@@ -586,7 +592,7 @@ if __name__ == '__main__':
         'wfsdescribefeaturetype.xml', build_dov_url(
             'geoserver/interpretaties'
             '/informele_hydrogeologische_stratigrafie/'
-            'ows?service=wfs&version=1.1.0&request=DescribeFeatureType'))
+            'ows?service=wfs&version=2.0.0&request=DescribeFeatureType'))
 
     for xsd_schema in InformeleHydrogeologischeStratigrafie.get_xsd_schemas():
         update_file(
@@ -600,14 +606,14 @@ if __name__ == '__main__':
 
     update_file('types/grondwaterfilter/wfsgetfeature.xml',
                 build_dov_url('geoserver/ows?service=WFS'
-                              '&version=1.1.0&request=GetFeature&typeName='
+                              '&version=2.0.0&request=GetFeature&typeName='
                               'gw_meetnetten:meetnetten&maxFeatures=1&'
                               'CQL_Filter=filterfiche=%27' + build_dov_url(
                                   'data/filter/2003-004471%27')))
 
     update_file('types/grondwaterfilter/feature.xml',
                 build_dov_url('geoserver/ows?service=WFS'
-                              '&version=1.1.0&request=GetFeature&typeName='
+                              '&version=2.0.0&request=GetFeature&typeName='
                               'gw_meetnetten:meetnetten&maxFeatures=1&'
                               'CQL_Filter=filterfiche=%27' + build_dov_url(
                                   'data/filter/2003-004471%27')),
@@ -633,13 +639,31 @@ if __name__ == '__main__':
 
     update_file('types/grondwaterfilter/wfsdescribefeaturetype.xml',
                 build_dov_url('geoserver/gw_meetnetten/'
-                              'meetnetten/ows?service=wfs&version=1.1.0&'
+                              'meetnetten/ows?service=wfs&version=2.0.0&'
                               'request=DescribeFeatureType'))
 
     for xsd_schema in GrondwaterFilter.get_xsd_schemas():
         update_file(
             'types/grondwaterfilter/xsd_%s.xml' % xsd_schema.split('/')[-1],
             xsd_schema)
+
+    update_file('types/grondwaterfilter/grondwaterfilter_geenpeilmeting.xml',
+                build_dov_url('data/filter/1976-101132.xml'))
+
+    update_file('types/grondwaterfilter/wfsgetfeature_geenpeilmeting.xml',
+                build_dov_url('geoserver/ows?service=WFS'
+                              '&version=2.0.0&request=GetFeature&typeName='
+                              'gw_meetnetten:meetnetten&maxFeatures=1&'
+                              'CQL_Filter=filterfiche=%27' + build_dov_url(
+                                  'data/filter/1976-101132%27')))
+
+    update_file('types/grondwaterfilter/feature_geenpeilmeting.xml',
+                build_dov_url('geoserver/ows?service=WFS'
+                              '&version=2.0.0&request=GetFeature&typeName='
+                              'gw_meetnetten:meetnetten&maxFeatures=1&'
+                              'CQL_Filter=filterfiche=%27' + build_dov_url(
+                                  'data/filter/1976-101132%27')),
+                get_first_featuremember)
 
     # types/grondwatermonster
 
@@ -650,7 +674,7 @@ if __name__ == '__main__':
         'types/grondwatermonster/wfsgetfeature.xml',
         build_dov_url(
             'geoserver/ows?service=WFS'
-            '&version=1.1.0&request=GetFeature&typeName='
+            '&version=2.0.0&request=GetFeature&typeName='
             'gw_meetnetten:grondwatermonsters&maxFeatures=1&'
             'CQL_Filter=grondwatermonsterfiche=%27' +
             build_dov_url('data/watermonster/2006-115684') +
@@ -660,7 +684,7 @@ if __name__ == '__main__':
         'types/grondwatermonster/feature.xml',
         build_dov_url(
             'geoserver/ows?service=WFS'
-            '&version=1.1.0&request=GetFeature&typeName='
+            '&version=2.0.0&request=GetFeature&typeName='
             'gw_meetnetten:grondwatermonsters&maxFeatures=1&'
             'CQL_Filter=grondwatermonsterfiche=%27' +
             build_dov_url('data/watermonster/2006-115684') +
@@ -689,7 +713,7 @@ if __name__ == '__main__':
         'types/grondwatermonster/wfsdescribefeaturetype.xml',
         build_dov_url(
             'geoserver/gw_meetnetten/'
-            'grondwatermonsters/ows?service=wfs&version=1.1.0&'
+            'grondwatermonsters/ows?service=wfs&version=2.0.0&'
             'request=DescribeFeatureType'))
 
     for xsd_schema in GrondwaterMonster.get_xsd_schemas():
@@ -710,7 +734,7 @@ if __name__ == '__main__':
 
     update_file('util/owsutil/wfscapabilities.xml',
                 build_dov_url('geoserver/wfs?request'
-                              '=getcapabilities&service=wfs&version=1.1.0'))
+                              '=getcapabilities&service=wfs&version=2.0.0'))
 
     # types/interpretaties/quartaire_stratigrafie
 
@@ -723,7 +747,7 @@ if __name__ == '__main__':
         '/wfsgetfeature.xml',
         build_dov_url(
             'geoserver/ows?service=WFS'
-            '&version=1.1.0&request=GetFeature&typeName=interpretaties'
+            '&version=2.0.0&request=GetFeature&typeName=interpretaties'
             ':quartaire_stratigrafie&maxFeatures=1&CQL_Filter'
             '=Interpretatiefiche=%27') +
         build_dov_url(
@@ -734,7 +758,7 @@ if __name__ == '__main__':
         'types/interpretaties/quartaire_stratigrafie/feature.xml',
         build_dov_url(
             'geoserver/ows?service=WFS'
-            '&version=1.1.0&request=GetFeature&typeName=interpretaties'
+            '&version=2.0.0&request=GetFeature&typeName=interpretaties'
             ':quartaire_stratigrafie&maxFeatures=1&CQL_Filter'
             '=Interpretatiefiche=%27') +
         build_dov_url(
@@ -763,7 +787,7 @@ if __name__ == '__main__':
         'types/interpretaties/quartaire_stratigrafie/wfsdescribefeaturetype'
         '.xml', build_dov_url(
             'geoserver/interpretaties'
-            '/quartaire_stratigrafie/ows?service=wfs&version=1.1.0&request'
+            '/quartaire_stratigrafie/ows?service=wfs&version=2.0.0&request'
             '=DescribeFeatureType'))
 
     for xsd_schema in QuartairStratigrafie.get_xsd_schemas():
@@ -780,7 +804,7 @@ if __name__ == '__main__':
         'types/grondmonster/wfsgetfeature.xml',
         build_dov_url(
             'geoserver/ows?service=WFS'
-            '&version=1.1.0&request=GetFeature&typeName='
+            '&version=2.0.0&request=GetFeature&typeName='
             'boringen:grondmonsters&maxFeatures=1&CQL_Filter'
             '=grondmonsterfiche=%27' +
             build_dov_url(
@@ -792,7 +816,7 @@ if __name__ == '__main__':
         'types/grondmonster/feature.xml',
         build_dov_url(
             'geoserver/ows?service=WFS'
-            '&version=1.1.0&request=GetFeature&typeName='
+            '&version=2.0.0&request=GetFeature&typeName='
             'boringen:grondmonsters&maxFeatures=1&CQL_Filter'
             '=grondmonsterfiche=%27' +
             build_dov_url(
@@ -822,7 +846,7 @@ if __name__ == '__main__':
         'types/grondmonster/wfsdescribefeaturetype'
         '.xml',
         build_dov_url('geoserver/boringen'
-                      '/grondmonsters/ows?service=wfs&version=1.1.0&request'
+                      '/grondmonsters/ows?service=wfs&version=2.0.0&request'
                       '=DescribeFeatureType'))
 
     for xsd_schema in Grondmonster.get_xsd_schemas():
@@ -838,7 +862,7 @@ if __name__ == '__main__':
         'types/bodemlocatie/wfsgetfeature.xml',
         build_dov_url(
             'geoserver/ows?service=WFS'
-            '&version=1.1.0&request=GetFeature&typeName=bodem:bodemlocaties'
+            '&version=2.0.0&request=GetFeature&typeName=bodem:bodemlocaties'
             '&maxFeatures=1&CQL_Filter=Bodemlocatiefiche=%27' +
             build_dov_url('data/bodemlocatie/2011-000002%27')))
 
@@ -846,7 +870,7 @@ if __name__ == '__main__':
         'types/bodemlocatie/feature.xml',
         build_dov_url(
             'geoserver/ows?service=WFS'
-            '&version=1.1.0&request=GetFeature&typeName=bodem:bodemlocaties'
+            '&version=2.0.0&request=GetFeature&typeName=bodem:bodemlocaties'
             '&maxFeatures=1&CQL_Filter=Bodemlocatiefiche=%27' +
             build_dov_url('data/bodemlocatie/2011-000002%27')),
         get_first_featuremember)
@@ -871,7 +895,7 @@ if __name__ == '__main__':
         'types/bodemlocatie/wfsdescribefeaturetype.xml',
         build_dov_url(
             'geoserver/bodem/bodemlocaties'
-            '/ows?service=wfs&version=1.1.0&request=DescribeFeatureType'))
+            '/ows?service=wfs&version=2.0.0&request=DescribeFeatureType'))
 
     for xsd_schema in Bodemlocatie.get_xsd_schemas():
         update_file(
@@ -883,7 +907,7 @@ if __name__ == '__main__':
         'types/bodemdiepteinterval/wfsgetfeature.xml',
         build_dov_url(
             'geoserver/ows?service=WFS'
-            '&version=1.1.0&request=GetFeature&typeName='
+            '&version=2.0.0&request=GetFeature&typeName='
             'bodem:bodemdiepteintervallen&maxFeatures=1&'
             'CQL_Filter=Diepteintervalfiche=%27' +
             build_dov_url('data/bodemdiepteinterval/2018-000004%27')))
@@ -892,7 +916,7 @@ if __name__ == '__main__':
         'types/bodemdiepteinterval/feature.xml',
         build_dov_url(
             'geoserver/ows?service=WFS'
-            '&version=1.1.0&request=GetFeature&typeName='
+            '&version=2.0.0&request=GetFeature&typeName='
             'bodem:bodemdiepteintervallen&maxFeatures=1&'
             'CQL_Filter=Diepteintervalfiche=%27' +
             build_dov_url('data/bodemdiepteinterval/2018-000004%27')),
@@ -918,7 +942,7 @@ if __name__ == '__main__':
         'types/bodemdiepteinterval/wfsdescribefeaturetype.xml',
         build_dov_url(
             'geoserver/bodem/bodemdiepteintervallen'
-            '/ows?service=wfs&version=1.1.0&request=DescribeFeatureType'))
+            '/ows?service=wfs&version=2.0.0&request=DescribeFeatureType'))
 
     for xsd_schema in Bodemdiepteinterval.get_xsd_schemas():
         update_file(
@@ -934,7 +958,7 @@ if __name__ == '__main__':
         'types/bodemobservatie/wfsgetfeature.xml',
         build_dov_url(
             'geoserver/ows?service=WFS'
-            '&version=1.1.0&request=GetFeature&typeName=bodem:bodemobservaties'
+            '&version=2.0.0&request=GetFeature&typeName=bodem:bodemobservaties'
             '&maxFeatures=1&CQL_Filter=Bodemobservatiefiche=%27' +
             build_dov_url('data/bodemobservatie/2019-001221%27')))
 
@@ -942,7 +966,7 @@ if __name__ == '__main__':
         'types/bodemobservatie/feature.xml',
         build_dov_url(
             'geoserver/ows?service=WFS'
-            '&version=1.1.0&request=GetFeature&typeName=bodem:bodemobservaties'
+            '&version=2.0.0&request=GetFeature&typeName=bodem:bodemobservaties'
             '&maxFeatures=1&CQL_Filter=Bodemobservatiefiche=%27' +
             build_dov_url('data/bodemobservatie/2019-001221%27')),
         get_first_featuremember)
@@ -967,7 +991,7 @@ if __name__ == '__main__':
         'types/bodemobservatie/wfsdescribefeaturetype.xml',
         build_dov_url(
             'geoserver/bodem/bodemobservaties'
-            '/ows?service=wfs&version=1.1.0&request=DescribeFeatureType'))
+            '/ows?service=wfs&version=2.0.0&request=DescribeFeatureType'))
 
     for xsd_schema in Bodemobservatie.get_xsd_schemas():
         update_file(
@@ -983,7 +1007,7 @@ if __name__ == '__main__':
         'types/bodemmonster/wfsgetfeature.xml',
         build_dov_url(
             'geoserver/ows?service=WFS'
-            '&version=1.1.0&request=GetFeature&typeName=bodem:bodemmonsters'
+            '&version=2.0.0&request=GetFeature&typeName=bodem:bodemmonsters'
             '&maxFeatures=1&CQL_Filter=Bodemmonsterfiche=%27' +
             build_dov_url('data/bodemmonster/2015-211807%27')))
 
@@ -991,7 +1015,7 @@ if __name__ == '__main__':
         'types/bodemmonster/feature.xml',
         build_dov_url(
             'geoserver/ows?service=WFS'
-            '&version=1.1.0&request=GetFeature&typeName=bodem:bodemmonsters'
+            '&version=2.0.0&request=GetFeature&typeName=bodem:bodemmonsters'
             '&maxFeatures=1&CQL_Filter=Bodemmonsterfiche=%27' +
             build_dov_url('data/bodemmonster/2015-211807%27')),
         get_first_featuremember)
@@ -1016,7 +1040,7 @@ if __name__ == '__main__':
         'types/bodemmonster/wfsdescribefeaturetype.xml',
         build_dov_url(
             'geoserver/bodem/bodemmonsters'
-            '/ows?service=wfs&version=1.1.0&request=DescribeFeatureType'))
+            '/ows?service=wfs&version=2.0.0&request=DescribeFeatureType'))
 
     for xsd_schema in Bodemmonster.get_xsd_schemas():
         update_file(
@@ -1031,7 +1055,7 @@ if __name__ == '__main__':
         'types/bodemsite/wfsgetfeature.xml',
         build_dov_url(
             'geoserver/ows?service=WFS'
-            '&version=1.1.0&request=GetFeature&typeName=bodem:bodemsites'
+            '&version=2.0.0&request=GetFeature&typeName=bodem:bodemsites'
             '&maxFeatures=1&CQL_Filter=Bodemsitefiche=%27' +
             build_dov_url('data/bodemsite/2013-000180%27')))
 
@@ -1039,7 +1063,7 @@ if __name__ == '__main__':
         'types/bodemsite/feature.xml',
         build_dov_url(
             'geoserver/ows?service=WFS'
-            '&version=1.1.0&request=GetFeature&typeName=bodem:bodemsites'
+            '&version=2.0.0&request=GetFeature&typeName=bodem:bodemsites'
             '&maxFeatures=1&CQL_Filter=Bodemsitefiche=%27' +
             build_dov_url('data/bodemsite/2013-000180%27')),
         get_first_featuremember)
@@ -1064,7 +1088,7 @@ if __name__ == '__main__':
         'types/bodemsite/wfsdescribefeaturetype.xml',
         build_dov_url(
             'geoserver/bodem/bodemsites'
-            '/ows?service=wfs&version=1.1.0&request=DescribeFeatureType'))
+            '/ows?service=wfs&version=2.0.0&request=DescribeFeatureType'))
 
     for xsd_schema in Bodemsite.get_xsd_schemas():
         update_file(
@@ -1076,7 +1100,7 @@ if __name__ == '__main__':
         'types/bodemclassificatie/wfsgetfeature.xml',
         build_dov_url(
             'geoserver/ows?service=WFS'
-            '&version=1.1.0&request=GetFeature&typeName='
+            '&version=2.0.0&request=GetFeature&typeName='
             'bodem:bodemclassificaties&maxFeatures=1&'
             'CQL_Filter=Bodemclassificatiefiche=%27' +
             build_dov_url('data/belgischebodemclassificatie/2018-000146%27')))
@@ -1085,7 +1109,7 @@ if __name__ == '__main__':
         'types/bodemclassificatie/feature.xml',
         build_dov_url(
             'geoserver/ows?service=WFS'
-            '&version=1.1.0&request=GetFeature&typeName='
+            '&version=2.0.0&request=GetFeature&typeName='
             'bodem:bodemclassificaties&maxFeatures=1&'
             'CQL_Filter=Bodemclassificatiefiche=%27' +
             build_dov_url('data/belgischebodemclassificatie/2018-000146%27')),
@@ -1110,7 +1134,7 @@ if __name__ == '__main__':
     update_file('types/bodemclassificatie/wfsdescribefeaturetype.xml',
                 build_dov_url(
                     'geoserver/bodem/bodemclassificaties'
-                    '/ows?service=wfs&version=1.1.0'
+                    '/ows?service=wfs&version=2.0.0'
                     '&request=DescribeFeatureType'))
 
     for xsd_schema in Bodemclassificatie.get_xsd_schemas():
@@ -1123,7 +1147,7 @@ if __name__ == '__main__':
         'types/grondwatervergunning/wfsgetfeature.xml',
         build_dov_url(
             'geoserver/ows?service=WFS'
-            '&version=1.1.0&request=GetFeature&typeName='
+            '&version=2.0.0&request=GetFeature&typeName='
             'gw_vergunningen:alle_verg&maxFeatures=1&CQL_Filter'
             '=id=38598'))
 
@@ -1131,7 +1155,7 @@ if __name__ == '__main__':
         'types/grondwatervergunning/feature.xml',
         build_dov_url(
             'geoserver/ows?service=WFS'
-            '&version=1.1.0&request=GetFeature&typeName='
+            '&version=2.0.0&request=GetFeature&typeName='
             'gw_vergunningen:alle_verg&maxFeatures=1&CQL_Filter'
             '=id=38598'), get_first_featuremember)
 
@@ -1154,7 +1178,7 @@ if __name__ == '__main__':
     update_file('types/grondwatervergunning/wfsdescribefeaturetype.xml',
                 build_dov_url(
                     'geoserver/gw_vergunningen/alle_verg'
-                    '/ows?service=wfs&version=1.1.0'
+                    '/ows?service=wfs&version=2.0.0'
                     '&request=DescribeFeatureType'))
 
     for xsd_schema in GrondwaterVergunning.get_xsd_schemas():
@@ -1163,4 +1187,12 @@ if __name__ == '__main__':
             xsd_schema.split('/')[-1], xsd_schema)
 
     for r in pool.join():
-        sys.stdout.write(r.get_result())
+        if r.get_error() is not None:
+            sys.stdout.write('{}: {}\n'.format(
+                type(r.get_error()).__name__, r.get_error()))
+            sys.exit(1)
+        else:
+            output, failed = r.get_result()
+            sys.stdout.write(output)
+            if failed:
+                sys.exit(1)

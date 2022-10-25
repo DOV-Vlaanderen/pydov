@@ -11,25 +11,25 @@
       <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">1</gco:CharacterString>
     </gmx:versionNumber>
     <gmx:versionDate xmlns:gmx="http://www.isotc211.org/2005/gmx">
-      <gco:DateTime xmlns:gco="http://www.isotc211.org/2005/gco">2021-02-17T21:30:59</gco:DateTime>
+      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2022-08-02</gco:Date>
     </gmx:versionDate>
     <gfc:producer>
       <gmd:CI_ResponsibleParty xmlns:gmd="http://www.isotc211.org/2005/gmd">
         <gmd:organisationName>
-          <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Vlaamse overheid - Vlaamse MilieuMaatschappij - Afdeling Operationeel Waterbeheer</gco:CharacterString>
+          <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Vlaamse overheid - Vlaamse MilieuMaatschappij</gco:CharacterString>
         </gmd:organisationName>
         <gmd:contactInfo>
           <gmd:CI_Contact>
             <gmd:address>
               <gmd:CI_Address>
                 <gmd:deliveryPoint>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Koning Albert II-laan 20 bus 16</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Dokter de Moorstraat 24-26</gco:CharacterString>
                 </gmd:deliveryPoint>
                 <gmd:city>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Brussel</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Aalst</gco:CharacterString>
                 </gmd:city>
                 <gmd:postalCode>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">1000</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">9300</gco:CharacterString>
                 </gmd:postalCode>
                 <gmd:country>
                   <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">België</gco:CharacterString>
@@ -209,6 +209,37 @@ omgevingsloket.</gco:CharacterString>
                   <gco:MultiplicityRange>
                     <gco:lower>
                       <gco:Integer>0</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:valueType>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:aName>
+                  <gco:CharacterString>String</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">vergunning</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">ID van de vergunning (permkey)</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>1</gco:Integer>
                     </gco:lower>
                     <gco:upper>
                       <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>

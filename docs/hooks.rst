@@ -67,18 +67,44 @@ meta_received (url: str, response: bytes)
     all calls except for WFS GetFeature requests and XML downloads of DOV data
     - these are other hooks.
 
-wfs_search_init (typename: str)
+wfs_search_init (params: dict)
     This method will be called whenever a WFS search is initiated. There is
-    one parameter `typename` with the WFS typename that is queried.
+    one parameter `params` with a dictionary containing parameters used to
+    initiate the WFS search:
 
-wfs_search_result (number_of_results: int)
-    This method will be called whenever a WFS search is completed. There is
-    one parameter `number_of_results` with the number of search results.
+        typename : str
+            Typename in the WFS service to query.
+        location : pydov.util.location.AbstractLocationFilter or None
+            Location filter limiting the features to retrieve.
+        filter : str (xml) or None
+            Attribute filter limiting the features to retrieve.
+        sort_by : str (xml) or None
+            SortBy clause listing fields to sort by.
+        max_features : int
+            Limit the maximum number of features to request.
+        propertynames : list of str
+            List of WFS propertynames (attributes) to retrieve.
+        geometry_column : str
+            Name of the column/attribute containing the geometry.
+
+wfs_search_result (number_matched: int, number_returned: int)
+    This method will be called whenever a WFS search is completed. There are
+    two parameters: `number_matched` with the number of features matching the
+    search, and `number_returned` with the amount of features returned by this
+    request. Due to server limitations this can be less than number_matched.
+
+    Because of parallel processing, this method will be called simultaneously
+    from multiple threads. Make sure your implementation is threadsafe or uses
+    locking.
 
 wfs_search_result_received (query: etree.ElementTree, features: etree.ElementTree)
     This method will be called whenever a WFS search finished. There are two
     parameters, `query` is the WFS GetFeature request sent to the server and
     `features` is the FeatureCollection received in response.
+
+    Because of parallel processing, this method will be called simultaneously
+    from multiple threads. Make sure your implementation is threadsafe or uses
+    locking.
 
 xml_received (pkey_object: str, xml: bytes)
     This method will be called whenever an XML document is received, either
@@ -161,6 +187,10 @@ inject_wfs_getfeature_response (query: etree.ElementTree) -> bytes
     When at least one registered hook returns a response for a given query,
     the remote call is not executed and instead the response from the
     last registered hook (that is non-null) is used instead.
+
+    Because of parallel processing, this method will be called simultaneously
+    from multiple threads. Make sure your implementation is threadsafe or uses
+    locking.
 
 inject_xml_response (pkey_object: str) -> bytes
     This method can be used to inject a custom response for a DOV XML

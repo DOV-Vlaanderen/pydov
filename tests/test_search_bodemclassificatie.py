@@ -1,5 +1,5 @@
 """Module grouping tests for the bodemclassificatie search module."""
-from owslib.fes import PropertyIsEqualTo
+from owslib.fes2 import PropertyIsEqualTo
 
 from pydov.search.bodemclassificatie import BodemclassificatieSearch
 from pydov.types.bodemclassificatie import Bodemclassificatie

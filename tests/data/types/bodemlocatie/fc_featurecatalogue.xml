@@ -11,7 +11,7 @@
       <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">1</gco:CharacterString>
     </gmx:versionNumber>
     <gmx:versionDate xmlns:gmx="http://www.isotc211.org/2005/gmx">
-      <gco:DateTime xmlns:gco="http://www.isotc211.org/2005/gco">2021-03-03T18:17:37</gco:DateTime>
+      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2022-03-24</gco:Date>
     </gmx:versionDate>
     <gfc:producer>
       <gmd:CI_ResponsibleParty xmlns:gmd="http://www.isotc211.org/2005/gmd">
@@ -370,7 +370,7 @@
               <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">mv_mTAW</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">De hoogte van het aanvangspeil van (het startpunt van) de bodemlocatie in het TAW stelsel (in meter).</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">De hoogte van het maaiveld van (het startpunt van) de bodemlocatie in het TAW stelsel (in meter).</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">

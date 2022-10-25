@@ -403,7 +403,7 @@ class AbstractDovType(AbstractTypeCommon):
             WFS response containing GML features.
 
             Can either be a GML `str` or `byte` sequence, in which case it
-            will be parsed and scanned for `gml:featureMembers`.
+            will be parsed and scanned for `wfs20:member`.
 
             Can also be a single instance of `etree.Element` containing the
             parsed GML response.
@@ -426,12 +426,13 @@ class AbstractDovType(AbstractTypeCommon):
 
         element_type = type(etree.Element(b'xml'))
         if isinstance(response, element_type):
-            feature_members = response.find('.//{http://www.opengis.net/gml}'
-                                            'featureMembers')
+            feature_members = response.findall(
+                './/{http://www.opengis.net/wfs/2.0}member')
 
             if feature_members is not None:
-                for ft in feature_members:
-                    yield (cls.from_wfs_element(ft, namespace))
+                for member in feature_members:
+                    feature = member[0]
+                    yield (cls.from_wfs_element(feature, namespace))
 
         if type(response) in (list, tuple, set) \
                 or isinstance(response, types.GeneratorType):

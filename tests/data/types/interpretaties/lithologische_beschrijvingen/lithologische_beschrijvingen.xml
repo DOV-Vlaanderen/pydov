@@ -3,6 +3,10 @@
     <interpretaties>
         <lithologischebeschrijving>
             <boring>kb15d28w-B345</boring>
+            <dataidentifier>
+                <permkey>1958-003925</permkey>
+                <uri>https://www.dov.vlaanderen.be/data/interpretatie/1958-003925</uri>
+            </dataidentifier>
             <auteur>
                 <persoon>
                     <naam>Gulinck</naam>
@@ -17,6 +21,10 @@
             <dataleverancier>
                 <naam>onbekend</naam>
             </dataleverancier>
+            <kwaliteit>
+                <categorie>goed</categorie>
+                <geschiktheid_boormethode>Onbekend</geschiktheid_boormethode>
+            </kwaliteit>
             <laag>
                 <van>0.00</van>
                 <tot>1.00</tot>

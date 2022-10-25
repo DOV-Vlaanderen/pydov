@@ -76,6 +76,21 @@ select '<xs:enumeration value="'||beschrijving||'"/>' from grondwater.lut_meetne
                     <xs:documentation>meetnet 11 - rubriek 53.6 (koude-warmtepompen)</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
+            <xs:enumeration value="12">
+                <xs:annotation>
+                    <xs:documentation>meetnet 12 - lokale besturen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="100">
+                <xs:annotation>
+                    <xs:documentation>meetnet 100 - Geotechniek</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="edov">
+                <xs:annotation>
+                    <xs:documentation>meetnet 20 – eDOV erkende boorbedrijven</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="OxidatieReductieEnumType">
@@ -640,4 +655,15 @@ select '<xs:enumeration value="'||beschrijving||'"/>' from grondwater.lut_method
             <xs:enumeration value="onbekend"/>
         </xs:restriction>
     </xs:simpleType>
+    <xs:simpleType name="OnttrekkingTypeEnumType">
+        <xs:annotation>
+            <xs:documentation>de mogelijke waarden voor type onttrekking</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="grondwaterwinning"/>
+            <xs:enumeration value="spui"/>
+            <xs:enumeration value="tot. rondgepompt (excl. spui)"/>
+        </xs:restriction>
+    </xs:simpleType>
+
 </xs:schema>

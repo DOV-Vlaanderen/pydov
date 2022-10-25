@@ -1,7 +1,7 @@
 """Module grouping tests for the bodemdiepteinterval search module."""
 import datetime
 
-from owslib.fes import PropertyIsEqualTo
+from owslib.fes2 import PropertyIsEqualTo
 
 from pydov.search.bodemdiepteinterval import BodemdiepteintervalSearch
 from pydov.types.bodemdiepteinterval import Bodemdiepteinterval

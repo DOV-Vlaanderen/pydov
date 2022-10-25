@@ -3,6 +3,10 @@
     <interpretaties>
         <geotechnischecodering>
             <boring>GEO-15/139-B1</boring>
+            <dataidentifier>
+                <permkey>2016-298511</permkey>
+                <uri>https://www.dov.vlaanderen.be/data/interpretatie/2016-298511</uri>
+            </dataidentifier>
             <auteur>
                 <persoon>
                     <naam>Luyten</naam>

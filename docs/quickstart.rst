@@ -45,7 +45,7 @@ Now we can query for boreholes either on attributes, on location or on a combina
 
 .. code-block:: python
 
-    from owslib.fes import PropertyIsGreaterThan
+    from owslib.fes2 import PropertyIsGreaterThan
 
     dataframe = boringsearch.search(
         query=PropertyIsGreaterThan(

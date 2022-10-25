@@ -2,6 +2,7 @@
 """Module implementing a simple hooks system to allow late-binding actions to
 PyDOV events."""
 
+import math
 import sys
 import time
 from multiprocessing import Lock
@@ -96,28 +97,46 @@ class HookRunner(object):
         HookRunner.__execute_read('meta_received', [url, response])
 
     @staticmethod
-    def execute_wfs_search_init(typename):
+    def execute_wfs_search_init(params):
         """Execute the wfs_search_init method for all registered hooks.
 
         Parameters
         ----------
-        typename : str
-            The typename (layername) of the WFS service used for searching.
+        params : dict
+            Parameters used to initiate WFS search. These include:
+                typename : str
+                    Typename in the WFS service to query.
+                location : pydov.util.location.AbstractLocationFilter or None
+                    Location filter limiting the features to retrieve.
+                filter : str (xml) or None
+                    Attribute filter limiting the features to retrieve.
+                sort_by : str (xml) or None
+                    SortBy clause listing fields to sort by.
+                max_features : int
+                    Limit the maximum number of features to request.
+                propertynames : list of str
+                    List of WFS propertynames (attributes) to retrieve.
+                geometry_column : str
+                    Name of the column/attribute containing the geometry.
 
         """
-        HookRunner.__execute_read('wfs_search_init', [typename])
+        HookRunner.__execute_read('wfs_search_init', [params])
 
     @staticmethod
-    def execute_wfs_search_result(number_of_results):
+    def execute_wfs_search_result(number_matched, number_returned):
         """Execute the wfs_search_result method for all registered hooks.
 
         Parameters
         ----------
-        number_of_results : int
-            The number of features returned by the WFS search.
+        number_matched : int
+            The number of features matched by the WFS search query.
+        number_returned : int
+            The number of features returned by the WFS search query. Due to
+            server limitations this can be less than number_matched.
 
         """
-        HookRunner.__execute_read('wfs_search_result', [number_of_results])
+        HookRunner.__execute_read(
+            'wfs_search_result', [number_matched, number_returned])
 
     @staticmethod
     def execute_wfs_search_result_received(query, features):
@@ -129,7 +148,7 @@ class HookRunner(object):
         query : etree.ElementTree
             The WFS GetFeature request sent to the WFS server.
         features : etree.ElementTree
-            The WFS GetFeature response containings the features.
+            The WFS GetFeature response containing the features.
 
         """
         HookRunner.__execute_read('wfs_search_result_received', [
@@ -286,24 +305,45 @@ class AbstractReadHook(object):
         """
         pass
 
-    def wfs_search_init(self, typename):
+    def wfs_search_init(self, params):
         """Called upon starting a WFS search.
 
         Parameters
         ----------
-        typename : str
-            The typename (layername) of the WFS service used for searching.
+        params : dict
+            Parameters used to initiate WFS search. These include:
+                typename : str
+                    Typename in the WFS service to query.
+                location : pydov.util.location.AbstractLocationFilter or None
+                    Location filter limiting the features to retrieve.
+                filter : str (xml) or None
+                    Attribute filter limiting the features to retrieve.
+                sort_by : str (xml) or None
+                    SortBy clause listing fields to sort by.
+                max_features : int
+                    Limit the maximum number of features to request.
+                propertynames : list of str
+                    List of WFS propertynames (attributes) to retrieve.
+                geometry_column : str
+                    Name of the column/attribute containing the geometry.
 
         """
         pass
 
-    def wfs_search_result(self, number_of_results):
-        """Called after a WFS search finished.
+    def wfs_search_result(self, number_matched, number_returned):
+        """Called after a WFS search query finished.
+
+        Because of parallel processing, this method will be called
+        simultaneously from multiple threads. Make sure your implementation is
+        threadsafe or uses locking.
 
         Parameters
         ----------
-        number_of_results : int
-            The number of features returned by the WFS search.
+        number_matched : int
+            The number of features matched by the WFS search query.
+        number_returned : int
+            The number of features returned by the WFS search query. Due to
+            server limitations this can be less than number_matched.
 
         """
         pass
@@ -313,6 +353,10 @@ class AbstractReadHook(object):
 
         Includes both the GetFeature query as well as the response from the
         WFS server.
+
+        Because of parallel processing, this method will be called
+        simultaneously from multiple threads. Make sure your implementation is
+        threadsafe or uses locking.
 
         Parameters
         ----------
@@ -469,6 +513,10 @@ class AbstractInjectHook(object):
         the remote call is not executed and instead the response from the
         last registered hook (that is non-null) is used instead.
 
+        Because of parallel processing, this method will be called
+        simultaneously from multiple threads. Make sure your implementation is
+        threadsafe or uses locking.
+
         Parameters
         ----------
         query : etree.ElementTree
@@ -515,19 +563,34 @@ class AbstractInjectHook(object):
 class SimpleStatusHook(AbstractReadHook):
     """Simple hook implementation to print progress to stdout."""
 
+    class ProgressState(object):
+        """Simple class for storing progress state.
+        """
+
+        def __init__(self):
+            """Initialise a new progress state, with all variable to default.
+            """
+            self.reset()
+
+        def reset(self):
+            """Reset the progress state. Resets all variables to default."""
+            self.max_results = None
+            self.result_count = 0
+            self.prog_counter = 0
+            self.init_time = time.time()
+            self.previous_remaining = None
+
     def __init__(self):
         """Initialisation.
 
-        Initialise all variables to 0.
+        Initialise all variables to default.
 
         """
-        self.result_count = 0
-        self.prog_counter = 0
-        self.init_time = None
-        self.previous_remaining = None
+        self.wfs_progress = SimpleStatusHook.ProgressState()
+        self.xml_progress = SimpleStatusHook.ProgressState()
         self.lock = Lock()
 
-    def _write_progress(self, char):
+    def _write_progress(self, state, char):
         """Write progress to standard output.
 
         Progress is grouped on lines per 50 items, adding ``char`` for every
@@ -535,62 +598,98 @@ class SimpleStatusHook(AbstractReadHook):
 
         Parameters
         ----------
+        state : ProgressState
+            State of current progress.
         char : str
             Single character to print.
 
         """
-        if self.prog_counter == 0:
+        if state.prog_counter == 0:
             sys.stdout.write('[{:03d}/{:03d}] '.format(
-                self.prog_counter, self.result_count))
+                state.prog_counter, state.result_count))
             sys.stdout.flush()
-        elif self.prog_counter % 50 == 0:
-            time_elapsed = time.time() - self.init_time
-            time_per_item = time_elapsed / self.prog_counter
+        elif state.prog_counter % 50 == 0:
+            time_elapsed = time.time() - state.init_time
+            time_per_item = time_elapsed / state.prog_counter
             remaining_mins = int((time_per_item * (
-                self.result_count - self.prog_counter)) / 60)
+                state.result_count - state.prog_counter)) / 60)
             if remaining_mins > 1 and remaining_mins != \
-                    self.previous_remaining:
+                    state.previous_remaining:
                 remaining = " ({:d} min. left)".format(remaining_mins)
-                self.previous_remaining = remaining_mins
+                state.previous_remaining = remaining_mins
             else:
                 remaining = ""
             sys.stdout.write('{}\n[{:03d}/{:03d}] '.format(
-                remaining, self.prog_counter, self.result_count))
+                remaining, state.prog_counter, state.result_count))
             sys.stdout.flush()
 
         sys.stdout.write(char)
         sys.stdout.flush()
-        self.prog_counter += 1
+        state.prog_counter += 1
 
-        if self.prog_counter == self.result_count:
+        if state.prog_counter == state.result_count:
             sys.stdout.write('\n')
             sys.stdout.flush()
 
-    def wfs_search_init(self, typename):
-        """When a new WFS search is started, reset all counters to 0.
+    def wfs_search_init(self, params):
+        """When a new WFS search is started, reset all counters to 0 and set
+        the maximum requested results.
 
         Parameters
         ----------
-        typename : str
-            The typename (layername) of the WFS service used for searching.
+        params : dict
+            Parameters used to initiate WFS search. These include:
+                typename : str
+                    Typename in the WFS service to query.
+                location : pydov.util.location.AbstractLocationFilter or None
+                    Location filter limiting the features to retrieve.
+                filter : str (xml) or None
+                    Attribute filter limiting the features to retrieve.
+                sort_by : str (xml) or None
+                    SortBy clause listing fields to sort by.
+                max_features : int or None
+                    Limit the maximum number of features to request.
+                propertynames : list of str
+                    List of WFS propertynames (attributes) to retrieve.
+                geometry_column : str
+                    Name of the column/attribute containing the geometry.
 
         """
-        self.result_count = 0
-        self.prog_counter = 0
-        self.init_time = time.time()
-        self.previous_remaining = None
+        self.wfs_progress.reset()
+        self.xml_progress.reset()
 
-    def wfs_search_result(self, number_of_results):
-        """When the WFS search completes, set the total result count to
-        ``number_of_results``.
+        self.wfs_progress.max_results = params.get('max_features', None)
+        self.xml_progress.max_results = params.get('max_features', None)
+
+    def wfs_search_result(self, number_matched, number_returned):
+        """When the WFS search completes, set the total result count.
 
         Parameters
         ----------
-        number_of_results : int
-            The number of features returned by the WFS search.
+        number_matched : int
+            The number of features matched by the WFS search query.
+        number_returned : int
+            The number of features returned by the WFS search query. Due to
+            server limitations this can be less than number_matched.
 
         """
-        self.result_count = number_of_results
+        if self.wfs_progress.result_count == 0:
+
+            if self.wfs_progress.max_results is not None:
+                total_results = min(
+                    self.wfs_progress.max_results, number_matched)
+            else:
+                total_results = number_matched
+
+            if number_returned > 0:
+                self.wfs_progress.result_count = math.ceil(
+                    total_results/number_returned)
+            else:
+                self.wfs_progress.result_count = 0
+
+            self.xml_progress.result_count = total_results
+
+        self._write_progress(self.wfs_progress, '.')
 
     def xml_cache_hit(self, pkey_object):
         """When an XML document is retrieved from the cache, print 'c' to
@@ -603,7 +702,7 @@ class SimpleStatusHook(AbstractReadHook):
 
         """
         with self.lock:
-            self._write_progress('c')
+            self._write_progress(self.xml_progress, 'c')
 
     def xml_stale_hit(self, pkey_object):
         """When a stale XML document is retrieved from the cache, print 'S' to
@@ -616,7 +715,7 @@ class SimpleStatusHook(AbstractReadHook):
 
         """
         with self.lock:
-            self._write_progress('S')
+            self._write_progress(self.xml_progress, 'S')
 
     def xml_fetch_error(self, pkey_object):
         """When an XML document failed to be fetched from DOV, print 'E' to
@@ -629,7 +728,7 @@ class SimpleStatusHook(AbstractReadHook):
 
         """
         with self.lock:
-            self._write_progress('E')
+            self._write_progress(self.xml_progress, 'E')
 
     def xml_downloaded(self, pkey_object):
         """When an XML document is downloaded from the DOV services,
@@ -642,4 +741,4 @@ class SimpleStatusHook(AbstractReadHook):
 
         """
         with self.lock:
-            self._write_progress('.')
+            self._write_progress(self.xml_progress, '.')

@@ -3,12 +3,13 @@ import datetime
 
 import pytest
 from owslib.etree import etree
-from owslib.fes import PropertyIsEqualTo
+from owslib.fes2 import PropertyIsEqualTo
 
 import pydov
 from pydov.search.boring import BoringSearch
 from pydov.util.hooks import (AbstractInjectHook, AbstractReadHook, Hooks,
                               SimpleStatusHook)
+from pydov.util.location import AbstractLocationFilter
 from tests.abstract import ServiceCheck
 
 
@@ -77,10 +78,10 @@ class HookCounter(AbstractReadHook, AbstractInjectHook):
     def inject_meta_response(self, url):
         self.count_inject_meta_response += 1
 
-    def wfs_search_init(self, typename):
+    def wfs_search_init(self, params):
         self.count_wfs_search_init += 1
 
-    def wfs_search_result(self, number_of_results):
+    def wfs_search_result(self, number_matched, number_returned):
         self.count_wfs_search_result += 1
 
     def wfs_search_result_received(self, query, features):
@@ -122,14 +123,42 @@ class HookTypeTester(AbstractReadHook, AbstractInjectHook):
         assert url is not None
         assert isinstance(url, str)
 
-    def wfs_search_init(self, typename):
-        assert typename is not None
-        assert isinstance(typename, str)
+    def wfs_search_init(self, params):
+        assert params is not None
+        assert isinstance(params, dict)
 
-    def wfs_search_result(self, number_of_results):
-        assert number_of_results is not None
-        assert number_of_results > 0
-        assert isinstance(number_of_results, int)
+        assert 'typename' in params
+        assert isinstance(params['typename'], str)
+
+        assert 'location' in params
+        assert params['location'] is None or \
+            isinstance(params['location'], str)
+
+        assert 'sort_by' in params
+        assert params['sort_by'] is None or \
+            isinstance(params['sort_by'], str)
+
+        assert 'max_features' in params
+        assert params['max_features'] is None or \
+            isinstance(params['max_features'], int)
+
+        assert 'propertynames' in params
+        assert isinstance(params['propertynames'], list)
+        for propertyname in params['propertynames']:
+            assert isinstance(propertyname, str)
+
+        assert 'geometry_column' in params
+        assert isinstance(params['geometry_column'], str)
+
+    def wfs_search_result(self, number_matched, number_returned):
+        assert number_matched is not None
+        assert isinstance(number_matched, int)
+        assert number_matched > 0
+
+        assert number_returned is not None
+        assert isinstance(number_returned, int)
+        assert number_returned > 0
+        assert number_matched >= number_returned
 
     def wfs_search_result_received(self, query, features):
         assert query is not None
@@ -186,9 +215,11 @@ class HookInjecter(AbstractReadHook, AbstractInjectHook):
                 './/{http://dov.vlaanderen.be/ocdov/dov-pub}Boringen/'
                 '{http://dov.vlaanderen.be/ocdov/dov-pub}gemeente')
             if len(gemeentes) == 0:
-                gemeente = etree.Element('{http://dov.vlaanderen.be/ocdov/dov-pub}gemeente')
+                gemeente = etree.Element(
+                    '{http://dov.vlaanderen.be/ocdov/dov-pub}gemeente')
                 gemeente.text = 'Bevergem'
-                boring = tree.find('.//{http://dov.vlaanderen.be/ocdov/dov-pub}Boringen')
+                boring = tree.find(
+                    './/{http://dov.vlaanderen.be/ocdov/dov-pub}Boringen')
                 boring.append(gemeente)
             else:
                 for g in gemeentes:

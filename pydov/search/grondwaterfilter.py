@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 """Module containing the search classes to retrieve DOV groundwater screen
  data."""
+from itertools import chain
 import pandas as pd
-from owslib.fes import And, Not, PropertyIsNull
+from owslib.fes2 import And, Not, PropertyIsNull
 
 from ..types.grondwaterfilter import GrondwaterFilter
 from .abstract import AbstractSearch
@@ -39,17 +40,17 @@ class GrondwaterFilterSearch(AbstractSearch):
         Parameters
         ----------
         location : pydov.util.location.AbstractLocationFilter or \
-                   owslib.fes.BinaryLogicOpType<AbstractLocationFilter> or \
-                   owslib.fes.UnaryLogicOpType<AbstractLocationFilter>
+                   owslib.fes2.BinaryLogicOpType<AbstractLocationFilter> or \
+                   owslib.fes2.UnaryLogicOpType<AbstractLocationFilter>
             Location filter limiting the features to retrieve. Can either be a
             single instance of a subclass of AbstractLocationFilter, or a
             combination using And, Or, Not of AbstractLocationFilters.
-        query : owslib.fes.OgcExpression
+        query : owslib.fes2.OgcExpression
             OGC filter expression to use for searching. This can contain any
-            combination of filter elements defined in owslib.fes. The query
+            combination of filter elements defined in owslib.fes2. The query
             should use the fields provided in `get_fields()`. Note that not
             all fields are currently supported as a search parameter.
-        sort_by : owslib.fes.SortBy, optional
+        sort_by : owslib.fes2.SortBy, optional
             List of properties to sort by.
         return_fields : list<str> or tuple<str> or set<str>
             A list of fields to be returned in the output data. This should
@@ -78,10 +79,6 @@ class GrondwaterFilterSearch(AbstractSearch):
             When a field that can only be used as a query parameter is used as
             a return field.
 
-        pydov.util.errors.FeatureOverflowError
-            When the number of features to be returned is equal to the
-            maxFeatures limit of the WFS server.
-
         AttributeError
             When the argument supplied as return_fields is not a list,
             tuple or set.
@@ -102,14 +99,18 @@ class GrondwaterFilterSearch(AbstractSearch):
         else:
             query = exclude_empty_filters
 
-        fts = self._search(location=location, query=query, sort_by=sort_by,
-                           return_fields=return_fields,
-                           max_features=max_features)
+        trees = self._search(location=location, query=query, sort_by=sort_by,
+                             return_fields=return_fields,
+                             max_features=max_features)
 
-        gw_filters = self._type.from_wfs(fts, self._wfs_namespace)
+        feature_generators = []
+        for tree in trees:
+            feature_generators.append(
+                self._type.from_wfs(tree, self._wfs_namespace))
 
         df = pd.DataFrame(
-            data=self._type.to_df_array(gw_filters, return_fields),
+            data=self._type.to_df_array(
+                chain.from_iterable(feature_generators), return_fields),
             columns=self._type.get_field_names(return_fields))
 
         return df

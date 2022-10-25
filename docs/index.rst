@@ -50,9 +50,7 @@ Getting started
 After :ref:`installation`, check the :ref:`quickstart` instructions for a first introduction of
 the pydov functionalities. For a more in-depth overview of the capabilities,
 the :ref:`tutorials` illustrate different capabilities of the pydov package
-for each of the object types (:class:`~pydov.search.grondwaterfilter.GrondwaterFilterSearch`,
-:class:`~pydov.search.boring.BoringSearch` and the interpretations derived from
-:class:`~pydov.search.interpretaties.InformeleStratigrafieSearch`).
+for each of the object types.
 
 While the search objects are different, the workflow is the same for each dataset.
 The :ref:`query_attribute` and :ref:`query_location` explain

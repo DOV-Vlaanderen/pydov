@@ -185,7 +185,7 @@ Sometimes the definition can be used as a (human readable) label for the (machin
 
 Using OGC filter expressions
 ****************************
-An attribute query consists of an OGC filter predicate, a query field (`propertyname`) and a literal value (`literal`). pydov uses the OGC filter predicates from the OWSLib library, defined in the owslib.fes package.
+An attribute query consists of an OGC filter predicate, a query field (`propertyname`) and a literal value (`literal`). pydov uses the OGC filter predicates from the OWSLib library, defined in the owslib.fes2 package.
 
 Note that the literal value is always expressed as a string, even if the field that is being searched is of a numeric, date or boolean type (dates should be expressed in the 'YYYY-mm-dd' format).
 
@@ -254,7 +254,7 @@ PropertyIsBetween
 
 Logically combining filter expressions
 **************************************
-You can combine different OGC filter expressions in one query by using the `And`, `Or` and `Not` predicates from the owslib.fes package.
+You can combine different OGC filter expressions in one query by using the `And`, `Or` and `Not` predicates from the owslib.fes2 package.
 
 Each of `And`, `Or` and `Not` take a list as argument, in the case of `And` and `Or` the list should consist of at least two items. Each item can be a simple OGC filter expression or another `And`, `Or` or `Not` expression, so you can nest different levels of filter expressions.
 
@@ -279,8 +279,8 @@ An example of an advanced query using a nested combination of logical filter exp
 
 ::
 
-    from owslib.fes import And, Or, Not
-    from owslib.fes import PropertyIsEqualTo, PropertyIsLike, PropertyIsNull
+    from owslib.fes2 import And, Or, Not
+    from owslib.fes2 import PropertyIsEqualTo, PropertyIsLike, PropertyIsNull
 
     from pydov.search.boring import BoringSearch
     boringsearch = BoringSearch()
@@ -350,8 +350,8 @@ The following example returns all the lithological descriptions of boreholes tha
 
 ::
 
-    from owslib.fes import And
-    from owslib.fes import PropertyIsEqualTo
+    from owslib.fes2 import And
+    from owslib.fes2 import PropertyIsEqualTo
 
     from pydov.util.query import Join
 

@@ -4,6 +4,80 @@
 History
 =======
 
+v3.0.0 (unreleased)
+-------------------
+
+* Breaking changes
+
+  * pydov3 uses WFS 2.0.0 instead of WFS 1.1.0, as a consequence attribute filters
+    should now use FES2.0 and location filters should now use GML3.2. This change 
+    impacts a number of places:
+
+      * ``query`` parameter in the 
+        :class:`pydov.search.abstract.AbstractSearch.search` method
+
+        Attribute query operators, like PropertyIsEqualTo, PropertyIsGreaterThan and so 
+        on, should from now on be imported from the owslib.fes2 package instead 
+        of the owslib.fes package. E.g.::
+
+          # change this
+          from owslib.fes import And, PropertyIsEqualTo
+
+          # into this
+          from owslib.fes2 import And, PropertyIsEqualTo
+
+      * ``sort_by`` parameter in the 
+        :class:`pydov.search.abstract.AbstractSearch.search` method
+
+        Also the SortBy operator should from now on be imported from the the owslib.fes2 
+        package instead of the owslib.fes package. E.g.::
+
+          # change this
+          from owslib.fes import SortBy, SortProperty
+
+          # into this
+          from owslib.fes2 import SortBy, SortProperty
+
+      * The :class:`pydov.util.location.GmlObject` class now expects GML3.2 
+        geometries instead of GML3.1.1.
+
+        Use GML3.2 objects from now on.
+
+      * The :class:`pydov.util.location.GmlFilter` class now expects GML3.2 
+        documents instead of GML3.1.1.
+
+        Transform the document to GML3.2 yourself
+        or use a :class:`pydov.util.location.GeometryFilter` instead.
+
+  * The new WFS 2.0.0 querying also allows paged WFS requests which has impact
+    on a number of hooks:
+
+      * :class:`pydov.util.hooks.AbstractReadHook.wfs_search_init` now has a 
+        single argument ``params`` with all the parameters used to initiate the 
+        WFS search.
+
+      * :class:`pydov.util.hooks.AbstractReadHook.wfs_search_result` now has
+        two arguments ``number_matched`` and ``number_returned``. Since there 
+        can be multiple (paged) WFS results per search, this hook can now be called 
+        multiple times per search query. It can also be called simultaneously
+        from different threads.
+
+      * :class:`pydov.util.hooks.AbstractReadHook.wfs_search_result_received` is
+        affected in a similar manner: this too can now be called multiple times 
+        per search, simultaneously from different threads.
+
+      * :class:`pydov.util.hooks.AbstractInjectHook.inject_wfs_getfeature_response`
+        is affected as well. This too can now be called multiple times per search, 
+        simultaneously from different threads.
+
+* New features
+
+  * Add support for WFS paging, allowing larger queries. It is now possible to
+    execute queries larger than the WFS response feature limit of 10000 features
+    without running into a FeatureOverflowError.
+
+    Please be kind to our infrastructure and only request the data you need.
+
 v2.2.0
 ------
 

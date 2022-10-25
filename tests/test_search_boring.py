@@ -1,7 +1,7 @@
 """Module grouping tests for the boring search module."""
 import datetime
 
-from owslib.fes import PropertyIsEqualTo
+from owslib.fes2 import PropertyIsEqualTo
 
 from pydov.search.boring import BoringSearch
 from pydov.types.boring import Boring

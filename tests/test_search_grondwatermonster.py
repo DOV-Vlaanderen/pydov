@@ -1,7 +1,7 @@
 """Module grouping tests for the search grondwatermonster module."""
 import datetime
 
-from owslib.fes import PropertyIsEqualTo
+from owslib.fes2 import PropertyIsEqualTo
 
 from pydov.search.grondwatermonster import GrondwaterMonsterSearch
 from pydov.types.grondwatermonster import GrondwaterMonster

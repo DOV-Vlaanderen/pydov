@@ -3,7 +3,7 @@ import copy
 
 import pytest
 from owslib.etree import etree
-from owslib.fes import FilterRequest, PropertyIsEqualTo, SortBy, SortProperty
+from owslib.fes2 import FilterRequest, PropertyIsEqualTo, SortBy, SortProperty
 from owslib.iso import MD_Metadata
 from owslib.util import nspath_eval
 
@@ -228,15 +228,72 @@ class TestOwsutil(object):
 
         """
         xml = owsutil.wfs_build_getfeature_request('dov-pub:Boringen')
+
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs" '
+            '<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs/2.0" '
             'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
-            'service="WFS" version="1.1.0" '
-            'xsi:schemaLocation="http://www.opengis.net/wfs '
-            'http://schemas.opengis.net/wfs/1.1.0/wfs.xsd"><wfs:Query '
-            'typeName="dov-pub:Boringen"><ogc:Filter '
-            'xmlns:ogc="http://www.opengis.net/ogc"/></wfs:Query></wfs'
+            'service="WFS" version="2.0.0" startIndex="0" '
+            'xsi:schemaLocation="http://www.opengis.net/wfs/2.0 '
+            'http://schemas.opengis.net/wfs/2.0/wfs.xsd"><wfs:Query '
+            'typeNames="dov-pub:Boringen"/></wfs'
             ':GetFeature>')
+
+    def test_wfs_build_getfeature_start_index(self):
+        """Test the owsutil.wfs_build_getfeature_request method with a
+        startIndex defined.
+
+        Test whether the XML of the WFS GetFeature call is generated correctly.
+
+        """
+        xml = owsutil.wfs_build_getfeature_request(
+            'dov-pub:Boringen', start_index=3)
+
+        assert "startIndex" in xml.attrib.keys()
+        assert xml.attrib["startIndex"] == "3"
+
+    def test_wfs_build_getfeature_start_index_negative(self):
+        """Test the owsutil.wfs_build_getfeature_request method with a
+        a negative startIndex value.
+
+        Test whether an AttributeError is raised.
+
+        """
+        with pytest.raises(AttributeError):
+            owsutil.wfs_build_getfeature_request(
+                'dov-pub:Boringen', start_index=-5)
+
+    def test_wfs_build_getfeature_start_index_none(self):
+        """Test the owsutil.wfs_build_getfeature_request method with a
+        a startIndex value of None.
+
+        Test whether an AttributeError is raised.
+
+        """
+        with pytest.raises(AttributeError):
+            owsutil.wfs_build_getfeature_request(
+                'dov-pub:Boringen', start_index=None)
+
+    def test_wfs_build_getfeature_start_index_float(self):
+        """Test the owsutil.wfs_build_getfeature_request method with a
+        a floating point startIndex value.
+
+        Test whether an AttributeError is raised.
+
+        """
+        with pytest.raises(AttributeError):
+            owsutil.wfs_build_getfeature_request(
+                'dov-pub:Boringen', start_index=1.5)
+
+    def test_wfs_build_getfeature_start_index_string(self):
+        """Test the owsutil.wfs_build_getfeature_request method with a
+        an non-integer startIndex value.
+
+        Test whether an AttributeError is raised.
+
+        """
+        with pytest.raises(AttributeError):
+            owsutil.wfs_build_getfeature_request(
+                'dov-pub:Boringen', start_index="0")
 
     def test_wfs_build_getfeature_maxfeatures(self):
         """Test the owsutil.wfs_build_getfeature_request method with a
@@ -248,8 +305,8 @@ class TestOwsutil(object):
         xml = owsutil.wfs_build_getfeature_request(
             'dov-pub:Boringen', max_features=3)
 
-        assert "maxFeatures" in xml.attrib.keys()
-        assert xml.attrib["maxFeatures"] == "3"
+        assert "count" in xml.attrib.keys()
+        assert xml.attrib["count"] == "3"
 
     def test_wfs_build_getfeature_maxfeatures_negative(self):
         """Test the owsutil.wfs_build_getfeature_request method with a
@@ -307,7 +364,7 @@ class TestOwsutil(object):
                 'dov-pub:Boringen',
                 location=Within(Box(151650, 214675, 151750, 214775)))
 
-    def test_wfs_build_getfeature_request_bbox(self):
+    def test_wfs_build_getfeature_request_bbox(self, mp_gml_id):
         """Test the owsutil.wfs_build_getfeature_request method with a
         typename, box and geometry_column.
 
@@ -318,20 +375,21 @@ class TestOwsutil(object):
             'dov-pub:Boringen',
             location=Within(Box(151650, 214675, 151750, 214775)),
             geometry_column='geom')
+
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs" '
+            '<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs/2.0" '
             'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
-            'service="WFS" version="1.1.0" '
-            'xsi:schemaLocation="http://www.opengis.net/wfs '
-            'http://schemas.opengis.net/wfs/1.1.0/wfs.xsd"><wfs:Query '
-            'typeName="dov-pub:Boringen"><ogc:Filter '
-            'xmlns:ogc="http://www.opengis.net/ogc"><ogc:Within> '
-            '<ogc:PropertyName>geom</ogc:PropertyName><gml:Envelope '
-            'xmlns:gml="http://www.opengis.net/gml" srsDimension="2" '
-            'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370"><gml'
-            ':lowerCorner>151650.000000 '
+            'service="WFS" version="2.0.0" startIndex="0" '
+            'xsi:schemaLocation="http://www.opengis.net/wfs/2.0 '
+            'http://schemas.opengis.net/wfs/2.0/wfs.xsd"><wfs:Query '
+            'typeNames="dov-pub:Boringen"><fes:Filter '
+            'xmlns:fes="http://www.opengis.net/fes/2.0"><fes:Within> '
+            '<fes:ValueReference>geom</fes:ValueReference><gml:Envelope '
+            'xmlns:gml="http://www.opengis.net/gml/3.2" srsDimension="2" '
+            'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370" gml32:id='
+            '"pydov.gmlid"><gml:lowerCorner>151650.000000 '
             '214675.000000</gml:lowerCorner><gml:upperCorner>151750.000000 '
-            '214775.000000</gml:upperCorner></gml:Envelope></ogc:Within></ogc'
+            '214775.000000</gml:upperCorner></gml:Envelope></fes:Within></fes'
             ':Filter></wfs:Query></wfs:GetFeature>')
 
     def test_wfs_build_getfeature_request_propertyname(self):
@@ -343,15 +401,16 @@ class TestOwsutil(object):
         """
         xml = owsutil.wfs_build_getfeature_request(
             'dov-pub:Boringen', propertyname=['fiche', 'diepte_tot_m'])
+
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs" '
+            '<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs/2.0" '
             'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
-            'service="WFS" version="1.1.0" '
-            'xsi:schemaLocation="http://www.opengis.net/wfs '
-            'http://schemas.opengis.net/wfs/1.1.0/wfs.xsd"> <wfs:Query '
-            'typeName="dov-pub:Boringen"> '
+            'service="WFS" version="2.0.0" startIndex="0" '
+            'xsi:schemaLocation="http://www.opengis.net/wfs/2.0 '
+            'http://schemas.opengis.net/wfs/2.0/wfs.xsd"> <wfs:Query '
+            'typeNames="dov-pub:Boringen"> '
             '<wfs:PropertyName>diepte_tot_m</wfs:PropertyName> '
-            '<wfs:PropertyName>fiche</wfs:PropertyName> <ogc:Filter/> '
+            '<wfs:PropertyName>fiche</wfs:PropertyName>'
             '</wfs:Query> </wfs:GetFeature>')
 
     def test_wfs_build_getfeature_request_propertyname_stable(self):
@@ -386,19 +445,20 @@ class TestOwsutil(object):
 
         xml = owsutil.wfs_build_getfeature_request(
             'dov-pub:Boringen', filter=filter_request)
+
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs" '
+            '<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs/2.0" '
             'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
-            'service="WFS" version="1.1.0" '
-            'xsi:schemaLocation="http://www.opengis.net/wfs '
-            'http://schemas.opengis.net/wfs/1.1.0/wfs.xsd"> <wfs:Query '
-            'typeName="dov-pub:Boringen"> <ogc:Filter> '
-            '<ogc:PropertyIsEqualTo> '
-            '<ogc:PropertyName>gemeente</ogc:PropertyName> '
-            '<ogc:Literal>Herstappe</ogc:Literal> </ogc:PropertyIsEqualTo> '
+            'service="WFS" version="2.0.0" startIndex="0" '
+            'xsi:schemaLocation="http://www.opengis.net/wfs/2.0 '
+            'http://schemas.opengis.net/wfs/2.0/wfs.xsd"> <wfs:Query '
+            'typeNames="dov-pub:Boringen"> <fes:Filter> '
+            '<fes:PropertyIsEqualTo> '
+            '<fes:ValueReference>gemeente</fes:ValueReference> '
+            '<ogc:Literal>Herstappe</ogc:Literal> </fes:PropertyIsEqualTo> '
             '</ogc:Filter> </wfs:Query> </wfs:GetFeature>')
 
-    def test_wfs_build_getfeature_request_bbox_filter(self):
+    def test_wfs_build_getfeature_request_bbox_filter(self, mp_gml_id):
         """Test the owsutil.wfs_build_getfeature_request method with an
         attribute filter, a box and a geometry_column.
 
@@ -415,26 +475,29 @@ class TestOwsutil(object):
             'dov-pub:Boringen', filter=filter_request,
             location=Within(Box(151650, 214675, 151750, 214775)),
             geometry_column='geom')
+
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs" '
+            '<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs/2.0" '
             'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
-            'service="WFS" version="1.1.0" '
-            'xsi:schemaLocation="http://www.opengis.net/wfs '
-            'http://schemas.opengis.net/wfs/1.1.0/wfs.xsd"> <wfs:Query '
-            'typeName="dov-pub:Boringen"> <ogc:Filter> <ogc:And> '
-            '<ogc:PropertyIsEqualTo> '
-            '<ogc:PropertyName>gemeente</ogc:PropertyName> '
-            '<ogc:Literal>Herstappe</ogc:Literal> </ogc:PropertyIsEqualTo> '
-            '<ogc:Within> <ogc:PropertyName>geom</ogc:PropertyName> '
+            'service="WFS" version="2.0.0" startIndex="0" '
+            'xsi:schemaLocation="http://www.opengis.net/wfs/2.0 '
+            'http://schemas.opengis.net/wfs/2.0/wfs.xsd"> <wfs:Query '
+            'typeNames="dov-pub:Boringen"> <fes:Filter> <fes:And> '
+            '<fes:PropertyIsEqualTo> '
+            '<fes:ValueReference>gemeente</fes:ValueReference> '
+            '<ogc:Literal>Herstappe</ogc:Literal> </fes:PropertyIsEqualTo> '
+            '<fes:Within> <fes:ValueReference>geom</fes:ValueReference> '
             '<gml:Envelope xmlns:gml="http://www.opengis.net/gml" '
             'srsDimension="2" '
-            'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370"> '
+            'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370" gml32:id='
+            '"pydov.gmlid"> '
             '<gml:lowerCorner>151650.000000 214675.000000</gml:lowerCorner> '
             '<gml:upperCorner>151750.000000 214775.000000</gml:upperCorner> '
-            '</gml:Envelope> </ogc:Within> </ogc:And> </ogc:Filter> '
+            '</gml:Envelope> </fes:Within> </fes:And> </fes:Filter> '
             '</wfs:Query> </wfs:GetFeature>')
 
-    def test_wfs_build_getfeature_request_bbox_filter_propertyname(self):
+    def test_wfs_build_getfeature_request_bbox_filter_propertyname(
+            self, mp_gml_id):
         """Test the owsutil.wfs_build_getfeature_request method with an
         attribute filter, a box, a geometry_column and a list of
         propertynames.
@@ -452,25 +515,27 @@ class TestOwsutil(object):
             'dov-pub:Boringen', filter=filter_request,
             location=Within(Box(151650, 214675, 151750, 214775)),
             geometry_column='geom', propertyname=['fiche', 'diepte_tot_m'])
+
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs" '
+            '<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs/2.0" '
             'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
-            'service="WFS" version="1.1.0" '
-            'xsi:schemaLocation="http://www.opengis.net/wfs '
-            'http://schemas.opengis.net/wfs/1.1.0/wfs.xsd"> <wfs:Query '
-            'typeName="dov-pub:Boringen"> '
+            'service="WFS" version="2.0.0" startIndex="0" '
+            'xsi:schemaLocation="http://www.opengis.net/wfs/2.0 '
+            'http://schemas.opengis.net/wfs/2.0/wfs.xsd"> <wfs:Query '
+            'typeNames="dov-pub:Boringen"> '
             '<wfs:PropertyName>diepte_tot_m</wfs:PropertyName> '
-            '<wfs:PropertyName>fiche</wfs:PropertyName> <ogc:Filter> '
-            '<ogc:And> <ogc:PropertyIsEqualTo> '
-            '<ogc:PropertyName>gemeente</ogc:PropertyName> '
-            '<ogc:Literal>Herstappe</ogc:Literal> </ogc:PropertyIsEqualTo> '
-            '<ogc:Within> <ogc:PropertyName>geom</ogc:PropertyName> '
+            '<wfs:PropertyName>fiche</wfs:PropertyName> <fes:Filter> '
+            '<fes:And> <fes:PropertyIsEqualTo> '
+            '<fes:ValueReference>gemeente</fes:ValueReference> '
+            '<ogc:Literal>Herstappe</ogc:Literal> </fes:PropertyIsEqualTo> '
+            '<fes:Within> <fes:ValueReference>geom</fes:ValueReference> '
             '<gml:Envelope xmlns:gml="http://www.opengis.net/gml" '
             'srsDimension="2" '
-            'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370"> '
+            'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370" gml32:id='
+            '"pydov.gmlid"> '
             '<gml:lowerCorner>151650.000000 214675.000000</gml:lowerCorner> '
             '<gml:upperCorner>151750.000000 214775.000000</gml:upperCorner> '
-            '</gml:Envelope> </ogc:Within> </ogc:And> </ogc:Filter> '
+            '</gml:Envelope> </fes:Within> </fes:And> </fes:Filter> '
             '</wfs:Query> </wfs:GetFeature>')
 
     def test_wfs_build_getfeature_request_sortby(self):
@@ -486,17 +551,18 @@ class TestOwsutil(object):
         xml = owsutil.wfs_build_getfeature_request(
             'dov-pub:Boringen', propertyname=['fiche', 'diepte_tot_m'],
             sort_by=sort_by)
+
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs" '
+            '<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs/2.0" '
             'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
-            'service="WFS" version="1.1.0" '
-            'xsi:schemaLocation="http://www.opengis.net/wfs '
-            'http://schemas.opengis.net/wfs/1.1.0/wfs.xsd"><wfs:Query '
-            'typeName="dov-pub:Boringen"><wfs:PropertyName>diepte_tot_m</wfs'
+            'service="WFS" version="2.0.0" startIndex="0" '
+            'xsi:schemaLocation="http://www.opengis.net/wfs/2.0 '
+            'http://schemas.opengis.net/wfs/2.0/wfs.xsd"><wfs:Query '
+            'typeNames="dov-pub:Boringen"><wfs:PropertyName>diepte_tot_m</wfs'
             ':PropertyName><wfs:PropertyName>fiche</wfs:PropertyName'
-            '><ogc:Filter/><ogc:SortBy><ogc:SortProperty><ogc:PropertyName'
-            '>diepte_tot_m</ogc:PropertyName><ogc:SortOrder>DESC</ogc'
-            ':SortOrder></ogc:SortProperty></ogc:SortBy></wfs:Query></wfs'
+            '><fes:SortBy><fes:SortProperty><fes:ValueReference'
+            '>diepte_tot_m</fes:ValueReference><ogfesc:SortOrder>DESC</fes'
+            ':SortOrder></fes:SortProperty></fes:SortBy></wfs:Query></wfs'
             ':GetFeature>')
 
     def test_wfs_build_getfeature_request_sortby_multi(self):
@@ -516,16 +582,31 @@ class TestOwsutil(object):
             sort_by=sort_by)
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs" '
+            '<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs/2.0" '
             'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
-            'service="WFS" version="1.1.0" '
-            'xsi:schemaLocation="http://www.opengis.net/wfs '
-            'http://schemas.opengis.net/wfs/1.1.0/wfs.xsd"><wfs:Query '
-            'typeName="dov-pub:Boringen"><wfs:PropertyName>diepte_tot_m</wfs'
+            'service="WFS" version="2.0.0" startIndex="0" '
+            'xsi:schemaLocation="http://www.opengis.net/wfs/2.0 '
+            'http://schemas.opengis.net/wfs/2.0/wfs.xsd"><wfs:Query '
+            'typeNames="dov-pub:Boringen"><wfs:PropertyName>diepte_tot_m</wfs'
             ':PropertyName><wfs:PropertyName>fiche</wfs:PropertyName'
-            '><ogc:Filter/><ogc:SortBy><ogc:SortProperty><ogc:PropertyName'
-            '>diepte_tot_m</ogc:PropertyName><ogc:SortOrder>DESC</ogc'
-            ':SortOrder></ogc:SortProperty><ogc:SortProperty><ogc'
-            ':PropertyName>datum_aanvang</ogc:PropertyName><ogc:SortOrder>ASC'
-            '</ogc:SortOrder></ogc:SortProperty></ogc:SortBy></wfs:Query>'
+            '><fes:SortBy><fes:SortProperty><fes:ValueReference'
+            '>diepte_tot_m</fes:ValueReference><fes:SortOrder>DESC</fes'
+            ':SortOrder></fes:SortProperty><fes:SortProperty><fes'
+            ':ValueReference>datum_aanvang</fes:ValueReference><fes:SortOrder>'
+            'ASC</fes:SortOrder></fes:SortProperty></fes:SortBy></wfs:Query>'
             '</wfs:GetFeature>')
+
+    def test_get_wfs_max_features(self, wfs_capabilities):
+        """Test the owsutil.get_wfs_max_features method.
+
+        Test whether the default maximum number of features can be found.
+
+        Parameters
+        ----------
+        wfs_capabilities : pytest.fixture
+            PyTest fixture providing the WFS GetCapabilities response.
+        """
+        max_features = owsutil.get_wfs_max_features(wfs_capabilities)
+
+        assert isinstance(max_features, int)
+        assert max_features > 0

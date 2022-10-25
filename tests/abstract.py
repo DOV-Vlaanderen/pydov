@@ -8,7 +8,7 @@ import pandas as pd
 import pytest
 import requests
 from owslib.etree import etree
-from owslib.fes import PropertyIsEqualTo, SortBy, SortProperty
+from owslib.fes2 import PropertyIsEqualTo, SortBy, SortProperty
 from pandas import DataFrame
 
 import pydov
@@ -85,6 +85,10 @@ def clean_xml(xml):
     # remove namespace prefixes in tags
     r = re.sub(r'<(/?)[^:]+:([^ >]+)([ >])', r'<\1\2\3', r)
 
+    # remove namespace prefixes in attributes
+    while re.match(r'<([^ >]+)( [^:]+ )*[^:]+:([^ >]+)([ >])', r):
+        r = re.sub(r'<([^ >]+)( [^:]+ )*[^:]+:([^ >]+)([ >])', r'<\1\2\3\4', r)
+
     # remove extra spaces in tags
     r = re.sub(r'[ ]+/>', '/>', r)
 
@@ -106,7 +110,7 @@ class AbstractTestSearch(object):
         Instance of subclass of this type used for searching.
     datatype_class : pydov.types.abstract.AbstractDovType
             Class reference for the corresponding datatype.
-    valid_query_single : owslib.fes.OgcExpression
+    valid_query_single : owslib.fes2.OgcExpression
         OGC expression of a valid query returning a single result.
     inexistent_field : str
             The name of an inexistent field.
@@ -984,8 +988,8 @@ class AbstractTestTypes(object):
 
         """
         tree = etree.fromstring(wfs_getfeature.encode('utf8'))
-        feature_members = tree.find('.//{http://www.opengis.net/gml}'
-                                    'featureMembers')
+        feature_members = tree.find(
+            './/{http://www.opengis.net/wfs/2.0}member')
 
         if feature_members is not None:
             fts = [ft for ft in feature_members]

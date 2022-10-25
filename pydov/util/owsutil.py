@@ -4,11 +4,12 @@ import warnings
 from urllib.parse import urlparse
 
 from owslib.etree import etree
-from owslib.fes import BinaryLogicOpType, UnaryLogicOpType
+from owslib.fes2 import BinaryLogicOpType, UnaryLogicOpType
 from owslib.namespaces import Namespaces
 from owslib.util import nspath_eval
 
 import pydov
+from pydov.util.net import SessionFactory
 
 from .errors import FeatureCatalogueNotFoundError, MetadataNotFoundError
 from .hooks import HookRunner
@@ -292,12 +293,31 @@ def get_namespace(wfs, layer):
 
     """
     from owslib.feature.schema import _get_describefeaturetype_url
-    url = _get_describefeaturetype_url(url=wfs.url, version='1.1.0',
+    url = _get_describefeaturetype_url(url=wfs.url, version='2.0.0',
                                        typename=layer)
     schema = __get_remote_describefeaturetype(url)
     tree = etree.fromstring(schema)
     namespace = tree.attrib.get('targetNamespace', None)
     return namespace
+
+
+def get_wfs_max_features(capabilities):
+    """Get the default maximum number of features the WFS service will return.
+
+    Parameters
+    ----------
+    capabilities : bytes
+        WFS 2.0.0 capabilities document.
+    """
+    tree = etree.fromstring(capabilities)
+
+    count_default = tree.findtext(
+        './/{http://www.opengis.net/ows/1.1}Operation[@name="GetFeature"]'
+        '/{http://www.opengis.net/ows/1.1}Constraint[@name="CountDefault"]'
+        '/{http://www.opengis.net/ows/1.1}DefaultValue')
+
+    if count_default is not None:
+        return int(count_default)
 
 
 def set_geometry_column(location, geometry_column):
@@ -306,8 +326,8 @@ def set_geometry_column(location, geometry_column):
     Parameters
     ----------
     location : pydov.util.location.AbstractLocationFilter or \
-                owslib.fes.BinaryLogicOpType<AbstractLocationFilter> or \
-                owslib.fes.UnaryLogicOpType<AbstractLocationFilter>
+                owslib.fes2.BinaryLogicOpType<AbstractLocationFilter> or \
+                owslib.fes2.UnaryLogicOpType<AbstractLocationFilter>
         Location filter limiting the features to retrieve. Can either be a
         single instance of a subclass of AbstractLocationFilter, or a
         combination using And, Or, Not of AbstractLocationFilters.
@@ -332,9 +352,9 @@ def set_geometry_column(location, geometry_column):
 
 def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
                                  filter=None, sort_by=None, propertyname=None,
-                                 max_features=None, version='1.1.0'):
-    """Build a WFS GetFeature request in XML to be used as payload in a WFS
-    GetFeature request using POST.
+                                 max_features=None, start_index=0):
+    """Build a WFS 2.0 GetFeature request in XML to be used as payload
+    in a WFS 2.0 GetFeature request using POST.
 
     Parameters
     ----------
@@ -346,16 +366,16 @@ def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
     location : pydov.util.location.AbstractLocationFilter
         Location filter limiting the features to retrieve.
         Requires ``geometry_column`` to be supplied as well.
-    filter : str of owslib.fes.FilterRequest, optional
+    filter : str of owslib.fes2.FilterRequest, optional
         Filter request to search on attribute values.
-    sort_by : str of owslib.fes.SortBy, optional
+    sort_by : str of owslib.fes2.SortBy, optional
         List of properties to sort by.
     propertyname : list<str>, optional
         List of properties to return. Defaults to all properties.
     max_features : int
         Limit the maximum number of features to request.
-    version : str, optional
-        WFS version to use. Defaults to 1.1.0
+    start_index : int
+        The index of the first feature to return.
 
     Raises
     ------
@@ -372,36 +392,40 @@ def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
         raise AttributeError('location requires geometry_column and it is '
                              'None')
 
-    xml = etree.Element('{http://www.opengis.net/wfs}GetFeature')
+    xml = etree.Element('{http://www.opengis.net/wfs/2.0}GetFeature')
     xml.set('service', 'WFS')
-    xml.set('version', version)
+    xml.set('version', '2.0.0')
 
     if max_features is not None:
         if (not isinstance(max_features, int)) or (max_features <= 0):
             raise AttributeError('max_features should be a positive integer')
-        xml.set('maxFeatures', str(max_features))
+        xml.set('count', str(max_features))
+
+    if (not isinstance(start_index, int)) or (start_index < 0):
+        raise AttributeError('start_index should be a positive integer or 0')
+    xml.set('startIndex', str(start_index))
 
     xml.set('{http://www.w3.org/2001/XMLSchema-instance}schemaLocation',
-            'http://www.opengis.net/wfs '
-            'http://schemas.opengis.net/wfs/{}/wfs.xsd'.format(version))
+            'http://www.opengis.net/wfs/2.0 '
+            'http://schemas.opengis.net/wfs/2.0/wfs.xsd')
 
-    query = etree.Element('{http://www.opengis.net/wfs}Query')
-    query.set('typeName', typename)
+    query = etree.Element('{http://www.opengis.net/wfs/2.0}Query')
+    query.set('typeNames', typename)
 
     if propertyname and len(propertyname) > 0:
         for property in sorted(propertyname):
             propertyname_xml = etree.Element(
-                '{http://www.opengis.net/wfs}PropertyName')
+                '{http://www.opengis.net/wfs/2.0}PropertyName')
             propertyname_xml.text = property
             query.append(propertyname_xml)
 
-    filter_xml = etree.Element('{http://www.opengis.net/ogc}Filter')
+    filter_xml = etree.Element('{http://www.opengis.net/fes/2.0}Filter')
     filter_parent = filter_xml
 
     if filter is not None and location is not None:
         # if both filter and location are specified, we wrap them inside an
         # ogc:And
-        and_xml = etree.Element('{http://www.opengis.net/ogc}And')
+        and_xml = etree.Element('{http://www.opengis.net/fes/2.0}And')
         filter_xml.append(and_xml)
         filter_parent = and_xml
 
@@ -413,7 +437,8 @@ def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
         location = set_geometry_column(location, geometry_column)
         filter_parent.append(location)
 
-    query.append(filter_xml)
+    if filter is not None or location is not None:
+        query.append(filter_xml)
 
     if sort_by is not None:
         query.append(etree.fromstring(sort_by))
@@ -422,7 +447,7 @@ def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
     return xml
 
 
-def wfs_get_feature(baseurl, get_feature_request):
+def wfs_get_feature(baseurl, get_feature_request, session=None):
     """Perform a WFS request using POST.
 
     Parameters
@@ -431,6 +456,9 @@ def wfs_get_feature(baseurl, get_feature_request):
         Base URL of the WFS service.
     get_feature_request : etree.Element
         XML element representing the WFS GetFeature request.
+    session : requests.Session
+        Session to use to perform HTTP requests for data. Defaults to None,
+        which means a new session will be created for each request.
 
     Returns
     -------
@@ -438,9 +466,12 @@ def wfs_get_feature(baseurl, get_feature_request):
         Response of the WFS service.
 
     """
+    if session is None:
+        session = SessionFactory.get_session()
+
     data = etree.tostring(get_feature_request)
 
-    request = pydov.session.post(baseurl, data)
+    request = session.post(baseurl, data)
     request.encoding = 'utf-8'
     return request.text.encode('utf8')
 

@@ -34,6 +34,29 @@ When running your script, pydov will now create a new zip archive in the
 provided directory and save the entire session inside, including all metadata 
 and search query responses, XML data and even pydov itself.
 
+The archive will also contain a metadata.json file with some more details,
+including the versions of key dependencies that were installed at the time of
+recording. Also the timestamp of the recording is added:
+
+    ::
+
+        {
+            "versions": {
+                "pydov": "2.2.0",
+                "owslib": "0.25.0",
+                "pandas": "1.5.0rc0",
+                "numpy": "1.23.1",
+                "requests": "2.28.1",
+                "fiona": "1.8.21",
+                "geopandas": "0.11.1"
+            },
+            "timings": {
+                "start": "20221006T152244",
+                "end": "20221006T152246",
+                "run_time_secs": 2.0412390239944216
+            }
+        }
+
 After the script is finished, it will print the location of the archive 
 containing the saved session.
 
@@ -58,3 +81,10 @@ location of the archive.
         pydov.hooks.append(
             RepeatableLogReplayer('./pydov-archive-20221006T150643-997a6d.zip')
         )
+
+Distribute this modified version of your script together with the pydov archive,
+executing it will now always yield the same results.
+
+Note: in order to have full reproducible runs it is advised to also install the
+same versions of pydov's dependencies as were used when recording. These version
+numbers can be found in the metadata.json file inside the archive.

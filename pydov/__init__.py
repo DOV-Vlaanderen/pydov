@@ -4,7 +4,7 @@ from pydov.util.hooks import Hooks, SimpleStatusHook
 from pydov.util.net import SessionFactory, proxy_autoconfiguration
 
 __author__ = """DOV-Vlaanderen"""
-__version__ = '2.2.0'
+__version__ = '2.2.1'
 
 cache = pydov.util.caching.GzipTextFileCache()
 

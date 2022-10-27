@@ -4,6 +4,14 @@
 History
 =======
 
+v2.2.1
+------
+
+* Fixes and improvements
+
+  * AquiferEnumType has been replaced with AquiferHCOVv1EnumType in both Grondwaterfilter and HydrogeologischeStratigrafie.
+
+
 v2.2.0
 ------
 

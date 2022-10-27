@@ -1,6 +1,7 @@
 import pydov
 import pytest
 import os
+import re
 
 from owslib.etree import etree
 from owslib.fes2 import PropertyIsGreaterThanOrEqualTo
@@ -31,12 +32,14 @@ def wfs_capabilities():
     """
     with open('tests/data/util/owsutil/wfscapabilities.xml', 'r',
               encoding='utf-8') as f:
-        data = f.read().replace(
-            '<ows:Constraint name="CountDefault"><ows:NoValues/>'
-            '<ows:DefaultValue>10000</ows:DefaultValue></ows:Constraint>',
-            '<ows:Constraint name="CountDefault"><ows:NoValues/>'
-            f'<ows:DefaultValue>{page_size}</ows:DefaultValue>'
-            '</ows:Constraint>')
+
+        data = re.sub(r'<ows:Constraint name="CountDefault"><ows:NoValues/>'
+                      r'<ows:DefaultValue>[1-9][0-9]*</ows:DefaultValue>'
+                      r'</ows:Constraint>',
+                      '<ows:Constraint name="CountDefault"><ows:NoValues/>'
+                      f'<ows:DefaultValue>{page_size}</ows:DefaultValue>'
+                      '</ows:Constraint>',
+                      f.read())
 
         if not isinstance(data, bytes):
             data = data.encode('utf-8')

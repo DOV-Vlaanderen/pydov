@@ -2,7 +2,10 @@
 <ns3:dov-schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns3="http://kern.schemas.dov.vlaanderen.be" xsi:schemaLocation="http://kern.schemas.dov.vlaanderen.be https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/dov.xsd">
     <bodemsite>
         <naam>Meise_Neerpoorten</naam>
-        <permkey>2013-000180</permkey>
+        <dataidentifier>
+            <permkey>2013-000180</permkey>
+            <uri>https://www.dov.vlaanderen.be/data/bodemsite/2013-000180</uri>
+        </dataidentifier>
         <waarnemingsdatum>2013-09-16</waarnemingsdatum>
         <beschrijving>grasland</beschrijving>
         <geometrie>

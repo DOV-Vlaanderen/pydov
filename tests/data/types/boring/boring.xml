@@ -2,6 +2,10 @@
 <ns3:dov-schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns3="http://kern.schemas.dov.vlaanderen.be" xsi:schemaLocation="http://kern.schemas.dov.vlaanderen.be https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/dov.xsd">
     <boring>
         <identificatie>GEO-04/169-BNo-B1</identificatie>
+        <dataidentifier>
+            <permkey>2004-103984</permkey>
+            <uri>https://www.dov.vlaanderen.be/data/boring/2004-103984</uri>
+        </dataidentifier>
         <xy>
             <x>151680.75</x>
             <y>214678.06</y>
@@ -28,6 +32,9 @@
         <diepte_tot>30.00</diepte_tot>
         <datum_aanvang>2004-12-20</datum_aanvang>
         <doel>Geotechnisch onderzoek</doel>
+        <wet_kader>
+            <niet_ingedeeld/>
+        </wet_kader>
         <uitvoerder>
             <naam>GEOLAB</naam>
         </uitvoerder>

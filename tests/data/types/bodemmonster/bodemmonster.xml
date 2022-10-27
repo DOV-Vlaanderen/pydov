@@ -2,7 +2,10 @@
 <ns3:dov-schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns3="http://kern.schemas.dov.vlaanderen.be" xsi:schemaLocation="http://kern.schemas.dov.vlaanderen.be https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/dov.xsd">
     <bodemmonster>
         <identificatie>A0055738</identificatie>
-        <permkey>2015-211807</permkey>
+        <dataidentifier>
+            <permkey>2015-211807</permkey>
+            <uri>https://www.dov.vlaanderen.be/data/bodemmonster/2015-211807</uri>
+        </dataidentifier>
         <datum_monstername>2015-06-30</datum_monstername>
         <type>ENK</type>
         <monsternamedoor>

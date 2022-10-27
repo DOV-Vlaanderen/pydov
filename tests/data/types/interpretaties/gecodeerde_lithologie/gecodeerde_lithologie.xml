@@ -3,6 +3,10 @@
     <interpretaties>
         <gecodeerdelithologie>
             <boring>kb22d56w-B165</boring>
+            <dataidentifier>
+                <permkey>2001-046845</permkey>
+                <uri>https://www.dov.vlaanderen.be/data/interpretatie/2001-046845</uri>
+            </dataidentifier>
             <auteur>
                 <persoon>
                     <naam>De Ceukelaire</naam>
@@ -17,6 +21,10 @@
             <dataleverancier>
                 <naam>onbekend</naam>
             </dataleverancier>
+            <kwaliteit>
+                <categorie>matig</categorie>
+                <geschiktheid_boormethode>Laag</geschiktheid_boormethode>
+            </kwaliteit>
             <laag>
                 <van>0.00</van>
                 <tot>4.00</tot>

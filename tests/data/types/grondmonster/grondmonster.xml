@@ -2,6 +2,10 @@
 <ns3:dov-schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns3="http://kern.schemas.dov.vlaanderen.be" xsi:schemaLocation="http://kern.schemas.dov.vlaanderen.be https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/dov.xsd">
     <grondmonster>
         <naam>N003A</naam>
+        <dataidentifier>
+            <permkey>2018-211728</permkey>
+            <uri>https://www.dov.vlaanderen.be/data/grondmonster/2018-211728</uri>
+        </dataidentifier>
         <boring>1445-GEO-17/047-B211</boring>
         <monstertype>ongeroerd</monstertype>
         <diepte>
@@ -26,54 +30,6 @@
                 <veld_labo>LABO</veld_labo>
             </observatie>
             <observatie>
-                <parameter>ASTM_CODE</parameter>
-                <waarde_text>CH</waarde_text>
-                <eenheid>-</eenheid>
-                <methode>Onbekend</methode>
-                <betrouwbaarheid>onbekend</betrouwbaarheid>
-                <veld_labo>LABO</veld_labo>
-            </observatie>
-            <observatie>
-                <parameter>KALKGEHALTE</parameter>
-                <waarde_numeriek>15.0</waarde_numeriek>
-                <eenheid>%</eenheid>
-                <methode>Onbekend</methode>
-                <betrouwbaarheid>onbekend</betrouwbaarheid>
-                <veld_labo>LABO</veld_labo>
-            </observatie>
-            <observatie>
-                <parameter>UITROLGRENS</parameter>
-                <waarde_numeriek>36.4</waarde_numeriek>
-                <eenheid>%</eenheid>
-                <methode>Onbekend</methode>
-                <betrouwbaarheid>onbekend</betrouwbaarheid>
-                <veld_labo>LABO</veld_labo>
-            </observatie>
-            <observatie>
-                <parameter>HUMUSGEHALTE</parameter>
-                <waarde_numeriek>4.7</waarde_numeriek>
-                <eenheid>%</eenheid>
-                <methode>Onbekend</methode>
-                <betrouwbaarheid>onbekend</betrouwbaarheid>
-                <veld_labo>LABO</veld_labo>
-            </observatie>
-            <observatie>
-                <parameter>VLOEIGRENS</parameter>
-                <waarde_numeriek>93.4</waarde_numeriek>
-                <eenheid>%</eenheid>
-                <methode>Onbekend</methode>
-                <betrouwbaarheid>onbekend</betrouwbaarheid>
-                <veld_labo>LABO</veld_labo>
-            </observatie>
-            <observatie>
-                <parameter>WATERGEHALTE</parameter>
-                <waarde_numeriek>57.7</waarde_numeriek>
-                <eenheid>%</eenheid>
-                <methode>Onbekend</methode>
-                <betrouwbaarheid>onbekend</betrouwbaarheid>
-                <veld_labo>LABO</veld_labo>
-            </observatie>
-            <observatie>
                 <parameter>VOLUMEMASSA</parameter>
                 <waarde_numeriek>1.627</waarde_numeriek>
                 <eenheid>t/m³</eenheid>
@@ -82,9 +38,9 @@
                 <veld_labo>LABO</veld_labo>
             </observatie>
             <observatie>
-                <parameter>KORRELVOLUMEMASSA</parameter>
-                <waarde_numeriek>2.65</waarde_numeriek>
-                <eenheid>t/m³</eenheid>
+                <parameter>ASTM_CODE</parameter>
+                <waarde_text>CH</waarde_text>
+                <eenheid>-</eenheid>
                 <methode>Onbekend</methode>
                 <betrouwbaarheid>onbekend</betrouwbaarheid>
                 <veld_labo>LABO</veld_labo>
@@ -99,6 +55,22 @@
                 <opmerking>proef uitgevoerd</opmerking>
             </observatie>
             <observatie>
+                <parameter>WATERGEHALTE</parameter>
+                <waarde_numeriek>57.7</waarde_numeriek>
+                <eenheid>%</eenheid>
+                <methode>Onbekend</methode>
+                <betrouwbaarheid>onbekend</betrouwbaarheid>
+                <veld_labo>LABO</veld_labo>
+            </observatie>
+            <observatie>
+                <parameter>KORRELVOLUMEMASSA</parameter>
+                <waarde_numeriek>2.650</waarde_numeriek>
+                <eenheid>t/m³</eenheid>
+                <methode>Onbekend</methode>
+                <betrouwbaarheid>onbekend</betrouwbaarheid>
+                <veld_labo>LABO</veld_labo>
+            </observatie>
+            <observatie>
                 <parameter>AREOMETER</parameter>
                 <waarde_text></waarde_text>
                 <eenheid>-</eenheid>
@@ -106,6 +78,38 @@
                 <betrouwbaarheid>onbekend</betrouwbaarheid>
                 <veld_labo>LABO</veld_labo>
                 <opmerking>proef uitgevoerd</opmerking>
+            </observatie>
+            <observatie>
+                <parameter>VLOEIGRENS</parameter>
+                <waarde_numeriek>93</waarde_numeriek>
+                <eenheid>%</eenheid>
+                <methode>Onbekend</methode>
+                <betrouwbaarheid>onbekend</betrouwbaarheid>
+                <veld_labo>LABO</veld_labo>
+            </observatie>
+            <observatie>
+                <parameter>HUMUSGEHALTE</parameter>
+                <waarde_numeriek>4.7</waarde_numeriek>
+                <eenheid>%</eenheid>
+                <methode>Onbekend</methode>
+                <betrouwbaarheid>onbekend</betrouwbaarheid>
+                <veld_labo>LABO</veld_labo>
+            </observatie>
+            <observatie>
+                <parameter>KALKGEHALTE</parameter>
+                <waarde_numeriek>15.0</waarde_numeriek>
+                <eenheid>%</eenheid>
+                <methode>Onbekend</methode>
+                <betrouwbaarheid>onbekend</betrouwbaarheid>
+                <veld_labo>LABO</veld_labo>
+            </observatie>
+            <observatie>
+                <parameter>UITROLGRENS</parameter>
+                <waarde_numeriek>36</waarde_numeriek>
+                <eenheid>%</eenheid>
+                <methode>Onbekend</methode>
+                <betrouwbaarheid>onbekend</betrouwbaarheid>
+                <veld_labo>LABO</veld_labo>
             </observatie>
         </observatieData>
         <observatieReeksData>
@@ -180,7 +184,7 @@
         </observatieReeksData>
         <proefuitvoeringsData>
             <proefuitvoering>
-                <proefnaam>OKP-ALGEMEEN</proefnaam>
+                <proefnaam>OKP-KORREL</proefnaam>
                 <uitvoerder>
                     <naam>VO - Afdeling Geotechniek</naam>
                 </uitvoerder>
@@ -188,6 +192,8 @@
                 <bedrijf_dienst>
                     <naam>VO - Afdeling Geotechniek</naam>
                 </bedrijf_dienst>
+                <opmerking></opmerking>
+                <methode>Onbekend</methode>
             </proefuitvoering>
             <proefuitvoering>
                 <proefnaam>VOLMASSA-PROEVEN</proefnaam>
@@ -201,18 +207,6 @@
                 <opmerking></opmerking>
             </proefuitvoering>
             <proefuitvoering>
-                <proefnaam>OKP-KORREL</proefnaam>
-                <uitvoerder>
-                    <naam>VO - Afdeling Geotechniek</naam>
-                </uitvoerder>
-                <identificatie>GEO-17/047</identificatie>
-                <bedrijf_dienst>
-                    <naam>VO - Afdeling Geotechniek</naam>
-                </bedrijf_dienst>
-                <opmerking></opmerking>
-                <methode>Onbekend</methode>
-            </proefuitvoering>
-            <proefuitvoering>
                 <proefnaam>SCHUIFWEERSTAND_GEN</proefnaam>
                 <uitvoerder>
                     <naam>onbekend</naam>
@@ -222,6 +216,16 @@
                     <naam>VO - Afdeling Geotechniek</naam>
                 </bedrijf_dienst>
                 <methode>Onbekend</methode>
+            </proefuitvoering>
+            <proefuitvoering>
+                <proefnaam>OKP-ALGEMEEN</proefnaam>
+                <uitvoerder>
+                    <naam>VO - Afdeling Geotechniek</naam>
+                </uitvoerder>
+                <identificatie>GEO-17/047</identificatie>
+                <bedrijf_dienst>
+                    <naam>VO - Afdeling Geotechniek</naam>
+                </bedrijf_dienst>
             </proefuitvoering>
         </proefuitvoeringsData>
         <opdracht>GEO-17/047</opdracht>

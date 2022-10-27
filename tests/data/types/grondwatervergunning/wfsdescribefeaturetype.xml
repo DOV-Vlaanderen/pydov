@@ -9,6 +9,7 @@
           <xsd:element maxOccurs="1" minOccurs="0" name="exploitant_naam" nillable="true" type="xsd:string"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="inrichtingsnummer" nillable="true" type="xsd:string"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="watnr" nillable="true" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="vergunning" nillable="true" type="xsd:string"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="vlaremrubriek" nillable="true" type="xsd:string"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="vergund_jaardebiet" nillable="true" type="xsd:decimal"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="vergund_dagdebiet" nillable="true" type="xsd:decimal"/>

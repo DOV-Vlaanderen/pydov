@@ -3,6 +3,10 @@
     <interpretaties>
         <informelestratigrafie>
             <boring>kb21d54e-B45</boring>
+            <dataidentifier>
+                <permkey>1962-101692</permkey>
+                <uri>https://www.dov.vlaanderen.be/data/interpretatie/1962-101692</uri>
+            </dataidentifier>
             <auteur>
                 <persoon>
                     <naam>De Moor</naam>

@@ -11,7 +11,7 @@
       <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">1</gco:CharacterString>
     </gmx:versionNumber>
     <gmx:versionDate xmlns:gmx="http://www.isotc211.org/2005/gmx">
-      <gco:DateTime xmlns:gco="http://www.isotc211.org/2005/gco">2019-08-22T11:21:04</gco:DateTime>
+      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2022-08-10</gco:Date>
     </gmx:versionDate>
     <gfc:producer>
       <gmd:CI_ResponsibleParty xmlns:gmd="http://www.isotc211.org/2005/gmd">
@@ -566,6 +566,68 @@
               <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:aName>
                   <gco:CharacterString>Date</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Score_categorie</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">De score categorie is een kwalitatieve categorie op basis van een kwantitatieve score, tussen 0 en 10, van de kwaliteit van (gecodeerde) lithologische beschrijvingen. Slecht: &lt; 4,7/10, matig: tussen 4,7/10 en 6,6/10, goed: tussen 6,6/10 en 8,5/10, zeer goed: &gt; 8,5/10. De score is samengesteld op basis van de beschrijving van basiselementen (lithologie, kleur, korrelgrootte), voldoende detail (secundaire kenmerken zoals glauconiet, schelpen, …) en voldoende kleine intervallen. Voor goed hergebruik van de beschrijvingen is minstens categorie ‘matig’ nodig.</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>0</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:valueType>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:aName>
+                  <gco:CharacterString>String</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Geschiktheid_boormethode</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">De geschiktheid van de boormethode beschrijft of de gebruikte boormethode van de boring waarop de beschrijving gebaseerd is eerder geschikt (hoog; bv. kernboring) of eerder niet geschikt (laag; bv. spoelboring) is voor het opmaken van een gedetailleerde (gecodeerde) lithologische beschrijving. Boormethodes die ongeroerde stalen opleveren zijn doorgaans geschikter dan methodes die geroerde stalen opleveren. Voor beschrijvingen met een hoge geschiktheid van de boormethode mag ook een betere score categorie verwacht worden dan van beschrijvingen met een lage geschiktheid van de boormethode.</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>0</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:valueType>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:aName>
+                  <gco:CharacterString>String</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>

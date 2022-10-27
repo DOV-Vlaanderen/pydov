@@ -53,6 +53,7 @@
             <aquifer>0230</aquifer>
             <grondwaterlichaam>CKS_0200_GWL_1</grondwaterlichaam>
             <grondwatersysteem>Centraal Kempisch Systeem</grondwatersysteem>
+            <afgesloten_volgens_gwdecreet>niet-afgesloten_delen_0200</afgesloten_volgens_gwdecreet>
             <regime>freatisch</regime>
         </ligging>
         <meetfrequentie/>

@@ -14,6 +14,23 @@ full repeatability: when rerunning the script or analysis exactly the same
 results should be returned. Pydov supports this too, by allowing users to
 save (record) a pydov session into an archive and replaying it afterwards.
 
+This could for instance be used to record a session in the initial stage of your
+research, and replay it from then on to always work with exactly the same dataset.
+You can make modifications to the analysis parts of your script, as long as the
+pydov calls remain the same it will be possible to replay the saved archive. The
+advantage of this approach over another way or form of saving the pydov dataframes
+is that the code to request the data remains in your script, and it also enables
+rerunning the entire analysis with updated data simply by removing the replay hook.
+
+It can also be used at the end of your research, to save a repeatable copy of your
+analysis to disk for archiving purposes. This way, you can be sure it is reproducible
+and repeatable, no matter what happens to the data in DOV.
+
+Lastly, it could be used to share a session between collegues, students or tutors/mentors.
+It enables them to rerun your session exactly as you saw it, while also allowing them
+to both inspect the code and make changes to the analysis part.
+
+
 Recording a pydov session
 *************************
 

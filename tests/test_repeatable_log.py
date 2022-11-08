@@ -109,7 +109,7 @@ class TestRepeatableLogRecorder(object):
             Fixture providing a temporary directory.
         """
         RepeatableLogRecorder(temp_directory)
-        assert len(os.listdir(temp_directory)) == 1
+        assert len(os.listdir(temp_directory)) >= 1
 
         log_file = os.listdir(temp_directory)[0]
         assert re.match(

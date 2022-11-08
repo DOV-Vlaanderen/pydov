@@ -26,7 +26,7 @@ def temp_directory():
     """
     temp_dir = os.path.join(tempfile.gettempdir(), 'pydov-test-repeatable-log')
     if os.path.exists(temp_dir):
-        shutil.rmtree(temp_dir)
+        shutil.rmtree(temp_dir, ignore_errors=True)
 
     yield temp_dir
 

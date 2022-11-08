@@ -82,3 +82,9 @@ class XmlStaleWarning(DOVWarning):
 class XmlParseWarning(DOVWarning):
     """Emitted when the failure to parse an XML document results in
     an incomplete dataframe."""
+
+
+class DataParseWarning(DOVWarning):
+    """Emitted when some data retrieved from DOV failed to be parsed according
+    to the datatypes in pydov. The data that failed to be parsed is removed,
+    resulting in an incomplete dataframe."""

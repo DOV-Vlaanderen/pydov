@@ -4,6 +4,14 @@
 History
 =======
 
+v2.2.2
+------
+
+* Fixes and improvements
+
+  * When data received from DOV fails to be parsed by pydov, set it to NaN and issue a warning instead of crashing.
+
+
 v2.2.1
 ------
 

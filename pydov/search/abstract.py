@@ -4,6 +4,7 @@
 from itertools import chain
 import datetime
 import math
+import warnings
 
 import owslib
 import owslib.fes
@@ -13,13 +14,15 @@ from owslib.feature import get_schema
 from owslib.fes2 import FilterRequest
 from owslib.wfs import WebFeatureService
 import pandas as pd
+import numpy as np
 
 import pydov
 from pydov.types.fields import _WfsInjectedField
 from pydov.util import owsutil
 from pydov.util.dovutil import build_dov_url, get_xsd_schema
 from pydov.util.errors import (InvalidFieldError, InvalidSearchParameterError,
-                               LayerNotFoundError, WfsGetFeatureError)
+                               LayerNotFoundError, WfsGetFeatureError,
+                               DataParseWarning)
 from pydov.util.hooks import HookRunner
 from pydov.util.net import LocalSessionThreadPool
 
@@ -100,7 +103,7 @@ class AbstractCommon(object):
             def typeconvert(x):
                 if x.endswith('Z'):
                     return datetime.datetime.strptime(
-                        x, '%Y-%m-%dT%H:%M:%SZ').date() \
+                        x, '%Y-%m-%dT%H:%M:%SZ') \
                         + datetime.timedelta(days=1)
                 else:
                     return datetime.datetime.strptime(
@@ -112,7 +115,14 @@ class AbstractCommon(object):
             def typeconvert(x):
                 return x
 
-        return typeconvert(text)
+        try:
+            return typeconvert(text)
+        except ValueError as e:
+            warnings.warn(
+                f"Failed to convert data to correct datatype: {e}. Resulting "
+                "dataframe will be incomplete.",
+                DataParseWarning)
+            return np.nan
 
 
 class AbstractSearch(AbstractCommon):

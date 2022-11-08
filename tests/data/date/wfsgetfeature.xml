@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wfs:FeatureCollection xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wfs="http://www.opengis.net/wfs/2.0" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:gw_vergunningen="http://dov.vlaanderen.be/grondwater/gw_vergunningen" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" numberMatched="1" numberReturned="1" timeStamp="2022-10-25T11:25:13.527+02:00" xsi:schemaLocation="http://www.opengis.net/wfs/2.0 https://www.dov.vlaanderen.be/geoserver/schemas/wfs/2.0/wfs.xsd
-                                                                                                                                                                                                                                                                                                                                                                                              http://dov.vlaanderen.be/grondwater/gw_vergunningen https://www.dov.vlaanderen.be/geoserver/wfs?service=WFS&amp;version=2.0.0&amp;request=DescribeFeatureType&amp;typeName=gw_vergunningen%3Aalle_verg
-                                                                                                                                                                                                                                                                                                                                                                                              http://www.opengis.net/gml/3.2 https://www.dov.vlaanderen.be/geoserver/schemas/gml/3.2.1/gml.xsd">
-    <wfs:member>
-        <gw_vergunningen:alle_verg gml:id="alle_verg.64079">
+<wfs:FeatureCollection xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wfs="http://www.opengis.net/wfs" xmlns:gml="http://www.opengis.net/gml" xmlns:gw_vergunningen="http://dov.vlaanderen.be/grondwater/gw_vergunningen" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" numberOfFeatures="1" timeStamp="2022-10-27T11:14:48.679+02:00" xsi:schemaLocation="http://www.opengis.net/wfs https://www.dov.vlaanderen.be/geoserver/schemas/wfs/1.1.0/wfs.xsd
+                                                                                                                                                                                                                                                                                                                                                                      http://dov.vlaanderen.be/grondwater/gw_vergunningen https://www.dov.vlaanderen.be/geoserver/wfs?service=WFS&amp;version=1.1.0&amp;request=DescribeFeatureType&amp;typeName=gw_vergunningen%3Aalle_verg">
+    <gml:featureMembers>
+        <gw_vergunningen:alle_verg gml:id="alle_verg.64114">
             <gw_vergunningen:id>38598</gw_vergunningen:id>
             <gw_vergunningen:installatie>https://www.dov.vlaanderen.be/data/installatie/2019-085126</gw_vergunningen:installatie>
             <gw_vergunningen:exploitant_naam>STERCK DIRK</gw_vergunningen:exploitant_naam>
@@ -28,10 +27,10 @@
             <gw_vergunningen:installatie_Y_mL72>169337.0</gw_vergunningen:installatie_Y_mL72>
             <gw_vergunningen:exploitant_adres>ZUURSTRAAT 41, 9400 NINOVE</gw_vergunningen:exploitant_adres>
             <gw_vergunningen:geom>
-                <gml:Point srsName="urn:ogc:def:crs:EPSG::31370" srsDimension="3" gml:id="alle_verg.64079.geom">
+                <gml:Point srsName="urn:x-ogc:def:crs:EPSG:31370" srsDimension="3">
                     <gml:pos>120005 169337 0</gml:pos>
                 </gml:Point>
             </gw_vergunningen:geom>
         </gw_vergunningen:alle_verg>
-    </wfs:member>
+    </gml:featureMembers>
 </wfs:FeatureCollection>

@@ -102,7 +102,7 @@ class TestRepeatableLogRecorder(object):
         assert os.path.exists(temp_directory)
 
     def test_create_log_archive(self, temp_directory):
-        """Test whether the log archive is recorded.
+        """Test whether the log archive is recorded and the filename matches the expectations.
 
         Parameters
         ----------
@@ -113,9 +113,8 @@ class TestRepeatableLogRecorder(object):
         assert len(os.listdir(temp_directory)) == 1
 
         log_file = os.listdir(temp_directory)[0]
-        timestamp = time.strftime('%Y%m%dT%H%M%S')
         assert re.match(
-            r'^pydov-archive-' + timestamp + r'-([0-9a-z]){6}.zip', log_file)
+            r'^pydov-archive-[0-9]{8}T[0-9]{6}-([0-9a-z]){6}.zip', log_file)
 
     def test_pydov_code(self, log_recorder):
         """Test whether the pydov code is recorded in the archive.

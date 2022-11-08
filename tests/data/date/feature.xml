@@ -1,0 +1,30 @@
+<ns0:alle_verg xmlns:gml311="http://www.opengis.net/gml" xmlns:ns0="http://dov.vlaanderen.be/grondwater/gw_vergunningen" gml311:id="alle_verg.64114">
+    <ns0:id>38598</ns0:id>
+    <ns0:installatie>https://www.dov.vlaanderen.be/data/installatie/2019-085126</ns0:installatie>
+    <ns0:exploitant_naam>STERCK DIRK</ns0:exploitant_naam>
+    <ns0:watnr>OVL-70968</ns0:watnr>
+    <ns0:vergunning>https://www.dov.vlaanderen.be/data/vergunning/2019-033352</ns0:vergunning>
+    <ns0:vlaremrubriek>53.8.2&lt;17</ns0:vlaremrubriek>
+    <ns0:vergund_jaardebiet>900.000</ns0:vergund_jaardebiet>
+    <ns0:vergund_dagdebiet>2.500</ns0:vergund_dagdebiet>
+    <ns0:van_datum_termijn>2005-10-06</ns0:van_datum_termijn>
+    <ns0:tot_datum_termijn>20211-10-03</ns0:tot_datum_termijn>
+    <ns0:aquifer_vergunning>0923: Zand van Mons-en-P&#233;v&#232;le</ns0:aquifer_vergunning>
+    <ns0:vergunde_diepte_m>32.00</ns0:vergunde_diepte_m>
+    <ns0:vergund_aantal_putten>1</ns0:vergund_aantal_putten>
+    <ns0:inrichtingsklasse>Klasse 2</ns0:inrichtingsklasse>
+    <ns0:vergunningverlenende_overheid_VVO>Gemeentebestuur NINOVE</ns0:vergunningverlenende_overheid_VVO>
+    <ns0:referentie_VVO>VLA2/471</ns0:referentie_VVO>
+    <ns0:IIOA_nacebelcode>014: Veeteelt</ns0:IIOA_nacebelcode>
+    <ns0:IIOA_adres>Zuurstraat 41, 9400 Ninove</ns0:IIOA_adres>
+    <ns0:grondwaterlichaam>CVS_0800_GWL_3: Ieperiaan Aquifer Heuvelstreken, lokaal gespannen</ns0:grondwaterlichaam>
+    <ns0:actie_waakgebied>geen actie/waakgebieden</ns0:actie_waakgebied>
+    <ns0:installatie_X_mL72>120005.0</ns0:installatie_X_mL72>
+    <ns0:installatie_Y_mL72>169337.0</ns0:installatie_Y_mL72>
+    <ns0:exploitant_adres>ZUURSTRAAT 41, 9400 NINOVE</ns0:exploitant_adres>
+    <ns0:geom>
+        <gml311:Point srsName="urn:x-ogc:def:crs:EPSG:31370" srsDimension="3">
+            <gml311:pos>120005 169337 0</gml311:pos>
+        </gml311:Point>
+    </ns0:geom>
+</ns0:alle_verg>

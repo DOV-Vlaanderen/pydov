@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wfs:FeatureCollection xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wfs="http://www.opengis.net/wfs/2.0" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:gw_vergunningen="http://dov.vlaanderen.be/grondwater/gw_vergunningen" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" numberMatched="1" numberReturned="1" timeStamp="2022-10-25T11:25:13.527+02:00" xsi:schemaLocation="http://www.opengis.net/wfs/2.0 https://www.dov.vlaanderen.be/geoserver/schemas/wfs/2.0/wfs.xsd
+                                                                                                                                                                                                                                                                                                                                                                                              http://dov.vlaanderen.be/grondwater/gw_vergunningen https://www.dov.vlaanderen.be/geoserver/wfs?service=WFS&amp;version=2.0.0&amp;request=DescribeFeatureType&amp;typeName=gw_vergunningen%3Aalle_verg
+                                                                                                                                                                                                                                                                                                                                                                                              http://www.opengis.net/gml/3.2 https://www.dov.vlaanderen.be/geoserver/schemas/gml/3.2.1/gml.xsd">
+    <wfs:member>
+        <gw_vergunningen:alle_verg gml:id="alle_verg.64079">
+            <gw_vergunningen:id>38598</gw_vergunningen:id>
+            <gw_vergunningen:installatie>https://www.dov.vlaanderen.be/data/installatie/2019-085126</gw_vergunningen:installatie>
+            <gw_vergunningen:exploitant_naam>STERCK DIRK</gw_vergunningen:exploitant_naam>
+            <gw_vergunningen:watnr>OVL-70968</gw_vergunningen:watnr>
+            <gw_vergunningen:vergunning>https://www.dov.vlaanderen.be/data/vergunning/2019-033352</gw_vergunningen:vergunning>
+            <gw_vergunningen:vlaremrubriek>53.8.2&lt;17</gw_vergunningen:vlaremrubriek>
+            <gw_vergunningen:vergund_jaardebiet>900.000</gw_vergunningen:vergund_jaardebiet>
+            <gw_vergunningen:vergund_dagdebiet>2.500</gw_vergunningen:vergund_dagdebiet>
+            <gw_vergunningen:van_datum_termijn>2005-10-06</gw_vergunningen:van_datum_termijn>
+            <gw_vergunningen:tot_datum_termijn>20211-10-03</gw_vergunningen:tot_datum_termijn>
+            <gw_vergunningen:aquifer_vergunning>0923: Zand van Mons-en-Pévèle</gw_vergunningen:aquifer_vergunning>
+            <gw_vergunningen:vergunde_diepte_m>32.00</gw_vergunningen:vergunde_diepte_m>
+            <gw_vergunningen:vergund_aantal_putten>1</gw_vergunningen:vergund_aantal_putten>
+            <gw_vergunningen:inrichtingsklasse>Klasse 2</gw_vergunningen:inrichtingsklasse>
+            <gw_vergunningen:vergunningverlenende_overheid_VVO>Gemeentebestuur NINOVE</gw_vergunningen:vergunningverlenende_overheid_VVO>
+            <gw_vergunningen:referentie_VVO>VLA2/471</gw_vergunningen:referentie_VVO>
+            <gw_vergunningen:IIOA_nacebelcode>014: Veeteelt</gw_vergunningen:IIOA_nacebelcode>
+            <gw_vergunningen:IIOA_adres>Zuurstraat 41, 9400 Ninove</gw_vergunningen:IIOA_adres>
+            <gw_vergunningen:grondwaterlichaam>CVS_0800_GWL_3: Ieperiaan Aquifer Heuvelstreken, lokaal gespannen</gw_vergunningen:grondwaterlichaam>
+            <gw_vergunningen:actie_waakgebied>geen actie/waakgebieden</gw_vergunningen:actie_waakgebied>
+            <gw_vergunningen:installatie_X_mL72>120005.0</gw_vergunningen:installatie_X_mL72>
+            <gw_vergunningen:installatie_Y_mL72>169337.0</gw_vergunningen:installatie_Y_mL72>
+            <gw_vergunningen:exploitant_adres>ZUURSTRAAT 41, 9400 NINOVE</gw_vergunningen:exploitant_adres>
+            <gw_vergunningen:geom>
+                <gml:Point srsName="urn:ogc:def:crs:EPSG::31370" srsDimension="3" gml:id="alle_verg.64079.geom">
+                    <gml:pos>120005 169337 0</gml:pos>
+                </gml:Point>
+            </gw_vergunningen:geom>
+        </gw_vergunningen:alle_verg>
+    </wfs:member>
+</wfs:FeatureCollection>

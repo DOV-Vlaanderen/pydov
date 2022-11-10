@@ -1,0 +1,126 @@
+<wfs20:FeatureCollection xmlns:gml32="http://www.opengis.net/gml/3.2" xmlns:ns2="http://dov.vlaanderen.be/ocdov/dov-pub" xmlns:wfs20="http://www.opengis.net/wfs/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" next="https://www.dov.vlaanderen.be/geoserver/dov-pub/wfs?PROPERTYNAME=%28X_mL72%2CY_mL72%2CZ_mTAW%2Cboornummer%2Cdatum_aanvang%2Cdiepte_tot_m%2Cfiche%2Cgemeente%2Cuitvoerder%29&amp;REQUEST=GetFeature&amp;RESULTTYPE=RESULTS&amp;OUTPUTFORMAT=application%2Fgml%2Bxml%3B%20version%3D3.2&amp;VERSION=2.0.0&amp;TYPENAMES=%28dov-pub%3ABoringen%29&amp;SERVICE=WFS&amp;COUNT=20&amp;STARTINDEX=20" numberMatched="20" numberReturned="10" timeStamp="2022-09-22T14:02:06.604+02:00" xsi:schemaLocation="http://www.opengis.net/wfs/2.0 https://www.dov.vlaanderen.be/geoserver/schemas/wfs/2.0/wfs.xsd http://dov.vlaanderen.be/ocdov/dov-pub https://www.dov.vlaanderen.be/geoserver/dov-pub/wfs?service=WFS&amp;version=2.0.0&amp;request=DescribeFeatureType&amp;typeName=dov-pub%3ABoringen http://www.opengis.net/gml/3.2 https://www.dov.vlaanderen.be/geoserver/schemas/gml/3.2.1/gml.xsd">
+    <wfs20:member>
+        <ns2:Boringen gml32:id="Boringen.10">
+            <ns2:boornummer>kb23d73e-B106</ns2:boornummer>
+            <ns2:fiche>https://www.dov.vlaanderen.be/data/boring/1882-076397</ns2:fiche>
+            <ns2:diepte_tot_m>1.20</ns2:diepte_tot_m>
+            <ns2:datum_aanvang>1882-03-03</ns2:datum_aanvang>
+            <ns2:X_mL72>156252.5</ns2:X_mL72>
+            <ns2:Y_mL72>181257.2</ns2:Y_mL72>
+            <ns2:Z_mTAW>15.00</ns2:Z_mTAW>
+            <ns2:gemeente>Vilvoorde</ns2:gemeente>
+            <ns2:uitvoerder>Belgische Geologische Dienst (BGD)</ns2:uitvoerder>
+        </ns2:Boringen>
+    </wfs20:member>
+    <wfs20:member>
+        <ns2:Boringen gml32:id="Boringen.11">
+            <ns2:boornummer>kb29d84e-B583</ns2:boornummer>
+            <ns2:fiche>https://www.dov.vlaanderen.be/data/boring/2016-139010</ns2:fiche>
+            <ns2:diepte_tot_m>0.00</ns2:diepte_tot_m>
+            <ns2:X_mL72>91863.0</ns2:X_mL72>
+            <ns2:Y_mL72>171365.0</ns2:Y_mL72>
+            <ns2:Z_mTAW>34.00</ns2:Z_mTAW>
+            <ns2:gemeente>Wortegem-Petegem</ns2:gemeente>
+            <ns2:uitvoerder>onbekend</ns2:uitvoerder>
+        </ns2:Boringen>
+    </wfs20:member>
+    <wfs20:member>
+        <ns2:Boringen gml32:id="Boringen.12">
+            <ns2:boornummer>kb29d84e-B584</ns2:boornummer>
+            <ns2:fiche>https://www.dov.vlaanderen.be/data/boring/2016-139011</ns2:fiche>
+            <ns2:diepte_tot_m>0.00</ns2:diepte_tot_m>
+            <ns2:X_mL72>91917.0</ns2:X_mL72>
+            <ns2:Y_mL72>171211.0</ns2:Y_mL72>
+            <ns2:Z_mTAW>38.00</ns2:Z_mTAW>
+            <ns2:gemeente>Wortegem-Petegem</ns2:gemeente>
+            <ns2:uitvoerder>onbekend</ns2:uitvoerder>
+        </ns2:Boringen>
+    </wfs20:member>
+    <wfs20:member>
+        <ns2:Boringen gml32:id="Boringen.13">
+            <ns2:boornummer>kb23d73e-B108</ns2:boornummer>
+            <ns2:fiche>https://www.dov.vlaanderen.be/data/boring/1882-111092</ns2:fiche>
+            <ns2:diepte_tot_m>2.60</ns2:diepte_tot_m>
+            <ns2:datum_aanvang>1882-03-03</ns2:datum_aanvang>
+            <ns2:X_mL72>157787.2</ns2:X_mL72>
+            <ns2:Y_mL72>182414.8</ns2:Y_mL72>
+            <ns2:Z_mTAW>9.80</ns2:Z_mTAW>
+            <ns2:gemeente>Vilvoorde</ns2:gemeente>
+            <ns2:uitvoerder>Belgische Geologische Dienst (BGD)</ns2:uitvoerder>
+        </ns2:Boringen>
+    </wfs20:member>
+    <wfs20:member>
+        <ns2:Boringen gml32:id="Boringen.14">
+            <ns2:boornummer>kb29d84e-B585</ns2:boornummer>
+            <ns2:fiche>https://www.dov.vlaanderen.be/data/boring/2016-139041</ns2:fiche>
+            <ns2:diepte_tot_m>0.00</ns2:diepte_tot_m>
+            <ns2:X_mL72>91724.0</ns2:X_mL72>
+            <ns2:Y_mL72>170992.0</ns2:Y_mL72>
+            <ns2:Z_mTAW>50.00</ns2:Z_mTAW>
+            <ns2:gemeente>Wortegem-Petegem</ns2:gemeente>
+            <ns2:uitvoerder>onbekend</ns2:uitvoerder>
+        </ns2:Boringen>
+    </wfs20:member>
+    <wfs20:member>
+        <ns2:Boringen gml32:id="Boringen.15">
+            <ns2:boornummer>kb23d73e-B109</ns2:boornummer>
+            <ns2:fiche>https://www.dov.vlaanderen.be/data/boring/1882-111093</ns2:fiche>
+            <ns2:diepte_tot_m>0.80</ns2:diepte_tot_m>
+            <ns2:datum_aanvang>1882-03-03</ns2:datum_aanvang>
+            <ns2:X_mL72>158519.6</ns2:X_mL72>
+            <ns2:Y_mL72>182557.2</ns2:Y_mL72>
+            <ns2:Z_mTAW>9.50</ns2:Z_mTAW>
+            <ns2:gemeente>Steenokkerzeel</ns2:gemeente>
+            <ns2:uitvoerder>Belgische Geologische Dienst (BGD)</ns2:uitvoerder>
+        </ns2:Boringen>
+    </wfs20:member>
+    <wfs20:member>
+        <ns2:Boringen gml32:id="Boringen.16">
+            <ns2:boornummer>kb22d55e-B1038</ns2:boornummer>
+            <ns2:fiche>https://www.dov.vlaanderen.be/data/boring/1945-076400</ns2:fiche>
+            <ns2:diepte_tot_m>16.00</ns2:diepte_tot_m>
+            <ns2:datum_aanvang>1945-01-01</ns2:datum_aanvang>
+            <ns2:X_mL72>108710.0</ns2:X_mL72>
+            <ns2:Y_mL72>188660.0</ns2:Y_mL72>
+            <ns2:Z_mTAW>15.36</ns2:Z_mTAW>
+            <ns2:gemeente>Melle</ns2:gemeente>
+            <ns2:uitvoerder>De Meyer L.-Gent              </ns2:uitvoerder>
+        </ns2:Boringen>
+    </wfs20:member>
+    <wfs20:member>
+        <ns2:Boringen gml32:id="Boringen.17">
+            <ns2:boornummer>kb29d84e-B586</ns2:boornummer>
+            <ns2:fiche>https://www.dov.vlaanderen.be/data/boring/2016-139042</ns2:fiche>
+            <ns2:diepte_tot_m>0.00</ns2:diepte_tot_m>
+            <ns2:X_mL72>91657.0</ns2:X_mL72>
+            <ns2:Y_mL72>171141.0</ns2:Y_mL72>
+            <ns2:Z_mTAW>47.00</ns2:Z_mTAW>
+            <ns2:gemeente>Wortegem-Petegem</ns2:gemeente>
+            <ns2:uitvoerder>onbekend</ns2:uitvoerder>
+        </ns2:Boringen>
+    </wfs20:member>
+    <wfs20:member>
+        <ns2:Boringen gml32:id="Boringen.18">
+            <ns2:boornummer>kb29d84e-B587</ns2:boornummer>
+            <ns2:fiche>https://www.dov.vlaanderen.be/data/boring/2016-139029</ns2:fiche>
+            <ns2:diepte_tot_m>0.00</ns2:diepte_tot_m>
+            <ns2:X_mL72>91564.0</ns2:X_mL72>
+            <ns2:Y_mL72>171316.0</ns2:Y_mL72>
+            <ns2:Z_mTAW>36.00</ns2:Z_mTAW>
+            <ns2:gemeente>Wortegem-Petegem</ns2:gemeente>
+            <ns2:uitvoerder>onbekend</ns2:uitvoerder>
+        </ns2:Boringen>
+    </wfs20:member>
+    <wfs20:member>
+        <ns2:Boringen gml32:id="Boringen.19">
+            <ns2:boornummer>kb29d84e-B589</ns2:boornummer>
+            <ns2:fiche>https://www.dov.vlaanderen.be/data/boring/2016-139043</ns2:fiche>
+            <ns2:diepte_tot_m>0.00</ns2:diepte_tot_m>
+            <ns2:X_mL72>91414.0</ns2:X_mL72>
+            <ns2:Y_mL72>171084.0</ns2:Y_mL72>
+            <ns2:Z_mTAW>42.00</ns2:Z_mTAW>
+            <ns2:gemeente>Wortegem-Petegem</ns2:gemeente>
+            <ns2:uitvoerder>onbekend</ns2:uitvoerder>
+        </ns2:Boringen>
+    </wfs20:member>
+</wfs20:FeatureCollection>

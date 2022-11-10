@@ -126,22 +126,31 @@ select '<xs:enumeration value="'||trim(beschrijving)||'"/>' from kern_monster.lu
             <xs:enumeration value="Volumieke massa door weging"/>
             <xs:enumeration value="Zeving op massa met grootte &lt;= 2mm (fijnkorrelige zeving)"/>
             <xs:enumeration value="Zeving op massa met grootte &gt; 2 mm (grofkorrelige zeving)"/>       
-            <xs:enumeration value="Cmon staalnameprotocol 1.0"/>
-            <xs:enumeration value="Cmon analyseprotocol 1.0"/>
-            
+            <xs:enumeration value="Cmon staalnameprotocol"/>
+            <xs:enumeration value="Cmon analyseprotocol"/>
+
             <!-- XDOVCL-1744 -->
             <xs:enumeration value="XYZ_GPS - RTK FLEPOS" />	
             <xs:enumeration value="Berekend - Organische C is gelijk aan Totale C min Anorganische C"/>
             <xs:enumeration value="Berekend - Organische C voorraad op basis van Organische C en Bulkdensiteit"/>	
-            <xs:enumeration value="Zeefrest 2 mm (CMON analyseprotocol 1.0)"/>
-            <xs:enumeration value="Visuele waarneming (Cmon analyseprotocol 1.0)"/>
-            <xs:enumeration value="Drogen 105°C (CMON 1.0)"/>
-            <xs:enumeration value="Total N by CN analyser (Cmon analyseprotocol 1.0)"/>
-            <xs:enumeration value="Total C by CN analyser (Cmon analyseprotocol 1.0)"/>
-            <xs:enumeration value="Inorganic C by CN analyser (Cmon analyseprotocol 1.0)"/>
-            <xs:enumeration value="pH in KCl 1:5 (V/V) (Cmon analyseprotocol 1.0)"/>
-            <xs:enumeration value="pH in KCl 1:10 (V/V) (Cmon analyseprotocol 1.0)"/>
-            <xs:enumeration value="Berekend - Volumetrisch vochtgehalte op basis van Gravimetrisch vochtgehalte"/>
+            <xs:enumeration value="Visuele waarneming (Cmon staalnameprotocol)"/>
+            <xs:enumeration value="Drogen 105°C (Cmon analyseprotocol)"/>
+            <xs:enumeration value="Total N by CN analyser (Cmon analyseprotocol)"/>
+            <xs:enumeration value="Total C by CN analyser (Cmon analyseprotocol)"/>
+            <xs:enumeration value="Inorganic C by CN analyser (Cmon analyseprotocol)"/>
+            <xs:enumeration value="pH in KCl 1:5 (V/V) (Cmon analyseprotocol)"/>
+            <xs:enumeration value="pH in KCl 1:10 (V/V) (Cmon analyseprotocol)"/>
+                                   
+            <!--XDOVCL-1867 -->
+            <xs:enumeration value="Massaprocent materiaal &gt; 1 cm (Cmon analyseprotocol)"/>
+            <xs:enumeration value="Bulkdensiteit bepaald op basis van Kopeckyringen en massa materiaal &gt; 1 cm (Cmon analyseprotocol)"/>
+            <xs:enumeration value="Bulkdensiteit bepaald op basis van Kopeckyringen en massa stenen &gt; 1 cm (Cmon analyseprotocol)"/>
+            <xs:enumeration value="Bulkdensiteit bepaald op basis van Kopeckyringen (Cmon analyseprotocol)"/>
+            <xs:enumeration value="Massaprocent stenen &gt; 1 cm (Cmon analyseprotocol 1.0)"/>
+            <xs:enumeration value="Inorganic C niet gemeten omdat pH KCl &lt; 6,5 (Cmon analyseprotocol)"/>
+            <xs:enumeration value="NIRS met FOSS XDS toestel (Cmon analyseprotocol)"/>
+            <xs:enumeration value="Zeefrest 2 mm (Cmon analyseprotocol)"/>
+            
         </xs:restriction>
     </xs:simpleType>
     <!--
@@ -460,6 +469,17 @@ order by beschrijving
                     <xs:documentation>meq/100g</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
+            <xs:enumeration value="g">
+                <xs:annotation>
+                    <xs:documentation>g</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="nm">
+                <xs:annotation>
+                    <xs:documentation>nm</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            
         </xs:restriction>
     </xs:simpleType>
     <!--
@@ -4410,14 +4430,9 @@ order by 1
                     <xs:documentation>parameter Bewaard bodemmonster opslaglocatie</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="bewaard_bodemmonster_voorbereiding_type_bewaring">
+            <xs:enumeration value="bewaard_bodemmonster_type_bewaring_vooraf">
                 <xs:annotation>
-                    <xs:documentation>parameter Bewaard bodemmonster voorbereiding type bewaring</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="bewaard_bodemmonster_voorbereiding_type_zevenmalen">
-                <xs:annotation>
-                    <xs:documentation>parameter Bewaard bodemmonster voorbereiding type breken zeven malen</xs:documentation>
+                    <xs:documentation>parameter Bewaard bodemmonster type bewaring vooraf monstervoorbereiding</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="bewaard_bodemmonster_voorbereiding_type_droging">
@@ -5003,6 +5018,12 @@ order by 1
                     <xs:documentation>CASRN: 68298-12-4</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
+            <xs:enumeration value="11Cl-PF3OunDS">
+                <xs:annotation>
+                    <xs:documentation>parameter 11-chlooreicosafluoro-3-oxaundecaansulfonzuur (11Cl-PF3OunDS)</xs:documentation>
+                    <xs:documentation>CASRN: 763051-92-9</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
 
             <!-- XDOVCL-1744 --> 
             <xs:enumeration value="enkelvoudig_monster_locatie">
@@ -5015,19 +5036,58 @@ order by 1
                     <xs:documentation>parameter Monster volledig organisch</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="bulkdensiteit_2mm_gemeten">
+            <xs:enumeration value="bulkdensiteit_2mm_vs_totale_volume_gemeten">
                 <xs:annotation>
-                    <xs:documentation>parameter Bulkdensiteit bodem &lt; 2 mm - gemeten</xs:documentation>
+                    <xs:documentation>parameter Bulkdensiteit bodem  &lt; 2 mm vs totale volume - gemeten</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="stenen_groter_dan_1000_massaprocent">
+            <xs:enumeration value="materiaal_groter_dan_1cm_massaprocent">
                 <xs:annotation>
-                    <xs:documentation>parameter Stenen groter dan 1000 µm massaprocent</xs:documentation>
+                    <xs:documentation>parameter Materiaal groter dan 1 cm massaprocent</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="stenen_groter_dan_1000_volumeprocent">
                 <xs:annotation>
                     <xs:documentation>parameter Stenen groter dan 1000 µm volumeprocent</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            
+            <!-- XDOVCL-1836 --> 
+            <xs:enumeration value="textuurmeting_laser_volumeprocent">
+                <xs:annotation>
+                    <xs:documentation>Textuurfracties laser volumeprocent</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="bewaard_bodemmonster_voorbereiding_type_breken">
+                <xs:annotation>
+                    <xs:documentation>Bewaard bodemmonster voorbereiding type breken</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="bewaard_bodemmonster_voorbereiding_type_zeven">
+                <xs:annotation>
+                    <xs:documentation>Bewaard bodemmonster voorbereiding type zeven</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="bewaard_bodemmonster_voorbereiding_type_malen">
+                <xs:annotation>
+                    <xs:documentation>Bewaard bodemmonster voorbereiding type malen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+
+            <!-- XDOVCL-1867 -->
+            <xs:enumeration value="golflengte">
+                <xs:annotation>
+                    <xs:documentation>parameter golflengte</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="nir_spectrale_absorptie">
+                <xs:annotation>
+                    <xs:documentation>parameter NIR spectrale absorptie Log 1/R</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="nirs">
+                <xs:annotation>
+                    <xs:documentation>parameter NIRS</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
         </xs:restriction>

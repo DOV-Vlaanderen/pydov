@@ -665,5 +665,17 @@ select '<xs:enumeration value="'||beschrijving||'"/>' from grondwater.lut_method
             <xs:enumeration value="tot. rondgepompt (excl. spui)"/>
         </xs:restriction>
     </xs:simpleType>
-
+    <xs:simpleType name="HydrogeologischRegimeEnumType">
+        <xs:annotation>
+            <xs:documentation>de mogelijke waarden voor het hydrogeologisch regime</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="freatisch"/>
+            <xs:enumeration value="kwel"/>
+            <xs:enumeration value="infiltratiegebied"/>
+            <xs:enumeration value="hangwatertafel"/>
+            <xs:enumeration value="gespannen"/>
+            <xs:enumeration value="afgesloten met freatisch karakter"/>
+        </xs:restriction>
+    </xs:simpleType>
 </xs:schema>

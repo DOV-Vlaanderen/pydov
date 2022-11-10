@@ -22,6 +22,22 @@
                 <veld_labo>LABO</veld_labo>
             </observatie>
             <observatie>
+                <parameter>BGGG</parameter>
+                <waarde_text>kalkh. weinig humush. zandh. klei</waarde_text>
+                <eenheid>-</eenheid>
+                <methode>Onbekend</methode>
+                <betrouwbaarheid>onbekend</betrouwbaarheid>
+                <veld_labo>LABO</veld_labo>
+            </observatie>
+            <observatie>
+                <parameter>ASTM_NAAM</parameter>
+                <waarde_text>Fat clay</waarde_text>
+                <eenheid>-</eenheid>
+                <methode>Onbekend</methode>
+                <betrouwbaarheid>onbekend</betrouwbaarheid>
+                <veld_labo>LABO</veld_labo>
+            </observatie>
+            <observatie>
                 <parameter>WATERGEHALTE</parameter>
                 <waarde_numeriek>57.7</waarde_numeriek>
                 <eenheid>%</eenheid>
@@ -37,22 +53,6 @@
                 <betrouwbaarheid>onbekend</betrouwbaarheid>
                 <veld_labo>LABO</veld_labo>
                 <opmerking>proef uitgevoerd</opmerking>
-            </observatie>
-            <observatie>
-                <parameter>ASTM_NAAM</parameter>
-                <waarde_text>Fat clay</waarde_text>
-                <eenheid>-</eenheid>
-                <methode>Onbekend</methode>
-                <betrouwbaarheid>onbekend</betrouwbaarheid>
-                <veld_labo>LABO</veld_labo>
-            </observatie>
-            <observatie>
-                <parameter>ASTM_CODE</parameter>
-                <waarde_text>CH</waarde_text>
-                <eenheid>-</eenheid>
-                <methode>Onbekend</methode>
-                <betrouwbaarheid>onbekend</betrouwbaarheid>
-                <veld_labo>LABO</veld_labo>
             </observatie>
             <observatie>
                 <parameter>AREOMETER</parameter>
@@ -72,8 +72,8 @@
                 <veld_labo>LABO</veld_labo>
             </observatie>
             <observatie>
-                <parameter>BGGG</parameter>
-                <waarde_text>kalkh. weinig humush. zandh. klei</waarde_text>
+                <parameter>ASTM_CODE</parameter>
+                <waarde_text>CH</waarde_text>
                 <eenheid>-</eenheid>
                 <methode>Onbekend</methode>
                 <betrouwbaarheid>onbekend</betrouwbaarheid>
@@ -88,8 +88,8 @@
                 <veld_labo>LABO</veld_labo>
             </observatie>
             <observatie>
-                <parameter>HUMUSGEHALTE</parameter>
-                <waarde_numeriek>4.7</waarde_numeriek>
+                <parameter>UITROLGRENS</parameter>
+                <waarde_numeriek>36</waarde_numeriek>
                 <eenheid>%</eenheid>
                 <methode>Onbekend</methode>
                 <betrouwbaarheid>onbekend</betrouwbaarheid>
@@ -104,8 +104,8 @@
                 <veld_labo>LABO</veld_labo>
             </observatie>
             <observatie>
-                <parameter>UITROLGRENS</parameter>
-                <waarde_numeriek>36</waarde_numeriek>
+                <parameter>HUMUSGEHALTE</parameter>
+                <waarde_numeriek>4.7</waarde_numeriek>
                 <eenheid>%</eenheid>
                 <methode>Onbekend</methode>
                 <betrouwbaarheid>onbekend</betrouwbaarheid>
@@ -184,6 +184,17 @@
         </observatieReeksData>
         <proefuitvoeringsData>
             <proefuitvoering>
+                <proefnaam>SCHUIFWEERSTAND_GEN</proefnaam>
+                <uitvoerder>
+                    <naam>onbekend</naam>
+                </uitvoerder>
+                <identificatie>GEO-17/047</identificatie>
+                <bedrijf_dienst>
+                    <naam>VO - Afdeling Geotechniek</naam>
+                </bedrijf_dienst>
+                <methode>Onbekend</methode>
+            </proefuitvoering>
+            <proefuitvoering>
                 <proefnaam>OKP-KORREL</proefnaam>
                 <uitvoerder>
                     <naam>VO - Afdeling Geotechniek</naam>
@@ -205,17 +216,6 @@
                     <naam>VO - Afdeling Geotechniek</naam>
                 </bedrijf_dienst>
                 <opmerking></opmerking>
-            </proefuitvoering>
-            <proefuitvoering>
-                <proefnaam>SCHUIFWEERSTAND_GEN</proefnaam>
-                <uitvoerder>
-                    <naam>onbekend</naam>
-                </uitvoerder>
-                <identificatie>GEO-17/047</identificatie>
-                <bedrijf_dienst>
-                    <naam>VO - Afdeling Geotechniek</naam>
-                </bedrijf_dienst>
-                <methode>Onbekend</methode>
             </proefuitvoering>
             <proefuitvoering>
                 <proefnaam>OKP-ALGEMEEN</proefnaam>

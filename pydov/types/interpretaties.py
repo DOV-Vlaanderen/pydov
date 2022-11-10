@@ -249,14 +249,15 @@ class HydrogeologischeStratigrafieLaag(AbstractDovSubType):
                  datatype='float'),
         XmlField(name='aquifer',
                  source_xpath='/aquifer',
-                 definition='code van de watervoerende laag waarin de laag '
-                            'Hydrogeologische stratigrafie zich bevindt.',
+                 definition='Code van de watervoerende laag waarin de laag '
+                            'Hydrogeologische stratigrafie zich bevindt '
+                            '(HCOVv1)',
                  datatype='string',
                  xsd_type=XsdType(
                      xsd_schema=build_dov_url(
                          'xdov/schema/latest/xsd/kern/interpretatie/'
                          'HydrogeologischeStratigrafieDataCodes.xsd'),
-                     typename='AquiferEnumType'
+                     typename='AquiferHCOVv1EnumType'
                  ))
     ]
 

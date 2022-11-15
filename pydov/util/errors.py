@@ -52,6 +52,10 @@ class XmlParseError(DOVError):
     pass
 
 
+class LogReplayError(Exception):
+    pass
+
+
 class DOVWarning(Warning):
     """General warning in PyDOV."""
     pass

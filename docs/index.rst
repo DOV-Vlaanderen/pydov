@@ -83,6 +83,7 @@ Contents:
    performance
    caching
    hooks
+   repeatable_log
    network_proxy
 
 .. toctree::

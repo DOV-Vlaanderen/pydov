@@ -11,7 +11,9 @@ v3.0.0 (unreleased)
 
   - This version drops support for Python 3.7.
 
-  - This version is supported on Python 3.8, 3.9 and 3.10.
+  - This version adds support for Python 3.11.
+
+  - This version is supported on Python 3.8, 3.9, 3.10 and 3.11.
 
 - Breaking changes
 

@@ -27,6 +27,12 @@ from pydov.util.errors import (InvalidFieldError, InvalidSearchParameterError,
 from pydov.util.hooks import HookRunner
 from pydov.util.net import LocalSessionThreadPool
 
+# compile regex for matching datetime
+re_datetime = re.compile(
+    r'([0-9]{4}-[0-9]{2}-[0-9]{2}T'
+    r'[0-9]{2}:[0-9]{2}:[0-9]{2})'
+    r'(\.[0-9]+)?([\+\-][0-9]{2}:?[0-9]{2})?(Z?)')
+
 
 class AbstractCommon(object):
     """Class grouping methods common to AbstractSearch and
@@ -102,10 +108,7 @@ class AbstractCommon(object):
                     return datetime.datetime.strptime(x, '%Y-%m-%d').date()
         elif returntype == 'datetime':
             def typeconvert(x):
-                x_match = re.search(
-                    r'([0-9]{4}-[0-9]{2}-[0-9]{2}T'
-                    r'[0-9]{2}:[0-9]{2}:[0-9]{2})'
-                    r'(\.[0-9]+)?([\+\-][0-9]{2}:?[0-9]{2})?(Z?)', x)
+                x_match = re_datetime.search(x)
                 if x_match is None:
                     raise ValueError(f'Cannot parse datetime from value "{x}"')
                 x_datetime, x_millisecs, x_tz, x_zulu = x_match.groups()

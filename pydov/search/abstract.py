@@ -5,6 +5,7 @@ from itertools import chain
 import datetime
 import math
 import warnings
+import re
 
 import owslib
 import owslib.fes
@@ -25,6 +26,12 @@ from pydov.util.errors import (InvalidFieldError, InvalidSearchParameterError,
                                DataParseWarning)
 from pydov.util.hooks import HookRunner
 from pydov.util.net import LocalSessionThreadPool
+
+# compile regex for matching datetime
+re_datetime = re.compile(
+    r'([0-9]{4}-[0-9]{2}-[0-9]{2}T'
+    r'[0-9]{2}:[0-9]{2}:[0-9]{2})'
+    r'(\.[0-9]+)?([\+\-][0-9]{2}:?[0-9]{2})?(Z?)')
 
 
 class AbstractCommon(object):
@@ -101,13 +108,27 @@ class AbstractCommon(object):
                     return datetime.datetime.strptime(x, '%Y-%m-%d').date()
         elif returntype == 'datetime':
             def typeconvert(x):
-                if x.endswith('Z'):
-                    return datetime.datetime.strptime(
-                        x, '%Y-%m-%dT%H:%M:%SZ') \
-                        + datetime.timedelta(days=1)
-                else:
-                    return datetime.datetime.strptime(
-                        x.split('.')[0], '%Y-%m-%dT%H:%M:%S')
+                x_match = re_datetime.search(x)
+                if x_match is None:
+                    raise ValueError(f'Cannot parse datetime from value "{x}"')
+                x_datetime, x_millisecs, x_tz, x_zulu = x_match.groups()
+
+                fmt = '%Y-%m-%dT%H:%M:%S'
+                val = x_datetime
+
+                if x_millisecs is not None:
+                    x_millisecs = int(x_millisecs[1:])
+                    fmt += '.%f'
+                    val += f'.{x_millisecs:0>6}'
+
+                if x_tz is not None:
+                    fmt += '%z'
+                    val += x_tz
+
+                dtime = datetime.datetime.strptime(val, fmt)
+                if x_zulu == 'Z':
+                    dtime += datetime.timedelta(hours=1)
+                return dtime
         elif returntype == 'boolean':
             def typeconvert(x):
                 return cls.__strtobool(x)

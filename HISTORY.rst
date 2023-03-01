@@ -4,6 +4,14 @@
 History
 =======
 
+v2.2.3
+------
+
+* Fixes and improvements
+
+  * Following the 0.28.1 OWSLib security release, disable XML entity resolution when using lxml's XMLParser.
+
+
 v2.2.2
 ------
 

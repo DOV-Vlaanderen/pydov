@@ -3,11 +3,10 @@ import numpy as np
 import pandas as pd
 from owslib.fes2 import PropertyIsEqualTo
 from pandas import DataFrame
-import pytest
 
 from pydov.search.interpretaties import InformeleStratigrafieSearch
 from pydov.types.interpretaties import InformeleStratigrafie
-from tests.abstract import AbstractTestSearch, ServiceCheck
+from tests.abstract import AbstractTestSearch
 
 location_md_metadata = \
     'tests/data/types/interpretaties/informele_stratigrafie/md_metadata.xml'

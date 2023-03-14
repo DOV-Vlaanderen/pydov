@@ -373,12 +373,6 @@ class AbstractDovType(AbstractTypeCommon):
             An instance of this class populated with the data from the WFS
             element.
 
-        Raises
-        ------
-        NotImplementedError
-            This is an abstract method that should be implemented in a
-            subclass.
-
         """
         instance = cls(feature.findtext(
             './{{{}}}{}'.format(namespace, cls.pkey_fieldname)))
@@ -390,6 +384,9 @@ class AbstractDovType(AbstractTypeCommon):
                 namespace=namespace,
                 returntype=field.get('type', None)
             )
+
+        for field in cls.get_fields(source=('custom',)).values():
+            instance.data[field['name']] = field._calculate(instance) or np.nan
 
         return instance
 

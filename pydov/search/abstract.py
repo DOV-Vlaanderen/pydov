@@ -768,7 +768,12 @@ class AbstractSearch(AbstractCommon):
                                        for i in self._map_df_wfs_source
                                        if i in return_fields])
 
+        extra_custom_fields = set()
+        for custom_field in self._type.get_fields(source=('custom',)).values():
+            extra_custom_fields.update(custom_field.requires_fields())
+
         wfs_property_names.extend(extra_wfs_fields)
+        wfs_property_names.extend(list(extra_custom_fields))
         wfs_property_names = list(set(wfs_property_names))
 
         if sort_by is not None:

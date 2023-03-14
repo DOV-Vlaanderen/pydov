@@ -125,8 +125,9 @@ class XmlField(AbstractField):
             self.__setitem__('xsd_type', xsd_type.typename)
 
 
-class _CustomField(AbstractField):
-    """Class for a custom field, created explicitly in pydov."""
+class _CustomWfsField(AbstractField):
+    """Class for a custom field, created explicitly in pydov from other WFS
+    fields."""
 
     def __init__(self, name, datatype, definition='', notnull=False):
         """Initialise a custom field.
@@ -144,6 +145,43 @@ class _CustomField(AbstractField):
             True if this field is always present (mandatory), False otherwise.
 
         """
-        super(_CustomField, self).__init__(name, 'custom', datatype)
+        super(_CustomWfsField, self).__init__(name, 'custom', datatype)
         self.__setitem__('definition', definition)
         self.__setitem__('notnull', notnull)
+
+    def requires_fields(self):
+        """Get a list of WFS fields that are required by (the calculation of)
+        this custom field.
+
+        Returns
+        -------
+        list of str
+            List of WFS fieldnames that is required by this custom field.
+
+        Raises
+        ------
+        NotImplementedError
+            Implement this in a subclass.
+        """
+        raise NotImplementedError
+
+    def _calculate(self, instance):
+        """Calculate the value of this custom field for the given instance.
+
+        Parameters
+        ----------
+        instance : AbstractDovType
+            Instance of the corresponding type, containing all WFS values in 
+            its data dictionary.
+
+        Returns
+        -------
+        Value to be used for this custom field for this instance. Its datatype
+        should match the one set in the initialisation of the custom field.
+
+        Raises
+        ------
+        NotImplementedError
+            Implement this in a subclass.
+        """
+        raise NotImplementedError

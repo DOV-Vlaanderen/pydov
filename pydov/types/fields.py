@@ -171,7 +171,7 @@ class _CustomWfsField(AbstractField):
         Parameters
         ----------
         instance : AbstractDovType
-            Instance of the corresponding type, containing all WFS values in 
+            Instance of the corresponding type, containing all WFS values in
             its data dictionary.
 
         Returns

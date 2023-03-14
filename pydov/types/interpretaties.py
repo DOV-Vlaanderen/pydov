@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """Module containing the DOV data types for interpretations, including
 subtypes."""
-import numpy as np
 
 from pydov.types.abstract import AbstractDovSubType, AbstractDovType
 from pydov.types.fields import WfsField, XmlField, XsdType, _CustomWfsField

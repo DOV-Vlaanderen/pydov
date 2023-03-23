@@ -82,9 +82,41 @@ v3.0.0 (unreleased)
 
   - Add support for WFS paging, allowing larger queries. It is now possible to
     execute queries larger than the WFS response feature limit of 10000 features
-    without running into a FeatureOverflowError.
+    without running into a FeatureOverflowError. (#194)
 
     Please be kind to our infrastructure and only request the data you need.
+
+- Fixes and improvements
+
+  - Fix parsing of datetime fields.
+  - Replace unparseable data with NaN and issue a warning. (#368)
+  - Raise MetadataNotFoundError when remote metadata fails to be downloaded or
+    parsed.
+
+
+v2.2.3
+------
+
+* Fixes and improvements
+
+  * Following the 0.28.1 OWSLib security release, disable XML entity resolution when using lxml's XMLParser.
+
+
+v2.2.2
+------
+
+* Fixes and improvements
+
+  * When data received from DOV fails to be parsed by pydov, set it to NaN and issue a warning instead of crashing.
+
+
+v2.2.1
+------
+
+* Fixes and improvements
+
+  * AquiferEnumType has been replaced with AquiferHCOVv1EnumType in both Grondwaterfilter and HydrogeologischeStratigrafie.
+
 
 v2.2.0
 ------

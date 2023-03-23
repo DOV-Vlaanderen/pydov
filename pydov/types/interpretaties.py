@@ -2,7 +2,6 @@
 """Module containing the DOV data types for interpretations, including
 subtypes."""
 
-from pydov.search.abstract import AbstractCommon
 from pydov.types.abstract import AbstractDovSubType, AbstractDovType
 from pydov.types.fields import WfsField, XmlField, XsdType, _CustomWfsField
 from pydov.util.dovutil import build_dov_url

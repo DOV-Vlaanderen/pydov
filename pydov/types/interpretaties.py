@@ -2,6 +2,7 @@
 """Module containing the DOV data types for interpretations, including
 subtypes."""
 
+from pydov.search.abstract import AbstractCommon
 from pydov.types.abstract import AbstractDovSubType, AbstractDovType
 from pydov.types.fields import WfsField, XmlField, XsdType, _CustomWfsField
 from pydov.util.dovutil import build_dov_url
@@ -23,7 +24,7 @@ class PkeyBoringField(_CustomWfsField):
     def requires_fields(self):
         return ['Type_proef', 'Proeffiche']
 
-    def _calculate(self, instance):
+    def calculate(self, instance):
         if instance.data['Type_proef'] == 'Boring':
             return instance.data['Proeffiche']
 
@@ -44,7 +45,7 @@ class PkeySonderingField(_CustomWfsField):
     def requires_fields(self):
         return ['Type_proef', 'Proeffiche']
 
-    def _calculate(self, instance):
+    def calculate(self, instance):
         if instance.data['Type_proef'] == 'Sondering':
             return instance.data['Proeffiche']
 

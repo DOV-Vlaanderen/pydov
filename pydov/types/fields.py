@@ -165,7 +165,7 @@ class _CustomWfsField(AbstractField):
         """
         raise NotImplementedError
 
-    def _calculate(self, instance):
+    def calculate(self, instance):
         """Calculate the value of this custom field for the given instance.
 
         Parameters

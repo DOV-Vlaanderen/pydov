@@ -386,7 +386,7 @@ class AbstractDovType(AbstractTypeCommon):
             )
 
         for field in cls.get_fields(source=('custom',)).values():
-            instance.data[field['name']] = field._calculate(instance) or np.nan
+            instance.data[field['name']] = field.calculate(instance) or np.nan
 
         return instance
 

@@ -19,7 +19,7 @@ In addition, we add the following guidelines:
 
 * Use underscores to separate words in non class names: ``n_samples`` rather than ``nsamples``.
 * Avoid multiple statements on one line. Prefer a line return after a control flow statement (\ ``if/for``\ ).
-* Please don’t use ``import *`` in any case. It is considered harmful by the official Python recommendations. It makes the code harder to read as the origin of symbols is no longer explicitly referenced, but most important, it prevents using a static analysis tool like pyflakes to automatically find bugs.
+* Please don't use ``import *`` in any case. It is considered harmful by the official Python recommendations. It makes the code harder to read as the origin of symbols is no longer explicitly referenced, but most important, it prevents using a static analysis tool like pyflakes to automatically find bugs.
 * Use the `numpy docstring standard`_ in all your docstrings.
 * The attributes for specific classes are Pandas data.frames, please use lowercase names (eventually with `_`) as column names.
 

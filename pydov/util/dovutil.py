@@ -127,7 +127,8 @@ def parse_dov_xml(xml_data):
 
     """
     try:
-        parser = etree.XMLParser(ns_clean=True, recover=True)
+        parser = etree.XMLParser(
+            ns_clean=True, recover=True, resolve_entities=False)
     except TypeError:
         parser = etree.XMLParser()
 

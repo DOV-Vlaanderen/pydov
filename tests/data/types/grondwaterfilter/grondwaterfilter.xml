@@ -74,6 +74,7 @@
             <aquifer>0100</aquifer>
             <grondwaterlichaam>CVS_0160_GWL_1</grondwaterlichaam>
             <grondwatersysteem>Centraal Vlaams Systeem</grondwatersysteem>
+            <afgesloten_volgens_gwdecreet>niet-afgesloten_delen_0100</afgesloten_volgens_gwdecreet>
             <regime>freatisch</regime>
         </ligging>
         <meetfrequentie>

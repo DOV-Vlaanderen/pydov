@@ -40,7 +40,7 @@ def get_first_featuremember(wfs_response):
 
 
 def update_file_real(filepath, url, process_fn=None, session=None):
-    output = 'Updated {} ... '.format(filepath)
+    output = 'Updating {} ... '.format(filepath)
     failed = False
     filepath = os.path.join(os.path.dirname(__file__), filepath)
     try:
@@ -62,7 +62,12 @@ def update_file_real(filepath, url, process_fn=None, session=None):
                     output += ' FAILED:\n   {}.\n'.format(e)
                     failed = True
                 else:
-                    f.write(data.encode('utf-8'))
+                    if data is not None:
+                        f.write(data.encode('utf-8'))
+                    else:
+                        output += ' FAILED:\n   {}.\n'.format(
+                            'No data returned by process function')
+                        failed = True
             else:
                 f.write(data.encode('utf-8'))
                 output += ' OK.\n'

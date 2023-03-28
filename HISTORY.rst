@@ -88,7 +88,7 @@ v3.0.0 (unreleased)
 
   - Add support for repeatable sessions, allowing recording and replaying of
     pydov sessions. More information and use cases can be found in the
-    `documentation <https://pydov.readthedocs.io/en/stable/repeatable_log.html>`_.
+    `documentation <https://pydov.readthedocs.io/en/stable/repeatable_log.html>`_. (#224)
 
 - Fixes and improvements
 

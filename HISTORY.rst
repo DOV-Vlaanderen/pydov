@@ -86,12 +86,17 @@ v3.0.0 (unreleased)
 
     Please be kind to our infrastructure and only request the data you need.
 
+  - Add support for repeatable sessions, allowing recording and replaying of
+    pydov sessions. More information and use cases can be found in the
+    `documentation <https://pydov.readthedocs.io/en/stable/repeatable_log.html>`_.
+
 - Fixes and improvements
 
   - Fix parsing of datetime fields.
   - Replace unparseable data with NaN and issue a warning. (#368)
   - Raise MetadataNotFoundError when remote metadata fails to be downloaded or
     parsed.
+  - Populate custom fields in all circumstances. (#379)
 
 
 v2.2.3

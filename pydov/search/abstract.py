@@ -238,7 +238,8 @@ class AbstractSearch(AbstractCommon):
             if self._md_metadata is None:
                 self._md_metadata = self._get_remote_metadata()
 
-            if self._fc_featurecatalogue is None:
+            if self._md_metadata is not None and \
+                    self._fc_featurecatalogue is None:
                 csw_url = self._get_csw_base_url()
                 fc_uuid = owsutil.get_featurecatalogue_uuid(self._md_metadata)
                 if fc_uuid is not None:
@@ -323,9 +324,10 @@ class AbstractSearch(AbstractCommon):
 
         Returns
         -------
-        owslib.iso.MD_Metadata
+        owslib.iso.MD_Metadata or None
             Parsed remote metadata describing the WFS layer in more detail,
-            in the ISO 19115/19139 format.
+            in the ISO 19115/19139 format or None when no metadata could be
+            found or parsed.
 
         """
         wfs_layer = self._get_layer()

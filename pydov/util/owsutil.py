@@ -11,7 +11,6 @@ from owslib.util import nspath_eval
 import pydov
 from pydov.util.net import SessionFactory
 
-from .errors import FeatureCatalogueNotFoundError, MetadataNotFoundError
 from .hooks import HookRunner
 
 
@@ -76,14 +75,10 @@ def get_remote_metadata(contentmetadata):
 
     Returns
     -------
-    owslib.iso.MD_Metadata
+    owslib.iso.MD_Metadata or None
         Parsed remote metadata describing the WFS layer in more detail,
-        in the ISO 19115/19139 format.
-
-    Raises
-    ------
-    pydov.util.errors.MetadataNotFoundError
-        If the `contentmetadata` has no valid metadata URL associated with it.
+        in the ISO 19115/19139 format, or None when no metadata could be found
+        or parsed.
 
     """
     with warnings.catch_warnings():
@@ -93,8 +88,6 @@ def get_remote_metadata(contentmetadata):
     for remote_md in contentmetadata.metadataUrls:
         if 'metadata' in remote_md and remote_md['metadata'] is not None:
             return remote_md['metadata']
-
-    raise MetadataNotFoundError
 
 
 def get_csw_base_url(contentmetadata):
@@ -108,14 +101,9 @@ def get_csw_base_url(contentmetadata):
 
     Returns
     -------
-    url : str
+    url : str or None
         Base URL of the CSW service where the remote metadata and feature
-        catalogue can be requested.
-
-    Raises
-    ------
-    pydov.util.errors.MetadataNotFoundError
-        If the `contentmetadata` has no valid metadata URL associated with it.
+        catalogue can be requested or None when no metadata URL could be found.
 
     """
     md_url = None
@@ -125,7 +113,7 @@ def get_csw_base_url(contentmetadata):
             md_url = md.get('url')
 
     if md_url is None:
-        raise MetadataNotFoundError
+        return None
 
     parsed_url = urlparse(md_url)
     return parsed_url.scheme + '://' + parsed_url.netloc + parsed_url.path
@@ -170,9 +158,10 @@ def get_remote_featurecatalogue(csw_url, fc_uuid):
 
     Returns
     -------
-    dict
+    dict or Noine
         Dictionary with fields described in the feature catalogue, using the
-        following schema:
+        following schema, or None when no feature catalogue with the given
+        UUID could not be found:
 
         >>>   {'definition' : 'feature type definition',
         >>>    'attributes' : {'name':
@@ -186,12 +175,6 @@ def get_remote_featurecatalogue(csw_url, fc_uuid):
         multiplicity is either an integer or the str 'Inf' indicating an
         infinate value.
 
-    Raises
-    ------
-    pydov.util.errors.FeatureCatalogueNotFoundError
-        If there is no feature catalogue with given UUID available in the
-        given CSW service.
-
     """
     fc_url = csw_url + '?Service=CSW&Request=GetRecordById&Version=2.0.2' \
                        '&outputSchema=http://www.isotc211.org/2005/gfc' \
@@ -202,7 +185,7 @@ def get_remote_featurecatalogue(csw_url, fc_uuid):
 
     fc = tree.find(nspath_eval('gfc:FC_FeatureCatalogue', __namespaces))
     if fc is None:
-        raise FeatureCatalogueNotFoundError
+        return None
 
     r = {}
     r['definition'] = fc.findtext(nspath_eval(

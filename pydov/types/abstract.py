@@ -689,7 +689,8 @@ class AbstractDovType(AbstractTypeCommon):
         """
         fields = self.get_field_names(return_fields)
         if len(fields) == 0:
-            fields = self.get_field_names(return_fields, include_wfs_injected=True)
+            fields = self.get_field_names(
+                return_fields, include_wfs_injected=True)
 
         ownfields = self.get_field_names(include_subtypes=False,
                                          include_wfs_injected=True)

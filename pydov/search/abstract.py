@@ -786,8 +786,9 @@ class AbstractSearch(AbstractCommon):
         if return_fields is None:
             wfs_property_names.extend([
                 f['sourcefield'] for f in self._type.get_fields(
-                    source=('wfs',)).values() if (self._type.pkey_fieldname is None
-                                                  or not f.get('wfs_injected', False))])
+                    source=('wfs',)).values() if (
+                        self._type.pkey_fieldname is None
+                        or not f.get('wfs_injected', False))])
         else:
             wfs_property_names.extend([self._map_df_wfs_source[i]
                                        for i in self._map_df_wfs_source
@@ -1021,7 +1022,8 @@ class AbstractSearch(AbstractCommon):
 
         cols = self._type.get_field_names(return_fields)
         if len(cols) == 0:
-            cols = self._type.get_field_names(return_fields, include_wfs_injected=True)
+            cols = self._type.get_field_names(
+                return_fields, include_wfs_injected=True)
 
         df = pd.DataFrame(
             data=self._type.to_df_array(

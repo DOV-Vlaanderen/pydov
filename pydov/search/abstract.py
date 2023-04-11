@@ -900,8 +900,10 @@ class AbstractSearch(AbstractCommon):
             for r in pool.join():
                 if r.get_error():
                     raise r.get_error()
-                elif r.get_result():
-                    result.append(r.get_result())
+
+                worker_result = r.get_result()
+                if worker_result is not None and len(worker_result) > 0:
+                    result.append(worker_result)
 
         return result
 

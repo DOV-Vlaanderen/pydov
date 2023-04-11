@@ -729,7 +729,15 @@ class AbstractDovType(AbstractTypeCommon):
                 for r in datarecords]
 
 
-class WfsType(AbstractDovType):
+class WfsTypeFactory:
 
-    def __init__(self, pkey):
-        super().__init__('wfs_layer', pkey)
+    @staticmethod
+    def get_wfs_type(layer):
+        class WfsType(AbstractDovType):
+
+            fields = []
+
+            def __init__(self, pkey):
+                super().__init__(layer, pkey)
+
+        return WfsType

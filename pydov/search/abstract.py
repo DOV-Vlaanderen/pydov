@@ -1044,5 +1044,6 @@ class WfsSearch(AbstractSearch):
             Workspace qualified layername of the layer to query.
 
         """
-        from pydov.types.abstract import WfsType
-        super(WfsSearch, self).__init__(layer, WfsType)
+        from pydov.types.abstract import WfsTypeFactory
+        super(WfsSearch, self).__init__(
+            layer, WfsTypeFactory.get_wfs_type(layer))

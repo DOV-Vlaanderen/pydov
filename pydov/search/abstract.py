@@ -128,7 +128,7 @@ class AbstractCommon(object):
                 dtime = datetime.datetime.strptime(val, fmt)
                 if x_zulu == 'Z':
                     dtime += datetime.timedelta(hours=1)
-                return dtime.isoformat()
+                return dtime
         elif returntype == 'boolean':
             def typeconvert(x):
                 return cls.__strtobool(x)

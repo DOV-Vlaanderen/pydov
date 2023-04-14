@@ -128,7 +128,7 @@ class AbstractCommon(object):
                 dtime = datetime.datetime.strptime(val, fmt)
                 if x_zulu == 'Z':
                     dtime += datetime.timedelta(hours=1)
-                return dtime
+                return dtime.isoformat()
         elif returntype == 'boolean':
             def typeconvert(x):
                 return cls.__strtobool(x)
@@ -139,8 +139,8 @@ class AbstractCommon(object):
                         import shapely
                         import shapely.geometry
                         import pygml
-                        return shapely.to_wkt(shapely.geometry.shape(
-                            pygml.parse(etree.tostring(x[0]).decode('utf8'))))
+                        return shapely.geometry.shape(
+                            pygml.parse(etree.tostring(x[0]).decode('utf8')))
                     else:
                         # this shouldn't happen
                         return etree.tostring(x[0]).decode('utf8')

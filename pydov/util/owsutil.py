@@ -27,6 +27,15 @@ def __get_namespaces():
 __namespaces = __get_namespaces()
 
 
+def has_geom_support():
+    try:
+        import pygml
+        import shapely
+        return True or pygml.__version__ and shapely.__version__
+    except ImportError:
+        return False
+
+
 def __get_remote_fc(fc_url):
     """Request the remote featurecatalogue by calling the `fc_url` and
     returning the response.

@@ -11,6 +11,7 @@ from owslib.etree import etree
 import pydov
 from pydov.search.abstract import AbstractCommon
 from pydov.types.fields import AbstractField
+from pydov.util import owsutil
 from pydov.util.dovutil import get_dov_xml, parse_dov_xml
 from pydov.util.errors import RemoteFetchError, XmlFetchWarning
 from pydov.util.net import LocalSessionThreadPool
@@ -383,12 +384,20 @@ class AbstractDovType(AbstractTypeCommon):
         instance = cls(pkey)
 
         for field in cls.get_fields(source=('wfs',)).values():
-            instance.data[field['name']] = cls._parse(
-                func=feature.findtext,
-                xpath=field['sourcefield'],
-                namespace=namespace,
-                returntype=field.get('type', None)
-            )
+            if owsutil.has_geom_support() and field['type'] == 'geometry':
+                instance.data[field['name']] = cls._parse(
+                    func=feature.find,
+                    xpath=field['sourcefield'],
+                    namespace=namespace,
+                    returntype=field.get('type', 'geometry')
+                )
+            else:
+                instance.data[field['name']] = cls._parse(
+                    func=feature.findtext,
+                    xpath=field['sourcefield'],
+                    namespace=namespace,
+                    returntype=field.get('type', None)
+                )
 
         for field in cls.get_fields(source=('custom',)).values():
             instance.data[field['name']] = field.calculate(instance) or np.nan

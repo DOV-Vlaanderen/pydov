@@ -132,6 +132,19 @@ class AbstractCommon(object):
         elif returntype == 'boolean':
             def typeconvert(x):
                 return cls.__strtobool(x)
+        elif returntype == 'geometry':
+            def typeconvert(x):
+                if isinstance(x, etree._Element):
+                    if owsutil.has_geom_support():
+                        import shapely
+                        import shapely.geometry
+                        import pygml
+                        return shapely.to_wkt(shapely.geometry.shape(
+                            pygml.parse(etree.tostring(x[0]).decode('utf8'))))
+                    else:
+                        # this shouldn't happen
+                        return etree.tostring(x[0]).decode('utf8')
+                return np.nan
         else:
             def typeconvert(x):
                 return x
@@ -511,6 +524,22 @@ class AbstractSearch(AbstractCommon):
                     field['values'] = fc_field['values']
 
                 fields[name] = field
+
+        if owsutil.has_geom_support() and 'geometry' in wfs_schema and \
+                'geometry_column' in wfs_schema:
+            name = wfs_schema['geometry_column']
+            self._wfs_fields.append(name)
+
+            field = {
+                'name': name,
+                'definition': None,
+                'type': 'geometry',
+                'notnull': False,
+                'query': False,
+                'cost': 1
+            }
+
+            fields[name] = field
 
         for xml_field in self._type.get_fields(source=['xml']).values():
             field = {

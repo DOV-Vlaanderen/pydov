@@ -136,7 +136,6 @@ class AbstractCommon(object):
             def typeconvert(x):
                 if isinstance(x, etree._Element):
                     if owsutil.has_geom_support():
-                        import shapely
                         import shapely.geometry
                         import pygml
                         return shapely.geometry.shape(

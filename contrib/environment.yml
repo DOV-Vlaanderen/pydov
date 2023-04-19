@@ -1,0 +1,10 @@
+name: dov_pfas
+channels:
+- conda-forge
+dependencies:
+- git
+- loguru
+- OWSLib
+- pandas
+- pip:
+  - pydov[proxy]

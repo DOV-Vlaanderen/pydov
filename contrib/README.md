@@ -25,7 +25,7 @@ The dataset consist of the following PFAS data:
     - groundwater
     - soil
 
-The different datasets will be saved as seperate Excel tabs of one Excel file.\
+The different datasets will be saved as seperate Excel tabs of one Excel file.
 
 ## Installation
 

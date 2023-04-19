@@ -26,7 +26,6 @@ The dataset consist of the following PFAS data:
     - soil
 
 The different datasets will be saved as seperate Excel tabs of one Excel file.\
-Note that all the OVAM data will be saved in one Excel tab.
 
 ## Installation
 

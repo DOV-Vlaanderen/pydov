@@ -11,7 +11,7 @@
       <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">1</gco:CharacterString>
     </gmx:versionNumber>
     <gmx:versionDate xmlns:gmx="http://www.isotc211.org/2005/gmx">
-      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2022-10-24</gco:Date>
+      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2023-04-19</gco:Date>
     </gmx:versionDate>
     <gfc:producer>
       <gmd:CI_ResponsibleParty xmlns:gmd="http://www.isotc211.org/2005/gmd">
@@ -717,6 +717,37 @@ Een bodemmonster is ofwel een enkelvoudig monster, ofwel een mengmonster (dit is
               <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:aName>
                   <gco:CharacterString>Number</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">eerste_invoer</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Het tijdstip waarop dit bodemmonster voor het eerst in DOV ingevoerd werd.</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>1</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:valueType>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:aName>
+                  <gco:CharacterString>Datetime</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>

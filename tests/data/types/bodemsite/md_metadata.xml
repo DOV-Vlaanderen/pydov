@@ -57,7 +57,7 @@
       </gmd:CI_ResponsibleParty>
     </gmd:contact>
     <gmd:dateStamp>
-      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2022-09-23</gco:Date>
+      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2023-03-28</gco:Date>
     </gmd:dateStamp>
     <gmd:metadataStandardName>
       <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">ISO 19115/2003/Cor.1:2006/INSPIRE-TG2.0</gco:CharacterString>
@@ -561,8 +561,8 @@ Een bodemsite kan een geometrie bevatten (polygoon), maar deze is niet verplicht
               <gmd:EX_TemporalExtent>
                 <gmd:extent>
                   <gml:TimePeriod xmlns:gml="http://www.opengis.net/gml/3.2" gml:id="timePeriod">
-                    <gml:beginPosition>1900-01-01</gml:beginPosition>
-                    <gml:endPosition>3999-01-01</gml:endPosition>
+                    <gml:beginPosition>1999-12-31</gml:beginPosition>
+                    <gml:endPosition>1999-01-01</gml:endPosition>
                   </gml:TimePeriod>
                 </gmd:extent>
               </gmd:EX_TemporalExtent>
@@ -587,7 +587,7 @@ Een bodemsite kan een geometrie bevatten (polygoon), maar deze is niet verplicht
             <gmd:date>
               <gmd:CI_Date>
                 <gmd:date>
-                  <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2022-09-23</gco:Date>
+                  <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2023-03-28</gco:Date>
                 </gmd:date>
                 <gmd:dateType>
                   <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation">creation</gmd:CI_DateTypeCode>
@@ -762,7 +762,7 @@ Een bodemsite kan een geometrie bevatten (polygoon), maar deze is niet verplicht
             <gmd:onLine>
               <gmd:CI_OnlineResource>
                 <gmd:linkage>
-                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/wfs?SERVICE=WFS&amp;version=2.0.0&amp;request=GetFeature</gmd:URL>
+                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/wfs?SERVICE=WFS&amp;version=2.0.0&amp;request=GetFeature&amp;count=1&amp;typeName=bodem:bodemsites</gmd:URL>
                 </gmd:linkage>
                 <gmd:protocol>
                   <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">OGC:WFS-2.0.0-http-get-feature</gco:CharacterString>

@@ -158,7 +158,7 @@ def get_remote_featurecatalogue(csw_url, fc_uuid):
 
     Returns
     -------
-    dict or Noine
+    dict or None
         Dictionary with fields described in the feature catalogue, using the
         following schema, or None when no feature catalogue with the given
         UUID could not be found:

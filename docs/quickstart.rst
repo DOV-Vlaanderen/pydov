@@ -5,34 +5,7 @@
 Quick start
 -----------
 
-To get started with pydov you should first determine which information you want to search for. DOV provides a lot of different datasets about soil, subsoil and groundwater of Flanders, some of which can be queried using pydov.
-
-Currently, we support the following datasets:
-
-.. csv-table:: Dataset search objects
-    :header-rows: 1
-
-    Dataset,Dataset (Dutch),Search object
-    Boreholes (with method),Boringen (met boormethode),:class:`pydov.search.boring.BoringSearch`
-    Borehole samples (with particle size distribution),Grondmonsters (met korrelverdeling),:class:`pydov.search.grondmonster.GrondmonsterSearch`
-    CPT measurements (with CPT data),Sonderingen (met sondeergegevens),:class:`pydov.search.sondering.SonderingSearch`
-    Groundwater screens (with water head levels),Grondwaterfilters (met peilmetingen),:class:`pydov.search.grondwaterfilter.GrondwaterFilterSearch`
-    Groundwater samples (with quality measurements),Grondwatermonsters (met kwaliteitsmetingen),:class:`pydov.search.grondwatermonster.GrondwaterMonsterSearch`
-    Groundwater permits,Grondwatervergunningen,:class:`pydov.search.grondwatervergunning.GrondwaterVergunningSearch`
-    Formal stratigraphy (with layers),Formele stratigrafie (met lagen),:class:`pydov.search.interpretaties.FormeleStratigrafieSearch`
-    Informal stratigraphy (with layers),Informele stratigrafie (met lagen),:class:`pydov.search.interpretaties.InformeleStratigrafieSearch`
-    Hydrogeological stratigraphy (with layers),Hydrogeologische stratigrafie (met lagen),:class:`pydov.search.interpretaties.HydrogeologischeStratigrafieSearch`
-    Informal hydrogeological stratigraphy (with layers),Informele hydrogeologische stratigrafie (met lagen),:class:`pydov.search.interpretaties.InformeleHydrogeologischeStratigrafieSearch`
-    Coded lithology (with layers),Gecodeerde lithologie (met lagen),:class:`pydov.search.interpretaties.GecodeerdeLithologieSearch`
-    Geotechnical encoding (with layers),Geotechnische codering (met lagen),:class:`pydov.search.interpretaties.GeotechnischeCoderingSearch`
-    Lithological descriptions (with layers),Lithologische beschrijvingen (met lagen),:class:`pydov.search.interpretaties.LithologischeBeschrijvingenSearch`
-    Quaternary stratigraphy (with layers),Quartair stratigrafie (met lagen),:class:`pydov.search.interpretaties.QuartairStratigrafieSearch`
-    Soil sites,Bodemsites,:class:`pydov.search.bodemsite.BodemsiteSearch`
-    Soil plots,Bodemlocaties,:class:`pydov.search.bodemlocatie.BodemlocatieSearch`
-    Soil intervals,Bodemdiepteintervallen,:class:`pydov.search.bodemdiepteinterval.BodemdiepteintervalSearch`
-    Soil samples,Bodemmonster,:class:`pydov.search.bodemmonster.BodemmonsterSearch`
-    Soil observations (with fraction measurements),Bodemobservaties (met fractiemetingen),:class:`pydov.search.bodemobservatie.BodemobservatieSearch`
-    Soil classifications,Bodemclassificaties,:class:`pydov.search.bodemclassificatie.BodemclassificatieSearch`
+To get started with pydov you should first determine which information you want to search for. DOV provides a lot of different datasets about soil, subsoil and groundwater of Flanders, most of which can be queried using pydov. Check out the datasets we support on the :ref:`select datasets <select_datasets>` page.
 
 Each of the datasets can be queried using a search object for this dataset. While the search objects are different, the workflow is the same for each dataset. Relevant classes can be imported from the pydov.search package, for example if we'd like to query the boreholes dataset:
 
@@ -41,7 +14,7 @@ Each of the datasets can be queried using a search object for this dataset. Whil
     from pydov.search.boring import BoringSearch
     boringsearch = BoringSearch()
 
-Now we can query for boreholes either on attributes, on location or on a combination of both. To query on attributes, we use the OGC filter functions from OWSLib. For example, to request all boreholes with a depth over 550 m, we would use the following ``query`` parameter:
+Now we can query for boreholes either on :ref:`attributes <query_attribute>`, on :ref:`location <query_location>` or on a combination of both. To query on attributes, we use the OGC filter functions from OWSLib. For example, to request all boreholes with a depth over 550 m, we would use the following ``query`` parameter:
 
 .. code-block:: python
 

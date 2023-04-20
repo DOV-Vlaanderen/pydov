@@ -67,14 +67,14 @@ def mp_wfs(monkeymodule, wfs_capabilities):
 
     """
     def read(*args, **kwargs):
-        return etree.fromstring(wfs_capabilities)
+        return wfs_capabilities
 
     monkeymodule.setattr(
-        owslib.feature.common.WFSCapabilitiesReader, 'read', read)
+        owsutil, 'get_wfs_capabilities', read)
 
 
 @pytest.fixture(scope='module')
-def wfs(mp_wfs):
+def wfs(wfs_capabilities):
     """PyTest fixture providing an instance of a WebFeatureService based on
     a local copy of a GetCapabilities request.
 
@@ -90,7 +90,8 @@ def wfs(mp_wfs):
 
     """
     return WebFeatureService(
-        url=build_dov_url('geoserver/wfs'), version="2.0.0")
+        url=build_dov_url('geoserver/wfs'), version="2.0.0",
+        xml=wfs_capabilities)
 
 
 @pytest.fixture()
@@ -466,7 +467,7 @@ def mp_gml_id(monkeypatch):
         return 'pydov.gmlid'
 
     monkeypatch.setattr(pydov.util.location.AbstractLocation,
-                         '_get_id', _get_id)
+                        '_get_id', _get_id)
 
 
 @pytest.fixture

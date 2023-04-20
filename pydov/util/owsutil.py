@@ -450,6 +450,22 @@ def wfs_get_feature(baseurl, get_feature_request, session=None):
     return request.text.encode('utf8')
 
 
+def get_wfs_capabilities(url):
+    """Perform a GET request to get the WFS capabilities.
+
+    Parameters
+    ----------
+    url : str
+        URL to request.
+
+    Returns
+    -------
+    bytes
+        Response containing the result of the WFS capabilities request.
+    """
+    return get_url(url)
+
+
 def get_url(url):
     """Perform a GET request to an OWS service an return the result.
 

@@ -55,8 +55,8 @@ class ServiceCheck:
 
         if ServiceCheck.is_service_ok is None:
             ServiceCheck.is_service_ok = (
-                check_url(build_dov_url('geoserver'), timeout) and
                 check_url(build_dov_url('geonetwork'), timeout) and
+                check_url(build_dov_url('geoserver'), timeout) and
                 check_url(
                     build_dov_url('xdov/schema/latest/xsd/kern/dov.xsd'),
                     timeout))
@@ -211,6 +211,8 @@ class AbstractTestSearch(object):
                         assert isinstance(v, int)
                     elif f['type'] == 'date':
                         assert isinstance(v, datetime.date)
+                    elif f['type'] == 'datetime':
+                        assert isinstance(v, datetime.datetime)
                     elif f['type'] == 'boolean':
                         assert isinstance(v, bool)
             else:

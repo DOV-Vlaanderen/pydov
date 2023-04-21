@@ -39,7 +39,7 @@ class RequestPFASdata:
                 return obj.isoformat()
             raise TypeError("Type %s not serializable" % type(obj))
 
-        date = datetime.now() #.strftime("%d/%m/%Y %H:%M:%S")
+        date = datetime.now()
         date = json_serial(date)
 
         package_versions = (f'pandas: {version("pandas")}', f'pydov: {version("pydov")}')
@@ -87,7 +87,6 @@ class RequestPFASdata:
         gwmonster = GrondwaterMonsterSearch()
         logger.info(f"Downloading groundwater monsters data")
         query = PropertyIsEqualTo(propertyname='chemisch_PFAS', literal='true')
-        # downloading the data for the groundwater monsters. All the groundwater monster data is dowloaded, by using a query only the necessary parameters can be downloaded. The advantage of downloading all the parameters is that you only download once and you can easily access other parameters later, without waiting on a new download. Nevertheless this can significantly increase the download time.
         df = gwmonster.search(location=Within(bbox), query=query)
         df = df[df.parametergroep == "Grondwater_chemisch_PFAS"]
         df = pd.DataFrame(df)  # Create a dataframe.
@@ -100,7 +99,7 @@ class RequestPFASdata:
                 "pkey_filter",
                 "aquifer_code",
                 "diepte_onderkant_filter",
-                "lengte_filter"])  # Downloading the data for the groundwater filter, give the pkey_filter, aquifer code and depth bottom filter.
+                "lengte_filter"])
             # Change the type of date.
             data["datum_monstername"] = pd.to_datetime(
                 data["datum_monstername"])
@@ -504,4 +503,4 @@ class RequestPFASdata:
         logger.info(f'The program was executed in {duration}.')
 
 
-RequestPFASdata().main(['all'], True)
+RequestPFASdata().main(['all'], False)

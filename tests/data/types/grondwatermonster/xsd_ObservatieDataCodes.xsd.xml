@@ -151,6 +151,18 @@ select '<xs:enumeration value="'||trim(beschrijving)||'"/>' from kern_monster.lu
             <xs:enumeration value="NIRS met FOSS XDS toestel (Cmon analyseprotocol)"/>
             <xs:enumeration value="Zeefrest 2 mm (Cmon analyseprotocol)"/>
             
+            <!-- XDOVCL-1958 -->
+            <xs:enumeration value="Cmon staalnameprotocol obstakel geroerd monster"/>
+            <xs:enumeration value="Cmon staalnameprotocol obstakel ongeroerd monster"/>
+            
+            <!-- XDOVCL-1961 -->
+            <xs:enumeration value="TOC by CN analyser na verwijderen anorganische C"/>
+            <xs:enumeration value="Textuurfracties volumeprocent afgeleid op basis van NIRS"/>
+            <xs:enumeration value="NIRS met ASD Fieldspec 3 FR spectroradiometer toestel"/>
+
+            <!-- ooit eens ...-->
+            <xs:enumeration value="Laserdiffractie bodem (Cmon analyseprotocol)"/>
+            
         </xs:restriction>
     </xs:simpleType>
     <!--
@@ -3742,6 +3754,11 @@ order by 1
                     <xs:documentation>parameter Temperatuur (veld)</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
+            <xs:enumeration value="Temperatuur">
+                <xs:annotation>
+                    <xs:documentation>parameter Temperatuur</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
             <xs:enumeration value="temp_bodem">
                 <xs:annotation>
                     <xs:documentation>parameter Temperatuur bodem</xs:documentation>
@@ -5031,11 +5048,6 @@ order by 1
                     <xs:documentation>parameter Enkelvoudig monster locatie</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="monster_organisch">
-                <xs:annotation>
-                    <xs:documentation>parameter Monster volledig organisch</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
             <xs:enumeration value="bulkdensiteit_2mm_vs_totale_volume_gemeten">
                 <xs:annotation>
                     <xs:documentation>parameter Bulkdensiteit bodem  &lt; 2 mm vs totale volume - gemeten</xs:documentation>
@@ -5090,6 +5102,33 @@ order by 1
                     <xs:documentation>parameter NIRS</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
+            
+            <!-- XDOVCL-1946 -->
+            <xs:enumeration value="strooisellaag_viltlaag_totale_c_perc">
+                <xs:annotation>
+                    <xs:documentation>parameter Strooisellaag of viltlaag - totale C - percentage</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="strooisellaag_viltlaag_totale_n_perc">
+                <xs:annotation>
+                    <xs:documentation>parameter Strooisellaag of viltlaag - totale N - percentage</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            
+            <!-- XDOVCL-1958 -->
+            <xs:enumeration value="bodemmonster_zeefrest_2mm">
+                <xs:annotation>
+                    <xs:documentation>parameter Bodemmonster zeefrest groter dan 2 mm</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+
+            <!-- parameters onder strikt voorbehoud - gaan er zo snel mogelijk weer uit -->
+            <xs:enumeration value="resultaattijd"/>
+            <xs:enumeration value="voorbehandeling_observatie_type_bewaring"/>
+            <xs:enumeration value="voorbehandeling_observatie_type_droging"/>
+            <xs:enumeration value="voorbehandeling_observatie_type_breken"/>
+            <xs:enumeration value="voorbehandeling_observatie_type_zeven"/>
+            <xs:enumeration value="voorbehandeling_observatie_type_malen"/>
         </xs:restriction>
     </xs:simpleType>
 </xs:schema>

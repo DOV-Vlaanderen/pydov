@@ -3,6 +3,8 @@ import os
 import sys
 
 from owslib.etree import etree
+import requests
+import pydov
 
 from pydov.types.bodemlocatie import Bodemlocatie
 from pydov.types.bodemdiepteinterval import Bodemdiepteinterval
@@ -1190,6 +1192,49 @@ if __name__ == '__main__':
         update_file(
             'types/grondwatervergunning/xsd_%s.xml' %
             xsd_schema.split('/')[-1], xsd_schema)
+
+    # types/generic
+
+    update_file(
+        'types/generic/wfsgetfeature.xml',
+        build_dov_url(
+            'geoserver/ows?service=WFS'
+            '&version=2.0.0&request=GetFeature&typeName='
+            'dov-pub:Opdrachten&maxFeatures=1&CQL_Filter'
+            '=fiche=%27' +
+            build_dov_url('data/opdracht/2021-026141%27')))
+
+    update_file(
+        'types/generic/feature.xml',
+        build_dov_url(
+            'geoserver/ows?service=WFS'
+            '&version=2.0.0&request=GetFeature&typeName='
+            'dov-pub:Opdrachten&maxFeatures=1&CQL_Filter'
+            '=fiche=%27' +
+            build_dov_url('data/opdracht/2021-026141%27')),
+        get_first_featuremember)
+
+    update_file(
+        'types/generic/fc_featurecatalogue.xml',
+        build_dov_url('geonetwork/srv/dut/csw'
+                      '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+                      '&outputSchema=http://www.isotc211.org/2005/gfc'
+                      '&elementSetName=full&id=f8178f8a-e5a4-4a10-ba31-'
+                      '49c4adbc21c2'))
+
+    update_file('types/generic/md_metadata.xml',
+                build_dov_url(
+                    'geonetwork/srv/dut/csw'
+                    '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+                    '&outputSchema=http://www.isotc211.org/2005/gmd'
+                    '&elementSetName=full&id=8a07f330-3900-4086-89c0-'
+                    'cebf940156e5'))
+
+    update_file('types/generic/wfsdescribefeaturetype.xml',
+                build_dov_url(
+                    'geoserver/dov-pub/Opdrachten'
+                    '/ows?service=wfs&version=2.0.0'
+                    '&request=DescribeFeatureType'))
 
     for r in pool.join():
         if r.get_error() is not None:

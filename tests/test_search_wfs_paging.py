@@ -128,8 +128,9 @@ def mp_remote_wfs_paged_feature(monkeymodule, request):
 class TestSearchWfsPaging(object):
     """Class grouping tests regarding WFS paging."""
 
-    def test_all_features_paged(self, mp_wfs, mp_wfs_max_features,
-                                mp_remote_wfs_paged_feature):
+    def test_all_features_paged(
+            self, mp_wfs, mp_get_schema, mp_remote_describefeaturetype,
+            mp_wfs_max_features, mp_remote_wfs_paged_feature):
         """Test a search needing multiple pages.
 
         Test whether the number of returned features is correct.
@@ -151,8 +152,9 @@ class TestSearchWfsPaging(object):
             'diepte_tot_m', '0'), return_fields=['pkey_boring'])
         assert len(df) == 20
 
-    def test_max_features_first_page(self, mp_wfs, mp_wfs_max_features,
-                                     mp_remote_wfs_paged_feature):
+    def test_max_features_first_page(
+            self, mp_wfs, mp_get_schema, mp_remote_describefeaturetype,
+            mp_wfs_max_features, mp_remote_wfs_paged_feature):
         """Test a search using max_features where the maximum is less than the
         WFS page size.
 
@@ -174,8 +176,9 @@ class TestSearchWfsPaging(object):
         df = s.search(return_fields=['pkey_boring'], max_features=5)
         assert len(df) == 5
 
-    def test_max_features_paged(self, mp_wfs, mp_wfs_max_features,
-                                mp_remote_wfs_paged_feature):
+    def test_max_features_paged(
+            self, mp_wfs, mp_get_schema, mp_remote_describefeaturetype,
+            mp_wfs_max_features, mp_remote_wfs_paged_feature):
         """Test a search using max_features where the maximum is greater than
         the WFS page size.
 

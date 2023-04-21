@@ -158,7 +158,7 @@ def get_remote_featurecatalogue(csw_url, fc_uuid):
 
     Returns
     -------
-    dict or Noine
+    dict or None
         Dictionary with fields described in the feature catalogue, using the
         following schema, or None when no feature catalogue with the given
         UUID could not be found:
@@ -448,6 +448,22 @@ def wfs_get_feature(baseurl, get_feature_request, session=None):
     request = session.post(baseurl, data)
     request.encoding = 'utf-8'
     return request.text.encode('utf8')
+
+
+def get_wfs_capabilities(url):
+    """Perform a GET request to get the WFS capabilities.
+
+    Parameters
+    ----------
+    url : str
+        URL to request.
+
+    Returns
+    -------
+    bytes
+        Response containing the result of the WFS capabilities request.
+    """
+    return get_url(url)
 
 
 def get_url(url):

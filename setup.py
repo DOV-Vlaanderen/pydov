@@ -25,7 +25,7 @@ with open('requirements_proxy.txt') as f:
 
 setup(
     name='pydov',
-    version='2.2.0',
+    version='3.0.0',
     description=("A Python package to download data from Databank Ondergrond "
                  "Vlaanderen (DOV)."),
     long_description=readme,
@@ -51,6 +51,7 @@ setup(
             'Programming Language :: Python :: 3.8',
             'Programming Language :: Python :: 3.9',
             'Programming Language :: Python :: 3.10',
+            'Programming Language :: Python :: 3.11',
             'Topic :: Scientific/Engineering',
     ],
     test_suite='tests',

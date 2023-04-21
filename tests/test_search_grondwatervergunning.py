@@ -4,6 +4,7 @@ from pandas import DataFrame
 
 from pydov.search.grondwatervergunning import GrondwaterVergunningSearch
 from pydov.types.grondwatervergunning import GrondwaterVergunning
+from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestSearch
 
 location_md_metadata = \
@@ -27,7 +28,7 @@ class TestGrondwaterVergunningSearch(AbstractTestSearch):
 
     valid_query_single = PropertyIsEqualTo(
         propertyname='installatie',
-        literal='https://www.dov.vlaanderen.be/data/installatie/2019-088045')
+        literal=build_dov_url('data/installatie/2019-088045'))
 
     inexistent_field = 'onbestaand'
     xml_field = None

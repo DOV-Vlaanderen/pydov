@@ -727,17 +727,3 @@ class AbstractDovType(AbstractTypeCommon):
 
         return [[c if c != self._UNRESOLVED else np.nan for c in r]
                 for r in datarecords]
-
-
-class WfsTypeFactory:
-
-    @staticmethod
-    def get_wfs_type(layer):
-        class WfsType(AbstractDovType):
-
-            fields = []
-
-            def __init__(self, pkey):
-                super().__init__(layer, pkey)
-
-        return WfsType

@@ -1,6 +1,6 @@
 import os
 import pandas as pd
-from pydov.search.abstract import WfsSearch
+from pydov.search.generic import WfsSearch
 from pydov.search.grondwatermonster import GrondwaterMonsterSearch
 from pydov.search.grondwaterfilter import GrondwaterFilterSearch
 from pydov.util.location import Within, Box
@@ -350,6 +350,7 @@ class RequestPFASdata:
 
         #todo: get pfas analyseresultaten from OVAM in cache, so it doesn't have to download again.
         # Can you query wfs?
+        # What with the cache of dov
 
         start_time = datetime.now()
 
@@ -410,19 +411,19 @@ class RequestPFASdata:
 
         metadata = json.dumps(self.dictionary, indent=3)
         path = os.getcwd()
-        with open(f"{path}/data/metadata.json", "w") as outfile:
+        with open(f"{path}/results/metadata.json", "w") as outfile:
             outfile.write(metadata)
 
         if save:
 
             path = os.getcwd()
 
-            with open(f"{path}/data/metadata.json") as metadata_file:
+            with open(f"{path}/results/metadata.json") as metadata_file:
                 metadata = json.load(metadata_file)
 
             pbar = tqdm(total=sum(metadata['nb_datapoints'][0].values()))
 
-            with pd.ExcelWriter(f'{path}/data/data.xlsx') as writer:
+            with pd.ExcelWriter(f'{path}/results/data.xlsx') as writer:
                 for i in medium:
                     if i == 'all':
                         data_wfs_VMM_biota.to_excel(writer, sheet_name='Biota_VMM')

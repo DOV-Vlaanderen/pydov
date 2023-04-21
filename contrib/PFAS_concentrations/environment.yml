@@ -1,10 +1,13 @@
-name: dov_pfas
+name: pydov_pfas
 channels:
 - conda-forge
 dependencies:
 - git
 - loguru
+- openpyxl
 - OWSLib
+- packaging
 - pandas
+- tqdm
 - pip:
   - pydov[proxy]

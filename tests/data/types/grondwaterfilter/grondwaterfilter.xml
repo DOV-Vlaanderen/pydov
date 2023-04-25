@@ -563,6 +563,20 @@
             <bron>freatisch 2020 najaar</bron>
         </peilmeting>
         <peilmeting>
+            <datum>2021-04-22</datum>
+            <diepte_tov_referentiepunt>0.91</diepte_tov_referentiepunt>
+            <peil_mtaw>8.18</peil_mtaw>
+            <methode>peillint</methode>
+            <filtertoestand>1</filtertoestand>
+            <filterstatus>in rust</filterstatus>
+            <opmeter>
+                <naam>Labo</naam>
+            </opmeter>
+            <zoet>N</zoet>
+            <betrouwbaarheid>goed</betrouwbaarheid>
+            <bron>freatisch 2021 voorjaar</bron>
+        </peilmeting>
+        <peilmeting>
             <datum>2022-03-17</datum>
             <diepte_tov_referentiepunt>0.81</diepte_tov_referentiepunt>
             <peil_mtaw>8.28</peil_mtaw>

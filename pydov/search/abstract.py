@@ -211,7 +211,7 @@ class AbstractSearch(AbstractCommon):
         if self._wfs is None:
             wfs_endpoint_url = self._get_wfs_endpoint()
 
-            capabilities = owsutil.get_url(
+            capabilities = owsutil.get_wfs_capabilities(
                 wfs_endpoint_url + '?request=GetCapabilities&version=2.0.0')
 
             self._wfs = WebFeatureService(
@@ -1060,18 +1060,3 @@ class AbstractSearch(AbstractCommon):
                 chain.from_iterable(feature_generators), return_fields),
             columns=cols)
         return df
-
-
-class WfsSearch(AbstractSearch):
-    def __init__(self, layer):
-        """Initialisation.
-
-        Parameters
-        ----------
-        layer : str
-            Workspace qualified layername of the layer to query.
-
-        """
-        from pydov.types.abstract import WfsTypeFactory
-        super(WfsSearch, self).__init__(
-            layer, WfsTypeFactory.get_wfs_type(layer))

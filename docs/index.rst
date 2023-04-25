@@ -52,11 +52,10 @@ the pydov functionalities. For a more in-depth overview of the capabilities,
 the :ref:`tutorials` illustrate different capabilities of the pydov package
 for each of the object types.
 
+:ref:`select_datasets` of your interest, and check the :ref:`query_attribute` and :ref:`query_location` pages to find the information you're looking for.
 While the search objects are different, the workflow is the same for each dataset.
-The :ref:`query_attribute` and :ref:`query_location` explain
-the query options for attributes and locations respectively.
 
-All functionalities are build on top of the existing webservices provided
+All functionalities are built on top of the existing webservices provided
 by DOV. For more details about these services and endpoints, check
 the :ref:`endpoints` page.
 
@@ -76,6 +75,7 @@ Contents:
    :caption: User guide
    :maxdepth: 1
 
+   select_datasets
    query_attribute
    query_location
    output_fields

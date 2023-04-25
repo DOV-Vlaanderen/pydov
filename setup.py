@@ -18,8 +18,8 @@ with open('requirements_dev.txt') as f:
     requirements_dev = f.read().splitlines()[1:]
 with open('requirements_doc.txt') as f:
     requirements_doc = f.read().splitlines()
-with open('requirements_vectorfile.txt') as f:
-    requirements_vectorfile = f.read().splitlines()
+with open('requirements_geom.txt') as f:
+    requirements_geom = f.read().splitlines()
 with open('requirements_proxy.txt') as f:
     requirements_proxy = f.read().splitlines()
 
@@ -59,7 +59,8 @@ setup(
     extras_require={
         'docs': requirements_doc,
         'devs': requirements_dev,
-        'vectorfile': requirements_vectorfile,
+        'vectorfile': requirements_geom,  # deprecated
+        'geom': requirements_geom,
         'proxy': requirements_proxy
     }
 )

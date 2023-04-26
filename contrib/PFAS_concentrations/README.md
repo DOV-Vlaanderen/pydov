@@ -41,19 +41,9 @@ have the development environment setup:
 
 3. Create a development environment, for example using [conda](https://docs.conda.io/projects/conda/en/stable/):
 
-
-    # using conda:
-      $ conda env create -f environment.yml
+    $ conda env create -f environment.yml
 
 4. Link the environment to the project in your IDE as interpreter.
-
-## Installation for use
-
-Create a development environment, for example using [conda](https://docs.conda.io/projects/conda/en/stable/):
-
-    # using conda:
-      $ conda env create -f environment.yml
-
 
 ## Tutorial
 

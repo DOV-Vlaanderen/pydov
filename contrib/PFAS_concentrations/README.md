@@ -36,14 +36,37 @@ have the development environment setup:
   near the top right of the page. This creates a copy of the code under your personal GitHub user account.
 2. Clone the [Github repo](https://github.com/DOV-Vlaanderen/pydov):
 
+    ```$ git clone https://github.com/YOUR-GITHUB-USERNAME/pydov```
 
-    $ git clone https://github.com/YOUR-GITHUB-USERNAME/pydov
+3. Create a development environment using the environment.yml from the contrib folder, for example using [conda](https://docs.conda.io/projects/conda/en/stable/):
 
-3. Create a development environment, for example using [conda](https://docs.conda.io/projects/conda/en/stable/):
-
-    $ conda env create -f environment.yml
+    ```$ conda env create -f environment.yml```
 
 4. Link the environment to the project in your IDE as interpreter.
+
+## Installation for use
+1. Download the [project repository](https://github.com/DOV-Vlaanderen/pydov) as a zip-file.
+2. Create a development environment using the environment.yml from the contrib folder, for example using [conda](https://docs.conda.io/projects/conda/en/stable/):
+    
+    ```$ conda env create -f environment.yml```
+
+3. Execute script
+ 
+    3.1 Work with the code directly in your IDE
+    
+     - Link the environment to the project in your IDE as interpreter.
+
+    3.2 Use the example notebooks
+    
+     - Activate the environment 
+
+        ```$ conda activate pydov_pfas```
+    
+     - Open the notebooks with the examples
+
+        ```$ cd 'PATH_TO_CONTRIB_FOLDER'``` 
+        
+        ```$ jupyter notebook```
 
 ## Tutorial
 

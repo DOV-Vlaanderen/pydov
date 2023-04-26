@@ -9,5 +9,8 @@ dependencies:
 - packaging
 - pandas
 - tqdm
+- ipython
+- jupyter_client
+- ipykernel
 - pip:
   - pydov[proxy]

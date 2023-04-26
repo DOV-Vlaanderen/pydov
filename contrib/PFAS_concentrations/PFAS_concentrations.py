@@ -347,9 +347,7 @@ class RequestPFASdata:
 
         #todo: get pfas analyseresultaten from OVAM in cache, so it doesn't have to download again.
         # Can you query wfs?
-        # What with the cache of dov
-
-        start_time = datetime.now()
+        # What with the cache of pydov
 
         """
         Call the functions to download the requested data and save the result in an Excel-file, with the different mediums as seperate tabs.
@@ -371,12 +369,14 @@ class RequestPFASdata:
                     - 'soil water'
                     - 'surface water'
                     - 'waste water'
+        save: boolean
+            Save the data if True.
 
         Returns
         -------
         The requested data in separate dataframe(s).
         """
-
+        start_time = datetime.now()
         return_list = []
 
         for i in medium:
@@ -517,10 +517,3 @@ class RequestPFASdata:
         end_time = datetime.now()
         duration = end_time-start_time
         logger.info(f'The program was executed in {duration}.')
-
-
-df = RequestPFASdata().main(['soil water', 'waste water'], False)
-pd.set_option("display.max_columns", None)
-print('df1: \n', df[0])
-print('df2: \n', df[1])
-print('df3: \n', df[2])

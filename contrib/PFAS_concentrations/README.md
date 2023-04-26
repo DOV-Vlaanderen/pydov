@@ -45,8 +45,10 @@ have the development environment setup:
 4. Link the environment to the project in your IDE as interpreter.
 
 ## Installation for use
-1. Download the [project repository](https://github.com/DOV-Vlaanderen/pydov) as a zip-file.
+1. Download the [project repository](https://github.com/DOV-Vlaanderen/pydov) as a zip-file. Unzip it at a location of your chosing.
 2. Create a development environment using the environment.yml from the contrib folder, for example using [conda](https://docs.conda.io/projects/conda/en/stable/):
+    
+    ```$ cd 'PATH_TO_CONTRIB__PFAS_CONCENTRATIONS_FOLDER'``` 
     
     ```$ conda env create -f environment.yml```
 
@@ -63,8 +65,6 @@ have the development environment setup:
         ```$ conda activate pydov_pfas```
     
      - Open the notebooks with the examples
-
-        ```$ cd 'PATH_TO_CONTRIB_FOLDER'``` 
         
         ```$ jupyter notebook```
 

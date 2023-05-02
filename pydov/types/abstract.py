@@ -452,7 +452,7 @@ class AbstractDovType(AbstractTypeCommon):
 
     @classmethod
     def get_field_names(cls, return_fields=None, include_subtypes=True,
-                        include_wfs_injected=False):
+                        include_wfs_injected=False, include_geometry=False):
         """Return the names of the fields available for this type.
 
         Parameters
@@ -467,6 +467,8 @@ class AbstractDovType(AbstractTypeCommon):
         include_wfs_injected : boolean
             Whether to include fields defined in WFS only, not in the
             default dataframe for this type. Defaults to False.
+        include_geometry : boolean
+            Whether to include geometry fields. Defaults to False.
 
         Returns
         -------
@@ -485,10 +487,12 @@ class AbstractDovType(AbstractTypeCommon):
         """
         if return_fields is None:
             if include_wfs_injected:
-                fields = [f['name'] for f in cls.fields]
+                fields = [f['name'] for f in cls.fields if f['type']
+                          != 'geometry' or include_geometry]
             else:
                 fields = [f['name'] for f in cls.fields if not f.get(
-                    'wfs_injected', False)]
+                    'wfs_injected', False) and (
+                        f['type'] != 'geometry' or include_geometry)]
             if include_subtypes:
                 for st in cls.subtypes:
                     fields.extend(st.get_field_names())
@@ -496,7 +500,8 @@ class AbstractDovType(AbstractTypeCommon):
             raise AttributeError(
                 'return_fields should be a list, tuple or set')
         else:
-            cls_fields = [f['name'] for f in cls.fields]
+            cls_fields = [f['name'] for f in cls.fields if f['type']
+                          != 'geometry' or include_geometry]
             if include_subtypes:
                 for st in cls.subtypes:
                     cls_fields.extend(st.get_field_names())
@@ -696,13 +701,15 @@ class AbstractDovType(AbstractTypeCommon):
             search operation.
 
         """
-        fields = self.get_field_names(return_fields)
+        fields = self.get_field_names(return_fields, include_geometry=True)
         if len(fields) == 0:
             fields = self.get_field_names(
-                return_fields, include_wfs_injected=True)
+                return_fields, include_wfs_injected=True,
+                include_geometry=False)
 
         ownfields = self.get_field_names(include_subtypes=False,
-                                         include_wfs_injected=True)
+                                         include_wfs_injected=True,
+                                         include_geometry=True)
         subfields = [f for f in fields if f not in ownfields]
         parsed = None
 

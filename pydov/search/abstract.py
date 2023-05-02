@@ -1059,10 +1059,11 @@ class AbstractSearch(AbstractCommon):
             feature_generators.append(
                 self._type.from_wfs(tree, self._wfs_namespace))
 
-        cols = self._type.get_field_names(return_fields)
+        cols = self._type.get_field_names(return_fields, include_geometry=True)
         if len(cols) == 0:
             cols = self._type.get_field_names(
-                return_fields, include_wfs_injected=True)
+                return_fields, include_wfs_injected=True,
+                include_geometry=False)
 
         df = pd.DataFrame(
             data=self._type.to_df_array(

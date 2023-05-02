@@ -9,8 +9,6 @@ from owslib.util import nspath_eval
 
 from pydov.util import owsutil
 from pydov.util.dovutil import build_dov_url
-from pydov.util.errors import (FeatureCatalogueNotFoundError,
-                               MetadataNotFoundError)
 from pydov.util.location import Box, Within
 from tests.abstract import clean_xml
 
@@ -43,7 +41,7 @@ class TestOwsutil(object):
         """Test the owsutil.get_csw_base_url method for a layer without
         metadata urls.
 
-        Test whether a MetadataNotFoundError is raised.
+        Test whether None is returned.
 
         Parameters
         ----------
@@ -54,8 +52,8 @@ class TestOwsutil(object):
         contents = copy.deepcopy(wfs.contents)
         contentmetadata = contents['dov-pub:Boringen']
         contentmetadata.metadataUrls = []
-        with pytest.raises(MetadataNotFoundError):
-            owsutil.get_csw_base_url(contentmetadata)
+
+        assert owsutil.get_csw_base_url(contentmetadata) is None
 
     def test_get_featurecatalogue_uuid(self, md_metadata):
         """Test the owsutil.get_featurecatalogue_uuid method.
@@ -77,7 +75,7 @@ class TestOwsutil(object):
         """Test the owsutil.get_featurecatalogue_uuid method when the
         metadata is missing the gmd:contentInfo element.
 
-        Test whether a FeatureCatalogueNotFoundError is raised.
+        Test whether None is returned.
 
         Parameters
         ----------
@@ -92,14 +90,13 @@ class TestOwsutil(object):
             tree.remove(ci)
         md_metadata = MD_Metadata(tree)
 
-        with pytest.raises(FeatureCatalogueNotFoundError):
-            owsutil.get_featurecatalogue_uuid(md_metadata)
+        assert owsutil.get_featurecatalogue_uuid(md_metadata) is None
 
     def test_get_featurecatalogue_uuid_nouuidref(self, md_metadata):
         """Test the owsutil.get_featurecatalogue_uuid method when the
         gmd:contentInfo element is missing a 'uuidref' attribute.
 
-        Test whether a FeatureCatalogueNotFoundError is raised.
+        Test whether None is returned.
 
         Parameters
         ----------
@@ -117,8 +114,7 @@ class TestOwsutil(object):
             ci.attrib.pop('uuidref')
         md_metadata = MD_Metadata(tree)
 
-        with pytest.raises(FeatureCatalogueNotFoundError):
-            owsutil.get_featurecatalogue_uuid(md_metadata)
+        assert owsutil.get_featurecatalogue_uuid(md_metadata) is None
 
     def test_get_namespace(self, wfs, mp_remote_describefeaturetype):
         """Test the owsutil.get_namespace method.
@@ -193,7 +189,7 @@ class TestOwsutil(object):
         """Test the owsutil.get_remote_featurecatalogue method with an
         inexistent feature catalogue uuid.
 
-        Test whether a FeatureCatalogueNotFoundError is raised.
+        Test whether None is returned.
 
         Parameters
         ----------
@@ -201,10 +197,9 @@ class TestOwsutil(object):
             Monkeypatch the call to get an inexistent remote featurecatalogue.
 
         """
-        with pytest.raises(FeatureCatalogueNotFoundError):
-            owsutil.get_remote_featurecatalogue(
+        assert owsutil.get_remote_featurecatalogue(
                 build_dov_url('geonetwork/srv/nl/csw'),
-                'badfc000-0000-0000-0000-badfc00badfc')
+                'badfc000-0000-0000-0000-badfc00badfc') is None
 
     def test_get_remote_metadata(self, md_metadata):
         """Test the owsutil.get_remote_metadata method.

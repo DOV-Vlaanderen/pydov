@@ -2,10 +2,7 @@
 module scoped monkeypatches."""
 import copy
 
-import pytest
-
 from pydov.util import owsutil
-from pydov.util.errors import MetadataNotFoundError
 
 
 class TestOwsutilNoMP(object):
@@ -16,7 +13,7 @@ class TestOwsutilNoMP(object):
         """Test the owsutil.get_remote_metadata method when the WFS layer
         missed metadata URLs.
 
-        Test whether a MetadataNotFoundError is raised.
+        Test whether None is returned.
 
         Parameters
         ----------
@@ -27,14 +24,13 @@ class TestOwsutilNoMP(object):
         contents = copy.deepcopy(wfs.contents)
         contentmetadata = contents['dov-pub:Boringen']
         contentmetadata.metadataUrls = []
-        with pytest.raises(MetadataNotFoundError):
-            owsutil.get_remote_metadata(contentmetadata)
+        assert owsutil.get_remote_metadata(contentmetadata) is None
 
     def test_get_remote_metadata_nometadata(self, wfs, mp_geonetwork_broken):
         """Test the owsutil.get_remote_metadata method when the remote metadata
         could not be found.
 
-        Test whether a MetadataNotFoundError is raised.
+        Test whether None is returned.
 
         Parameters
         ----------
@@ -44,5 +40,4 @@ class TestOwsutilNoMP(object):
         """
         contents = copy.deepcopy(wfs.contents)
         contentmetadata = contents['dov-pub:Boringen']
-        with pytest.raises(MetadataNotFoundError):
-            owsutil.get_remote_metadata(contentmetadata)
+        assert owsutil.get_remote_metadata(contentmetadata) is None

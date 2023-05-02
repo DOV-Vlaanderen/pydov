@@ -86,6 +86,12 @@ Bodemclassificatie
 .. automodule:: pydov.search.bodemclassificatie
     :members:
 
+Generic
+*******
+
+.. automodule:: pydov.search.generic
+    :members:
+
 Object types
 ------------
 
@@ -180,6 +186,13 @@ Bodemclassificatie
 ******************
 
 .. automodule:: pydov.types.bodemclassificatie
+    :members:
+    :show-inheritance:
+
+Generic
+*******
+
+.. automodule:: pydov.types.generic
     :members:
     :show-inheritance:
 

@@ -70,9 +70,10 @@ class MyGrondwaterFilterOpbouw(GrondwaterFilter):
 class TestMyWrongGrondwaterFilter(object):
     """Class grouping tests for the MyWrongGrondwaterFilter custom type."""
 
-    def test_get_fields(self, mp_wfs, mp_remote_describefeaturetype,
-                        mp_remote_md, mp_remote_fc, mp_remote_wfs_feature,
-                        mp_dov_xml):
+    def test_get_fields(
+            self, mp_wfs, mp_get_schema, mp_remote_describefeaturetype,
+            mp_remote_md, mp_remote_fc, mp_remote_xsd, mp_remote_wfs_feature,
+            mp_dov_xml):
         """Test the get_fields method.
 
         Test whether a RuntimeError is raised.
@@ -83,9 +84,10 @@ class TestMyWrongGrondwaterFilter(object):
         with pytest.raises(RuntimeError):
             fs.get_fields()
 
-    def test_search(self, mp_wfs, mp_remote_describefeaturetype,
-                    mp_remote_md, mp_remote_fc, mp_remote_wfs_feature,
-                    mp_dov_xml):
+    def test_search(
+            self, mp_wfs, mp_get_schema, mp_remote_describefeaturetype,
+            mp_remote_md, mp_remote_fc, mp_remote_xsd, mp_remote_wfs_feature,
+            mp_dov_xml):
         """Test the search method.
 
         Test whether a RuntimeError is raised.

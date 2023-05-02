@@ -374,8 +374,13 @@ class AbstractDovType(AbstractTypeCommon):
             element.
 
         """
-        instance = cls(feature.findtext(
-            './{{{}}}{}'.format(namespace, cls.pkey_fieldname)))
+        if cls.pkey_fieldname is not None:
+            pkey = feature.findtext(
+                './{{{}}}{}'.format(namespace, cls.pkey_fieldname))
+        else:
+            pkey = feature.get('{http://www.opengis.net/gml/3.2}id')
+
+        instance = cls(pkey)
 
         for field in cls.get_fields(source=('wfs',)).values():
             instance.data[field['name']] = cls._parse(
@@ -683,6 +688,10 @@ class AbstractDovType(AbstractTypeCommon):
 
         """
         fields = self.get_field_names(return_fields)
+        if len(fields) == 0:
+            fields = self.get_field_names(
+                return_fields, include_wfs_injected=True)
+
         ownfields = self.get_field_names(include_subtypes=False,
                                          include_wfs_injected=True)
         subfields = [f for f in fields if f not in ownfields]

@@ -199,7 +199,7 @@ class AbstractSearch(AbstractCommon):
         if self._wfs is None:
             wfs_endpoint_url = self._get_wfs_endpoint()
 
-            capabilities = owsutil.get_url(
+            capabilities = owsutil.get_wfs_capabilities(
                 wfs_endpoint_url + '?request=GetCapabilities&version=2.0.0')
 
             self._wfs = WebFeatureService(
@@ -238,11 +238,13 @@ class AbstractSearch(AbstractCommon):
             if self._md_metadata is None:
                 self._md_metadata = self._get_remote_metadata()
 
-            if self._fc_featurecatalogue is None:
+            if self._md_metadata is not None and \
+                    self._fc_featurecatalogue is None:
                 csw_url = self._get_csw_base_url()
                 fc_uuid = owsutil.get_featurecatalogue_uuid(self._md_metadata)
-                self._fc_featurecatalogue = \
-                    owsutil.get_remote_featurecatalogue(csw_url, fc_uuid)
+                if fc_uuid is not None:
+                    self._fc_featurecatalogue = \
+                        owsutil.get_remote_featurecatalogue(csw_url, fc_uuid)
 
             if self._xsd_schemas is None:
                 self._xsd_schemas = self._get_remote_xsd_schemas()
@@ -322,9 +324,10 @@ class AbstractSearch(AbstractCommon):
 
         Returns
         -------
-        owslib.iso.MD_Metadata
+        owslib.iso.MD_Metadata or None
             Parsed remote metadata describing the WFS layer in more detail,
-            in the ISO 19115/19139 format.
+            in the ISO 19115/19139 format or None when no metadata could be
+            found or parsed.
 
         """
         wfs_layer = self._get_layer()
@@ -470,7 +473,8 @@ class AbstractSearch(AbstractCommon):
             self._map_df_wfs_source[f['name']] = f['sourcefield']
 
         for wfs_field in wfs_schema['properties'].keys():
-            if wfs_field in feature_catalogue['attributes']:
+            if feature_catalogue is not None and \
+                    wfs_field in feature_catalogue['attributes']:
                 fc_field = feature_catalogue['attributes'][wfs_field]
                 self._wfs_fields.append(wfs_field)
 
@@ -489,6 +493,23 @@ class AbstractSearch(AbstractCommon):
 
                 if fc_field['values'] is not None:
                     field['values'] = fc_field['values']
+
+                fields[name] = field
+            else:
+                self._wfs_fields.append(wfs_field)
+
+                name = self._map_wfs_source_df.get(wfs_field, wfs_field)
+
+                field = {
+                    'name': name,
+                    'definition': None,
+                    'type': _map_wfs_datatypes.get(
+                        wfs_schema['properties'][wfs_field],
+                        wfs_schema['properties'][wfs_field]),
+                    'notnull': False,
+                    'query': True,
+                    'cost': 1
+                }
 
                 fields[name] = field
 
@@ -632,6 +653,8 @@ class AbstractSearch(AbstractCommon):
                             "'{}'. Did you mean '{}'?".format(rf, sugg))
                     raise InvalidFieldError(
                         "Unknown return field: '{}'".format(rf))
+        elif len(self._type.fields) == 0:
+            self._init_fields()
 
     @staticmethod
     def _get_remote_wfs_feature(wfs, typename, location, filter,
@@ -756,13 +779,17 @@ class AbstractSearch(AbstractCommon):
 
             filter_request = etree.tostring(filter_request, encoding='unicode')
 
-        wfs_property_names = [self._type.pkey_fieldname]
+        if self._type.pkey_fieldname is not None:
+            wfs_property_names = [self._type.pkey_fieldname]
+        else:
+            wfs_property_names = []
 
         if return_fields is None:
             wfs_property_names.extend([
                 f['sourcefield'] for f in self._type.get_fields(
-                    source=('wfs',)).values() if not f.get(
-                    'wfs_injected', False)])
+                    source=('wfs',)).values() if (
+                        self._type.pkey_fieldname is None
+                        or not f.get('wfs_injected', False))])
         else:
             wfs_property_names.extend([self._map_df_wfs_source[i]
                                        for i in self._map_df_wfs_source
@@ -874,8 +901,10 @@ class AbstractSearch(AbstractCommon):
             for r in pool.join():
                 if r.get_error():
                     raise r.get_error()
-                elif r.get_result():
-                    result.append(r.get_result())
+
+                worker_result = r.get_result()
+                if worker_result is not None and len(worker_result) > 0:
+                    result.append(worker_result)
 
         return result
 
@@ -994,8 +1023,13 @@ class AbstractSearch(AbstractCommon):
             feature_generators.append(
                 self._type.from_wfs(tree, self._wfs_namespace))
 
+        cols = self._type.get_field_names(return_fields)
+        if len(cols) == 0:
+            cols = self._type.get_field_names(
+                return_fields, include_wfs_injected=True)
+
         df = pd.DataFrame(
             data=self._type.to_df_array(
                 chain.from_iterable(feature_generators), return_fields),
-            columns=self._type.get_field_names(return_fields))
+            columns=cols)
         return df

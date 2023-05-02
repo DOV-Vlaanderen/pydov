@@ -24,6 +24,7 @@
           <xsd:element maxOccurs="1" minOccurs="0" name="steenkool" nillable="true" type="xsd:boolean"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="chemisch" nillable="true" type="xsd:boolean"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="opdrachten" nillable="true" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="eerste_invoer" nillable="true" type="xsd:dateTime"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="geom" nillable="true" type="gml:PointPropertyType"/>
         </xsd:sequence>
       </xsd:extension>

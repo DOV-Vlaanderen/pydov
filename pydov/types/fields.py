@@ -185,3 +185,51 @@ class _CustomWfsField(AbstractField):
             Implement this in a subclass.
         """
         raise NotImplementedError
+
+
+class AbstractReturnField:
+    def __init__(self, name):
+        self.name = name
+
+    @classmethod
+    def from_field_name(cls, name):
+        return cls(name)
+
+
+class ReturnFieldList(list):
+    def __contains__(self, __key: object):
+        return __key in [i.name for i in self]
+
+    @classmethod
+    def from_field_names(self, return_fields):
+        if return_fields is None:
+            return None
+
+        result = ReturnFieldList()
+        for rf in return_fields:
+            if isinstance(rf, AbstractReturnField):
+                result.append(rf)
+            else:
+                result.append(ReturnField.from_field_name(rf))
+        return result
+
+
+class ReturnField(AbstractReturnField):
+    def __init__(self, name):
+        super().__init__(name)
+
+
+class GeometryReturnField(AbstractReturnField):
+    def __init__(self, geometry_field, srs='EPSG:31370'):
+        """Initialise a geometry return field.
+
+        Parameters
+        ----------
+        geometry_field : str
+            Name of the geometry field.
+        srs : str
+            EPSG qualified code of the CRS to be used. Defaults to Belgian
+            Lambert72.
+        """
+        super().__init__(geometry_field)
+        self.srs = srs

@@ -18,7 +18,7 @@ import pandas as pd
 import numpy as np
 
 import pydov
-from pydov.types.fields import _WfsInjectedField
+from pydov.types.fields import _WfsInjectedField, ReturnFieldList
 from pydov.util import owsutil
 from pydov.util.dovutil import build_dov_url, get_xsd_schema
 from pydov.util.errors import (InvalidFieldError, InvalidSearchParameterError,
@@ -585,7 +585,7 @@ class AbstractSearch(AbstractCommon):
             all fields are currently supported as a search parameter.
         sort_by : owslib.fes2.SortBy, optional
             List of properties to sort by.
-        return_fields : list<str> or tuple<str> or set<str>
+        return_fields : pydov.types.fields.ReturnFieldList
             A list of fields to be returned in the output data. This should
             be a subset of the fields provided in `get_fields()`.
         max_features : int
@@ -668,27 +668,28 @@ class AbstractSearch(AbstractCommon):
                         "Unknown query parameter: '{}'".format(name))
 
         if return_fields is not None:
-            if type(return_fields) not in (list, tuple, set):
-                raise AttributeError('return_fields should be a list, '
-                                     'tuple or set')
+            if not isinstance(return_fields, ReturnFieldList):
+                raise AttributeError(
+                    'return_fields should be an instance of '
+                    'pydov.types.fields.ReturnFieldList')
 
             self._init_fields()
             for rf in return_fields:
-                if rf not in self._fields:
-                    if rf in self._map_wfs_source_df:
+                if rf.name not in self._fields:
+                    if rf.name in self._map_wfs_source_df:
                         raise InvalidFieldError(
                             "Unknown return field: "
                             "'{}'. Did you mean '{}'?".format(
                                 rf, self._map_wfs_source_df[rf]))
-                    if rf.lower() in [i.lower() for i in
-                                      self._map_wfs_source_df.keys()]:
+                    if rf.name.lower() in [i.lower() for i in
+                                           self._map_wfs_source_df.keys()]:
                         sugg = [i for i in self._map_wfs_source_df.keys() if
-                                i.lower() == rf.lower()][0]
+                                i.lower() == rf.name.lower()][0]
                         raise InvalidFieldError(
                             "Unknown return field: "
-                            "'{}'. Did you mean '{}'?".format(rf, sugg))
+                            "'{}'. Did you mean '{}'?".format(rf.name, sugg))
                     raise InvalidFieldError(
-                        "Unknown return field: '{}'".format(rf))
+                        "Unknown return field: '{}'".format(rf.name))
         elif len(self._type.fields) == 0:
             self._init_fields()
 
@@ -1050,6 +1051,8 @@ class AbstractSearch(AbstractCommon):
             subclass.
 
         """
+        return_fields = ReturnFieldList.from_field_names(return_fields)
+
         trees = self._search(location=location, query=query, sort_by=sort_by,
                              return_fields=return_fields,
                              max_features=max_features)

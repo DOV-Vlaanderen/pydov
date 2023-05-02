@@ -10,7 +10,7 @@ from owslib.etree import etree
 
 import pydov
 from pydov.search.abstract import AbstractCommon
-from pydov.types.fields import AbstractField
+from pydov.types.fields import AbstractField, ReturnFieldList
 from pydov.util import owsutil
 from pydov.util.dovutil import get_dov_xml, parse_dov_xml
 from pydov.util.errors import RemoteFetchError, XmlFetchWarning
@@ -457,7 +457,7 @@ class AbstractDovType(AbstractTypeCommon):
 
         Parameters
         ----------
-        return_fields : list<str> or tuple<str> or set<str>
+        return_fields : ReturnFieldList
             List of fields to include in the data array. The order is
             ignored, the default order of the fields of the datatype is used
             instead. Defaults to None, which will include all fields.
@@ -496,9 +496,10 @@ class AbstractDovType(AbstractTypeCommon):
             if include_subtypes:
                 for st in cls.subtypes:
                     fields.extend(st.get_field_names())
-        elif type(return_fields) not in (list, tuple, set):
+        elif not isinstance(return_fields, ReturnFieldList):
             raise AttributeError(
-                'return_fields should be a list, tuple or set')
+                'return_fields should be an instance of '
+                'pydov.types.fields.ReturnFieldList')
         else:
             cls_fields = [f['name'] for f in cls.fields if f['type']
                           != 'geometry' or include_geometry]
@@ -506,12 +507,12 @@ class AbstractDovType(AbstractTypeCommon):
                 for st in cls.subtypes:
                     cls_fields.extend(st.get_field_names())
 
-            fields = [f for f in return_fields if f in cls_fields]
+            fields = [f.name for f in return_fields if f.name in cls_fields]
 
             for rf in return_fields:
-                if rf not in cls_fields:
+                if rf.name not in cls_fields:
                     raise InvalidFieldError(
-                        "Unknown return field: '{}'".format(rf))
+                        "Unknown return field: '{}'".format(rf.name))
         return fields
 
     @classmethod

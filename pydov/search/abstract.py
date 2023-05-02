@@ -638,6 +638,14 @@ class AbstractSearch(AbstractCommon):
                     raise InvalidFieldError(
                         "Unknown query parameter: '{}'".format(name))
 
+                if name in self._wfs_fields and name in self._fields and \
+                        self._fields[name]['type'] == 'geometry':
+                    raise InvalidFieldError(
+                        ("Cannot use geometry field '{}' in attribute query. "
+                         "Use the 'location' parameter for "
+                         "spatial filtering.").format(name)
+                    )
+
         if location is not None:
             self._init_fields()
 

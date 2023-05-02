@@ -485,24 +485,8 @@ class AbstractSearch(AbstractCommon):
             self._map_df_wfs_source[f['name']] = f['sourcefield']
 
         for wfs_field in wfs_schema['properties'].keys():
-            if feature_catalogue is None:
-                self._wfs_fields.append(wfs_field)
-
-                name = self._map_wfs_source_df.get(wfs_field, wfs_field)
-
-                field = {
-                    'name': name,
-                    'definition': None,
-                    'type': _map_wfs_datatypes.get(
-                        wfs_schema['properties'][wfs_field],
-                        wfs_schema['properties'][wfs_field]),
-                    'notnull': False,
-                    'query': True,
-                    'cost': 1
-                }
-
-                fields[name] = field
-            elif wfs_field in feature_catalogue['attributes']:
+            if feature_catalogue is not None and \
+                    wfs_field in feature_catalogue['attributes']:
                 fc_field = feature_catalogue['attributes'][wfs_field]
                 self._wfs_fields.append(wfs_field)
 
@@ -521,6 +505,23 @@ class AbstractSearch(AbstractCommon):
 
                 if fc_field['values'] is not None:
                     field['values'] = fc_field['values']
+
+                fields[name] = field
+            else:
+                self._wfs_fields.append(wfs_field)
+
+                name = self._map_wfs_source_df.get(wfs_field, wfs_field)
+
+                field = {
+                    'name': name,
+                    'definition': None,
+                    'type': _map_wfs_datatypes.get(
+                        wfs_schema['properties'][wfs_field],
+                        wfs_schema['properties'][wfs_field]),
+                    'notnull': False,
+                    'query': True,
+                    'cost': 1
+                }
 
                 fields[name] = field
 

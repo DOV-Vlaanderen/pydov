@@ -31,7 +31,7 @@ def has_geom_support():
     try:
         import pygml
         import shapely
-        return True or pygml.__version__ and shapely.__version__
+        return True or (pygml.__version__ and shapely.__version__)
     except ImportError:
         return False
 

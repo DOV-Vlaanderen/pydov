@@ -12,6 +12,7 @@ from datetime import datetime
 from importlib.metadata import version
 import json
 
+
 class RequestPFASdata:
 
     def __init__(self):
@@ -46,19 +47,14 @@ class RequestPFASdata:
 
         self.dictionary = {"date": date, "versions": package_versions, "nb_datapoints": [{}]}
 
-        self.lowerleftx = 15000
-        self.lowerlefty = 150000
-        self.upperrightx = 270000
-        self.upperrighty = 250000
-
-    def wfs_request(self, layer, bbox):
+    def wfs_request(self, layer, location):
         """Download the available PFAS-data through a wfs request.
 
         Parameters
         ----------
         layer : str
             The name of the layer containing the PFAS-data.
-        bbox : Box
+        location : Box
             A box location, also known as a bounding box.
 
         Returns
@@ -67,14 +63,14 @@ class RequestPFASdata:
         """
 
         wfsSearch = WfsSearch(layer)
-        return wfsSearch.search(location=Within(bbox))
+        return wfsSearch.search(location=Within(location))
 
-    def pydov_request(self, bbox):
+    def pydov_request(self, location):
         """Function to download the groundwater monster and according filter data for a specific bounding box.
 
         Parameters
         ----------
-        bbox : Box
+        location : Box
             A box location, also known as a bounding box.
 
         Returns
@@ -84,7 +80,7 @@ class RequestPFASdata:
 
         gwmonster = GrondwaterMonsterSearch()
         query = PropertyIsEqualTo(propertyname='chemisch_PFAS', literal='true')
-        df = gwmonster.search(location=Within(bbox), query=query)
+        df = gwmonster.search(location=Within(location), query=query)
         df = df[df.parametergroep == "Grondwater_chemisch_PFAS"]
         df = pd.DataFrame(df)  # Create a dataframe.
         data = df
@@ -105,14 +101,23 @@ class RequestPFASdata:
             logger.info(f"Empty dataframe: {e}")
         return data
 
-    def biota(self):
+    def biota(self, location):
         """
         Download the biota data.
+
+        Parameters
+        ----------
+        location : Box
+            A box location, also known as a bounding box.
+
+        Returns
+        -------
+        The downloaded biota data.
         """
         logger.info(f"Downloading biota data")
         data_wfs_VMM_biota = self.wfs_request(
             'pfas:pfas_biota',
-            Box(self.lowerleftx, self.lowerlefty, self.upperrightx, self.upperrighty))
+            location)
 
         data_wfs_VMM_biota = data_wfs_VMM_biota.drop_duplicates(
             subset=data_wfs_VMM_biota.columns)
@@ -124,14 +129,23 @@ class RequestPFASdata:
 
         return data_wfs_VMM_biota
 
-    def effluent(self):
+    def effluent(self, location):
         """
         Download the effluent data.
+
+        Parameters
+        ----------
+        location : Box
+            A box location, also known as a bounding box.
+
+        Returns
+        -------
+        The downloaded effluent data.
         """
         logger.info(f"Downloading effluent data")
         data_wfs_OVAM = self.wfs_request(
             'pfas:pfas_analyseresultaten',
-            Box(self.lowerleftx, self.lowerlefty, self.upperrightx, self.upperrighty))
+            location)
 
         data_wfs_OVAM = data_wfs_OVAM.drop_duplicates(
             subset=data_wfs_OVAM.columns)
@@ -144,19 +158,28 @@ class RequestPFASdata:
 
         return data_wfs_OVAM
 
-    def groundwater(self):
+    def groundwater(self, location):
         """
         Download the groundwater data.
+
+        Parameters
+        ----------
+        location : Box
+            A box location, also known as a bounding box.
+
+        Returns
+        -------
+        The downloaded groundwater data.
         """
         logger.info(f"Downloading groundwater data")
         data_pydov_VMM_gw = self.pydov_request(
-            Box(self.lowerleftx, self.lowerlefty, self.upperrightx, self.upperrighty))
+            location)
         data_wfs_OVAM = self.wfs_request(
             'pfas:pfas_analyseresultaten',
-            Box(self.lowerleftx, self.lowerlefty, self.upperrightx, self.upperrighty))
+            location)
         data_wfs_Lantis_gw = self.wfs_request(
             'pfas:lantis_gw_metingen_publiek',
-            Box(self.lowerleftx, self.lowerlefty, self.upperrightx, self.upperrighty))
+            location)
 
         data_pydov_VMM_gw = data_pydov_VMM_gw.drop_duplicates(
             subset=data_pydov_VMM_gw.columns)
@@ -179,14 +202,23 @@ class RequestPFASdata:
 
         return data_pydov_VMM_gw, data_wfs_OVAM, data_wfs_Lantis_gw
 
-    def migration(self):
+    def migration(self, location):
         """
         Download the migration data.
+
+        Parameters
+        ----------
+        location : Box
+            A box location, also known as a bounding box.
+
+        Returns
+        -------
+        The downloaded migration data.
         """
         logger.info(f"Downloading migration data")
         data_wfs_OVAM = self.wfs_request(
             'pfas:pfas_analyseresultaten',
-            Box(self.lowerleftx, self.lowerlefty, self.upperrightx, self.upperrighty))
+            location)
 
         data_wfs_OVAM = data_wfs_OVAM.drop_duplicates(
             subset=data_wfs_OVAM.columns)
@@ -199,14 +231,23 @@ class RequestPFASdata:
 
         return data_wfs_OVAM
 
-    def pure_product(self):
+    def pure_product(self, location):
         """
         Download the pure product data.
+
+        Parameters
+        ----------
+        location : Box
+            A box location, also known as a bounding box.
+
+        Returns
+        -------
+        The downloaded pure product data.
         """
         logger.info(f"Downloading pure product data")
         data_wfs_OVAM = self.wfs_request(
             'pfas:pfas_analyseresultaten',
-            Box(self.lowerleftx, self.lowerlefty, self.upperrightx, self.upperrighty))
+            location)
 
         data_wfs_OVAM = data_wfs_OVAM.drop_duplicates(
             subset=data_wfs_OVAM.columns)
@@ -219,14 +260,23 @@ class RequestPFASdata:
 
         return data_wfs_OVAM
 
-    def rainwater(self):
+    def rainwater(self, location):
         """
         Download the rainwater data.
+
+        Parameters
+        ----------
+        location : Box
+            A box location, also known as a bounding box.
+
+        Returns
+        -------
+        The downloaded rainwater data.
         """
         logger.info(f"Downloading rainwater data")
         data_wfs_OVAM = self.wfs_request(
             'pfas:pfas_analyseresultaten',
-            Box(self.lowerleftx, self.lowerlefty, self.upperrightx, self.upperrighty))
+            location)
 
         data_wfs_OVAM = data_wfs_OVAM.drop_duplicates(
             subset=data_wfs_OVAM.columns)
@@ -239,17 +289,26 @@ class RequestPFASdata:
 
         return data_wfs_OVAM
 
-    def soil(self):
+    def soil(self, location):
         """
         Download the soil data.
+
+        Parameters
+        ----------
+        location : Box
+            A box location, also known as a bounding box.
+
+        Returns
+        -------
+        The downloaded soil data.
         """
         logger.info(f"Downloading soil data")
         data_wfs_OVAM = self.wfs_request(
             'pfas:pfas_analyseresultaten',
-            Box(self.lowerleftx, self.lowerlefty, self.upperrightx, self.upperrighty))
+            location)
         data_wfs_Lantis_soil = self.wfs_request(
             'pfas:lantis_bodem_metingen',
-            Box(self.lowerleftx, self.lowerlefty, self.upperrightx, self.upperrighty))
+            location)
 
         data_wfs_OVAM = data_wfs_OVAM.drop_duplicates(
             subset=data_wfs_OVAM.columns)
@@ -267,45 +326,67 @@ class RequestPFASdata:
 
         return data_wfs_OVAM, data_wfs_Lantis_soil
 
-    def soil_water(self):
+    def soil_water(self, location):
         """
         Download the soil water data.
+
+        Parameters
+        ----------
+        location : Box
+            A box location, also known as a bounding box.
+
+        Returns
+        -------
+        The downloaded soil water data.
         """
         logger.info(f"Downloading soilwater data")
         data_wfs_VMM_ws = self.wfs_request(
             'waterbodems:pfas_meetpunten_fcs',
-            Box(self.lowerleftx, self.lowerlefty, self.upperrightx, self.upperrighty))
+            location)
         data_wfs_OVAM = self.wfs_request(
             'pfas:pfas_analyseresultaten',
-            Box(self.lowerleftx, self.lowerlefty, self.upperrightx, self.upperrighty))
+            location)
 
         data_wfs_VMM_ws = data_wfs_VMM_ws.drop_duplicates(
             subset=data_wfs_VMM_ws.columns)
         data_wfs_OVAM = data_wfs_OVAM.drop_duplicates(
             subset=data_wfs_OVAM.columns)
-        data_wfs_OVAM = data_wfs_OVAM[data_wfs_OVAM['medium'] == 'Waterbodem - sediment']
+        data_wfs_OVAM_sediment = data_wfs_OVAM[data_wfs_OVAM['medium'] == 'Waterbodem - sediment']
+        data_wfs_OVAM_fixed = data_wfs_OVAM[data_wfs_OVAM['medium'] == 'Waterbodem - vaste deel van waterbodem']
 
         data_wfs_VMM_ws_len = len(data_wfs_VMM_ws)
-        data_wfs_OVAM_len = len(data_wfs_OVAM)
+        data_wfs_OVAM_sediment_len = len(data_wfs_OVAM_sediment)
+        data_wfs_OVAM_fixed_len = len(data_wfs_OVAM_fixed)
 
         nb_datapoints = {"Soil_water_VMM" : data_wfs_VMM_ws_len}
         self.dictionary["nb_datapoints"][0].update(nb_datapoints)
-        nb_datapoints = {"Soil_water_OVAM" : data_wfs_OVAM_len}
+        nb_datapoints = {"Soil_water_sediment_OVAM" : data_wfs_OVAM_sediment_len}
+        self.dictionary["nb_datapoints"][0].update(nb_datapoints)
+        nb_datapoints = {"Soil_water_fixed_OVAM": data_wfs_OVAM_fixed_len}
         self.dictionary["nb_datapoints"][0].update(nb_datapoints)
 
-        return data_wfs_VMM_ws, data_wfs_OVAM
+        return data_wfs_VMM_ws, data_wfs_OVAM_sediment, data_wfs_OVAM_fixed
 
-    def surface_water(self):
+    def surface_water(self, location):
         """
         Download the surface water data.
+
+        Parameters
+        ----------
+        location : Box
+            A box location, also known as a bounding box.
+
+        Returns
+        -------
+        The downloaded surface water data.
         """
         logger.info(f"Downloading surface water data")
         data_wfs_VMM_sw = self.wfs_request(
             'pfas:pfas_oppwater',
-            Box(self.lowerleftx, self.lowerlefty, self.upperrightx, self.upperrighty))
+            location)
         data_wfs_OVAM = self.wfs_request(
             'pfas:pfas_analyseresultaten',
-            Box(self.lowerleftx, self.lowerlefty, self.upperrightx, self.upperrighty))
+            location)
 
         data_wfs_VMM_sw = data_wfs_VMM_sw.drop_duplicates(
             subset=data_wfs_VMM_sw.columns)
@@ -324,14 +405,23 @@ class RequestPFASdata:
 
         return data_wfs_VMM_sw, data_wfs_OVAM
 
-    def waste_water(self):
+    def waste_water(self, location):
         """
         Download the waste water data.
+
+        Parameters
+        ----------
+        location : Box
+            A box location, also known as a bounding box.
+
+        Returns
+        -------
+        The downloaded waste water data.
         """
         logger.info(f"Downloading waste water data")
         data_wfs_VMM_ww = self.wfs_request(
             'pfas:pfas_afvalwater',
-            Box(self.lowerleftx, self.lowerlefty, self.upperrightx, self.upperrighty))
+            location)
 
         data_wfs_VMM_ww = data_wfs_VMM_ww.drop_duplicates(
             subset=data_wfs_VMM_ww.columns)
@@ -343,7 +433,7 @@ class RequestPFASdata:
 
         return data_wfs_VMM_ww
 
-    def main(self, medium, save):
+    def main(self, medium, location, save):
 
         #todo: get pfas analyseresultaten from OVAM in cache, so it doesn't have to download again.
         # Can you query wfs?
@@ -381,49 +471,49 @@ class RequestPFASdata:
 
         for i in medium:
             if i == 'all':
-                data_wfs_VMM_biota = self.biota()
-                data_wfs_OVAM_effluent = self.effluent()
-                data_pydov_VMM_gw, data_wfs_OVAM_gw, data_wfs_Lantis_gw = self.groundwater()
-                data_wfs_OVAM_migration = self.migration()
-                data_wfs_OVAM_pp = self.pure_product()
-                data_wfs_OVAM_rainwater = self.rainwater()
-                data_wfs_OVAM_soil, data_wfs_Lantis_soil = self.soil()
-                data_wfs_VMM_ws, data_wfs_OVAM_ws = self.soil_water()
-                data_wfs_VMM_sw, data_wfs_OVAM_sw = self.surface_water()
-                data_wfs_VMM_ww = self.waste_water()
+                data_wfs_VMM_biota = self.biota(location)
+                data_wfs_OVAM_effluent = self.effluent(location)
+                data_pydov_VMM_gw, data_wfs_OVAM_gw, data_wfs_Lantis_gw = self.groundwater(location)
+                data_wfs_OVAM_migration = self.migration(location)
+                data_wfs_OVAM_pp = self.pure_product(location)
+                data_wfs_OVAM_rainwater = self.rainwater(location)
+                data_wfs_OVAM_soil, data_wfs_Lantis_soil = self.soil(location)
+                data_wfs_VMM_ws, data_wfs_OVAM_ws_sediment, data_wfs_OVAM_ws_fixed = self.soil_water(location)
+                data_wfs_VMM_sw, data_wfs_OVAM_sw = self.surface_water(location)
+                data_wfs_VMM_ww = self.waste_water(location)
                 return_list.extend([data_wfs_VMM_biota, data_wfs_OVAM_effluent, data_pydov_VMM_gw, data_wfs_OVAM_gw,
                         data_wfs_Lantis_gw, data_wfs_OVAM_migration, data_wfs_OVAM_pp, data_wfs_OVAM_rainwater,
-                        data_wfs_OVAM_soil, data_wfs_Lantis_soil, data_wfs_VMM_ws, data_wfs_OVAM_ws, data_wfs_VMM_sw,
+                        data_wfs_OVAM_soil, data_wfs_Lantis_soil, data_wfs_VMM_ws, data_wfs_OVAM_ws_sediment, data_wfs_OVAM_ws_fixed, data_wfs_VMM_sw,
                         data_wfs_OVAM_sw, data_wfs_VMM_ww])
             elif i == 'biota':
-                data_wfs_VMM_biota = self.biota()
+                data_wfs_VMM_biota = self.biota(location)
                 return_list.extend([data_wfs_VMM_biota])
             elif i == 'effluent':
-                data_wfs_OVAM_effluent = self.effluent()
+                data_wfs_OVAM_effluent = self.effluent(location)
                 return_list.extend([data_wfs_OVAM_effluent])
             elif i == 'groundwater':
-                data_pydov_VMM_gw, data_wfs_OVAM_gw, data_wfs_Lantis_gw = self.groundwater()
+                data_pydov_VMM_gw, data_wfs_OVAM_gw, data_wfs_Lantis_gw = self.groundwater(location)
                 return_list.extend([data_pydov_VMM_gw, data_wfs_OVAM_gw, data_wfs_Lantis_gw])
             elif i == 'migration':
-                data_wfs_OVAM_migration = self.migration()
+                data_wfs_OVAM_migration = self.migration(location)
                 return_list.extend([data_wfs_OVAM_migration])
             elif i == 'pure product':
-                data_wfs_OVAM_pp = self.pure_product()
+                data_wfs_OVAM_pp = self.pure_product(location)
                 return_list.extend([data_wfs_OVAM_pp])
             elif i == 'rainwater':
-                data_wfs_OVAM_rainwater = self.rainwater()
+                data_wfs_OVAM_rainwater = self.rainwater(location)
                 return_list.extend([data_wfs_OVAM_rainwater])
             elif i == 'soil':
-                data_wfs_OVAM_soil, data_wfs_Lantis_soil = self.soil()
+                data_wfs_OVAM_soil, data_wfs_Lantis_soil = self.soil(location)
                 return_list.extend([data_wfs_OVAM_soil, data_wfs_Lantis_soil])
             elif i == 'soil water':
-                data_wfs_VMM_ws, data_wfs_OVAM_ws = self.soil_water()
-                return_list.extend([data_wfs_VMM_ws, data_wfs_OVAM_ws])
+                data_wfs_VMM_ws, data_wfs_OVAM_ws_sediment, data_wfs_OVAM_ws_fixed = self.soil_water(location)
+                return_list.extend([data_wfs_VMM_ws, data_wfs_OVAM_ws_sediment, data_wfs_OVAM_ws_fixed])
             elif i == 'surface water':
-                data_wfs_VMM_sw, data_wfs_OVAM_sw = self.surface_water()
+                data_wfs_VMM_sw, data_wfs_OVAM_sw = self.surface_water(location)
                 return_list.extend([data_wfs_VMM_sw, data_wfs_OVAM_sw])
             elif i == 'waste water':
-                data_wfs_VMM_ww = self.waste_water()
+                data_wfs_VMM_ww = self.waste_water(location)
                 return_list.extend([data_wfs_VMM_ww])
 
         metadata = json.dumps(self.dictionary, indent=3)
@@ -462,8 +552,10 @@ class RequestPFASdata:
                         pbar.update(metadata['nb_datapoints'][0]['Soil_Lantis'])
                         data_wfs_VMM_ws.to_excel(writer, sheet_name='Soil_water_VMM')
                         pbar.update(metadata['nb_datapoints'][0]['Soil_water_VMM'])
-                        data_wfs_OVAM_ws.to_excel(writer, sheet_name='Soil_water_OVAM')
-                        pbar.update(metadata['nb_datapoints'][0]['Soil_water_OVAM'])
+                        data_wfs_OVAM_ws_sediment.to_excel(writer, sheet_name='Soil_water_sediment_OVAM')
+                        pbar.update(metadata['nb_datapoints'][0]['Soil_water_sediment_OVAM'])
+                        data_wfs_OVAM_ws_fixed.to_excel(writer, sheet_name='Soil_water_fixed_OVAM')
+                        pbar.update(metadata['nb_datapoints'][0]['Soil_water_fixed_OVAM'])
                         data_wfs_VMM_sw.to_excel(writer, sheet_name='Surface_water_VMM')
                         pbar.update(metadata['nb_datapoints'][0]['Surface_water_VMM'])
                         data_wfs_OVAM_sw.to_excel(writer, sheet_name='Surface_water_OVAM')
@@ -500,8 +592,10 @@ class RequestPFASdata:
                     elif i == 'soil water':
                         data_wfs_VMM_ws.to_excel(writer, sheet_name='Soil_water_VMM')
                         pbar.update(metadata['nb_datapoints'][0]['Soil_water_VMM'])
-                        data_wfs_OVAM_ws.to_excel(writer, sheet_name='Soil_water_OVAM')
-                        pbar.update(metadata['nb_datapoints'][0]['Soil_water_OVAM'])
+                        data_wfs_OVAM_ws_sediment.to_excel(writer, sheet_name='Soil_water_sediment_OVAM')
+                        pbar.update(metadata['nb_datapoints'][0]['Soil_water_sediment_OVAM'])
+                        data_wfs_OVAM_ws_fixed.to_excel(writer, sheet_name='Soil_water_fixed_OVAM')
+                        pbar.update(metadata['nb_datapoints'][0]['Soil_water_fixed_OVAM'])
                     elif i == 'surface water':
                         data_wfs_VMM_sw.to_excel(writer, sheet_name='Surface_water_VMM')
                         pbar.update(metadata['nb_datapoints'][0]['Surface_water_VMM'])
@@ -518,9 +612,9 @@ class RequestPFASdata:
         duration = end_time-start_time
         logger.info(f'The program was executed in {duration}.')
 
-
-df = RequestPFASdata().main(['soil water', 'waste water'], False)
-pd.set_option("display.max_columns", None)
-print('df1: \n', df[0])
-print('df2: \n', df[1])
-print('df3: \n', df[2])
+if __name__ == '__main__':
+    parameters = ['all']
+    location = Box(15000, 150000, 270000, 250000)  # Bounding box Flanders
+    save = True
+    rd = RequestPFASdata()
+    df = rd.main(parameters, location, save)

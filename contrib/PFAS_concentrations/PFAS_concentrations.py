@@ -82,21 +82,20 @@ class RequestPFASdata:
         query = PropertyIsEqualTo(propertyname='chemisch_PFAS', literal='true')
         df = gwmonster.search(location=Within(location), query=query)
         df = df[df.parametergroep == "Grondwater_chemisch_PFAS"]
-        df = pd.DataFrame(df)  # Create a dataframe.
+        df = pd.DataFrame(df)
         data = df
 
         try:
-            # Link a local variable to GrondwaterMonsterSearch()
             gwfilter = GrondwaterFilterSearch()
             filter_elements = gwfilter.search(query=Join(data, "pkey_filter"), return_fields=[
                 "pkey_filter",
                 "aquifer_code",
                 "diepte_onderkant_filter",
                 "lengte_filter"])
-            # Change the type of date.
+
             data["datum_monstername"] = pd.to_datetime(
                 data["datum_monstername"])
-            data = pd.merge(data, filter_elements)  # Combine the dataframes.
+            data = pd.merge(data, filter_elements)
         except ValueError as e:
             logger.info(f"Empty dataframe: {e}")
         return data

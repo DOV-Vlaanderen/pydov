@@ -6,9 +6,16 @@ Select datasets
 
 To get started with pydov you should first determine which information you want to search for. DOV provides a lot of different datasets about soil, subsoil and groundwater of Flanders, most of which can be queried using pydov.
 
-Generally the datasets consist of a main type and a subtype, where the resulting dataframe will contain multiple records for each instance of the main type based on the records of the subtype (you can think of this as a 'left join' between the main and the subtype).
+Depending on the type of data you want to query, you need a different search class instance. To search for boreholes for instance, you'd write::
 
-While you'll need to instantiate a different search class for each datatype, querying the datatypes from then on is the same. You can use similar queries for each of them, filtering on :ref:`attributes <query_attribute>`, :ref:`location <query_location>`, :ref:`sorting, limiting, <sort_limit>` and :ref:`customizing the output fields <output_df_fields>`.
+    from pydov.search.boring import BoringSearch
+
+    borehole_search = BoringSearch()
+    # df = borehole_search.search(...)
+
+While you'll need to instantiate a different search class for each datatype, querying the datatypes from then on is similar as each one supports the same ``search()`` method. You can use similar queries for each of them, filtering on :ref:`attributes <query_attribute>`, :ref:`location <query_location>`, :ref:`sorting, limiting, <sort_limit>` and :ref:`customizing the output fields <output_df_fields>`.
+
+Generally the datasets consist of a main type and a subtype, where the resulting dataframe will contain multiple records for each instance of the main type based on the records of the subtype (you can think of this as a 'left join' between the main and the subtype).
 
 Currently, we support the following datasets:
 
@@ -144,7 +151,7 @@ Default dataframe output
         diepte_tot_cm,Bodemmonster,1,float,45
         labo,Bodemmonster,1,string,Centrum voor Grondonderzoek (C.V.G.)
 
-Soil observations (bodemobservaties)
+Soil observations (Bodemobservaties)
 ------------------------------------
 
 Type
@@ -183,7 +190,7 @@ Default dataframe output
         fractiemeting_bovengrens,Fractiemeting,10,float,NaN
         fractiemeting_waarde,Fractiemeting,10,float,NaN
 
-Soil classifications (bodemclassificaties)
+Soil classifications (Bodemclassificaties)
 ------------------------------------------
 
 Type
@@ -713,6 +720,7 @@ Remarks
     When instantiating the WfsSearch class, you can provide the workspace-qualified layer name of your interest, for example::
 
         from pydov.search.generic import WfsSearch
+
         s = WfsSearch('erosie:erosie_gemeente')
 
 Example dataframe output
@@ -723,7 +731,7 @@ Example dataframe output
 
         Field,Source,Cost,Datatype,Example
         dataengine_id,WfsType,1,integer,1
-        gemeentelijke_erosiegevoeligheid,WfsType,1,string,zeer weinig gemeentelijke_erosiegevoelig
+        gemeentelijke_erosiegevoeligheid,WfsType,1,string,zeer weinig erosiegevoelig
         klasse,WfsType,1,integer,5
         gemeente,WfsType,1,string,Zoersel
         provincie,WfsType,1,string,Antwerpen

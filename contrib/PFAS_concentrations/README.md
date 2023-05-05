@@ -155,88 +155,120 @@ Possible mediums:
         - Waste_water_VMM
 </details>
 
+### Basis
 
-- Case 1 : You want to save the data
+```python
+from pydov.util.location import Within, Box
+from pydov.util.query import Join
+from loguru import logger
+from owslib.fes2 import PropertyIsEqualTo, And
+from tqdm.auto import tqdm
+from datetime import datetime
+from importlib.metadata import version
 
-  <br>
+medium = ['MEDIUM']
+location = Box(LowerLeftX,LowerLeftY,UpperRightX,UpperRightY)  # Bounding box of area of interest
 
-  - Example 1 : You want to download and save all the PFAS data
+rd = RequestPFASdata()
+df = rd.main(medium, query=None, location=location, sort_by=None, max_features=None, save=False)
+```
+Check out the query and customization options from pydov.\
+You can query on [attribute properties](https://pydov.readthedocs.io/en/stable/query_attribute.html)
+and [location](https://pydov.readthedocs.io/en/stable/query_location.html).\
+You can also [sort on one or multiple attributes](https://pydov.readthedocs.io/en/stable/sort_limit.html)
+and [restrict the number of WFS features returned](https://pydov.readthedocs.io/en/stable/sort_limit.html).
+
+### Case 1 : You want to save the data
+
+  - Example 1 : You want to download and save all the PFAS data of Flanders
 
       ```python
-      RequestPFASdata().main(['all'], True)
+      # Change in the basis request:
+        medium = ['all']
+        location = Box(15000, 150000, 270000, 250000)  # Bounding box Flanders
+        save = True
       ```
       This results in one excel-file with 15 tabs. One for each dataset.
 
-  <br>
 
-  <br>
-
-  - Example 2 : You only want to download and save the groundwater data
+  - Example 2 : You only want to download and save the groundwater data of Flanders
 
       ```python
-      RequestPFASdata().main(['groundwater'], True)
+    # Change in the basis request:
+        medium = ['groundwater']
+        location = Box(15000, 150000, 270000, 250000)  # Bounding box Flanders
+        save = True
       ```
       This results in one excel-file with 3 tabs. One tab with the groundwater data from VMM,
       one with the groundwater data from OVAM and one with the groundwater data from Lantis.
 
-  <br>
 
-  - Example 3 : You want to download and save the soil and groundwater data
+  - Example 3 : You want to download and save the soil and groundwater data of Flanders
 
       ```python
-      RequestPFASdata().main(['soil', 'groundwater'], True)
+    # Change in the basis request:
+        medium = ['soil', 'groundwater']
+        location = Box(15000, 150000, 270000, 250000)  # Bounding box Flanders
+        save = True
       ```
       This results in one excel-file with 5 tabs. One tab with the soil data from OVAM,
       one with the soil data from Lantis, one with the groundwater data from VMM,
       one with the groundwater data from OVAM and one with the groundwater data from Lantis.
 
-  <br>
 
-- Case 2 : You want the data in a dataframe to integrate it in your python script
+### Case 2 : You want the data in a dataframe to integrate it in your python script
 
-  <br>
-
-  - Example 1 : You want to download all the PFAS data
+  - Example 1 : You want to download all the PFAS data of Flanders
 
     ```python
-    df = RequestPFASdata().main(['all'], False)
-    df[0] # Biota_VMM
-    df[1] # Effluent_OVAM
-    df[2] # Groundwater_VMM
-    df[3] # Groundwater_OVAM
-    df[4] # Groundwater_Lantis
-    df[5] # Migration_OVAM
-    df[6] # Pure_product_OVAM
-    df[7] # Rainwater_OVAM
-    df[8] # Soil_OVAM
-    df[9] # Soil_Lantis
-    df[10] # Soil_water_VMM
-    df[11] # Soil_water_OVAM
-    df[12] # Surface_water_VMM
-    df[13] # Surface_water_OVAM
-    df[14] # Waste_water_VMM
+    # Change in the basis request:
+        medium = ['all']
+        location = Box(15000, 150000, 270000, 250000)  # Bounding box Flanders
+
+    # Access data:
+        df[0] # Biota_VMM
+        df[1] # Effluent_OVAM
+        df[2] # Groundwater_VMM
+        df[3] # Groundwater_OVAM
+        df[4] # Groundwater_Lantis
+        df[5] # Migration_OVAM
+        df[6] # Pure_product_OVAM
+        df[7] # Rainwater_OVAM
+        df[8] # Soil_OVAM
+        df[9] # Soil_Lantis
+        df[10] # Soil_water_VMM
+        df[11] # Soil_water_OVAM
+        df[12] # Surface_water_VMM
+        df[13] # Surface_water_OVAM
+        df[14] # Waste_water_VMM
     ```
-  <br>
 
-  <br>
-
-  - Example 2 : You only want to download the groundwater data
+  - Example 2 : You only want to download the groundwater data of Flanders
 
     ```python
-    df = RequestPFASdata().main(['groundwater'], False)
-    df[0] # Groundwater_VMM
-    df[1] # Groundwater_OVAM
-    df[2] # Groundwater_Lantis
-    ```
-  <br>
+    # Change in the basis request:
+        medium = ['groundwater']
+        location = Box(15000, 150000, 270000, 250000)  # Bounding box Flanders
 
-  - Example 3 : You want to download the soil and groundwater data
+    # Access data:
+        df[0] # Groundwater_VMM
+        df[1] # Groundwater_OVAM
+        df[2] # Groundwater_Lantis
+    ```
+
+  - Example 3 : You want to download the soil and groundwater data of Flanders
 
     ```python
-    df = RequestPFASdata().main(['soil', 'groundwater'], False)
-    df[0] # Soil_OVAM
-    df[1] # Soil_Lantis
-    df[2] # Groundwater_VMM
-    df[3] # Groundwater_OVAM
-    df[4] # Groundwater_Lantis
+    # Change in the basis request:
+        medium = ['soil', 'groundwater']
+        location = Box(15000, 150000, 270000, 250000)  # Bounding box Flanders
+
+    # Access data:
+        df[0] # Soil_OVAM
+        df[1] # Soil_Lantis
+        df[2] # Groundwater_VMM
+        df[3] # Groundwater_OVAM
+        df[4] # Groundwater_Lantis
     ```
+
+

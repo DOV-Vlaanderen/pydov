@@ -170,7 +170,16 @@ medium = ['MEDIUM']
 location = Box(LowerLeftX,LowerLeftY,UpperRightX,UpperRightY)  # Bounding box of area of interest
 
 rd = RequestPFASdata()
-df = rd.main(medium, query=None, location=location, sort_by=None, max_features=None, save=False)
+
+# If you are only interested in the data
+df = rd.main(medium, query=None, location=location, sort_by=None, max_features=None, save=False)[0]
+
+# If you are only interested in the metadata
+metadata = rd.main(medium, query=None, location=location, sort_by=None, max_features=None, save=False)[1]
+
+# If you are interested in both the data as the metadata
+df, metadata = rd.main(medium, query=None, location=location, sort_by=None, max_features=None, save=False)
+
 ```
 Check out the query and customization options from pydov.\
 You can query on [attribute properties](https://pydov.readthedocs.io/en/stable/query_attribute.html)

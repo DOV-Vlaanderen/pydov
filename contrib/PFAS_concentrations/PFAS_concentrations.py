@@ -594,7 +594,7 @@ class RequestPFASdata:
 
         Returns
         -------
-        The requested data in separate dataframe(s).
+        The requested data in separate dataframe(s) and the metadata.
         """
         start_time = datetime.now()
 
@@ -648,18 +648,18 @@ class RequestPFASdata:
                 return_list.extend([data_wfs_VMM_ww])
 
         metadata = json.dumps(self.dictionary, indent=3)
-        path = os.getcwd()
-        path1 = f"{path}/results/metadata.json"
-        if os.path.exists(path1):
-            with open(path1, "w") as outfile:
-                outfile.write(metadata)
-        else:
-            os.mkdir(f"{path}/results")
-            with open(path1, "w") as outfile:
-                outfile.write(metadata)
 
         if save:
             path = os.getcwd()
+            path1 = f"{path}/results/metadata.json"
+            if os.path.exists(path1):
+                with open(path1, "w") as outfile:
+                    outfile.write(metadata)
+            else:
+                os.mkdir(f"{path}/results")
+                with open(path1, "w") as outfile:
+                    outfile.write(metadata)
+
             with open(f"{path}/results/metadata.json") as metadata_file:
                 metadata = json.load(metadata_file)
 
@@ -742,8 +742,8 @@ class RequestPFASdata:
                         data_wfs_VMM_ww.to_excel(writer, sheet_name='Waste_water_VMM')
                         pbar.update(metadata['nb_datapoints'][0]['Waste_water_VMM'])
             pbar.close()
-        else:
-            return return_list
+
+        return return_list, metadata
 
         end_time = datetime.now()
         duration = end_time-start_time
@@ -754,4 +754,8 @@ if __name__ == '__main__':
     parameters = ['all']
     location = Within(Box(15000, 150000, 270000, 250000))  # Bounding box Flanders
     rd = RequestPFASdata()
-    df = rd.main(parameters, location, max_features=2)
+    #df = rd.main(parameters, location, max_features=2)[0]
+    #meta = rd.main(parameters, location, max_features=2)[1]
+    df, meta = rd.main(parameters, location, max_features=2)
+    print(df[0], meta)
+

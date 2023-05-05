@@ -10,6 +10,7 @@ dependencies:
 - pandas
 - tqdm
 - ipython
+- jupyter
 - jupyter_client
 - ipykernel
 - pip:

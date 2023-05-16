@@ -187,23 +187,47 @@ class _CustomWfsField(AbstractField):
         raise NotImplementedError
 
 
-class AbstractReturnField:
-    def __init__(self, name):
-        self.name = name
-
-    @classmethod
-    def from_field_name(cls, name):
-        return cls(name)
-
-
 class ReturnFieldList(list):
     def __contains__(self, __key: object):
         return __key in [i.name for i in self]
 
+    def get_names(self):
+        return [f.name for f in self]
+
     @classmethod
-    def from_field_names(self, return_fields):
+    def from_field_names(self, *return_fields):
+        """Initiale a ReturnFieldList from a list of return field names.
+
+        Parameters
+        ----------
+        return_fields : list or set or tuple of str
+            List, set or tuple of return field names.
+
+        Returns
+        -------
+        ReturnFieldList
+            Equivalent ReturnFieldList.
+
+        Raises
+        ------
+        AttributeError
+            If the value of return_fields is not a list, set or tuple.
+        """
+        if len(return_fields) == 0:
+            return None
+
+        if len(return_fields) == 1:
+            return_fields = return_fields[0]
+
+        if isinstance(return_fields, str):
+            return_fields = (return_fields,)
+
         if return_fields is None:
             return None
+
+        if not isinstance(return_fields, (list, set, tuple)):
+            # FIXME: this should be TypeError instead
+            raise AttributeError('return_fields should be a list, set or tuple')
 
         result = ReturnFieldList()
         for rf in return_fields:
@@ -214,22 +238,69 @@ class ReturnFieldList(list):
         return result
 
 
-class ReturnField(AbstractReturnField):
+class AbstractReturnField:
+    """Base class of ReturnField and GeometryReturnField."""
+
     def __init__(self, name):
+        """Initialisation.
+
+        Parameters
+        ----------
+        name : str
+            Name of the return field.
+        """
+        self.name = name
+
+    @classmethod
+    def from_field_name(cls, name):
+        """Initialise a new instance from a field name.
+
+        Parameters
+        ----------
+        name : str
+            Field name.
+
+        Returns
+        -------
+        Instance of this class.
+            Instance of ReturnField or GeometryReturnField.
+        """
+        return cls(name)
+
+
+class ReturnField(AbstractReturnField):
+    """Normal (non-geometry) return field."""
+
+    def __init__(self, name):
+        """Initialisation.
+
+        Parameters
+        ----------
+        name : str
+            Name of the return field.
+        """
         super().__init__(name)
 
 
 class GeometryReturnField(AbstractReturnField):
-    def __init__(self, geometry_field, srs='EPSG:31370'):
+    def __init__(self, geometry_field, srs=None):
         """Initialise a geometry return field.
 
         Parameters
         ----------
         geometry_field : str
             Name of the geometry field.
-        srs : str
-            EPSG qualified code of the CRS to be used. Defaults to Belgian
-            Lambert72.
+        srs : str, optional
+            EPSG code of the CRS of the geometries that will be returned. Defaults
+            to None, which means the default SRS of the WFS layer.
         """
         super().__init__(geometry_field)
+
+        if srs is not None:
+            if not isinstance(srs, str):
+                raise TypeError('srs should be a string starting with "EPSG"')
+
+            if not srs.lower().startswith('epsg'):
+                raise ValueError('srs should start with "EPSG"')
+
         self.srs = srs

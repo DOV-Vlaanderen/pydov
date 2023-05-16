@@ -4,6 +4,7 @@ import datetime
 from owslib.fes2 import PropertyIsEqualTo
 
 from pydov.search.grondwatermonster import GrondwaterMonsterSearch
+from pydov.types.fields import ReturnFieldList
 from pydov.types.grondwatermonster import GrondwaterMonster
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestSearch
@@ -33,10 +34,10 @@ class TestGrondwaterMonsterSearch(AbstractTestSearch):
     wfs_field = 'kationen'
     xml_field = 'eenheid'
 
-    valid_returnfields = ('pkey_grondwatermonster', 'datum_monstername')
-    valid_returnfields_subtype = (
+    valid_returnfields = ReturnFieldList.from_field_names('pkey_grondwatermonster', 'datum_monstername')
+    valid_returnfields_subtype = ReturnFieldList.from_field_names(
         'pkey_grondwatermonster', 'datum_monstername', 'eenheid')
-    valid_returnfields_extra = ('pkey_grondwatermonster', 'kationen')
+    valid_returnfields_extra = ReturnFieldList.from_field_names('pkey_grondwatermonster', 'kationen')
 
     df_default_columns = [
         'pkey_grondwatermonster', 'grondwatermonsternummer',

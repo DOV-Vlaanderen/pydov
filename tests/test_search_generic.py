@@ -1,6 +1,7 @@
 """Module grouping tests for the generic search module."""
 
 from pydov.search.generic import WfsSearch
+from pydov.types.fields import ReturnFieldList
 from pydov.types.generic import WfsTypeFactory
 from owslib.fes2 import PropertyIsEqualTo
 from pydov.util.dovutil import build_dov_url
@@ -33,9 +34,9 @@ class TestWfsSearch(AbstractTestSearch):
     xml_field = None
     wfs_field = 'opdrachtgever'
 
-    valid_returnfields = ('opdrachtgever', 'opdrachtnemer')
+    valid_returnfields = ReturnFieldList.from_field_names('opdrachtgever', 'opdrachtnemer')
     valid_returnfields_subtype = None
-    valid_returnfields_extra = ('startdatum', 'naam')
+    valid_returnfields_extra = ReturnFieldList.from_field_names('startdatum', 'naam')
 
     df_default_columns = [
         'id', 'naam', 'fiche', 'omschrijving', 'startdatum', 'einddatum',

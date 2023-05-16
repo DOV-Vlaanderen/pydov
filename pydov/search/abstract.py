@@ -667,6 +667,7 @@ class AbstractSearch(AbstractCommon):
                     raise InvalidFieldError(
                         "Unknown query parameter: '{}'".format(name))
 
+        return_fields = ReturnFieldList.from_field_names(return_fields)
         if return_fields is not None:
             if not isinstance(return_fields, ReturnFieldList):
                 raise AttributeError(

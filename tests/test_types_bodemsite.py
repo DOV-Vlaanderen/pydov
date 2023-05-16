@@ -1,6 +1,7 @@
 """Module grouping tests for the pydov.types.bodemsite module."""
 
 from pydov.types.bodemsite import Bodemsite
+from pydov.types.fields import ReturnFieldList
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes
 
@@ -19,15 +20,15 @@ class TestBodemsite(AbstractTestTypes):
     field_names = [
         'pkey_bodemsite', 'naam', 'waarnemingsdatum', 'beschrijving',
         'invoerdatum'
-        ]
+    ]
     field_names_subtypes = []
     field_names_nosubtypes = [
         'pkey_bodemsite', 'naam', 'waarnemingsdatum', 'beschrijving',
         'invoerdatum'
     ]
 
-    valid_returnfields = ('pkey_bodemsite', 'naam')
-    valid_returnfields_subtype = ('pkey_bodemsite', 'naam')
+    valid_returnfields = ReturnFieldList.from_field_names('pkey_bodemsite', 'naam')
+    valid_returnfields_subtype = ReturnFieldList.from_field_names('pkey_bodemsite', 'naam')
 
     inexistent_field = 'onbestaand'
 

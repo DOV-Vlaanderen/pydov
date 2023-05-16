@@ -1,5 +1,6 @@
 """Module grouping tests for the bodemclassificatie search module."""
 from owslib.fes2 import PropertyIsEqualTo
+from shapely.geometry import Point
 
 from pydov.search.bodemclassificatie import BodemclassificatieSearch
 from pydov.types.bodemclassificatie import Bodemclassificatie
@@ -40,3 +41,16 @@ class TestBodemclassificatieSearch(AbstractTestSearch):
         'pkey_bodemclassificatie', 'pkey_bodemlocatie', 'x', 'y', 'mv_mtaw',
         'classificatietype', 'bodemtype', 'auteurs'
     ]
+
+    def test_return_geometry(self, mp_get_schema,
+                             mp_remote_describefeaturetype,
+                             mp_remote_wfs_feature):
+        return_fields = list(self.df_default_columns)
+        return_fields.append('geom')
+
+        s = BodemclassificatieSearch()
+        df = s.search(max_features=1, return_fields=return_fields)
+
+        assert 'geom' in list(df)
+        assert len(df.geom.notna()) == 1
+        assert Point(248905.6718, 200391.287).equals(df.geom[0])

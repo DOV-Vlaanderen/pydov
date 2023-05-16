@@ -336,7 +336,7 @@ def set_geometry_column(location, geometry_column):
 def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
                                  filter=None, sort_by=None, propertyname=None,
                                  max_features=None, start_index=0,
-                                 srs='EPSG:31370'):
+                                 srs=None):
     """Build a WFS 2.0 GetFeature request in XML to be used as payload
     in a WFS 2.0 GetFeature request using POST.
 
@@ -362,7 +362,7 @@ def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
         The index of the first feature to return.
     srs : str
         EPSG code of the CRS of the geometries that will be returned. Defaults
-        to Belgian Lambert72.
+        to None, which means the default SRS of the WFS layer.
 
     Raises
     ------
@@ -398,7 +398,9 @@ def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
 
     query = etree.Element('{http://www.opengis.net/wfs/2.0}Query')
     query.set('typeNames', typename)
-    query.set('srsName', srs)
+
+    if srs is not None:
+        query.set('srsName', srs)
 
     if propertyname and len(propertyname) > 0:
         for property in sorted(propertyname):

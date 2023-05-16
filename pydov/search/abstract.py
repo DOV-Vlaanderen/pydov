@@ -18,7 +18,7 @@ import pandas as pd
 import numpy as np
 
 import pydov
-from pydov.types.fields import _WfsInjectedField, ReturnFieldList
+from pydov.types.fields import _WfsInjectedField, GeometryReturnField, ReturnFieldList
 from pydov.util import owsutil
 from pydov.util.dovutil import build_dov_url, get_xsd_schema
 from pydov.util.errors import (InvalidFieldError, InvalidSearchParameterError,
@@ -696,7 +696,7 @@ class AbstractSearch(AbstractCommon):
     @staticmethod
     def _get_remote_wfs_feature(wfs, typename, location, filter,
                                 sort_by, propertyname, max_features,
-                                geometry_column, start_index=0, session=None):
+                                geometry_column, srs=None, start_index=0, session=None):
         """Perform the WFS 2.0 GetFeature call to get features from the remote
         service.
 
@@ -716,6 +716,9 @@ class AbstractSearch(AbstractCommon):
             Limit the maximum number of features to request.
         geometry_column : str
             Name of the geometry column to use in the spatial filter.
+        srs : str
+            EPSG code of the CRS of the geometries that will be returned. Defaults
+            to None, which means the default SRS of the WFS layer.
         start_index : int
             Index of the first feature to return. Can be used for paging.
         session : requests.Session
@@ -736,7 +739,8 @@ class AbstractSearch(AbstractCommon):
             sort_by=sort_by,
             max_features=max_features,
             propertyname=propertyname,
-            start_index=start_index
+            start_index=start_index,
+            srs=srs
         )
 
         tree = HookRunner.execute_inject_wfs_getfeature_response(
@@ -827,10 +831,14 @@ class AbstractSearch(AbstractCommon):
                     source=('wfs',)).values() if (
                         self._type.pkey_fieldname is None
                         or not f.get('wfs_injected', False))])
+            geom_return_srs = None
         else:
             wfs_property_names.extend([self._map_df_wfs_source[i]
                                        for i in self._map_df_wfs_source
                                        if i in return_fields])
+
+            geom_return_srs = [f.srs for f in return_fields if isinstance(f, GeometryReturnField)]
+            geom_return_srs = geom_return_srs[0] if len(geom_return_srs) > 0 else None
 
         extra_custom_fields = set()
         for custom_field in self._type.get_fields(source=('custom',)).values():
@@ -869,6 +877,7 @@ class AbstractSearch(AbstractCommon):
                 max_features=max_features,
                 propertyname=wfs_property_names,
                 geometry_column=self._geometry_column,
+                srs=geom_return_srs,
                 start_index=start_index,
                 session=session)
 

@@ -400,6 +400,15 @@ class AbstractDovType(AbstractTypeCommon):
                 )
 
         for field in cls.get_fields(source=('custom',)).values():
+            for required_field in field.requires_fields():
+                instance.data[required_field] = cls._parse(
+                    func=feature.findtext,
+                    xpath=required_field,
+                    namespace=namespace,
+                    returntype=None
+                )
+
+        for field in cls.get_fields(source=('custom',)).values():
             instance.data[field['name']] = field.calculate(instance) or np.nan
 
         return instance

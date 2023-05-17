@@ -47,7 +47,7 @@ class RequestPFASdata:
 
         self.dictionary = {"date": date, "versions": package_versions, "nb_datapoints": [{}]}
 
-    def wfs_request(self, layer, location, query, sort_by, max_features):
+    def wfs_request(self, layer, location, max_features, query=None, sort_by=None):
         """Download the available PFAS-data through a wfs request.
 
         Parameters
@@ -57,14 +57,14 @@ class RequestPFASdata:
         location:
             Query on location.
             (https://pydov.readthedocs.io/en/stable/query_location.html)
+        max_features: int
+            Limit the number of WFS features you want to be returned.
+            (https://pydov.readthedocs.io/en/stable/sort_limit.html)
         query:
             Find data based on one or more of its attribute values.
             (https://pydov.readthedocs.io/en/stable/query_attribute.html)
         sort_by:
             Sort on one or multiple attributes.
-            (https://pydov.readthedocs.io/en/stable/sort_limit.html)
-        max_features: int
-            Limit the number of WFS features you want to be returned.
             (https://pydov.readthedocs.io/en/stable/sort_limit.html)
 
         Returns
@@ -75,7 +75,7 @@ class RequestPFASdata:
         wfsSearch = WfsSearch(layer)
         return wfsSearch.search(location=location, query=query, sort_by=sort_by, max_features=max_features)
 
-    def pydov_request(self, location, query, sort_by, max_features):
+    def pydov_request(self, location, max_features, query=None, sort_by=None):
         """Function to download the groundwater monster and according filter data for a specific bounding box.
 
         Parameters
@@ -83,14 +83,14 @@ class RequestPFASdata:
         location:
             Query on location.
             (https://pydov.readthedocs.io/en/stable/query_location.html)
+        max_features: int
+            Limit the number of WFS features you want to be returned.
+            (https://pydov.readthedocs.io/en/stable/sort_limit.html)
         query:
             Find data based on one or more of its attribute values.
             (https://pydov.readthedocs.io/en/stable/query_attribute.html)
         sort_by:
             Sort on one or multiple attributes.
-            (https://pydov.readthedocs.io/en/stable/sort_limit.html)
-        max_features: int
-            Limit the number of WFS features you want to be returned.
             (https://pydov.readthedocs.io/en/stable/sort_limit.html)
 
         Returns
@@ -123,7 +123,7 @@ class RequestPFASdata:
             logger.info(f"Empty dataframe: {e}")
         return data
 
-    def biota(self, location, query, sort_by, max_features):
+    def biota(self, location, max_features, query=None, sort_by=None):
         """
         Download the biota data.
 
@@ -132,14 +132,14 @@ class RequestPFASdata:
         location:
             Query on location.
             (https://pydov.readthedocs.io/en/stable/query_location.html)
+        max_features: int
+            Limit the number of WFS features you want to be returned.
+            (https://pydov.readthedocs.io/en/stable/sort_limit.html)
         query:
             Find data based on one or more of its attribute values.
             (https://pydov.readthedocs.io/en/stable/query_attribute.html)
         sort_by:
             Sort on one or multiple attributes.
-            (https://pydov.readthedocs.io/en/stable/sort_limit.html)
-        max_features: int
-            Limit the number of WFS features you want to be returned.
             (https://pydov.readthedocs.io/en/stable/sort_limit.html)
 
         Returns
@@ -161,7 +161,7 @@ class RequestPFASdata:
 
         return data_wfs_VMM_biota
 
-    def effluent(self, location, query, sort_by, max_features):
+    def effluent(self, location, max_features, query=None, sort_by=None):
         """
         Download the effluent data.
 
@@ -170,14 +170,14 @@ class RequestPFASdata:
         location:
             Query on location.
             (https://pydov.readthedocs.io/en/stable/query_location.html)
+        max_features: int
+            Limit the number of WFS features you want to be returned.
+            (https://pydov.readthedocs.io/en/stable/sort_limit.html)
         query:
             Find data based on one or more of its attribute values.
             (https://pydov.readthedocs.io/en/stable/query_attribute.html)
         sort_by:
             Sort on one or multiple attributes.
-            (https://pydov.readthedocs.io/en/stable/sort_limit.html)
-        max_features: int
-            Limit the number of WFS features you want to be returned.
             (https://pydov.readthedocs.io/en/stable/sort_limit.html)
 
         Returns
@@ -200,7 +200,7 @@ class RequestPFASdata:
 
         return data_wfs_OVAM
 
-    def groundwater(self, location, query, sort_by, max_features):
+    def groundwater(self, location, max_features):
         """
         Download the groundwater data.
 
@@ -209,12 +209,6 @@ class RequestPFASdata:
         location:
             Query on location.
             (https://pydov.readthedocs.io/en/stable/query_location.html)
-        query:
-            Find data based on one or more of its attribute values.
-            (https://pydov.readthedocs.io/en/stable/query_attribute.html)
-        sort_by:
-            Sort on one or multiple attributes.
-            (https://pydov.readthedocs.io/en/stable/sort_limit.html)
         max_features: int
             Limit the number of WFS features you want to be returned.
             (https://pydov.readthedocs.io/en/stable/sort_limit.html)
@@ -225,13 +219,13 @@ class RequestPFASdata:
         """
         logger.info(f"Downloading groundwater data")
         data_pydov_VMM_gw = self.pydov_request(
-            location, query, sort_by, max_features)
+            location, max_features)
         data_wfs_OVAM = self.wfs_request(
             'pfas:pfas_analyseresultaten',
-            location, query, sort_by, max_features)
+            location, max_features)
         data_wfs_Lantis_gw = self.wfs_request(
             'pfas:lantis_gw_metingen_publiek',
-            location, query, sort_by, max_features)
+            location, max_features)
 
         data_pydov_VMM_gw = data_pydov_VMM_gw.drop_duplicates(
             subset=data_pydov_VMM_gw.columns)
@@ -254,7 +248,7 @@ class RequestPFASdata:
 
         return data_pydov_VMM_gw, data_wfs_OVAM, data_wfs_Lantis_gw
 
-    def migration(self, location, query, sort_by, max_features):
+    def migration(self, location, max_features, query=None, sort_by=None):
         """
         Download the migration data.
 
@@ -263,14 +257,14 @@ class RequestPFASdata:
         location:
             Query on location.
             (https://pydov.readthedocs.io/en/stable/query_location.html)
+        max_features: int
+            Limit the number of WFS features you want to be returned.
+            (https://pydov.readthedocs.io/en/stable/sort_limit.html)
         query:
             Find data based on one or more of its attribute values.
             (https://pydov.readthedocs.io/en/stable/query_attribute.html)
         sort_by:
             Sort on one or multiple attributes.
-            (https://pydov.readthedocs.io/en/stable/sort_limit.html)
-        max_features: int
-            Limit the number of WFS features you want to be returned.
             (https://pydov.readthedocs.io/en/stable/sort_limit.html)
 
         Returns
@@ -293,7 +287,7 @@ class RequestPFASdata:
 
         return data_wfs_OVAM
 
-    def pure_product(self, location, query, sort_by, max_features):
+    def pure_product(self, location, max_features, query=None, sort_by=None):
         """
         Download the pure product data.
 
@@ -302,14 +296,14 @@ class RequestPFASdata:
         location:
             Query on location.
             (https://pydov.readthedocs.io/en/stable/query_location.html)
+        max_features: int
+            Limit the number of WFS features you want to be returned.
+            (https://pydov.readthedocs.io/en/stable/sort_limit.html)
         query:
             Find data based on one or more of its attribute values.
             (https://pydov.readthedocs.io/en/stable/query_attribute.html)
         sort_by:
             Sort on one or multiple attributes.
-            (https://pydov.readthedocs.io/en/stable/sort_limit.html)
-        max_features: int
-            Limit the number of WFS features you want to be returned.
             (https://pydov.readthedocs.io/en/stable/sort_limit.html)
 
         Returns
@@ -332,7 +326,7 @@ class RequestPFASdata:
 
         return data_wfs_OVAM
 
-    def rainwater(self, location, query, sort_by, max_features):
+    def rainwater(self, location, max_features, query=None, sort_by=None):
         """
         Download the rainwater data.
 
@@ -341,14 +335,14 @@ class RequestPFASdata:
         location:
             Query on location.
             (https://pydov.readthedocs.io/en/stable/query_location.html)
+        max_features: int
+            Limit the number of WFS features you want to be returned.
+            (https://pydov.readthedocs.io/en/stable/sort_limit.html)
         query:
             Find data based on one or more of its attribute values.
             (https://pydov.readthedocs.io/en/stable/query_attribute.html)
         sort_by:
             Sort on one or multiple attributes.
-            (https://pydov.readthedocs.io/en/stable/sort_limit.html)
-        max_features: int
-            Limit the number of WFS features you want to be returned.
             (https://pydov.readthedocs.io/en/stable/sort_limit.html)
 
         Returns
@@ -371,7 +365,7 @@ class RequestPFASdata:
 
         return data_wfs_OVAM
 
-    def soil(self, location, query, sort_by, max_features):
+    def soil(self, location, max_features):
         """
         Download the soil data.
 
@@ -380,12 +374,6 @@ class RequestPFASdata:
         location:
             Query on location.
             (https://pydov.readthedocs.io/en/stable/query_location.html)
-        query:
-            Find data based on one or more of its attribute values.
-            (https://pydov.readthedocs.io/en/stable/query_attribute.html)
-        sort_by:
-            Sort on one or multiple attributes.
-            (https://pydov.readthedocs.io/en/stable/sort_limit.html)
         max_features: int
             Limit the number of WFS features you want to be returned.
             (https://pydov.readthedocs.io/en/stable/sort_limit.html)
@@ -397,10 +385,10 @@ class RequestPFASdata:
         logger.info(f"Downloading soil data")
         data_wfs_OVAM = self.wfs_request(
             'pfas:pfas_analyseresultaten',
-            location, query, sort_by, max_features)
+            location, max_features)
         data_wfs_Lantis_soil = self.wfs_request(
             'pfas:lantis_bodem_metingen',
-            location, query, sort_by, max_features)
+            location, max_features)
 
         data_wfs_OVAM = data_wfs_OVAM.drop_duplicates(
             subset=data_wfs_OVAM.columns)
@@ -418,7 +406,7 @@ class RequestPFASdata:
 
         return data_wfs_OVAM, data_wfs_Lantis_soil
 
-    def soil_water(self, location, query, sort_by, max_features):
+    def soil_water(self, location, max_features, query=None, sort_by=None):
         """
         Download the soil water data.
 
@@ -427,14 +415,14 @@ class RequestPFASdata:
         location:
             Query on location.
             (https://pydov.readthedocs.io/en/stable/query_location.html)
+        max_features: int
+            Limit the number of WFS features you want to be returned.
+            (https://pydov.readthedocs.io/en/stable/sort_limit.html)
         query:
             Find data based on one or more of its attribute values.
             (https://pydov.readthedocs.io/en/stable/query_attribute.html)
         sort_by:
             Sort on one or multiple attributes.
-            (https://pydov.readthedocs.io/en/stable/sort_limit.html)
-        max_features: int
-            Limit the number of WFS features you want to be returned.
             (https://pydov.readthedocs.io/en/stable/sort_limit.html)
 
         Returns
@@ -469,7 +457,7 @@ class RequestPFASdata:
 
         return data_wfs_VMM_ws, data_wfs_OVAM_sediment, data_wfs_OVAM_fixed
 
-    def surface_water(self, location, query, sort_by, max_features):
+    def surface_water(self, location, max_features, query=None, sort_by=None):
         """
         Download the surface water data.
 
@@ -478,14 +466,14 @@ class RequestPFASdata:
         location:
             Query on location.
             (https://pydov.readthedocs.io/en/stable/query_location.html)
+        max_features: int
+            Limit the number of WFS features you want to be returned.
+            (https://pydov.readthedocs.io/en/stable/sort_limit.html)
         query:
             Find data based on one or more of its attribute values.
             (https://pydov.readthedocs.io/en/stable/query_attribute.html)
         sort_by:
             Sort on one or multiple attributes.
-            (https://pydov.readthedocs.io/en/stable/sort_limit.html)
-        max_features: int
-            Limit the number of WFS features you want to be returned.
             (https://pydov.readthedocs.io/en/stable/sort_limit.html)
 
         Returns
@@ -517,7 +505,7 @@ class RequestPFASdata:
 
         return data_wfs_VMM_sw, data_wfs_OVAM
 
-    def waste_water(self, location, query, sort_by, max_features):
+    def waste_water(self, location, max_features, query=None, sort_by=None):
         """
         Download the waste water data.
 
@@ -526,14 +514,14 @@ class RequestPFASdata:
         location:
             Query on location.
             (https://pydov.readthedocs.io/en/stable/query_location.html)
+        max_features: int
+            Limit the number of WFS features you want to be returned.
+            (https://pydov.readthedocs.io/en/stable/sort_limit.html)
         query:
             Find data based on one or more of its attribute values.
             (https://pydov.readthedocs.io/en/stable/query_attribute.html)
         sort_by:
             Sort on one or multiple attributes.
-            (https://pydov.readthedocs.io/en/stable/sort_limit.html)
-        max_features: int
-            Limit the number of WFS features you want to be returned.
             (https://pydov.readthedocs.io/en/stable/sort_limit.html)
 
         Returns
@@ -555,7 +543,7 @@ class RequestPFASdata:
 
         return data_wfs_VMM_ww
 
-    def main(self, medium, location=None, query=None, sort_by=None, max_features=None, save=False):
+    def main(self, medium, location=None, max_features=None, save=False):
 
         """
         Call the functions to download the requested data and save the result in an Excel-file, with the different mediums as seperate tabs.
@@ -580,12 +568,6 @@ class RequestPFASdata:
         location:
             Query on location.
             (https://pydov.readthedocs.io/en/stable/query_location.html)
-        query:
-            Find data based on one or more of its attribute values.
-            (https://pydov.readthedocs.io/en/stable/query_attribute.html)
-        sort_by:
-            Sort on one or multiple attributes.
-            (https://pydov.readthedocs.io/en/stable/sort_limit.html)
         max_features: int
             Limit the number of WFS features you want to be returned.
             (https://pydov.readthedocs.io/en/stable/sort_limit.html)
@@ -602,49 +584,49 @@ class RequestPFASdata:
 
         for i in medium:
             if i == 'all':
-                data_wfs_VMM_biota = self.biota(location, query, sort_by, max_features)
-                data_wfs_OVAM_effluent = self.effluent(location, query, sort_by, max_features)
-                data_pydov_VMM_gw, data_wfs_OVAM_gw, data_wfs_Lantis_gw = self.groundwater(location, query, sort_by, max_features)
-                data_wfs_OVAM_migration = self.migration(location, query, sort_by, max_features)
-                data_wfs_OVAM_pp = self.pure_product(location, query, sort_by, max_features)
-                data_wfs_OVAM_rainwater = self.rainwater(location, query, sort_by, max_features)
-                data_wfs_OVAM_soil, data_wfs_Lantis_soil = self.soil(location, query, sort_by, max_features)
-                data_wfs_VMM_ws, data_wfs_OVAM_ws_sediment, data_wfs_OVAM_ws_fixed = self.soil_water(location, query, sort_by, max_features)
-                data_wfs_VMM_sw, data_wfs_OVAM_sw = self.surface_water(location, query, sort_by, max_features)
-                data_wfs_VMM_ww = self.waste_water(location, query, sort_by, max_features)
+                data_wfs_VMM_biota = self.biota(location, max_features)
+                data_wfs_OVAM_effluent = self.effluent(location, max_features)
+                data_pydov_VMM_gw, data_wfs_OVAM_gw, data_wfs_Lantis_gw = self.groundwater(location, max_features)
+                data_wfs_OVAM_migration = self.migration(location, max_features)
+                data_wfs_OVAM_pp = self.pure_product(location, max_features)
+                data_wfs_OVAM_rainwater = self.rainwater(location, max_features)
+                data_wfs_OVAM_soil, data_wfs_Lantis_soil = self.soil(location, max_features)
+                data_wfs_VMM_ws, data_wfs_OVAM_ws_sediment, data_wfs_OVAM_ws_fixed = self.soil_water(location, max_features)
+                data_wfs_VMM_sw, data_wfs_OVAM_sw = self.surface_water(location, max_features)
+                data_wfs_VMM_ww = self.waste_water(location, max_features)
                 return_list.extend([data_wfs_VMM_biota, data_wfs_OVAM_effluent, data_pydov_VMM_gw, data_wfs_OVAM_gw,
                         data_wfs_Lantis_gw, data_wfs_OVAM_migration, data_wfs_OVAM_pp, data_wfs_OVAM_rainwater,
                         data_wfs_OVAM_soil, data_wfs_Lantis_soil, data_wfs_VMM_ws, data_wfs_OVAM_ws_sediment, data_wfs_OVAM_ws_fixed, data_wfs_VMM_sw,
                         data_wfs_OVAM_sw, data_wfs_VMM_ww])
             elif i == 'biota':
-                data_wfs_VMM_biota = self.biota(location, query, sort_by, max_features)
+                data_wfs_VMM_biota = self.biota(location, max_features)
                 return_list.extend([data_wfs_VMM_biota])
             elif i == 'effluent':
-                data_wfs_OVAM_effluent = self.effluent(location, query, sort_by, max_features)
+                data_wfs_OVAM_effluent = self.effluent(location,max_features)
                 return_list.extend([data_wfs_OVAM_effluent])
             elif i == 'groundwater':
-                data_pydov_VMM_gw, data_wfs_OVAM_gw, data_wfs_Lantis_gw = self.groundwater(location, query, sort_by, max_features)
+                data_pydov_VMM_gw, data_wfs_OVAM_gw, data_wfs_Lantis_gw = self.groundwater(location, max_features)
                 return_list.extend([data_pydov_VMM_gw, data_wfs_OVAM_gw, data_wfs_Lantis_gw])
             elif i == 'migration':
-                data_wfs_OVAM_migration = self.migration(location, query, sort_by, max_features)
+                data_wfs_OVAM_migration = self.migration(location, max_features)
                 return_list.extend([data_wfs_OVAM_migration])
             elif i == 'pure product':
-                data_wfs_OVAM_pp = self.pure_product(location, query, sort_by, max_features)
+                data_wfs_OVAM_pp = self.pure_product(location, max_features)
                 return_list.extend([data_wfs_OVAM_pp])
             elif i == 'rainwater':
-                data_wfs_OVAM_rainwater = self.rainwater(location, query, sort_by, max_features)
+                data_wfs_OVAM_rainwater = self.rainwater(location, max_features)
                 return_list.extend([data_wfs_OVAM_rainwater])
             elif i == 'soil':
-                data_wfs_OVAM_soil, data_wfs_Lantis_soil = self.soil(location, query, sort_by, max_features)
+                data_wfs_OVAM_soil, data_wfs_Lantis_soil = self.soil(location, max_features)
                 return_list.extend([data_wfs_OVAM_soil, data_wfs_Lantis_soil])
             elif i == 'soil water':
-                data_wfs_VMM_ws, data_wfs_OVAM_ws_sediment, data_wfs_OVAM_ws_fixed = self.soil_water(location, query, sort_by, max_features)
+                data_wfs_VMM_ws, data_wfs_OVAM_ws_sediment, data_wfs_OVAM_ws_fixed = self.soil_water(location, max_features)
                 return_list.extend([data_wfs_VMM_ws, data_wfs_OVAM_ws_sediment, data_wfs_OVAM_ws_fixed])
             elif i == 'surface water':
-                data_wfs_VMM_sw, data_wfs_OVAM_sw = self.surface_water(location, query, sort_by, max_features)
+                data_wfs_VMM_sw, data_wfs_OVAM_sw = self.surface_water(location, max_features)
                 return_list.extend([data_wfs_VMM_sw, data_wfs_OVAM_sw])
             elif i == 'waste water':
-                data_wfs_VMM_ww = self.waste_water(location, query, sort_by, max_features)
+                data_wfs_VMM_ww = self.waste_water(location, max_features)
                 return_list.extend([data_wfs_VMM_ww])
 
         metadata = json.dumps(self.dictionary, indent=3)

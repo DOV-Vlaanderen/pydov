@@ -172,20 +172,18 @@ location = Within(Box(LowerLeftX,LowerLeftY,UpperRightX,UpperRightY))  # Boundin
 rd = RequestPFASdata()
 
 # If you are only interested in the data
-df = rd.main(medium, query=None, location=location, sort_by=None, max_features=None, save=False)[0]
+df = rd.main(medium, location=location, max_features=None, save=False)[0]
 
 # If you are only interested in the metadata
-metadata = rd.main(medium, query=None, location=location, sort_by=None, max_features=None, save=False)[1]
+metadata = rd.main(medium, location=location, max_features=None, save=False)[1]
 
 # If you are interested in both the data as the metadata
-df, metadata = rd.main(medium, query=None, location=location, sort_by=None, max_features=None, save=False)
+df, metadata = rd.main(medium, location=location, max_features=None, save=False)
 
 ```
 Check out the query and customization options from pydov.\
-You can query on [attribute properties](https://pydov.readthedocs.io/en/stable/query_attribute.html)
-and [location](https://pydov.readthedocs.io/en/stable/query_location.html).\
-You can also [sort on one or multiple attributes](https://pydov.readthedocs.io/en/stable/sort_limit.html)
-and [restrict the number of WFS features returned](https://pydov.readthedocs.io/en/stable/sort_limit.html).
+You can query on [location](https://pydov.readthedocs.io/en/stable/query_location.html)
+and also [restrict the number of WFS features returned](https://pydov.readthedocs.io/en/stable/sort_limit.html).
 
 ### Case 1 : You want to save the data
 

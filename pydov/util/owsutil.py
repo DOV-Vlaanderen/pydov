@@ -368,6 +368,14 @@ def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
     ------
     AttributeError
         If ``bbox`` is given without ``geometry_column``.
+        If ``max_features`` has an invalid value.
+        If ``start_index`` had an invalid value.
+
+    TypeError
+        If ``srs`` is not a string.
+
+    ValueError
+        If ``srs`` does not start with 'EPSG'.
 
     Returns
     -------
@@ -400,6 +408,12 @@ def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
     query.set('typeNames', typename)
 
     if srs is not None:
+        if not isinstance(srs, str):
+            raise TypeError('srs should be a string starting with "EPSG"')
+
+        if not srs.lower().startswith('epsg'):
+            raise ValueError('srs should start with "EPSG"')
+
         query.set('srsName', srs)
 
     if propertyname and len(propertyname) > 0:

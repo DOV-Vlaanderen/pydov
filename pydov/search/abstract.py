@@ -18,7 +18,8 @@ import pandas as pd
 import numpy as np
 
 import pydov
-from pydov.types.fields import _WfsInjectedField, GeometryReturnField, ReturnFieldList
+from pydov.types.fields import (_WfsInjectedField, GeometryReturnField,
+                                ReturnFieldList)
 from pydov.util import owsutil
 from pydov.util.dovutil import build_dov_url, get_xsd_schema
 from pydov.util.errors import (InvalidFieldError, InvalidSearchParameterError,
@@ -697,7 +698,8 @@ class AbstractSearch(AbstractCommon):
     @staticmethod
     def _get_remote_wfs_feature(wfs, typename, location, filter,
                                 sort_by, propertyname, max_features,
-                                geometry_column, srs=None, start_index=0, session=None):
+                                geometry_column, srs=None, start_index=0,
+                                session=None):
         """Perform the WFS 2.0 GetFeature call to get features from the remote
         service.
 
@@ -718,8 +720,8 @@ class AbstractSearch(AbstractCommon):
         geometry_column : str
             Name of the geometry column to use in the spatial filter.
         srs : str
-            EPSG code of the CRS of the geometries that will be returned. Defaults
-            to None, which means the default SRS of the WFS layer.
+            EPSG code of the CRS of the geometries that will be returned.
+            Defaults to None, which means the default SRS of the WFS layer.
         start_index : int
             Index of the first feature to return. Can be used for paging.
         session : requests.Session
@@ -838,8 +840,12 @@ class AbstractSearch(AbstractCommon):
                                        for i in self._map_df_wfs_source
                                        if i in return_fields])
 
-            geom_return_srs = [f.srs for f in return_fields if isinstance(f, GeometryReturnField)]
-            geom_return_srs = geom_return_srs[0] if len(geom_return_srs) > 0 else None
+            geom_return_srs = [f.srs for f in return_fields
+                               if isinstance(f, GeometryReturnField)]
+            if len(geom_return_srs) > 0:
+                geom_return_srs = geom_return_srs[0]
+            else:
+                geom_return_srs = None
 
         extra_custom_fields = set()
         for custom_field in self._type.get_fields(source=('custom',)).values():

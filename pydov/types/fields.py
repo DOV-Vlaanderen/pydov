@@ -227,7 +227,8 @@ class ReturnFieldList(list):
 
         if not isinstance(return_fields, (list, set, tuple)):
             # FIXME: this should be TypeError instead
-            raise AttributeError('return_fields should be a list, set or tuple')
+            raise AttributeError(
+                'return_fields should be a list, set or tuple')
 
         result = ReturnFieldList()
         for rf in return_fields:
@@ -291,8 +292,8 @@ class GeometryReturnField(AbstractReturnField):
         geometry_field : str
             Name of the geometry field.
         srs : str, optional
-            EPSG code of the CRS of the geometries that will be returned. Defaults
-            to None, which means the default SRS of the WFS layer.
+            EPSG code of the CRS of the geometries that will be returned.
+            Defaults to None, which means the default SRS of the WFS layer.
         """
         super().__init__(geometry_field)
 

@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 """Module containing the search classes to retrieve DOV groundwater screen
  data."""
-from itertools import chain
-import pandas as pd
 from owslib.fes2 import And, Not, PropertyIsNull
 
 from ..types.grondwaterfilter import GrondwaterFilter

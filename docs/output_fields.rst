@@ -6,7 +6,6 @@ Customizing data output
 
 When using pydov to search datasets, the returned dataframe has different default columns (fields) depending on the dataset. We believe each dataframe to contain the most relevant fields for the corresponding dataset, but pydov allows you to select and customize the fields you want to be returned in the output dataframe.
 
-
 Using return fields
 *******************
 
@@ -17,15 +16,21 @@ For example, to query the boreholes in Ghent but only retrieve their depth, you'
   from pydov.search.boring import BoringSearch
 
   bs = BoringSearch()
-  df = bs.search(query=PropertyIsEqualTo('gemeente', 'Gent'), return_fields=('pkey_boring', 'diepte_boring_tot'))
+  df = bs.search(
+      query=PropertyIsEqualTo('gemeente', 'Gent'),
+      return_fields=('pkey_boring', 'diepte_boring_tot')
+  )
 
 
-Note that you can not only use ``return_fields`` to limit the columns from the default dataframe for you can also add extra fields not included in this default set. The following example returns the purpose ('doel') of all the Ghent boreholes::
+Note that you can not only use ``return_fields`` to limit the columns from the default dataframe, but you can also add extra fields not included in this default set. The following example returns the purpose ('doel') of all the Ghent boreholes::
 
   from pydov.search.boring import BoringSearch
 
   bs = BoringSearch()
-  df = bs.search(query=PropertyIsEqualTo('gemeente', 'Gent'), return_fields=('pkey_boring', 'doel'))
+  df = bs.search(
+    query=PropertyIsEqualTo('gemeente', 'Gent'),
+    return_fields=('pkey_boring', 'doel')
+  )
 
 
 You can get an overview of the available fields for a dataset using its search objects `get_fields` method. More information can be found in the :ref:`available_attribute_fields` section.
@@ -34,7 +39,13 @@ You can get an overview of the available fields for a dataset using its search o
 
     Significant performance gains can be achieved by only including the fields you need, and more specifically by including only fields with a cost of 1. More information can be found in the :ref:`performance` section below.
 
-    For instance, in the examples above only fields with a cost of 1 are selected, allowing the results to be retrieved almost instantly. By selecting only fields available in the WFS service (i.e. fields with a cost of 1), pydov only needs a single WFS query to obtain the results and doesn't need to download any additional XML documents.
+    For instance, in the examples above only fields with a cost of 1 are selected, allowing the results to be retrieved almost instantly. By selecting only fields available in the WFS service (i.e. fields with a cost of 1), pydov only needs to query the WFS service to obtain the results and doesn't need to download any additional XML documents.
+
+
+Including geometries
+********************
+
+By default, pydov will only include attribute fields in the output dataframe. However it is possible to add the geometry too, when requested in the ``return_fields`` parameter and additional support for geometries has been installed (see :ref:`installation`).
 
 
 Defining custom object types

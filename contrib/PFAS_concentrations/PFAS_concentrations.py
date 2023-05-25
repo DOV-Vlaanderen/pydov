@@ -149,7 +149,7 @@ class RequestPFASdata:
         logger.info(f"Downloading biota data")
         data_wfs_VMM_biota = self.wfs_request(
             'pfas:pfas_biota',
-            location, query, sort_by, max_features)
+            location, max_features, query, sort_by)
 
         data_wfs_VMM_biota = data_wfs_VMM_biota.drop_duplicates(
             subset=data_wfs_VMM_biota.columns)
@@ -187,7 +187,7 @@ class RequestPFASdata:
         logger.info(f"Downloading effluent data")
         data_wfs_OVAM = self.wfs_request(
             'pfas:pfas_analyseresultaten',
-            location, query, sort_by, max_features)
+            location, max_features, query, sort_by)
 
         data_wfs_OVAM = data_wfs_OVAM.drop_duplicates(
             subset=data_wfs_OVAM.columns)
@@ -274,7 +274,7 @@ class RequestPFASdata:
         logger.info(f"Downloading migration data")
         data_wfs_OVAM = self.wfs_request(
             'pfas:pfas_analyseresultaten',
-            location, query, sort_by, max_features)
+            location, max_features, query, sort_by)
 
         data_wfs_OVAM = data_wfs_OVAM.drop_duplicates(
             subset=data_wfs_OVAM.columns)
@@ -313,7 +313,7 @@ class RequestPFASdata:
         logger.info(f"Downloading pure product data")
         data_wfs_OVAM = self.wfs_request(
             'pfas:pfas_analyseresultaten',
-            location, query, sort_by, max_features)
+            location, max_features, query, sort_by)
 
         data_wfs_OVAM = data_wfs_OVAM.drop_duplicates(
             subset=data_wfs_OVAM.columns)
@@ -352,7 +352,7 @@ class RequestPFASdata:
         logger.info(f"Downloading rainwater data")
         data_wfs_OVAM = self.wfs_request(
             'pfas:pfas_analyseresultaten',
-            location, query, sort_by, max_features)
+            location, max_features, query, sort_by)
 
         data_wfs_OVAM = data_wfs_OVAM.drop_duplicates(
             subset=data_wfs_OVAM.columns)
@@ -432,10 +432,10 @@ class RequestPFASdata:
         logger.info(f"Downloading soilwater data")
         data_wfs_VMM_ws = self.wfs_request(
             'waterbodems:pfas_meetpunten_fcs',
-            location, query, sort_by, max_features)
+            location, max_features, query, sort_by)
         data_wfs_OVAM = self.wfs_request(
             'pfas:pfas_analyseresultaten',
-            location, query, sort_by, max_features)
+            location, max_features, query, sort_by)
 
         data_wfs_VMM_ws = data_wfs_VMM_ws.drop_duplicates(
             subset=data_wfs_VMM_ws.columns)
@@ -483,10 +483,10 @@ class RequestPFASdata:
         logger.info(f"Downloading surface water data")
         data_wfs_VMM_sw = self.wfs_request(
             'pfas:pfas_oppwater',
-            location, query, sort_by, max_features)
+            location, max_features, query, sort_by)
         data_wfs_OVAM = self.wfs_request(
             'pfas:pfas_analyseresultaten',
-            location, query, sort_by, max_features)
+            location, max_features, query, sort_by)
 
         data_wfs_VMM_sw = data_wfs_VMM_sw.drop_duplicates(
             subset=data_wfs_VMM_sw.columns)
@@ -531,7 +531,7 @@ class RequestPFASdata:
         logger.info(f"Downloading waste water data")
         data_wfs_VMM_ww = self.wfs_request(
             'pfas:pfas_afvalwater',
-            location, query, sort_by, max_features)
+            location, max_features, query, sort_by)
 
         data_wfs_VMM_ww = data_wfs_VMM_ww.drop_duplicates(
             subset=data_wfs_VMM_ww.columns)
@@ -633,14 +633,13 @@ class RequestPFASdata:
 
         if save:
             path = os.getcwd()
-            path1 = f"{path}/results/metadata.json"
+            path1 = f"{path}/results"
             if os.path.exists(path1):
-                with open(path1, "w") as outfile:
+                path2 = f"{path}/results/metadata.json"
+                with open(path2, "w") as outfile:
                     outfile.write(metadata)
             else:
                 os.mkdir(f"{path}/results")
-                with open(path1, "w") as outfile:
-                    outfile.write(metadata)
 
             with open(f"{path}/results/metadata.json") as metadata_file:
                 metadata = json.load(metadata_file)
@@ -733,11 +732,9 @@ class RequestPFASdata:
 
 
 if __name__ == '__main__':
-    parameters = ['all']
+    medium = ['all']
     location = Within(Box(15000, 150000, 270000, 250000))  # Bounding box Flanders
     rd = RequestPFASdata()
-    #df = rd.main(parameters, location, max_features=2)[0]
-    #meta = rd.main(parameters, location, max_features=2)[1]
-    df, meta = rd.main(parameters, location, max_features=2)
-    print(df[0], meta)
+    df = rd.main(medium, location=location, max_features=10)[0]
+    print(df[0])
 

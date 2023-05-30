@@ -617,7 +617,7 @@ class TestWfsGetFeatureRequest(object):
         Test whether the XML of the WFS GetFeature call is generated correctly.
 
         """
-        xml = owsutil.wfs_build_getfeature_request('dov-pub:Boringen', srs='EPSG:31370')
+        xml = owsutil.wfs_build_getfeature_request('dov-pub:Boringen', crs='EPSG:31370')
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
             '<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs/2.0" '
@@ -630,20 +630,20 @@ class TestWfsGetFeatureRequest(object):
 
     def test_wfs_build_getfeature_request_srs_wrongtype(self):
         """Test the owsutil.wfs_build_getfeature_request method with only a
-        typename and an SRS of the wrong type.
+        typename and an CRS of the wrong type.
 
         Test whether a TypeError is raised.
 
         """
         with pytest.raises(TypeError):
-            owsutil.wfs_build_getfeature_request('dov-pub:Boringen', srs=31370)
+            owsutil.wfs_build_getfeature_request('dov-pub:Boringen', crs=31370)
 
     def test_wfs_build_getfeature_request_srs_wrongvalue(self):
         """Test the owsutil.wfs_build_getfeature_request method with only a
-        typename and an SRS of the wrong type.
+        typename and an CRS of the wrong type.
 
         Test whether a ValueError is raised.
 
         """
         with pytest.raises(ValueError):
-            owsutil.wfs_build_getfeature_request('dov-pub:Boringen', srs='31370')
+            owsutil.wfs_build_getfeature_request('dov-pub:Boringen', crs='31370')

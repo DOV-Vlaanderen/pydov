@@ -29,7 +29,7 @@ class TestGeometryReturnOnline(object):
             """
         return_fields = [
             'pkey_bodemclassificatie', 'pkey_bodemlocatie', 'x', 'y', 'mv_mtaw',
-            'classificatietype', 'bodemtype', 'auteurs', GeometryReturnField('geom', 'EPSG:4326')
+            'classificatietype', 'bodemtype', 'auteurs', GeometryReturnField('geom', 4326)
         ]
 
         s = BodemclassificatieSearch()

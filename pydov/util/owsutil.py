@@ -336,7 +336,7 @@ def set_geometry_column(location, geometry_column):
 def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
                                  filter=None, sort_by=None, propertyname=None,
                                  max_features=None, start_index=0,
-                                 srs=None):
+                                 crs=None):
     """Build a WFS 2.0 GetFeature request in XML to be used as payload
     in a WFS 2.0 GetFeature request using POST.
 
@@ -360,9 +360,9 @@ def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
         Limit the maximum number of features to request.
     start_index : int
         The index of the first feature to return.
-    srs : str
+    crs : str
         EPSG code of the CRS of the geometries that will be returned. Defaults
-        to None, which means the default SRS of the WFS layer.
+        to None, which means the default CRS of the WFS layer.
 
     Raises
     ------
@@ -407,14 +407,14 @@ def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
     query = etree.Element('{http://www.opengis.net/wfs/2.0}Query')
     query.set('typeNames', typename)
 
-    if srs is not None:
-        if not isinstance(srs, str):
-            raise TypeError('srs should be a string starting with "EPSG"')
+    if crs is not None:
+        if not isinstance(crs, str):
+            raise TypeError('crs should be a string starting with "EPSG"')
 
-        if not srs.lower().startswith('epsg'):
-            raise ValueError('srs should start with "EPSG"')
+        if not crs.lower().startswith('epsg'):
+            raise ValueError('crs should start with "EPSG"')
 
-        query.set('srsName', srs)
+        query.set('srsName', crs)
 
     if propertyname and len(propertyname) > 0:
         for property in sorted(propertyname):

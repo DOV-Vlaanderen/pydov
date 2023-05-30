@@ -114,28 +114,20 @@ class TestGeometryReturnField():
 
         assert isinstance(rf, GeometryReturnField)
         assert rf.name == 'shape'
-        assert rf.srs is None
+        assert rf.epsg is None
 
     def test_srs_31370(self):
-        """Test initialisation of a GeometryReturnField with SRS set to Belgian Lambert 72."""
-        rf = GeometryReturnField('shape', 'EPSG:31370')
+        """Test initialisation of a GeometryReturnField with CRS set to Belgian Lambert 72."""
+        rf = GeometryReturnField('shape', 31370)
 
         assert isinstance(rf, GeometryReturnField)
         assert rf.name == 'shape'
-        assert rf.srs is 'EPSG:31370'
+        assert rf.epsg == 31370
 
     def test_wrong_srs_type(self):
-        """Test initialisation of a GeometryReturnField with a wrong SRS type.
+        """Test initialisation of a GeometryReturnField with a wrong CRS type.
 
         Test whether a TypeError is raised.
         """
         with pytest.raises(TypeError):
-            GeometryReturnField('shape', 31370)
-
-    def test_wrong_srs_value(self):
-        """Test initialisation of a GeometryReturnField with a wrong SRS value.
-
-        Test whether a ValueError is raised.
-        """
-        with pytest.raises(ValueError):
-            GeometryReturnField('shape', '31370')
+            GeometryReturnField('shape', 'EPSG:31370')

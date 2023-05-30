@@ -284,24 +284,21 @@ class ReturnField(AbstractReturnField):
 
 
 class GeometryReturnField(AbstractReturnField):
-    def __init__(self, geometry_field, srs=None):
+    def __init__(self, geometry_field, epsg=None):
         """Initialise a geometry return field.
 
         Parameters
         ----------
         geometry_field : str
             Name of the geometry field.
-        srs : str, optional
+        epsg : int, optional
             EPSG code of the CRS of the geometries that will be returned.
-            Defaults to None, which means the default SRS of the WFS layer.
+            Defaults to None, which means the default CRS of the WFS layer.
         """
         super().__init__(geometry_field)
 
-        if srs is not None:
-            if not isinstance(srs, str):
-                raise TypeError('srs should be a string starting with "EPSG"')
+        if epsg is not None:
+            if not isinstance(epsg, int):
+                raise TypeError('epsg should be an integer value')
 
-            if not srs.lower().startswith('epsg'):
-                raise ValueError('srs should start with "EPSG"')
-
-        self.srs = srs
+        self.epsg = epsg

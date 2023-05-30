@@ -47,6 +47,56 @@ Including geometries
 
 By default, pydov will only include attribute fields in the output dataframe. However it is possible to add the geometry too, when requested in the ``return_fields`` parameter and additional support for geometries has been installed (see :ref:`installation`).
 
+Finding geometry columns
+  When pydov is installed with additional support for geometries, geometry column(s) are listed in the output of the ``get_fields()`` method. You can recognise them from their 'type', which is 'geometry'::
+
+    from pydov.search.boring import BoringSearch
+
+    bs = BoringSearch()
+    print([f for f in bs.get_fields().values() if f['type'] == 'geometry'])
+
+    [{'name': 'geom', 'definition': None, 'type': 'geometry', 'notnull': False, 'query': False, 'cost': 1}]
+
+
+Default coordinate reference system
+  When adding the geometry field as return field, you will get the corresponding geometry in the default coordinate reference system (CRS) of the layer - most of our layers use the Belgian Lambert 72 CRS (EPSG:31370) by default::
+
+    df = bs.search(
+        return_fields=['pkey_boring', 'geom'],
+        max_features=1
+    )
+    print(df)
+
+                                              pkey_boring                  geom
+    0  https://www.dov.vlaanderen.be/data/boring/2016...  POINT (92424 170752)
+
+Custom coordinate reference systems
+  To get the geometry in another CRS, instead of adding just the fieldname as return field, you can add an instance of :class:`pydov.types.fields.GeometryReturnField` specifying both the field name and the desired CRS. If you'd like to receive the geometries in GPS coordinates (lon/lat, or EPSG:4326) instead of Belgian Lambert 72, you could::
+
+      from pydov.types.fields import GeometryReturnField
+
+      df = bs.search(
+          return_fields=['pkey_boring', GeometryReturnField('geom', epsg=4326)],
+          max_features=1
+      )
+      print(df)
+
+                                            pkey_boring                    geom
+    0  https://www.dov.vlaanderen.be/data/boring/2016...  POINT (3.5512 50.8443)
+
+
+Turning the result into a GeoPandas GeoDataFrame
+  pydov result dataframes which include a geometry column can easily be transformed from a normal Pandas DataFrame into a GeoPandas GeoDataFrame for further (geo) analysis, exporting or use in a new query using a :class:`pydov.util.location.GeopandasFilter`::
+
+      bs = BoringSearch()
+      df = bs.search(
+          return_fields=['pkey_boring', GeometryReturnField('geom', 4326)],
+          max_features=1
+      )
+
+      geo_df = GeoDataFrame(df, geometry='geom', crs='EPSG:4326')
+      geo_df.to_file('boringen.geojson')
+
 
 Defining custom object types
 ****************************

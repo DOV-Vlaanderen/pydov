@@ -372,10 +372,10 @@ def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
         If ``start_index`` had an invalid value.
 
     TypeError
-        If ``srs`` is not a string.
+        If ``crs`` is not a string.
 
     ValueError
-        If ``srs`` does not start with 'EPSG'.
+        If ``crs`` does not start with 'EPSG'.
 
     Returns
     -------

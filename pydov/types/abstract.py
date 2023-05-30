@@ -389,14 +389,14 @@ class AbstractDovType(AbstractTypeCommon):
                     func=feature.find,
                     xpath=field['sourcefield'],
                     namespace=namespace,
-                    returntype=field.get('type', 'geometry')
+                    returntype='geometry'
                 )
             else:
                 instance.data[field['name']] = cls._parse(
                     func=feature.findtext,
                     xpath=field['sourcefield'],
                     namespace=namespace,
-                    returntype=field.get('type', None)
+                    returntype=field.get('type', str)
                 )
 
         for field in cls.get_fields(source=('custom',)).values():
@@ -405,7 +405,7 @@ class AbstractDovType(AbstractTypeCommon):
                     func=feature.findtext,
                     xpath=required_field,
                     namespace=namespace,
-                    returntype=None
+                    returntype=field.get('type', str)
                 )
 
         for field in cls.get_fields(source=('custom',)).values():

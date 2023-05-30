@@ -188,10 +188,31 @@ class _CustomWfsField(AbstractField):
 
 
 class ReturnFieldList(list):
+    """List of return fields used in search methods. """
+
     def __contains__(self, __key: object):
+        """Overwrite the default method. Checks on field name.
+
+        Parameters
+        ----------
+        __key
+            The key to check.
+
+        Returns
+        -------
+        boolean
+            Whether the key is one of the names in the ReturnFieldList.
+        """
         return __key in [i.name for i in self]
 
     def get_names(self):
+        """Return a list with all the names of the fields in this ReturnFieldList.
+
+        Returns
+        -------
+        list of str
+            List of field names.
+        """
         return [f.name for f in self]
 
     @classmethod

@@ -206,7 +206,8 @@ class ReturnFieldList(list):
         return __key in [i.name for i in self]
 
     def get_names(self):
-        """Return a list with all the names of the fields in this ReturnFieldList.
+        """Return a list with all the names of the fields in this
+        ReturnFieldList.
 
         Returns
         -------

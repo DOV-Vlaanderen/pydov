@@ -6,7 +6,7 @@ from pydov.search.grondwaterfilter import GrondwaterFilterSearch
 from pydov.util.location import Within, Box
 from pydov.util.query import Join
 from loguru import logger
-from owslib.fes2 import PropertyIsEqualTo, And
+from owslib.fes2 import PropertyIsEqualTo, And, Or
 from tqdm.auto import tqdm
 from datetime import datetime
 from importlib.metadata import version
@@ -20,8 +20,6 @@ class RequestPFASdata:
 
         Create a metadata file that contains the date and necessary package versions.
         """
-
-        #todo: in which file type is metadata saved? JSON?
 
         def json_serial(obj):
             """JSON serializer for objects not serializable by default json code
@@ -73,7 +71,11 @@ class RequestPFASdata:
         """
 
         wfsSearch = WfsSearch(layer)
-        return wfsSearch.search(location=location, query=query, sort_by=sort_by, max_features=max_features)
+        return wfsSearch.search(
+            location=location,
+            query=query,
+            sort_by=sort_by,
+            max_features=max_features)
 
     def pydov_request(self, location, max_features, query=None, sort_by=None):
         """Function to download the groundwater monster and according filter data for a specific bounding box.
@@ -185,14 +187,22 @@ class RequestPFASdata:
         The downloaded effluent data.
         """
         logger.info(f"Downloading effluent data")
+
+        if query is not None:
+            query = And([query, PropertyIsEqualTo(propertyname='medium', literal='Effluent')])
+        else:
+            query = PropertyIsEqualTo(propertyname='medium', literal='Effluent')
+
         data_wfs_OVAM = self.wfs_request(
-            'pfas:pfas_analyseresultaten',
-            location, max_features, query, sort_by)
+            layer='pfas:pfas_analyseresultaten',
+            location=location,
+            max_features=max_features,
+            query=query,
+            sort_by=sort_by)
 
         data_wfs_OVAM = data_wfs_OVAM.drop_duplicates(
             subset=data_wfs_OVAM.columns)
 
-        data_wfs_OVAM = data_wfs_OVAM[data_wfs_OVAM['medium'] == 'Effluent']
         data_wfs_OVAM_len = len(data_wfs_OVAM)
 
         nb_datapoints = {"Effluent_OVAM" : data_wfs_OVAM_len}
@@ -218,20 +228,24 @@ class RequestPFASdata:
         The downloaded groundwater data.
         """
         logger.info(f"Downloading groundwater data")
+
         data_pydov_VMM_gw = self.pydov_request(
-            location, max_features)
+            location=location,
+            max_features=max_features)
         data_wfs_OVAM = self.wfs_request(
-            'pfas:pfas_analyseresultaten',
-            location, max_features)
+            layer='pfas:pfas_analyseresultaten',
+            location=location,
+            max_features=max_features,
+            query=PropertyIsEqualTo(propertyname='medium', literal='Grondwater'))
         data_wfs_Lantis_gw = self.wfs_request(
-            'pfas:lantis_gw_metingen_publiek',
-            location, max_features)
+            layer='pfas:lantis_gw_metingen_publiek',
+            location=location,
+            max_features=max_features)
 
         data_pydov_VMM_gw = data_pydov_VMM_gw.drop_duplicates(
             subset=data_pydov_VMM_gw.columns)
         data_wfs_OVAM = data_wfs_OVAM.drop_duplicates(
             subset=data_wfs_OVAM.columns)
-        data_wfs_OVAM = data_wfs_OVAM[data_wfs_OVAM['medium'] == 'Grondwater']
         data_wfs_Lantis_gw = data_wfs_Lantis_gw.drop_duplicates(
             subset=data_wfs_Lantis_gw.columns)
 
@@ -272,13 +286,21 @@ class RequestPFASdata:
         The downloaded migration data.
         """
         logger.info(f"Downloading migration data")
+
+        if query is not None:
+            query = And([query, PropertyIsEqualTo(propertyname='medium', literal='Migratie')])
+        else:
+            query = PropertyIsEqualTo(propertyname='medium', literal='Migratie')
+
         data_wfs_OVAM = self.wfs_request(
-            'pfas:pfas_analyseresultaten',
-            location, max_features, query, sort_by)
+            layer='pfas:pfas_analyseresultaten',
+            location=location,
+            max_features=max_features,
+            query=query,
+            sort_by=sort_by)
 
         data_wfs_OVAM = data_wfs_OVAM.drop_duplicates(
             subset=data_wfs_OVAM.columns)
-        data_wfs_OVAM = data_wfs_OVAM[data_wfs_OVAM['medium'] == 'Migratie']
 
         data_wfs_OVAM_len = len(data_wfs_OVAM)
 
@@ -311,13 +333,21 @@ class RequestPFASdata:
         The downloaded pure product data.
         """
         logger.info(f"Downloading pure product data")
+
+        if query is not None:
+            query = And([query, PropertyIsEqualTo(propertyname='medium', literal='Puur product')])
+        else:
+            query = PropertyIsEqualTo(propertyname='medium', literal='Puur product')
+
         data_wfs_OVAM = self.wfs_request(
-            'pfas:pfas_analyseresultaten',
-            location, max_features, query, sort_by)
+            layer='pfas:pfas_analyseresultaten',
+            location=location,
+            max_features=max_features,
+            query=query,
+            sort_by=sort_by)
 
         data_wfs_OVAM = data_wfs_OVAM.drop_duplicates(
             subset=data_wfs_OVAM.columns)
-        data_wfs_OVAM = data_wfs_OVAM[data_wfs_OVAM['medium'] == 'Puur product']
 
         data_wfs_OVAM_len = len(data_wfs_OVAM)
 
@@ -350,13 +380,21 @@ class RequestPFASdata:
         The downloaded rainwater data.
         """
         logger.info(f"Downloading rainwater data")
+
+        if query is not None:
+            query = And([query, PropertyIsEqualTo(propertyname='medium', literal='Regenwater')])
+        else:
+            query = PropertyIsEqualTo(propertyname='medium', literal='Regenwater')
+
         data_wfs_OVAM = self.wfs_request(
-            'pfas:pfas_analyseresultaten',
-            location, max_features, query, sort_by)
+            layer='pfas:pfas_analyseresultaten',
+            location=location,
+            max_features=max_features,
+            query=query,
+            sort_by=sort_by)
 
         data_wfs_OVAM = data_wfs_OVAM.drop_duplicates(
             subset=data_wfs_OVAM.columns)
-        data_wfs_OVAM = data_wfs_OVAM[data_wfs_OVAM['medium'] == 'Regenwater']
 
         data_wfs_OVAM_len = len(data_wfs_OVAM)
 
@@ -384,15 +422,17 @@ class RequestPFASdata:
         """
         logger.info(f"Downloading soil data")
         data_wfs_OVAM = self.wfs_request(
-            'pfas:pfas_analyseresultaten',
-            location, max_features)
+            layer='pfas:pfas_analyseresultaten',
+            location=location,
+            max_features=max_features,
+            query=PropertyIsEqualTo('medium', 'Vaste deel van de aarde'))
         data_wfs_Lantis_soil = self.wfs_request(
-            'pfas:lantis_bodem_metingen',
-            location, max_features)
+            layer='pfas:lantis_bodem_metingen',
+            location=location,
+            max_features=max_features)
 
         data_wfs_OVAM = data_wfs_OVAM.drop_duplicates(
             subset=data_wfs_OVAM.columns)
-        data_wfs_OVAM = data_wfs_OVAM[data_wfs_OVAM['medium'] == 'Vaste deel van de aarde']
         data_wfs_Lantis_soil = data_wfs_Lantis_soil.drop_duplicates(
             subset=data_wfs_Lantis_soil.columns)
 
@@ -406,7 +446,7 @@ class RequestPFASdata:
 
         return data_wfs_OVAM, data_wfs_Lantis_soil
 
-    def soil_water(self, location, max_features, query=None, sort_by=None):
+    def soil_water(self, location, max_features):
         """
         Download the soil water data.
 
@@ -431,11 +471,16 @@ class RequestPFASdata:
         """
         logger.info(f"Downloading soilwater data")
         data_wfs_VMM_ws = self.wfs_request(
-            'waterbodems:pfas_meetpunten_fcs',
-            location, max_features, query, sort_by)
+            layer='waterbodems:pfas_meetpunten_fcs',
+            location=location,
+            max_features=max_features)
         data_wfs_OVAM = self.wfs_request(
-            'pfas:pfas_analyseresultaten',
-            location, max_features, query, sort_by)
+            layer='pfas:pfas_analyseresultaten',
+            location=location,
+            max_features=max_features,
+            query=Or([
+                PropertyIsEqualTo('medium', 'Waterbodem - sediment'),
+                PropertyIsEqualTo('medium', 'Waterbodem - vaste deel van waterbodem')]))
 
         data_wfs_VMM_ws = data_wfs_VMM_ws.drop_duplicates(
             subset=data_wfs_VMM_ws.columns)
@@ -457,7 +502,7 @@ class RequestPFASdata:
 
         return data_wfs_VMM_ws, data_wfs_OVAM_sediment, data_wfs_OVAM_fixed
 
-    def surface_water(self, location, max_features, query=None, sort_by=None):
+    def surface_water(self, location, max_features):
         """
         Download the surface water data.
 
@@ -482,17 +527,19 @@ class RequestPFASdata:
         """
         logger.info(f"Downloading surface water data")
         data_wfs_VMM_sw = self.wfs_request(
-            'pfas:pfas_oppwater',
-            location, max_features, query, sort_by)
+            layer='pfas:pfas_oppwater',
+            location=location,
+            max_features=max_features)
         data_wfs_OVAM = self.wfs_request(
-            'pfas:pfas_analyseresultaten',
-            location, max_features, query, sort_by)
+            layer='pfas:pfas_analyseresultaten',
+            location=location,
+            max_features=max_features,
+            query=PropertyIsEqualTo('medium', 'Oppervlaktewater'))
 
         data_wfs_VMM_sw = data_wfs_VMM_sw.drop_duplicates(
             subset=data_wfs_VMM_sw.columns)
         data_wfs_OVAM = data_wfs_OVAM.drop_duplicates(
             subset=data_wfs_OVAM.columns)
-        data_wfs_OVAM = data_wfs_OVAM[data_wfs_OVAM['medium'] == 'Oppervlaktewater']
 
         data_wfs_VMM_sw_len = len(data_wfs_VMM_sw)
         data_wfs_OVAM_len = len(data_wfs_OVAM)
@@ -530,8 +577,11 @@ class RequestPFASdata:
         """
         logger.info(f"Downloading waste water data")
         data_wfs_VMM_ww = self.wfs_request(
-            'pfas:pfas_afvalwater',
-            location, max_features, query, sort_by)
+            layer='pfas:pfas_afvalwater',
+            location=location,
+            max_features=max_features,
+            query=query,
+            sort_by=sort_by)
 
         data_wfs_VMM_ww = data_wfs_VMM_ww.drop_duplicates(
             subset=data_wfs_VMM_ww.columns)
@@ -735,6 +785,6 @@ if __name__ == '__main__':
     medium = ['all']
     location = Within(Box(15000, 150000, 270000, 250000))  # Bounding box Flanders
     rd = RequestPFASdata()
-    df = rd.main(medium, location=location, max_features=10)[0]
-    print(df[0])
+    df = rd.main(medium, location=location, save=True)[0]
+    #print(df[0])
 

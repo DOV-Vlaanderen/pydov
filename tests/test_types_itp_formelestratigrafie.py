@@ -1,5 +1,6 @@
 """Module grouping tests for the
 pydov.types.interpretaties.FormeleStratigrafie class."""
+from pydov.types.fields import ReturnFieldList
 from pydov.types.interpretaties import FormeleStratigrafie
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes
@@ -35,8 +36,8 @@ class TestFormeleStratigrafie(AbstractTestTypes):
         'pkey_sondering', 'betrouwbaarheid_interpretatie', 'x', 'y',
         'start_interpretatie_mtaw']
 
-    valid_returnfields = ('pkey_interpretatie', 'pkey_sondering')
-    valid_returnfields_subtype = (
+    valid_returnfields = ReturnFieldList.from_field_names('pkey_interpretatie', 'pkey_sondering')
+    valid_returnfields_subtype = ReturnFieldList.from_field_names(
         'pkey_interpretatie', 'diepte_laag_van', 'diepte_laag_tot')
 
     inexistent_field = 'onbestaand'

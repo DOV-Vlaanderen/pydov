@@ -5,6 +5,7 @@ import pandas as pd
 from owslib.fes2 import PropertyIsEqualTo
 
 from pydov.search.sondering import SonderingSearch
+from pydov.types.fields import ReturnFieldList
 from pydov.types.sondering import Sondering
 from tests.abstract import AbstractTestSearch
 
@@ -31,12 +32,12 @@ class TestSonderingSearch(AbstractTestSearch):
     wfs_field = 'sondeernummer'
     xml_field = 'gw_meting'
 
-    valid_returnfields = (
+    valid_returnfields = ReturnFieldList.from_field_names(
         'pkey_sondering', 'sondeernummer', 'diepte_sondering_tot',
                           'datum_aanvang')
-    valid_returnfields_subtype = (
+    valid_returnfields_subtype = ReturnFieldList.from_field_names(
         'pkey_sondering', 'sondeernummer', 'lengte', 'qc', 'Qt')
-    valid_returnfields_extra = ('pkey_sondering', 'conus')
+    valid_returnfields_extra = ReturnFieldList.from_field_names('pkey_sondering', 'conus')
 
     df_default_columns = [
         'pkey_sondering', 'sondeernummer', 'x', 'y', 'mv_mtaw',

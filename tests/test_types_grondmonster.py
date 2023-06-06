@@ -1,5 +1,6 @@
 """Module grouping tests for the pydov.types.grondmonster module."""
 
+from pydov.types.fields import ReturnFieldList
 from pydov.types.grondmonster import Grondmonster
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes
@@ -35,7 +36,7 @@ class TestGrondmonster(AbstractTestTypes):
         'uitrolgrens', 'vloeigrens', 'glauconiet_totaal',
         'korrelvolumemassa', 'volumemassa', 'watergehalte']
 
-    valid_returnfields = ('pkey_grondmonster', 'diepte_tot_m')
-    valid_returnfields_subtype = ('diameter', 'fractie', 'methode')
+    valid_returnfields = ReturnFieldList.from_field_names('pkey_grondmonster', 'diepte_tot_m')
+    valid_returnfields_subtype = ReturnFieldList.from_field_names('diameter', 'fractie', 'methode')
 
     inexistent_field = 'onbestaand'

@@ -5,6 +5,7 @@ from owslib.fes2 import PropertyIsEqualTo
 
 from pydov.search.bodemdiepteinterval import BodemdiepteintervalSearch
 from pydov.types.bodemdiepteinterval import Bodemdiepteinterval
+from pydov.types.fields import ReturnFieldList
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestSearch
 
@@ -31,9 +32,9 @@ class TestBodemdiepteintervalSearch(AbstractTestSearch):
     wfs_field = 'ondergrens_bereikt'
     xml_field = None
 
-    valid_returnfields = ('pkey_diepteinterval', 'naam', 'bovengrens1_cm')
+    valid_returnfields = ReturnFieldList.from_field_names('pkey_diepteinterval', 'naam', 'bovengrens1_cm')
     valid_returnfields_subtype = None
-    valid_returnfields_extra = ('pkey_diepteinterval', 'naam', 'Monsters')
+    valid_returnfields_extra = ReturnFieldList.from_field_names('pkey_diepteinterval', 'naam', 'Monsters')
 
     df_default_columns = [
         'pkey_diepteinterval', 'pkey_bodemopbouw', 'pkey_bodemlocatie',

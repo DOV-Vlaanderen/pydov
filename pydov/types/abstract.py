@@ -10,7 +10,8 @@ from owslib.etree import etree
 
 import pydov
 from pydov.search.abstract import AbstractCommon
-from pydov.types.fields import AbstractField
+from pydov.types.fields import AbstractField, ReturnFieldList
+from pydov.util import owsutil
 from pydov.util.dovutil import get_dov_xml, parse_dov_xml
 from pydov.util.errors import RemoteFetchError, XmlFetchWarning
 from pydov.util.net import LocalSessionThreadPool
@@ -383,12 +384,29 @@ class AbstractDovType(AbstractTypeCommon):
         instance = cls(pkey)
 
         for field in cls.get_fields(source=('wfs',)).values():
-            instance.data[field['name']] = cls._parse(
-                func=feature.findtext,
-                xpath=field['sourcefield'],
-                namespace=namespace,
-                returntype=field.get('type', None)
-            )
+            if owsutil.has_geom_support() and field['type'] == 'geometry':
+                instance.data[field['name']] = cls._parse(
+                    func=feature.find,
+                    xpath=field['sourcefield'],
+                    namespace=namespace,
+                    returntype='geometry'
+                )
+            else:
+                instance.data[field['name']] = cls._parse(
+                    func=feature.findtext,
+                    xpath=field['sourcefield'],
+                    namespace=namespace,
+                    returntype=field.get('type', str)
+                )
+
+        for field in cls.get_fields(source=('custom',)).values():
+            for required_field in field.requires_fields():
+                instance.data[required_field] = cls._parse(
+                    func=feature.findtext,
+                    xpath=required_field,
+                    namespace=namespace,
+                    returntype=field.get('type', str)
+                )
 
         for field in cls.get_fields(source=('custom',)).values():
             instance.data[field['name']] = field.calculate(instance) or np.nan
@@ -443,12 +461,12 @@ class AbstractDovType(AbstractTypeCommon):
 
     @classmethod
     def get_field_names(cls, return_fields=None, include_subtypes=True,
-                        include_wfs_injected=False):
+                        include_wfs_injected=False, include_geometry=False):
         """Return the names of the fields available for this type.
 
         Parameters
         ----------
-        return_fields : list<str> or tuple<str> or set<str>
+        return_fields : ReturnFieldList
             List of fields to include in the data array. The order is
             ignored, the default order of the fields of the datatype is used
             instead. Defaults to None, which will include all fields.
@@ -458,6 +476,8 @@ class AbstractDovType(AbstractTypeCommon):
         include_wfs_injected : boolean
             Whether to include fields defined in WFS only, not in the
             default dataframe for this type. Defaults to False.
+        include_geometry : boolean
+            Whether to include geometry fields. Defaults to False.
 
         Returns
         -------
@@ -476,28 +496,32 @@ class AbstractDovType(AbstractTypeCommon):
         """
         if return_fields is None:
             if include_wfs_injected:
-                fields = [f['name'] for f in cls.fields]
+                fields = [f['name'] for f in cls.fields if f['type']
+                          != 'geometry' or include_geometry]
             else:
                 fields = [f['name'] for f in cls.fields if not f.get(
-                    'wfs_injected', False)]
+                    'wfs_injected', False) and (
+                        f['type'] != 'geometry' or include_geometry)]
             if include_subtypes:
                 for st in cls.subtypes:
                     fields.extend(st.get_field_names())
-        elif type(return_fields) not in (list, tuple, set):
+        elif not isinstance(return_fields, ReturnFieldList):
             raise AttributeError(
-                'return_fields should be a list, tuple or set')
+                'return_fields should be an instance of '
+                'pydov.types.fields.ReturnFieldList')
         else:
-            cls_fields = [f['name'] for f in cls.fields]
+            cls_fields = [f['name'] for f in cls.fields if f['type']
+                          != 'geometry' or include_geometry]
             if include_subtypes:
                 for st in cls.subtypes:
                     cls_fields.extend(st.get_field_names())
 
-            fields = [f for f in return_fields if f in cls_fields]
+            fields = [f.name for f in return_fields if f.name in cls_fields]
 
             for rf in return_fields:
-                if rf not in cls_fields:
+                if rf.name not in cls_fields:
                     raise InvalidFieldError(
-                        "Unknown return field: '{}'".format(rf))
+                        "Unknown return field: '{}'".format(rf.name))
         return fields
 
     @classmethod
@@ -687,13 +711,15 @@ class AbstractDovType(AbstractTypeCommon):
             search operation.
 
         """
-        fields = self.get_field_names(return_fields)
+        fields = self.get_field_names(return_fields, include_geometry=True)
         if len(fields) == 0:
             fields = self.get_field_names(
-                return_fields, include_wfs_injected=True)
+                return_fields, include_wfs_injected=True,
+                include_geometry=False)
 
         ownfields = self.get_field_names(include_subtypes=False,
-                                         include_wfs_injected=True)
+                                         include_wfs_injected=True,
+                                         include_geometry=True)
         subfields = [f for f in fields if f not in ownfields]
         parsed = None
 

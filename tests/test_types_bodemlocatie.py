@@ -1,6 +1,7 @@
 """Module grouping tests for the pydov.types.bodemlocatie module."""
 
 from pydov.types.bodemlocatie import Bodemlocatie
+from pydov.types.fields import ReturnFieldList
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes
 
@@ -32,8 +33,8 @@ class TestBodemlocatie(AbstractTestTypes):
         'invoerdatum', 'educatieve_waarde'
     ]
 
-    valid_returnfields = ('pkey_bodemlocatie', 'naam')
-    valid_returnfields_subtype = ('pkey_bodemlocatie', 'naam')
+    valid_returnfields = ReturnFieldList.from_field_names('pkey_bodemlocatie', 'naam')
+    valid_returnfields_subtype = ReturnFieldList.from_field_names('pkey_bodemlocatie', 'naam')
 
     inexistent_field = 'onbestaand'
 

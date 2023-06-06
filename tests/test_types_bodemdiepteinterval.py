@@ -1,6 +1,7 @@
 """Module grouping tests for the pydov.types.bodemdiepteinterval module."""
 
 from pydov.types.bodemdiepteinterval import Bodemdiepteinterval
+from pydov.types.fields import ReturnFieldList
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes
 
@@ -31,7 +32,7 @@ class TestBodemdiepteinterval(AbstractTestTypes):
         'grensduidelijkheid', 'grensregelmatigheid', 'beschrijving', 'x', 'y',
         'mv_mtaw']
 
-    valid_returnfields = ('pkey_diepteinterval', 'naam')
+    valid_returnfields = ReturnFieldList.from_field_names('pkey_diepteinterval', 'naam')
     valid_returnfields_subtype = None
 
     inexistent_field = 'onbestaand'

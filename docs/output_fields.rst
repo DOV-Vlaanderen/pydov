@@ -6,7 +6,6 @@ Customizing data output
 
 When using pydov to search datasets, the returned dataframe has different default columns (fields) depending on the dataset. We believe each dataframe to contain the most relevant fields for the corresponding dataset, but pydov allows you to select and customize the fields you want to be returned in the output dataframe.
 
-
 Using return fields
 *******************
 
@@ -17,15 +16,21 @@ For example, to query the boreholes in Ghent but only retrieve their depth, you'
   from pydov.search.boring import BoringSearch
 
   bs = BoringSearch()
-  df = bs.search(query=PropertyIsEqualTo('gemeente', 'Gent'), return_fields=('pkey_boring', 'diepte_boring_tot'))
+  df = bs.search(
+      query=PropertyIsEqualTo('gemeente', 'Gent'),
+      return_fields=('pkey_boring', 'diepte_boring_tot')
+  )
 
 
-Note that you can not only use ``return_fields`` to limit the columns from the default dataframe for you can also add extra fields not included in this default set. The following example returns the purpose ('doel') of all the Ghent boreholes::
+Note that you can not only use ``return_fields`` to limit the columns from the default dataframe, but you can also add extra fields not included in this default set. The following example returns the purpose ('doel') of all the Ghent boreholes::
 
   from pydov.search.boring import BoringSearch
 
   bs = BoringSearch()
-  df = bs.search(query=PropertyIsEqualTo('gemeente', 'Gent'), return_fields=('pkey_boring', 'doel'))
+  df = bs.search(
+    query=PropertyIsEqualTo('gemeente', 'Gent'),
+    return_fields=('pkey_boring', 'doel')
+  )
 
 
 You can get an overview of the available fields for a dataset using its search objects `get_fields` method. More information can be found in the :ref:`available_attribute_fields` section.
@@ -34,7 +39,63 @@ You can get an overview of the available fields for a dataset using its search o
 
     Significant performance gains can be achieved by only including the fields you need, and more specifically by including only fields with a cost of 1. More information can be found in the :ref:`performance` section below.
 
-    For instance, in the examples above only fields with a cost of 1 are selected, allowing the results to be retrieved almost instantly. By selecting only fields available in the WFS service (i.e. fields with a cost of 1), pydov only needs a single WFS query to obtain the results and doesn't need to download any additional XML documents.
+    For instance, in the examples above only fields with a cost of 1 are selected, allowing the results to be retrieved almost instantly. By selecting only fields available in the WFS service (i.e. fields with a cost of 1), pydov only needs to query the WFS service to obtain the results and doesn't need to download any additional XML documents.
+
+
+Including geometries
+********************
+
+By default, pydov will only include attribute fields in the output dataframe. However it is possible to add the geometry too, when requested in the ``return_fields`` parameter and additional support for geometries has been installed (see :ref:`installation`).
+
+Finding geometry columns
+  When pydov is installed with additional support for geometries, geometry column(s) are listed in the output of the ``get_fields()`` method. You can recognise them from their 'type', which is 'geometry'::
+
+    from pydov.search.boring import BoringSearch
+
+    bs = BoringSearch()
+    print([f for f in bs.get_fields().values() if f['type'] == 'geometry'])
+
+    [{'name': 'geom', 'definition': None, 'type': 'geometry', 'notnull': False, 'query': False, 'cost': 1}]
+
+
+Default coordinate reference system
+  When adding the geometry field as return field, you will get the corresponding geometry in the default coordinate reference system (CRS) of the layer - most of our layers use the Belgian Lambert 72 CRS (EPSG:31370) by default::
+
+    df = bs.search(
+        return_fields=['pkey_boring', 'geom'],
+        max_features=1
+    )
+    print(df)
+
+                                              pkey_boring                  geom
+    0  https://www.dov.vlaanderen.be/data/boring/2016...  POINT (92424 170752)
+
+Custom coordinate reference systems
+  To get the geometry in another CRS, instead of adding just the fieldname as return field, you can add an instance of :class:`pydov.types.fields.GeometryReturnField` specifying both the field name and the desired CRS. If you'd like to receive the geometries in GPS coordinates (lon/lat, or EPSG:4326) instead of Belgian Lambert 72, you could::
+
+      from pydov.types.fields import GeometryReturnField
+
+      df = bs.search(
+          return_fields=['pkey_boring', GeometryReturnField('geom', epsg=4326)],
+          max_features=1
+      )
+      print(df)
+
+                                            pkey_boring                    geom
+    0  https://www.dov.vlaanderen.be/data/boring/2016...  POINT (3.5512 50.8443)
+
+
+Turning the result into a GeoPandas GeoDataFrame
+  pydov result dataframes which include a geometry column can easily be transformed from a normal Pandas DataFrame into a GeoPandas GeoDataFrame for further (geo) analysis, exporting or use in a new query using a :class:`pydov.util.location.GeopandasFilter`::
+
+      bs = BoringSearch()
+      df = bs.search(
+          return_fields=['pkey_boring', GeometryReturnField('geom', 4326)],
+          max_features=1
+      )
+
+      geo_df = GeoDataFrame(df, geometry='geom', crs='EPSG:4326')
+      geo_df.to_file('boringen.geojson')
 
 
 Defining custom object types

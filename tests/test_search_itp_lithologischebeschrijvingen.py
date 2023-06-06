@@ -4,6 +4,7 @@ import pandas as pd
 from owslib.fes2 import PropertyIsEqualTo
 
 from pydov.search.interpretaties import LithologischeBeschrijvingenSearch
+from pydov.types.fields import ReturnFieldList
 from pydov.types.interpretaties import LithologischeBeschrijvingen
 from tests.abstract import AbstractTestSearch
 
@@ -40,11 +41,11 @@ class TestLithologischeBeschrijvingenSearch(AbstractTestSearch):
     wfs_field = 'Proefnummer'
     xml_field = 'beschrijving'
 
-    valid_returnfields = ('pkey_interpretatie',
-                          'betrouwbaarheid_interpretatie')
-    valid_returnfields_subtype = (
+    valid_returnfields = ReturnFieldList.from_field_names('pkey_interpretatie',
+                                                          'betrouwbaarheid_interpretatie')
+    valid_returnfields_subtype = ReturnFieldList.from_field_names(
         'pkey_interpretatie', 'diepte_laag_van', 'diepte_laag_tot')
-    valid_returnfields_extra = ('pkey_interpretatie', 'gemeente')
+    valid_returnfields_extra = ReturnFieldList.from_field_names('pkey_interpretatie', 'gemeente')
 
     df_default_columns = [
         'pkey_interpretatie', 'pkey_boring',

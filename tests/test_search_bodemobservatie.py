@@ -6,6 +6,7 @@ from owslib.fes2 import PropertyIsEqualTo
 
 from pydov.search.bodemobservatie import BodemobservatieSearch
 from pydov.types.bodemobservatie import Bodemobservatie
+from pydov.types.fields import ReturnFieldList
 from tests.abstract import AbstractTestSearch
 
 location_md_metadata = 'tests/data/types/bodemobservatie/md_metadata.xml'
@@ -31,14 +32,14 @@ class TestBodemobservatieSearch(AbstractTestSearch):
     wfs_field = 'parameter'
     xml_field = 'observatiedatum'
 
-    valid_returnfields = (
+    valid_returnfields = ReturnFieldList.from_field_names(
         'pkey_bodemobservatie',
         'parameter')
-    valid_returnfields_subtype = (
+    valid_returnfields_subtype = ReturnFieldList.from_field_names(
         'pkey_bodemobservatie',
         'parameter',
         'observatiedatum')
-    valid_returnfields_extra = (
+    valid_returnfields_extra = ReturnFieldList.from_field_names(
         'pkey_bodemobservatie',
         'parameter',
         'Opmerkingen')

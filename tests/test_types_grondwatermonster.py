@@ -1,4 +1,5 @@
 """Module grouping tests for the pydov.types.boring module."""
+from pydov.types.fields import ReturnFieldList
 from pydov.types.grondwatermonster import GrondwaterMonster
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes
@@ -32,8 +33,8 @@ class TestGrondwaterMonster(AbstractTestTypes):
         'filternummer', 'x', 'y', 'start_grondwaterlocatie_mtaw',
         'gemeente', 'datum_monstername']
 
-    valid_returnfields = ('y', 'gemeente')
-    valid_returnfields_subtype = (
+    valid_returnfields = ReturnFieldList.from_field_names('y', 'gemeente')
+    valid_returnfields_subtype = ReturnFieldList.from_field_names(
         'pkey_filter', 'pkey_grondwatermonster', 'eenheid')
 
     inexistent_field = 'onbestaand'

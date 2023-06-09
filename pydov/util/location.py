@@ -30,10 +30,14 @@ class AbstractLocation(object):
     """
 
     def _get_id_seed(self):
+        """Get the seed for generating a random but stable GML ID for this location.
+
+        Should return the same value for locations considered equal.
+        """
         raise NotImplementedError('This should be implemented in a subclass.')
 
     def _get_id(self):
-        # random.seed(self._get_id_seed())
+        random.seed(self._get_id_seed())
         random_id = ''.join(random.choice(
             string.ascii_letters + string.digits) for x in range(8))
         return f'pydov.{random_id}'

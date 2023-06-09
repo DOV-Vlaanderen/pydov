@@ -333,6 +333,30 @@ def set_geometry_column(location, geometry_column):
     return location.toXML()
 
 
+def unique_gml_ids(location):
+    """Make sure the location query has unique GML id's for all features.
+
+    Parameters
+    ----------
+    location : etree.ElementTree
+        XML tree of the location filter.
+
+    Returns
+    -------
+    etree.ElementTree
+        XML tree of the location filter with unique GML ids.
+    """
+    gml_items = location.findall('.//*[@{http://www.opengis.net/gml/3.2}id]')
+    gml_ids = [i.get('{http://www.opengis.net/gml/3.2}id') for i in gml_items]
+
+    if len(gml_ids) == len(set(gml_ids)):
+        return location
+    else:
+        for ix, item in enumerate(gml_items):
+            item.set('{http://www.opengis.net/gml/3.2}id', f'pydov.{ix}')
+        return location
+
+
 def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
                                  filter=None, sort_by=None, propertyname=None,
                                  max_features=None, start_index=0,
@@ -439,6 +463,7 @@ def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
 
     if location is not None:
         location = set_geometry_column(location, geometry_column)
+        location = unique_gml_ids(location)
         filter_parent.append(location)
 
     if filter is not None or location is not None:

@@ -3,13 +3,13 @@ import copy
 
 import pytest
 from owslib.etree import etree
-from owslib.fes2 import FilterRequest, PropertyIsEqualTo, SortBy, SortProperty
+from owslib.fes2 import FilterRequest, PropertyIsEqualTo, SortBy, SortProperty, Or
 from owslib.iso import MD_Metadata
 from owslib.util import nspath_eval
 
 from pydov.util import owsutil
 from pydov.util.dovutil import build_dov_url
-from pydov.util.location import Box, Within
+from pydov.util.location import Box, Within, WithinDistance
 from tests.abstract import clean_xml
 
 location_md_metadata = 'tests/data/types/boring/md_metadata.xml'
@@ -405,6 +405,41 @@ class TestWfsGetFeatureRequest(object):
             '214675.000000</gml:lowerCorner><gml:upperCorner>151750.000000 '
             '214775.000000</gml:upperCorner></gml:Envelope></fes:Within></fes'
             ':Filter></wfs:Query></wfs:GetFeature>')
+
+    def test_wfs_build_getfeature_request_gml_id_stable(self):
+        """Test the owsutil.wfs_build_getfeature_request method with a
+        typename, box and geometry_column.
+        Test whether the XML of the WFS GetFeature call is stable.
+        """
+        xml1 = owsutil.wfs_build_getfeature_request(
+            'dov-pub:Boringen',
+            location=Within(Box(151650, 214675, 151750, 214775)),
+            geometry_column='geom')
+
+        xml2 = owsutil.wfs_build_getfeature_request(
+            'dov-pub:Boringen',
+            location=Within(Box(151650, 214675, 151750, 214775)),
+            geometry_column='geom')
+
+        assert etree.tostring(xml1) == etree.tostring(xml2)
+
+    def test_wfs_build_getfeature_request_gml_id_unique(self):
+        """Test the owsutil.wfs_build_getfeature_request method with a
+        typename, two boxes and geometry_column.
+        Test whether the GML ids in the XML of the WFS GetFeature are unique.
+        """
+        xml = owsutil.wfs_build_getfeature_request(
+            'dov-pub:Boringen',
+            location=Or([
+                Within(Box(100000, 120000, 200000, 220000)),
+                WithinDistance(Box(100000, 120000, 200000, 220000), 10)
+            ]),
+            geometry_column='geom')
+
+        gml_items = xml.findall('.//*[@{http://www.opengis.net/gml/3.2}id]')
+        gml_ids = [i.get('{http://www.opengis.net/gml/3.2}id') for i in gml_items]
+
+        assert len(gml_ids) == len(set(gml_ids))
 
     def test_wfs_build_getfeature_request_propertyname(self):
         """Test the owsutil.wfs_build_getfeature_request method with a list

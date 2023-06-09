@@ -752,11 +752,18 @@ class AbstractSearch(AbstractCommon):
         if tree is not None:
             return tree, wfs_getfeature_xml
 
-        return owsutil.wfs_get_feature(
-            baseurl=wfs.url,
-            get_feature_request=wfs_getfeature_xml,
-            session=session
-        ), wfs_getfeature_xml
+        if pydov.cache:
+            return pydov.cache.get_wfs(
+                url=wfs.url,
+                get_feature_request=wfs_getfeature_xml,
+                session=session
+            ), wfs_getfeature_xml
+        else:
+            return owsutil.wfs_get_feature(
+                baseurl=wfs.url,
+                get_feature_request=wfs_getfeature_xml,
+                session=session
+            ), wfs_getfeature_xml
 
     def _search(self, location=None, query=None, return_fields=None,
                 sort_by=None, max_features=None, extra_wfs_fields=[]):

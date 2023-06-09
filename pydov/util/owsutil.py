@@ -477,6 +477,9 @@ def wfs_get_feature(baseurl, get_feature_request, session=None):
 
     request = session.post(baseurl, data)
     request.encoding = 'utf-8'
+
+    HookRunner.execute_wfs_downloaded()
+
     return request.text.encode('utf8')
 
 

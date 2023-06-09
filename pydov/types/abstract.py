@@ -666,7 +666,7 @@ class AbstractDovType(AbstractTypeCommon):
 
         """
         if pydov.cache:
-            return pydov.cache.get(self.pkey + '.xml', session)
+            return pydov.cache.get_xml(self.pkey + '.xml', session)
         else:
             xml = get_dov_xml(self.pkey + '.xml', session)
             HookRunner.execute_xml_downloaded(self.pkey)

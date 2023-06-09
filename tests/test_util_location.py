@@ -25,7 +25,7 @@ from tests.abstract import clean_xml
 class TestLocation(object):
     """Class grouping tests for the AbstractLocation subtypes."""
 
-    def test_gml_id(self):
+    def test_gml_id_unique(self):
         box1 = Box(94720, 186910, 112220, 202870)
         id1 = box1.get_element().get('{http://www.opengis.net/gml/3.2}id')
 
@@ -35,6 +35,17 @@ class TestLocation(object):
         assert id1.startswith('pydov')
         assert id2.startswith('pydov')
         assert id1 != id2
+
+    def test_gml_id_stable(self):
+        box1 = Box(94720, 186910, 112220, 202870)
+        id1 = box1.get_element().get('{http://www.opengis.net/gml/3.2}id')
+
+        box2 = Box(94720, 186910, 112220, 202870)
+        id2 = box2.get_element().get('{http://www.opengis.net/gml/3.2}id')
+
+        assert id1.startswith('pydov')
+        assert id2.startswith('pydov')
+        assert id1 == id2
 
     def test_box(self, mp_gml_id):
         """Test the default Box type.

@@ -2,15 +2,18 @@
 """Module implementing a local cache for downloaded XML files."""
 import datetime
 import gzip
+from hashlib import md5
 import os
 import re
 import shutil
 import tempfile
 import warnings
+from owslib.etree import etree
 
 from pydov.util.dovutil import build_dov_url, get_dov_xml
-from pydov.util.errors import RemoteFetchError, XmlStaleWarning
+from pydov.util.errors import RemoteFetchError, WfsStaleWarning, XmlStaleWarning
 from pydov.util.hooks import HookRunner
+from pydov.util.owsutil import wfs_get_feature
 
 
 class AbstractCache(object):
@@ -27,7 +30,12 @@ class AbstractCache(object):
         """Initialisation."""
         self.stale_on_error = True
 
-    def _get_remote(self, url, session=None):
+    def _get_remote_wfs(self, url, get_feature_request, session=None):
+        result = wfs_get_feature(url, get_feature_request, session)
+        HookRunner.execute_wfs_downloaded()
+        return result
+
+    def _get_remote_xml(self, url, session=None):
         """Get the XML data by requesting it from the given URL.
 
         Parameters
@@ -48,7 +56,13 @@ class AbstractCache(object):
         HookRunner.execute_xml_downloaded(url.rstrip('.xml'))
         return xml
 
-    def _emit_cache_hit(self, url):
+    def _emit_wfs_cache_hit(self):
+        HookRunner.execute_wfs_cache_hit()
+
+    def _emit_wfs_stale_hit(self):
+        HookRunner.execute_wfs_stale_hit()
+
+    def _emit_xml_cache_hit(self, url):
         """Emit the XML cache hit event for all registered hooks.
 
         This notifies hooks that a valid XML document has been returned from
@@ -61,7 +75,7 @@ class AbstractCache(object):
         """
         HookRunner.execute_xml_cache_hit(url.rstrip('.xml'))
 
-    def _emit_stale_hit(self, url):
+    def _emit_xml_stale_hit(self, url):
         """Emit the XML stale hit event for all registered hooks.
 
         This notifies hooks that a stale XML document has been returned from
@@ -74,7 +88,10 @@ class AbstractCache(object):
         """
         HookRunner.execute_xml_stale_hit(url.rstrip('.xml'))
 
-    def get(self, url, session=None):
+    def get_wfs(self, url, get_feature_request, session=None):
+        raise NotImplementedError('This should be implemented in a subclass.')
+
+    def get_xml(self, url, session=None):
         """Get the XML data for the DOV object referenced by the given URL.
 
         Because of parallel processing, this method will be called
@@ -116,6 +133,22 @@ class AbstractCache(object):
         """Remove the entire cache."""
         raise NotImplementedError('This should be implemented in a subclass.')
 
+    def _emit_cache_hit(self, url):
+        # deprecated
+        return self._emit_xml_cache_hit(url)
+
+    def _emit_stale_hit(self, url):
+        # deprecated
+        return self._emit_xml_stale_hit(url)
+
+    def _get_remote(self, url, session=None):
+        # deprecated
+        return self._get_remote_xml(url, session)
+
+    def get(self, url, session=None):
+        # deprecated
+        return self.get_xml(url, session)
+
 
 class AbstractFileCache(AbstractCache):
     """Abstract class for filebased caching of downloaded XML files from
@@ -148,8 +181,12 @@ class AbstractFileCache(AbstractCache):
             self.cachedir = os.path.join(tempfile.gettempdir(), 'pydov')
         self.max_age = max_age
 
-        self._re_type_key = re.compile(
+        self._re_xml_type_key = re.compile(
             build_dov_url('data/') + r'([^ /]+)/([^.]+)'
+        )
+
+        self._re_wfs_type_key = re.compile(
+            build_dov_url('geoserver/') + r'([^ /]+)'
         )
 
         try:
@@ -177,7 +214,7 @@ class AbstractFileCache(AbstractCache):
         """
         raise NotImplementedError('This should be implemented in a subclass.')
 
-    def _get_type_key_from_url(self, url):
+    def _get_xml_type_key_from_url(self, url):
         """Parse a DOV permalink and return the datatype and object key.
 
         Parameters
@@ -194,9 +231,19 @@ class AbstractFileCache(AbstractCache):
             referred to by the URL.
 
         """
-        datatype = self._re_type_key.search(url)
+        datatype = self._re_xml_type_key.search(url)
         if datatype and len(datatype.groups()) > 1:
             return datatype.group(1), datatype.group(2)
+
+    def _get_wfs_type_key_from_url(self, url, get_feature_request):
+        datatype = self._re_wfs_type_key.search(url)
+
+        data = etree.tostring(get_feature_request, encoding='unicode')
+        print(data)
+        key = md5(data.encode('utf8')).hexdigest()
+
+        if datatype and len(datatype.groups()) > 0:
+            return f'wfs_{datatype.group(1)}', key
 
     def _get_type_key_from_path(self, path):
         """Parse a filepath and return the datatype and object key.
@@ -306,8 +353,51 @@ class AbstractFileCache(AbstractCache):
         """
         raise NotImplementedError('This should be implemented in a subclass.')
 
-    def get(self, url, session=None):
-        datatype, key = self._get_type_key_from_url(url)
+    def get_wfs(self, url, get_feature_request, session=None):
+        datatype, key = self._get_wfs_type_key_from_url(url, get_feature_request)
+
+        data = HookRunner.execute_inject_wfs_getfeature_response(get_feature_request)
+
+        if data is not None:
+            # run hook?
+            return data
+
+        if self._is_valid(datatype, key):
+            try:
+                self._emit_wfs_cache_hit()
+                data = self._load(datatype, key).encode('utf-8')
+
+                # run hook?
+                return data
+            except Exception:
+                pass
+
+        try:
+            data = self._get_remote_wfs(url, get_feature_request, session)
+        except RemoteFetchError:
+            if self.stale_on_error and self._is_stale(datatype, key):
+                self._emit_wfs_stale_hit(url)
+                warnings.warn((
+                    "Failed to fetch remote WFS response for "
+                    "URL '{}', using older stale version from cache. "
+                    "Resulting dataframe will be out-of-date.".format(url)),
+                    WfsStaleWarning)
+
+                data = self._load(datatype, key).encode('utf-8')
+                return data
+            else:
+                HookRunner.execute_wfs_fetch_error()
+                raise RemoteFetchError
+        else:
+            try:
+                self._save(datatype, key, data)
+            except Exception:
+                pass
+
+        return data
+
+    def get_xml(self, url, session=None):
+        datatype, key = self._get_xml_type_key_from_url(url)
 
         data = HookRunner.execute_inject_xml_response(url)
 
@@ -317,7 +407,7 @@ class AbstractFileCache(AbstractCache):
 
         if self._is_valid(datatype, key):
             try:
-                self._emit_cache_hit(url)
+                self._emit_xml_cache_hit(url)
                 data = self._load(datatype, key).encode('utf-8')
 
                 HookRunner.execute_xml_received(url, data)
@@ -326,10 +416,10 @@ class AbstractFileCache(AbstractCache):
                 pass
 
         try:
-            data = self._get_remote(url, session)
+            data = self._get_remote_xml(url, session)
         except RemoteFetchError:
             if self.stale_on_error and self._is_stale(datatype, key):
-                self._emit_stale_hit(url)
+                self._emit_xml_stale_hit(url)
                 warnings.warn((
                     "Failed to fetch remote XML document for "
                     "object '{}', using older stale version from cache. "
@@ -394,6 +484,9 @@ class PlainTextFileCache(AbstractFileCache):
     def _get_type_key_from_path(self, path):
         key = os.path.basename(path).rstrip('.xml')
         datatype = os.path.dirname(path).split()[-1]
+
+        if datatype.startswith('wfs_'):
+            datatype = datatype[len('wfs_'):]
         return datatype, key
 
     def _save(self, datatype, key, content):
@@ -421,6 +514,9 @@ class GzipTextFileCache(AbstractFileCache):
     def _get_type_key_from_path(self, path):
         key = os.path.basename(path).rstrip('.xml.gz')
         datatype = os.path.dirname(path).split()[-1]
+
+        if datatype.startswith('wfs_'):
+            datatype = datatype[len('wfs_'):]
         return datatype, key
 
     def _save(self, datatype, key, content):

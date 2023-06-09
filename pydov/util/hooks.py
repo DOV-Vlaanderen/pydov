@@ -226,6 +226,22 @@ class HookRunner(object):
         HookRunner.__execute_read('xml_downloaded', [pkey_object])
 
     @staticmethod
+    def execute_wfs_cache_hit():
+        HookRunner.__execute_read('wfs_cache_hit', [])
+
+    @staticmethod
+    def execute_wfs_stale_hit():
+        HookRunner.__execute_read('wfs_stale_hit', [])
+
+    @staticmethod
+    def execute_wfs_fetch_error():
+        HookRunner.__execute_read('wfs_fetch_error', [])
+
+    @staticmethod
+    def execute_wfs_downloaded():
+        HookRunner.__execute_read('wfs_downloaded', [])
+
+    @staticmethod
     def execute_inject_meta_response(url):
         """Execute the inject_meta_response method for all registered hooks.
 
@@ -465,6 +481,18 @@ class AbstractReadHook(object):
         """
         pass
 
+    def wfs_cache_hit():
+        pass
+
+    def wfs_stale_hit():
+        pass
+
+    def wfs_fetch_error():
+        pass
+
+    def wfs_downloaded():
+        pass
+
 
 class AbstractInjectHook(object):
     """Abstract base class for custom hook implementations.
@@ -699,7 +727,21 @@ class SimpleStatusHook(AbstractReadHook):
 
             self.xml_progress.result_count = total_results
 
-        self._write_progress(self.wfs_progress, '.')
+    def wfs_downloaded(self):
+        with self.lock:
+            self._write_progress(self.wfs_progress, '.')
+
+    def wfs_cache_hit(self):
+        with self.lock:
+            self._write_progress(self.wfs_progress, 'c')
+
+    def wfs_stale_hit(self):
+        with self.lock:
+            self._write_progress(self.xml_progress, 'S')
+
+    def wfs_fetch_error(self):
+        with self.lock:
+            self._write_progress(self.xml_progress, 'E')
 
     def xml_cache_hit(self, pkey_object):
         """When an XML document is retrieved from the cache, print 'c' to

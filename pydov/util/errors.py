@@ -51,6 +51,10 @@ class DOVWarning(Warning):
     pass
 
 
+class WfsStaleWarning(DOVWarning):
+    pass
+
+
 class XsdFetchWarning(DOVWarning):
     """Emitted when an XSD document fails to be fetched from the DOV
     webservice, resulting in the fields metadata to be incomplete."""

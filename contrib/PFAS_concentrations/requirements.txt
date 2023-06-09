@@ -1,0 +1,8 @@
+git
+loguru
+openpyxl
+OWSLib
+packaging
+pandas
+tqdm
+pydov[proxy]>=3.1.0

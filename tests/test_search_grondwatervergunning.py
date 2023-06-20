@@ -3,6 +3,7 @@ from owslib.fes2 import PropertyIsEqualTo
 from pandas import DataFrame
 
 from pydov.search.grondwatervergunning import GrondwaterVergunningSearch
+from pydov.types.fields import ReturnFieldList
 from pydov.types.grondwatervergunning import GrondwaterVergunning
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestSearch
@@ -34,9 +35,9 @@ class TestGrondwaterVergunningSearch(AbstractTestSearch):
     xml_field = None
     wfs_field = 'installatie'
 
-    valid_returnfields = ('id_vergunning', 'diepte')
+    valid_returnfields = ReturnFieldList.from_field_names('id_vergunning', 'diepte')
     valid_returnfields_subtype = None
-    valid_returnfields_extra = ('inrichtingsnummer', 'vergund_aantal_putten')
+    valid_returnfields_extra = ReturnFieldList.from_field_names('inrichtingsnummer', 'vergund_aantal_putten')
 
     df_default_columns = [
         'id_vergunning', 'pkey_installatie', 'x', 'y',

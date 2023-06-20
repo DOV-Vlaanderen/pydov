@@ -1,6 +1,7 @@
 """Module grouping tests for the pydov.types.boring module."""
 
 from pydov.types.boring import Boring
+from pydov.types.fields import ReturnFieldList
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes
 
@@ -31,8 +32,8 @@ class TestBoring(AbstractTestTypes):
         'diepte_boring_tot', 'datum_aanvang', 'uitvoerder',
         'boorgatmeting']
 
-    valid_returnfields = ('pkey_boring', 'diepte_boring_tot')
-    valid_returnfields_subtype = (
+    valid_returnfields = ReturnFieldList.from_field_names('pkey_boring', 'diepte_boring_tot')
+    valid_returnfields_subtype = ReturnFieldList.from_field_names(
         'pkey_boring', 'diepte_methode_van', 'boormethode')
 
     inexistent_field = 'onbestaand'

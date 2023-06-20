@@ -4,6 +4,7 @@ import datetime
 from owslib.fes2 import PropertyIsEqualTo
 
 from pydov.search.grondwaterfilter import GrondwaterFilterSearch
+from pydov.types.fields import ReturnFieldList
 from pydov.types.grondwaterfilter import GrondwaterFilter
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestSearch
@@ -32,9 +33,9 @@ class TestGrondwaterfilterSearch(AbstractTestSearch):
     wfs_field = 'filternummer'
     xml_field = 'peil_mtaw'
 
-    valid_returnfields = ('pkey_filter', 'filternummer')
-    valid_returnfields_subtype = ('pkey_filter', 'filternummer', 'peil_mtaw')
-    valid_returnfields_extra = ('pkey_filter', 'beheerder')
+    valid_returnfields = ReturnFieldList.from_field_names('pkey_filter', 'filternummer')
+    valid_returnfields_subtype = ReturnFieldList.from_field_names('pkey_filter', 'filternummer', 'peil_mtaw')
+    valid_returnfields_extra = ReturnFieldList.from_field_names('pkey_filter', 'beheerder')
 
     df_default_columns = ['pkey_filter', 'pkey_grondwaterlocatie', 'gw_id',
                           'filternummer', 'filtertype', 'x', 'y',

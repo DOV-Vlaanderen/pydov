@@ -29,7 +29,16 @@ class AbstractLocation(object):
 
     """
 
+    def _get_id_seed(self):
+        """Get the seed for generating a random but stable GML ID for this
+        location.
+
+        Should return the same value for locations considered equal.
+        """
+        raise NotImplementedError('This should be implemented in a subclass.')
+
     def _get_id(self):
+        random.seed(self._get_id_seed())
         random_id = ''.join(random.choice(
             string.ascii_letters + string.digits) for x in range(8))
         return f'pydov.{random_id}'
@@ -184,6 +193,7 @@ class Box(AbstractLocation):
         self.miny = miny
         self.maxx = maxx
         self.maxy = maxy
+        self.epsg = epsg
 
         self.element = etree.Element(
             '{http://www.opengis.net/gml/3.2}Envelope')
@@ -202,6 +212,11 @@ class Box(AbstractLocation):
             '{http://www.opengis.net/gml/3.2}upperCorner')
         upper_corner.text = '{:.06f} {:.06f}'.format(self.maxx, self.maxy)
         self.element.append(upper_corner)
+
+    def _get_id_seed(self):
+        return ','.join(str(i) for i in [
+            self.minx, self.miny, self.maxx, self.miny, self.epsg
+        ])
 
     def get_element(self):
         return self.element
@@ -230,6 +245,7 @@ class Point(AbstractLocation):
         """
         self.x = x
         self.y = y
+        self.epsg = epsg
 
         self.element = etree.Element('{http://www.opengis.net/gml/3.2}Point')
         self.element.set('srsDimension', '2')
@@ -241,6 +257,11 @@ class Point(AbstractLocation):
         coordinates = etree.Element('{http://www.opengis.net/gml/3.2}pos')
         coordinates.text = '{:.06f} {:.06f}'.format(self.x, self.y)
         self.element.append(coordinates)
+
+    def _get_id_seed(self):
+        return ','.join(str(i) for i in [
+            self.x, self.y, self.epsg
+        ])
 
     def get_element(self):
         return self.element

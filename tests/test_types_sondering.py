@@ -1,5 +1,6 @@
 """Module grouping tests for the pydov.types.sondering module."""
 
+from pydov.types.fields import ReturnFieldList
 from pydov.types.sondering import Sondering
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes
@@ -31,7 +32,7 @@ class TestSondering(AbstractTestTypes):
         'sondeermethode', 'apparaat', 'datum_gw_meting',
         'diepte_gw_m']
 
-    valid_returnfields = ('pkey_sondering', 'sondeernummer')
-    valid_returnfields_subtype = ('pkey_sondering', 'sondeernummer', 'z')
+    valid_returnfields = ReturnFieldList.from_field_names('pkey_sondering', 'sondeernummer')
+    valid_returnfields_subtype = ReturnFieldList.from_field_names('pkey_sondering', 'sondeernummer', 'z')
 
     inexistent_field = 'onbestaand'

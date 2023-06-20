@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 """Module containing the search classes to retrieve DOV groundwater screen
  data."""
-from itertools import chain
-import pandas as pd
 from owslib.fes2 import And, Not, PropertyIsNull
 
 from ..types.grondwaterfilter import GrondwaterFilter
@@ -99,18 +97,6 @@ class GrondwaterFilterSearch(AbstractSearch):
         else:
             query = exclude_empty_filters
 
-        trees = self._search(location=location, query=query, sort_by=sort_by,
-                             return_fields=return_fields,
-                             max_features=max_features)
-
-        feature_generators = []
-        for tree in trees:
-            feature_generators.append(
-                self._type.from_wfs(tree, self._wfs_namespace))
-
-        df = pd.DataFrame(
-            data=self._type.to_df_array(
-                chain.from_iterable(feature_generators), return_fields),
-            columns=self._type.get_field_names(return_fields))
-
-        return df
+        return super().search(
+            location=location, query=query, sort_by=sort_by,
+            return_fields=return_fields, max_features=max_features)

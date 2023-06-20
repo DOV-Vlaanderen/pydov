@@ -27,6 +27,15 @@ def __get_namespaces():
 __namespaces = __get_namespaces()
 
 
+def has_geom_support():
+    try:
+        import pygml
+        import shapely
+        return True or (pygml.__version__ and shapely.__version__)
+    except ImportError:
+        return False
+
+
 def __get_remote_fc(fc_url):
     """Request the remote featurecatalogue by calling the `fc_url` and
     returning the response.
@@ -324,9 +333,32 @@ def set_geometry_column(location, geometry_column):
     return location.toXML()
 
 
+def unique_gml_ids(location):
+    """Make sure the location query has unique GML id's for all features.
+    Parameters
+    ----------
+    location : etree.ElementTree
+        XML tree of the location filter.
+    Returns
+    -------
+    etree.ElementTree
+        XML tree of the location filter with unique GML ids.
+    """
+    gml_items = location.findall('.//*[@{http://www.opengis.net/gml/3.2}id]')
+    gml_ids = [i.get('{http://www.opengis.net/gml/3.2}id') for i in gml_items]
+
+    if len(gml_ids) == len(set(gml_ids)):
+        return location
+    else:
+        for ix, item in enumerate(gml_items):
+            item.set('{http://www.opengis.net/gml/3.2}id', f'pydov.{ix}')
+        return location
+
+
 def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
                                  filter=None, sort_by=None, propertyname=None,
-                                 max_features=None, start_index=0):
+                                 max_features=None, start_index=0,
+                                 crs=None):
     """Build a WFS 2.0 GetFeature request in XML to be used as payload
     in a WFS 2.0 GetFeature request using POST.
 
@@ -350,11 +382,22 @@ def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
         Limit the maximum number of features to request.
     start_index : int
         The index of the first feature to return.
+    crs : str
+        EPSG code of the CRS of the geometries that will be returned. Defaults
+        to None, which means the default CRS of the WFS layer.
 
     Raises
     ------
     AttributeError
         If ``bbox`` is given without ``geometry_column``.
+        If ``max_features`` has an invalid value.
+        If ``start_index`` had an invalid value.
+
+    TypeError
+        If ``crs`` is not a string.
+
+    ValueError
+        If ``crs`` does not start with 'EPSG'.
 
     Returns
     -------
@@ -386,6 +429,15 @@ def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
     query = etree.Element('{http://www.opengis.net/wfs/2.0}Query')
     query.set('typeNames', typename)
 
+    if crs is not None:
+        if not isinstance(crs, str):
+            raise TypeError('crs should be a string starting with "EPSG"')
+
+        if not crs.lower().startswith('epsg'):
+            raise ValueError('crs should start with "EPSG"')
+
+        query.set('srsName', crs)
+
     if propertyname and len(propertyname) > 0:
         for property in sorted(propertyname):
             propertyname_xml = etree.Element(
@@ -409,6 +461,7 @@ def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
 
     if location is not None:
         location = set_geometry_column(location, geometry_column)
+        location = unique_gml_ids(location)
         filter_parent.append(location)
 
     if filter is not None or location is not None:

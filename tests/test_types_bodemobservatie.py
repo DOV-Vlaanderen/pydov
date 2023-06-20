@@ -2,6 +2,7 @@
 """Module grouping tests for the pydov.types.bodemobservatie module."""
 
 from pydov.types.bodemobservatie import Bodemobservatie
+from pydov.types.fields import ReturnFieldList
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes
 
@@ -33,8 +34,8 @@ class TestBodemobservatie(AbstractTestTypes):
         'parametergroep', 'parameter', 'detectie', 'waarde',
         'eenheid', 'veld_labo', 'methode', 'betrouwbaarheid']
 
-    valid_returnfields = ('pkey_bodemobservatie', 'parameter')
-    valid_returnfields_subtype = ('pkey_bodemobservatie', 'parameter',
-                                  'fractiemeting_ondergrens')
+    valid_returnfields = ReturnFieldList.from_field_names('pkey_bodemobservatie', 'parameter')
+    valid_returnfields_subtype = ReturnFieldList.from_field_names('pkey_bodemobservatie', 'parameter',
+                                                                  'fractiemeting_ondergrens')
 
     inexistent_field = 'onbestaand'

@@ -3,6 +3,7 @@ from owslib.fes2 import PropertyIsEqualTo
 from pandas import DataFrame
 
 from pydov.search.interpretaties import QuartairStratigrafieSearch
+from pydov.types.fields import ReturnFieldList
 from pydov.types.interpretaties import QuartairStratigrafie
 from tests.abstract import AbstractTestSearch
 
@@ -37,11 +38,11 @@ class TestQuartairStratigrafieSearch(AbstractTestSearch):
     wfs_field = 'Proefnummer'
     xml_field = 'diepte_laag_van'
 
-    valid_returnfields = ('pkey_interpretatie',
-                          'betrouwbaarheid_interpretatie')
-    valid_returnfields_subtype = (
+    valid_returnfields = ReturnFieldList.from_field_names('pkey_interpretatie',
+                                                          'betrouwbaarheid_interpretatie')
+    valid_returnfields_subtype = ReturnFieldList.from_field_names(
         'pkey_interpretatie', 'diepte_laag_van', 'diepte_laag_tot')
-    valid_returnfields_extra = ('pkey_interpretatie', 'gemeente')
+    valid_returnfields_extra = ReturnFieldList.from_field_names('pkey_interpretatie', 'gemeente')
 
     df_default_columns = ['pkey_interpretatie', 'pkey_boring',
                           'betrouwbaarheid_interpretatie', 'x', 'y',

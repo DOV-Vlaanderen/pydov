@@ -5,6 +5,7 @@ from owslib.fes2 import PropertyIsEqualTo
 
 from pydov.search.bodemlocatie import BodemlocatieSearch
 from pydov.types.bodemlocatie import Bodemlocatie
+from pydov.types.fields import ReturnFieldList
 from tests.abstract import AbstractTestSearch
 
 location_md_metadata = 'tests/data/types/bodemlocatie/md_metadata.xml'
@@ -30,12 +31,12 @@ class TestBodemlocatieSearch(AbstractTestSearch):
     wfs_field = 'naam'
     xml_field = 'invoerdatum'
 
-    valid_returnfields = ('pkey_bodemlocatie', 'naam', 'waarnemingsdatum')
-    valid_returnfields_subtype = (
+    valid_returnfields = ReturnFieldList.from_field_names('pkey_bodemlocatie', 'naam', 'waarnemingsdatum')
+    valid_returnfields_subtype = ReturnFieldList.from_field_names(
         'pkey_bodemlocatie',
         'naam',
         'educatieve_waarde')
-    valid_returnfields_extra = ('pkey_bodemlocatie', 'naam', 'erfgoed')
+    valid_returnfields_extra = ReturnFieldList.from_field_names('pkey_bodemlocatie', 'naam', 'erfgoed')
 
     df_default_columns = ['pkey_bodemlocatie', 'pkey_bodemsite',
                           'naam', 'type', 'waarnemingsdatum', 'doel', 'x', 'y',

@@ -684,12 +684,11 @@ class RequestPFASdata:
         if save:
             path = os.getcwd()
             path1 = f"{path}/results"
-            if os.path.exists(path1):
-                path2 = f"{path}/results/metadata.json"
-                with open(path2, "w") as outfile:
-                    outfile.write(metadata)
-            else:
+            if not os.path.exists(path1):
                 os.mkdir(f"{path}/results")
+            path2 = f"{path}/results/metadata.json"
+            with open(path2, "w") as outfile:
+                outfile.write(metadata)
 
             with open(f"{path}/results/metadata.json") as metadata_file:
                 metadata = json.load(metadata_file)
@@ -774,11 +773,12 @@ class RequestPFASdata:
                         pbar.update(metadata['nb_datapoints'][0]['Waste_water_VMM'])
             pbar.close()
 
-        return return_list, metadata
 
         end_time = datetime.now()
         duration = end_time-start_time
         logger.info(f'The program was executed in {duration}.')
+
+        return return_list, metadata
 
 
 if __name__ == '__main__':

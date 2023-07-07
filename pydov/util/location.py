@@ -30,7 +30,8 @@ class AbstractLocation(object):
     """
 
     def _get_id_seed(self):
-        """Get the seed for generating a random but stable GML ID for this location.
+        """Get the seed for generating a random but stable GML ID for this
+        location.
 
         Should return the same value for locations considered equal.
         """

@@ -481,16 +481,16 @@ class AbstractReadHook(object):
         """
         pass
 
-    def wfs_cache_hit():
+    def wfs_cache_hit(self):
         pass
 
-    def wfs_stale_hit():
+    def wfs_stale_hit(self):
         pass
 
-    def wfs_fetch_error():
+    def wfs_fetch_error(self):
         pass
 
-    def wfs_downloaded():
+    def wfs_downloaded(self):
         pass
 
 

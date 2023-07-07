@@ -239,7 +239,6 @@ class AbstractFileCache(AbstractCache):
         datatype = self._re_wfs_type_key.search(url)
 
         data = etree.tostring(get_feature_request, encoding='unicode')
-        print(data)
         key = md5(data.encode('utf8')).hexdigest()
 
         if datatype and len(datatype.groups()) > 0:

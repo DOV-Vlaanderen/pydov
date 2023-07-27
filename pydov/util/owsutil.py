@@ -9,6 +9,7 @@ from owslib.namespaces import Namespaces
 from owslib.util import nspath_eval
 
 import pydov
+from pydov.util.errors import RemoteFetchError, WfsGetFeatureError
 from pydov.util.net import SessionFactory
 
 from .hooks import HookRunner
@@ -494,6 +495,13 @@ def wfs_get_feature(baseurl, get_feature_request, session=None):
     bytes
         Response of the WFS service.
 
+    Raises
+    ------
+    WfsGetFeatureError
+        When the HTTP status is not 200, the body contains an
+        ows:ExceptionReport element, or the root tag has no
+        attribute numberReturned.
+
     """
     if session is None:
         session = SessionFactory.get_session()
@@ -501,7 +509,21 @@ def wfs_get_feature(baseurl, get_feature_request, session=None):
     data = etree.tostring(get_feature_request)
 
     request = session.post(baseurl, data)
+
+    if request.status_code != 200:
+        raise WfsGetFeatureError(
+            "Error retrieving WFS features from {} : status {}\n{}".format(
+                baseurl, request.status_code, request.text))
+
     request.encoding = 'utf-8'
+
+    tree = etree.fromstring(request.text.encode('utf8'))
+
+    if tree.get('numberReturned') is None or \
+            tree.find('{http://www.opengis.net/ows/1.1}ExceptionReport'):
+        raise WfsGetFeatureError(
+            "Error retrieving WFS features from {}:\n{}".format(
+                baseurl, request.text))
 
     HookRunner.execute_wfs_downloaded()
 
@@ -542,6 +564,9 @@ def get_url(url):
 
     if response is None:
         request = pydov.session.get(url)
+        if request.status_code != 200:
+            raise RemoteFetchError("Failed to fetch data at {}".format(url))
+
         request.encoding = 'utf-8'
         response = request.text.encode('utf8')
 

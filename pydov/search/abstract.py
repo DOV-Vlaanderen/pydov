@@ -23,8 +23,7 @@ from pydov.types.fields import (_WfsInjectedField, GeometryReturnField,
 from pydov.util import owsutil
 from pydov.util.dovutil import build_dov_url, get_xsd_schema
 from pydov.util.errors import (InvalidFieldError, InvalidSearchParameterError,
-                               LayerNotFoundError, WfsGetFeatureError,
-                               DataParseWarning)
+                               LayerNotFoundError, DataParseWarning)
 from pydov.util.hooks import HookRunner
 from pydov.util.net import LocalSessionThreadPool
 
@@ -896,13 +895,6 @@ class AbstractSearch(AbstractCommon):
                 session=session)
 
             tree = etree.fromstring(fts)
-
-            if tree.get('numberReturned') is None:
-                raise WfsGetFeatureError(
-                    "Error retrieving features of layer '{}' from "
-                    "DOV WFS server:\n{}".format(
-                        self._layer,
-                        etree.tostring(tree).decode('utf8')))
 
             number_matched = int(tree.get('numberMatched'))
             number_returned = int(tree.get('numberReturned'))

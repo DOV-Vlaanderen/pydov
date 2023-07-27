@@ -471,9 +471,10 @@ class AbstractTestSearch(object):
 
         assert list(df) == list(self.valid_returnfields_extra.get_names())
 
-    def test_search_sortby_valid(self, mp_get_schema,
-                                 mp_remote_describefeaturetype,
-                                 mp_remote_wfs_feature, mp_dov_xml):
+    @pytest.mark.online
+    @pytest.mark.skipif(not ServiceCheck.service_ok(),
+                        reason="DOV service is unreachable")
+    def test_search_sortby_valid(self):
         """Test the search method with the query parameter and the sort_by
         parameter with a valid sort field.
 

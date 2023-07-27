@@ -72,7 +72,7 @@ def mp_wfs_max_features(monkeypatch, wfs_capabilities):
 
 
 @pytest.fixture
-def mp_remote_wfs_paged_feature(monkeypatch, request):
+def mp_remote_wfs_paged_feature(monkeypatch, request, nocache):
     """Monkeypatch the call to get WFS features.
 
     This monkeypatch requires a module variable ``location_wfs_getfeature``
@@ -87,6 +87,9 @@ def mp_remote_wfs_paged_feature(monkeypatch, request):
         PyTest monkeypatch fixture.
     request : pytest.fixture
         PyTest fixture providing request context.
+    nocache : pytest.fixture
+        PyTest fixture to disable caching, since
+        WFS caching interferes with the monkeypatch.
 
     """
     def __get_remote_wfs_feature(*args, **kwargs):

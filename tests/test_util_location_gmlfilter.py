@@ -914,8 +914,6 @@ class TestGeopandasFilter:
         f.set_geometry_column('geom')
         xml = f.toXML()
 
-        print(clean_xml(etree.tostring(xml).decode('utf8')))
-
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
             '<fes:Within xmlns:gml="http://www.opengis.net/gml/3.2" '
             'xmlns:fes="http://www.opengis.net/fes/2.0"><fes:ValueReference>'

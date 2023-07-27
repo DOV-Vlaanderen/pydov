@@ -28,7 +28,7 @@ class TestWfsSearch(AbstractTestSearch):
 
     valid_query_single = PropertyIsEqualTo(
         propertyname='fiche',
-        literal=build_dov_url('data/opdracht/2021-026141%27'))
+        literal=build_dov_url('data/opdracht/2021-026141'))
 
     inexistent_field = 'onbestaand'
     xml_field = None

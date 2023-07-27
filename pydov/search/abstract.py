@@ -8,7 +8,6 @@ import warnings
 import re
 
 import owslib
-import owslib.fes
 import owslib.fes2
 from owslib.etree import etree
 from owslib.feature import get_schema
@@ -864,7 +863,7 @@ class AbstractSearch(AbstractCommon):
         if sort_by is not None:
             sort_by_xml = sort_by.toXML()
             for property_name in sort_by_xml.findall(
-                    './/{http://www.opengis.net/ogc}PropertyName'):
+                    './/{http://www.opengis.net/fes/2.0}ValueReference'):
                 property_name.text = self._map_df_wfs_source.get(
                     property_name.text, property_name.text)
 

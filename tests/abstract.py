@@ -479,18 +479,6 @@ class AbstractTestSearch(object):
         parameter with a valid sort field.
 
         Test whether a dataframe is returned.
-
-        Parameters
-        ----------
-        mp_get_schema : pytest.fixture
-            Monkeypatch the call to a remote OWSLib schema.
-        mp_remote_describefeaturetype : pytest.fixture
-            Monkeypatch the call to a remote DescribeFeatureType.
-        mp_remote_wfs_feature : pytest.fixture
-            Monkeypatch the call to get WFS features.
-        mp_dov_xml : pytest.fixture
-            Monkeypatch the call to get the remote XML data.
-
         """
         df = self.search_instance.search(
             query=self.valid_query_single,

@@ -19,7 +19,7 @@ location_wfs_getfeature = 'tests/data/wfs_paging/wfsgetfeature.xml'
 page_size = 10
 
 
-@pytest.fixture(scope='module')
+@pytest.fixture
 def wfs_capabilities():
     """PyTest fixture providing the WFS GetCapabilities response based on a 
     local copy. Adjusts the CountDefault parameter to the configured 
@@ -47,16 +47,16 @@ def wfs_capabilities():
     return data
 
 
-@pytest.fixture(scope='module')
-def mp_wfs_max_features(monkeymodule, wfs_capabilities):
+@pytest.fixture
+def mp_wfs_max_features(monkeypatch, wfs_capabilities):
     """Monkeypatch the call to get the WFS capabilities maximum features.
 
     This ensures the maximum features are read from the testdata capabilities.
 
     Parameters
     ----------
-    monkeymodule : pytest.fixture
-        PyTest monkeypatch fixture with module scope.
+    monkeypatch : pytest.fixture
+        PyTest monkeypatch fixture.
     wfs_capabilities : pytest.fixture
         PyTest fixture providing the WFS capabilities from the testdata.
 
@@ -66,13 +66,13 @@ def mp_wfs_max_features(monkeymodule, wfs_capabilities):
     def __get_wfs_max_features(*args, **kwargs):
         return max_features
 
-    monkeymodule.setattr(pydov.util.owsutil,
-                         'get_wfs_max_features',
-                         __get_wfs_max_features)
+    monkeypatch.setattr(pydov.util.owsutil,
+                        'get_wfs_max_features',
+                        __get_wfs_max_features)
 
 
-@pytest.fixture(scope='module')
-def mp_remote_wfs_paged_feature(monkeymodule, request):
+@pytest.fixture
+def mp_remote_wfs_paged_feature(monkeypatch, request):
     """Monkeypatch the call to get WFS features.
 
     This monkeypatch requires a module variable ``location_wfs_getfeature``
@@ -83,9 +83,9 @@ def mp_remote_wfs_paged_feature(monkeymodule, request):
 
     Parameters
     ----------
-    monkeymodule : pytest.fixture
-        PyTest monkeypatch fixture with module scope.
-    request : pytest.fixtue
+    monkeypatch : pytest.fixture
+        PyTest monkeypatch fixture.
+    request : pytest.fixture
         PyTest fixture providing request context.
 
     """
@@ -120,9 +120,9 @@ def mp_remote_wfs_paged_feature(monkeymodule, request):
                 data = data.encode('utf-8')
         return data
 
-    monkeymodule.setattr(pydov.util.owsutil,
-                         'wfs_get_feature',
-                         __get_remote_wfs_feature)
+    monkeypatch.setattr(pydov.util.owsutil,
+                        'wfs_get_feature',
+                        __get_remote_wfs_feature)
 
 
 class TestSearchWfsPaging(object):

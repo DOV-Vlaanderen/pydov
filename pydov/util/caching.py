@@ -11,7 +11,8 @@ import warnings
 from owslib.etree import etree
 
 from pydov.util.dovutil import build_dov_url, get_dov_xml
-from pydov.util.errors import RemoteFetchError, WfsStaleWarning, XmlStaleWarning
+from pydov.util.errors import (RemoteFetchError, WfsStaleWarning,
+                               XmlStaleWarning)
 from pydov.util.hooks import HookRunner
 from pydov.util.owsutil import wfs_get_feature
 
@@ -355,7 +356,8 @@ class AbstractFileCache(AbstractCache):
         raise NotImplementedError('This should be implemented in a subclass.')
 
     def get_wfs(self, url, get_feature_request, session=None):
-        datatype, key = self._get_wfs_type_key_from_url(url, get_feature_request)
+        datatype, key = self._get_wfs_type_key_from_url(
+            url, get_feature_request)
 
         if self._is_valid(datatype, key):
             try:

@@ -20,7 +20,7 @@ class TestSearchInvalidDate(object):
 
     def test_year_gt_9999(self, mp_wfs, mp_get_schema,
                           mp_remote_describefeaturetype, mp_remote_md,
-                          mp_remote_fc, mp_remote_wfs_feature):
+                          mp_remote_fc, mp_remote_wfs_feature, nocache):
         """Test with a year greater than 9999. This is not supported in Python.
 
         Test whether no exception is raised, but instead the date is replaced with NaN and a warning is raised.

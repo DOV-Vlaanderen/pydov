@@ -48,7 +48,7 @@ class TestSonderingSearch(AbstractTestSearch):
 
     def test_search_date(self, mp_wfs, mp_get_schema,
                          mp_remote_describefeaturetype, mp_remote_md,
-                         mp_remote_fc, mp_remote_wfs_feature, mp_dov_xml):
+                         mp_remote_fc, mp_remote_wfs_feature, mp_dov_xml, nocache):
         """Test the search method with only the query parameter.
 
         Test whether the result is correct.

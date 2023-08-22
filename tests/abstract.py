@@ -246,7 +246,7 @@ class AbstractTestSearch(object):
 
     def test_search(self, mp_wfs, mp_get_schema, mp_remote_describefeaturetype,
                     mp_remote_md, mp_remote_fc, mp_remote_wfs_feature,
-                    mp_dov_xml):
+                    mp_dov_xml, nocache):
         """Test the search method with only the query parameter.
 
         Test whether the result is correct.
@@ -557,7 +557,7 @@ class AbstractTestSearch(object):
 
         """
         self.search_instance.search(
-            query=PropertyInList(self.wfs_field, ['a', 'b']))
+            query=PropertyInList(self.wfs_field, ['true', 'false']))
 
     def test_search_join(self, mp_get_schema, mp_remote_describefeaturetype,
                          mp_remote_wfs_feature, mp_dov_xml):

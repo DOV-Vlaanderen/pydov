@@ -49,7 +49,7 @@ class TestGrondwaterVergunningSearch(AbstractTestSearch):
 
     def test_search_customreturnfields(self, mp_get_schema,
                                        mp_remote_describefeaturetype,
-                                       mp_remote_wfs_feature, mp_dov_xml):
+                                       mp_remote_wfs_feature, mp_dov_xml, nocache):
         """Test the search method with custom return fields.
 
         Test whether the output dataframe is correct.
@@ -76,7 +76,7 @@ class TestGrondwaterVergunningSearch(AbstractTestSearch):
 
     def test_search_wfs_resolve(self, mp_get_schema,
                                 mp_remote_describefeaturetype,
-                                mp_remote_wfs_feature,):
+                                mp_remote_wfs_feature, nocache):
         """Test the search method with return fields from WFS but not from
         XML.
 

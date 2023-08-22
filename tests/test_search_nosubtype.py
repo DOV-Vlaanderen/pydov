@@ -24,7 +24,7 @@ class TestSearchNoSubtype(object):
     def test_search_nosubtype(self, mp_wfs, mp_remote_md, mp_remote_fc,
                               mp_get_schema, mp_remote_describefeaturetype,
                               mp_remote_wfs_feature, mp_remote_xsd,
-                              mp_dov_xml):
+                              mp_dov_xml, nocache):
         """Test the search method with a result containing no elements from
         the subtype.
 

@@ -18,9 +18,9 @@ location_xsd_base = 'tests/data/types/bodemclassificatie/xsd_*.xml'
 class TestGeometryReturn(object):
     """Class grouping tests for returning geometry fields."""
 
-    def test_return_geometry(self, mp_get_schema,
+    def test_return_geometry(self, mp_wfs, mp_get_schema,
                              mp_remote_describefeaturetype,
-                             mp_remote_wfs_feature):
+                             mp_remote_wfs_feature, nocache):
         """Test whether the geometry field is returned when requested.
 
         Parameters

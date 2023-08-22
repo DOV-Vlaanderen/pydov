@@ -31,8 +31,10 @@ class AbstractCache(object):
         self.stale_on_error = True
 
     def _get_remote_wfs(self, url, get_feature_request, session=None):
-        result = wfs_get_feature(url, get_feature_request, session)
-        HookRunner.execute_wfs_downloaded()
+        result = wfs_get_feature(
+            baseurl=url,
+            get_feature_request=get_feature_request,
+            session=session)
         return result
 
     def _get_remote_xml(self, url, session=None):
@@ -354,12 +356,6 @@ class AbstractFileCache(AbstractCache):
 
     def get_wfs(self, url, get_feature_request, session=None):
         datatype, key = self._get_wfs_type_key_from_url(url, get_feature_request)
-
-        data = HookRunner.execute_inject_wfs_getfeature_response(get_feature_request)
-
-        if data is not None:
-            # run hook?
-            return data
 
         if self._is_valid(datatype, key):
             try:

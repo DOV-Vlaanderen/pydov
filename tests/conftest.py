@@ -286,7 +286,7 @@ def wfs_feature(request):
 
 
 @pytest.fixture
-def mp_remote_wfs_feature(monkeypatch, request, nocache):
+def mp_remote_wfs_feature(monkeypatch, request):
     """Monkeypatch the call to get WFS features.
 
     This monkeypatch requires a module variable ``location_wfs_getfeature``
@@ -298,9 +298,6 @@ def mp_remote_wfs_feature(monkeypatch, request, nocache):
         PyTest monkeypatch fixture.
     request : pytest.fixture
         PyTest fixture providing request context.
-    nocache : pytest.fixture
-        PyTest fixture to disable caching, since
-        WFS caching interferes with the monkeypatch.
 
     """
     def __get_remote_wfs_feature(*args, **kwargs):
@@ -312,6 +309,10 @@ def mp_remote_wfs_feature(monkeypatch, request, nocache):
         return data
 
     monkeypatch.setattr(pydov.util.owsutil,
+                        'wfs_get_feature',
+                        __get_remote_wfs_feature)
+
+    monkeypatch.setattr(pydov.util.caching,
                         'wfs_get_feature',
                         __get_remote_wfs_feature)
 
@@ -456,8 +457,8 @@ def mp_remote_xml(monkeypatch):
                 data = data.encode('utf-8')
         return data
 
-    monkeypatch.setattr(pydov.util.caching.AbstractFileCache,
-                        '_get_remote', _get_remote_data)
+    monkeypatch.setattr(pydov.util.caching.AbstractCache,
+                        '_get_remote_xml', _get_remote_data)
 
 
 @pytest.fixture

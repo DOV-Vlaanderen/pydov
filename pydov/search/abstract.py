@@ -723,13 +723,14 @@ class AbstractSearch(AbstractCommon):
         start_index : int
             Index of the first feature to return. Can be used for paging.
         session : requests.Session
-            Session to use to perform HTTP requests for data. Defaults to None,
-            which means a new session will be created for each request.
+            Session to use to perform HTTP requests for data. Defaults to
+            None, which means a new session will be created for each request.
 
         Returns
         -------
         wfs_response, wfs_getfeature_request : bytes, etree.Element
-            Response of the WFS service.
+            Tuple with: response of the WFS service, request sent to the
+            WFS service, whether the result originated from cache
 
         """
         wfs_getfeature_xml = owsutil.wfs_build_getfeature_request(

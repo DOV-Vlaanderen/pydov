@@ -606,7 +606,7 @@ class SimpleStatusHook(AbstractReadHook):
         """
 
         def __init__(self):
-            """Initialise a new progress state, with all variable to default.
+            """Initialise a new progress state, with all variables to default.
             """
             self.reset()
 
@@ -617,6 +617,76 @@ class SimpleStatusHook(AbstractReadHook):
             self.prog_counter = 0
             self.init_time = time.time()
             self.previous_remaining = None
+            self.prog_stash = []
+
+        def set_result_count(self, result_count):
+            """Set the result count and flush the stash."""
+            self.result_count = result_count
+            self._flush_progress()
+
+        def _stash_progress(self, char):
+            """Stash a progress char for writing out later."""
+            self.prog_stash.append(char)
+
+        def _flush_progress(self):
+            """Write out the progress stash."""
+            try:
+                next_stash = self.prog_stash.pop(0)
+            except IndexError:
+                return
+
+            while next_stash:
+                self.write_progress(next_stash)
+                try:
+                    next_stash = self.prog_stash.pop(0)
+                except IndexError:
+                    break
+
+            self.prog_stash.clear()
+
+        def write_progress(self, char):
+            """Write progress to standard output. If the result_count is 0, the
+            progress is stashed for writing out later.
+
+            Progress is grouped on lines per 50 items, adding ``char`` for every
+            item processed.
+
+            Parameters
+            ----------
+            char : str
+                Single character to print.
+
+            """
+            if self.result_count == 0:
+                self._stash_progress(char)
+                return
+
+            if self.prog_counter == 0:
+                sys.stdout.write('[{:03d}/{:03d}] '.format(
+                    self.prog_counter, self.result_count))
+                sys.stdout.flush()
+            elif self.prog_counter % 50 == 0:
+                time_elapsed = time.time() - self.init_time
+                time_per_item = time_elapsed / self.prog_counter
+                remaining_mins = int((time_per_item * (
+                    self.result_count - self.prog_counter)) / 60)
+                if remaining_mins > 1 and remaining_mins != \
+                        self.previous_remaining:
+                    remaining = " ({:d} min. left)".format(remaining_mins)
+                    self.previous_remaining = remaining_mins
+                else:
+                    remaining = ""
+                sys.stdout.write('{}\n[{:03d}/{:03d}] '.format(
+                    remaining, self.prog_counter, self.result_count))
+                sys.stdout.flush()
+
+            sys.stdout.write(char)
+            sys.stdout.flush()
+            self.prog_counter += 1
+
+            if self.prog_counter == self.result_count:
+                sys.stdout.write('\n')
+                sys.stdout.flush()
 
     def __init__(self):
         """Initialisation.
@@ -627,47 +697,6 @@ class SimpleStatusHook(AbstractReadHook):
         self.wfs_progress = SimpleStatusHook.ProgressState()
         self.xml_progress = SimpleStatusHook.ProgressState()
         self.lock = Lock()
-
-    def _write_progress(self, state, char):
-        """Write progress to standard output.
-
-        Progress is grouped on lines per 50 items, adding ``char`` for every
-        item processed.
-
-        Parameters
-        ----------
-        state : ProgressState
-            State of current progress.
-        char : str
-            Single character to print.
-
-        """
-        if state.prog_counter == 0:
-            sys.stdout.write('[{:03d}/{:03d}] '.format(
-                state.prog_counter, state.result_count))
-            sys.stdout.flush()
-        elif state.prog_counter % 50 == 0:
-            time_elapsed = time.time() - state.init_time
-            time_per_item = time_elapsed / state.prog_counter
-            remaining_mins = int((time_per_item * (
-                state.result_count - state.prog_counter)) / 60)
-            if remaining_mins > 1 and remaining_mins != \
-                    state.previous_remaining:
-                remaining = " ({:d} min. left)".format(remaining_mins)
-                state.previous_remaining = remaining_mins
-            else:
-                remaining = ""
-            sys.stdout.write('{}\n[{:03d}/{:03d}] '.format(
-                remaining, state.prog_counter, state.result_count))
-            sys.stdout.flush()
-
-        sys.stdout.write(char)
-        sys.stdout.flush()
-        state.prog_counter += 1
-
-        if state.prog_counter == state.result_count:
-            sys.stdout.write('\n')
-            sys.stdout.flush()
 
     def wfs_search_init(self, params):
         """When a new WFS search is started, reset all counters to 0 and set
@@ -720,28 +749,28 @@ class SimpleStatusHook(AbstractReadHook):
                 total_results = number_matched
 
             if number_returned > 0:
-                self.wfs_progress.result_count = math.ceil(
-                    total_results/number_returned)
+                self.wfs_progress.set_result_count(math.ceil(
+                    total_results/number_returned))
             else:
-                self.wfs_progress.result_count = 0
+                self.wfs_progress.set_result_count(0)
 
-            self.xml_progress.result_count = total_results
+            self.xml_progress.set_result_count(total_results)
 
     def wfs_downloaded(self):
         with self.lock:
-            self._write_progress(self.wfs_progress, '.')
+            self.wfs_progress.write_progress('.')
 
     def wfs_cache_hit(self):
         with self.lock:
-            self._write_progress(self.wfs_progress, 'c')
+            self.wfs_progress.write_progress('c')
 
     def wfs_stale_hit(self):
         with self.lock:
-            self._write_progress(self.xml_progress, 'S')
+            self.wfs_progress.write_progress('S')
 
     def wfs_fetch_error(self):
         with self.lock:
-            self._write_progress(self.xml_progress, 'E')
+            self.wfs_progress.write_progress('E')
 
     def xml_cache_hit(self, pkey_object):
         """When an XML document is retrieved from the cache, print 'c' to
@@ -754,7 +783,7 @@ class SimpleStatusHook(AbstractReadHook):
 
         """
         with self.lock:
-            self._write_progress(self.xml_progress, 'c')
+            self.xml_progress.write_progress('c')
 
     def xml_stale_hit(self, pkey_object):
         """When a stale XML document is retrieved from the cache, print 'S' to
@@ -767,7 +796,7 @@ class SimpleStatusHook(AbstractReadHook):
 
         """
         with self.lock:
-            self._write_progress(self.xml_progress, 'S')
+            self.xml_progress.write_progress('S')
 
     def xml_fetch_error(self, pkey_object):
         """When an XML document failed to be fetched from DOV, print 'E' to
@@ -780,7 +809,7 @@ class SimpleStatusHook(AbstractReadHook):
 
         """
         with self.lock:
-            self._write_progress(self.xml_progress, 'E')
+            self.xml_progress.write_progress('E')
 
     def xml_downloaded(self, pkey_object):
         """When an XML document is downloaded from the DOV services,
@@ -793,7 +822,7 @@ class SimpleStatusHook(AbstractReadHook):
 
         """
         with self.lock:
-            self._write_progress(self.xml_progress, '.')
+            self.xml_progress.write_progress('.')
 
 
 class RepeatableLogRecorder(AbstractReadHook, AbstractInjectHook):

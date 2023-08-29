@@ -25,7 +25,19 @@ The dataset consist of the following PFAS data:
     - groundwater
     - soil
 
-The different datasets can be saved as separate Excel tabs of one Excel file.
+The different datasets from the different sources (VMM, OVAM, Lantis) can be saved as separate Excel tabs of one Excel file.
+
+There is also an option to download the combined datasets per matrix and save them as separate Excel tabs.
+
+- Combined datasets
+  - combined groundwater
+    - Contains groundwater data from VMM, OVAM and Lantis
+  - combined soil
+    - Contains soil data from OVAM and Lantis
+  - combined soilwater
+    - Contains soilwater data from VMM and OVAM
+  - combined surface water
+    - Contains surface water from VMM and OVAM
 
 ## Installation for contribution
 
@@ -78,6 +90,11 @@ Possible mediums:
         - Surface_water_VMM
         - Surface_water_OVAM
         - Waste_water_VMM
+        - Combined_groundwater
+        - Combined_soil
+        - Combined_soil_water
+        - Combined_surface_water
+
 </details>
 
 <details>
@@ -106,21 +123,21 @@ Possible mediums:
 <details>
 <summary>'migration'</summary>
 
-    -> returns 1 dataframes
+    -> returns 1 dataframe
         - Migration_OVAM
 </details>
 
 <details>
 <summary>'pure product'</summary>
 
-    -> returns 1 dataframes
+    -> returns 1 dataframe
         - Pure_product_OVAM
 </details>
 
 <details>
 <summary>'rainwater'</summary>
 
-    -> returns 1 dataframes
+    -> returns 1 dataframe
         - Rainwater_OVAM
 </details>
 
@@ -151,8 +168,36 @@ Possible mediums:
 <details>
 <summary>'waste water'</summary>
 
-    -> returns 1 dataframes
+    -> returns 1 dataframe
         - Waste_water_VMM
+</details>
+
+<details>
+<summary>'combined_groundwater'</summary>
+
+    -> returns 1 dataframe
+        - Combined groundwater
+</details>
+
+<details>
+<summary>'combined_soil'</summary>
+
+    -> returns 1 dataframe
+        - Combined soil
+</details>
+
+<details>
+<summary>'combined_soil_water'</summary>
+
+    -> returns 1 dataframe
+        - Combined soilwater
+</details>
+
+<details>
+<summary>'combined_surface_water'</summary>
+
+    -> returns 1 dataframe
+        - Combined surface water
 </details>
 
 ### Basis
@@ -198,7 +243,7 @@ and also [restrict the number of WFS features returned](https://pydov.readthedoc
       This results in one excel-file with 15 tabs. One for each dataset.
 
 
-  - Example 2 : You only want to download and save the groundwater data of Flanders
+  - Example 2 : You only want to download and save the groundwater PFAS data of Flanders
 
       ```python
     # Change in the basis request:
@@ -210,7 +255,7 @@ and also [restrict the number of WFS features returned](https://pydov.readthedoc
       one with the groundwater data from OVAM and one with the groundwater data from Lantis.
 
 
-  - Example 3 : You want to download and save the soil and groundwater data of Flanders
+  - Example 3 : You want to download and save the soil and groundwater PFAS data of Flanders
 
       ```python
     # Change in the basis request:
@@ -222,6 +267,16 @@ and also [restrict the number of WFS features returned](https://pydov.readthedoc
       one with the soil data from Lantis, one with the groundwater data from VMM,
       one with the groundwater data from OVAM and one with the groundwater data from Lantis.
 
+
+- Example 4 : You want to download and save the combined groundwater PFAS data of Flanders
+
+    ```python
+   # Change in the basis request:
+      medium = ['combined_groundwater']
+      location = Within(Box(15000, 150000, 270000, 250000))  # Bounding box Flanders
+      save = True
+    ```
+    This results in one excel-file with one tab containing the groundwater data from all the sources (VMM, OVAM and Lantis).
 
 ### Case 2 : You want the data in a dataframe to integrate it in your python script
 
@@ -250,7 +305,7 @@ and also [restrict the number of WFS features returned](https://pydov.readthedoc
         df[14] # Waste_water_VMM
     ```
 
-  - Example 2 : You only want to download the groundwater data of Flanders
+  - Example 2 : You only want to download the groundwater PFAS data of Flanders
 
     ```python
     # Change in the basis request:
@@ -263,7 +318,7 @@ and also [restrict the number of WFS features returned](https://pydov.readthedoc
         df[2] # Groundwater_Lantis
     ```
 
-  - Example 3 : You want to download the soil and groundwater data of Flanders
+  - Example 3 : You want to download the soil and groundwater PFAS data of Flanders
 
     ```python
     # Change in the basis request:
@@ -278,4 +333,13 @@ and also [restrict the number of WFS features returned](https://pydov.readthedoc
         df[4] # Groundwater_Lantis
     ```
 
+  - Example 4 : You want to download the combined groundwater PFAS data of Flanders
 
+      ```python
+    # Change in the basis request:
+        medium = ['combined_groundwater']
+        location = Within(Box(15000, 150000, 270000, 250000))  # Bounding box Flanders
+
+    # Access data:
+        df[0] # combined_groundwater
+      ```

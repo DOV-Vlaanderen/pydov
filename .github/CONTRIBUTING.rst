@@ -29,16 +29,14 @@ see this `Open Source Guide`_.
 Share the love
 ^^^^^^^^^^^^^^
 
-Think pydov is useful? Let others discover it, by telling them in person, via Twitter_ or a blog post.
-
-.. _Twitter: https://twitter.com/DOVdovVO
+Think pydov is useful? Let others discover it, by telling them in person, via social media or a blog post.
 
 Using pydov for a paper you are writing? Consider citing it:
 
-    Roel Huybrechts, Stijn Van Hoey, Pieter Jan Haest, Johan Van de Wauw, Peter Desmet & Joris Synaeve. (2020). DOV-Vlaanderen/pydov. Zenodo. http://doi.org/10.5281/zenodo.2788681
+    Roel Huybrechts, Stijn Van Hoey, Pieter Jan Haest, Johan Van de Wauw, Joris Synaeve, Guillaume Vandekerckhove, Killian Paenen, Peter Desmet, Gilles Trenson, sweco-begilt, Joris Van den Bossche, marleenvd, & Shaun. (2023). Zenodo. https://doi.org/10.5281/zenodo.2788680
 
-Ask a question ⁉️
-^^^^^^^^^^^^^^^^^
+Ask a question
+^^^^^^^^^^^^^^
 
 Using pydov and got stuck? Browse the documentation_ to see if you
 can find a solution. Still stuck? Post your question as a `new issue`_ on GitHub.
@@ -127,5 +125,18 @@ Care to fix bugs or implement new functionality for pydov? Awesome! Have a
 look at the `issue list`_ and leave a comment on the things you want
 to work on.
 
-Make sure to setup your development environment as explained in the :ref:`installation instructions for developers <devinstallation>`.
-Once setup, check the :ref:`development guidelines <dev-guidelines>` to see ow we develop the pydov package.
+Make sure to setup your development environment and check the :ref:`development guidelines <dev-guidelines>` to see ow we develop the pydov package.
+
+Share your work
+~~~~~~~~~~~~~~~
+
+Made something cool using pydov, that might be useful for others too? Feel free to share it, and be sure to let us know so we can include
+a reference in our documentation and help promote it.
+
+Smaller scripts and tools can be included in the `contrib`_ section of our repository too. Don't hesitate to open a pull request to add yours!
+
+.. _contrib: https://github.com/DOV-Vlaanderen/pydov/tree/master/contrib
+
+The contribution section is not maintained by the pydov core team and does not require the same level of e.g. test coverage as does the main
+pydov code. The minimum to provide besided the script itself is a README.md with minimal information on what it does and how to use it,
+and a requirements.txt file if your script requires additional dependencies.

@@ -32,7 +32,7 @@ class AbstractField(dict):
         ----------
         name : str
             Name of this field in the return dataframe.
-        source : one of 'wfs', 'xml', 'custom'
+        source : one of 'wfs', 'xml', 'custom_wfs', 'custom_xml'
             Source of this field.
         datatype : one of 'string', 'integer', 'float', 'date', 'datetime' \
                    or 'boolean'
@@ -145,11 +145,11 @@ class _CustomWfsField(AbstractField):
             True if this field is always present (mandatory), False otherwise.
 
         """
-        super(_CustomWfsField, self).__init__(name, 'custom', datatype)
+        super(_CustomWfsField, self).__init__(name, 'custom_wfs', datatype)
         self.__setitem__('definition', definition)
         self.__setitem__('notnull', notnull)
 
-    def requires_fields(self):
+    def requires_wfs_fields(self):
         """Get a list of WFS fields that are required by (the calculation of)
         this custom field.
 
@@ -173,6 +173,53 @@ class _CustomWfsField(AbstractField):
         instance : AbstractDovType
             Instance of the corresponding type, containing all WFS values in
             its data dictionary.
+
+        Returns
+        -------
+        Value to be used for this custom field for this instance. Its datatype
+        should match the one set in the initialisation of the custom field.
+
+        Raises
+        ------
+        NotImplementedError
+            Implement this in a subclass.
+        """
+        raise NotImplementedError
+
+
+class _CustomXmlField(AbstractField):
+    """Class for a custom field, created explicitly in pydov from other XML
+    fields."""
+
+    def __init__(self, name, datatype, definition='', notnull=False):
+        """Initialise a custom field.
+
+        Parameters
+        ----------
+        name : str
+            Name of this field in the return dataframe.
+        datatype : one of 'string', 'integer', 'float', 'date', 'datetime' \
+                   or 'boolean'
+            Datatype of the values of this field in the return dataframe.
+        definition : str, optional
+            Definition of this field.
+        notnull : bool, optional, defaults to False
+            True if this field is always present (mandatory), False otherwise.
+
+        """
+        super(_CustomXmlField, self).__init__(name, 'custom_xml', datatype)
+        self.__setitem__('definition', definition)
+        self.__setitem__('notnull', notnull)
+
+    def calculate(self, cls, tree):
+        """Calculate the value of this custom field from the given XML tree.
+
+        Parameters
+        ----------
+        cls : AbstractDovType
+            Class of the type this field belongs to.
+        tree : etree.ElementTree
+            ElementTree of the DOV XML for this instance.
 
         Returns
         -------

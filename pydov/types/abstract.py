@@ -348,6 +348,11 @@ class AbstractDovType(AbstractTypeCommon):
                     returntype=field.get('type', None)
                 )
 
+            for field in self.get_fields(source=('custom_xml',),
+                                         include_subtypes=False).values():
+                self.data[field['name']] = field.calculate(
+                    self.__class__, tree) or np.nan
+
             self._parse_subtypes(xml)
             return True
         except XmlParseError:
@@ -399,8 +404,8 @@ class AbstractDovType(AbstractTypeCommon):
                     returntype=field.get('type', str)
                 )
 
-        for field in cls.get_fields(source=('custom',)).values():
-            for required_field in field.requires_fields():
+        for field in cls.get_fields(source=('custom_wfs',)).values():
+            for required_field in field.requires_wfs_fields():
                 instance.data[required_field] = cls._parse(
                     func=feature.findtext,
                     xpath=required_field,
@@ -408,7 +413,7 @@ class AbstractDovType(AbstractTypeCommon):
                     returntype=field.get('type', str)
                 )
 
-        for field in cls.get_fields(source=('custom',)).values():
+        for field in cls.get_fields(source=('custom_wfs',)).values():
             instance.data[field['name']] = field.calculate(instance) or np.nan
 
         return instance

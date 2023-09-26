@@ -877,7 +877,7 @@ class AbstractTestTypes(object):
             wfs_feature, self.namespace)
 
         fields = [f for f in self.datatype_class.get_fields(
-            source=('wfs', 'xml', 'custom')).values() if not
+            source=('wfs', 'xml', 'custom_wfs', 'custom_xml')).values() if not
             f.get('wfs_injected', False)]
 
         df_array = feature.get_df_array()
@@ -919,7 +919,8 @@ class AbstractTestTypes(object):
             wfs_feature, self.namespace)
 
         with pytest.raises(InvalidFieldError):
-            feature.get_df_array(return_fields=ReturnFieldList.from_field_names(self.inexistent_field))
+            feature.get_df_array(
+                return_fields=ReturnFieldList.from_field_names(self.inexistent_field))
 
     def test_from_wfs_str(self, wfs_getfeature):
         """Test the from_wfs method to construct objects from a WFS response,

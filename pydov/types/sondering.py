@@ -3,6 +3,7 @@
 including subtypes."""
 from pydov.types.abstract import AbstractDovSubType, AbstractDovType
 from pydov.types.fields import WfsField, XmlField
+from pydov.types.ligging import MvMtawField
 
 
 class Meetdata(AbstractDovSubType):
@@ -62,12 +63,8 @@ class Sondering(AbstractDovType):
                  datatype='string'),
         WfsField(name='x', source_field='X_mL72', datatype='float'),
         WfsField(name='y', source_field='Y_mL72', datatype='float'),
-        XmlField(name='mv_mtaw',
-                 source_xpath='/sondering/sondeerpositie/'
-                              'oorspronkelijk_maaiveld/waarde',
-                 definition='Maaiveldhoogte in mTAW op dag dat de sondering '
-                            'uitgevoerd werd.',
-                 datatype='float'),
+        MvMtawField('Maaiveldhoogte in mTAW op dag dat de sondering '
+                    'uitgevoerd werd.'),
         WfsField(name='start_sondering_mtaw', source_field='Z_mTAW',
                  datatype='float'),
         WfsField(name='diepte_sondering_van', source_field='diepte_van_m',

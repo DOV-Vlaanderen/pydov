@@ -94,6 +94,8 @@ jobs:
         shell: pwsh
         run: |
           conda update -n base -c defaults conda
+          conda install -n base conda-libmamba-solver
+          conda config --set solver libmamba
           conda install --name pydov --file requirements.txt
           conda install --name pydov fiona>=1.8.18 geopandas shapely
           conda list

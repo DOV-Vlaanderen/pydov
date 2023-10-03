@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+"""Module containing generic fields for the location (ligging) of objects."""
+
 import numpy as np
 
 from pydov.types.fields import _CustomXmlField
@@ -5,7 +8,7 @@ from pydov.types.fields import _CustomXmlField
 
 class MvMtawField(_CustomXmlField):
     """Field for retrieving the mv_mtaw value from the height of the point in
-    relavant cases."""
+    relevant cases."""
 
     def __init__(self, definition):
         """Initialise a MvMtawField (mv_mtaw) with given definition.

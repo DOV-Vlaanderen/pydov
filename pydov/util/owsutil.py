@@ -335,6 +335,7 @@ def set_geometry_column(location, geometry_column):
 
 def unique_gml_ids(location):
     """Make sure the location query has unique GML id's for all features.
+
     Parameters
     ----------
     location : etree.ElementTree
@@ -343,6 +344,7 @@ def unique_gml_ids(location):
     -------
     etree.ElementTree
         XML tree of the location filter with unique GML ids.
+
     """
     gml_items = location.findall('.//*[@{http://www.opengis.net/gml/3.2}id]')
     gml_ids = [i.get('{http://www.opengis.net/gml/3.2}id') for i in gml_items]

@@ -203,6 +203,8 @@ Fields
     :members:
     :show-inheritance:
 
+.. automodule:: pydov.types.ligging
+    :members:
 
 Search utilities
 ----------------

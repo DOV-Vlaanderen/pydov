@@ -241,7 +241,7 @@ class TestMvMtawField:
                                     <naam>Universiteit Gent</naam>
                                 </uitvoerder>
                                 <betrouwbaarheid>onbekend</betrouwbaarheid>
-                                <referentiepunt_type>Aanvangspeil</referentiepunt_type>
+                                <referentiepunt_type>Maaiveld</referentiepunt_type>
                             </metadata_hoogtebepaling>
                         </ligging>
                         <diepte_van>0.00</diepte_van>

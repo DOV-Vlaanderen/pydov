@@ -2,6 +2,7 @@
 """Module containing the DOV data type for screens (Filter), including
 subtypes."""
 from pydov.types.fields import WfsField, XmlField, XsdType
+from pydov.types.ligging import MvMtawField
 from pydov.util.dovutil import build_dov_url
 
 from .abstract import AbstractDovSubType, AbstractDovType
@@ -78,12 +79,8 @@ class GrondwaterFilter(AbstractDovType):
         WfsField(name='y', source_field='Y_mL72', datatype='float'),
         WfsField(name='start_grondwaterlocatie_mtaw', source_field='Z_mTAW',
                  datatype='float'),
-        XmlField(name='mv_mtaw',
-                 source_xpath='/grondwaterlocatie/puntligging/'
-                              'oorspronkelijk_maaiveld/waarde',
-                 definition='Maaiveldhoogte in mTAW op dag '
-                            'dat de put/boring uitgevoerd werd',
-                 datatype='float'),
+        MvMtawField('Maaiveldhoogte in mTAW op dag '
+                    'dat de put/boring uitgevoerd werd'),
         WfsField(name='gemeente', source_field='gemeente', datatype='string'),
         XmlField(name='meetnet_code',
                  source_xpath='/filter/meetnet',

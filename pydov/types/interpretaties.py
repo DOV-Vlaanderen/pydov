@@ -20,7 +20,7 @@ class PkeyBoringField(_CustomWfsField):
                          'boring).',
                          datatype='string')
 
-    def requires_fields(self):
+    def requires_wfs_fields(self):
         return ['Type_proef', 'Proeffiche']
 
     def calculate(self, instance):
@@ -41,7 +41,7 @@ class PkeySonderingField(_CustomWfsField):
                          'aan een sondering).',
                          datatype='string')
 
-    def requires_fields(self):
+    def requires_wfs_fields(self):
         return ['Type_proef', 'Proeffiche']
 
     def calculate(self, instance):

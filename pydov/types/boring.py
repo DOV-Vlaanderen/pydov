@@ -2,6 +2,7 @@
 """Module containing the DOV data type for boreholes (Boring), including
 subtypes."""
 from pydov.types.fields import WfsField, XmlField
+from pydov.types.ligging import MvMtawField
 
 from .abstract import AbstractDovSubType, AbstractDovType
 
@@ -39,11 +40,8 @@ class Boring(AbstractDovType):
                  datatype='string'),
         WfsField(name='x', source_field='X_mL72', datatype='float'),
         WfsField(name='y', source_field='Y_mL72', datatype='float'),
-        XmlField(name='mv_mtaw',
-                 source_xpath='/boring/oorspronkelijk_maaiveld/waarde',
-                 definition='Maaiveldhoogte in mTAW op dag dat de boring '
-                            'uitgevoerd werd.',
-                 datatype='float'),
+        MvMtawField('Maaiveldhoogte in mTAW op dag dat de boring '
+                    'uitgevoerd werd.'),
         WfsField(name='start_boring_mtaw', source_field='Z_mTAW',
                  datatype='float'),
         WfsField(name='gemeente', source_field='gemeente', datatype='string'),

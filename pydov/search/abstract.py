@@ -557,7 +557,8 @@ class AbstractSearch(AbstractCommon):
 
             fields[field['name']] = field
 
-        for custom_field in self._type.get_fields(source=['custom']).values():
+        for custom_field in self._type.get_fields(
+                source=['custom_wfs']).values():
             field = {
                 'name': custom_field['name'],
                 'type': custom_field['type'],
@@ -565,6 +566,18 @@ class AbstractSearch(AbstractCommon):
                 'notnull': custom_field['notnull'],
                 'query': False,
                 'cost': 1
+            }
+            fields[field['name']] = field
+
+        for custom_field in self._type.get_fields(
+                source=['custom_xml']).values():
+            field = {
+                'name': custom_field['name'],
+                'type': custom_field['type'],
+                'definition': custom_field['definition'],
+                'notnull': custom_field['notnull'],
+                'query': False,
+                'cost': 10
             }
             fields[field['name']] = field
 
@@ -847,8 +860,9 @@ class AbstractSearch(AbstractCommon):
                 geom_return_crs = None
 
         extra_custom_fields = set()
-        for custom_field in self._type.get_fields(source=('custom',)).values():
-            extra_custom_fields.update(custom_field.requires_fields())
+        for custom_field in self._type.get_fields(
+                source=('custom_wfs',)).values():
+            extra_custom_fields.update(custom_field.requires_wfs_fields())
 
         wfs_property_names.extend(extra_wfs_fields)
         wfs_property_names.extend(list(extra_custom_fields))

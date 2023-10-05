@@ -53,5 +53,9 @@ class MvMtawField(_CustomXmlField):
             './/ligging/{http://www.opengis.net/gml/3.2}Point/'
             '{http://www.opengis.net/gml/3.2}pos'
         )
-        hoogte = float(point.split(' ')[-1])
-        return hoogte
+        coords = point.split(' ')
+        if len(coords) == 3:
+            hoogte = float(coords[-1])
+            return hoogte
+        else:
+            return np.nan

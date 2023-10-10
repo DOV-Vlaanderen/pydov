@@ -4,6 +4,42 @@
 History
 =======
 
+v3.1.0
+------
+
+- News
+
+  - Add `contribution <https://github.com/DOV-Vlaanderen/pydov/tree/master/contrib>`_ section in the pydov repository. (#394)
+
+- New features
+
+  - Add support for generic DOV WFS layers. Next to the existing 'fixed' datatypes, this make all other WFS data we publish
+    available in pydov too, allowing to use them using the same search options as for other datatypes. (#383)
+
+    To support this we are now also more relaxed about metadata being available: we will still use it when it's available,
+    but will no longer raise errors when it's not. While all of our layers should have metadata available,
+    most of them don't have a feature catalogue. We will now return 'None' in the description of get_fields() when this is missing.
+
+  - Add support for geometry return fields. (#386)
+
+    While it was already possible to do advanced spatial queries, up until now the resulting dataframes only contained 
+    attribute fields and not the geometry of the feature. When the necessary dependencies are installed, it is now 
+    possible to add geometry fields to your dataframe using the ``return_fields`` parameter. Converting the resulting 
+    dataframe into a GeoPandas geodataframe then becomes easy.
+
+- Fixes and improvements
+
+  - Generate stable and unique GML ids for Box and Point locations. (#387, #388)
+
+  - Fix property name replacement in sort_by. (#390, #391)
+
+  - Update mv_mtaw fields based on updated DOV XML schema. (#395)
+
+- Documentation-only updates
+
+  - Open tutorial notebooks through documentation. (#385)
+
+
 v3.0.0
 ------
 

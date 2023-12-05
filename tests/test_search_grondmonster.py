@@ -42,7 +42,7 @@ class TestGrondmonsterSearch(AbstractTestSearch):
         'grondsoort_bggg', 'humusgehalte', 'kalkgehalte',
         'uitrolgrens', 'vloeigrens', 'glauconiet_totaal',
         'korrelvolumemassa', 'volumemassa', 'watergehalte',
-        'diameter', 'fractie', 'methode']
+        'methode', 'diameter', 'fractie']
 
     def test_search_xmlresolving(self, mp_get_schema,
                                  mp_remote_describefeaturetype,

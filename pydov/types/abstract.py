@@ -306,7 +306,6 @@ class AbstractDovSubType(AbstractTypeCommon):
                     datadicts.append(self.data)
                 else:
                     for subdata in self.subdata[subtype]:
-                        # print(self.data, subdata)
                         for subdata_dict in subdata.get_data_dicts():
                             datadict = {}
                             datadict.update(self.data)

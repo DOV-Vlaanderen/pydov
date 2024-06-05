@@ -605,6 +605,58 @@ class RequestPFASdata:
 
         return data_wfs_VMM_ww
 
+    def air(self, location, max_features):
+        """
+        Download the air data.
+
+        Parameters
+        ----------
+        location:
+            Query on location.
+            (https://pydov.readthedocs.io/en/stable/query_location.html)
+        max_features: int
+            Limit the number of WFS features you want to be returned.
+            (https://pydov.readthedocs.io/en/stable/sort_limit.html)
+
+        Returns
+        -------
+        The downloaded air data.
+        """
+        logger.info(f"Downloading air data")
+
+        data_wfs_zwevend_stof_VMM = self.wfs_request(
+            layer='pfas:lucht_zwevendstof_metingen',
+            location=location,
+            max_features=max_features)
+        data_wfs_gas_VMM = self.wfs_request(
+            layer='pfas:lucht_gas_metingen',
+            location=location,
+            max_features=max_features)
+        data_wfs_depositie_VMM = self.wfs_request(
+            layer='pfas:lucht_depositie_metingen',
+            location=location,
+            max_features=max_features)
+
+        data_wfs_zwevend_stof_VMM = data_wfs_zwevend_stof_VMM.drop_duplicates(
+            subset=data_wfs_zwevend_stof_VMM.columns)
+        data_wfs_gas_VMM = data_wfs_gas_VMM.drop_duplicates(
+            subset=data_wfs_gas_VMM.columns)
+        data_wfs_depositie_VMM = data_wfs_depositie_VMM.drop_duplicates(
+            subset=data_wfs_depositie_VMM.columns)
+
+        data_wfs_zwevend_stof_VMM_len = len(data_wfs_zwevend_stof_VMM)
+        data_wfs_gas_VMM_len = len(data_wfs_gas_VMM)
+        data_wfs_depositie_VMM_len = len(data_wfs_depositie_VMM)
+
+        nb_datapoints = {"Air_dust_VMM" : data_wfs_zwevend_stof_VMM_len}
+        self.dictionary["nb_datapoints"][0].update(nb_datapoints)
+        nb_datapoints = {"Air_gas_VMM" : data_wfs_gas_VMM_len}
+        self.dictionary["nb_datapoints"][0].update(nb_datapoints)
+        nb_datapoints = {"Air_deposition_VMM" : data_wfs_depositie_VMM_len}
+        self.dictionary["nb_datapoints"][0].update(nb_datapoints)
+
+        return data_wfs_zwevend_stof_VMM, data_wfs_gas_VMM, data_wfs_depositie_VMM
+
     def combined_groundwater(self, location, max_features):
         """
         Download the groundwater data and combine it in one dataframe.
@@ -676,16 +728,27 @@ class RequestPFASdata:
         else:
             soil_OVAM, soil_Lantis = RequestPFASdata().soil(location, max_features)
 
-        soil_OVAM = soil_OVAM.rename(columns={'top_in_m': 'top_m_mv', 'basis_in_m': 'basis_m_mv', 'x_ml72': 'x_m_L72', 'y_ml72': 'y_m_L72'})
-        soil_Lantis = soil_Lantis.rename(columns={'analysemonster': 'id', 'diepte_van_m': 'top_m_mv', 'diepte_tot_m': 'basis_m_mv', 'datum_bemonstering': 'datum', 'waarde': 'meetwaarde', 'eenheid': 'meeteenheid', 'x_ml72': 'x_m_L72', 'y_ml72': 'y_m_L72'})
+        soil_OVAM = soil_OVAM.rename(columns={'id': 'id_original','top_in_m': 'top_m_mv', 'basis_in_m': 'basis_m_mv', 'x_ml72': 'x_m_L72', 'y_ml72': 'y_m_L72'})
+        soil_Lantis = soil_Lantis.rename(columns={'diepte_van_m': 'top_m_mv', 'diepte_tot_m': 'basis_m_mv', 'datum_bemonstering': 'datum', 'waarde': 'meetwaarde', 'eenheid': 'meeteenheid', 'x_ml72': 'x_m_L72', 'y_ml72': 'y_m_L72'})
 
         soil_OVAM['bron'] = 'OVAM'
         soil_Lantis['bron'] = 'Lantis'
+        id_OVAM_list = []
+        for i in range(len(soil_OVAM)):
+            id_OVAM = f"{int(soil_OVAM['opdracht'][i])}/{int(soil_OVAM['pfasdossiernr'][i])}/{soil_OVAM['profielnaam'][i]}"
+            id_OVAM_list.append(id_OVAM)
+        soil_OVAM['id'] = id_OVAM_list
+        id_lantis_list = []
+        for i in range(len(soil_Lantis)):
+            id_lantis = f"{soil_Lantis['boring'][i]}/{int(soil_Lantis['nummer'][i])}/{soil_Lantis['analysemonster'][i]}"
+            id_lantis_list.append(id_lantis)
+        soil_Lantis['id'] = id_lantis_list
 
         soil_OVAM = soil_OVAM[['id', 'datum', 'x_m_L72', 'y_m_L72', 'top_m_mv', 'basis_m_mv', 'parameter', 'detectieconditie', 'meetwaarde', 'meeteenheid', 'bron']]
         soil_Lantis = soil_Lantis[['id', 'datum', 'x_m_L72', 'y_m_L72', 'top_m_mv', 'basis_m_mv', 'parameter', 'detectieconditie', 'meetwaarde', 'meeteenheid', 'bron']]
 
         soil = pd.concat([soil_OVAM, soil_Lantis])
+        soil = soil.replace(['som PFOA', 'som PFOS'],['PFOAtotaal', 'PFOStotaal'])
 
         data_soil_len = len(soil)
         nb_datapoints = {"Combined_soil": data_soil_len}
@@ -801,6 +864,7 @@ class RequestPFASdata:
                     - 'soil water'
                     - 'surface water'
                     - 'waste water'
+                    - 'air'
                     - 'combined_groundwater'
                     - 'combined_soil'
                     - 'combined_soil_water'
@@ -834,6 +898,7 @@ class RequestPFASdata:
                 data_wfs_VMM_ws, data_wfs_OVAM_ws_sediment, data_wfs_OVAM_ws_fixed = self.soil_water(location, max_features)
                 data_wfs_VMM_sw, data_wfs_OVAM_sw = self.surface_water(location, max_features)
                 data_wfs_VMM_ww = self.waste_water(location, max_features)
+                data_wfs_zwevend_stof_VMM, data_wfs_gas_VMM, data_wfs_depositie_VMM = self.air(location, max_features)
                 data_groundwater = self.combined_groundwater(location, max_features)
                 data_soil = self.combined_soil(location, max_features)
                 data_soil_water = self.combined_soil_water(location, max_features)
@@ -841,7 +906,7 @@ class RequestPFASdata:
                 return_list.extend([data_wfs_VMM_biota, data_wfs_OVAM_effluent, data_pydov_VMM_gw, data_wfs_OVAM_gw,
                         data_wfs_Lantis_gw, data_wfs_OVAM_migration, data_wfs_OVAM_pp, data_wfs_OVAM_rainwater,
                         data_wfs_OVAM_soil, data_wfs_Lantis_soil, data_wfs_VMM_ws, data_wfs_OVAM_ws_sediment, data_wfs_OVAM_ws_fixed, data_wfs_VMM_sw,
-                        data_wfs_OVAM_sw, data_wfs_VMM_ww, data_groundwater, data_soil, data_soil_water, data_surface_water])
+                        data_wfs_OVAM_sw, data_wfs_VMM_ww, data_wfs_zwevend_stof_VMM, data_wfs_gas_VMM, data_wfs_depositie_VMM, data_groundwater, data_soil, data_soil_water, data_surface_water])
             elif i == 'biota':
                 data_wfs_VMM_biota = self.biota(location, max_features)
                 return_list.extend([data_wfs_VMM_biota])
@@ -872,6 +937,9 @@ class RequestPFASdata:
             elif i == 'waste water':
                 data_wfs_VMM_ww = self.waste_water(location, max_features)
                 return_list.extend([data_wfs_VMM_ww])
+            elif i == 'air':
+                data_wfs_zwevend_stof_VMM, data_wfs_gas_VMM, data_wfs_depositie_VMM = self.air(location, max_features)
+                return_list.extend([data_wfs_zwevend_stof_VMM, data_wfs_gas_VMM, data_wfs_depositie_VMM])
             elif i == 'combined_groundwater':
                 data_groundwater = self.combined_groundwater(location, max_features)
                 return_list.extend([data_groundwater])
@@ -935,6 +1003,12 @@ class RequestPFASdata:
                         pbar.update(metadata['nb_datapoints'][0]['Surface_water_OVAM'])
                         data_wfs_VMM_ww.to_excel(writer, sheet_name='Waste_water_VMM')
                         pbar.update(metadata['nb_datapoints'][0]['Waste_water_VMM'])
+                        data_wfs_zwevend_stof_VMM.to_excel(writer, sheet_name='Air_dust_VMM')
+                        pbar.update(metadata['nb_datapoints'][0]['Air_dust_VMM'])
+                        data_wfs_gas_VMM.to_excel(writer, sheet_name='Air_gas_VMM')
+                        pbar.update(metadata['nb_datapoints'][0]['Air_gas_VMM'])
+                        data_wfs_depositie_VMM.to_excel(writer, sheet_name='Air_deposition_VMM')
+                        pbar.update(metadata['nb_datapoints'][0]['Air_deposition_VMM'])
                         data_groundwater.to_excel(writer, sheet_name='Combined_groundwater')
                         pbar.update(metadata['nb_datapoints'][0]['Combined_groundwater'])
                         data_soil.to_excel(writer, sheet_name='Combined_soil')
@@ -985,6 +1059,13 @@ class RequestPFASdata:
                     elif i == 'waste water':
                         data_wfs_VMM_ww.to_excel(writer, sheet_name='Waste_water_VMM')
                         pbar.update(metadata['nb_datapoints'][0]['Waste_water_VMM'])
+                    elif i == 'air':
+                        data_wfs_zwevend_stof_VMM.to_excel(writer, sheet_name='Air_dust_VMM')
+                        pbar.update(metadata['nb_datapoints'][0]['Air_dust_VMM'])
+                        data_wfs_gas_VMM.to_excel(writer, sheet_name='Air_gas_VMM')
+                        pbar.update(metadata['nb_datapoints'][0]['Air_gas_VMM'])
+                        data_wfs_depositie_VMM.to_excel(writer, sheet_name='Air_deposition_VMM')
+                        pbar.update(metadata['nb_datapoints'][0]['Air_deposition_VMM'])
                     elif i == 'combined_groundwater':
                         data_groundwater.to_excel(writer, sheet_name='Combined_groundwater')
                         pbar.update(metadata['nb_datapoints'][0]['Combined_groundwater'])
@@ -1008,7 +1089,7 @@ class RequestPFASdata:
 
 
 if __name__ == '__main__':
-    medium = ['all']
+    medium = ['combined_soil']
     location = Within(Box(15000, 150000, 270000, 250000))  # Bounding box Flanders
     rd = RequestPFASdata()
     df = rd.main(medium, location=location, save=True)[0]

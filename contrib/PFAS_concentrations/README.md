@@ -10,6 +10,9 @@ The dataset consist of the following PFAS data:
     - groundwater
     - waste water
     - biota
+    - air dust
+    - air gas
+    - air deposition
 
 - From [OVAM](https://ovam.vlaanderen.be/)
     - rain water
@@ -74,7 +77,7 @@ Possible mediums:
 <details>
 <summary>'all'</summary>
 
-    -> returns 15 dataframes
+    -> returns 22 dataframes
         - Biota_VMM
         - Effluent_OVAM
         - Groundwater_VMM
@@ -90,6 +93,9 @@ Possible mediums:
         - Surface_water_VMM
         - Surface_water_OVAM
         - Waste_water_VMM
+        - Air_dust_VMM
+        - Air_gas_VMM
+        - Air_deposition_VMM
         - Combined_groundwater
         - Combined_soil
         - Combined_soil_water
@@ -170,6 +176,15 @@ Possible mediums:
 
     -> returns 1 dataframe
         - Waste_water_VMM
+</details>
+
+<details>
+<summary>'air'</summary>
+
+    -> returns 3 dataframes
+        - Air_dust_VMM
+        - Air_gas_VMM
+        - Air_deposition_VMM
 </details>
 
 <details>
@@ -303,6 +318,13 @@ and also [restrict the number of WFS features returned](https://pydov.readthedoc
         df[12] # Surface_water_VMM
         df[13] # Surface_water_OVAM
         df[14] # Waste_water_VMM
+        df[15] # Air_dust_VMM
+        df[16] # Air_gas_VMM
+        df[17] # Air_deposition_VMM
+        df[18] # Combined_groundwater
+        df[19] # Combined_soil
+        df[20] # Combined_soil_water
+        df[21] # Combined_surface_water
     ```
 
   - Example 2 : You only want to download the groundwater PFAS data of Flanders

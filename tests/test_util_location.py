@@ -218,13 +218,12 @@ class TestLocation(object):
         Test whether an ValueError is raised.
 
         """
-        with open('tests/data/types/boring/boring.xml', 'r') as xmlfile:
+        with open('tests/data/types/interpretaties/gecodeerde_lithologie/'
+                  'gecodeerde_lithologie.xml', 'r') as xmlfile:
             xml = xmlfile.read()
 
-            with pytest.raises(ValueError) as error:
+            with pytest.raises(ValueError, match='not to be valid GML3.2'):
                 GmlObject(xml)
-
-                assert 'not to be valid GML3.2' in error
 
     def test_gmlobject_old_gml(self):
         """Test the GmlObject type with XML that is GML 3.1.1
@@ -236,10 +235,8 @@ class TestLocation(object):
                   'r') as xmlfile:
             xml = xmlfile.read()
 
-            with pytest.raises(ValueError) as error:
+            with pytest.raises(ValueError, match='older'):
                 GmlObject(xml)
-
-                assert 'older' in error
 
 
 class TestBinarySpatialFilters(object):

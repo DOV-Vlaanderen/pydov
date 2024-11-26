@@ -11,12 +11,12 @@
       <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">1</gco:CharacterString>
     </gmx:versionNumber>
     <gmx:versionDate xmlns:gmx="http://www.isotc211.org/2005/gmx">
-      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2023-04-19</gco:Date>
+      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2024-11-25</gco:Date>
     </gmx:versionDate>
     <gfc:producer>
       <gmd:CI_ResponsibleParty xmlns:gmd="http://www.isotc211.org/2005/gmd">
         <gmd:organisationName>
-          <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Vlaamse overheid, Departement Omgeving, Vlaams Planbureau voor Omgeving (VPO)</gco:CharacterString>
+          <gmx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://data.vlaanderen.be/id/organisatie/OVO003750">Vlaamse overheid, Departement Omgeving, Vlaams Planbureau voor Omgeving (VPO)</gmx:Anchor>
         </gmd:organisationName>
         <gmd:contactInfo>
           <gmd:CI_Contact>
@@ -87,7 +87,7 @@ Een bodemmonster is ofwel een enkelvoudig monster, ofwel een mengmonster (dit is
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
@@ -118,7 +118,7 @@ Een bodemmonster is ofwel een enkelvoudig monster, ofwel een mengmonster (dit is
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
@@ -149,7 +149,7 @@ Een bodemmonster is ofwel een enkelvoudig monster, ofwel een mengmonster (dit is
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
@@ -180,7 +180,7 @@ Een bodemmonster is ofwel een enkelvoudig monster, ofwel een mengmonster (dit is
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
@@ -211,7 +211,7 @@ Een bodemmonster is ofwel een enkelvoudig monster, ofwel een mengmonster (dit is
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
@@ -242,7 +242,7 @@ Een bodemmonster is ofwel een enkelvoudig monster, ofwel een mengmonster (dit is
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
@@ -273,7 +273,7 @@ Een bodemmonster is ofwel een enkelvoudig monster, ofwel een mengmonster (dit is
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
@@ -304,7 +304,7 @@ Een bodemmonster is ofwel een enkelvoudig monster, ofwel een mengmonster (dit is
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
@@ -335,7 +335,7 @@ Een bodemmonster is ofwel een enkelvoudig monster, ofwel een mengmonster (dit is
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
@@ -366,7 +366,7 @@ Een bodemmonster is ofwel een enkelvoudig monster, ofwel een mengmonster (dit is
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
@@ -397,7 +397,7 @@ Een bodemmonster is ofwel een enkelvoudig monster, ofwel een mengmonster (dit is
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
@@ -428,7 +428,7 @@ Een bodemmonster is ofwel een enkelvoudig monster, ofwel een mengmonster (dit is
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
@@ -459,7 +459,7 @@ Een bodemmonster is ofwel een enkelvoudig monster, ofwel een mengmonster (dit is
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
@@ -490,7 +490,7 @@ Een bodemmonster is ofwel een enkelvoudig monster, ofwel een mengmonster (dit is
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
@@ -521,7 +521,7 @@ Een bodemmonster is ofwel een enkelvoudig monster, ofwel een mengmonster (dit is
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
@@ -552,7 +552,7 @@ Een bodemmonster is ofwel een enkelvoudig monster, ofwel een mengmonster (dit is
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
@@ -583,7 +583,7 @@ Een bodemmonster is ofwel een enkelvoudig monster, ofwel een mengmonster (dit is
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
@@ -614,7 +614,7 @@ Een bodemmonster is ofwel een enkelvoudig monster, ofwel een mengmonster (dit is
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
@@ -645,7 +645,7 @@ Een bodemmonster is ofwel een enkelvoudig monster, ofwel een mengmonster (dit is
                       <gco:Integer>1</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
@@ -676,7 +676,7 @@ Een bodemmonster is ofwel een enkelvoudig monster, ofwel een mengmonster (dit is
                       <gco:Integer>1</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
@@ -707,7 +707,7 @@ Een bodemmonster is ofwel een enkelvoudig monster, ofwel een mengmonster (dit is
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
@@ -738,7 +738,7 @@ Een bodemmonster is ofwel een enkelvoudig monster, ofwel een mengmonster (dit is
                       <gco:Integer>1</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>

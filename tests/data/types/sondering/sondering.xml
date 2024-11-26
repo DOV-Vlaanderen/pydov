@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns3:dov-schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns3="http://kern.schemas.dov.vlaanderen.be" xsi:schemaLocation="http://kern.schemas.dov.vlaanderen.be https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/dov.xsd">
+<ns4:dov-schema xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns4="http://kern.schemas.dov.vlaanderen.be" xsi:schemaLocation="http://kern.schemas.dov.vlaanderen.be https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/dov.xsd">
     <sondering>
         <sondeernummer>GEO-02/111-S1</sondeernummer>
         <dataidentifier>
             <permkey>2002-018435</permkey>
-            <uri>https://www.dov.vlaanderen.be/data/sondering/2002-018435</uri>
+            <uri>https://www/data/sondering/2002-018435</uri>
         </dataidentifier>
         <datum_aanvang>2002-12-17</datum_aanvang>
         <uitvoerder>
@@ -24,7 +24,6 @@
                     <naam>derden</naam>
                 </origine_opmeten>
             </xy>
-            <beschrijving_locatie></beschrijving_locatie>
             <gemeente>11002</gemeente>
             <aanvangspeil>
                 <waarde>8.53</waarde>
@@ -60,6 +59,7 @@
                     <net_area_ratio>0.8</net_area_ratio>
                 </sondeerconus>
             </sondeerapparaat>
+            <sondeparameter>Temp</sondeparameter>
             <sondeparameter>fs</sondeparameter>
             <sondeparameter>i</sondeparameter>
             <sondeparameter>qc</sondeparameter>
@@ -71,8 +71,8 @@
             </nulpunt>
             <nulpunt>
                 <sondeparameter>fs</sondeparameter>
-                <nulpunt_voor>0.0</nulpunt_voor>
-                <nulpunt_na>0.0</nulpunt_na>
+                <nulpunt_voor>0.001</nulpunt_voor>
+                <nulpunt_na>0.002</nulpunt_na>
             </nulpunt>
             <verwerking>
                 <volumemassa_boven>1.6</volumemassa_boven>
@@ -3865,9 +3865,19 @@
                     <i>3.8</i>
                 </meetdata>
                 <technieken>
+                    <diepte_techniek>8.00</diepte_techniek>
+                    <techniek>andere</techniek>
+                    <techniek_andere>dissipatieproef</techniek_andere>
+                </technieken>
+                <technieken>
                     <diepte_van>14.45</diepte_van>
                     <diepte_techniek>10.20</diepte_techniek>
                     <techniek>V</techniek>
+                </technieken>
+                <technieken>
+                    <diepte_techniek>14.00</diepte_techniek>
+                    <techniek>andere</techniek>
+                    <techniek_andere>dissipatieproef</techniek_andere>
                 </technieken>
                 <technieken>
                     <diepte_van>19.45</diepte_van>
@@ -3875,8 +3885,9 @@
                     <techniek>V</techniek>
                 </technieken>
             </penetratietest>
+            <stopcriterium>niet nader gespecificeerd</stopcriterium>
         </sondeonderzoek>
         <kwaliteit/>
         <opdracht>GEO-02/111</opdracht>
     </sondering>
-</ns3:dov-schema>
+</ns4:dov-schema>

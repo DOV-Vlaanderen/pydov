@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns3:dov-schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns3="http://kern.schemas.dov.vlaanderen.be" xsi:schemaLocation="http://kern.schemas.dov.vlaanderen.be https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/dov.xsd">
+<ns4:dov-schema xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns4="http://kern.schemas.dov.vlaanderen.be" xsi:schemaLocation="http://kern.schemas.dov.vlaanderen.be https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/dov.xsd">
     <grondwaterlocatie>
         <identificatie>5111-151</identificatie>
         <dataidentifier>
             <permkey>2021-096695</permkey>
-            <uri>https://www.dov.vlaanderen.be/data/put/2021-096695</uri>
+            <uri>https://www/data/put/2021-096695</uri>
         </dataidentifier>
         <putnaam>5111-151</putnaam>
         <grondwaterlocatieType>PUT</grondwaterlocatieType>
@@ -36,13 +36,17 @@
         <afwerking>
             <beschermbuis/>
         </afwerking>
+        <naam>
+            <naam>5111-151</naam>
+            <naamtype>EXPLOITANT</naamtype>
+        </naam>
         <status>publiek</status>
     </grondwaterlocatie>
     <filter>
         <identificatie>1</identificatie>
         <dataidentifier>
             <permkey>1976-101132</permkey>
-            <uri>https://www.dov.vlaanderen.be/data/filter/1976-101132</uri>
+            <uri>https://www/data/filter/1976-101132</uri>
         </dataidentifier>
         <filtertype>peilfilter</filtertype>
         <grondwaterlocatie>5111-151</grondwaterlocatie>
@@ -54,6 +58,8 @@
             <grondwaterlichaam>CKS_0200_GWL_1</grondwaterlichaam>
             <grondwatersysteem>Centraal Kempisch Systeem</grondwatersysteem>
             <afgesloten_volgens_gwdecreet>niet-afgesloten_delen_0200</afgesloten_volgens_gwdecreet>
+            <controle/>
+            <actie_waakgebieden_22_27>geen actie/waakgebieden</actie_waakgebieden_22_27>
             <regime>freatisch</regime>
         </ligging>
         <meetfrequentie/>
@@ -64,8 +70,19 @@
                 <filterelement>onbekend</filterelement>
             </onderdeel>
         </opbouw>
+        <filternaam>
+            <naam>1</naam>
+            <naamtype>EXPLOITANT</naamtype>
+        </filternaam>
         <status>publiek</status>
     </filter>
+    <filterdebietmeter>
+        <grondwaterlocatie>5111-151</grondwaterlocatie>
+        <filter>
+            <identificatie>1</identificatie>
+            <filtertype>peilfilter</filtertype>
+        </filter>
+    </filterdebietmeter>
     <filtermeting>
         <grondwaterlocatie>5111-151</grondwaterlocatie>
         <filter>
@@ -78,4 +95,4 @@
             <referentie>Maaiveld</referentie>
         </referentiepunt>
     </filtermeting>
-</ns3:dov-schema>
+</ns4:dov-schema>

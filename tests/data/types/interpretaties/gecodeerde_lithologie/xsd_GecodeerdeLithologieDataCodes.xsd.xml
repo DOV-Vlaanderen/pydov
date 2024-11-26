@@ -80,9 +80,19 @@
 					<xs:documentation>bentoniet</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
+			<xs:enumeration value="BK">
+				<xs:annotation>
+					<xs:documentation>baksteen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
 			<xs:enumeration value="BS">
 				<xs:annotation>
 					<xs:documentation>blauwshist</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BT">
+				<xs:annotation>
+					<xs:documentation>beton</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="CA">
@@ -528,6 +538,11 @@
 			<xs:enumeration value="SL">
 				<xs:annotation>
 					<xs:documentation>slib</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SN">
+				<xs:annotation>
+					<xs:documentation>steenfragmenten</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="SO">

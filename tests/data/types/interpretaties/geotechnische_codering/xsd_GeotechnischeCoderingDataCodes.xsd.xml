@@ -89,6 +89,11 @@
 				<xs:annotation>
 					<xs:documentation>blauwshist</xs:documentation>
 				</xs:annotation>
+			</xs:enumeration>			
+            <xs:enumeration value="BT">
+				<xs:annotation>
+					<xs:documentation>beton</xs:documentation>
+				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="CA">
 				<xs:annotation>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <csw:GetRecordByIdResponse xmlns:csw="http://www.opengis.net/cat/csw/2.0.2">
-  <gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:geonet="http://www.fao.org/geonetwork" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://schemas.opengis.net/csw/2.0.2/profiles/apiso/1.0.0/apiso.xsd">
+  <gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:geonet="http://www.fao.org/geonetwork" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.isotc211.org/2005/gmx http://schemas.opengis.net/iso/19139/20060504/gmx/gmx.xsd http://www.isotc211.org/2005/srv http://schemas.opengis.net/iso/19139/20060504/srv/srv.xsd http://www.isotc211.org/2005/gmd http://schemas.opengis.net/iso/19139/20060504/gmd/gmd.xsd">
     <gmd:fileIdentifier>
       <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">27142078-f0d0-46e3-b97e-2ffc2c6bdd41</gco:CharacterString>
     </gmd:fileIdentifier>
@@ -19,7 +19,7 @@
     <gmd:contact>
       <gmd:CI_ResponsibleParty>
         <gmd:organisationName>
-          <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Vlaamse overheid, Departement Omgeving, Vlaams Planbureau voor Omgeving (VPO)</gco:CharacterString>
+          <gmx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://data.vlaanderen.be/id/organisatie/OVO003750">Vlaamse overheid, Departement Omgeving, Vlaams Planbureau voor Omgeving (VPO)</gmx:Anchor>
         </gmd:organisationName>
         <gmd:contactInfo>
           <gmd:CI_Contact>
@@ -57,7 +57,7 @@
       </gmd:CI_ResponsibleParty>
     </gmd:contact>
     <gmd:dateStamp>
-      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2023-03-28</gco:Date>
+      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2024-06-07</gco:Date>
     </gmd:dateStamp>
     <gmd:metadataStandardName>
       <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">ISO 19115/2003/Cor.1:2006/INSPIRE-TG2.0</gco:CharacterString>
@@ -86,7 +86,7 @@
             <gmd:date>
               <gmd:CI_Date>
                 <gmd:date>
-                  <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2017-07-24</gco:Date>
+                  <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2017-07-24</gco:Date>
                 </gmd:date>
                 <gmd:dateType>
                   <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation">creation</gmd:CI_DateTypeCode>
@@ -96,7 +96,7 @@
             <gmd:date>
               <gmd:CI_Date>
                 <gmd:date>
-                  <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2017-07-24</gco:Date>
+                  <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2017-07-24</gco:Date>
                 </gmd:date>
                 <gmd:dateType>
                   <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</gmd:CI_DateTypeCode>
@@ -125,7 +125,7 @@ Een bodemsite kan een geometrie bevatten (polygoon), maar deze is niet verplicht
         <gmd:pointOfContact>
           <gmd:CI_ResponsibleParty>
             <gmd:organisationName>
-              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Databank Ondergrond Vlaanderen (DOV)</gco:CharacterString>
+              <gmx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://data.vlaanderen.be/doc/organisatie/OVO027735">Databank Ondergrond Vlaanderen (DOV)</gmx:Anchor>
             </gmd:organisationName>
             <gmd:contactInfo>
               <gmd:CI_Contact>
@@ -172,7 +172,7 @@ Een bodemsite kan een geometrie bevatten (polygoon), maar deze is niet verplicht
         <gmd:pointOfContact>
           <gmd:CI_ResponsibleParty>
             <gmd:organisationName>
-              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Ondersteunend Centrum Databank Ondergrond Vlaanderen</gco:CharacterString>
+              <gmx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://data.vlaanderen.be/doc/organisatie/OVO027735">Ondersteunend Centrum Databank Ondergrond Vlaanderen</gmx:Anchor>
             </gmd:organisationName>
             <gmd:contactInfo>
               <gmd:CI_Contact>
@@ -219,7 +219,7 @@ Een bodemsite kan een geometrie bevatten (polygoon), maar deze is niet verplicht
         <gmd:pointOfContact>
           <gmd:CI_ResponsibleParty>
             <gmd:organisationName>
-              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Vlaamse overheid, Departement Omgeving, Vlaams Planbureau voor Omgeving (VPO)</gco:CharacterString>
+              <gmx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://data.vlaanderen.be/id/organisatie/OVO003750">Vlaamse overheid, Departement Omgeving, Vlaams Planbureau voor Omgeving (VPO)</gmx:Anchor>
             </gmd:organisationName>
             <gmd:contactInfo>
               <gmd:CI_Contact>
@@ -259,7 +259,7 @@ Een bodemsite kan een geometrie bevatten (polygoon), maar deze is niet verplicht
         <gmd:pointOfContact>
           <gmd:CI_ResponsibleParty>
             <gmd:organisationName>
-              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Vlaamse overheid, Departement Omgeving, Vlaams Planbureau voor Omgeving (VPO)</gco:CharacterString>
+              <gmx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://data.vlaanderen.be/id/organisatie/OVO003750">Vlaamse overheid, Departement Omgeving, Vlaams Planbureau voor Omgeving (VPO)</gmx:Anchor>
             </gmd:organisationName>
             <gmd:contactInfo>
               <gmd:CI_Contact>
@@ -299,7 +299,7 @@ Een bodemsite kan een geometrie bevatten (polygoon), maar deze is niet verplicht
         <gmd:graphicOverview>
           <gmd:MD_BrowseGraphic>
             <gmd:fileName>
-              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">https://www.dov.vlaanderen.be/geoserver/wms?SERVICE=WMS&amp;VERSION=1.1.1&amp;REQUEST=GetMap&amp;FORMAT=image%2Fpng&amp;TRANSPARENT=false&amp;STYLES&amp;LAYERS=bodem:bodemsites&amp;SRS=EPSG%3A31370&amp;WIDTH=858&amp;HEIGHT=330&amp;BBOX=9518.482229747839%2C148172.73525929108%2C271454.8939534676%2C248854.86152133934</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">https://www.dov.vlaanderen.be/geoserver/bodem/wms?SERVICE=WMS&amp;VERSION=1.1.1&amp;REQUEST=GetMap&amp;FORMAT=image%2Fpng&amp;TRANSPARENT=false&amp;STYLES&amp;LAYERS=bodemsites&amp;SRS=EPSG%3A31370&amp;WIDTH=858&amp;HEIGHT=330&amp;BBOX=9518.482229747839%2C148172.73525929108%2C271454.8939534676%2C248854.86152133934</gco:CharacterString>
             </gmd:fileName>
             <gmd:fileType>
               <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">png</gco:CharacterString>
@@ -319,7 +319,7 @@ Een bodemsite kan een geometrie bevatten (polygoon), maar deze is niet verplicht
                 <gmd:date>
                   <gmd:CI_Date>
                     <gmd:date>
-                      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2008-06-01</gco:Date>
+                      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2008-06-01</gco:Date>
                     </gmd:date>
                     <gmd:dateType>
                       <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</gmd:CI_DateTypeCode>
@@ -379,7 +379,7 @@ Een bodemsite kan een geometrie bevatten (polygoon), maar deze is niet verplicht
                 <gmd:date>
                   <gmd:CI_Date>
                     <gmd:date>
-                      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2010-01-13</gco:Date>
+                      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2010-01-13</gco:Date>
                     </gmd:date>
                     <gmd:dateType>
                       <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</gmd:CI_DateTypeCode>
@@ -431,7 +431,7 @@ Een bodemsite kan een geometrie bevatten (polygoon), maar deze is niet verplicht
                 <gmd:date>
                   <gmd:CI_Date>
                     <gmd:date>
-                      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2019-05-22</gco:Date>
+                      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2019-05-22</gco:Date>
                     </gmd:date>
                     <gmd:dateType>
                       <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</gmd:CI_DateTypeCode>
@@ -473,7 +473,7 @@ Een bodemsite kan een geometrie bevatten (polygoon), maar deze is niet verplicht
                 <gmd:date>
                   <gmd:CI_Date>
                     <gmd:date>
-                      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2014-02-26</gco:Date>
+                      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2014-02-26</gco:Date>
                     </gmd:date>
                     <gmd:dateType>
                       <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</gmd:CI_DateTypeCode>
@@ -544,16 +544,16 @@ Een bodemsite kan een geometrie bevatten (polygoon), maar deze is niet verplicht
             <gmd:geographicElement>
               <gmd:EX_GeographicBoundingBox>
                 <gmd:westBoundLongitude>
-                  <gco:Decimal xmlns:gco="http://www.isotc211.org/2005/gco">2.552117444939435</gco:Decimal>
+                  <gco:Decimal xmlns:gco="http://www.isotc211.org/2005/gco">2.552117444939426</gco:Decimal>
                 </gmd:westBoundLongitude>
                 <gmd:eastBoundLongitude>
-                  <gco:Decimal xmlns:gco="http://www.isotc211.org/2005/gco">5.869315139693988</gco:Decimal>
+                  <gco:Decimal xmlns:gco="http://www.isotc211.org/2005/gco">5.869315139693997</gco:Decimal>
                 </gmd:eastBoundLongitude>
                 <gmd:southBoundLatitude>
-                  <gco:Decimal xmlns:gco="http://www.isotc211.org/2005/gco">50.527836699617936</gco:Decimal>
+                  <gco:Decimal xmlns:gco="http://www.isotc211.org/2005/gco">50.5278366996182</gco:Decimal>
                 </gmd:southBoundLatitude>
                 <gmd:northBoundLatitude>
-                  <gco:Decimal xmlns:gco="http://www.isotc211.org/2005/gco">51.45276081563827</gco:Decimal>
+                  <gco:Decimal xmlns:gco="http://www.isotc211.org/2005/gco">51.45276081563852</gco:Decimal>
                 </gmd:northBoundLatitude>
               </gmd:EX_GeographicBoundingBox>
             </gmd:geographicElement>
@@ -587,7 +587,7 @@ Een bodemsite kan een geometrie bevatten (polygoon), maar deze is niet verplicht
             <gmd:date>
               <gmd:CI_Date>
                 <gmd:date>
-                  <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2023-03-28</gco:Date>
+                  <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2024-06-07</gco:Date>
                 </gmd:date>
                 <gmd:dateType>
                   <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation">creation</gmd:CI_DateTypeCode>
@@ -618,7 +618,7 @@ Een bodemsite kan een geometrie bevatten (polygoon), maar deze is niet verplicht
             <gmd:distributorContact>
               <gmd:CI_ResponsibleParty>
                 <gmd:organisationName>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Databank Ondergrond Vlaanderen (DOV)</gco:CharacterString>
+                  <gmx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://data.vlaanderen.be/doc/organisatie/OVO027735">Databank Ondergrond Vlaanderen (DOV)</gmx:Anchor>
                 </gmd:organisationName>
                 <gmd:contactInfo>
                   <gmd:CI_Contact>
@@ -676,61 +676,13 @@ Een bodemsite kan een geometrie bevatten (polygoon), maar deze is niet verplicht
             <gmd:onLine>
               <gmd:CI_OnlineResource>
                 <gmd:linkage>
-                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/wms?</gmd:URL>
-                </gmd:linkage>
-                <gmd:protocol>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">OGC:WMS</gco:CharacterString>
-                </gmd:protocol>
-                <gmd:name>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">bodem:bodemsites</gco:CharacterString>
-                </gmd:name>
-                <gmd:description>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">WMS-endpoint Bodemsites</gco:CharacterString>
-                </gmd:description>
-              </gmd:CI_OnlineResource>
-            </gmd:onLine>
-            <gmd:onLine>
-              <gmd:CI_OnlineResource>
-                <gmd:linkage>
-                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/wms?SERVICE=WMS&amp;version=1.3.0&amp;request=GetCapabilities</gmd:URL>
-                </gmd:linkage>
-                <gmd:protocol>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">OGC:WMS-1.3.0-http-get-capabilities</gco:CharacterString>
-                </gmd:protocol>
-                <gmd:name>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">bodem:bodemsites</gco:CharacterString>
-                </gmd:name>
-                <gmd:description>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">WMS-capabilities Bodemsites</gco:CharacterString>
-                </gmd:description>
-              </gmd:CI_OnlineResource>
-            </gmd:onLine>
-            <gmd:onLine>
-              <gmd:CI_OnlineResource>
-                <gmd:linkage>
-                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/wms?SERVICE=WMS&amp;version=1.3.0&amp;request=GetMap</gmd:URL>
-                </gmd:linkage>
-                <gmd:protocol>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">OGC:WMS-1.3.0-http-get-map</gco:CharacterString>
-                </gmd:protocol>
-                <gmd:name>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">bodem:bodemsites</gco:CharacterString>
-                </gmd:name>
-                <gmd:description>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">WMS-map Bodemsites</gco:CharacterString>
-                </gmd:description>
-              </gmd:CI_OnlineResource>
-            </gmd:onLine>
-            <gmd:onLine>
-              <gmd:CI_OnlineResource>
-                <gmd:linkage>
-                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/wfs?</gmd:URL>
+                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/bodem/wfs?</gmd:URL>
                 </gmd:linkage>
                 <gmd:protocol>
                   <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">OGC:WFS</gco:CharacterString>
                 </gmd:protocol>
                 <gmd:name>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">bodem:bodemsites</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">bodemsites</gco:CharacterString>
                 </gmd:name>
                 <gmd:description>
                   <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">WFS-endpoint Bodemsites</gco:CharacterString>
@@ -743,7 +695,7 @@ Een bodemsite kan een geometrie bevatten (polygoon), maar deze is niet verplicht
             <gmd:onLine>
               <gmd:CI_OnlineResource>
                 <gmd:linkage>
-                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/wfs?SERVICE=WFS&amp;version=2.0.0&amp;request=GetCapabilities</gmd:URL>
+                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/bodem/wfs?SERVICE=WFS&amp;version=2.0.0&amp;request=GetCapabilities</gmd:URL>
                 </gmd:linkage>
                 <gmd:protocol>
                   <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">OGC:WFS-2.0.0-http-get-capabilities</gco:CharacterString>
@@ -762,13 +714,77 @@ Een bodemsite kan een geometrie bevatten (polygoon), maar deze is niet verplicht
             <gmd:onLine>
               <gmd:CI_OnlineResource>
                 <gmd:linkage>
-                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/wfs?SERVICE=WFS&amp;version=2.0.0&amp;request=GetFeature&amp;count=1&amp;typeName=bodem:bodemsites</gmd:URL>
+                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/bodem/wms?SERVICE=WMS&amp;version=1.3.0&amp;request=GetCapabilities</gmd:URL>
+                </gmd:linkage>
+                <gmd:protocol>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">OGC:WMS-1.3.0-http-get-capabilities</gco:CharacterString>
+                </gmd:protocol>
+                <gmd:name>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">bodemsites</gco:CharacterString>
+                </gmd:name>
+                <gmd:description>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">WMS-capabilities Bodemsites</gco:CharacterString>
+                </gmd:description>
+              </gmd:CI_OnlineResource>
+            </gmd:onLine>
+            <gmd:onLine>
+              <gmd:CI_OnlineResource>
+                <gmd:linkage>
+                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/bodem/wms/kml?layers=bodemsites</gmd:URL>
+                </gmd:linkage>
+                <gmd:protocol>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">GLG:KML-2.0-http-get-map</gco:CharacterString>
+                </gmd:protocol>
+                <gmd:name>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">bodemsites</gco:CharacterString>
+                </gmd:name>
+                <gmd:description>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">KML Bodemsites</gco:CharacterString>
+                </gmd:description>
+              </gmd:CI_OnlineResource>
+            </gmd:onLine>
+            <gmd:onLine>
+              <gmd:CI_OnlineResource>
+                <gmd:linkage>
+                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/bodem/wms?SERVICE=WMS&amp;version=1.3.0&amp;request=GetMap</gmd:URL>
+                </gmd:linkage>
+                <gmd:protocol>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">OGC:WMS-1.3.0-http-get-map</gco:CharacterString>
+                </gmd:protocol>
+                <gmd:name>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">bodemsites</gco:CharacterString>
+                </gmd:name>
+                <gmd:description>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">WMS-map Bodemsites</gco:CharacterString>
+                </gmd:description>
+              </gmd:CI_OnlineResource>
+            </gmd:onLine>
+            <gmd:onLine>
+              <gmd:CI_OnlineResource>
+                <gmd:linkage>
+                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/bodem/wms?</gmd:URL>
+                </gmd:linkage>
+                <gmd:protocol>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">OGC:WMS</gco:CharacterString>
+                </gmd:protocol>
+                <gmd:name>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">bodemsites</gco:CharacterString>
+                </gmd:name>
+                <gmd:description>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">WMS-endpoint Bodemsites</gco:CharacterString>
+                </gmd:description>
+              </gmd:CI_OnlineResource>
+            </gmd:onLine>
+            <gmd:onLine>
+              <gmd:CI_OnlineResource>
+                <gmd:linkage>
+                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/bodem/wfs?SERVICE=WFS&amp;version=2.0.0&amp;request=GetFeature&amp;count=1&amp;typeName=bodemsites</gmd:URL>
                 </gmd:linkage>
                 <gmd:protocol>
                   <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">OGC:WFS-2.0.0-http-get-feature</gco:CharacterString>
                 </gmd:protocol>
                 <gmd:name>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">bodem:bodemsites</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">bodemsites</gco:CharacterString>
                 </gmd:name>
                 <gmd:description>
                   <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">WFS-feature Bodemsites</gco:CharacterString>
@@ -776,22 +792,6 @@ Een bodemsite kan een geometrie bevatten (polygoon), maar deze is niet verplicht
                 <gmd:function>
                   <gmd:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode" codeListValue="download">download</gmd:CI_OnLineFunctionCode>
                 </gmd:function>
-              </gmd:CI_OnlineResource>
-            </gmd:onLine>
-            <gmd:onLine>
-              <gmd:CI_OnlineResource>
-                <gmd:linkage>
-                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/wms/kml?layers=bodem:bodemsites</gmd:URL>
-                </gmd:linkage>
-                <gmd:protocol>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">GLG:KML-2.0-http-get-map</gco:CharacterString>
-                </gmd:protocol>
-                <gmd:name>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">bodem:bodemsites</gco:CharacterString>
-                </gmd:name>
-                <gmd:description>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">KML Bodemsites</gco:CharacterString>
-                </gmd:description>
               </gmd:CI_OnlineResource>
             </gmd:onLine>
             <gmd:onLine>
@@ -835,7 +835,7 @@ Een bodemsite kan een geometrie bevatten (polygoon), maar deze is niet verplicht
                     <gmd:date>
                       <gmd:CI_Date>
                         <gmd:date>
-                          <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2010-12-08</gco:Date>
+                          <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2010-12-08</gco:Date>
                         </gmd:date>
                         <gmd:dateType>
                           <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</gmd:CI_DateTypeCode>

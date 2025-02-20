@@ -110,6 +110,8 @@ class AbstractDovSubType(AbstractTypeCommon):
 
     rootpath = None
 
+    subtypes = []
+
     _UNRESOLVED = "{UNRESOLVED}"
 
     def __init__(self):
@@ -133,6 +135,11 @@ class AbstractDovSubType(AbstractTypeCommon):
                 [AbstractDovSubType._UNRESOLVED] * len(self.get_field_names()))
         )
 
+        self.subdata = dict(
+            zip([st.get_name() for st in self.subtypes],
+                [] * len(self.subtypes))
+        )
+
     @classmethod
     def from_xml(cls, xml_data):
         """Build instances of this subtype from XML data.
@@ -151,7 +158,7 @@ class AbstractDovSubType(AbstractTypeCommon):
         """
         try:
             tree = parse_dov_xml(xml_data)
-            for element in tree.findall(cls.rootpath):
+            for element in tree.xpath(cls.rootpath):
                 yield cls.from_xml_element(element)
         except XmlParseError:
             # Ignore XmlParseError here in subtypes, assuming it will be
@@ -185,11 +192,12 @@ class AbstractDovSubType(AbstractTypeCommon):
                 returntype=field.get('type', None)
             )
 
+        instance._parse_subtypes(etree.tostring(element))
         return instance
 
     @classmethod
     def get_field_names(cls):
-        """Return the names of the fields available for this type.
+        """Return the names of the fields available for this subtype.
 
         Returns
         -------
@@ -198,11 +206,16 @@ class AbstractDovSubType(AbstractTypeCommon):
             the names of the columns in the output dataframe for this type.
 
         """
-        return [f['name'] for f in cls.fields]
+        field_names = [f['name'] for f in cls.fields]
+
+        for st in cls.subtypes:
+            field_names.extend(st.get_field_names())
+
+        return field_names
 
     @classmethod
     def get_fields(cls):
-        """Return the metadata of the fields available for this type.
+        """Return the metadata of the fields available for this subtype.
 
         Returns
         -------
@@ -233,9 +246,17 @@ class AbstractDovSubType(AbstractTypeCommon):
                 Whether the field is mandatory (True) or can be null (False).
 
         """
-        return OrderedDict(
+        fields = OrderedDict(
             zip([f['name'] for f in cls.fields],
                 [f for f in cls.fields]))
+
+        for st in cls.subtypes:
+            fields.update(OrderedDict(
+                zip([f['name'] for f in st.fields],
+                    [f for f in st.fields])
+            ))
+
+        return fields
 
     @classmethod
     def get_name(cls):
@@ -248,6 +269,50 @@ class AbstractDovSubType(AbstractTypeCommon):
 
         """
         return cls.__name__
+
+    def _parse_subtypes(self, xml):
+        """Parse the subtypes with the given XML data.
+
+        Parameters
+        ----------
+        xml : bytes
+            The raw XML data of the DOV object as bytes.
+
+        """
+        for subtype in self.subtypes:
+            st_name = subtype.get_name()
+            if st_name not in self.subdata:
+                self.subdata[st_name] = []
+
+            for subitem in subtype.from_xml(xml):
+                self.subdata[st_name].append(subitem)
+
+    def get_data_dicts(self):
+        """Return the data dictionaries for this instance, including subtypes,
+        for inclusion in the output dataframe.
+
+        Returns
+        -------
+        list(dict)
+            list of data dictionaries for inclusion in the output dataframe
+        """
+        datadicts = []
+
+        if len(self.subdata) == 0:
+            datadicts.append(self.data)
+        else:
+            for subtype in self.subdata:
+                if len(self.subdata[subtype]) == 0:
+                    datadicts.append(self.data)
+                else:
+                    for subdata in self.subdata[subtype]:
+                        for subdata_dict in subdata.get_data_dicts():
+                            datadict = {}
+                            datadict.update(self.data)
+                            datadict.update(subdata_dict)
+                            datadicts.append(datadict)
+
+        return datadicts
 
 
 class AbstractDovType(AbstractTypeCommon):
@@ -742,10 +807,11 @@ class AbstractDovType(AbstractTypeCommon):
                     datadicts.append(self.data)
                 else:
                     for subdata in self.subdata[subtype]:
-                        datadict = {}
-                        datadict.update(self.data)
-                        datadict.update(subdata.data)
-                        datadicts.append(datadict)
+                        for subdata_dict in subdata.get_data_dicts():
+                            datadict = {}
+                            datadict.update(self.data)
+                            datadict.update(subdata_dict)
+                            datadicts.append(datadict)
 
         for d in datadicts:
             datarecords.append([d.get(field, np.nan) for field in fields])

@@ -295,9 +295,9 @@ Default dataframe output
         korrelvolumemassa,Grondmonster,10,float,NaN
         volumemassa,Grondmonster,10,float,NaN
         watergehalte,Grondmonster,10,float,NaN
-        diameter,Korrelverdeling,10,float,10
-        fractie,Korrelverdeling,10,float,0
-        methode,Korrelverdeling,10,string,ZEEFPROEF
+        methode,Korrelverdeling,10,string,Korrelverdeling d.m.v. hydrometer/areometer
+        diameter,Korrelverdeling,10,float,0.001575
+        fractie,Korrelverdeling,10,float,68.4
 
 CPT measurements (Sonderingen)
 ------------------------------

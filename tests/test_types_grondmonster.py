@@ -25,9 +25,9 @@ class TestGrondmonster(AbstractTestTypes):
         'grondsoort_bggg', 'humusgehalte', 'kalkgehalte',
         'uitrolgrens', 'vloeigrens', 'glauconiet_totaal',
         'korrelvolumemassa', 'volumemassa', 'watergehalte',
-        'diameter', 'fractie', 'methode']
+        'methode', 'diameter', 'fractie']
     field_names_subtypes = [
-        'diepte_methode_van', 'diepte_methode_tot', 'boormethode']
+        'methode', 'diameter', 'fractie']
     field_names_nosubtypes = [
         'pkey_grondmonster', 'naam', 'pkey_boring', 'boornummer',
         'datum', 'x', 'y', 'gemeente', 'diepte_van_m', 'diepte_tot_m',
@@ -36,7 +36,9 @@ class TestGrondmonster(AbstractTestTypes):
         'uitrolgrens', 'vloeigrens', 'glauconiet_totaal',
         'korrelvolumemassa', 'volumemassa', 'watergehalte']
 
-    valid_returnfields = ReturnFieldList.from_field_names('pkey_grondmonster', 'diepte_tot_m')
-    valid_returnfields_subtype = ReturnFieldList.from_field_names('diameter', 'fractie', 'methode')
+    valid_returnfields = ReturnFieldList.from_field_names(
+        'pkey_grondmonster', 'diepte_tot_m')
+    valid_returnfields_subtype = ReturnFieldList.from_field_names(
+        'diameter', 'fractie', 'methode')
 
     inexistent_field = 'onbestaand'

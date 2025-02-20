@@ -314,7 +314,35 @@ def mp_remote_wfs_feature(monkeypatch, request):
 
 
 @pytest.fixture
-def mp_dov_xml(monkeypatch, request):
+def dov_xml(request):
+    """Fixture providing the DOV XML data.
+
+    This fixture requires a module variable ``location_dov_xml``
+    with the path to the dov_xml file on disk.
+
+    Parameters
+    ----------
+    request : pytest.fixture
+        PyTest fixture providing request context.
+
+    """
+    if not hasattr(request.module, "location_dov_xml"):
+        return
+
+    file_path = getattr(request.module, "location_dov_xml")
+
+    if file_path is None or not os.path.isfile(file_path):
+        return None
+
+    with open(file_path, 'r', encoding="utf-8") as f:
+        data = f.read()
+        if not isinstance(data, bytes):
+            data = data.encode('utf-8')
+    return data
+
+
+@pytest.fixture
+def mp_dov_xml(monkeypatch, dov_xml):
     """Monkeypatch the call to get the remote XML data.
 
     This monkeypatch requires a module variable ``location_dov_xml``
@@ -328,14 +356,8 @@ def mp_dov_xml(monkeypatch, request):
         PyTest fixture providing request context.
 
     """
-
     def _get_xml_data(*args, **kwargs):
-        file_path = getattr(request.module, "location_dov_xml")
-        with open(file_path, 'r', encoding="utf-8") as f:
-            data = f.read()
-            if not isinstance(data, bytes):
-                data = data.encode('utf-8')
-        return data
+        return dov_xml
 
     monkeypatch.setattr(pydov.types.abstract.AbstractDovType,
                         '_get_xml_data', _get_xml_data)

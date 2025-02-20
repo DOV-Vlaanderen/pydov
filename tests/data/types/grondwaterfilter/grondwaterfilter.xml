@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns3:dov-schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns3="http://kern.schemas.dov.vlaanderen.be" xsi:schemaLocation="http://kern.schemas.dov.vlaanderen.be https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/dov.xsd">
+<ns4:dov-schema xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns4="http://kern.schemas.dov.vlaanderen.be" xsi:schemaLocation="http://kern.schemas.dov.vlaanderen.be https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/dov.xsd">
     <grondwaterlocatie>
         <identificatie>130/21/20</identificatie>
         <dataidentifier>
             <permkey>2017-000566</permkey>
-            <uri>https://www.dov.vlaanderen.be/data/put/2017-000566</uri>
+            <uri>https://www/data/put/2017-000566</uri>
         </dataidentifier>
         <grondwaterlocatieType>PUT</grondwaterlocatieType>
         <boring>B/130/21/20</boring>
@@ -42,10 +42,8 @@
             </beheerder>
         </beheer>
         <afwerking>
-            <beschermbuis>
-                <diameter>160</diameter>
-                <materiaal>staal, zonder verdere precisering</materiaal>
-            </beschermbuis>
+            <materiaal>staal, zonder verdere precisering</materiaal>
+            <diameter>160.0</diameter>
             <annulaireruimte>
                 <van>0.50</van>
                 <tot>1.70</tot>
@@ -63,7 +61,7 @@
         <identificatie>1</identificatie>
         <dataidentifier>
             <permkey>2003-004471</permkey>
-            <uri>https://www.dov.vlaanderen.be/data/filter/2003-004471</uri>
+            <uri>https://www/data/filter/2003-004471</uri>
         </dataidentifier>
         <filtertype>peilfilter</filtertype>
         <grondwaterlocatie>130/21/20</grondwaterlocatie>
@@ -75,6 +73,8 @@
             <grondwaterlichaam>CVS_0160_GWL_1</grondwaterlichaam>
             <grondwatersysteem>Centraal Vlaams Systeem</grondwatersysteem>
             <afgesloten_volgens_gwdecreet>niet-afgesloten_delen_0100</afgesloten_volgens_gwdecreet>
+            <controle/>
+            <actie_waakgebieden_22_27>geen actie/waakgebieden</actie_waakgebieden_22_27>
             <regime>freatisch</regime>
         </ligging>
         <meetfrequentie>
@@ -86,23 +86,31 @@
                 <van>0.0</van>
                 <tot>2.0</tot>
                 <filterelement>stijgbuis</filterelement>
-                <binnendiameter>58</binnendiameter>
+                <materiaal>pvc</materiaal>
+                <binnendiameter>58.0</binnendiameter>
             </onderdeel>
             <onderdeel>
                 <van>2.0</van>
                 <tot>2.5</tot>
                 <filterelement>filter</filterelement>
-                <binnendiameter>58</binnendiameter>
+                <binnendiameter>58.0</binnendiameter>
             </onderdeel>
             <onderdeel>
                 <van>2.5</van>
                 <tot>2.7</tot>
                 <filterelement>zandvang</filterelement>
-                <binnendiameter>58</binnendiameter>
+                <binnendiameter>58.0</binnendiameter>
             </onderdeel>
         </opbouw>
         <status>publiek</status>
     </filter>
+    <filterdebietmeter>
+        <grondwaterlocatie>130/21/20</grondwaterlocatie>
+        <filter>
+            <identificatie>1</identificatie>
+            <filtertype>peilfilter</filtertype>
+        </filter>
+    </filterdebietmeter>
     <filtermeting>
         <grondwaterlocatie>130/21/20</grondwaterlocatie>
         <filter>
@@ -577,6 +585,20 @@
             <bron>freatisch 2021 voorjaar</bron>
         </peilmeting>
         <peilmeting>
+            <datum>2021-10-26</datum>
+            <diepte_tov_referentiepunt>1.08</diepte_tov_referentiepunt>
+            <peil_mtaw>8.01</peil_mtaw>
+            <methode>peillint</methode>
+            <filtertoestand>1</filtertoestand>
+            <filterstatus>in rust</filterstatus>
+            <opmeter>
+                <naam>Labo</naam>
+            </opmeter>
+            <zoet>N</zoet>
+            <betrouwbaarheid>goed</betrouwbaarheid>
+            <bron>freatisch 2021 najaar</bron>
+        </peilmeting>
+        <peilmeting>
             <datum>2022-03-17</datum>
             <diepte_tov_referentiepunt>0.81</diepte_tov_referentiepunt>
             <peil_mtaw>8.28</peil_mtaw>
@@ -588,7 +610,49 @@
             </opmeter>
             <zoet>N</zoet>
             <betrouwbaarheid>goed</betrouwbaarheid>
-            <bron>PFAS_freatisch_VMM_2022_voorjaar</bron>
+            <bron>freatisch 2022 voorjaar</bron>
+        </peilmeting>
+        <peilmeting>
+            <datum>2022-10-18</datum>
+            <diepte_tov_referentiepunt>1.7</diepte_tov_referentiepunt>
+            <peil_mtaw>7.39</peil_mtaw>
+            <methode>peillint</methode>
+            <filtertoestand>1</filtertoestand>
+            <filterstatus>in rust</filterstatus>
+            <opmeter>
+                <naam>Labo</naam>
+            </opmeter>
+            <zoet>N</zoet>
+            <betrouwbaarheid>goed</betrouwbaarheid>
+            <bron>freatisch 2022 najaar</bron>
+        </peilmeting>
+        <peilmeting>
+            <datum>2023-04-03</datum>
+            <diepte_tov_referentiepunt>0.5</diepte_tov_referentiepunt>
+            <peil_mtaw>8.59</peil_mtaw>
+            <methode>peillint</methode>
+            <filtertoestand>1</filtertoestand>
+            <filterstatus>in rust</filterstatus>
+            <opmeter>
+                <naam>Labo</naam>
+            </opmeter>
+            <zoet>N</zoet>
+            <betrouwbaarheid>goed</betrouwbaarheid>
+            <bron>freatisch 2023 voorjaar</bron>
+        </peilmeting>
+        <peilmeting>
+            <datum>2023-10-16</datum>
+            <diepte_tov_referentiepunt>1.7</diepte_tov_referentiepunt>
+            <peil_mtaw>7.39</peil_mtaw>
+            <methode>peillint</methode>
+            <filtertoestand>1</filtertoestand>
+            <filterstatus>in rust</filterstatus>
+            <opmeter>
+                <naam>Labo</naam>
+            </opmeter>
+            <zoet>N</zoet>
+            <betrouwbaarheid>goed</betrouwbaarheid>
+            <bron>freatisch 2023 najaar</bron>
         </peilmeting>
     </filtermeting>
-</ns3:dov-schema>
+</ns4:dov-schema>

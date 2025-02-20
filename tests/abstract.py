@@ -1000,3 +1000,26 @@ class AbstractTestTypes(object):
         """
         with pytest.raises(ValueError):
             self.datatype_class(None)
+
+    def test_nested_subtype_from_xml_element(self, dov_xml):
+        """Test initialising the subtype(s) from the XML document.
+
+        Parameters
+        ----------
+        dov_xml : pytest.fixture returning bytes
+            Fixture providing DOV XML data.
+        """
+        def instance_from_xml(clz, xml):
+            if len(clz.subtypes) == 0:
+                return
+
+            if xml is None:
+                return
+
+            st_instance = next(
+                clz.subtypes[0].from_xml(dov_xml))
+            assert isinstance(st_instance, clz.subtypes[0])
+
+            instance_from_xml(clz.subtypes[0], dov_xml)
+
+        instance_from_xml(self.datatype_class, dov_xml)

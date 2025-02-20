@@ -1,22 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           xmlns="http://observatie.kern.schemas.dov.vlaanderen.be"
-           targetNamespace="http://observatie.kern.schemas.dov.vlaanderen.be"
-           elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.00">
-
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://observatie.kern.schemas.dov.vlaanderen.be" targetNamespace="http://observatie.kern.schemas.dov.vlaanderen.be" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.00">
     <xs:simpleType name="DetectieconditieEnumType">
         <xs:annotation>
             <xs:documentation>de mogelijke waarden voor de detectielimiet van de kwaliteitsmeting</xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
-            <!-- kleiner dan -->
-            <xs:pattern value="[&lt;]"/>
-            <!-- groter dan -->
-            <xs:pattern value="[&gt;]"/>
-            <!-- niet van toepassing -->
-            <xs:pattern value="[-]"/>
+            <xs:enumeration value="&lt;"/>
+            <xs:enumeration value="&gt;"/>
+            <xs:enumeration value="-"/>
         </xs:restriction>
-    </xs:simpleType> 
+    </xs:simpleType>
     <!--
 select '<xs:enumeration value="'||trim(beschrijving)||'"/>' from kern_monster.lut_analysemethode order by beschrijving order by lower(beschrijving)
 -->
@@ -83,7 +76,7 @@ select '<xs:enumeration value="'||trim(beschrijving)||'"/>' from kern_monster.lu
             <xs:enumeration value="Natriumdithioniet"/>
             <xs:enumeration value="Onbekend"/>
             <xs:enumeration value="Opbruisen bij contact met HCl"/>
-            <xs:enumeration value="Oxalaat extraheerbaar Al, Fe en P Schwertmann 1973"/>            
+            <xs:enumeration value="Oxalaat extraheerbaar Al, Fe en P Schwertmann 1973"/>
             <xs:enumeration value="pH H2O centrum voor Grondonderzoek De Leenheer"/>
             <xs:enumeration value="pH in CaCl2; 0,01M; 1:2,5"/>
             <xs:enumeration value="pH in KCl, 1M, 1:5 (m/V)"/>
@@ -115,24 +108,23 @@ select '<xs:enumeration value="'||trim(beschrijving)||'"/>' from kern_monster.lu
             <xs:enumeration value="Chemische reactie met waterstofchloride"/>
             <xs:enumeration value="Chemische reactie met waterstofperoxide"/>
             <xs:enumeration value="Laserdiffractie"/>
-            <xs:enumeration value="Gaspyknometer"/>           
-            <xs:enumeration value="Gewichtsverlies na drogen in droogstoof"/>            
+            <xs:enumeration value="Gaspyknometer"/>
+            <xs:enumeration value="Gewichtsverlies na drogen in droogstoof"/>
             <xs:enumeration value="Methode volgens de norm"/>
-            <xs:enumeration value="Methyleenblauwproef"/>            
-            <xs:enumeration value="Met ijking Geotechniek"/>
-            <xs:enumeration value="Optisch model Fraunhofer"/>
-            <xs:enumeration value="Optisch model MIE"/>
-            <xs:enumeration value="Referentiecilinder"/>
+            <xs:enumeration value="Methyleenblauwproef"/>
+            <xs:enumeration value="Hydrometer met ijking Geotechniek"/>
+            <xs:enumeration value="Hydrometer met referentiecilinder"/>
+            <xs:enumeration value="Laserdiffractie (Optisch model Fraunhofer)"/>
+            <xs:enumeration value="Laserdiffractie (Optisch model MIE)"/>
             <xs:enumeration value="Volumieke massa door weging"/>
             <xs:enumeration value="Zeving op massa met grootte &lt;= 2mm (fijnkorrelige zeving)"/>
-            <xs:enumeration value="Zeving op massa met grootte &gt; 2 mm (grofkorrelige zeving)"/>       
+            <xs:enumeration value="Zeving op massa met grootte &gt; 2 mm (grofkorrelige zeving)"/>
             <xs:enumeration value="Cmon staalnameprotocol"/>
             <xs:enumeration value="Cmon analyseprotocol"/>
-
             <!-- XDOVCL-1744 -->
-            <xs:enumeration value="XYZ_GPS - RTK FLEPOS" />	
+            <xs:enumeration value="XYZ_GPS - RTK FLEPOS"/>
             <xs:enumeration value="Berekend - Organische C is gelijk aan Totale C min Anorganische C"/>
-            <xs:enumeration value="Berekend - Organische C voorraad op basis van Organische C en Bulkdensiteit"/>	
+            <xs:enumeration value="Berekend - Organische C voorraad op basis van Organische C en Bulkdensiteit"/>
             <xs:enumeration value="Visuele waarneming (Cmon staalnameprotocol)"/>
             <xs:enumeration value="Drogen 105°C (Cmon analyseprotocol)"/>
             <xs:enumeration value="Total N by CN analyser (Cmon analyseprotocol)"/>
@@ -140,7 +132,6 @@ select '<xs:enumeration value="'||trim(beschrijving)||'"/>' from kern_monster.lu
             <xs:enumeration value="Inorganic C by CN analyser (Cmon analyseprotocol)"/>
             <xs:enumeration value="pH in KCl 1:5 (V/V) (Cmon analyseprotocol)"/>
             <xs:enumeration value="pH in KCl 1:10 (V/V) (Cmon analyseprotocol)"/>
-                                   
             <!--XDOVCL-1867 -->
             <xs:enumeration value="Massaprocent materiaal &gt; 1 cm (Cmon analyseprotocol)"/>
             <xs:enumeration value="Bulkdensiteit bepaald op basis van Kopeckyringen en massa materiaal &gt; 1 cm (Cmon analyseprotocol)"/>
@@ -150,18 +141,56 @@ select '<xs:enumeration value="'||trim(beschrijving)||'"/>' from kern_monster.lu
             <xs:enumeration value="Inorganic C niet gemeten omdat pH KCl &lt; 6,5 (Cmon analyseprotocol)"/>
             <xs:enumeration value="NIRS met FOSS XDS toestel (Cmon analyseprotocol)"/>
             <xs:enumeration value="Zeefrest 2 mm (Cmon analyseprotocol)"/>
-            
             <!-- XDOVCL-1958 -->
             <xs:enumeration value="Cmon staalnameprotocol obstakel geroerd monster"/>
             <xs:enumeration value="Cmon staalnameprotocol obstakel ongeroerd monster"/>
-            
             <!-- XDOVCL-1961 -->
             <xs:enumeration value="TOC by CN analyser na verwijderen anorganische C"/>
             <xs:enumeration value="Textuurfracties volumeprocent afgeleid op basis van NIRS"/>
             <xs:enumeration value="NIRS met ASD Fieldspec 3 FR spectroradiometer toestel"/>
-
             <!-- ooit eens ...-->
             <xs:enumeration value="Laserdiffractie bodem (Cmon analyseprotocol)"/>
+            <!-- XDOVCL-2073 -->
+            <xs:enumeration value="Bepaling plasticiteitsindex, vloeigrens d.m.v. de valconus"/>
+            <xs:enumeration value="Bepaling plasticiteitsindex, vloeigrens d.m.v. het apparaat van Casagrande"/>
+            <xs:enumeration value="Bepaling van de uitrolgrens"/>
+            <xs:enumeration value="Bezinkingsproef"/>
+            <xs:enumeration value="Classificatie volgens de norm"/>
+            <xs:enumeration value="Constant verval in doorlatendheidscel"/>
+            <xs:enumeration value="Constant verval in triaxiaalcel"/>
+            <xs:enumeration value="d.m.v. trechter"/>
+            <xs:enumeration value="Hydrometer"/>
+            <xs:enumeration value="Pipette"/>
+            <xs:enumeration value="Sedigraaf"/>
+            <xs:enumeration value="Veranderlijk verval in permeameter"/>
+            <xs:enumeration value="Zeving"/>
+            <xs:enumeration value="Lithologische beschrijving"/>
+            <!--XDOVCL-2377 -->
+            <xs:enumeration value="Magnetische scheiding"/>
+            <!-- XDOVCL-2079 -->
+            <xs:enumeration value="Berekend - Totale N voorraad op basis van Totale N en Bulkdensiteit"/>
+            <xs:enumeration value="Berekend - Gemiddelde van Bulkdensiteit bepaald op basis van Kopeckyringen en massa materiaal &gt; 1 cm (Cmon analyseprotocol)"/>
+            <xs:enumeration value="Berekend - Gemiddelde van Bulkdensiteit bepaald op basis van Kopeckyringen en massa stenen &gt; 1 cm (Cmon analyseprotocol)"/>
+            <xs:enumeration value="Berekend - Gemiddelde van Bulkdensiteit bepaald op basis van Kopeckyringen (Cmon analyseprotocol)"/>
+            <xs:enumeration value="Berekend - fractie 0-6 µm op basis van Laserdiffractie bodem (Cmon analyseprotocol)"/>
+            <xs:enumeration value="Berekend - fractie 6-63 µm op basis van Laserdiffractie bodem (Cmon analyseprotocol)"/>
+            <xs:enumeration value="Berekend - fractie 63-2000 µm op basis van Laserdiffractie bodem (Cmon analyseprotocol)"/>
+            <xs:enumeration value="Berekend - Organische C voorraad op basis van Organische C en Massa"/>
+            <xs:enumeration value="Berekend - Totale N voorraad op basis van Totale N en Massa"/>
+            <!-- XDOVCL-2574 -->
+            <xs:enumeration value="CVGP_Uitlogingsproef_PFAS_2023_09_01_ultrapuur"/>
+            <xs:enumeration value="CVGP_Uitlogingsproef_PFAS_2024_02_21_CaCl2"/>
+            <!-- XDOVCL-2592  / XDOVCL-2593 / XDOVCL-2594-->
+            <xs:enumeration value="CMA_2_II_A.20 - pH in bodem en waterbodem"/>
+            <xs:enumeration value="CMA_2_II_A.6 - kleigehalte (pipetmethode van Robinson-Köhn)"/>
+            <xs:enumeration value="CMA_2_II_A.7 - Totaal organisch koolstofgehalte (TOC)"/>
+            <!-- XDOVCL-2634-->
+            <xs:enumeration value="CMA_2_II_A.7 - Berekend o.b.v. totaal organisch koolstofgehalte (TOC)"/>
+            <xs:enumeration value="CMA_2_I_A.1 - Zuurtegraad"/>
+            <xs:enumeration value="CMA_2_I_A.2 - Electrische geleidbaarheid"/>
+            
+            
+            
             
         </xs:restriction>
     </xs:simpleType>
@@ -249,6 +278,11 @@ order by beschrijving
             <xs:enumeration value="g MB/100g droog monster">
                 <xs:annotation>
                     <xs:documentation>g MB/100g droog monster</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="g MB/1000g droog monster">
+                <xs:annotation>
+                    <xs:documentation>g MB/1000g droog monster</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="°C">
@@ -491,7 +525,11 @@ order by beschrijving
                     <xs:documentation>nm</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
-            
+            <xs:enumeration value="mm">
+                <xs:annotation>
+                    <xs:documentation>mm</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
         </xs:restriction>
     </xs:simpleType>
     <!--
@@ -541,7 +579,7 @@ order by 1
             </xs:enumeration>
             <xs:enumeration value="123TCB">
                 <xs:annotation>
-                    <xs:documentation>parameter 1,2,3-Trichloorbenzeen </xs:documentation>
+                    <xs:documentation>parameter 1,2,3-Trichloorbenzeen</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="123TCPA">
@@ -556,7 +594,7 @@ order by 1
             </xs:enumeration>
             <xs:enumeration value="124TCB">
                 <xs:annotation>
-                    <xs:documentation>parameter 1,2,4-Trichloorbenzeen </xs:documentation>
+                    <xs:documentation>parameter 1,2,4-Trichloorbenzeen</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="124TMB">
@@ -586,7 +624,7 @@ order by 1
             </xs:enumeration>
             <xs:enumeration value="135TCB">
                 <xs:annotation>
-                    <xs:documentation>parameter 1,3,5-Trichloorbenzeen </xs:documentation>
+                    <xs:documentation>parameter 1,3,5-Trichloorbenzeen</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="135TMB">
@@ -741,11 +779,6 @@ order by 1
                     <xs:documentation>parameter Aluminium</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="Al">
-                <xs:annotation>
-                    <xs:documentation>parameter Aluminium</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
             <xs:enumeration value="Ala">
                 <xs:annotation>
                     <xs:documentation>parameter Alachloor</xs:documentation>
@@ -814,11 +847,6 @@ order by 1
             <xs:enumeration value="Areometer">
                 <xs:annotation>
                     <xs:documentation>parameter Areometerproef</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="As">
-                <xs:annotation>
-                    <xs:documentation>parameter Arseen</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="As">
@@ -1202,11 +1230,6 @@ order by 1
                     <xs:documentation>parameter Cadmium</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="Cd">
-                <xs:annotation>
-                    <xs:documentation>parameter Cadmium</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
             <xs:enumeration value="cec_totaal">
                 <xs:annotation>
                     <xs:documentation>parameter CEC totaal</xs:documentation>
@@ -1503,19 +1526,9 @@ order by 1
                     <xs:documentation>parameter Chroom</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="Cr">
-                <xs:annotation>
-                    <xs:documentation>parameter Chroom</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
             <xs:enumeration value="CRS">
                 <xs:annotation>
                     <xs:documentation>parameter Constant rate of strain (CRS)</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="Cu">
-                <xs:annotation>
-                    <xs:documentation>parameter Koper</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="Cu">
@@ -1751,7 +1764,8 @@ order by 1
             </xs:enumeration>
             <xs:enumeration value="Doorlatendheid VVH">
                 <xs:annotation>
-                    <xs:documentation>parameter Doorlatendheidsproef- veranderlijk verval - horizontaal</xs:documentation>
+                    <xs:documentation>parameter Doorlatendheidsproef- veranderlijk verval - horizontaal
+                    </xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="Doorlatendheid VVV">
@@ -1898,11 +1912,6 @@ order by 1
             <xs:enumeration value="Fe">
                 <xs:annotation>
                     <xs:documentation>parameter IJzer</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="Fe">
-                <xs:annotation>
-                    <xs:documentation>parameter Ijzer</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="Fe2+">
@@ -2078,8 +2087,8 @@ order by 1
                     <xs:documentation>CASRN: 98886-44-3</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
-
-            <xs:enumeration value="Fractie > 500 µm"><xs:annotation>
+            <xs:enumeration value="Fractie > 500 µm">
+                <xs:annotation>
                     <xs:documentation>parameter Fractie &gt; 500 µm</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
@@ -2093,7 +2102,6 @@ order by 1
                     <xs:documentation>parameter Fractie &lt; 63µm</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
-
             <xs:enumeration value="G 25°C">
                 <xs:annotation>
                     <xs:documentation>parameter geleidingsvermogen 25°C</xs:documentation>
@@ -2365,11 +2373,6 @@ order by 1
                     <xs:documentation>parameter Kwik</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="Hg">
-                <xs:annotation>
-                    <xs:documentation>parameter Kwik</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
             <xs:enumeration value="H (HCO3)">
                 <xs:annotation>
                     <xs:documentation>parameter Bicarbonaathardheid</xs:documentation>
@@ -2488,11 +2491,6 @@ order by 1
                 <xs:annotation>
                     <xs:documentation>parameter Isoxaben</xs:documentation>
                     <xs:documentation>CASRN: 82558-50-7</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="K">
-                <xs:annotation>
-                    <xs:documentation>parameter Kalium</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="K">
@@ -2962,11 +2960,6 @@ order by 1
                     <xs:documentation>parameter Nikkel</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="Ni">
-                <xs:annotation>
-                    <xs:documentation>parameter Nikkel</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
             <xs:enumeration value="Nicosulfuron">
                 <xs:annotation>
                     <xs:documentation>parameter Nicosulfuron</xs:documentation>
@@ -3065,9 +3058,9 @@ order by 1
                     <xs:documentation>parameter Organische C - voorraad</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="organische_stof">
+            <xs:enumeration value="organisch_materiaal">
                 <xs:annotation>
-                    <xs:documentation>parameter Organische stof - percentage</xs:documentation>
+                    <xs:documentation>parameter Organische materiaal - percentage</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="o_X">
@@ -3125,11 +3118,6 @@ order by 1
             <xs:enumeration value="Path.Staph.">
                 <xs:annotation>
                     <xs:documentation>parameter Pathogene staphylococcen</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="Pb">
-                <xs:annotation>
-                    <xs:documentation>parameter Lood</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="Pb">
@@ -3502,22 +3490,20 @@ order by 1
             </xs:enumeration>
             <xs:enumeration value="Schuifweerstand CU">
                 <xs:annotation>
-                    <xs:documentation>parameter Schuifweerstandskarakteristieken Consolidated Undrained</xs:documentation>
+                    <xs:documentation>parameter Schuifweerstandskarakteristieken Consolidated Undrained
+                    </xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="Schuifweerstand UU">
                 <xs:annotation>
-                    <xs:documentation>parameter Schuifweerstandskarakteristieken Unconsolidated Undrained</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="Schuifweerstand UU">
-                <xs:annotation>
-                    <xs:documentation>parameter Schuifweerstandskarakteristieken Unconsolidated Undrained</xs:documentation>
+                    <xs:documentation>parameter Schuifweerstandskarakteristieken Unconsolidated Undrained
+                    </xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="Vrije prismaproef">
                 <xs:annotation>
-                    <xs:documentation>parameter Schuifweerstandskarakteristieken - UC (Vrije prismaproef)</xs:documentation>
+                    <xs:documentation>parameter Schuifweerstandskarakteristieken - UC (Vrije prismaproef)
+                    </xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="Se">
@@ -3837,7 +3823,8 @@ order by 1
             </xs:enumeration>
             <xs:enumeration value="textuur_granulometrisch_bodemkartering_met_Zg">
                 <xs:annotation>
-                    <xs:documentation>parameter Textuur - granulometrisch - klassen bodemkartering met Zg</xs:documentation>
+                    <xs:documentation>parameter Textuur - granulometrisch - klassen bodemkartering met Zg
+                    </xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="textuur_granulometrisch_gedetailleerd">
@@ -3862,7 +3849,7 @@ order by 1
             </xs:enumeration>
             <xs:enumeration value="textuur_palpatie_fout_groter_dan_5_procent">
                 <xs:annotation>
-                    <xs:documentation>parameter Textuur - handmatig - fout groter dan 5% </xs:documentation>
+                    <xs:documentation>parameter Textuur - handmatig - fout groter dan 5%</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="textuur_palpatie_gedetailleerd">
@@ -4038,11 +4025,6 @@ order by 1
                     <xs:documentation>parameter Vegetatie</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="vegetatie">
-                <xs:annotation>
-                    <xs:documentation>parameter vegetatie</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
             <xs:enumeration value="Verassingresten/600">
                 <xs:annotation>
                     <xs:documentation>parameter Verassingresten/600°C</xs:documentation>
@@ -4155,12 +4137,14 @@ order by 1
             </xs:enumeration>
             <xs:enumeration value="watertafel_ghg">
                 <xs:annotation>
-                    <xs:documentation>parameter Diepte gemiddeld hoogste (grond)watertafel t.o.v. maaiveld - ghg</xs:documentation>
+                    <xs:documentation>parameter Diepte gemiddeld hoogste (grond)watertafel t.o.v. maaiveld - ghg
+                    </xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="watertafel_glg">
                 <xs:annotation>
-                    <xs:documentation>parameter Diepte gemiddeld laagste (grond)watertafel t.o.v. maaiveld - glg</xs:documentation>
+                    <xs:documentation>parameter Diepte gemiddeld laagste (grond)watertafel t.o.v. maaiveld - glg
+                    </xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="weersomstandigheden">
@@ -4191,11 +4175,6 @@ order by 1
             <xs:enumeration value="Zeving">
                 <xs:annotation>
                     <xs:documentation>parameter zeefproef</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="Zn">
-                <xs:annotation>
-                    <xs:documentation>parameter Zink</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="Zn">
@@ -4283,7 +4262,7 @@ order by 1
             </xs:enumeration>
             <xs:enumeration value="EtPFOSAA">
                 <xs:annotation>
-                    <xs:documentation>parameter N-ethylperfluoroctaansulfonamidoazijnzuur  (EtPFOSAA)</xs:documentation>
+                    <xs:documentation>parameter N-ethylperfluoroctaansulfonamidoazijnzuur (EtPFOSAA)</xs:documentation>
                     <xs:documentation>CASRN: 2991-50-6</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
@@ -4295,7 +4274,7 @@ order by 1
             </xs:enumeration>
             <xs:enumeration value="MePFOSAA">
                 <xs:annotation>
-                    <xs:documentation>parameter N-methylperfluoroctaansulfonamidoazijnzuur  (MePFOSAA)</xs:documentation>
+                    <xs:documentation>parameter N-methylperfluoroctaansulfonamidoazijnzuur (MePFOSAA)</xs:documentation>
                     <xs:documentation>CASRN: 2355-31-9</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
@@ -4417,11 +4396,6 @@ order by 1
                 </xs:annotation>
             </xs:enumeration>
             <!-- XDOVCL-1627 -->
-            <xs:enumeration value="bodemtoestand">
-                <xs:annotation>
-                    <xs:documentation>parameter Bodemtoestand</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
             <xs:enumeration value="landgebruikscategorie_cmon">
                 <xs:annotation>
                     <xs:documentation>parameter Landgebruikscategorie Cmon</xs:documentation>
@@ -4449,7 +4423,8 @@ order by 1
             </xs:enumeration>
             <xs:enumeration value="bewaard_bodemmonster_type_bewaring_vooraf">
                 <xs:annotation>
-                    <xs:documentation>parameter Bewaard bodemmonster type bewaring vooraf monstervoorbereiding</xs:documentation>
+                    <xs:documentation>parameter Bewaard bodemmonster type bewaring vooraf monstervoorbereiding
+                    </xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="bewaard_bodemmonster_voorbereiding_type_droging">
@@ -4499,7 +4474,8 @@ order by 1
             </xs:enumeration>
             <xs:enumeration value="antropogeen_perc_steken">
                 <xs:annotation>
-                    <xs:documentation>parameter Percentage steken met aanwezigheid antropogeen materiaal</xs:documentation>
+                    <xs:documentation>parameter Percentage steken met aanwezigheid antropogeen materiaal
+                    </xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="antropogeen_specificatie">
@@ -4559,7 +4535,8 @@ order by 1
             </xs:enumeration>
             <xs:enumeration value="bodembemonstering_cmon_steken_ander_landgebruik">
                 <xs:annotation>
-                    <xs:documentation>parameter Bodembemonstering Cmon steken niet uitgevoerd ander landgebruik</xs:documentation>
+                    <xs:documentation>parameter Bodembemonstering Cmon steken niet uitgevoerd ander landgebruik
+                    </xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="relief_helling_aanwezigheid">
@@ -4636,22 +4613,22 @@ order by 1
                 <xs:annotation>
                     <xs:documentation>parameter Strooisellaag of viltlaag - massa</xs:documentation>
                 </xs:annotation>
-            </xs:enumeration>            
+            </xs:enumeration>
             <xs:enumeration value="watertafel_aanwezig_perc_steken">
                 <xs:annotation>
                     <xs:documentation>parameter Percentage steken met aanwezigheid watertafel</xs:documentation>
                 </xs:annotation>
-            </xs:enumeration>            
+            </xs:enumeration>
             <xs:enumeration value="textuurmeting_laser_volumeprocent">
                 <xs:annotation>
                     <xs:documentation>parameter Textuurfracties laser volumeprocent</xs:documentation>
                 </xs:annotation>
-            </xs:enumeration>            
+            </xs:enumeration>
             <xs:enumeration value="bodemmonster_type_matrix">
                 <xs:annotation>
                     <xs:documentation>parameter Bodemmonster type matrix</xs:documentation>
                 </xs:annotation>
-            </xs:enumeration>            
+            </xs:enumeration>
             <xs:enumeration value="Gehalte wateroplosbare Chloriden">
                 <xs:annotation>
                     <xs:documentation>parameter Gehalte wateroplosbare Chloriden</xs:documentation>
@@ -4687,12 +4664,13 @@ order by 1
                     <xs:documentation>parameter BGGG zonder detail grind</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="Glauconietgehalte in fractie &lt; 63µm">
+            <xs:enumeration value="Glauconietgehalte in fractie &lt; 63 µm">
                 <xs:annotation>
-                    <xs:documentation>parameter Glauconietgehalte in fractie kleiner dan 63µm</xs:documentation>
+                    <xs:documentation>parameter Glauconietgehalte in fractie kleiner dan 63 µm</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="Glauconietgehalte in fractie > 63 µm"><xs:annotation>
+            <xs:enumeration value="Glauconietgehalte in fractie > 63 µm">
+                <xs:annotation>
                     <xs:documentation>parameter Glauconietgehalte fractie groter dan 63 µm</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
@@ -4701,7 +4679,8 @@ order by 1
                     <xs:documentation>parameter Glauconietgehalte in fractie 63µm - 500µm</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="Glauconietgehalte in fractie > 500 µm"><xs:annotation>
+            <xs:enumeration value="Glauconietgehalte in fractie > 500 µm">
+                <xs:annotation>
                     <xs:documentation>parameter Glauconietgehalte in fractie groter dan 500µm</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
@@ -4735,14 +4714,13 @@ order by 1
                     <xs:documentation>parameter Organische koolstof</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
-
             <!-- XDOVCL-1695 -->
             <xs:enumeration value="textuur_fractie_groter_dan_2000_volumeprocent">
                 <xs:annotation>
-                    <xs:documentation>parameter Textuur - grove fractie (groter dan 2000 µm) volumeprocent</xs:documentation>
+                    <xs:documentation>parameter Textuur - grove fractie (groter dan 2000 µm) volumeprocent
+                    </xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
-
             <!--XDOVCL-1714 -->
             <xs:enumeration value="Carba">
                 <xs:annotation>
@@ -4799,7 +4777,6 @@ order by 1
                     <xs:documentation>parameter Sulfadiazine</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
-
             <!--XDOVCL-1713 -->
             <xs:enumeration value="6:2 PAP">
                 <xs:annotation>
@@ -4813,9 +4790,10 @@ order by 1
                     <xs:documentation>CASRN: 57678-03-2</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="ADONA">
+            <!-- XDOVCL-2054 : ADONA renamed to DONA -->
+            <xs:enumeration value="DONA">
                 <xs:annotation>
-                    <xs:documentation>parameter ammonium-4,8-dioxa-3H-perfluornonanoaat (ADONA)</xs:documentation>
+                    <xs:documentation>parameter 4,8-dioxa-3H-perfluornonaanzuur(DONA)</xs:documentation>
                     <xs:documentation>CASRN: 919005-14-4</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
@@ -4881,13 +4859,15 @@ order by 1
             </xs:enumeration>
             <xs:enumeration value="11Cl-PF3ONS">
                 <xs:annotation>
-                    <xs:documentation>parameter 11-chlooreicosafluor-3-oxanonaansulfonzuur (11Cl-PF3ONS)</xs:documentation>
+                    <xs:documentation>parameter 11-chlooreicosafluor-3-oxanonaansulfonzuur (11Cl-PF3ONS)
+                    </xs:documentation>
                     <xs:documentation>CASRN: 883329-89-9</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="8:2 FTUCA">
                 <xs:annotation>
-                    <xs:documentation>parameter 8:2 fluortelomeer onverzadigd carboxylzuur (8:2 FTUCA)</xs:documentation>
+                    <xs:documentation>parameter 8:2 fluortelomeer onverzadigd carboxylzuur (8:2 FTUCA)
+                    </xs:documentation>
                     <xs:documentation>CASRN: 70887-84-2</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
@@ -4905,13 +4885,16 @@ order by 1
             </xs:enumeration>
             <xs:enumeration value="MePFBSAA">
                 <xs:annotation>
-                    <xs:documentation>parameter N-methylperfluorbutaansulfonylamide azijnzuur (MePFBSAA)</xs:documentation>
+                    <xs:documentation>parameter N-methylperfluorbutaansulfonylamide azijnzuur (MePFBSAA)
+                    </xs:documentation>
                     <xs:documentation>CASRN: 159381-10-9</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="Capstone A (DPOSA)">
                 <xs:annotation>
-                    <xs:documentation>parameter N-[3-(dimethyloxidoamino)propyl]-tridecafluoroctaansulfonamide (Capstone A (DPOSA))</xs:documentation>
+                    <xs:documentation>parameter N-[3-(dimethyloxidoamino)propyl]-tridecafluoroctaansulfonamide (Capstone
+                        A (DPOSA))
+                    </xs:documentation>
                     <xs:documentation>CASRN: 80475-32-7</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
@@ -4942,7 +4925,7 @@ order by 1
             <xs:enumeration value="PFOSbranched">
                 <xs:annotation>
                     <xs:documentation>parameter perfluor-n-octaansulfonzuur vertakt (PFOSbranched)</xs:documentation>
-                    <xs:documentation>CASRN:  -</xs:documentation>
+                    <xs:documentation>CASRN: -</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="H4PFOS">
@@ -4953,14 +4936,15 @@ order by 1
             </xs:enumeration>
             <xs:enumeration value="PFOStotal">
                 <xs:annotation>
-                    <xs:documentation>parameter totaal perfluor-n-octaansulfonzuur (lineair + vertakt) (PFOStotal)</xs:documentation>
-                    <xs:documentation>CASRN:  -</xs:documentation>
+                    <xs:documentation>parameter totaal perfluor-n-octaansulfonzuur (lineair + vertakt) (PFOStotal)
+                    </xs:documentation>
+                    <xs:documentation>CASRN: -</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="PFOAbranched">
                 <xs:annotation>
                     <xs:documentation>parameter perfluor-n-octaanzuur vertakt (PFOAbranched)</xs:documentation>
-                    <xs:documentation>CASRN:  -</xs:documentation>
+                    <xs:documentation>CASRN: -</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="PFO3OA">
@@ -4977,8 +4961,9 @@ order by 1
             </xs:enumeration>
             <xs:enumeration value="PFOSAtotal">
                 <xs:annotation>
-                    <xs:documentation>parameter totaal perfluoroctaansulfonamide (lineair + vertakt) (PFOSAtotal)</xs:documentation>
-                    <xs:documentation>CASRN:  -</xs:documentation>
+                    <xs:documentation>parameter totaal perfluoroctaansulfonamide (lineair + vertakt) (PFOSAtotal)
+                    </xs:documentation>
+                    <xs:documentation>CASRN: -</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="HPFHpA">
@@ -4989,7 +4974,10 @@ order by 1
             </xs:enumeration>
             <xs:enumeration value="Capstone B (CDPOS)">
                 <xs:annotation>
-                    <xs:documentation>parameter N-(carboxymethyl)-N,N-dimethyl-3-((((perfluorhexyl)ethyl)sulfonyl)amino)-, hydroxide (Capstone B (CDPOS))</xs:documentation>
+                    <xs:documentation>parameter
+                        N-(carboxymethyl)-N,N-dimethyl-3-((((perfluorhexyl)ethyl)sulfonyl)amino)-, hydroxide (Capstone B
+                        (CDPOS))
+                    </xs:documentation>
                     <xs:documentation>CASRN: 34455-29-3</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
@@ -5002,7 +4990,7 @@ order by 1
             <xs:enumeration value="PFOSAbranched">
                 <xs:annotation>
                     <xs:documentation>parameter perfluoroctaansulfonamide vertakt (PFOSAbranched)</xs:documentation>
-                    <xs:documentation>CASRN:  -</xs:documentation>
+                    <xs:documentation>CASRN: -</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="PFBSA">
@@ -5013,20 +5001,22 @@ order by 1
             </xs:enumeration>
             <xs:enumeration value="PFO2HxA">
                 <xs:annotation>
-                    <xs:documentation>parameter perfluor-3,5-dioxahexaanzuur  (PFO2HxA)</xs:documentation>
+                    <xs:documentation>parameter perfluor-3,5-dioxahexaanzuur (PFO2HxA)</xs:documentation>
                     <xs:documentation>CASRN: 39492-88-1</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="9Cl-PF3ONS">
                 <xs:annotation>
-                    <xs:documentation>parameter 9-Chloorhexadecafluor-3-oxanonaansulfonzuur (9Cl-PF3ONS)</xs:documentation>
+                    <xs:documentation>parameter 9-Chloorhexadecafluor-3-oxanonaansulfonzuur (9Cl-PF3ONS)
+                    </xs:documentation>
                     <xs:documentation>CASRN: 73606-19-6</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="PFOAtotal">
                 <xs:annotation>
-                    <xs:documentation>parameter totaal perfluor-n-octaanzuur (lineair + vertakt) (PFOAtotal)</xs:documentation>
-                    <xs:documentation>CASRN:  -</xs:documentation>
+                    <xs:documentation>parameter totaal perfluor-n-octaanzuur (lineair + vertakt) (PFOAtotal)
+                    </xs:documentation>
+                    <xs:documentation>CASRN: -</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="MePFBSA">
@@ -5035,14 +5025,14 @@ order by 1
                     <xs:documentation>CASRN: 68298-12-4</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="11Cl-PF3OunDS">
+            <xs:enumeration value="11Cl-PF3OUnDS">
                 <xs:annotation>
-                    <xs:documentation>parameter 11-chlooreicosafluoro-3-oxaundecaansulfonzuur (11Cl-PF3OunDS)</xs:documentation>
+                    <xs:documentation>parameter 11-chlooreicosafluoro-3-oxaundecaansulfonzuur (11Cl-PF3OUnDS)
+                    </xs:documentation>
                     <xs:documentation>CASRN: 763051-92-9</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
-
-            <!-- XDOVCL-1744 --> 
+            <!-- XDOVCL-1744 -->
             <xs:enumeration value="enkelvoudig_monster_locatie">
                 <xs:annotation>
                     <xs:documentation>parameter Enkelvoudig monster locatie</xs:documentation>
@@ -5050,7 +5040,8 @@ order by 1
             </xs:enumeration>
             <xs:enumeration value="bulkdensiteit_2mm_vs_totale_volume_gemeten">
                 <xs:annotation>
-                    <xs:documentation>parameter Bulkdensiteit bodem  &lt; 2 mm vs totale volume - gemeten</xs:documentation>
+                    <xs:documentation>parameter Bulkdensiteit bodem &lt; 2 mm vs totale volume - gemeten
+                    </xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="materiaal_groter_dan_1cm_massaprocent">
@@ -5063,13 +5054,7 @@ order by 1
                     <xs:documentation>parameter Stenen groter dan 1000 µm volumeprocent</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
-            
-            <!-- XDOVCL-1836 --> 
-            <xs:enumeration value="textuurmeting_laser_volumeprocent">
-                <xs:annotation>
-                    <xs:documentation>Textuurfracties laser volumeprocent</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
+            <!-- XDOVCL-1836 -->
             <xs:enumeration value="bewaard_bodemmonster_voorbereiding_type_breken">
                 <xs:annotation>
                     <xs:documentation>Bewaard bodemmonster voorbereiding type breken</xs:documentation>
@@ -5085,7 +5070,6 @@ order by 1
                     <xs:documentation>Bewaard bodemmonster voorbereiding type malen</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
-
             <!-- XDOVCL-1867 -->
             <xs:enumeration value="golflengte">
                 <xs:annotation>
@@ -5102,7 +5086,6 @@ order by 1
                     <xs:documentation>parameter NIRS</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
-            
             <!-- XDOVCL-1946 -->
             <xs:enumeration value="strooisellaag_viltlaag_totale_c_perc">
                 <xs:annotation>
@@ -5114,14 +5097,580 @@ order by 1
                     <xs:documentation>parameter Strooisellaag of viltlaag - totale N - percentage</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
-            
             <!-- XDOVCL-1958 -->
             <xs:enumeration value="bodemmonster_zeefrest_2mm">
                 <xs:annotation>
                     <xs:documentation>parameter Bodemmonster zeefrest groter dan 2 mm</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
+            <!-- XDOVCL-2061 -->
+            <xs:enumeration value="meta12">
+                <xs:annotation>
+                    <xs:documentation>parameter Metazachloor 479M12</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <!-- XDOVCL-2072 -->
+            <xs:enumeration value="Consistentiegrenzen - Plasticiteitsindex">
+                <xs:annotation>
+                    <xs:documentation>parameter Consistentiegrenzen - Plasticiteitsindex</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Korrelverdeling d.m.v. bezinkingsproef">
+                <xs:annotation>
+                    <xs:documentation>parameter Korrelverdeling d.m.v. bezinkingsproef</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Korrelverdeling d.m.v. pipette methode">
+                <xs:annotation>
+                    <xs:documentation>parameter Korrelverdeling d.m.v. pipette methode</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Korrelverdeling d.m.v. sedigraaf">
+                <xs:annotation>
+                    <xs:documentation>parameter Korrelverdeling d.m.v. sedigraaf</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <!-- XDOVCL-2079 -->
+            <xs:enumeration value="totale_n_voorraad">
+                <xs:annotation>
+                    <xs:documentation>parameter Totale N - voorraad</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="strooisellaag_viltlaag_organische_c_voorraad">
+                <xs:annotation>
+                    <xs:documentation>parameter Strooisellaag of viltlaag - organische C - voorraad</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="strooisellaag_viltlaag_totale_n_voorraad">
+                <xs:annotation>
+                    <xs:documentation>parameter Strooisellaag of viltlaag - totale N - voorraad</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="bulkdensiteit_2mm_vs_totale_volume_gemeten_average">
+                <xs:annotation>
+                    <xs:documentation>parameter Bulkdensiteit bodem &lt; 2 mm vs totale volume - gemeten gemiddelde
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="bulkdensiteit_totaal_gemeten_average">
+                <xs:annotation>
+                    <xs:documentation>parameter Bulkdensiteit bodem totaal - gemeten gemiddelde</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="textuur_fractie_klei">
+                <xs:annotation>
+                    <xs:documentation>parameter Textuur - fractie klei</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="textuur_fractie_leem">
+                <xs:annotation>
+                    <xs:documentation>parameter Textuur - fractie leem</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="textuur_fractie_zand">
+                <xs:annotation>
+                    <xs:documentation>parameter Textuur - fractie zand</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <!--XDOVCL-2090 -->
+            <xs:enumeration value="PFAS (EFSA-4)">
+                <xs:annotation>
+                    <xs:documentation>parameter PFAS (EFSA-4)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFAS (EU DWRL-20)">
+                <xs:annotation>
+                    <xs:documentation>parameter PFAS (EU DWRL-20)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="EtPFOSAtotal">
+                <xs:annotation>
+                    <xs:documentation>parameter totaal N-ethylperfluoroctaansulfonamide (lineair + vertakt)
+                        (EtPFOSAtotal)
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="EtPFOSAbranched">
+                <xs:annotation>
+                    <xs:documentation>parameter totaal N-ethylperfluoroctaansulfonamide (vertakt) (EtPFOSAbranchedl)
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MePFOSAtotal">
+                <xs:annotation>
+                    <xs:documentation>parameter totaal N-methylperfluoroctaansulfonamide (lineair + vertakt)
+                        (MePFOSAtotal)
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MePFOSAbranched">
+                <xs:annotation>
+                    <xs:documentation>parameter totaal N-methylperfluoroctaansulfonamide (vertakt) (MePFOSAbranched)
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFHxStotal">
+                <xs:annotation>
+                    <xs:documentation>parameter totaal perfluorhexaansulfonzuur (lineair + vertakt) (PFHxStotal)
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFHxSbranched">
+                <xs:annotation>
+                    <xs:documentation>parameter totaal perfluorhexaansulfonzuur (vertakt) (PFHxSbranchedl)
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Bepaling kleihoudendheid in fractie 0-0.125 mm">
+                <xs:annotation>
+                    <xs:documentation>parameter Bepaling kleihoudendheid in fractie 0-0.125 mm (MBf)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Bepaling kleihoudendheid in fractie 0-2 mm">
+                <xs:annotation>
+                    <xs:documentation>parameter Bepaling kleihoudendheid in fractie 0-2 mm (MB)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Grondsoort RIG">
+                <xs:annotation>
+                    <xs:documentation>parameter Grondsoort volgens RIG norm</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            
+            <!--XDOVCL-2574-->
+            <xs:enumeration value="10:2 FTS (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter 10:2 fluortelomeersulfonzuur (10:2 FTS) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="11Cl-PF3ONS (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter 11-chlooreicosafluor-3-oxanonaansulfonzuur (11Cl-PF3ONS) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="11Cl-PF3OUnDS (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter 11-chlooreicosafluoro-3-oxaundecaansulfonzuur (11Cl-PF3OUnDS) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="H4PFOS (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter 1H,1H,2H,2H-perfluorooctaansulfonzuur (H4PFOS) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4H-PFUnDA (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter 2H,2H,3H,3H-perfluorundecaanzuur (4H-PFUnDA) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4:2 FTS (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter 4:2 fluortelomeersulfonzuur (4:2 FTS) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="DONA (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter 4,8-dioxa-3H-perfluornonaanzuur (DONA) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="6:2/8:2 diPAP (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter 6:2/8:2 fluortelomeerfosfaat diester (6:2/8:2 diPAP) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="6:2 diPAP (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter 6:2 fluortelomeerfosfaat diester (6:2 diPAP) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="6:2 PAP (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter 6:2 fluortelomeerfosfaat monoester (6:2 PAP) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="6:2 FTS (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter 6:2 fluortelomeersulfonzuur (6:2 FTS) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="HPFHpA (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter 7H-perfluorheptaanzuur (HPFHpA) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="8:2 diPAP (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter 8:2 fluortelomeerfosfaat diester (8:2 diPAP) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="8:2 PAP (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter 8:2 fluortelomeerfosfaat monoester (8:2 PAP) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="8:2 FTUCA (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter 8:2 fluortelomeer onverzadigd carboxylzuur (8:2 FTUCA) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="8:2 FTS (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter 8:2 fluortelomeersulfonzuur (8:2 FTS) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="9Cl-PF3ONS (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter 9-Chloorhexadecafluor-3-oxanonaansulfonzuur (9Cl-PF3ONS) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Capstone A (DPOSA) (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter N-[3-(dimethyloxidoamino)propyl]-tridecafluoroctaansulfonamide (Capstone A (DPOSA)) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Capstone B (CDPOS) (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter N-(carboxymethyl)-N,N-dimethyl-3-((((perfluorhexyl)ethyl)sulfonyl)amino)-, hydroxide (Capstone B (CDPOS)) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="EtPFOSA (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter N-ethylperfluoroctaan-1-sulfonamide (EtPFOSA) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="EtPFOSAA (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter N-ethylperfluoroctaansulfonamidoazijnzuur  (EtPFOSAA) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MePFBSA (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter N-methylperfluorbutaansulfonamide (MePFBSA) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MePFBSAA (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter N-methylperfluorbutaansulfonylamide azijnzuur (MePFBSAA) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MePFOSA (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter N-methylperfluoroctaan-1-sulfonamide (MePFOSA) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MePFOSAA (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter N-methylperfluoroctaansulfonamidoazijnzuur  (MePFOSAA) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFMOAA (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter perfluor-2-methoxyazijnzuur (PFMOAA) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="HFPO-DA (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter perfluor-2-propoxypropaanzuur (HFPO-DA) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFO4DA (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter perfluor-3,5,7,9-tetraoxadecaanzuur (PFO4DA) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFO3OA (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter perfluor-3,5,7-trioxaoctaanzuur (PFO3OA) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFO2HxA (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter perfluor-3,5-dioxahexaanzuur  (PFO2HxA) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="P37DMOA (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter perfluor-3-7-dimethyloctaanzuur (P37DMOA) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFMOPrA (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter perfluor-3-methoxypropaanzuur (PFMOPrA) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFECHS (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter perfluor-4-ethylcyclohexaansulfonzuur (PFECHS) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFMOBA (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter perfluor-4-methoxybutaanzuur (PFMOBA) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFBSA (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter perfluorbutaansulfonamide (PFBSA) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFBS (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter perfluorbutaansulfonzuur (PFBS) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFBA (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter perfluorbutaanzuur (PFBA) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFDA (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter perfluordecaanzuur (PFDA) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFHpS (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter perfluorheptaansulfonzuur (PFHpS) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFHpA (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter perfluorheptaanzuur (PFHpA) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFHxSA (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter perfluorhexaansulfonamide (PFHxSA) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFHxS (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter perfluorhexaansulfonzuur (PFHxS) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFHxA (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter perfluorhexaanzuur (PFHxA) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFHxDA (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter perfluorhexadecaanzuur (PFHxDA) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFDS (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter perfluor-n-decaansulfonzuur (PFDS) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFDoDS (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter perfluor-n-dodecaansulfonzuur (PFDoDS) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFDoDA (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter perfluor-n-dodecaanzuur (PFDoDA) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFOSbranched (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter perfluor-n-octaansulfonzuur vertakt (PFOSbranched) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFOAbranched (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter perfluor-n-octaanzuur vertakt (PFOAbranched) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFNS (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter perfluornonaansulfonzuur (PFNS) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFNA (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter perfluornonaanzuur (PFNA) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFPeDA (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter perfluor-n-pentadecaanzuur (PFPeDA) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFTeDA (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter perfluor-n-tetradecaanzuur (PFTeDA) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFTrDS (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter perfluor-n-tridecaansulfonzuur (PFTrDS) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFTrDA (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter perfluor-n-tridecaanzuur (PFTrDA) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFUnDS (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter perfluor-n-undecaansulfonzuur (PFUnDS) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFUnDA (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter perfluor-n-undecaanzuur (PFUnDA) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFOSA (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter perfluoroctaansulfonamide (PFOSA) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFOSAbranched (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter perfluoroctaansulfonamide vertakt (PFOSAbranched) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFOSAA (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter perfluoroctaansulfonamidoazijnzuur (PFOSAA) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFOS (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter perfluoroctaansulfonzuur (PFOS) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFOA (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter perfluoroctaanzuur (PFOA) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFODA (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter perfluoroctadecaanzuur (PFODA) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFPeS (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter perfluorpentaansulfonzuur (PFPeS) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFPeA (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter perfluorpentaanzuur (PFPeA) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFAS (EFSA-4) (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter PFAS (EFSA-4) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFAS (EU DWRL-20) (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter PFAS (EU DWRL-20) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="EtPFOSAtotal (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter totaal N-ethylperfluoroctaansulfonamide (lineair + vertakt) (EtPFOSAtotal) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="EtPFOSAbranched (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter totaal N-ethylperfluoroctaansulfonamide (vertakt) (EtPFOSAbranchedl) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MePFOSAtotal (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter totaal N-methylperfluoroctaansulfonamide (lineair + vertakt) (MePFOSAtotal) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MePFOSAbranched (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter totaal N-methylperfluoroctaansulfonamide (vertakt) (MePFOSAbranched) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFHxStotal (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter totaal perfluorhexaansulfonzuur (lineair + vertakt) (PFHxStotal) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFHxSbranched (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter totaal perfluorhexaansulfonzuur (vertakt) (PFHxSbranchedl) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFOStotal (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter totaal perfluor-n-octaansulfonzuur (lineair + vertakt) (PFOStotal) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFOAtotal (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter totaal perfluor-n-octaanzuur (lineair + vertakt) (PFOAtotal) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFOSAtotal (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter totaal perfluoroctaansulfonamide (lineair + vertakt) (PFOSAtotal) (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
 
+            <!-- XDOVCL-2634-->
+            <xs:enumeration value="pH (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter pH (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="EC (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter EC (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="meettemperatuur bij pH">
+                <xs:annotation>
+                    <xs:documentation>parameter meettemperatuur bij pH</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="meettemperatuur bij EC">
+                <xs:annotation>
+                    <xs:documentation>parameter meettemperatuur bij EC</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="som van gemeten kwantitatieve PFAS">
+                <xs:annotation>
+                    <xs:documentation>parameter som van gemeten kwantitatieve PFAS</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="som van gemeten indicatieve PFAS">
+                <xs:annotation>
+                    <xs:documentation>parameter som van gemeten indicatieve PFAS</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="som van gemeten PFAS">
+                <xs:annotation>
+                    <xs:documentation>parameter som van gemeten PFAS</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="som van gemeten kwantitatieve PFAS (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter som van gemeten kwantitatieve PFAS (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="som van gemeten indicatieve PFAS (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter som van gemeten indicatieve PFAS (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="som van gemeten PFAS (eluaat)">
+                <xs:annotation>
+                    <xs:documentation>parameter som van gemeten PFAS (eluaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            
             <!-- parameters onder strikt voorbehoud - gaan er zo snel mogelijk weer uit -->
             <xs:enumeration value="resultaattijd"/>
             <xs:enumeration value="voorbehandeling_observatie_type_bewaring"/>

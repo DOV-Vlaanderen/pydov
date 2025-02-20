@@ -4,6 +4,24 @@
 History
 =======
 
+v3.2.0
+------
+
+- News
+
+  - This version drops support for Python 3.8.
+
+  - This version adds support for Python 3.12 and Python 3.13.
+
+  - This version is supported on Python 3.9, 3.10, 3.11, 3.12 and 3.13.
+
+- Fixes and improvements
+
+  - Update grondmonster XML based on XSD schema updates. (#404)
+
+  - Fix GMLObject tests. (#401)
+
+
 v3.1.0
 ------
 

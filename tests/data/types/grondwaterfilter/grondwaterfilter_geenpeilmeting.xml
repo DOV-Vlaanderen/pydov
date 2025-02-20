@@ -6,7 +6,6 @@
             <permkey>2021-096695</permkey>
             <uri>https://www/data/put/2021-096695</uri>
         </dataidentifier>
-        <putnaam>5111-151</putnaam>
         <grondwaterlocatieType>PUT</grondwaterlocatieType>
         <puntligging>
             <xy>
@@ -33,9 +32,7 @@
         <diepte>9.00</diepte>
         <datum_ingebruikname>1976-11-01</datum_ingebruikname>
         <putsoort>niet-verbuisde boorput</putsoort>
-        <afwerking>
-            <beschermbuis/>
-        </afwerking>
+        <afwerking/>
         <naam>
             <naam>5111-151</naam>
             <naamtype>EXPLOITANT</naamtype>

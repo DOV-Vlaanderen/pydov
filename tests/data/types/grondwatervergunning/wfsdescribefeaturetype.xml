@@ -6,6 +6,7 @@
         <xsd:sequence>
           <xsd:element maxOccurs="1" minOccurs="0" name="id" nillable="true" type="xsd:string"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="installatie" nillable="true" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="exploitant" nillable="true" type="xsd:string"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="exploitant_naam" nillable="true" type="xsd:string"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="inrichtingsnummer" nillable="true" type="xsd:string"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="watnr" nillable="true" type="xsd:string"/>

@@ -779,11 +779,6 @@ order by 1
                     <xs:documentation>parameter Aluminium</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="Al">
-                <xs:annotation>
-                    <xs:documentation>parameter Aluminium</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
             <xs:enumeration value="Ala">
                 <xs:annotation>
                     <xs:documentation>parameter Alachloor</xs:documentation>
@@ -852,11 +847,6 @@ order by 1
             <xs:enumeration value="Areometer">
                 <xs:annotation>
                     <xs:documentation>parameter Areometerproef</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="As">
-                <xs:annotation>
-                    <xs:documentation>parameter Arseen</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="As">
@@ -1240,11 +1230,6 @@ order by 1
                     <xs:documentation>parameter Cadmium</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="Cd">
-                <xs:annotation>
-                    <xs:documentation>parameter Cadmium</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
             <xs:enumeration value="cec_totaal">
                 <xs:annotation>
                     <xs:documentation>parameter CEC totaal</xs:documentation>
@@ -1541,19 +1526,9 @@ order by 1
                     <xs:documentation>parameter Chroom</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="Cr">
-                <xs:annotation>
-                    <xs:documentation>parameter Chroom</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
             <xs:enumeration value="CRS">
                 <xs:annotation>
                     <xs:documentation>parameter Constant rate of strain (CRS)</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="Cu">
-                <xs:annotation>
-                    <xs:documentation>parameter Koper</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="Cu">
@@ -1937,11 +1912,6 @@ order by 1
             <xs:enumeration value="Fe">
                 <xs:annotation>
                     <xs:documentation>parameter IJzer</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="Fe">
-                <xs:annotation>
-                    <xs:documentation>parameter Ijzer</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="Fe2+">
@@ -2403,11 +2373,6 @@ order by 1
                     <xs:documentation>parameter Kwik</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="Hg">
-                <xs:annotation>
-                    <xs:documentation>parameter Kwik</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
             <xs:enumeration value="H (HCO3)">
                 <xs:annotation>
                     <xs:documentation>parameter Bicarbonaathardheid</xs:documentation>
@@ -2526,11 +2491,6 @@ order by 1
                 <xs:annotation>
                     <xs:documentation>parameter Isoxaben</xs:documentation>
                     <xs:documentation>CASRN: 82558-50-7</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="K">
-                <xs:annotation>
-                    <xs:documentation>parameter Kalium</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="K">
@@ -3000,11 +2960,6 @@ order by 1
                     <xs:documentation>parameter Nikkel</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="Ni">
-                <xs:annotation>
-                    <xs:documentation>parameter Nikkel</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
             <xs:enumeration value="Nicosulfuron">
                 <xs:annotation>
                     <xs:documentation>parameter Nicosulfuron</xs:documentation>
@@ -3163,11 +3118,6 @@ order by 1
             <xs:enumeration value="Path.Staph.">
                 <xs:annotation>
                     <xs:documentation>parameter Pathogene staphylococcen</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="Pb">
-                <xs:annotation>
-                    <xs:documentation>parameter Lood</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="Pb">
@@ -3541,12 +3491,6 @@ order by 1
             <xs:enumeration value="Schuifweerstand CU">
                 <xs:annotation>
                     <xs:documentation>parameter Schuifweerstandskarakteristieken Consolidated Undrained
-                    </xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="Schuifweerstand UU">
-                <xs:annotation>
-                    <xs:documentation>parameter Schuifweerstandskarakteristieken Unconsolidated Undrained
                     </xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
@@ -4081,11 +4025,6 @@ order by 1
                     <xs:documentation>parameter Vegetatie</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="vegetatie">
-                <xs:annotation>
-                    <xs:documentation>parameter vegetatie</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
             <xs:enumeration value="Verassingresten/600">
                 <xs:annotation>
                     <xs:documentation>parameter Verassingresten/600°C</xs:documentation>
@@ -4236,11 +4175,6 @@ order by 1
             <xs:enumeration value="Zeving">
                 <xs:annotation>
                     <xs:documentation>parameter zeefproef</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
-            <xs:enumeration value="Zn">
-                <xs:annotation>
-                    <xs:documentation>parameter Zink</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="Zn">
@@ -4462,11 +4396,6 @@ order by 1
                 </xs:annotation>
             </xs:enumeration>
             <!-- XDOVCL-1627 -->
-            <xs:enumeration value="bodemtoestand">
-                <xs:annotation>
-                    <xs:documentation>parameter Bodemtoestand</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
             <xs:enumeration value="landgebruikscategorie_cmon">
                 <xs:annotation>
                     <xs:documentation>parameter Landgebruikscategorie Cmon</xs:documentation>
@@ -5126,11 +5055,6 @@ order by 1
                 </xs:annotation>
             </xs:enumeration>
             <!-- XDOVCL-1836 -->
-            <xs:enumeration value="textuurmeting_laser_volumeprocent">
-                <xs:annotation>
-                    <xs:documentation>Textuurfracties laser volumeprocent</xs:documentation>
-                </xs:annotation>
-            </xs:enumeration>
             <xs:enumeration value="bewaard_bodemmonster_voorbereiding_type_breken">
                 <xs:annotation>
                     <xs:documentation>Bewaard bodemmonster voorbereiding type breken</xs:documentation>

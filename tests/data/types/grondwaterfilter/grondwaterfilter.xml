@@ -42,10 +42,8 @@
             </beheerder>
         </beheer>
         <afwerking>
-            <beschermbuis>
-                <diameter>160</diameter>
-                <materiaal>staal, zonder verdere precisering</materiaal>
-            </beschermbuis>
+            <materiaal>staal, zonder verdere precisering</materiaal>
+            <diameter>160.0</diameter>
             <annulaireruimte>
                 <van>0.50</van>
                 <tot>1.70</tot>

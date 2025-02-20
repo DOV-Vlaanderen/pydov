@@ -1,201 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ns4:dov-schema xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns4="http://kern.schemas.dov.vlaanderen.be" xsi:schemaLocation="http://kern.schemas.dov.vlaanderen.be https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/dov.xsd">
-    <grondmonster>
-        <naam>N003A</naam>
-        <dataidentifier>
-            <permkey>2018-211728</permkey>
-            <uri>https://www/data/grondmonster/2018-211728</uri>
-        </dataidentifier>
-        <boring>1445-GEO-17/047-B211</boring>
-        <datum_monstername>2017-05-29</datum_monstername>
-        <monstertype>ongeroerd</monstertype>
-        <diepte>
-            <van>8.00</van>
+    <monster>
+        <identificator>
+            <identificator>N003A</identificator>
+            <toegekend_door>DATABEHEERDER</toegekend_door>
+        </identificator>
+        <identificator>
+            <identificator>2018-211728</identificator>
+            <toegekend_door>DOV</toegekend_door>
+        </identificator>
+        <type>Enkelvoudig monster</type>
+        <bemonsterdObject>
+            <objecttype>BORING</objecttype>
+            <naam>1445-GEO-17/047-B211</naam>
+            <permkey>2017-151201</permkey>
+        </bemonsterdObject>
+        <bemonsteringsmethode>
+            <bemonsteringsprocedure>https://data.bodemenondergrond.vlaanderen.be/id/concept/bemonsteringsprocedure/22475-1-2007</bemonsteringsprocedure>
+            <bemonsteringsinstrument>https://data.bodemenondergrond.vlaanderen.be/id/concept/bemonsteringsinstrument/steekbus</bemonsteringsinstrument>
+            <monsternemer>
+                <naam>VO - Afdeling Geotechniek</naam>
+            </monsternemer>
+        </bemonsteringsmethode>
+        <monstertype>https://data.bodemenondergrond.vlaanderen.be/id/concept/bemonsteringstype/ongeroerd</monstertype>
+        <bemonsteringsplaats>
+            <van>8.0</van>
             <tot>8.15</tot>
-        </diepte>
-        <observatieData>
-            <observatie>
-                <parameter>ASTM_CODE</parameter>
-                <waarde_text>CH</waarde_text>
-                <eenheid>-</eenheid>
-                <methode>Onbekend</methode>
-                <veld_labo>LABO</veld_labo>
-            </observatie>
-            <observatie>
-                <parameter>ASTM_NAAM</parameter>
-                <waarde_text>Fat clay</waarde_text>
-                <eenheid>-</eenheid>
-                <methode>Onbekend</methode>
-                <veld_labo>LABO</veld_labo>
-            </observatie>
-            <observatie>
-                <parameter>UITROLGRENS</parameter>
-                <waarde_numeriek>36</waarde_numeriek>
-                <eenheid>%</eenheid>
-                <methode>Onbekend</methode>
-                <veld_labo>LABO</veld_labo>
-            </observatie>
-            <observatie>
-                <parameter>VLOEIGRENS</parameter>
-                <waarde_numeriek>93</waarde_numeriek>
-                <eenheid>%</eenheid>
-                <methode>Onbekend</methode>
-                <veld_labo>LABO</veld_labo>
-            </observatie>
-            <observatie>
-                <parameter>KALKGEHALTE</parameter>
-                <waarde_numeriek>15.0</waarde_numeriek>
-                <eenheid>%</eenheid>
-                <methode>Chemische reactie met waterstofchloride</methode>
-                <veld_labo>LABO</veld_labo>
-            </observatie>
-            <observatie>
-                <parameter>HUMUSGEHALTE</parameter>
-                <waarde_numeriek>4.7</waarde_numeriek>
-                <eenheid>%</eenheid>
-                <methode>Chemische reactie met waterstofperoxide</methode>
-                <veld_labo>LABO</veld_labo>
-            </observatie>
-            <observatie>
-                <parameter>BGGG</parameter>
-                <waarde_text>kalkh. weinig humush. zandh. klei</waarde_text>
-                <eenheid>-</eenheid>
-                <methode>Classificatie volgens de norm</methode>
-                <veld_labo>LABO</veld_labo>
-            </observatie>
-            <observatie>
-                <parameter>AREOMETER</parameter>
-                <waarde_text></waarde_text>
-                <eenheid>-</eenheid>
-                <methode>Hydrometer</methode>
-                <veld_labo>LABO</veld_labo>
-            </observatie>
-            <observatie>
-                <parameter>ZEEFPROEF</parameter>
-                <waarde_text></waarde_text>
-                <eenheid>-</eenheid>
-                <methode>Zeving</methode>
-                <veld_labo>LABO</veld_labo>
-            </observatie>
-            <observatie>
-                <parameter>KORRELVOLUMEMASSA</parameter>
-                <waarde_numeriek>2.65</waarde_numeriek>
-                <eenheid>t/m³</eenheid>
-                <methode>Aangenomen</methode>
-                <veld_labo>LABO</veld_labo>
-            </observatie>
-            <observatie>
-                <parameter>VOLUMEMASSA</parameter>
-                <waarde_numeriek>1.63</waarde_numeriek>
-                <eenheid>t/m³</eenheid>
-                <methode>Volumieke massa door weging</methode>
-                <veld_labo>LABO</veld_labo>
-            </observatie>
-            <observatie>
-                <parameter>WATERGEHALTE</parameter>
-                <waarde_numeriek>57.7</waarde_numeriek>
-                <eenheid>%</eenheid>
-                <methode>Gewichtsverlies na drogen in droogstoof</methode>
-                <veld_labo>LABO</veld_labo>
-            </observatie>
-        </observatieData>
-        <observatieReeksData>
-            <korrelverdeling_reeks>
-                <humus_kalk_verwijderd>J</humus_kalk_verwijderd>
-                <korrelverdeling>
-                    <diameter>0.500000</diameter>
-                    <fractie>0.00</fractie>
-                    <methode>ZEEFPROEF</methode>
-                </korrelverdeling>
-                <korrelverdeling>
-                    <diameter>0.355000</diameter>
-                    <fractie>0.00</fractie>
-                    <methode>ZEEFPROEF</methode>
-                </korrelverdeling>
-                <korrelverdeling>
-                    <diameter>0.250000</diameter>
-                    <fractie>0.20</fractie>
-                    <methode>ZEEFPROEF</methode>
-                </korrelverdeling>
-                <korrelverdeling>
-                    <diameter>0.180000</diameter>
-                    <fractie>1.20</fractie>
-                    <methode>ZEEFPROEF</methode>
-                </korrelverdeling>
-                <korrelverdeling>
-                    <diameter>0.125000</diameter>
-                    <fractie>5.30</fractie>
-                    <methode>ZEEFPROEF</methode>
-                </korrelverdeling>
-                <korrelverdeling>
-                    <diameter>0.090000</diameter>
-                    <fractie>10.20</fractie>
-                    <methode>ZEEFPROEF</methode>
-                </korrelverdeling>
-                <korrelverdeling>
-                    <diameter>0.042550</diameter>
-                    <fractie>22.00</fractie>
-                    <methode>AREOMETER</methode>
-                </korrelverdeling>
-                <korrelverdeling>
-                    <diameter>0.031247</diameter>
-                    <fractie>28.00</fractie>
-                    <methode>AREOMETER</methode>
-                </korrelverdeling>
-                <korrelverdeling>
-                    <diameter>0.020683</diameter>
-                    <fractie>35.90</fractie>
-                    <methode>AREOMETER</methode>
-                </korrelverdeling>
-                <korrelverdeling>
-                    <diameter>0.013068</diameter>
-                    <fractie>46.50</fractie>
-                    <methode>AREOMETER</methode>
-                </korrelverdeling>
-                <korrelverdeling>
-                    <diameter>0.008747</diameter>
-                    <fractie>52.20</fractie>
-                    <methode>AREOMETER</methode>
-                </korrelverdeling>
-                <korrelverdeling>
-                    <diameter>0.005960</diameter>
-                    <fractie>56.50</fractie>
-                    <methode>AREOMETER</methode>
-                </korrelverdeling>
-                <korrelverdeling>
-                    <diameter>0.001575</diameter>
-                    <fractie>68.40</fractie>
-                    <methode>AREOMETER</methode>
-                </korrelverdeling>
-            </korrelverdeling_reeks>
-        </observatieReeksData>
-        <proefuitvoeringsData>
-            <proefuitvoering>
-                <proefnaam>SCHUIFWEERSTAND_GEN</proefnaam>
-                <uitvoerder>
-                    <naam>onbekend</naam>
-                </uitvoerder>
-                <identificatie>GEO-17/047 </identificatie>
-                <bedrijf_dienst>
-                    <naam>VO - Afdeling Geotechniek </naam>
-                </bedrijf_dienst>
-            </proefuitvoering>
-            <proefuitvoering>
-                <proefnaam>OKP-ALGEMEEN</proefnaam>
-            </proefuitvoering>
-            <proefuitvoering>
-                <proefnaam>OKP-KORREL</proefnaam>
-                <uitvoerder>
-                    <naam>VO - Afdeling Geotechniek</naam>
-                </uitvoerder>
-            </proefuitvoering>
-            <proefuitvoering>
-                <proefnaam>VOLMASSA-PROEVEN</proefnaam>
-                <uitvoerder>
-                    <naam>VO - Afdeling Geotechniek</naam>
-                </uitvoerder>
-            </proefuitvoering>
-        </proefuitvoeringsData>
+        </bemonsteringsplaats>
+        <bemonsteringstijdstip>
+            <datum>2017-05-29</datum>
+        </bemonsteringstijdstip>
+        <materiaalklasse>https://data.bodemenondergrond.vlaanderen.be/id/concept/materiaalklasse/sediment</materiaalklasse>
         <opdracht>GEO-17/047</opdracht>
         <opmerking>
             <tekst>Resultaten van de mechanische laboproeven uitgevoerd in de zone van Lantis-perceel 3A zijn opgenomen in bijlage.</tekst>
@@ -218,8 +53,19 @@
             <bijlage_type>Mech. proeven - Schuifweerstand</bijlage_type>
             <opmerking>Id: GEO-17/047 Beschikbaar bij: VO - Afdeling Geotechniek </opmerking>
         </bijlage>
-    </grondmonster>
+    </monster>
     <observatie>
+        <dataidentifier>
+            <permkey>2022-4036264</permkey>
+            <uri>https://www/data/observatie/2022-4036264</uri>
+        </dataidentifier>
+        <geobserveerd_object>
+            <objecttype>monster</objecttype>
+            <naam>N003A</naam>
+            <permkey>2018-211728</permkey>
+        </geobserveerd_object>
+        <diepte_van>8.0</diepte_van>
+        <diepte_tot>8.15</diepte_tot>
         <parameter>ASTM_code</parameter>
         <parametergroep>Onderkenning-grondsoort</parametergroep>
         <waarde_text>CH</waarde_text>
@@ -228,21 +74,23 @@
         <fenomeentijd>2017-05-29</fenomeentijd>
         <herkomst>LABO</herkomst>
         <uitvoerder>
-            <naam>VO - Afdeling Geotechniek</naam>
+            <organisatie>
+                <naam>VO - Afdeling Geotechniek</naam>
+            </organisatie>
         </uitvoerder>
+    </observatie>
+    <observatie>
+        <dataidentifier>
+            <permkey>2022-3808974</permkey>
+            <uri>https://www/data/observatie/2022-3808974</uri>
+        </dataidentifier>
         <geobserveerd_object>
             <objecttype>monster</objecttype>
             <naam>N003A</naam>
             <permkey>2018-211728</permkey>
         </geobserveerd_object>
-        <dataidentifier>
-            <permkey>2022-4036264</permkey>
-            <uri>https://www/data/observatie/2022-4036264</uri>
-        </dataidentifier>
         <diepte_van>8.0</diepte_van>
         <diepte_tot>8.15</diepte_tot>
-    </observatie>
-    <observatie>
         <parameter>ASTM_naam</parameter>
         <parametergroep>Onderkenning-grondsoort</parametergroep>
         <waarde_text>Fat clay</waarde_text>
@@ -250,21 +98,23 @@
         <fenomeentijd>2017-05-29</fenomeentijd>
         <herkomst>LABO</herkomst>
         <uitvoerder>
-            <naam>VO - Afdeling Geotechniek</naam>
+            <organisatie>
+                <naam>VO - Afdeling Geotechniek</naam>
+            </organisatie>
         </uitvoerder>
+    </observatie>
+    <observatie>
+        <dataidentifier>
+            <permkey>2023-11026988</permkey>
+            <uri>https://www/data/observatie/2023-11026988</uri>
+        </dataidentifier>
         <geobserveerd_object>
             <objecttype>monster</objecttype>
             <naam>N003A</naam>
             <permkey>2018-211728</permkey>
         </geobserveerd_object>
-        <dataidentifier>
-            <permkey>2022-3808974</permkey>
-            <uri>https://www/data/observatie/2022-3808974</uri>
-        </dataidentifier>
         <diepte_van>8.0</diepte_van>
         <diepte_tot>8.15</diepte_tot>
-    </observatie>
-    <observatie>
         <parameter>Consistentiegrenzen - Plasticiteitsindex</parameter>
         <parametergroep>Onderkenning - proeven</parametergroep>
         <waarde_numeriek>57.0</waarde_numeriek>
@@ -272,19 +122,19 @@
         <methode>Berekend</methode>
         <fenomeentijd>2017-05-29</fenomeentijd>
         <herkomst>LABO</herkomst>
+    </observatie>
+    <observatie>
+        <dataidentifier>
+            <permkey>2022-6409375</permkey>
+            <uri>https://www/data/observatie/2022-6409375</uri>
+        </dataidentifier>
         <geobserveerd_object>
             <objecttype>monster</objecttype>
             <naam>N003A</naam>
             <permkey>2018-211728</permkey>
         </geobserveerd_object>
-        <dataidentifier>
-            <permkey>2023-11026988</permkey>
-            <uri>https://www/data/observatie/2023-11026988</uri>
-        </dataidentifier>
         <diepte_van>8.0</diepte_van>
         <diepte_tot>8.15</diepte_tot>
-    </observatie>
-    <observatie>
         <parameter>Consistentiegrenzen - Uitrolgrens</parameter>
         <parametergroep>Onderkenning - proeven</parametergroep>
         <waarde_numeriek>36.4</waarde_numeriek>
@@ -293,21 +143,23 @@
         <fenomeentijd>2017-05-29</fenomeentijd>
         <herkomst>LABO</herkomst>
         <uitvoerder>
-            <naam>VO - Afdeling Geotechniek</naam>
+            <organisatie>
+                <naam>VO - Afdeling Geotechniek</naam>
+            </organisatie>
         </uitvoerder>
+    </observatie>
+    <observatie>
+        <dataidentifier>
+            <permkey>2022-3945091</permkey>
+            <uri>https://www/data/observatie/2022-3945091</uri>
+        </dataidentifier>
         <geobserveerd_object>
             <objecttype>monster</objecttype>
             <naam>N003A</naam>
             <permkey>2018-211728</permkey>
         </geobserveerd_object>
-        <dataidentifier>
-            <permkey>2022-6409375</permkey>
-            <uri>https://www/data/observatie/2022-6409375</uri>
-        </dataidentifier>
         <diepte_van>8.0</diepte_van>
         <diepte_tot>8.15</diepte_tot>
-    </observatie>
-    <observatie>
         <parameter>Consistentiegrenzen - Vloeigrens</parameter>
         <parametergroep>Onderkenning - proeven</parametergroep>
         <waarde_numeriek>93.4</waarde_numeriek>
@@ -316,21 +168,23 @@
         <fenomeentijd>2017-05-29</fenomeentijd>
         <herkomst>LABO</herkomst>
         <uitvoerder>
-            <naam>VO - Afdeling Geotechniek</naam>
+            <organisatie>
+                <naam>VO - Afdeling Geotechniek</naam>
+            </organisatie>
         </uitvoerder>
+    </observatie>
+    <observatie>
+        <dataidentifier>
+            <permkey>2022-6591544</permkey>
+            <uri>https://www/data/observatie/2022-6591544</uri>
+        </dataidentifier>
         <geobserveerd_object>
             <objecttype>monster</objecttype>
             <naam>N003A</naam>
             <permkey>2018-211728</permkey>
         </geobserveerd_object>
-        <dataidentifier>
-            <permkey>2022-3945091</permkey>
-            <uri>https://www/data/observatie/2022-3945091</uri>
-        </dataidentifier>
         <diepte_van>8.0</diepte_van>
         <diepte_tot>8.15</diepte_tot>
-    </observatie>
-    <observatie>
         <parameter>Gehalte Kalkachtige stoffen</parameter>
         <parametergroep>Onderkenning - proeven</parametergroep>
         <waarde_numeriek>15.0</waarde_numeriek>
@@ -339,21 +193,23 @@
         <fenomeentijd>2017-05-29</fenomeentijd>
         <herkomst>LABO</herkomst>
         <uitvoerder>
-            <naam>VO - Afdeling Geotechniek</naam>
+            <organisatie>
+                <naam>VO - Afdeling Geotechniek</naam>
+            </organisatie>
         </uitvoerder>
+    </observatie>
+    <observatie>
+        <dataidentifier>
+            <permkey>2022-3261737</permkey>
+            <uri>https://www/data/observatie/2022-3261737</uri>
+        </dataidentifier>
         <geobserveerd_object>
             <objecttype>monster</objecttype>
             <naam>N003A</naam>
             <permkey>2018-211728</permkey>
         </geobserveerd_object>
-        <dataidentifier>
-            <permkey>2022-6591544</permkey>
-            <uri>https://www/data/observatie/2022-6591544</uri>
-        </dataidentifier>
         <diepte_van>8.0</diepte_van>
         <diepte_tot>8.15</diepte_tot>
-    </observatie>
-    <observatie>
         <parameter>Gehalte Organische stoffen</parameter>
         <parametergroep>Onderkenning - proeven</parametergroep>
         <waarde_numeriek>4.7</waarde_numeriek>
@@ -362,21 +218,23 @@
         <fenomeentijd>2017-05-29</fenomeentijd>
         <herkomst>LABO</herkomst>
         <uitvoerder>
-            <naam>VO - Afdeling Geotechniek</naam>
+            <organisatie>
+                <naam>VO - Afdeling Geotechniek</naam>
+            </organisatie>
         </uitvoerder>
+    </observatie>
+    <observatie>
+        <dataidentifier>
+            <permkey>2022-2486013</permkey>
+            <uri>https://www/data/observatie/2022-2486013</uri>
+        </dataidentifier>
         <geobserveerd_object>
             <objecttype>monster</objecttype>
             <naam>N003A</naam>
             <permkey>2018-211728</permkey>
         </geobserveerd_object>
-        <dataidentifier>
-            <permkey>2022-3261737</permkey>
-            <uri>https://www/data/observatie/2022-3261737</uri>
-        </dataidentifier>
         <diepte_van>8.0</diepte_van>
         <diepte_tot>8.15</diepte_tot>
-    </observatie>
-    <observatie>
         <parameter>Grondsoort BGGG</parameter>
         <parametergroep>Onderkenning-grondsoort</parametergroep>
         <waarde_text>kalkh. weinig humush. zandh. klei</waarde_text>
@@ -385,21 +243,23 @@
         <fenomeentijd>2017-05-29</fenomeentijd>
         <herkomst>LABO</herkomst>
         <uitvoerder>
-            <naam>VO - Afdeling Geotechniek</naam>
+            <organisatie>
+                <naam>VO - Afdeling Geotechniek</naam>
+            </organisatie>
         </uitvoerder>
+    </observatie>
+    <observatie>
+        <dataidentifier>
+            <permkey>2022-2576967</permkey>
+            <uri>https://www/data/observatie/2022-2576967</uri>
+        </dataidentifier>
         <geobserveerd_object>
             <objecttype>monster</objecttype>
             <naam>N003A</naam>
             <permkey>2018-211728</permkey>
         </geobserveerd_object>
-        <dataidentifier>
-            <permkey>2022-2486013</permkey>
-            <uri>https://www/data/observatie/2022-2486013</uri>
-        </dataidentifier>
         <diepte_van>8.0</diepte_van>
         <diepte_tot>8.15</diepte_tot>
-    </observatie>
-    <observatie>
         <parameter>Korrelverdeling d.m.v. hydrometer/areometer</parameter>
         <parametergroep>Onderkenningsproeven-korrelverdeling </parametergroep>
         <waarde_meetreeks>
@@ -440,13 +300,10 @@
         <fenomeentijd>2017-05-29</fenomeentijd>
         <herkomst>LABO</herkomst>
         <uitvoerder>
-            <naam>VO - Afdeling Geotechniek</naam>
+            <organisatie>
+                <naam>VO - Afdeling Geotechniek</naam>
+            </organisatie>
         </uitvoerder>
-        <geobserveerd_object>
-            <objecttype>monster</objecttype>
-            <naam>N003A</naam>
-            <permkey>2018-211728</permkey>
-        </geobserveerd_object>
         <behandeling>
             <behandeling>Kalk verwijderd</behandeling>
             <behandeling_waarde>ja</behandeling_waarde>
@@ -455,14 +312,19 @@
             <behandeling>Organisch materiaal verwijderd</behandeling>
             <behandeling_waarde>ja</behandeling_waarde>
         </behandeling>
-        <dataidentifier>
-            <permkey>2022-2576967</permkey>
-            <uri>https://www/data/observatie/2022-2576967</uri>
-        </dataidentifier>
-        <diepte_van>8.0</diepte_van>
-        <diepte_tot>8.15</diepte_tot>
     </observatie>
     <observatie>
+        <dataidentifier>
+            <permkey>2022-4081893</permkey>
+            <uri>https://www/data/observatie/2022-4081893</uri>
+        </dataidentifier>
+        <geobserveerd_object>
+            <objecttype>monster</objecttype>
+            <naam>N003A</naam>
+            <permkey>2018-211728</permkey>
+        </geobserveerd_object>
+        <diepte_van>8.0</diepte_van>
+        <diepte_tot>8.15</diepte_tot>
         <parameter>Korrelverdeling d.m.v. zeefproef</parameter>
         <parametergroep>Onderkenningsproeven-korrelverdeling </parametergroep>
         <waarde_meetreeks>
@@ -499,13 +361,10 @@
         <fenomeentijd>2017-05-29</fenomeentijd>
         <herkomst>LABO</herkomst>
         <uitvoerder>
-            <naam>VO - Afdeling Geotechniek</naam>
+            <organisatie>
+                <naam>VO - Afdeling Geotechniek</naam>
+            </organisatie>
         </uitvoerder>
-        <geobserveerd_object>
-            <objecttype>monster</objecttype>
-            <naam>N003A</naam>
-            <permkey>2018-211728</permkey>
-        </geobserveerd_object>
         <behandeling>
             <behandeling>Kalk verwijderd</behandeling>
             <behandeling_waarde>ja</behandeling_waarde>
@@ -514,14 +373,17 @@
             <behandeling>Organisch materiaal verwijderd</behandeling>
             <behandeling_waarde>ja</behandeling_waarde>
         </behandeling>
-        <dataidentifier>
-            <permkey>2022-4081893</permkey>
-            <uri>https://www/data/observatie/2022-4081893</uri>
-        </dataidentifier>
-        <diepte_van>8.0</diepte_van>
-        <diepte_tot>8.15</diepte_tot>
     </observatie>
     <observatie>
+        <dataidentifier>
+            <permkey>2022-7001937</permkey>
+            <uri>https://www/data/observatie/2022-7001937</uri>
+        </dataidentifier>
+        <geobserveerd_object>
+            <objecttype>monster</objecttype>
+            <naam>N003A</naam>
+            <permkey>2018-211728</permkey>
+        </geobserveerd_object>
         <parameter>korrelvolumemassa</parameter>
         <parametergroep>Volumemassa-watergehalte </parametergroep>
         <waarde_numeriek>2.65</waarde_numeriek>
@@ -530,19 +392,21 @@
         <fenomeentijd>2017-05-29</fenomeentijd>
         <herkomst>LABO</herkomst>
         <uitvoerder>
-            <naam>VO - Afdeling Geotechniek</naam>
+            <organisatie>
+                <naam>VO - Afdeling Geotechniek</naam>
+            </organisatie>
         </uitvoerder>
+    </observatie>
+    <observatie>
+        <dataidentifier>
+            <permkey>2022-4812427</permkey>
+            <uri>https://www/data/observatie/2022-4812427</uri>
+        </dataidentifier>
         <geobserveerd_object>
             <objecttype>monster</objecttype>
             <naam>N003A</naam>
             <permkey>2018-211728</permkey>
         </geobserveerd_object>
-        <dataidentifier>
-            <permkey>2022-7001937</permkey>
-            <uri>https://www/data/observatie/2022-7001937</uri>
-        </dataidentifier>
-    </observatie>
-    <observatie>
         <parameter>volumemassa nat</parameter>
         <parametergroep>Volumemassa-watergehalte </parametergroep>
         <waarde_numeriek>1.627</waarde_numeriek>
@@ -551,19 +415,21 @@
         <fenomeentijd>2017-05-29</fenomeentijd>
         <herkomst>LABO</herkomst>
         <uitvoerder>
-            <naam>VO - Afdeling Geotechniek</naam>
+            <organisatie>
+                <naam>VO - Afdeling Geotechniek</naam>
+            </organisatie>
         </uitvoerder>
+    </observatie>
+    <observatie>
+        <dataidentifier>
+            <permkey>2022-1663150</permkey>
+            <uri>https://www/data/observatie/2022-1663150</uri>
+        </dataidentifier>
         <geobserveerd_object>
             <objecttype>monster</objecttype>
             <naam>N003A</naam>
             <permkey>2018-211728</permkey>
         </geobserveerd_object>
-        <dataidentifier>
-            <permkey>2022-4812427</permkey>
-            <uri>https://www/data/observatie/2022-4812427</uri>
-        </dataidentifier>
-    </observatie>
-    <observatie>
         <parameter>watergehalte</parameter>
         <parametergroep>Volumemassa-watergehalte </parametergroep>
         <waarde_numeriek>57.7</waarde_numeriek>
@@ -572,16 +438,9 @@
         <fenomeentijd>2017-05-29</fenomeentijd>
         <herkomst>LABO</herkomst>
         <uitvoerder>
-            <naam>VO - Afdeling Geotechniek</naam>
+            <organisatie>
+                <naam>VO - Afdeling Geotechniek</naam>
+            </organisatie>
         </uitvoerder>
-        <geobserveerd_object>
-            <objecttype>monster</objecttype>
-            <naam>N003A</naam>
-            <permkey>2018-211728</permkey>
-        </geobserveerd_object>
-        <dataidentifier>
-            <permkey>2022-1663150</permkey>
-            <uri>https://www/data/observatie/2022-1663150</uri>
-        </dataidentifier>
     </observatie>
 </ns4:dov-schema>

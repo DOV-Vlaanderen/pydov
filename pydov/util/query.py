@@ -66,7 +66,8 @@ class PropertyLikeList(OgcExpression):
     Internally translates to an Or combination of PropertyIsLike
     expressions:
 
-    PropertyLikeList('methode', ['spade', 'spoelboring'], '%{item}%') is equivalent to
+    PropertyLikeList('methode', ['spade', 'spoelboring'], '%{item}%') is
+    equivalent to
 
     Or([PropertyIsLike('methode', '%spade%'), PropertyIsLike('methode',
     '%spoelboring%')])
@@ -83,8 +84,9 @@ class PropertyLikeList(OgcExpression):
         lst : list of str
             List of item literals to match against.
         modifier : str
-            Optional, modifier to apply to the lst items when constructing the query.
-            You can use the string '{item}' in it which will be replaced by the lst item.
+            Optional, modifier to apply to the lst items when constructing the
+            query. You can use the string '{item}' in it which will be replaced
+            by the lst item.
 
         Raises
         ------
@@ -108,7 +110,8 @@ class PropertyLikeList(OgcExpression):
                 propertyname, modifier.format(item=set(lst).pop()))
         else:
             self.query = Or(
-                [PropertyIsLike(propertyname, modifier.format(item=i)) for i in sorted(set(lst))])
+                [PropertyIsLike(propertyname, modifier.format(item=i)) for i
+                 in sorted(set(lst))])
 
     def toXML(self):
         """Return the XML representation of the PropertyInList query.
@@ -126,7 +129,8 @@ class AbstractJoin:
     """Abstract base class for the Join classes."""
 
     def _is_iterable_type(self, dataframe, column):
-        """Check if the first element in a specified column of a dataframe is an iterable type (list or set).
+        """Check if the first element in a specified column of a dataframe is
+        an iterable type (list or set).
 
         Parameters
         ----------
@@ -138,7 +142,8 @@ class AbstractJoin:
         Returns
         -------
         bool
-            True if the first element of the column is a list or set, False otherwise.
+            True if the first element of the column is a list or set, False
+            otherwise.
 
         Raises
         ------
@@ -152,8 +157,9 @@ class AbstractJoin:
             isinstance(dataframe[column].iloc[0], set)
 
     def _get_unique_value_list(self, dataframe, column):
-        """Retrieve a list of unique values from a specified column in a pandas DataFrame. 
-        If the values are iterable (list or set), it aggregates them.
+        """Retrieve a list of unique values from a specified column in a pandas
+        DataFrame. If the values are iterable (list or set), it aggregates
+        them.
 
         Parameters
         ----------
@@ -165,7 +171,8 @@ class AbstractJoin:
         Returns
         -------
         list
-            A list of unique values from the specified column, possibly aggregating iterable values.
+            A list of unique values from the specified column, possibly
+            aggregating iterable values.
 
         Raises
         ------
@@ -237,14 +244,16 @@ class Join(AbstractJoin, PropertyInList):
 
 
 class FuzzyJoin(AbstractJoin, PropertyLikeList):
-    """Filter expression to join different searches together in a fuzzy (non-exact) way.
+    """Filter expression to join different searches together in a fuzzy
+    (non-exact) way.
 
     Internally translates to a PropertyLikeList:
 
     FuzzyJoin(df, 'pkey_boring', modifier='%|{item}|%') is equivalent to
 
-    PropertyLikeList('pkey_boring', list(df['pkey_boring'), modifier='%|{item}|%') which is
-    equivalent to
+    PropertyLikeList('pkey_boring', list(df['pkey_boring'),
+                     modifier='%|{item}|%')
+    which is equivalent to
 
     Or([PropertyIsLike('pkey_boring', '%|x|%'), PropertyIsLike(
     'pkey_boring', '%|y|%'), ...]) for every x, y, in df['pkey_boring']
@@ -264,8 +273,9 @@ class FuzzyJoin(AbstractJoin, PropertyLikeList):
             Name of the column in the dataframe to use for joining. By
             default, the same column name as in `on` is assumed.
         modifier : str, optional, defaults to `'%|{item}|%'`
-            Optional, modifier to apply to the dataframe items when constructing the query.
-            You can use the string '{item}' in it which will be replaced by the dataframe item.
+            Optional, modifier to apply to the dataframe items when
+            constructing the query. You can use the string '{item}' in it which
+            will be replaced by the dataframe item.
 
         Raises
         ------

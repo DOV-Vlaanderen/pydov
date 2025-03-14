@@ -34,7 +34,7 @@ class AbstractTypeCommon(AbstractCommon):
     fields = []
 
     @classmethod
-    def _parse(cls, func, xpath, namespace, returntype):
+    def _parse(cls, func, xpath, namespace, returntype, split_fn=None):
         """Parse the result of an XML path function, stripping the namespace
         and adding type conversion.
 
@@ -50,6 +50,10 @@ class AbstractTypeCommon(AbstractCommon):
         returntype : str
             Parse the text found with `func` to this output datatype. One of
             `string`, `float`, `integer`, `date`, `datetime`, `boolean`.
+        split_fn : optional, function
+            Function to split values from this field into a list of values.
+            After splitting they will be parsed into the corresponding
+            returntype.
 
         Returns
         -------
@@ -66,6 +70,10 @@ class AbstractTypeCommon(AbstractCommon):
 
         if text is None:
             return np.nan
+
+        if split_fn is not None:
+            items = split_fn(text)
+            return [cls._typeconvert(item, returntype) for item in items]
 
         return cls._typeconvert(text, returntype)
 
@@ -189,7 +197,8 @@ class AbstractDovSubType(AbstractTypeCommon):
                 func=element.findtext,
                 xpath=field['sourcefield'],
                 namespace=None,
-                returntype=field.get('type', None)
+                returntype=field.get('type', None),
+                split_fn=field.get('split_fn', None)
             )
 
         instance._parse_subtypes(etree.tostring(element))
@@ -410,7 +419,8 @@ class AbstractDovType(AbstractTypeCommon):
                     func=tree.findtext,
                     xpath=field['sourcefield'],
                     namespace=None,
-                    returntype=field.get('type', None)
+                    returntype=field.get('type', None),
+                    split_fn=field.get('split_fn', None)
                 )
 
             for field in self.get_fields(source=('custom_xml',),
@@ -466,7 +476,8 @@ class AbstractDovType(AbstractTypeCommon):
                     func=feature.findtext,
                     xpath=field['sourcefield'],
                     namespace=namespace,
-                    returntype=field.get('type', str)
+                    returntype=field.get('type', str),
+                    split_fn=field.get('split_fn', None)
                 )
 
         for field in cls.get_fields(source=('custom_wfs',)).values():
@@ -475,7 +486,8 @@ class AbstractDovType(AbstractTypeCommon):
                     func=feature.findtext,
                     xpath=required_field,
                     namespace=namespace,
-                    returntype=field.get('type', str)
+                    returntype=field.get('type', str),
+                    split_fn=field.get('split_fn', None)
                 )
 
         for field in cls.get_fields(source=('custom_wfs',)).values():

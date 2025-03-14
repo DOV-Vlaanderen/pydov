@@ -25,7 +25,7 @@ class AbstractField(dict):
     """Abstract base class for pydov field definitions. Not to be
     instantiated directly."""
 
-    def __init__(self, name, source, datatype, **kwargs):
+    def __init__(self, name, source, datatype, split_fn=None, **kwargs):
         """Initialise a field.
 
         Parameters
@@ -37,18 +37,21 @@ class AbstractField(dict):
         datatype : one of 'string', 'integer', 'float', 'date', 'datetime' \
                    or 'boolean'
             Datatype of the values of this field in the return dataframe.
+        split_fn : optional, function
+            Function to split values from this field into a list of values.
 
         """
         super(AbstractField, self).__init__(**kwargs)
         self.__setitem__('name', name)
         self.__setitem__('source', source)
         self.__setitem__('type', datatype)
+        self.__setitem__('split_fn', split_fn)
 
 
 class WfsField(AbstractField):
     """Class for a field available in the WFS service."""
 
-    def __init__(self, name, source_field, datatype):
+    def __init__(self, name, source_field, datatype, split_fn=None):
         """Initialise a WFS field.
 
         Parameters
@@ -60,9 +63,11 @@ class WfsField(AbstractField):
         datatype : one of 'string', 'integer', 'float', 'date', 'datetime' \
                    or 'boolean'
             Datatype of the values of this field in the return dataframe.
+        split_fn : optional, function
+            Function to split values from this field into a list of values.
 
         """
-        super(WfsField, self).__init__(name, 'wfs', datatype)
+        super(WfsField, self).__init__(name, 'wfs', datatype, split_fn)
         self.__setitem__('sourcefield', source_field)
 
 

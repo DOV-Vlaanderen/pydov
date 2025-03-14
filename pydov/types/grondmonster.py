@@ -50,43 +50,30 @@ class Grondmonster(AbstractDovType):
 
     fields = [
         WfsField(name='pkey_grondmonster',
-                 source_field='grondmonsterfiche',
+                 source_field='monster_link',
                  datatype='string'),
         WfsField(name='naam',
-                 source_field='naam',
+                 source_field='monster',
                  datatype='string'),
-        WfsField(name='pkey_boring',
-                 source_field='boringfiche',
-                 datatype='string'),
-        WfsField(name='boornummer',
-                 source_field='boornummer',
-                 datatype='string'),
-        XmlField(name='datum',
-                 source_xpath='/grondmonster/datum_monstername',
+        WfsField(name='pkey_parents',
+                 source_field='gekoppeld_aan_link',
+                 datatype='string',
+                 split_fn=lambda x: (y for y in x.strip(
+                     '| ').split('|') if y != '')),
+        WfsField(name='datum',
+                 source_field='bemonsteringsdatum',
                  datatype='date',),
-        WfsField(name='x',
-                 source_field='X_mL72',
-                 datatype='float'),
-        WfsField(name='y',
-                 source_field='Y_mL72',
-                 datatype='float'),
-        WfsField(name='gemeente',
-                 source_field='gemeente',
-                 datatype='string'),
         WfsField(name='diepte_van_m',
                  source_field='diepte_van_m',
                  datatype='float'),
         WfsField(name='diepte_tot_m',
                  source_field='diepte_tot_m',
                  datatype='float'),
-        WfsField(name='peil_van_mtaw',
-                 source_field='peil_van_mTAW',
-                 datatype='float'),
-        WfsField(name='peil_tot_mtaw',
-                 source_field='peil_tot_mTAW',
-                 datatype='float'),
         WfsField(name='monstertype',
                  source_field='monstertype',
+                 datatype='string'),
+        WfsField(name='monstersamenstelling',
+                 source_field='monstersamenstelling',
                  datatype='string'),
         XmlField(name='astm_naam',
                  source_xpath='/observatie[parameter="ASTM_naam"]/waarde_text',
@@ -139,7 +126,7 @@ class Grondmonster(AbstractDovType):
                  datatype='float')
     ]
 
-    pkey_fieldname = 'grondmonsterfiche'
+    pkey_fieldname = 'monster_link'
 
     def __init__(self, pkey):
         """Initialisation.

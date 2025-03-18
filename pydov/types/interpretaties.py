@@ -125,7 +125,8 @@ class AbstractBoringInterpretatie(AbstractDovType):
                 func=feature.findtext,
                 xpath=field['sourcefield'],
                 namespace=namespace,
-                returntype=field.get('type', None)
+                returntype=field.get('type', None),
+                split_fn=field.get('split_fn', None)
             )
 
         return instance

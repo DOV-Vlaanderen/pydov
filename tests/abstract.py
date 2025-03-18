@@ -799,11 +799,11 @@ class AbstractTestTypes(object):
             if field['source'] == 'wfs':
                 if 'wfs_injected' in field.keys():
                     assert sorted(field.keys()) == [
-                        'name', 'source', 'sourcefield', 'type',
+                        'name', 'source', 'sourcefield', 'split_fn', 'type',
                         'wfs_injected']
                 else:
                     assert sorted(field.keys()) == [
-                        'name', 'source', 'sourcefield', 'type']
+                        'name', 'source', 'sourcefield', 'split_fn', 'type']
             elif field['source'] == 'xml':
                 assert 'definition' in field
                 assert isinstance(field['definition'], str)
@@ -814,11 +814,12 @@ class AbstractTestTypes(object):
                 if 'xsd_type' in field:
                     assert sorted(field.keys()) == [
                         'definition', 'name', 'notnull', 'source',
-                        'sourcefield', 'type', 'xsd_schema', 'xsd_type']
+                        'sourcefield', 'split_fn', 'type', 'xsd_schema',
+                        'xsd_type']
                 else:
                     assert sorted(field.keys()) == [
                         'definition', 'name', 'notnull', 'source',
-                        'sourcefield', 'type']
+                        'sourcefield', 'split_fn', 'type']
 
     def test_get_fields_nosubtypes(self):
         """Test the get_fields method not including subtypes.

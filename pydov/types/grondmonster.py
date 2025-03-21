@@ -48,6 +48,23 @@ class Grondmonster(AbstractDovType):
 
     subtypes = [Korrelverdeling]
 
+    def _split_pkey_parents(agg_value):
+        """
+        Splits the given aggregated value into parent keys.
+
+        Parameters
+        ----------
+        agg_value : str
+            Aggregated value containing parent keys, separated by '|'.
+
+        Returns
+        -------
+        generator of str
+            Generator yielding non-empty parent keys extracted from the input.
+        """
+        return (pkey for pkey in agg_value.strip(
+            '| ').split('|') if pkey != '')
+
     fields = [
         WfsField(name='pkey_grondmonster',
                  source_field='monster_link',
@@ -58,8 +75,7 @@ class Grondmonster(AbstractDovType):
         WfsField(name='pkey_parents',
                  source_field='gekoppeld_aan_link',
                  datatype='string',
-                 split_fn=lambda x: (y for y in x.strip(
-                     '| ').split('|') if y != '')),
+                 split_fn=_split_pkey_parents),
         WfsField(name='datum',
                  source_field='bemonsteringsdatum',
                  datatype='date',),

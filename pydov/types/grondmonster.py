@@ -151,7 +151,7 @@ class Grondmonster(AbstractDovType):
         ----------
         pkey : str
             Permanent key of the Grondmonster, being a URI of the form
-            `https://www.dov.vlaanderen.be/data/grondmonster/<id>`.
+            `https://www.dov.vlaanderen.be/data/monster/<id>`.
 
         """
-        super().__init__('grondmonster', pkey)
+        super().__init__('monster', pkey)

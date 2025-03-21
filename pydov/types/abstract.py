@@ -638,6 +638,10 @@ class AbstractDovType(AbstractTypeCommon):
                 Datatype of the output data field (one of `string`, `float`,
                 `integer`, `date`, `datetime`, `boolean`).
 
+            split_fn (function)
+                Optional, a function to split the value of this field into
+                a list of values.
+
             The metadata dictionary additionally includes for fields with
             source `xml` or `wfs`:
 

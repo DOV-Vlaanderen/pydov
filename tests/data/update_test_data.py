@@ -813,10 +813,10 @@ if __name__ == '__main__':
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName='
             'boringen:grondmonsters&maxFeatures=1&CQL_Filter'
-            '=grondmonsterfiche=%27' +
+            '=monster_link=%27' +
             build_dov_url(
                 'data'
-                '/grondmonster/2018-211728') +
+                '/monster/2018-211728') +
             '%27'))
 
     update_file(
@@ -825,10 +825,10 @@ if __name__ == '__main__':
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName='
             'boringen:grondmonsters&maxFeatures=1&CQL_Filter'
-            '=grondmonsterfiche=%27' +
+            '=monster_link=%27' +
             build_dov_url(
                 'data'
-                '/grondmonster/2018-211728') +
+                '/monster/2018-211728') +
             '%27'),
         get_first_featuremember)
 

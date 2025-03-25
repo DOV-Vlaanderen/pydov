@@ -150,6 +150,7 @@ class AbstractJoin:
         ------
         ValueError
             If the input dataframe is empty.
+
         """
         if len(dataframe) < 1:
             raise ValueError("dataframe should not be empty")
@@ -180,6 +181,7 @@ class AbstractJoin:
         ------
         ValueError
             If the input dataframe is empty.
+
         """
         if AbstractJoin._is_iterable_type(dataframe, column):
             value_list = dataframe[column].dropna().aggregate('sum')

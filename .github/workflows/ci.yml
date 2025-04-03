@@ -18,12 +18,14 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        python-version: ["3.8", "3.9", "3.10"]
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
     steps:
-      - uses: "actions/checkout@v2"
-      - uses: "actions/setup-python@v1"
+      - uses: "actions/checkout@v3"
+      - uses: "actions/setup-python@v4"
         with:
           python-version: "${{ matrix.python-version }}"
+          cache: "pip"
+          cache-dependency-path: "requirements*.txt"
       - name: "Install dependencies"
         run: |
           set -xe
@@ -43,12 +45,14 @@ jobs:
       fail-fast: false
       matrix:
         os: [windows-latest]
-        python-version: ["3.8", "3.9", "3.10"]
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
     steps:
-      - uses: "actions/checkout@v2"
-      - uses: "actions/setup-python@v1"
+      - uses: "actions/checkout@v3"
+      - uses: "actions/setup-python@v4"
         with:
           python-version: "${{ matrix.python-version }}"
+          cache: "pip"
+          cache-dependency-path: "requirements*.txt"
       - name: "Install dependencies"
         run: |
           python -VV
@@ -67,12 +71,20 @@ jobs:
       fail-fast: false
       matrix:
         os: ["ubuntu-latest", "windows-latest"]
-        python-version: ["3.8", "3.9", "3.10"]
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
     steps:
-      - uses: "actions/checkout@v2"
+      - uses: "actions/checkout@v3"
+      - uses: actions/cache@v3
+        env:
+          CACHE_NUMBER: 0
+        with:
+          path: |
+            ~/conda_pkgs_dir
+            ${{ env.CONDA }}/envs
+          key: ${{ runner.os }}-conda-${{ env.CACHE_NUMBER }}-${{ hashFiles('requirements.txt') }}
       - uses: conda-incubator/setup-miniconda@v2
         with:
-          channels: conda-forge
+          channels: conda-forge,defaults
           allow-softlinks: true
           channel-priority: flexible
           auto-update-conda: true
@@ -82,14 +94,21 @@ jobs:
         shell: pwsh
         run: |
           conda update -n base -c defaults conda
+          conda install -n base conda-libmamba-solver
+          conda config --set solver libmamba
           conda install --name pydov --file requirements.txt
-          conda install --name pydov fiona>=1.8.18 geopandas
+          conda install --name pydov fiona>=1.8.18 geopandas shapely
           conda list
       - name: Install proxy dependencies with pip
         if: ${{ matrix.os == 'windows-latest' }}
         shell: pwsh
         run: |
           pip install -r requirements_proxy.txt
+          conda list
+      - name: Install geom dependencies with pip
+        shell: pwsh
+        run: |
+          pip install -r requirements_geom.txt
           conda list
       - name: Install development dependencies with pip
         shell: pwsh
@@ -109,12 +128,14 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        python-version: ["3.9"]
+        python-version: ["3.11"]
     steps:
-      - uses: "actions/checkout@v2"
-      - uses: "actions/setup-python@v1"
+      - uses: "actions/checkout@v3"
+      - uses: "actions/setup-python@v4"
         with:
           python-version: "${{ matrix.python-version }}"
+          cache: "pip"
+          cache-dependency-path: "requirements*.txt"
       - name: "Install dependencies"
         run: |
           set -xe
@@ -134,12 +155,14 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        python-version: ["3.9"]
+        python-version: ["3.11"]
     steps:
-      - uses: "actions/checkout@v2"
-      - uses: "actions/setup-python@v1"
+      - uses: "actions/checkout@v3"
+      - uses: "actions/setup-python@v4"
         with:
           python-version: "${{ matrix.python-version }}"
+          cache: "pip"
+          cache-dependency-path: "requirements*.txt"
       - name: "Install dependencies"
         run: |
           set -xe
@@ -159,12 +182,14 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        python-version: ["3.9"]
+        python-version: ["3.11"]
     steps:
-      - uses: "actions/checkout@v2"
-      - uses: "actions/setup-python@v1"
+      - uses: "actions/checkout@v3"
+      - uses: "actions/setup-python@v4"
         with:
           python-version: "${{ matrix.python-version }}"
+          cache: "pip"
+          cache-dependency-path: "requirements*.txt"
       - name: "Install pandoc"
         run: sudo apt install pandoc
       - name: "Install dependencies"

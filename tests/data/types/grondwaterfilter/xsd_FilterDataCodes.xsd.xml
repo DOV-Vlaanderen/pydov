@@ -382,7 +382,16 @@ select '<xs:enumeration value="'||beschrijving||'"/>' from grondwater.lut_filter
             <xs:documentation>de mogelijke onderdelen waaruit een filter opgebouwd is</xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
-            <xs:enumeration value="filter"/>
+            <xs:enumeration value="filter">
+                <xs:annotation>
+                    <xs:documentation>deprecated -  gebruik 'filterelement'. Deze optie al verwijderd worden in een volgende versie.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>    
+            <xs:enumeration value="filterelement">
+                <xs:annotation>
+                    <xs:documentation>vervangt 'filter'</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>    
             <xs:enumeration value="onbekend"/>
             <xs:enumeration value="open boorgat"/>
             <xs:enumeration value="pomp"/>
@@ -678,4 +687,106 @@ select '<xs:enumeration value="'||beschrijving||'"/>' from grondwater.lut_method
             <xs:enumeration value="afgesloten met freatisch karakter"/>
         </xs:restriction>
     </xs:simpleType>
+    <xs:simpleType name="ActieWaakgebieden1621EnumType">
+        <xs:annotation>
+            <xs:documentation>actiewaakgebieden - versie 2016 - 2021</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="0400_ actiegebied_met_freatisch_alternatief"/>
+            <xs:enumeration value="1000_actiegebied_2"/>
+            <xs:enumeration value="1000_actiegebied_3"/>
+            <xs:enumeration value="1000_actiegebied_4"/>
+            <xs:enumeration value="1000_waakgebied"/>
+            <xs:enumeration value="1100_waakgebied"/>
+            <xs:enumeration value="1300_actiegebied_1"/>
+            <xs:enumeration value="1300_actiegebied_2"/>
+            <xs:enumeration value="1300_actiegebied_3"/>
+            <xs:enumeration value="1300_actiegebied_4"/>
+            <xs:enumeration value="0800_actiegebied_met_beperkt_freatisch_alternatief"/>
+            <xs:enumeration value="0400_actiegebied_met_beperkt_freatisch_alternatief"/>
+            <xs:enumeration value="0800_actiegebied_met_freatisch_alternatief"/>
+            <xs:enumeration value="1100_waakgebied_Beringen"/>
+            <xs:enumeration value="1100_waakgebied_Leuven"/>
+            <xs:enumeration value="0400_actiegebied_verzilt"/>
+            <xs:enumeration value="0400_waakgebied"/>
+            <xs:enumeration value="0600_actiegebied_met_beperkt_freatisch_alternatief"/>
+            <xs:enumeration value="0600_actiegebied_met_freatisch_alternatief"/>
+            <xs:enumeration value="0600_waakgebied"/>
+            <xs:enumeration value="0800_waakgebied"/>
+            <xs:enumeration value="1000_actiegebied_1"/>
+            <xs:enumeration value="geen actie/waakgebieden"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="ActieWaakgebieden2227EnumType">
+        <xs:annotation>
+            <xs:documentation>actiewaakgebieden - versie 2022 - 2027</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="0400_actiegebied_1_met_beperkt_freatisch_alternatief"/>
+            <xs:enumeration value="0400_actiegebied_1_met_freatisch_alternatief"/>
+            <xs:enumeration value="0400_actiegebied_1_verzilt"/>
+            <xs:enumeration value="0400_actiegebied_2_met_beperkt_freatisch_alternatief"/>
+            <xs:enumeration value="0400_actiegebied_2_met_freatisch_alternatief"/>
+            <xs:enumeration value="0400_actiegebied_2_verzilt"/>
+            <xs:enumeration value="0400_waakgebied"/>
+            <xs:enumeration value="0600_actiegebied_met_beperkt_freatisch_alternatief"/>
+            <xs:enumeration value="0600_actiegebied_met_freatisch_alternatief"/>
+            <xs:enumeration value="0600_waakgebied"/>
+            <xs:enumeration value="0800_actiegebied_met_beperkt_freatisch_alternatief"/>
+            <xs:enumeration value="0800_actiegebied_met_freatisch_alternatief"/>
+            <xs:enumeration value="0800_waakgebied"/>
+            <xs:enumeration value="1000_actiegebied_1"/>
+            <xs:enumeration value="1000_actiegebied_2"/>
+            <xs:enumeration value="1000_actiegebied_3"/>
+            <xs:enumeration value="1000_waakgebied_1"/>
+            <xs:enumeration value="1000_waakgebied_2"/>
+            <xs:enumeration value="1100_waakgebied_1"/>
+            <xs:enumeration value="1300_actiegebied_1"/>
+            <xs:enumeration value="1300_actiegebied_2"/>
+            <xs:enumeration value="1300_actiegebied_3"/>
+            <xs:enumeration value="1300_waakgebied_1"/>
+            <xs:enumeration value="geen actie/waakgebieden"/>        
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="MethodeControleAquiferEnumType">
+        <xs:annotation>
+            <xs:documentation>de mogelijke waarden voor controle aquifer</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="volgens H3Dv2"/>
+            <xs:enumeration value="interpretatie o.b.v. boorbeschrijving"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="PeilbuislocatieEnumType">
+        <xs:annotation>
+            <xs:documentation>de mogelijke waarden voor de locatie van de peilbuis</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="onbekend"/>
+            <xs:enumeration value="geen peilbuis"/>
+            <xs:enumeration value="peilbuis in annulaire ruimte"/>
+            <xs:enumeration value="peilbuis in pompfilter"/>
+            <xs:enumeration value="peillat"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="PomptypeEnumType">
+        <xs:annotation>
+            <xs:documentation>de mogelijke waarden voor de locatie van de peilbuis</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="onbekend"/>
+            <xs:enumeration value="Bovengrondse zuigpomp"/>
+            <xs:enumeration value="Onderwaterpomp"/>
+            <xs:enumeration value="handpomp"/>
+            <xs:enumeration value="mobiele pomp (onderwater of bovengronds)"/>
+            <xs:enumeration value="caravanpomp"/>
+            <xs:enumeration value="peristaltische pomp"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+
+
 </xs:schema>

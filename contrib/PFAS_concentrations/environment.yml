@@ -1,0 +1,17 @@
+name: pydov_pfas
+channels:
+- conda-forge
+dependencies:
+- git
+- loguru
+- openpyxl
+- OWSLib
+- packaging
+- pandas
+- tqdm
+- ipython
+- jupyter
+- jupyter_client
+- ipykernel
+- pip:
+  - pydov[proxy]>=3.1.0

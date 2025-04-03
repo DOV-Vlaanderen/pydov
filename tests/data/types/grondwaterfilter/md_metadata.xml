@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <csw:GetRecordByIdResponse xmlns:csw="http://www.opengis.net/cat/csw/2.0.2">
-  <gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:geonet="http://www.fao.org/geonetwork" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://schemas.opengis.net/csw/2.0.2/profiles/apiso/1.0.0/apiso.xsd">
+  <gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:geonet="http://www.fao.org/geonetwork" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.isotc211.org/2005/gmx http://schemas.opengis.net/iso/19139/20060504/gmx/gmx.xsd http://www.isotc211.org/2005/srv http://schemas.opengis.net/iso/19139/20060504/srv/srv.xsd http://www.isotc211.org/2005/gmd http://schemas.opengis.net/iso/19139/20060504/gmd/gmd.xsd">
     <gmd:fileIdentifier>
       <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">6c39d716-aecc-4fbc-bac8-4f05a49a78d5</gco:CharacterString>
     </gmd:fileIdentifier>
@@ -19,20 +19,27 @@
     <gmd:contact>
       <gmd:CI_ResponsibleParty>
         <gmd:organisationName>
-          <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Vlaamse overheid - Vlaamse MilieuMaatschappij - Afdeling Operationeel Waterbeheer</gco:CharacterString>
+          <gmx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://data.vlaanderen.be/id/organisatie/OVO000092">Vlaamse overheid - Vlaamse MilieuMaatschappij</gmx:Anchor>
         </gmd:organisationName>
         <gmd:contactInfo>
           <gmd:CI_Contact>
+            <gmd:phone>
+              <gmd:CI_Telephone>
+                <gmd:voice>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">+32 5 372 62 10</gco:CharacterString>
+                </gmd:voice>
+              </gmd:CI_Telephone>
+            </gmd:phone>
             <gmd:address>
               <gmd:CI_Address>
                 <gmd:deliveryPoint>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Koning Albert II-laan 20 bus 16</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Dokter de Moorstraat 24-26</gco:CharacterString>
                 </gmd:deliveryPoint>
                 <gmd:city>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Brussel</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Aalst</gco:CharacterString>
                 </gmd:city>
                 <gmd:postalCode>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">1000</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">9300</gco:CharacterString>
                 </gmd:postalCode>
                 <gmd:country>
                   <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">België</gco:CharacterString>
@@ -57,7 +64,7 @@
       </gmd:CI_ResponsibleParty>
     </gmd:contact>
     <gmd:dateStamp>
-      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2022-09-23</gco:Date>
+      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2025-02-04</gco:Date>
     </gmd:dateStamp>
     <gmd:metadataStandardName>
       <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">ISO 19115/2003/Cor.1:2006/INSPIRE-TG2.0</gco:CharacterString>
@@ -89,7 +96,7 @@
             <gmd:date>
               <gmd:CI_Date>
                 <gmd:date>
-                  <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2002-05-22</gco:Date>
+                  <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2002-05-22</gco:Date>
                 </gmd:date>
                 <gmd:dateType>
                   <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation">creation</gmd:CI_DateTypeCode>
@@ -99,7 +106,7 @@
             <gmd:date>
               <gmd:CI_Date>
                 <gmd:date>
-                  <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2002-05-22</gco:Date>
+                  <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2002-05-22</gco:Date>
                 </gmd:date>
                 <gmd:dateType>
                   <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</gmd:CI_DateTypeCode>
@@ -134,7 +141,7 @@
         <gmd:pointOfContact>
           <gmd:CI_ResponsibleParty>
             <gmd:organisationName>
-              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Databank Ondergrond Vlaanderen (DOV)</gco:CharacterString>
+              <gmx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://data.vlaanderen.be/doc/organisatie/OVO027735">Databank Ondergrond Vlaanderen (DOV)</gmx:Anchor>
             </gmd:organisationName>
             <gmd:contactInfo>
               <gmd:CI_Contact>
@@ -181,7 +188,7 @@
         <gmd:pointOfContact>
           <gmd:CI_ResponsibleParty>
             <gmd:organisationName>
-              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Ondersteunend Centrum Databank Ondergrond Vlaanderen</gco:CharacterString>
+              <gmx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://data.vlaanderen.be/doc/organisatie/OVO027735">Ondersteunend Centrum Databank Ondergrond Vlaanderen</gmx:Anchor>
             </gmd:organisationName>
             <gmd:contactInfo>
               <gmd:CI_Contact>
@@ -225,10 +232,104 @@
             </gmd:role>
           </gmd:CI_ResponsibleParty>
         </gmd:pointOfContact>
+        <gmd:pointOfContact>
+          <gmd:CI_ResponsibleParty>
+            <gmd:organisationName>
+              <gmx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://data.vlaanderen.be/id/organisatie/OVO000092">Vlaamse overheid - Vlaamse MilieuMaatschappij</gmx:Anchor>
+            </gmd:organisationName>
+            <gmd:contactInfo>
+              <gmd:CI_Contact>
+                <gmd:phone>
+                  <gmd:CI_Telephone>
+                    <gmd:voice>
+                      <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">+32 5 372 62 10</gco:CharacterString>
+                    </gmd:voice>
+                  </gmd:CI_Telephone>
+                </gmd:phone>
+                <gmd:address>
+                  <gmd:CI_Address>
+                    <gmd:deliveryPoint>
+                      <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Dokter de Moorstraat 24-26</gco:CharacterString>
+                    </gmd:deliveryPoint>
+                    <gmd:city>
+                      <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Aalst</gco:CharacterString>
+                    </gmd:city>
+                    <gmd:postalCode>
+                      <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">9300</gco:CharacterString>
+                    </gmd:postalCode>
+                    <gmd:country>
+                      <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">België</gco:CharacterString>
+                    </gmd:country>
+                    <gmd:electronicMailAddress>
+                      <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">info@vmm.be</gco:CharacterString>
+                    </gmd:electronicMailAddress>
+                  </gmd:CI_Address>
+                </gmd:address>
+                <gmd:onlineResource>
+                  <gmd:CI_OnlineResource>
+                    <gmd:linkage>
+                      <gmd:URL>https://www.vmm.be</gmd:URL>
+                    </gmd:linkage>
+                  </gmd:CI_OnlineResource>
+                </gmd:onlineResource>
+              </gmd:CI_Contact>
+            </gmd:contactInfo>
+            <gmd:role>
+              <gmd:CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode" codeListValue="custodian">custodian</gmd:CI_RoleCode>
+            </gmd:role>
+          </gmd:CI_ResponsibleParty>
+        </gmd:pointOfContact>
+        <gmd:pointOfContact>
+          <gmd:CI_ResponsibleParty>
+            <gmd:organisationName>
+              <gmx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://data.vlaanderen.be/id/organisatie/OVO000092">Vlaamse overheid - Vlaamse MilieuMaatschappij</gmx:Anchor>
+            </gmd:organisationName>
+            <gmd:contactInfo>
+              <gmd:CI_Contact>
+                <gmd:phone>
+                  <gmd:CI_Telephone>
+                    <gmd:voice>
+                      <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">+32 5 372 62 10</gco:CharacterString>
+                    </gmd:voice>
+                  </gmd:CI_Telephone>
+                </gmd:phone>
+                <gmd:address>
+                  <gmd:CI_Address>
+                    <gmd:deliveryPoint>
+                      <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Dokter de Moorstraat 24-26</gco:CharacterString>
+                    </gmd:deliveryPoint>
+                    <gmd:city>
+                      <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Aalst</gco:CharacterString>
+                    </gmd:city>
+                    <gmd:postalCode>
+                      <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">9300</gco:CharacterString>
+                    </gmd:postalCode>
+                    <gmd:country>
+                      <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">België</gco:CharacterString>
+                    </gmd:country>
+                    <gmd:electronicMailAddress>
+                      <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">info@vmm.be</gco:CharacterString>
+                    </gmd:electronicMailAddress>
+                  </gmd:CI_Address>
+                </gmd:address>
+                <gmd:onlineResource>
+                  <gmd:CI_OnlineResource>
+                    <gmd:linkage>
+                      <gmd:URL>https://www.vmm.be</gmd:URL>
+                    </gmd:linkage>
+                  </gmd:CI_OnlineResource>
+                </gmd:onlineResource>
+              </gmd:CI_Contact>
+            </gmd:contactInfo>
+            <gmd:role>
+              <gmd:CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode" codeListValue="owner">owner</gmd:CI_RoleCode>
+            </gmd:role>
+          </gmd:CI_ResponsibleParty>
+        </gmd:pointOfContact>
         <gmd:graphicOverview>
           <gmd:MD_BrowseGraphic>
             <gmd:fileName>
-              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">https://www.dov.vlaanderen.be/geoserver/wms?SERVICE=WMS&amp;VERSION=1.1.1&amp;REQUEST=GetMap&amp;FORMAT=image%2Fpng&amp;TRANSPARENT=false&amp;STYLES&amp;LAYERS=gw_meetnetten:meetnetten&amp;SRS=EPSG%3A31370&amp;WIDTH=858&amp;HEIGHT=330&amp;BBOX=9518.482229747839%2C148172.73525929108%2C271454.8939534676%2C248854.86152133934</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">https://www.dov.vlaanderen.be/geoserver/gw_meetnetten/wms?SERVICE=WMS&amp;VERSION=1.1.1&amp;REQUEST=GetMap&amp;FORMAT=image%2Fpng&amp;TRANSPARENT=false&amp;STYLES&amp;SRS=EPSG%3A31370&amp;WIDTH=858&amp;HEIGHT=330&amp;BBOX=165000,200000,175000,215000&amp;layers=meetnetten</gco:CharacterString>
             </gmd:fileName>
             <gmd:fileType>
               <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">png</gco:CharacterString>
@@ -248,7 +349,7 @@
                 <gmd:date>
                   <gmd:CI_Date>
                     <gmd:date>
-                      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2008-06-01</gco:Date>
+                      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2008-06-01</gco:Date>
                     </gmd:date>
                     <gmd:dateType>
                       <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</gmd:CI_DateTypeCode>
@@ -278,7 +379,7 @@
                 <gmd:date>
                   <gmd:CI_Date>
                     <gmd:date>
-                      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2010-01-13</gco:Date>
+                      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2010-01-13</gco:Date>
                     </gmd:date>
                     <gmd:dateType>
                       <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</gmd:CI_DateTypeCode>
@@ -302,6 +403,9 @@
             </gmd:keyword>
             <gmd:keyword>
               <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Databank Ondergrond Vlaanderen</gco:CharacterString>
+            </gmd:keyword>
+            <gmd:keyword>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">VMM</gco:CharacterString>
             </gmd:keyword>
             <gmd:keyword>
               <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">meetnetten</gco:CharacterString>
@@ -330,7 +434,7 @@
                 <gmd:date>
                   <gmd:CI_Date>
                     <gmd:date>
-                      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2019-05-22</gco:Date>
+                      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2019-05-22</gco:Date>
                     </gmd:date>
                     <gmd:dateType>
                       <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</gmd:CI_DateTypeCode>
@@ -361,9 +465,6 @@
             <gmd:keyword>
               <gmx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/MDINSPIRECONFORM">Metadata INSPIRE-conform</gmx:Anchor>
             </gmd:keyword>
-            <gmd:keyword>
-              <gmx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://metadata.vlaanderen.be/id/GDI-Vlaanderen-Trefwoorden/LIJSTMRINSPIRE">Lijst M&amp;R INSPIRE</gmx:Anchor>
-            </gmd:keyword>
             <gmd:type>
               <gmd:MD_KeywordTypeCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode" codeListValue="theme" />
             </gmd:type>
@@ -375,7 +476,7 @@
                 <gmd:date>
                   <gmd:CI_Date>
                     <gmd:date>
-                      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2014-02-26</gco:Date>
+                      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2014-02-26</gco:Date>
                     </gmd:date>
                     <gmd:dateType>
                       <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</gmd:CI_DateTypeCode>
@@ -386,6 +487,13 @@
             </gmd:thesaurusName>
           </gmd:MD_Keywords>
         </gmd:descriptiveKeywords>
+        <gmd:resourceConstraints>
+          <gmd:MD_Constraints>
+            <gmd:useLimitation>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">geen beperkingen</gco:CharacterString>
+            </gmd:useLimitation>
+          </gmd:MD_Constraints>
+        </gmd:resourceConstraints>
         <gmd:resourceConstraints>
           <gmd:MD_LegalConstraints>
             <gmd:accessConstraints>
@@ -402,7 +510,7 @@
               <gmd:MD_RestrictionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode" codeListValue="otherRestrictions">otherRestrictions</gmd:MD_RestrictionCode>
             </gmd:useConstraints>
             <gmd:otherConstraints>
-              <gmx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://overheid.vlaanderen.be/sites/default/files/documenten/ict-egov/licenties/hergebruik/modellicentie_gratis_hergebruik_v1_0.html">In uitvoering van het Vlaamse decreet voor hergebruik van overheidsinformatie, is het hergebruik geregeld d.m.v. de Modellicentie voor gratis hergebruik. Dit betekent dat elk commercieel of niet-commercieel hergebruik voor onbepaalde duur is toegelaten, zonder dat daar kosten aan verbonden zijn. Als enige gebruiksvoorwaarde geldt een bronvermeldingsplicht.</gmx:Anchor>
+              <gmx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://data.vlaanderen.be/doc/licentie/modellicentie-gratis-hergebruik/v1.0">In uitvoering van het Vlaamse decreet voor hergebruik van overheidsinformatie, is het hergebruik geregeld d.m.v. de Modellicentie voor gratis hergebruik. Dit betekent dat elk commercieel of niet-commercieel hergebruik voor onbepaalde duur is toegelaten, zonder dat daar kosten aan verbonden zijn. Als enige gebruiksvoorwaarde geldt een bronvermeldingsplicht.</gmx:Anchor>
             </gmd:otherConstraints>
             <gmd:otherConstraints>
               <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Bij het gebruik van de informatie die DOV aanbiedt, dient steeds volgende standaardreferentie gebruikt te worden: Databank Ondergrond Vlaanderen - (vermelding van de beheerder en de specifieke geraadpleegde gegevens) - Geraadpleegd op dd/mm/jjjj, op https://www.dov.vlaanderen.be</gco:CharacterString>
@@ -446,16 +554,16 @@
             <gmd:geographicElement>
               <gmd:EX_GeographicBoundingBox>
                 <gmd:westBoundLongitude>
-                  <gco:Decimal xmlns:gco="http://www.isotc211.org/2005/gco">2.4035741568005036</gco:Decimal>
+                  <gco:Decimal xmlns:gco="http://www.isotc211.org/2005/gco">2.403574156800493</gco:Decimal>
                 </gmd:westBoundLongitude>
                 <gmd:eastBoundLongitude>
-                  <gco:Decimal xmlns:gco="http://www.isotc211.org/2005/gco">5.926733413934552</gco:Decimal>
+                  <gco:Decimal xmlns:gco="http://www.isotc211.org/2005/gco">5.926733413934559</gco:Decimal>
                 </gmd:eastBoundLongitude>
                 <gmd:southBoundLatitude>
-                  <gco:Decimal xmlns:gco="http://www.isotc211.org/2005/gco">50.677823278899695</gco:Decimal>
+                  <gco:Decimal xmlns:gco="http://www.isotc211.org/2005/gco">50.677823278899936</gco:Decimal>
                 </gmd:southBoundLatitude>
                 <gmd:northBoundLatitude>
-                  <gco:Decimal xmlns:gco="http://www.isotc211.org/2005/gco">51.505342259834116</gco:Decimal>
+                  <gco:Decimal xmlns:gco="http://www.isotc211.org/2005/gco">51.50534225983435</gco:Decimal>
                 </gmd:northBoundLatitude>
               </gmd:EX_GeographicBoundingBox>
             </gmd:geographicElement>
@@ -492,7 +600,7 @@
             <gmd:date>
               <gmd:CI_Date>
                 <gmd:date>
-                  <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2022-09-23</gco:Date>
+                  <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2025-02-04</gco:Date>
                 </gmd:date>
                 <gmd:dateType>
                   <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation">creation</gmd:CI_DateTypeCode>
@@ -523,7 +631,7 @@
             <gmd:distributorContact>
               <gmd:CI_ResponsibleParty>
                 <gmd:organisationName>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Databank Ondergrond Vlaanderen (DOV)</gco:CharacterString>
+                  <gmx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://data.vlaanderen.be/doc/organisatie/OVO027735">Databank Ondergrond Vlaanderen (DOV)</gmx:Anchor>
                 </gmd:organisationName>
                 <gmd:contactInfo>
                   <gmd:CI_Contact>
@@ -581,61 +689,13 @@
             <gmd:onLine>
               <gmd:CI_OnlineResource>
                 <gmd:linkage>
-                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/wms?</gmd:URL>
-                </gmd:linkage>
-                <gmd:protocol>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">OGC:WMS</gco:CharacterString>
-                </gmd:protocol>
-                <gmd:name>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">gw_meetnetten:meetnetten</gco:CharacterString>
-                </gmd:name>
-                <gmd:description>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">WMS-endpoint Grondwatermeetnetten</gco:CharacterString>
-                </gmd:description>
-              </gmd:CI_OnlineResource>
-            </gmd:onLine>
-            <gmd:onLine>
-              <gmd:CI_OnlineResource>
-                <gmd:linkage>
-                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/wms?SERVICE=WMS&amp;version=1.3.0&amp;request=GetCapabilities</gmd:URL>
-                </gmd:linkage>
-                <gmd:protocol>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">OGC:WMS-1.3.0-http-get-capabilities</gco:CharacterString>
-                </gmd:protocol>
-                <gmd:name>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">gw_meetnetten:meetnetten</gco:CharacterString>
-                </gmd:name>
-                <gmd:description>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">WMS-capabilities Grondwatermeetnetten</gco:CharacterString>
-                </gmd:description>
-              </gmd:CI_OnlineResource>
-            </gmd:onLine>
-            <gmd:onLine>
-              <gmd:CI_OnlineResource>
-                <gmd:linkage>
-                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/wms?SERVICE=WMS&amp;version=1.3.0&amp;request=GetMap</gmd:URL>
-                </gmd:linkage>
-                <gmd:protocol>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">OGC:WMS-1.3.0-http-get-map</gco:CharacterString>
-                </gmd:protocol>
-                <gmd:name>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">gw_meetnetten:meetnetten</gco:CharacterString>
-                </gmd:name>
-                <gmd:description>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">WMS-map Grondwatermeetnetten</gco:CharacterString>
-                </gmd:description>
-              </gmd:CI_OnlineResource>
-            </gmd:onLine>
-            <gmd:onLine>
-              <gmd:CI_OnlineResource>
-                <gmd:linkage>
-                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/wfs?</gmd:URL>
+                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/gw_meetnetten/wfs?</gmd:URL>
                 </gmd:linkage>
                 <gmd:protocol>
                   <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">OGC:WFS</gco:CharacterString>
                 </gmd:protocol>
                 <gmd:name>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">gw_meetnetten:meetnetten</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">meetnetten</gco:CharacterString>
                 </gmd:name>
                 <gmd:description>
                   <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">WFS-endpoint Grondwatermeetnetten</gco:CharacterString>
@@ -648,7 +708,7 @@
             <gmd:onLine>
               <gmd:CI_OnlineResource>
                 <gmd:linkage>
-                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/wfs?SERVICE=WFS&amp;version=2.0.0&amp;request=GetCapabilities</gmd:URL>
+                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/gw_meetnetten/wfs?SERVICE=WFS&amp;version=2.0.0&amp;request=GetCapabilities</gmd:URL>
                 </gmd:linkage>
                 <gmd:protocol>
                   <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">OGC:WFS-2.0.0-http-get-capabilities</gco:CharacterString>
@@ -667,13 +727,77 @@
             <gmd:onLine>
               <gmd:CI_OnlineResource>
                 <gmd:linkage>
-                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/wfs?SERVICE=WFS&amp;version=2.0.0&amp;request=GetFeature</gmd:URL>
+                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/gw_meetnetten/wms?SERVICE=WMS&amp;version=1.3.0&amp;request=GetCapabilities</gmd:URL>
+                </gmd:linkage>
+                <gmd:protocol>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">OGC:WMS-1.3.0-http-get-capabilities</gco:CharacterString>
+                </gmd:protocol>
+                <gmd:name>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">meetnetten</gco:CharacterString>
+                </gmd:name>
+                <gmd:description>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">WMS-capabilities Grondwatermeetnetten</gco:CharacterString>
+                </gmd:description>
+              </gmd:CI_OnlineResource>
+            </gmd:onLine>
+            <gmd:onLine>
+              <gmd:CI_OnlineResource>
+                <gmd:linkage>
+                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/gw_meetnetten/wms/kml?layers=meetnetten</gmd:URL>
+                </gmd:linkage>
+                <gmd:protocol>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">GLG:KML-2.0-http-get-map</gco:CharacterString>
+                </gmd:protocol>
+                <gmd:name>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">meetnetten</gco:CharacterString>
+                </gmd:name>
+                <gmd:description>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">KML Grondwatermeetnetten</gco:CharacterString>
+                </gmd:description>
+              </gmd:CI_OnlineResource>
+            </gmd:onLine>
+            <gmd:onLine>
+              <gmd:CI_OnlineResource>
+                <gmd:linkage>
+                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/gw_meetnetten/wms?SERVICE=WMS&amp;version=1.3.0&amp;request=GetMap</gmd:URL>
+                </gmd:linkage>
+                <gmd:protocol>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">OGC:WMS-1.3.0-http-get-map</gco:CharacterString>
+                </gmd:protocol>
+                <gmd:name>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">meetnetten</gco:CharacterString>
+                </gmd:name>
+                <gmd:description>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">WMS-map Grondwatermeetnetten</gco:CharacterString>
+                </gmd:description>
+              </gmd:CI_OnlineResource>
+            </gmd:onLine>
+            <gmd:onLine>
+              <gmd:CI_OnlineResource>
+                <gmd:linkage>
+                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/gw_meetnetten/wms?</gmd:URL>
+                </gmd:linkage>
+                <gmd:protocol>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">OGC:WMS</gco:CharacterString>
+                </gmd:protocol>
+                <gmd:name>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">meetnetten</gco:CharacterString>
+                </gmd:name>
+                <gmd:description>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">WMS-endpoint Grondwatermeetnetten</gco:CharacterString>
+                </gmd:description>
+              </gmd:CI_OnlineResource>
+            </gmd:onLine>
+            <gmd:onLine>
+              <gmd:CI_OnlineResource>
+                <gmd:linkage>
+                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/gw_meetnetten/wfs?SERVICE=WFS&amp;version=2.0.0&amp;request=GetFeature&amp;count=1&amp;typeName=meetnetten</gmd:URL>
                 </gmd:linkage>
                 <gmd:protocol>
                   <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">OGC:WFS-2.0.0-http-get-feature</gco:CharacterString>
                 </gmd:protocol>
                 <gmd:name>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">gw_meetnetten:meetnetten</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">meetnetten</gco:CharacterString>
                 </gmd:name>
                 <gmd:description>
                   <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">WFS-feature Grondwatermeetnetten</gco:CharacterString>
@@ -681,22 +805,6 @@
                 <gmd:function>
                   <gmd:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode" codeListValue="download">download</gmd:CI_OnLineFunctionCode>
                 </gmd:function>
-              </gmd:CI_OnlineResource>
-            </gmd:onLine>
-            <gmd:onLine>
-              <gmd:CI_OnlineResource>
-                <gmd:linkage>
-                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/wms/kml?layers=gw_meetnetten:meetnetten</gmd:URL>
-                </gmd:linkage>
-                <gmd:protocol>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">GLG:KML-2.0-http-get-map</gco:CharacterString>
-                </gmd:protocol>
-                <gmd:name>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">gw_meetnetten:meetnetten</gco:CharacterString>
-                </gmd:name>
-                <gmd:description>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">KML Grondwatermeetnetten</gco:CharacterString>
-                </gmd:description>
               </gmd:CI_OnlineResource>
             </gmd:onLine>
             <gmd:onLine>
@@ -740,7 +848,7 @@
                     <gmd:date>
                       <gmd:CI_Date>
                         <gmd:date>
-                          <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2010-12-08</gco:Date>
+                          <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2010-12-08</gco:Date>
                         </gmd:date>
                         <gmd:dateType>
                           <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</gmd:CI_DateTypeCode>
@@ -753,7 +861,7 @@
                   <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Zie vermelde specificatie</gco:CharacterString>
                 </gmd:explanation>
                 <gmd:pass>
-                  <gco:Boolean xmlns:gco="http://www.isotc211.org/2005/gco">false</gco:Boolean>
+                  <gco:Boolean xmlns:gco="http://www.isotc211.org/2005/gco">true</gco:Boolean>
                 </gmd:pass>
               </gmd:DQ_ConformanceResult>
             </gmd:result>

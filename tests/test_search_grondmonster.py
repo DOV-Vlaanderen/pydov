@@ -3,6 +3,7 @@
 from owslib.fes2 import PropertyIsEqualTo
 
 from pydov.search.grondmonster import GrondmonsterSearch
+from pydov.types.fields import ReturnFieldList
 from pydov.types.grondmonster import Grondmonster
 from tests.abstract import AbstractTestSearch
 
@@ -29,10 +30,12 @@ class TestGrondmonsterSearch(AbstractTestSearch):
     wfs_field = 'boornummer'
     xml_field = 'astm_naam'
 
-    valid_returnfields = ('pkey_grondmonster', 'boornummer')
-    valid_returnfields_subtype = (
+    valid_returnfields = ReturnFieldList.from_field_names(
+        'pkey_grondmonster', 'boornummer')
+    valid_returnfields_subtype = ReturnFieldList.from_field_names(
         'pkey_grondmonster', 'boornummer', 'diameter')
-    valid_returnfields_extra = ('pkey_grondmonster', 'korrelverdeling')
+    valid_returnfields_extra = ReturnFieldList.from_field_names(
+        'pkey_grondmonster', 'korrelverdeling')
 
     df_default_columns = [
         'pkey_grondmonster', 'naam', 'pkey_boring', 'boornummer',
@@ -41,7 +44,7 @@ class TestGrondmonsterSearch(AbstractTestSearch):
         'grondsoort_bggg', 'humusgehalte', 'kalkgehalte',
         'uitrolgrens', 'vloeigrens', 'glauconiet_totaal',
         'korrelvolumemassa', 'volumemassa', 'watergehalte',
-        'diameter', 'fractie', 'methode']
+        'methode', 'diameter', 'fractie']
 
     def test_search_xmlresolving(self, mp_get_schema,
                                  mp_remote_describefeaturetype,
@@ -69,7 +72,7 @@ class TestGrondmonsterSearch(AbstractTestSearch):
                            'methode'))
 
         assert df.humusgehalte[0] == 4.7
-        assert df.methode[0] == 'ZEEFPROEF'
+        assert df.methode[0] == 'Korrelverdeling d.m.v. hydrometer/areometer'
 
     def test_issue_285(self, mp_get_schema,
                        mp_remote_describefeaturetype,

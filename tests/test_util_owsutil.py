@@ -3,15 +3,13 @@ import copy
 
 import pytest
 from owslib.etree import etree
-from owslib.fes2 import FilterRequest, PropertyIsEqualTo, SortBy, SortProperty
+from owslib.fes2 import FilterRequest, PropertyIsEqualTo, SortBy, SortProperty, Or
 from owslib.iso import MD_Metadata
 from owslib.util import nspath_eval
 
 from pydov.util import owsutil
 from pydov.util.dovutil import build_dov_url
-from pydov.util.errors import (FeatureCatalogueNotFoundError,
-                               MetadataNotFoundError)
-from pydov.util.location import Box, Within
+from pydov.util.location import Box, Within, WithinDistance
 from tests.abstract import clean_xml
 
 location_md_metadata = 'tests/data/types/boring/md_metadata.xml'
@@ -43,7 +41,7 @@ class TestOwsutil(object):
         """Test the owsutil.get_csw_base_url method for a layer without
         metadata urls.
 
-        Test whether a MetadataNotFoundError is raised.
+        Test whether None is returned.
 
         Parameters
         ----------
@@ -54,8 +52,8 @@ class TestOwsutil(object):
         contents = copy.deepcopy(wfs.contents)
         contentmetadata = contents['dov-pub:Boringen']
         contentmetadata.metadataUrls = []
-        with pytest.raises(MetadataNotFoundError):
-            owsutil.get_csw_base_url(contentmetadata)
+
+        assert owsutil.get_csw_base_url(contentmetadata) is None
 
     def test_get_featurecatalogue_uuid(self, md_metadata):
         """Test the owsutil.get_featurecatalogue_uuid method.
@@ -77,7 +75,7 @@ class TestOwsutil(object):
         """Test the owsutil.get_featurecatalogue_uuid method when the
         metadata is missing the gmd:contentInfo element.
 
-        Test whether a FeatureCatalogueNotFoundError is raised.
+        Test whether None is returned.
 
         Parameters
         ----------
@@ -92,14 +90,13 @@ class TestOwsutil(object):
             tree.remove(ci)
         md_metadata = MD_Metadata(tree)
 
-        with pytest.raises(FeatureCatalogueNotFoundError):
-            owsutil.get_featurecatalogue_uuid(md_metadata)
+        assert owsutil.get_featurecatalogue_uuid(md_metadata) is None
 
     def test_get_featurecatalogue_uuid_nouuidref(self, md_metadata):
         """Test the owsutil.get_featurecatalogue_uuid method when the
         gmd:contentInfo element is missing a 'uuidref' attribute.
 
-        Test whether a FeatureCatalogueNotFoundError is raised.
+        Test whether None is returned.
 
         Parameters
         ----------
@@ -117,8 +114,7 @@ class TestOwsutil(object):
             ci.attrib.pop('uuidref')
         md_metadata = MD_Metadata(tree)
 
-        with pytest.raises(FeatureCatalogueNotFoundError):
-            owsutil.get_featurecatalogue_uuid(md_metadata)
+        assert owsutil.get_featurecatalogue_uuid(md_metadata) is None
 
     def test_get_namespace(self, wfs, mp_remote_describefeaturetype):
         """Test the owsutil.get_namespace method.
@@ -193,7 +189,7 @@ class TestOwsutil(object):
         """Test the owsutil.get_remote_featurecatalogue method with an
         inexistent feature catalogue uuid.
 
-        Test whether a FeatureCatalogueNotFoundError is raised.
+        Test whether None is returned.
 
         Parameters
         ----------
@@ -201,10 +197,9 @@ class TestOwsutil(object):
             Monkeypatch the call to get an inexistent remote featurecatalogue.
 
         """
-        with pytest.raises(FeatureCatalogueNotFoundError):
-            owsutil.get_remote_featurecatalogue(
-                build_dov_url('geonetwork/srv/nl/csw'),
-                'badfc000-0000-0000-0000-badfc00badfc')
+        assert owsutil.get_remote_featurecatalogue(
+            build_dov_url('geonetwork/srv/nl/csw'),
+            'badfc000-0000-0000-0000-badfc00badfc') is None
 
     def test_get_remote_metadata(self, md_metadata):
         """Test the owsutil.get_remote_metadata method.
@@ -219,6 +214,25 @@ class TestOwsutil(object):
 
         """
         assert isinstance(md_metadata, MD_Metadata)
+
+    def test_get_wfs_max_features(self, wfs_capabilities):
+        """Test the owsutil.get_wfs_max_features method.
+
+        Test whether the default maximum number of features can be found.
+
+        Parameters
+        ----------
+        wfs_capabilities : pytest.fixture
+            PyTest fixture providing the WFS GetCapabilities response.
+        """
+        max_features = owsutil.get_wfs_max_features(wfs_capabilities)
+
+        assert isinstance(max_features, int)
+        assert max_features > 0
+
+
+class TestWfsGetFeatureRequest(object):
+    """Class grouping tests checking the WFS GetFeature request generation."""
 
     def test_wfs_build_getfeature_request_onlytypename(self):
         """Test the owsutil.wfs_build_getfeature_request method with only a
@@ -391,6 +405,41 @@ class TestOwsutil(object):
             '214675.000000</gml:lowerCorner><gml:upperCorner>151750.000000 '
             '214775.000000</gml:upperCorner></gml:Envelope></fes:Within></fes'
             ':Filter></wfs:Query></wfs:GetFeature>')
+
+    def test_wfs_build_getfeature_request_gml_id_stable(self):
+        """Test the owsutil.wfs_build_getfeature_request method with a
+        typename, box and geometry_column.
+        Test whether the XML of the WFS GetFeature call is stable.
+        """
+        xml1 = owsutil.wfs_build_getfeature_request(
+            'dov-pub:Boringen',
+            location=Within(Box(151650, 214675, 151750, 214775)),
+            geometry_column='geom')
+
+        xml2 = owsutil.wfs_build_getfeature_request(
+            'dov-pub:Boringen',
+            location=Within(Box(151650, 214675, 151750, 214775)),
+            geometry_column='geom')
+
+        assert etree.tostring(xml1) == etree.tostring(xml2)
+
+    def test_wfs_build_getfeature_request_gml_id_unique(self):
+        """Test the owsutil.wfs_build_getfeature_request method with a
+        typename, two boxes and geometry_column.
+        Test whether the GML ids in the XML of the WFS GetFeature are unique.
+        """
+        xml = owsutil.wfs_build_getfeature_request(
+            'dov-pub:Boringen',
+            location=Or([
+                Within(Box(100000, 120000, 200000, 220000)),
+                WithinDistance(Box(100000, 120000, 200000, 220000), 10)
+            ]),
+            geometry_column='geom')
+
+        gml_items = xml.findall('.//*[@{http://www.opengis.net/gml/3.2}id]')
+        gml_ids = [i.get('{http://www.opengis.net/gml/3.2}id') for i in gml_items]
+
+        assert len(gml_ids) == len(set(gml_ids))
 
     def test_wfs_build_getfeature_request_propertyname(self):
         """Test the owsutil.wfs_build_getfeature_request method with a list
@@ -596,17 +645,40 @@ class TestOwsutil(object):
             'ASC</fes:SortOrder></fes:SortProperty></fes:SortBy></wfs:Query>'
             '</wfs:GetFeature>')
 
-    def test_get_wfs_max_features(self, wfs_capabilities):
-        """Test the owsutil.get_wfs_max_features method.
+    def test_wfs_build_getfeature_request_srs(self):
+        """Test the owsutil.wfs_build_getfeature_request method with only a
+        typename and an SRS.
 
-        Test whether the default maximum number of features can be found.
+        Test whether the XML of the WFS GetFeature call is generated correctly.
 
-        Parameters
-        ----------
-        wfs_capabilities : pytest.fixture
-            PyTest fixture providing the WFS GetCapabilities response.
         """
-        max_features = owsutil.get_wfs_max_features(wfs_capabilities)
+        xml = owsutil.wfs_build_getfeature_request('dov-pub:Boringen', crs='EPSG:31370')
 
-        assert isinstance(max_features, int)
-        assert max_features > 0
+        assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
+            '<wfs:GetFeature xmlns:wfs="http://www.opengis.net/wfs/2.0" '
+            'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" '
+            'service="WFS" version="2.0.0" startIndex="0" '
+            'xsi:schemaLocation="http://www.opengis.net/wfs/2.0 '
+            'http://schemas.opengis.net/wfs/2.0/wfs.xsd"><wfs:Query '
+            'typeNames="dov-pub:Boringen" srsName="EPSG:31370"/></wfs'
+            ':GetFeature>')
+
+    def test_wfs_build_getfeature_request_srs_wrongtype(self):
+        """Test the owsutil.wfs_build_getfeature_request method with only a
+        typename and an CRS of the wrong type.
+
+        Test whether a TypeError is raised.
+
+        """
+        with pytest.raises(TypeError):
+            owsutil.wfs_build_getfeature_request('dov-pub:Boringen', crs=31370)
+
+    def test_wfs_build_getfeature_request_srs_wrongvalue(self):
+        """Test the owsutil.wfs_build_getfeature_request method with only a
+        typename and an CRS of the wrong type.
+
+        Test whether a ValueError is raised.
+
+        """
+        with pytest.raises(ValueError):
+            owsutil.wfs_build_getfeature_request('dov-pub:Boringen', crs='31370')

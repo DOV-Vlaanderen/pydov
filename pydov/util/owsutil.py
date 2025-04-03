@@ -11,7 +11,6 @@ from owslib.util import nspath_eval
 import pydov
 from pydov.util.net import SessionFactory
 
-from .errors import FeatureCatalogueNotFoundError, MetadataNotFoundError
 from .hooks import HookRunner
 
 
@@ -26,6 +25,15 @@ def __get_namespaces():
 
 
 __namespaces = __get_namespaces()
+
+
+def has_geom_support():
+    try:
+        import pygml
+        import shapely
+        return True or (pygml.__version__ and shapely.__version__)
+    except ImportError:
+        return False
 
 
 def __get_remote_fc(fc_url):
@@ -76,14 +84,10 @@ def get_remote_metadata(contentmetadata):
 
     Returns
     -------
-    owslib.iso.MD_Metadata
+    owslib.iso.MD_Metadata or None
         Parsed remote metadata describing the WFS layer in more detail,
-        in the ISO 19115/19139 format.
-
-    Raises
-    ------
-    pydov.util.errors.MetadataNotFoundError
-        If the `contentmetadata` has no valid metadata URL associated with it.
+        in the ISO 19115/19139 format, or None when no metadata could be found
+        or parsed.
 
     """
     with warnings.catch_warnings():
@@ -93,8 +97,6 @@ def get_remote_metadata(contentmetadata):
     for remote_md in contentmetadata.metadataUrls:
         if 'metadata' in remote_md and remote_md['metadata'] is not None:
             return remote_md['metadata']
-
-    raise MetadataNotFoundError
 
 
 def get_csw_base_url(contentmetadata):
@@ -108,14 +110,9 @@ def get_csw_base_url(contentmetadata):
 
     Returns
     -------
-    url : str
+    url : str or None
         Base URL of the CSW service where the remote metadata and feature
-        catalogue can be requested.
-
-    Raises
-    ------
-    pydov.util.errors.MetadataNotFoundError
-        If the `contentmetadata` has no valid metadata URL associated with it.
+        catalogue can be requested or None when no metadata URL could be found.
 
     """
     md_url = None
@@ -125,7 +122,7 @@ def get_csw_base_url(contentmetadata):
             md_url = md.get('url')
 
     if md_url is None:
-        raise MetadataNotFoundError
+        return None
 
     parsed_url = urlparse(md_url)
     return parsed_url.scheme + '://' + parsed_url.netloc + parsed_url.path
@@ -141,15 +138,9 @@ def get_featurecatalogue_uuid(md_metadata):
 
     Returns
     -------
-    uuid : str
+    uuid : str or None
         Universally unique identifier of the feature catalogue associated
-        with the metadata.
-
-    Raises
-    ------
-    pydov.util.errors.FeatureCatalogueNotFoundError
-        If there is no Feature Catalogue associated with the metadata or its
-        UUID could not be retrieved.
+        with the metadata or None when there is no feature catalogue available.
 
     """
     fc_uuid = None
@@ -160,10 +151,7 @@ def get_featurecatalogue_uuid(md_metadata):
         fc_uuid = contentinfo.featurecatalogues[0] if \
             len(contentinfo.featurecatalogues) > 0 else None
 
-    if fc_uuid is None:
-        raise FeatureCatalogueNotFoundError
-    else:
-        return fc_uuid
+    return fc_uuid
 
 
 def get_remote_featurecatalogue(csw_url, fc_uuid):
@@ -179,9 +167,10 @@ def get_remote_featurecatalogue(csw_url, fc_uuid):
 
     Returns
     -------
-    dict
+    dict or None
         Dictionary with fields described in the feature catalogue, using the
-        following schema:
+        following schema, or None when no feature catalogue with the given
+        UUID could not be found:
 
         >>>   {'definition' : 'feature type definition',
         >>>    'attributes' : {'name':
@@ -195,12 +184,6 @@ def get_remote_featurecatalogue(csw_url, fc_uuid):
         multiplicity is either an integer or the str 'Inf' indicating an
         infinate value.
 
-    Raises
-    ------
-    pydov.util.errors.FeatureCatalogueNotFoundError
-        If there is no feature catalogue with given UUID available in the
-        given CSW service.
-
     """
     fc_url = csw_url + '?Service=CSW&Request=GetRecordById&Version=2.0.2' \
                        '&outputSchema=http://www.isotc211.org/2005/gfc' \
@@ -211,7 +194,7 @@ def get_remote_featurecatalogue(csw_url, fc_uuid):
 
     fc = tree.find(nspath_eval('gfc:FC_FeatureCatalogue', __namespaces))
     if fc is None:
-        raise FeatureCatalogueNotFoundError
+        return None
 
     r = {}
     r['definition'] = fc.findtext(nspath_eval(
@@ -350,9 +333,34 @@ def set_geometry_column(location, geometry_column):
     return location.toXML()
 
 
+def unique_gml_ids(location):
+    """Make sure the location query has unique GML id's for all features.
+
+    Parameters
+    ----------
+    location : etree.ElementTree
+        XML tree of the location filter.
+    Returns
+    -------
+    etree.ElementTree
+        XML tree of the location filter with unique GML ids.
+
+    """
+    gml_items = location.findall('.//*[@{http://www.opengis.net/gml/3.2}id]')
+    gml_ids = [i.get('{http://www.opengis.net/gml/3.2}id') for i in gml_items]
+
+    if len(gml_ids) == len(set(gml_ids)):
+        return location
+    else:
+        for ix, item in enumerate(gml_items):
+            item.set('{http://www.opengis.net/gml/3.2}id', f'pydov.{ix}')
+        return location
+
+
 def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
                                  filter=None, sort_by=None, propertyname=None,
-                                 max_features=None, start_index=0):
+                                 max_features=None, start_index=0,
+                                 crs=None):
     """Build a WFS 2.0 GetFeature request in XML to be used as payload
     in a WFS 2.0 GetFeature request using POST.
 
@@ -376,11 +384,22 @@ def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
         Limit the maximum number of features to request.
     start_index : int
         The index of the first feature to return.
+    crs : str
+        EPSG code of the CRS of the geometries that will be returned. Defaults
+        to None, which means the default CRS of the WFS layer.
 
     Raises
     ------
     AttributeError
         If ``bbox`` is given without ``geometry_column``.
+        If ``max_features`` has an invalid value.
+        If ``start_index`` had an invalid value.
+
+    TypeError
+        If ``crs`` is not a string.
+
+    ValueError
+        If ``crs`` does not start with 'EPSG'.
 
     Returns
     -------
@@ -412,6 +431,15 @@ def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
     query = etree.Element('{http://www.opengis.net/wfs/2.0}Query')
     query.set('typeNames', typename)
 
+    if crs is not None:
+        if not isinstance(crs, str):
+            raise TypeError('crs should be a string starting with "EPSG"')
+
+        if not crs.lower().startswith('epsg'):
+            raise ValueError('crs should start with "EPSG"')
+
+        query.set('srsName', crs)
+
     if propertyname and len(propertyname) > 0:
         for property in sorted(propertyname):
             propertyname_xml = etree.Element(
@@ -435,6 +463,7 @@ def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
 
     if location is not None:
         location = set_geometry_column(location, geometry_column)
+        location = unique_gml_ids(location)
         filter_parent.append(location)
 
     if filter is not None or location is not None:
@@ -474,6 +503,22 @@ def wfs_get_feature(baseurl, get_feature_request, session=None):
     request = session.post(baseurl, data)
     request.encoding = 'utf-8'
     return request.text.encode('utf8')
+
+
+def get_wfs_capabilities(url):
+    """Perform a GET request to get the WFS capabilities.
+
+    Parameters
+    ----------
+    url : str
+        URL to request.
+
+    Returns
+    -------
+    bytes
+        Response containing the result of the WFS capabilities request.
+    """
+    return get_url(url)
 
 
 def get_url(url):

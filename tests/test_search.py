@@ -1,5 +1,6 @@
 """Module grouping common tests for all search modules."""
 
+import datetime
 import numpy as np
 import pytest
 
@@ -10,6 +11,7 @@ from pydov.search.bodemobservatie import BodemobservatieSearch
 from pydov.search.bodemsite import BodemsiteSearch
 from pydov.search.bodemclassificatie import BodemclassificatieSearch
 from pydov.search.boring import BoringSearch
+from pydov.search.generic import WfsSearch
 from pydov.search.grondmonster import GrondmonsterSearch
 from pydov.search.grondwaterfilter import GrondwaterFilterSearch
 from pydov.search.grondwatermonster import GrondwaterMonsterSearch
@@ -23,6 +25,8 @@ from pydov.search.sondering import SonderingSearch
 from pydov.util.errors import InvalidSearchParameterError
 from pydov.util.location import Point, WithinDistance
 from tests.abstract import ServiceCheck
+
+from pydov.search.abstract import AbstractCommon
 
 search_objects = [BodemsiteSearch(),
                   BodemlocatieSearch(),
@@ -43,7 +47,8 @@ search_objects = [BodemsiteSearch(),
                   HydrogeologischeStratigrafieSearch(),
                   GecodeerdeLithologieSearch(),
                   LithologischeBeschrijvingenSearch(),
-                  GrondmonsterSearch()]
+                  GrondmonsterSearch(),
+                  WfsSearch('dov-pub:Opdrachten')]
 
 
 @pytest.mark.parametrize("objectsearch", search_objects)
@@ -199,3 +204,41 @@ def test_search_wfs_no_primary_key(objectsearch):
 
         df = objectsearch.search(max_features=1, return_fields=(field,))
         assert not np.isnan(df[field][0])
+
+
+def test_typeconvert_datetime():
+    """Test the type conversion function for datetime strings."""
+
+    # Zulu time
+    x = AbstractCommon._typeconvert('2023-02-07T09:19:24Z', 'datetime')
+    assert isinstance(x, datetime.datetime)
+    assert x == datetime.datetime(2023, 2, 7, 10, 19, 24, 0)
+
+    # Brussels time
+    x = AbstractCommon._typeconvert('2023-02-07T09:19:24+0100', 'datetime')
+    assert isinstance(x, datetime.datetime)
+    assert x == datetime.datetime(
+        2023, 2, 7, 9, 19, 24, 0,
+        datetime.timezone(datetime.timedelta(hours=1)))
+
+    # Brussels time, with colon
+    x = AbstractCommon._typeconvert('2023-02-07T09:19:24+01:00', 'datetime')
+    assert isinstance(x, datetime.datetime)
+    assert x == datetime.datetime(
+        2023, 2, 7, 9, 19, 24, 0,
+        datetime.timezone(datetime.timedelta(hours=1)))
+
+    # With milliseconds
+    x = AbstractCommon._typeconvert('2023-02-07T09:19:24.123+01:00', 'datetime')
+    assert isinstance(x, datetime.datetime)
+    assert x == datetime.datetime(
+        2023, 2, 7, 9, 19, 24, 123,
+        datetime.timezone(datetime.timedelta(hours=1)))
+
+    # With more milliseconds
+    x = AbstractCommon._typeconvert(
+        '2023-02-07T09:19:24.123456+01:00', 'datetime')
+    assert isinstance(x, datetime.datetime)
+    assert x == datetime.datetime(
+        2023, 2, 7, 9, 19, 24, 123456,
+        datetime.timezone(datetime.timedelta(hours=1)))

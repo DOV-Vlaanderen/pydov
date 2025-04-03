@@ -12,7 +12,8 @@ from owslib.etree import etree
 
 import pydov
 from pydov.search.abstract import AbstractCommon
-from pydov.types.fields import AbstractField
+from pydov.types.fields import AbstractField, ReturnFieldList
+from pydov.util import owsutil
 from pydov.util.dovutil import get_dov_xml, parse_dov_xml
 from pydov.util.errors import RemoteFetchError, XmlFetchWarning
 from pydov.util.net import LocalSessionThreadPool
@@ -68,7 +69,7 @@ class AbstractTypeCommon(AbstractCommon):
     fields = []
 
     @classmethod
-    def _parse(cls, func, xpath, namespace, returntype):
+    def _parse(cls, func, xpath, namespace, returntype, split_fn=None):
         """Parse the result of an XML path function, stripping the namespace
         and adding type conversion.
 
@@ -84,6 +85,10 @@ class AbstractTypeCommon(AbstractCommon):
         returntype : str
             Parse the text found with `func` to this output datatype. One of
             `string`, `float`, `integer`, `date`, `datetime`, `boolean`.
+        split_fn : optional, function
+            Function to split values from this field into a list of values.
+            After splitting they will be parsed into the corresponding
+            returntype.
 
         Returns
         -------
@@ -100,6 +105,10 @@ class AbstractTypeCommon(AbstractCommon):
 
         if text is None:
             return np.nan
+
+        if split_fn is not None:
+            items = split_fn(text)
+            return [cls._typeconvert(item, returntype) for item in items]
 
         return cls._typeconvert(text, returntype)
 
@@ -248,6 +257,8 @@ class AbstractDovSubType(AbstractTypeCommon):
 
     rootpath = None
 
+    subtypes = []
+
     _UNRESOLVED = "{UNRESOLVED}"
 
     def __init__(self):
@@ -271,6 +282,11 @@ class AbstractDovSubType(AbstractTypeCommon):
                 [AbstractDovSubType._UNRESOLVED] * len(self.get_field_names()))
         )
 
+        self.subdata = dict(
+            zip([st.get_name() for st in self.subtypes],
+                [] * len(self.subtypes))
+        )
+
     @classmethod
     def from_xml(cls, xml_data):
         """Build instances of this subtype from XML data.
@@ -289,7 +305,7 @@ class AbstractDovSubType(AbstractTypeCommon):
         """
         try:
             tree = parse_dov_xml(xml_data)
-            for element in tree.findall(cls.rootpath):
+            for element in tree.xpath(cls.rootpath):
                 yield cls.from_xml_element(element)
         except XmlParseError:
             # Ignore XmlParseError here in subtypes, assuming it will be
@@ -320,14 +336,16 @@ class AbstractDovSubType(AbstractTypeCommon):
                 func=element.findtext,
                 xpath=field['sourcefield'],
                 namespace=None,
-                returntype=field.get('type', None)
+                returntype=field.get('type', None),
+                split_fn=field.get('split_fn', None)
             )
 
+        instance._parse_subtypes(etree.tostring(element))
         return instance
 
     @classmethod
     def get_field_names(cls):
-        """Return the names of the fields available for this type.
+        """Return the names of the fields available for this subtype.
 
         Returns
         -------
@@ -336,11 +354,16 @@ class AbstractDovSubType(AbstractTypeCommon):
             the names of the columns in the output dataframe for this type.
 
         """
-        return [f['name'] for f in cls.fields]
+        field_names = [f['name'] for f in cls.fields]
+
+        for st in cls.subtypes:
+            field_names.extend(st.get_field_names())
+
+        return field_names
 
     @classmethod
     def get_fields(cls):
-        """Return the metadata of the fields available for this type.
+        """Return the metadata of the fields available for this subtype.
 
         Returns
         -------
@@ -371,9 +394,17 @@ class AbstractDovSubType(AbstractTypeCommon):
                 Whether the field is mandatory (True) or can be null (False).
 
         """
-        return OrderedDict(
+        fields = OrderedDict(
             zip([f['name'] for f in cls.fields],
                 [f for f in cls.fields]))
+
+        for st in cls.subtypes:
+            fields.update(OrderedDict(
+                zip([f['name'] for f in st.fields],
+                    [f for f in st.fields])
+            ))
+
+        return fields
 
     @classmethod
     def get_name(cls):
@@ -386,6 +417,50 @@ class AbstractDovSubType(AbstractTypeCommon):
 
         """
         return cls.__name__
+
+    def _parse_subtypes(self, xml):
+        """Parse the subtypes with the given XML data.
+
+        Parameters
+        ----------
+        xml : bytes
+            The raw XML data of the DOV object as bytes.
+
+        """
+        for subtype in self.subtypes:
+            st_name = subtype.get_name()
+            if st_name not in self.subdata:
+                self.subdata[st_name] = []
+
+            for subitem in subtype.from_xml(xml):
+                self.subdata[st_name].append(subitem)
+
+    def get_data_dicts(self):
+        """Return the data dictionaries for this instance, including subtypes,
+        for inclusion in the output dataframe.
+
+        Returns
+        -------
+        list(dict)
+            list of data dictionaries for inclusion in the output dataframe
+        """
+        datadicts = []
+
+        if len(self.subdata) == 0:
+            datadicts.append(self.data)
+        else:
+            for subtype in self.subdata:
+                if len(self.subdata[subtype]) == 0:
+                    datadicts.append(self.data)
+                else:
+                    for subdata in self.subdata[subtype]:
+                        for subdata_dict in subdata.get_data_dicts():
+                            datadict = {}
+                            datadict.update(self.data)
+                            datadict.update(subdata_dict)
+                            datadicts.append(datadict)
+
+        return datadicts
 
 
 class AbstractDovType(AbstractTypeCommon):
@@ -483,8 +558,14 @@ class AbstractDovType(AbstractTypeCommon):
                     func=tree.findtext,
                     xpath=field['sourcefield'],
                     namespace=None,
-                    returntype=field.get('type', None)
+                    returntype=field.get('type', None),
+                    split_fn=field.get('split_fn', None)
                 )
+
+            for field in self.get_fields(source=('custom_xml',),
+                                         include_subtypes=False).values():
+                self.data[field['name']] = field.calculate(
+                    self.__class__, tree) or np.nan
 
             self._parse_subtypes(xml)
             return True
@@ -572,23 +653,44 @@ class AbstractDovType(AbstractTypeCommon):
             An instance of this class populated with the data from the WFS
             element.
 
-        Raises
-        ------
-        NotImplementedError
-            This is an abstract method that should be implemented in a
-            subclass.
-
         """
-        instance = cls(feature.findtext(
-            './{{{}}}{}'.format(namespace, cls.pkey_fieldname)))
+        if cls.pkey_fieldname is not None:
+            pkey = feature.findtext(
+                './{{{}}}{}'.format(namespace, cls.pkey_fieldname))
+        else:
+            pkey = feature.get('{http://www.opengis.net/gml/3.2}id')
+
+        instance = cls(pkey)
 
         for field in cls.get_fields(source=('wfs',)).values():
-            instance.data[field['name']] = cls._parse(
-                func=feature.findtext,
-                xpath=field['sourcefield'],
-                namespace=namespace,
-                returntype=field.get('type', None)
-            )
+            if owsutil.has_geom_support() and field['type'] == 'geometry':
+                instance.data[field['name']] = cls._parse(
+                    func=feature.find,
+                    xpath=field['sourcefield'],
+                    namespace=namespace,
+                    returntype='geometry'
+                )
+            else:
+                instance.data[field['name']] = cls._parse(
+                    func=feature.findtext,
+                    xpath=field['sourcefield'],
+                    namespace=namespace,
+                    returntype=field.get('type', str),
+                    split_fn=field.get('split_fn', None)
+                )
+
+        for field in cls.get_fields(source=('custom_wfs',)).values():
+            for required_field in field.requires_wfs_fields():
+                instance.data[required_field] = cls._parse(
+                    func=feature.findtext,
+                    xpath=required_field,
+                    namespace=namespace,
+                    returntype=field.get('type', str),
+                    split_fn=field.get('split_fn', None)
+                )
+
+        for field in cls.get_fields(source=('custom_wfs',)).values():
+            instance.data[field['name']] = field.calculate(instance) or np.nan
 
         return instance
 
@@ -640,12 +742,12 @@ class AbstractDovType(AbstractTypeCommon):
 
     @classmethod
     def get_field_names(cls, return_fields=None, include_subtypes=True,
-                        include_wfs_injected=False):
+                        include_wfs_injected=False, include_geometry=False):
         """Return the names of the fields available for this type.
 
         Parameters
         ----------
-        return_fields : list<str> or tuple<str> or set<str>
+        return_fields : ReturnFieldList
             List of fields to include in the data array. The order is
             ignored, the default order of the fields of the datatype is used
             instead. Defaults to None, which will include all fields.
@@ -655,6 +757,8 @@ class AbstractDovType(AbstractTypeCommon):
         include_wfs_injected : boolean
             Whether to include fields defined in WFS only, not in the
             default dataframe for this type. Defaults to False.
+        include_geometry : boolean
+            Whether to include geometry fields. Defaults to False.
 
         Returns
         -------
@@ -673,28 +777,32 @@ class AbstractDovType(AbstractTypeCommon):
         """
         if return_fields is None:
             if include_wfs_injected:
-                fields = [f['name'] for f in cls.fields]
+                fields = [f['name'] for f in cls.fields if f['type']
+                          != 'geometry' or include_geometry]
             else:
                 fields = [f['name'] for f in cls.fields if not f.get(
-                    'wfs_injected', False)]
+                    'wfs_injected', False) and (
+                        f['type'] != 'geometry' or include_geometry)]
             if include_subtypes:
                 for st in cls.subtypes:
                     fields.extend(st.get_field_names())
-        elif type(return_fields) not in (list, tuple, set):
+        elif not isinstance(return_fields, ReturnFieldList):
             raise AttributeError(
-                'return_fields should be a list, tuple or set')
+                'return_fields should be an instance of '
+                'pydov.types.fields.ReturnFieldList')
         else:
-            cls_fields = [f['name'] for f in cls.fields]
+            cls_fields = [f['name'] for f in cls.fields if f['type']
+                          != 'geometry' or include_geometry]
             if include_subtypes:
                 for st in cls.subtypes:
                     cls_fields.extend(st.get_field_names())
 
-            fields = [f for f in return_fields if f in cls_fields]
+            fields = [f.name for f in return_fields if f.name in cls_fields]
 
             for rf in return_fields:
-                if rf not in cls_fields:
+                if rf.name not in cls_fields:
                     raise InvalidFieldError(
-                        "Unknown return field: '{}'".format(rf))
+                        "Unknown return field: '{}'".format(rf.name))
         return fields
 
     @classmethod
@@ -884,9 +992,15 @@ class AbstractDovType(AbstractTypeCommon):
             search operation.
 
         """
-        fields = self.get_field_names(return_fields)
+        fields = self.get_field_names(return_fields, include_geometry=True)
+        if len(fields) == 0:
+            fields = self.get_field_names(
+                return_fields, include_wfs_injected=True,
+                include_geometry=False)
+
         ownfields = self.get_field_names(include_subtypes=False,
-                                         include_wfs_injected=True)
+                                         include_wfs_injected=True,
+                                         include_geometry=True)
         subfields = [f for f in fields if f not in ownfields]
         parsed = None
 
@@ -904,10 +1018,11 @@ class AbstractDovType(AbstractTypeCommon):
                     datadicts.append(self.data)
                 else:
                     for subdata in self.subdata[subtype]:
-                        datadict = {}
-                        datadict.update(self.data)
-                        datadict.update(subdata.data)
-                        datadicts.append(datadict)
+                        for subdata_dict in subdata.get_data_dicts():
+                            datadict = {}
+                            datadict.update(self.data)
+                            datadict.update(subdata_dict)
+                            datadicts.append(datadict)
 
         for d in datadicts:
             datarecords.append([d.get(field, np.nan) for field in fields])

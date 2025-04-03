@@ -1,7 +1,7 @@
 Welcome to pydov's documentation!
 ==================================
 
-.. image:: https://github.com/DOV-Vlaanderen/pydov/workflows/CI/badge.svg
+.. image:: https://github.com/DOV-Vlaanderen/pydov/actions/workflows/ci.yml/badge.svg?branch=master
     :target: https://github.com/DOV-Vlaanderen/pydov
 
 .. image:: https://readthedocs.org/projects/pydov/badge/?version=latest
@@ -11,9 +11,9 @@ Welcome to pydov's documentation!
 .. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.2788680.svg
    :target: https://doi.org/10.5281/zenodo.2788680
    
-.. image:: https://camo.githubusercontent.com/63ff31cdb80a06361e53ac2b9ac0d184118ebd0b/68747470733a2f2f74696e7975726c2e636f6d2f7932326e62387570
+.. image:: https://img.shields.io/badge/PyOpenSci-Peer%20Reviewed-success.svg
    :target: https://github.com/pyOpenSci/software-review/issues/19
-   :alt: pyopensci approval   
+   :alt: pyopensci approval
 
 A Python package to query and download data from Databank Ondergrond Vlaanderen (DOV).
 
@@ -52,11 +52,10 @@ the pydov functionalities. For a more in-depth overview of the capabilities,
 the :ref:`tutorials` illustrate different capabilities of the pydov package
 for each of the object types.
 
+:ref:`select_datasets` of your interest, and check the :ref:`query_attribute` and :ref:`query_location` pages to find the information you're looking for.
 While the search objects are different, the workflow is the same for each dataset.
-The :ref:`query_attribute` and :ref:`query_location` explain
-the query options for attributes and locations respectively.
 
-All functionalities are build on top of the existing webservices provided
+All functionalities are built on top of the existing webservices provided
 by DOV. For more details about these services and endpoints, check
 the :ref:`endpoints` page.
 
@@ -76,6 +75,7 @@ Contents:
    :caption: User guide
    :maxdepth: 1
 
+   select_datasets
    query_attribute
    query_location
    output_fields
@@ -83,6 +83,7 @@ Contents:
    performance
    caching
    hooks
+   repeatable_log
    network_proxy
 
 .. toctree::

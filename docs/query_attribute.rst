@@ -300,7 +300,8 @@ An example of an advanced query using a nested combination of logical filter exp
 Query using lists
 *****************
 
-pydov extends the default OGC filter expressions described above with a new expression `PropertyInList` that allows you to use lists (of strings) in search queries.
+pydov extends the default OGC filter expressions described above with a two new expressions: `PropertyInList` that allows you to use lists (of strings) in (exact) search queries
+and `PropertyLikeList` that does the same for fuzzy matches.
 
 The `PropertyInList` internally translates to a `PropertyIsEqualTo` and is relevant for string, numeric, date or boolean attributes:
 
@@ -311,11 +312,45 @@ PropertyInList
 
     Example: ``PropertyInList(propertyname='methode', list=['ramkernboring', 'spoelboring', 'spade'])``
 
+        Is equivalent to:
+
+        ::
+
+            Or([
+                PropertyIsEqualTo(propertyname='methode', literal='ramkernboring'),
+                PropertyIsEqualTo(propertyname='methode', literal='spoelboring'),
+                PropertyIsEqualTo(propertyname='methode', literal='spade')
+            ])
+
+The `PropertyLikeList` internally translates to a `PropertyIsLike` and is relevant for string attributes:
+
+PropertyLikeList
+    Search for one of a list of fuzzy (non-exact) matches.
+
+    The optional modifier is used to transform the list values into PropertyIsLike literals (e.g. adding wildcards).
+    You can use the string `{item}` in it, which will be replaced with the list item.
+
+    Internally this is translated to ``Or([PropertyIsLike(), PropertyIsLike(), ...])``.
+
+    Example: ``PropertyLikeList(propertyname='methode', list=['ramkernboring', 'spoelboring', 'spade'])``
+
+    Example: ``PropertyLikeList(propertyname='methode', list=['ramkernboring', 'spoelboring', 'spade'], modifier='%|{item}|%')``
+
+        Is equivalent to:
+
+            ::
+
+                Or([
+                    PropertyIsLike(propertyname='methode', literal='%|ramkernboring|%'),
+                    PropertyIsLike(propertyname='methode', literal='%|spoelboring|%'),
+                    PropertyIsLike(propertyname='methode', literal='%|spade|%')
+                ])
+
 
 Join different searches
 ***********************
 
-The `Join` expression allows you to join multiple searches together. This allows combining results from different datasets to get the results you're looking for.
+The `Join` and `FuzzyJoin` expressions allow you to join multiple searches together. This allows combining results from different datasets to get the results you're looking for.
 
 Join
     Join searches together using a common attribute. Instead of a propertyname and a literal (or a list of literals), this expression takes a Pandas dataframe and one or two join columns.
@@ -394,3 +429,47 @@ The following example gets borehole information based on a search for groundwate
     #                                              pkey_boring      ...     boormethode
     # 0  https://www.dov.vlaanderen.be/data/boring/1989-021283      ...        onbekend
     # 1  https://www.dov.vlaanderen.be/data/boring/1989-065942      ...        onbekend
+
+
+FuzzyJoin
+    FuzzyJoin can be used to combine searches in a fuzzy way, meaning the values from the dataframe only partly match an attribute of the query type.
+    Instead of a propertyname and a literal (or a list of literals), this expression takes a Pandas dataframe, one or two join columns and optionally a modifier.
+
+    You can either specify a single column (in the `on` parameter) which should exist both in the provided dataframe as in the datatype being searched.
+    Alternatively, you can specify both the `on` column (which should exist in the queried datatype) as well as the `using` column (which should exists in the provided dataframe).
+
+    The optional modifier is passed to the PropertyLikeList, which will use it to transform the dataframe values into PropertyIsLike literals (e.g. adding wildcards).
+
+    Example: ``FuzzyJoin(df_boringen, 'pkey_parents')``
+
+    Example: ``FuzzyJoin(df_boringen, on='pkey_parents')``
+
+    Example: ``FuzzyJoin(df_boringen, on='pkey_parents', using='boringfiche')``
+
+    Example: ``FuzzyJoin(df_boringen, on='pkey_parents', modifier='%{item}%')``
+
+The following example gets borehole samples based on a search for boreholes:
+
+::
+
+    from pydov.util.query import FuzzyJoin
+
+    from pydov.search.boring import BoringSearch
+    from pydov.search.grondmonster import GrondmonsterSearch
+
+    bs = BoringSearch()
+    gs = GrondmonsterSearch()
+
+    boreholes = bs.search(max_features=1000, return_fields=('pkey_boring'))
+
+    print(boreholes.head())
+    #                                                    pkey_boring
+    # 0  https://ontwikkel.dov.vlaanderen.be/data/boring/1986-076450
+    # 1  https://ontwikkel.dov.vlaanderen.be/data/boring/1945-076396
+    # 2  https://ontwikkel.dov.vlaanderen.be/data/boring/2016-139026
+    # 3  https://ontwikkel.dov.vlaanderen.be/data/boring/2016-139027
+    # 4  https://ontwikkel.dov.vlaanderen.be/data/boring/2016-139028
+
+    samples = gs.search(query=FuzzyJoin(boreholes, on='pkey_parents'))
+    #                                               pkey_grondmonster naam                                                   pkey_parents       datum  diepte_van_m  diepte_tot_m  ... korrelvolumemassa volumemassa  watergehalte  methode  diameter  fractie
+    # 0  https://ontwikkel.dov.vlaanderen.be/data/monster/2024-325196   M1  [https://ontwikkel.dov.vlaanderen.be/data/boring/1986-076450]  2024-10-30           1.0           3.0  ...               NaN         NaN           NaN      NaN       NaN      NaN

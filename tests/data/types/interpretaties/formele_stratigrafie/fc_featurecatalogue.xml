@@ -11,12 +11,12 @@
       <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">1</gco:CharacterString>
     </gmx:versionNumber>
     <gmx:versionDate xmlns:gmx="http://www.isotc211.org/2005/gmx">
-      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2022-03-24</gco:Date>
+      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2025-02-04</gco:Date>
     </gmx:versionDate>
     <gfc:producer>
       <gmd:CI_ResponsibleParty xmlns:gmd="http://www.isotc211.org/2005/gmd">
         <gmd:organisationName>
-          <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Databank Ondergrond Vlaanderen (DOV)</gco:CharacterString>
+          <gmx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="false">Databank Ondergrond Vlaanderen (DOV)</gmx:Anchor>
         </gmd:organisationName>
         <gmd:contactInfo>
           <gmd:CI_Contact>
@@ -81,7 +81,7 @@
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
@@ -112,7 +112,7 @@
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
@@ -143,7 +143,7 @@
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
@@ -194,7 +194,7 @@
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
@@ -225,7 +225,7 @@
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
@@ -256,7 +256,7 @@
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
@@ -287,7 +287,7 @@
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
@@ -318,7 +318,7 @@
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
@@ -349,7 +349,7 @@
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
@@ -380,7 +380,7 @@
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
@@ -411,7 +411,7 @@
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
@@ -442,7 +442,7 @@
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
@@ -473,7 +473,7 @@
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
@@ -504,7 +504,7 @@
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
@@ -535,7 +535,7 @@
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
@@ -566,7 +566,7 @@
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>
@@ -576,6 +576,37 @@
               <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
                 <gco:aName>
                   <gco:CharacterString>Date</gco:CharacterString>
+                </gco:aName>
+              </gco:TypeName>
+            </gfc:valueType>
+          </gfc:FC_FeatureAttribute>
+        </gfc:carrierOfCharacteristics>
+        <gfc:carrierOfCharacteristics>
+          <gfc:FC_FeatureAttribute>
+            <gfc:memberName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">eerste_invoer</gco:LocalName>
+            </gfc:memberName>
+            <gfc:definition>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Het tijdstip waarop deze interpretatie voor het eerst in DOV ingevoerd werd.</gco:CharacterString>
+            </gfc:definition>
+            <gfc:cardinality>
+              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:range>
+                  <gco:MultiplicityRange>
+                    <gco:lower>
+                      <gco:Integer>1</gco:Integer>
+                    </gco:lower>
+                    <gco:upper>
+                      <gco:UnlimitedInteger isInfinite="false">1</gco:UnlimitedInteger>
+                    </gco:upper>
+                  </gco:MultiplicityRange>
+                </gco:range>
+              </gco:Multiplicity>
+            </gfc:cardinality>
+            <gfc:valueType>
+              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
+                <gco:aName>
+                  <gco:CharacterString>Datetime</gco:CharacterString>
                 </gco:aName>
               </gco:TypeName>
             </gfc:valueType>
@@ -597,7 +628,7 @@
                       <gco:Integer>0</gco:Integer>
                     </gco:lower>
                     <gco:upper>
-                      <gco:UnlimitedInteger xsi:nil="false" isInfinite="false">1</gco:UnlimitedInteger>
+                      <gco:UnlimitedInteger isInfinite="false">1</gco:UnlimitedInteger>
                     </gco:upper>
                   </gco:MultiplicityRange>
                 </gco:range>

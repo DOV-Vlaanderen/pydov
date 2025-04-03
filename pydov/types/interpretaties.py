@@ -1,11 +1,52 @@
 # -*- coding: utf-8 -*-
 """Module containing the DOV data types for interpretations, including
 subtypes."""
-import numpy as np
 
 from pydov.types.abstract import AbstractDovSubType, AbstractDovType
-from pydov.types.fields import WfsField, XmlField, XsdType, _CustomField
+from pydov.types.fields import WfsField, XmlField, XsdType, _CustomWfsField
 from pydov.util.dovutil import build_dov_url
+
+
+class PkeyBoringField(_CustomWfsField):
+    """Custom field to populate pkey_boring in case the interpretation is
+    linked with a Boring.
+    """
+
+    def __init__(self):
+        super().__init__(name='pkey_boring',
+                         definition='URL die verwijst naar de gegevens van de '
+                         'boring waaraan deze interpretatie '
+                         'gekoppeld is (indien gekoppeld aan een '
+                         'boring).',
+                         datatype='string')
+
+    def requires_wfs_fields(self):
+        return ['Type_proef', 'Proeffiche']
+
+    def calculate(self, instance):
+        if instance.data['Type_proef'] == 'Boring':
+            return instance.data['Proeffiche']
+
+
+class PkeySonderingField(_CustomWfsField):
+    """Custom field to populate pkey_sondering in case the interpretation is
+    linked with a Sondering.
+    """
+
+    def __init__(self):
+        super().__init__(name='pkey_sondering',
+                         definition='URL die verwijst naar de gegevens van de '
+                         'sondering waaraan deze interpretatie '
+                         'gekoppeld is (indien gekoppeld '
+                         'aan een sondering).',
+                         datatype='string')
+
+    def requires_wfs_fields(self):
+        return ['Type_proef', 'Proeffiche']
+
+    def calculate(self, instance):
+        if instance.data['Type_proef'] == 'Sondering':
+            return instance.data['Proeffiche']
 
 
 class AbstractCommonInterpretatie(AbstractDovType):
@@ -15,18 +56,8 @@ class AbstractCommonInterpretatie(AbstractDovType):
     fields = [
         WfsField(name='pkey_interpretatie',
                  source_field='Interpretatiefiche', datatype='string'),
-        _CustomField(name='pkey_boring',
-                     definition='URL die verwijst naar de gegevens van de '
-                                'boring waaraan deze informele stratigrafie '
-                                'gekoppeld is (indien gekoppeld aan een '
-                                'boring).',
-                     datatype='string'),
-        _CustomField(name='pkey_sondering',
-                     definition='URL die verwijst naar de gegevens van de '
-                                'sondering waaraan deze informele '
-                                'stratigrafie gekoppeld is (indien gekoppeld '
-                                'aan een sondering).',
-                     datatype='string'),
+        PkeyBoringField(),
+        PkeySonderingField(),
         WfsField(name='betrouwbaarheid_interpretatie',
                  source_field='Betrouwbaarheid', datatype='string'),
         WfsField(name='x', source_field='X_mL72', datatype='float'),
@@ -49,52 +80,6 @@ class AbstractCommonInterpretatie(AbstractDovType):
 
         """
         super().__init__('interpretatie', pkey)
-
-    @classmethod
-    def from_wfs_element(cls, feature, namespace):
-        instance = cls(
-            feature.findtext('./{{{}}}{}'.format(
-                namespace, cls.pkey_fieldname)))
-
-        typeproef = cls._parse(
-            func=feature.findtext,
-            xpath='Type_proef',
-            namespace=namespace,
-            returntype='string'
-        )
-
-        if typeproef == 'Boring':
-            instance.data['pkey_boring'] = cls._parse(
-                func=feature.findtext,
-                xpath='Proeffiche',
-                namespace=namespace,
-                returntype='string'
-            )
-            instance.data['pkey_sondering'] = np.nan
-        elif typeproef == 'Sondering':
-            instance.data['pkey_sondering'] = cls._parse(
-                func=feature.findtext,
-                xpath='Proeffiche',
-                namespace=namespace,
-                returntype='string'
-            )
-            instance.data['pkey_boring'] = np.nan
-        else:
-            instance.data['pkey_boring'] = np.nan
-            instance.data['pkey_sondering'] = np.nan
-
-        for field in cls.get_fields(source=('wfs',)).values():
-            if field['name'] in ['pkey_boring', 'pkey_sondering']:
-                continue
-
-            instance.data[field['name']] = cls._parse(
-                func=feature.findtext,
-                xpath=field['sourcefield'],
-                namespace=namespace,
-                returntype=field.get('type', None)
-            )
-
-        return instance
 
 
 class AbstractBoringInterpretatie(AbstractDovType):
@@ -140,7 +125,8 @@ class AbstractBoringInterpretatie(AbstractDovType):
                 func=feature.findtext,
                 xpath=field['sourcefield'],
                 namespace=namespace,
-                returntype=field.get('type', None)
+                returntype=field.get('type', None),
+                split_fn=field.get('split_fn', None)
             )
 
         return instance

@@ -1,8 +1,10 @@
 """Module grouping tests for the bodemclassificatie search module."""
 from owslib.fes2 import PropertyIsEqualTo
+from shapely.geometry import Point
 
 from pydov.search.bodemclassificatie import BodemclassificatieSearch
 from pydov.types.bodemclassificatie import Bodemclassificatie
+from pydov.types.fields import ReturnFieldList
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestSearch
 
@@ -30,8 +32,8 @@ class TestBodemclassificatieSearch(AbstractTestSearch):
     wfs_field = 'bodemtype'
     xml_field = None
 
-    valid_returnfields = ('pkey_bodemclassificatie', 'bodemtype',
-                          'classificatietype')
+    valid_returnfields = ReturnFieldList.from_field_names('pkey_bodemclassificatie', 'bodemtype',
+                                                          'classificatietype')
     valid_returnfields_subtype = None
     valid_returnfields_extra = None
 

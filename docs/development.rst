@@ -49,14 +49,14 @@ application. Feel free to use the environment you like the most.
 
    .. code-block:: bash
 
-       $ git clone https://github.com/DOV-Vlaanderen/pydov.git
+       $ git clone https://github.com/YOUR-GITHUB-USERNAME/pydov.git
        $ cd pydov
 
    If you’re using the GitHub for Desktop application, navigate over to the bottom on the right hand side bar and click ``Clone in Desktop``. Once you've clicked this, it’ll ask you if you want to launch our desktop application to clone the repository, and where you want to save it. Pick a location on your computer that you feel comfortable with creating files and folders.
 
 
-   .. image:: https://guides.github.com/activities/forking/clone-in-desktop.png
-      :target: https://guides.github.com/activities/forking/clone-in-desktop.png
+   .. image:: https://docs.github.com/assets/cb-44807/mw-1440/images/help/repository/open-with-desktop.webp
+      :target: https://docs.github.com/assets/cb-44807/mw-1440/images/help/repository/open-with-desktop.webp
       :alt: clonerepo
       :height: 200px
 
@@ -76,11 +76,56 @@ application. Feel free to use the environment you like the most.
       :alt:
       :height: 200px
 
-   Always use a ``my-feature`` branch. It's good practice to **never work on the ``master`` branch**\ !
+   Always use a ``my-feature`` branch. It's good practice to never work on the ``master`` branch.
 
 #. Make sure your development environment is setup to have all the required tooling available
-   (code, unit tests, documentation,...). Follow the development installation instructions :ref:`for package contributors <devinstallation>`
-   to setup the tooling.
+   (code, unit tests, documentation,...).
+
+   Create a development environment, for example using `conda`_ or `venv`_:
+
+   .. code-block:: console
+
+      # using conda:
+         $ conda create -n pydov python=3.11
+         $ conda activate pydov
+
+      # or using venv (commands are OS dependent):
+         # linux users
+         $ python3 -m venv pydov/venv              # linux users
+         $ source pydov/venv/bin/activate          # linux users
+
+         # windows users
+         $ python3 -m venv pydov\venv              # windows users
+         $ pydov\venv\Scripts\activate             # windows users
+
+   The Python documentation on `virtual environments`_ provides more guidance on using a development environment.
+
+   From inside the "pydov" repository folder, install all development dependencies and the package in development mode:
+
+   .. code-block:: console
+
+      $ pip install -e .[devs]
+
+   To build the documentation, make sure to also install `pandoc`_ as it is required by `Sphinx`_, the
+   tool used to generate the documentation website. See the `pandoc installation instructions`_.
+
+   .. note::
+      If the :code:`sphinx-build` (or :code:`make html`) CLI command returns an error, try to reinstall sphinx separately in the environment using
+      :code:`pip install -U sphinx`.
+
+   Have a look at the :ref:`development guidelines <dev-guidelines>` to see how we develop the pydov package and get more information on the workflow.
+
+   .. note::
+      The repository contains multiple ``requirements_*.txt`` files:
+
+      * ``requirements.txt`` required packages to use pydov
+      * ``requirements_geom.txt`` required packages to use geometry fields and vector files (GeometryFilter and GeopandasFilter) in pydov
+      * ``requirements_proxy.txt`` required packages to use proxy server autodiscovery in pydov
+      * ``requirements_dev.txt`` required packages to run the pydov test suite and contribute to pydov code
+      * ``requirements_doc.txt`` required packages to build the pydov documentation and contribute to the pydov documentation
+      * ``binder/requirements.txt`` requirements setup to setup a Binder environment
+
+      When adding dependencies, make sure to make the appropriate adjustments in the individual file!
 
 #.
    Develop the feature on your feature branch. Add changed files using ``git add`` and then ``git commit`` files:
@@ -125,24 +170,6 @@ application. Feel free to use the environment you like the most.
 
 
 If any of the above seems like magic to you, please look up the `Git documentation <https://git-scm.com/documentation>`_ on the web, or ask a friend or another contributor for help.
-
-Setting up your environment
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-To start developing, make sure to setup a development environment, provided
-in the development installation instructions :ref:`for package contributors <devinstallation>`.
-
-.. note::
-   The repository contains multiple ``requirements_*.txt`` files:
-
-   * ``requirements.txt`` required packages to use pydov
-   * ``requirements_vectorfile.txt`` required packages to use vector files (GeometryFilter and GeopandasFilter) in pydov
-   * ``requirements_proxy.txt`` required packages to use proxy server autodiscovery in pydov
-   * ``requirements_dev.txt`` required packages to run the pydov test suite and contribute to pydov code
-   * ``requirements_doc.txt`` required packages to build the pydov documentation and contribute to the pydov documentation
-   * ``binder/requirements.txt`` requirements setup to setup a Binder environment
-
-   When adding dependencies, make sure to make the appropriate adjustments in the individual file!
 
 .. _unittests:
 
@@ -214,13 +241,15 @@ of the package version. use the following commands to switch the version:
 
 3. Push the code to GitHub, `git push origin master`
 4. Push the tags to GitHub, ``git push --tags`` to create the release in Github
-5. `Travis.ci`_ is used to push the distribution archives to pypi_. Make sure to have a look at the pypi_ pydov page to verify this. If not, check the `packaging instructions`_ to do it manually, it basically boils down to ``python3 setup.py sdist bdist_wheel`` and ``twine upload dist/*``.
 
 The new release can be installed using ``pip``, ``pip install --upgrade pydov``.
 
-.. _Travis.ci: https://travis-ci.org/DOV-Vlaanderen/pydov
 .. _pypi: https://pypi.org/project/pydov/
 .. _packaging instructions: https://packaging.python.org/tutorials/packaging-projects/
 .. _numpy docstring standard: https://numpydoc.readthedocs.io/en/latest/format.html
 .. _Sphinx: http://www.sphinx-doc.org/en/master/
 .. _pandoc: https://pandoc.org/
+.. _conda: https://docs.conda.io/en/latest/miniconda.html
+.. _venv: https://docs.python.org/3/library/venv.html#module-venv
+.. _virtual environments: https://packaging.python.org/tutorials/installing-packages/#creating-virtual-environments
+.. _pandoc installation instructions: https://pandoc.org/installing.html

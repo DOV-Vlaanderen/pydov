@@ -6,8 +6,8 @@
 Installation
 ============
 
-Stable release
---------------
+Standard version
+----------------
 
 To install pydov, run this command in your terminal:
 
@@ -23,108 +23,36 @@ you through the process.
 .. _pip: https://pip.pypa.io
 .. _Python installation guide: http://docs.python-guide.org/en/latest/starting/installation/
 
-.. note::
+Additional geometry support
+---------------------------
 
-    To be able to use vector files not defined as GML (for example ESRI Shape files), some additional dependencies
-    are required which are not installed by default. One of the dependencies is `Fiona`_, it is described as "GDAL’s
-    neat and nimble vector API for Python programmers". `GDAL`_ is a translator library for raster and vector
-    geospatial data formats. Fiona is also required by `GeoPandas`_. Combining these three packages, vector files like
-    ESRI Shape files can be converted to GML files and used in spatial queries to DOV. To install the required
-    dependencies to handle vector files, add the `vectorfile` option to the installation instruction:
-
-    .. code-block:: console
-
-        pip install pydov[vectorfile]
-
-    If you are using conda, you can also pre-install them with :code:`conda install -c conda-forge fiona geopandas`
-    in your pydov conda environment before running the pydov installation.
-
-.. _Fiona: https://pypi.org/project/Fiona/
-.. _GDAL: https://gdal.org/
-.. _GeoPandas: https://geopandas.org/
-
-From sources
-------------
-
-The sources for pydov can be downloaded from the `Github repo`_.
-
-You can either clone the public repository:
+To be able to use and return geometry fields and vector files other than GML (for example ESRI Shapefiles), some additional dependencies
+are required which are not installed by default. To install the required dependencies, add the ``geom`` option to the installation instruction:
 
 .. code-block:: console
 
-    $ git clone git://github.com/DOV-Vlaanderen/pydov
+    pip install pydov[geom]
 
-Or download the `tarball`_:
+If you are using conda, you can also pre-install them with :code:`conda install -c conda-forge fiona geopandas shapely`
+in your pydov conda environment before running the pydov installation.
 
-.. code-block:: console
+This will enable:
 
-    $ curl  -OL https://github.com/DOV-Vlaanderen/pydov/tarball/master
+ - :class:`pydov.util.location.GeometryFilter` for spatial querying using vectory files supported by fiona
+ - :class:`pydov.util.location.GeopandasFilter` for spatial querying using GeoPandas GeoDataFrames
+ - Fields with type 'geometry' to be used as return fields, using :class:`pydov.types.fields.GeometryReturnField`
 
-Once you have a copy of the source, you can install it with:
-
-.. code-block:: console
-
-    $ python setup.py install
-
-.. _Github repo: https://github.com/DOV-Vlaanderen/pydov
-.. _tarball: https://github.com/DOV-Vlaanderen/pydov/tarball/master
-
-
-.. _devinstallation:
-
-For package contributors
+Additional proxy support
 ------------------------
 
-Noticed a bug, want to improve the documentation? Great! Want to dive into the code directly on your local machine? Make sure to
-have the development environment setup:
-
-- Fork the `project repository <https://github.com/DOV-Vlaanderen/pydov>`_ by clicking on the 'Fork' button
-  near the top right of the page. This creates a copy of the code under your personal GitHub user account.
-
-- Clone the `Github repo`_:
+If your organisation or network requires the use of a proxy server and has the possibility for it to be autodiscovered using PAC (Proxy Auto-Configuration), pydov can support this too. This requires the installation of extra dependencies not included by default. To install the required dependencies, add the ``proxy`` option to the installation instruction:
 
 .. code-block:: console
 
-    $ git clone git://github.com/YOUR-GITHUB-USERNAME/pydov
+    pip install pydov[proxy]
 
-- Create a development environment, for example using `conda`_ or `venv`_:
+This will enable:
 
-.. code-block:: console
+ - Proxy server autodiscovery using PAC. You don't need to make any changes to your scripts to use this functionality, if it is installed it will be used.
 
-    # using conda:
-      $ conda create -n pydov python=3.7
-      $ conda activate pydov
-
-    # or using venv (commands are OS dependent):
-      # linux users
-        $ python3 -m venv pydov/venv              # linux users
-        $ source pydov/venv/bin/activate          # linux users
-
-      # windows users
-        $ python3 -m venv pydov\venv              # windows users
-        $ pydov\venv\Scripts\activate             # windows users
-
-The Python documentation on `virtual environments`_ provides more guidance on using a development environment.
-
-- From inside the "pydov" repository folder, install all development dependencies and the package in development mode:
-
-.. code-block:: console
-
-    $ pip install -e .[devs]
-
-- To build the documentation, make sure to also install `pandoc`_ as it is required by `Sphinx`_, the
-  tool used to generate the documentation website. See the `pandoc installation instructions`_.
-
-.. _Sphinx: https://www.sphinx-doc.org/en/master/
-.. _pandoc: https://pandoc.org
-.. _pandoc installation instructions: https://pandoc.org/installing.html
-
-.. note::
-    If the :code:`sphinx-build` (or :code:`make html`) CLI command returns an error, try to reinstall sphinx separately in the environment using
-    :code:`pip install -U sphinx`.
-
-Have a look at the :ref:`development guidelines <dev-guidelines>` to see how we develop the pydov package and get more information on the workflow.
-
-.. _conda: https://docs.conda.io/en/latest/miniconda.html
-.. _venv: https://docs.python.org/3/library/venv.html#module-venv
-.. _virtual environments: https://packaging.python.org/tutorials/installing-packages/#creating-virtual-environments
+More information can be found on the :ref:`network_proxy` page.

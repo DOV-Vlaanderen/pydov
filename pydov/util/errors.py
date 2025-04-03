@@ -22,16 +22,6 @@ class LayerNotFoundError(OWSError):
     pass
 
 
-class MetadataNotFoundError(OWSError):
-    """Error that occurs when the metadata could not be found."""
-    pass
-
-
-class FeatureCatalogueNotFoundError(OWSError):
-    """Error that occurs when the feature catalogue could not be found."""
-    pass
-
-
 class WfsGetFeatureError(OWSError):
     """Error that occurs when requesting features using WFS GetFeature."""
     pass
@@ -49,6 +39,10 @@ class InvalidFieldError(DOVError):
 
 class XmlParseError(DOVError):
     """Error that occurs when the parsing of a DOV XML document failed."""
+    pass
+
+
+class LogReplayError(Exception):
     pass
 
 

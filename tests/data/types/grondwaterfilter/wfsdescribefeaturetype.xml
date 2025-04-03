@@ -22,7 +22,7 @@
           <xsd:element maxOccurs="1" minOccurs="0" name="Z_mTAW" nillable="true" type="xsd:decimal"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="gemeente" nillable="true" type="xsd:string"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="grondwaterlichaam" nillable="true" type="xsd:string"/>
-          <xsd:element maxOccurs="1" minOccurs="0" name="regime" nillable="true" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="afgesloten_volgens_gwdecreet" nillable="true" type="xsd:string"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="datum_in_filter" nillable="true" type="xsd:date"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="datum_uit_filter" nillable="true" type="xsd:date"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="stijghoogterapport" nillable="true" type="xsd:string"/>
@@ -35,6 +35,8 @@
           <xsd:element maxOccurs="1" minOccurs="0" name="kwaliteitsmetingen_tot" nillable="true" type="xsd:date"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="recentste_exploitant" nillable="true" type="xsd:string"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="beheerder" nillable="true" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="eerste_invoer" nillable="true" type="xsd:dateTime"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="recentste_installatie" nillable="true" type="xsd:string"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="geom" nillable="true" type="gml:GeometryPropertyType"/>
         </xsd:sequence>
       </xsd:extension>

@@ -11,8 +11,8 @@ PyYAML
 pytest
 pytest-runner
 pytest-cov
-Sphinx
-sphinx_rtd_theme
+Sphinx >3, <8.2
+sphinx-rtd-theme >1
 nbsphinx
 numpydoc
 flask

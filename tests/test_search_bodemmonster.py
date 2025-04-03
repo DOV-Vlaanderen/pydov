@@ -6,6 +6,7 @@ from owslib.fes2 import PropertyIsEqualTo
 
 from pydov.search.bodemmonster import BodemmonsterSearch
 from pydov.types.bodemmonster import Bodemmonster
+from pydov.types.fields import ReturnFieldList
 from tests.abstract import AbstractTestSearch
 
 location_md_metadata = 'tests/data/types/bodemmonster/md_metadata.xml'
@@ -31,12 +32,12 @@ class TestBodemmonsterSearch(AbstractTestSearch):
     wfs_field = 'identificatie'
     xml_field = 'opmerking'
 
-    valid_returnfields = ('pkey_bodemmonster', 'identificatie')
-    valid_returnfields_subtype = (
+    valid_returnfields = ReturnFieldList.from_field_names('pkey_bodemmonster', 'identificatie')
+    valid_returnfields_subtype = ReturnFieldList.from_field_names(
         'pkey_bodemmonster',
         'identificatie',
         'tijdstip_monstername')
-    valid_returnfields_extra = (
+    valid_returnfields_extra = ReturnFieldList.from_field_names(
         'pkey_bodemmonster',
         'identificatie',
         'Opdrachten')

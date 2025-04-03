@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns3:dov-schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns3="http://kern.schemas.dov.vlaanderen.be" xsi:schemaLocation="http://kern.schemas.dov.vlaanderen.be https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/dov.xsd">
+<ns4:dov-schema xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns4="http://kern.schemas.dov.vlaanderen.be" xsi:schemaLocation="http://kern.schemas.dov.vlaanderen.be https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/dov.xsd">
     <interpretaties>
         <geotechnischecodering>
             <boring>GEO-15/139-B1</boring>
             <dataidentifier>
                 <permkey>2016-298511</permkey>
-                <uri>https://www.dov.vlaanderen.be/data/interpretatie/2016-298511</uri>
+                <uri>https://www/data/interpretatie/2016-298511</uri>
             </dataidentifier>
             <auteur>
                 <persoon>
@@ -77,4 +77,4 @@
             </laag>
         </geotechnischecodering>
     </interpretaties>
-</ns3:dov-schema>
+</ns4:dov-schema>

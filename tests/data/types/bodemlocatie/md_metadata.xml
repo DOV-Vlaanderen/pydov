@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <csw:GetRecordByIdResponse xmlns:csw="http://www.opengis.net/cat/csw/2.0.2">
-  <gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:geonet="http://www.fao.org/geonetwork" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://schemas.opengis.net/csw/2.0.2/profiles/apiso/1.0.0/apiso.xsd">
+  <gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:geonet="http://www.fao.org/geonetwork" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.isotc211.org/2005/gmx http://schemas.opengis.net/iso/19139/20060504/gmx/gmx.xsd http://www.isotc211.org/2005/srv http://schemas.opengis.net/iso/19139/20060504/srv/srv.xsd http://www.isotc211.org/2005/gmd http://schemas.opengis.net/iso/19139/20060504/gmd/gmd.xsd">
     <gmd:fileIdentifier>
       <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">3f507fd9-24c0-40ab-9328-29f0dff571fe</gco:CharacterString>
     </gmd:fileIdentifier>
@@ -19,7 +19,7 @@
     <gmd:contact>
       <gmd:CI_ResponsibleParty>
         <gmd:organisationName>
-          <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Vlaamse overheid, Departement Omgeving, Vlaams Planbureau voor Omgeving (VPO)</gco:CharacterString>
+          <gmx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://data.vlaanderen.be/id/organisatie/OVO003750">Vlaamse overheid, Departement Omgeving, Vlaams Planbureau voor Omgeving (VPO)</gmx:Anchor>
         </gmd:organisationName>
         <gmd:contactInfo>
           <gmd:CI_Contact>
@@ -57,7 +57,7 @@
       </gmd:CI_ResponsibleParty>
     </gmd:contact>
     <gmd:dateStamp>
-      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2022-09-23</gco:Date>
+      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2025-02-04</gco:Date>
     </gmd:dateStamp>
     <gmd:metadataStandardName>
       <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">ISO 19115/2003/Cor.1:2006/INSPIRE-TG2.0</gco:CharacterString>
@@ -89,7 +89,7 @@
             <gmd:date>
               <gmd:CI_Date>
                 <gmd:date>
-                  <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2018-11-20</gco:Date>
+                  <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2018-11-20</gco:Date>
                 </gmd:date>
                 <gmd:dateType>
                   <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation">creation</gmd:CI_DateTypeCode>
@@ -99,7 +99,7 @@
             <gmd:date>
               <gmd:CI_Date>
                 <gmd:date>
-                  <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2018-11-20</gco:Date>
+                  <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2018-11-20</gco:Date>
                 </gmd:date>
                 <gmd:dateType>
                   <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</gmd:CI_DateTypeCode>
@@ -130,7 +130,7 @@ De bodemlocaties uit de 'Aardewerk-Vlaanderen-2010' databank worden afzonderlijk
         <gmd:pointOfContact>
           <gmd:CI_ResponsibleParty>
             <gmd:organisationName>
-              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Databank Ondergrond Vlaanderen (DOV)</gco:CharacterString>
+              <gmx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://data.vlaanderen.be/doc/organisatie/OVO027735">Databank Ondergrond Vlaanderen (DOV)</gmx:Anchor>
             </gmd:organisationName>
             <gmd:contactInfo>
               <gmd:CI_Contact>
@@ -177,7 +177,7 @@ De bodemlocaties uit de 'Aardewerk-Vlaanderen-2010' databank worden afzonderlijk
         <gmd:pointOfContact>
           <gmd:CI_ResponsibleParty>
             <gmd:organisationName>
-              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Ondersteunend Centrum Databank Ondergrond Vlaanderen</gco:CharacterString>
+              <gmx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://data.vlaanderen.be/doc/organisatie/OVO027735">Ondersteunend Centrum Databank Ondergrond Vlaanderen</gmx:Anchor>
             </gmd:organisationName>
             <gmd:contactInfo>
               <gmd:CI_Contact>
@@ -224,7 +224,7 @@ De bodemlocaties uit de 'Aardewerk-Vlaanderen-2010' databank worden afzonderlijk
         <gmd:pointOfContact>
           <gmd:CI_ResponsibleParty>
             <gmd:organisationName>
-              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Vlaamse overheid, Departement Omgeving, Vlaams Planbureau voor Omgeving (VPO)</gco:CharacterString>
+              <gmx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://data.vlaanderen.be/id/organisatie/OVO003750">Vlaamse overheid, Departement Omgeving, Vlaams Planbureau voor Omgeving (VPO)</gmx:Anchor>
             </gmd:organisationName>
             <gmd:contactInfo>
               <gmd:CI_Contact>
@@ -264,7 +264,7 @@ De bodemlocaties uit de 'Aardewerk-Vlaanderen-2010' databank worden afzonderlijk
         <gmd:pointOfContact>
           <gmd:CI_ResponsibleParty>
             <gmd:organisationName>
-              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Vlaamse overheid, Departement Omgeving, Vlaams Planbureau voor Omgeving (VPO)</gco:CharacterString>
+              <gmx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://data.vlaanderen.be/id/organisatie/OVO003750">Vlaamse overheid, Departement Omgeving, Vlaams Planbureau voor Omgeving (VPO)</gmx:Anchor>
             </gmd:organisationName>
             <gmd:contactInfo>
               <gmd:CI_Contact>
@@ -304,7 +304,7 @@ De bodemlocaties uit de 'Aardewerk-Vlaanderen-2010' databank worden afzonderlijk
         <gmd:graphicOverview>
           <gmd:MD_BrowseGraphic>
             <gmd:fileName>
-              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">https://www.dov.vlaanderen.be/geoserver/wms?SERVICE=WMS&amp;VERSION=1.1.1&amp;REQUEST=GetMap&amp;FORMAT=image%2Fpng&amp;TRANSPARENT=false&amp;STYLES&amp;LAYERS=bodem:bodemlocaties&amp;SRS=EPSG%3A31370&amp;WIDTH=858&amp;HEIGHT=330&amp;BBOX=9518.482229747839%2C148172.73525929108%2C271454.8939534676%2C248854.86152133934</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">https://www.dov.vlaanderen.be/geoserver/bodem/wms?SERVICE=WMS&amp;VERSION=1.1.1&amp;REQUEST=GetMap&amp;FORMAT=image%2Fpng&amp;TRANSPARENT=false&amp;STYLES&amp;LAYERS=bodemlocaties&amp;SRS=EPSG%3A31370&amp;WIDTH=858&amp;HEIGHT=330&amp;BBOX=9518.482229747839%2C148172.73525929108%2C271454.8939534676%2C248854.86152133934</gco:CharacterString>
             </gmd:fileName>
             <gmd:fileType>
               <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">png</gco:CharacterString>
@@ -327,7 +327,7 @@ De bodemlocaties uit de 'Aardewerk-Vlaanderen-2010' databank worden afzonderlijk
                 <gmd:date>
                   <gmd:CI_Date>
                     <gmd:date>
-                      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2008-06-01</gco:Date>
+                      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2008-06-01</gco:Date>
                     </gmd:date>
                     <gmd:dateType>
                       <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</gmd:CI_DateTypeCode>
@@ -432,7 +432,7 @@ De bodemlocaties uit de 'Aardewerk-Vlaanderen-2010' databank worden afzonderlijk
                 <gmd:date>
                   <gmd:CI_Date>
                     <gmd:date>
-                      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2010-01-13</gco:Date>
+                      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2010-01-13</gco:Date>
                     </gmd:date>
                     <gmd:dateType>
                       <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</gmd:CI_DateTypeCode>
@@ -484,7 +484,7 @@ De bodemlocaties uit de 'Aardewerk-Vlaanderen-2010' databank worden afzonderlijk
                 <gmd:date>
                   <gmd:CI_Date>
                     <gmd:date>
-                      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2019-05-22</gco:Date>
+                      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2019-05-22</gco:Date>
                     </gmd:date>
                     <gmd:dateType>
                       <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</gmd:CI_DateTypeCode>
@@ -526,7 +526,7 @@ De bodemlocaties uit de 'Aardewerk-Vlaanderen-2010' databank worden afzonderlijk
                 <gmd:date>
                   <gmd:CI_Date>
                     <gmd:date>
-                      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2014-02-26</gco:Date>
+                      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2014-02-26</gco:Date>
                     </gmd:date>
                     <gmd:dateType>
                       <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</gmd:CI_DateTypeCode>
@@ -553,7 +553,7 @@ De bodemlocaties uit de 'Aardewerk-Vlaanderen-2010' databank worden afzonderlijk
               <gmd:MD_RestrictionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode" codeListValue="otherRestrictions">otherRestrictions</gmd:MD_RestrictionCode>
             </gmd:useConstraints>
             <gmd:otherConstraints>
-              <gmx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://overheid.vlaanderen.be/sites/default/files/documenten/ict-egov/licenties/hergebruik/modellicentie_gratis_hergebruik_v1_0.html">In uitvoering van het Vlaamse decreet voor hergebruik van overheidsinformatie, is het hergebruik geregeld d.m.v. de Modellicentie voor gratis hergebruik. Dit betekent dat elk commercieel of niet-commercieel hergebruik voor onbepaalde duur is toegelaten, zonder dat daar kosten aan verbonden zijn. Als enige gebruiksvoorwaarde geldt een bronvermeldingsplicht.</gmx:Anchor>
+              <gmx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://data.vlaanderen.be/doc/licentie/modellicentie-gratis-hergebruik/v1.0">In uitvoering van het Vlaamse decreet voor hergebruik van overheidsinformatie, is het hergebruik geregeld d.m.v. de Modellicentie voor gratis hergebruik. Dit betekent dat elk commercieel of niet-commercieel hergebruik voor onbepaalde duur is toegelaten, zonder dat daar kosten aan verbonden zijn. Als enige gebruiksvoorwaarde geldt een bronvermeldingsplicht.</gmx:Anchor>
             </gmd:otherConstraints>
             <gmd:otherConstraints>
               <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Bij het gebruik van de informatie die DOV aanbiedt, dient steeds volgende standaardreferentie gebruikt te worden: Databank Ondergrond Vlaanderen - (vermelding van de beheerder en de specifieke geraadpleegde gegevens) - Geraadpleegd op dd/mm/jjjj, op https://www.dov.vlaanderen.be</gco:CharacterString>
@@ -597,16 +597,16 @@ De bodemlocaties uit de 'Aardewerk-Vlaanderen-2010' databank worden afzonderlijk
             <gmd:geographicElement>
               <gmd:EX_GeographicBoundingBox>
                 <gmd:westBoundLongitude>
-                  <gco:Decimal xmlns:gco="http://www.isotc211.org/2005/gco">2.5521321727948028</gco:Decimal>
+                  <gco:Decimal xmlns:gco="http://www.isotc211.org/2005/gco">2.5521321727947943</gco:Decimal>
                 </gmd:westBoundLongitude>
                 <gmd:eastBoundLongitude>
-                  <gco:Decimal xmlns:gco="http://www.isotc211.org/2005/gco">5.869300470014366</gco:Decimal>
+                  <gco:Decimal xmlns:gco="http://www.isotc211.org/2005/gco">5.869300470014372</gco:Decimal>
                 </gmd:eastBoundLongitude>
                 <gmd:southBoundLatitude>
-                  <gco:Decimal xmlns:gco="http://www.isotc211.org/2005/gco">50.527845900723094</gco:Decimal>
+                  <gco:Decimal xmlns:gco="http://www.isotc211.org/2005/gco">50.52784590072332</gco:Decimal>
                 </gmd:southBoundLatitude>
                 <gmd:northBoundLatitude>
-                  <gco:Decimal xmlns:gco="http://www.isotc211.org/2005/gco">51.45275182945815</gco:Decimal>
+                  <gco:Decimal xmlns:gco="http://www.isotc211.org/2005/gco">51.452751829458414</gco:Decimal>
                 </gmd:northBoundLatitude>
               </gmd:EX_GeographicBoundingBox>
             </gmd:geographicElement>
@@ -640,7 +640,7 @@ De bodemlocaties uit de 'Aardewerk-Vlaanderen-2010' databank worden afzonderlijk
             <gmd:date>
               <gmd:CI_Date>
                 <gmd:date>
-                  <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2022-09-23</gco:Date>
+                  <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2025-02-04</gco:Date>
                 </gmd:date>
                 <gmd:dateType>
                   <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation">creation</gmd:CI_DateTypeCode>
@@ -671,7 +671,7 @@ De bodemlocaties uit de 'Aardewerk-Vlaanderen-2010' databank worden afzonderlijk
             <gmd:distributorContact>
               <gmd:CI_ResponsibleParty>
                 <gmd:organisationName>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Databank Ondergrond Vlaanderen (DOV)</gco:CharacterString>
+                  <gmx:Anchor xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://data.vlaanderen.be/doc/organisatie/OVO027735">Databank Ondergrond Vlaanderen (DOV)</gmx:Anchor>
                 </gmd:organisationName>
                 <gmd:contactInfo>
                   <gmd:CI_Contact>
@@ -729,61 +729,13 @@ De bodemlocaties uit de 'Aardewerk-Vlaanderen-2010' databank worden afzonderlijk
             <gmd:onLine>
               <gmd:CI_OnlineResource>
                 <gmd:linkage>
-                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/wms?</gmd:URL>
-                </gmd:linkage>
-                <gmd:protocol>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">OGC:WMS</gco:CharacterString>
-                </gmd:protocol>
-                <gmd:name>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">bodem:bodemlocaties</gco:CharacterString>
-                </gmd:name>
-                <gmd:description>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">WMS-endpoint Bodemlocaties</gco:CharacterString>
-                </gmd:description>
-              </gmd:CI_OnlineResource>
-            </gmd:onLine>
-            <gmd:onLine>
-              <gmd:CI_OnlineResource>
-                <gmd:linkage>
-                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/wms?SERVICE=WMS&amp;version=1.3.0&amp;request=GetCapabilities</gmd:URL>
-                </gmd:linkage>
-                <gmd:protocol>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">OGC:WMS-1.3.0-http-get-capabilities</gco:CharacterString>
-                </gmd:protocol>
-                <gmd:name>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">bodem:bodemlocaties</gco:CharacterString>
-                </gmd:name>
-                <gmd:description>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">WMS-capabilities Bodemlocaties</gco:CharacterString>
-                </gmd:description>
-              </gmd:CI_OnlineResource>
-            </gmd:onLine>
-            <gmd:onLine>
-              <gmd:CI_OnlineResource>
-                <gmd:linkage>
-                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/wms?SERVICE=WMS&amp;version=1.3.0&amp;request=GetMap</gmd:URL>
-                </gmd:linkage>
-                <gmd:protocol>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">OGC:WMS-1.3.0-http-get-map</gco:CharacterString>
-                </gmd:protocol>
-                <gmd:name>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">bodem:bodemlocaties</gco:CharacterString>
-                </gmd:name>
-                <gmd:description>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">WMS-map Bodemlocaties</gco:CharacterString>
-                </gmd:description>
-              </gmd:CI_OnlineResource>
-            </gmd:onLine>
-            <gmd:onLine>
-              <gmd:CI_OnlineResource>
-                <gmd:linkage>
-                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/wfs?</gmd:URL>
+                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/bodem/wfs?</gmd:URL>
                 </gmd:linkage>
                 <gmd:protocol>
                   <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">OGC:WFS</gco:CharacterString>
                 </gmd:protocol>
                 <gmd:name>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">bodem:bodemlocaties</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">bodemlocaties</gco:CharacterString>
                 </gmd:name>
                 <gmd:description>
                   <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">WFS-endpoint Bodemlocaties</gco:CharacterString>
@@ -796,7 +748,7 @@ De bodemlocaties uit de 'Aardewerk-Vlaanderen-2010' databank worden afzonderlijk
             <gmd:onLine>
               <gmd:CI_OnlineResource>
                 <gmd:linkage>
-                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/wfs?SERVICE=WFS&amp;version=2.0.0&amp;request=GetCapabilities</gmd:URL>
+                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/bodem/wfs?SERVICE=WFS&amp;version=2.0.0&amp;request=GetCapabilities</gmd:URL>
                 </gmd:linkage>
                 <gmd:protocol>
                   <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">OGC:WFS-2.0.0-http-get-capabilities</gco:CharacterString>
@@ -815,13 +767,77 @@ De bodemlocaties uit de 'Aardewerk-Vlaanderen-2010' databank worden afzonderlijk
             <gmd:onLine>
               <gmd:CI_OnlineResource>
                 <gmd:linkage>
-                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/wfs?SERVICE=WFS&amp;version=2.0.0&amp;request=GetFeature</gmd:URL>
+                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/bodem/wms?SERVICE=WMS&amp;version=1.3.0&amp;request=GetCapabilities</gmd:URL>
+                </gmd:linkage>
+                <gmd:protocol>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">OGC:WMS-1.3.0-http-get-capabilities</gco:CharacterString>
+                </gmd:protocol>
+                <gmd:name>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">bodemlocaties</gco:CharacterString>
+                </gmd:name>
+                <gmd:description>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">WMS-capabilities Bodemlocaties</gco:CharacterString>
+                </gmd:description>
+              </gmd:CI_OnlineResource>
+            </gmd:onLine>
+            <gmd:onLine>
+              <gmd:CI_OnlineResource>
+                <gmd:linkage>
+                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/bodem/wms/kml?layers=bodemlocaties</gmd:URL>
+                </gmd:linkage>
+                <gmd:protocol>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">GLG:KML-2.0-http-get-map</gco:CharacterString>
+                </gmd:protocol>
+                <gmd:name>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">bodemlocaties</gco:CharacterString>
+                </gmd:name>
+                <gmd:description>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">KML Bodemlocaties</gco:CharacterString>
+                </gmd:description>
+              </gmd:CI_OnlineResource>
+            </gmd:onLine>
+            <gmd:onLine>
+              <gmd:CI_OnlineResource>
+                <gmd:linkage>
+                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/bodem/wms?SERVICE=WMS&amp;version=1.3.0&amp;request=GetMap</gmd:URL>
+                </gmd:linkage>
+                <gmd:protocol>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">OGC:WMS-1.3.0-http-get-map</gco:CharacterString>
+                </gmd:protocol>
+                <gmd:name>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">bodemlocaties</gco:CharacterString>
+                </gmd:name>
+                <gmd:description>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">WMS-map Bodemlocaties</gco:CharacterString>
+                </gmd:description>
+              </gmd:CI_OnlineResource>
+            </gmd:onLine>
+            <gmd:onLine>
+              <gmd:CI_OnlineResource>
+                <gmd:linkage>
+                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/bodem/wms?</gmd:URL>
+                </gmd:linkage>
+                <gmd:protocol>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">OGC:WMS</gco:CharacterString>
+                </gmd:protocol>
+                <gmd:name>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">bodemlocaties</gco:CharacterString>
+                </gmd:name>
+                <gmd:description>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">WMS-endpoint Bodemlocaties</gco:CharacterString>
+                </gmd:description>
+              </gmd:CI_OnlineResource>
+            </gmd:onLine>
+            <gmd:onLine>
+              <gmd:CI_OnlineResource>
+                <gmd:linkage>
+                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/bodem/wfs?SERVICE=WFS&amp;version=2.0.0&amp;request=GetFeature&amp;count=1&amp;typeName=bodemlocaties</gmd:URL>
                 </gmd:linkage>
                 <gmd:protocol>
                   <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">OGC:WFS-2.0.0-http-get-feature</gco:CharacterString>
                 </gmd:protocol>
                 <gmd:name>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">bodem:bodemlocaties</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">bodemlocaties</gco:CharacterString>
                 </gmd:name>
                 <gmd:description>
                   <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">WFS-feature Bodemlocaties</gco:CharacterString>
@@ -829,22 +845,6 @@ De bodemlocaties uit de 'Aardewerk-Vlaanderen-2010' databank worden afzonderlijk
                 <gmd:function>
                   <gmd:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode" codeListValue="download">download</gmd:CI_OnLineFunctionCode>
                 </gmd:function>
-              </gmd:CI_OnlineResource>
-            </gmd:onLine>
-            <gmd:onLine>
-              <gmd:CI_OnlineResource>
-                <gmd:linkage>
-                  <gmd:URL>https://www.dov.vlaanderen.be/geoserver/wms/kml?layers=bodem:bodemlocaties</gmd:URL>
-                </gmd:linkage>
-                <gmd:protocol>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">GLG:KML-2.0-http-get-map</gco:CharacterString>
-                </gmd:protocol>
-                <gmd:name>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">bodem:bodemlocaties</gco:CharacterString>
-                </gmd:name>
-                <gmd:description>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">KML Bodemlocaties</gco:CharacterString>
-                </gmd:description>
               </gmd:CI_OnlineResource>
             </gmd:onLine>
             <gmd:onLine>
@@ -888,7 +888,7 @@ De bodemlocaties uit de 'Aardewerk-Vlaanderen-2010' databank worden afzonderlijk
                     <gmd:date>
                       <gmd:CI_Date>
                         <gmd:date>
-                          <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco" xsi:nil="false">2010-12-08</gco:Date>
+                          <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2010-12-08</gco:Date>
                         </gmd:date>
                         <gmd:dateType>
                           <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication">publication</gmd:CI_DateTypeCode>

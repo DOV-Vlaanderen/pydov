@@ -5,9 +5,9 @@ from itertools import chain
 import datetime
 import math
 import warnings
+import re
 
 import owslib
-import owslib.fes
 import owslib.fes2
 from owslib.etree import etree
 from owslib.feature import get_schema
@@ -17,7 +17,8 @@ import pandas as pd
 import numpy as np
 
 import pydov
-from pydov.types.fields import _WfsInjectedField
+from pydov.types.fields import (_WfsInjectedField, GeometryReturnField,
+                                ReturnFieldList)
 from pydov.util import owsutil
 from pydov.util.dovutil import build_dov_url, get_xsd_schema
 from pydov.util.errors import (InvalidFieldError, InvalidSearchParameterError,
@@ -25,6 +26,12 @@ from pydov.util.errors import (InvalidFieldError, InvalidSearchParameterError,
                                DataParseWarning)
 from pydov.util.hooks import HookRunner
 from pydov.util.net import LocalSessionThreadPool
+
+# compile regex for matching datetime
+re_datetime = re.compile(
+    r'([0-9]{4}-[0-9]{2}-[0-9]{2}T'
+    r'[0-9]{2}:[0-9]{2}:[0-9]{2})'
+    r'(\.[0-9]+)?([\+\-][0-9]{2}:?[0-9]{2})?(Z?)')
 
 
 class AbstractCommon(object):
@@ -101,16 +108,42 @@ class AbstractCommon(object):
                     return datetime.datetime.strptime(x, '%Y-%m-%d').date()
         elif returntype == 'datetime':
             def typeconvert(x):
-                if x.endswith('Z'):
-                    return datetime.datetime.strptime(
-                        x, '%Y-%m-%dT%H:%M:%SZ') \
-                        + datetime.timedelta(days=1)
-                else:
-                    return datetime.datetime.strptime(
-                        x.split('.')[0], '%Y-%m-%dT%H:%M:%S')
+                x_match = re_datetime.search(x)
+                if x_match is None:
+                    raise ValueError(f'Cannot parse datetime from value "{x}"')
+                x_datetime, x_millisecs, x_tz, x_zulu = x_match.groups()
+
+                fmt = '%Y-%m-%dT%H:%M:%S'
+                val = x_datetime
+
+                if x_millisecs is not None:
+                    x_millisecs = int(x_millisecs[1:])
+                    fmt += '.%f'
+                    val += f'.{x_millisecs:0>6}'
+
+                if x_tz is not None:
+                    fmt += '%z'
+                    val += x_tz
+
+                dtime = datetime.datetime.strptime(val, fmt)
+                if x_zulu == 'Z':
+                    dtime += datetime.timedelta(hours=1)
+                return dtime
         elif returntype == 'boolean':
             def typeconvert(x):
                 return cls.__strtobool(x)
+        elif returntype == 'geometry':
+            def typeconvert(x):
+                if isinstance(x, etree._Element):
+                    if owsutil.has_geom_support():
+                        import shapely.geometry
+                        import pygml
+                        return shapely.geometry.shape(
+                            pygml.parse(etree.tostring(x[0]).decode('utf8')))
+                    else:
+                        # this shouldn't happen
+                        return etree.tostring(x[0]).decode('utf8')
+                return np.nan
         else:
             def typeconvert(x):
                 return x
@@ -178,7 +211,7 @@ class AbstractSearch(AbstractCommon):
         if self._wfs is None:
             wfs_endpoint_url = self._get_wfs_endpoint()
 
-            capabilities = owsutil.get_url(
+            capabilities = owsutil.get_wfs_capabilities(
                 wfs_endpoint_url + '?request=GetCapabilities&version=2.0.0')
 
             self._wfs = WebFeatureService(
@@ -217,11 +250,13 @@ class AbstractSearch(AbstractCommon):
             if self._md_metadata is None:
                 self._md_metadata = self._get_remote_metadata()
 
-            if self._fc_featurecatalogue is None:
+            if self._md_metadata is not None and \
+                    self._fc_featurecatalogue is None:
                 csw_url = self._get_csw_base_url()
                 fc_uuid = owsutil.get_featurecatalogue_uuid(self._md_metadata)
-                self._fc_featurecatalogue = \
-                    owsutil.get_remote_featurecatalogue(csw_url, fc_uuid)
+                if fc_uuid is not None:
+                    self._fc_featurecatalogue = \
+                        owsutil.get_remote_featurecatalogue(csw_url, fc_uuid)
 
             if self._xsd_schemas is None:
                 self._xsd_schemas = self._get_remote_xsd_schemas()
@@ -301,9 +336,10 @@ class AbstractSearch(AbstractCommon):
 
         Returns
         -------
-        owslib.iso.MD_Metadata
+        owslib.iso.MD_Metadata or None
             Parsed remote metadata describing the WFS layer in more detail,
-            in the ISO 19115/19139 format.
+            in the ISO 19115/19139 format or None when no metadata could be
+            found or parsed.
 
         """
         wfs_layer = self._get_layer()
@@ -449,7 +485,8 @@ class AbstractSearch(AbstractCommon):
             self._map_df_wfs_source[f['name']] = f['sourcefield']
 
         for wfs_field in wfs_schema['properties'].keys():
-            if wfs_field in feature_catalogue['attributes']:
+            if feature_catalogue is not None and \
+                    wfs_field in feature_catalogue['attributes']:
                 fc_field = feature_catalogue['attributes'][wfs_field]
                 self._wfs_fields.append(wfs_field)
 
@@ -470,6 +507,39 @@ class AbstractSearch(AbstractCommon):
                     field['values'] = fc_field['values']
 
                 fields[name] = field
+            else:
+                self._wfs_fields.append(wfs_field)
+
+                name = self._map_wfs_source_df.get(wfs_field, wfs_field)
+
+                field = {
+                    'name': name,
+                    'definition': None,
+                    'type': _map_wfs_datatypes.get(
+                        wfs_schema['properties'][wfs_field],
+                        wfs_schema['properties'][wfs_field]),
+                    'notnull': False,
+                    'query': True,
+                    'cost': 1
+                }
+
+                fields[name] = field
+
+        if owsutil.has_geom_support() and 'geometry' in wfs_schema and \
+                'geometry_column' in wfs_schema:
+            name = wfs_schema['geometry_column']
+            self._wfs_fields.append(name)
+
+            field = {
+                'name': name,
+                'definition': None,
+                'type': 'geometry',
+                'notnull': False,
+                'query': False,
+                'cost': 1
+            }
+
+            fields[name] = field
 
         for xml_field in self._type.get_fields(source=['xml']).values():
             field = {
@@ -487,7 +557,8 @@ class AbstractSearch(AbstractCommon):
 
             fields[field['name']] = field
 
-        for custom_field in self._type.get_fields(source=['custom']).values():
+        for custom_field in self._type.get_fields(
+                source=['custom_wfs']).values():
             field = {
                 'name': custom_field['name'],
                 'type': custom_field['type'],
@@ -495,6 +566,18 @@ class AbstractSearch(AbstractCommon):
                 'notnull': custom_field['notnull'],
                 'query': False,
                 'cost': 1
+            }
+            fields[field['name']] = field
+
+        for custom_field in self._type.get_fields(
+                source=['custom_xml']).values():
+            field = {
+                'name': custom_field['name'],
+                'type': custom_field['type'],
+                'definition': custom_field['definition'],
+                'notnull': custom_field['notnull'],
+                'query': False,
+                'cost': 10
             }
             fields[field['name']] = field
 
@@ -515,7 +598,7 @@ class AbstractSearch(AbstractCommon):
             all fields are currently supported as a search parameter.
         sort_by : owslib.fes2.SortBy, optional
             List of properties to sort by.
-        return_fields : list<str> or tuple<str> or set<str>
+        return_fields : pydov.types.fields.ReturnFieldList
             A list of fields to be returned in the output data. This should
             be a subset of the fields provided in `get_fields()`.
         max_features : int
@@ -568,6 +651,14 @@ class AbstractSearch(AbstractCommon):
                     raise InvalidFieldError(
                         "Unknown query parameter: '{}'".format(name))
 
+                if name in self._wfs_fields and name in self._fields and \
+                        self._fields[name]['type'] == 'geometry':
+                    raise InvalidFieldError(
+                        ("Cannot use geometry field '{}' in attribute query. "
+                         "Use the 'location' parameter for "
+                         "spatial filtering.").format(name)
+                    )
+
         if location is not None:
             self._init_fields()
 
@@ -589,33 +680,38 @@ class AbstractSearch(AbstractCommon):
                     raise InvalidFieldError(
                         "Unknown query parameter: '{}'".format(name))
 
+        return_fields = ReturnFieldList.from_field_names(return_fields)
         if return_fields is not None:
-            if type(return_fields) not in (list, tuple, set):
-                raise AttributeError('return_fields should be a list, '
-                                     'tuple or set')
+            if not isinstance(return_fields, ReturnFieldList):
+                raise AttributeError(
+                    'return_fields should be an instance of '
+                    'pydov.types.fields.ReturnFieldList')
 
             self._init_fields()
             for rf in return_fields:
-                if rf not in self._fields:
-                    if rf in self._map_wfs_source_df:
+                if rf.name not in self._fields:
+                    if rf.name in self._map_wfs_source_df:
                         raise InvalidFieldError(
                             "Unknown return field: "
                             "'{}'. Did you mean '{}'?".format(
                                 rf, self._map_wfs_source_df[rf]))
-                    if rf.lower() in [i.lower() for i in
-                                      self._map_wfs_source_df.keys()]:
+                    if rf.name.lower() in [i.lower() for i in
+                                           self._map_wfs_source_df.keys()]:
                         sugg = [i for i in self._map_wfs_source_df.keys() if
-                                i.lower() == rf.lower()][0]
+                                i.lower() == rf.name.lower()][0]
                         raise InvalidFieldError(
                             "Unknown return field: "
-                            "'{}'. Did you mean '{}'?".format(rf, sugg))
+                            "'{}'. Did you mean '{}'?".format(rf.name, sugg))
                     raise InvalidFieldError(
-                        "Unknown return field: '{}'".format(rf))
+                        "Unknown return field: '{}'".format(rf.name))
+        elif len(self._type.fields) == 0:
+            self._init_fields()
 
     @staticmethod
     def _get_remote_wfs_feature(wfs, typename, location, filter,
                                 sort_by, propertyname, max_features,
-                                geometry_column, start_index=0, session=None):
+                                geometry_column, crs=None, start_index=0,
+                                session=None):
         """Perform the WFS 2.0 GetFeature call to get features from the remote
         service.
 
@@ -635,6 +731,9 @@ class AbstractSearch(AbstractCommon):
             Limit the maximum number of features to request.
         geometry_column : str
             Name of the geometry column to use in the spatial filter.
+        crs : str
+            EPSG code of the CRS of the geometries that will be returned.
+            Defaults to None, which means the default CRS of the WFS layer.
         start_index : int
             Index of the first feature to return. Can be used for paging.
         session : requests.Session
@@ -655,7 +754,8 @@ class AbstractSearch(AbstractCommon):
             sort_by=sort_by,
             max_features=max_features,
             propertyname=propertyname,
-            start_index=start_index
+            start_index=start_index,
+            crs=crs
         )
 
         tree = HookRunner.execute_inject_wfs_getfeature_response(
@@ -735,25 +835,43 @@ class AbstractSearch(AbstractCommon):
 
             filter_request = etree.tostring(filter_request, encoding='unicode')
 
-        wfs_property_names = [self._type.pkey_fieldname]
+        if self._type.pkey_fieldname is not None:
+            wfs_property_names = [self._type.pkey_fieldname]
+        else:
+            wfs_property_names = []
 
         if return_fields is None:
             wfs_property_names.extend([
                 f['sourcefield'] for f in self._type.get_fields(
-                    source=('wfs',)).values() if not f.get(
-                    'wfs_injected', False)])
+                    source=('wfs',)).values() if (
+                        self._type.pkey_fieldname is None
+                        or not f.get('wfs_injected', False))])
+            geom_return_crs = None
         else:
             wfs_property_names.extend([self._map_df_wfs_source[i]
                                        for i in self._map_df_wfs_source
                                        if i in return_fields])
 
+            geom_return_crs = [f.epsg for f in return_fields
+                               if isinstance(f, GeometryReturnField)]
+            if len(geom_return_crs) > 0:
+                geom_return_crs = f'EPSG:{geom_return_crs[0]}'
+            else:
+                geom_return_crs = None
+
+        extra_custom_fields = set()
+        for custom_field in self._type.get_fields(
+                source=('custom_wfs',)).values():
+            extra_custom_fields.update(custom_field.requires_wfs_fields())
+
         wfs_property_names.extend(extra_wfs_fields)
+        wfs_property_names.extend(list(extra_custom_fields))
         wfs_property_names = list(set(wfs_property_names))
 
         if sort_by is not None:
             sort_by_xml = sort_by.toXML()
             for property_name in sort_by_xml.findall(
-                    './/{http://www.opengis.net/ogc}PropertyName'):
+                    './/{http://www.opengis.net/fes/2.0}ValueReference'):
                 property_name.text = self._map_df_wfs_source.get(
                     property_name.text, property_name.text)
 
@@ -779,6 +897,7 @@ class AbstractSearch(AbstractCommon):
                 max_features=max_features,
                 propertyname=wfs_property_names,
                 geometry_column=self._geometry_column,
+                crs=geom_return_crs,
                 start_index=start_index,
                 session=session)
 
@@ -848,8 +967,10 @@ class AbstractSearch(AbstractCommon):
             for r in pool.join():
                 if r.get_error():
                     raise r.get_error()
-                elif r.get_result():
-                    result.append(r.get_result())
+
+                worker_result = r.get_result()
+                if worker_result is not None and len(worker_result) > 0:
+                    result.append(worker_result)
 
         return result
 
@@ -959,6 +1080,8 @@ class AbstractSearch(AbstractCommon):
             subclass.
 
         """
+        return_fields = ReturnFieldList.from_field_names(return_fields)
+
         trees = self._search(location=location, query=query, sort_by=sort_by,
                              return_fields=return_fields,
                              max_features=max_features)
@@ -968,8 +1091,14 @@ class AbstractSearch(AbstractCommon):
             feature_generators.append(
                 self._type.from_wfs(tree, self._wfs_namespace))
 
+        cols = self._type.get_field_names(return_fields, include_geometry=True)
+        if len(cols) == 0:
+            cols = self._type.get_field_names(
+                return_fields, include_wfs_injected=True,
+                include_geometry=False)
+
         df = pd.DataFrame(
             data=self._type.to_df_array(
                 chain.from_iterable(feature_generators), return_fields),
-            columns=self._type.get_field_names(return_fields))
+            columns=cols)
         return df

@@ -18,14 +18,14 @@ with open('requirements_dev.txt') as f:
     requirements_dev = f.read().splitlines()[1:]
 with open('requirements_doc.txt') as f:
     requirements_doc = f.read().splitlines()
-with open('requirements_vectorfile.txt') as f:
-    requirements_vectorfile = f.read().splitlines()
+with open('requirements_geom.txt') as f:
+    requirements_geom = f.read().splitlines()
 with open('requirements_proxy.txt') as f:
     requirements_proxy = f.read().splitlines()
 
 setup(
     name='pydov',
-    version='2.2.0',
+    version='3.2.0',
     description=("A Python package to download data from Databank Ondergrond "
                  "Vlaanderen (DOV)."),
     long_description=readme,
@@ -48,9 +48,11 @@ setup(
             'Natural Language :: English',
             'Natural Language :: Dutch',
             'Programming Language :: Python :: 3',
-            'Programming Language :: Python :: 3.8',
             'Programming Language :: Python :: 3.9',
             'Programming Language :: Python :: 3.10',
+            'Programming Language :: Python :: 3.11',
+            'Programming Language :: Python :: 3.12',
+            'Programming Language :: Python :: 3.13',
             'Topic :: Scientific/Engineering',
     ],
     test_suite='tests',
@@ -58,7 +60,8 @@ setup(
     extras_require={
         'docs': requirements_doc,
         'devs': requirements_dev,
-        'vectorfile': requirements_vectorfile,
+        'vectorfile': requirements_geom,  # deprecated
+        'geom': requirements_geom,
         'proxy': requirements_proxy
     }
 )

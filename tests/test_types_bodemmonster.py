@@ -2,6 +2,7 @@
 """Module grouping tests for the pydov.types.bodemmonster module."""
 
 from pydov.types.bodemmonster import Bodemmonster
+from pydov.types.fields import ReturnFieldList
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes
 
@@ -18,23 +19,23 @@ class TestBodemmonster(AbstractTestTypes):
     pkey_base = build_dov_url('data/bodemmonster/')
 
     field_names = [
-            'pkey_bodemmonster', 'pkey_bodemlocatie', 'pkey_parent',
-            'x', 'y', 'mv_mtaw', 'identificatie',
-            'datum_monstername', 'tijdstip_monstername',
-            'type', 'monstername_door', 'techniek',
-            'condities', 'diepte_van_cm', 'diepte_tot_cm', 'labo'
-        ]
+        'pkey_bodemmonster', 'pkey_bodemlocatie', 'pkey_parent',
+        'x', 'y', 'mv_mtaw', 'identificatie',
+        'datum_monstername', 'tijdstip_monstername',
+        'type', 'monstername_door', 'techniek',
+        'condities', 'diepte_van_cm', 'diepte_tot_cm', 'labo'
+    ]
     field_names_subtypes = []
     field_names_nosubtypes = [
-            'pkey_bodemmonster', 'pkey_bodemlocatie', 'pkey_parent',
-            'x', 'y', 'mv_mtaw', 'identificatie',
-            'datum_monstername', 'tijdstip_monstername',
-            'type', 'monstername_door', 'techniek',
-            'condities', 'diepte_van_cm', 'diepte_tot_cm', 'labo'
+        'pkey_bodemmonster', 'pkey_bodemlocatie', 'pkey_parent',
+        'x', 'y', 'mv_mtaw', 'identificatie',
+        'datum_monstername', 'tijdstip_monstername',
+        'type', 'monstername_door', 'techniek',
+        'condities', 'diepte_van_cm', 'diepte_tot_cm', 'labo'
     ]
 
-    valid_returnfields = ('pkey_bodemmonster', 'identificatie')
-    valid_returnfields_subtype = ('pkey_bodemmonster', 'identificatie')
+    valid_returnfields = ReturnFieldList.from_field_names('pkey_bodemmonster', 'identificatie')
+    valid_returnfields_subtype = ReturnFieldList.from_field_names('pkey_bodemmonster', 'identificatie')
 
     inexistent_field = 'onbestaand'
 

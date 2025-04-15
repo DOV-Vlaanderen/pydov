@@ -210,7 +210,7 @@ class AbstractTypeCommon(AbstractCommon):
         def filter_fn(c):
             try:
                 return c.intended_for.__qualname__ == cls.__qualname__
-            except:
+            except AttributeError:
                 return False
 
         return cls._get_module_classes_metadata(
@@ -235,8 +235,8 @@ class AbstractTypeCommon(AbstractCommon):
         AbstractDov(Sub)Type
             New AbstractDov(Sub)Type with the given extra fields.
         """
-        if type(extra_fields) == type(AbstractDovFieldSet) and \
-                issubclass(extra_fields, AbstractDovFieldSet):
+        if inspect.isclass(extra_fields) \
+                and issubclass(extra_fields, AbstractDovFieldSet):
             extra_fields = extra_fields.fields
 
         class newType(cls):
@@ -629,7 +629,7 @@ class AbstractDovType(AbstractTypeCommon):
         ValueError
             When the given subtype is not a subclass of AbstractDovSubType.
         """
-        if not type(subtype) == type(AbstractDovSubType):
+        if not inspect.isclass(subtype):
             raise ValueError('subtype should be a class, specifically a '
                              'subclass of AbstractDovSubType.')
 

@@ -103,7 +103,7 @@ class Boring(AbstractDovType):
 
 
 class MethodeXyz(AbstractDovFieldSet):
-    """Fieldset containing fields for method and reliability of the point 
+    """Fieldset containing fields for method and reliability of the point
     location of the borehole."""
 
     __generiekeDataCodes = build_dov_url(

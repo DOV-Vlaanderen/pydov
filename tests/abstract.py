@@ -139,30 +139,15 @@ class AbstractTestSearch(object):
         datatype = self.datatype_class
         self.search_instance.__class__(objecttype=datatype)
 
-    def test_get_fields(self, mp_wfs, mp_get_schema,
-                        mp_remote_describefeaturetype, mp_remote_md,
-                        mp_remote_fc, mp_remote_xsd):
-        """Test the get_fields method.
-
-        Test whether the returned fields match the format specified
+    def validate_get_fields(self, fields):
+        """Validate whether the returned fields match the format specified
         in the documentation.
 
         Parameters
         ----------
-        mp_wfs : pytest.fixture
-            Monkeypatch the call to the remote GetCapabilities request.
-        mp_get_schema : pytest.fixture
-            Monkeypatch the call to a remote OWSLib schema.
-        mp_remote_describefeaturetype : pytest.fixture
-            Monkeypatch the call to a remote DescribeFeatureType.
-        mp_remote_md : pytest.fixture
-            Monkeypatch the call to get the remote metadata.
-        mp_remote_fc : pytest.fixture
-            Monkeypatch the call to get the remote feature catalogue.
-
+        fields : dict
+            Output of get_fields method to validate.
         """
-        fields = self.search_instance.get_fields()
-
         assert isinstance(fields, dict)
 
         for field in fields:
@@ -219,6 +204,68 @@ class AbstractTestSearch(object):
             else:
                 assert sorted(f.keys()) == ['cost', 'definition', 'name',
                                             'notnull', 'query', 'type']
+
+    def test_get_fields(self, mp_wfs, mp_get_schema,
+                        mp_remote_describefeaturetype, mp_remote_md,
+                        mp_remote_fc, mp_remote_xsd):
+        """Test the get_fields method.
+
+        Test whether the returned fields match the format specified
+        in the documentation.
+
+        Parameters
+        ----------
+        mp_wfs : pytest.fixture
+            Monkeypatch the call to the remote GetCapabilities request.
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType.
+        mp_remote_md : pytest.fixture
+            Monkeypatch the call to get the remote metadata.
+        mp_remote_fc : pytest.fixture
+            Monkeypatch the call to get the remote feature catalogue.
+
+        """
+        fields = self.search_instance.get_fields()
+        self.validate_get_fields(fields)
+
+    def test_get_fields_with_extra_fields(
+        self, mp_wfs, mp_get_schema,
+            mp_remote_describefeaturetype, mp_remote_md,
+            mp_remote_fc, mp_remote_xsd):
+        """Test the get_fields method with extra fieldsets.
+
+        Test whether the returned fields match the format specified
+        in the documentation and the extra fields are included.
+
+        Parameters
+        ----------
+        mp_wfs : pytest.fixture
+            Monkeypatch the call to the remote GetCapabilities request.
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType.
+        mp_remote_md : pytest.fixture
+            Monkeypatch the call to get the remote metadata.
+        mp_remote_fc : pytest.fixture
+            Monkeypatch the call to get the remote feature catalogue.
+
+        """
+        if len(self.datatype_class.get_fieldsets()) > 0:
+            for fs in self.datatype_class.get_fieldsets().values():
+
+                search_instance = self.search_class(
+                    objecttype=self.datatype_class.with_extra_fields(
+                        fs['class'])
+                )
+                fields = search_instance.get_fields()
+
+                self.validate_get_fields(fields)
+
+                for field in fs['class'].get_field_names():
+                    assert field in fields
 
     def test_search_both_location_query(self, mp_get_schema,
                                         mp_remote_describefeaturetype,

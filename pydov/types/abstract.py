@@ -207,9 +207,15 @@ class AbstractTypeCommon(AbstractCommon):
                 Class reference of this fieldset.
 
         """
+        def filter_fn(c):
+            try:
+                return c.intended_for.__qualname__ == cls.__qualname__
+            except:
+                return False
+
         return cls._get_module_classes_metadata(
             AbstractDovFieldSet,
-            lambda c: c.intended_for == cls
+            filter_fn=filter_fn
         )
 
     @classmethod

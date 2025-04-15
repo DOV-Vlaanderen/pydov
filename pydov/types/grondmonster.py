@@ -3,7 +3,7 @@
 subtypes."""
 from pydov.types.fields import WfsField, XmlField
 
-from .abstract import AbstractDovSubType, AbstractDovType, AbstractDovFieldSet
+from .abstract import AbstractDovSubType, AbstractDovType
 
 
 class KorrelverdelingMeetreeks(AbstractDovSubType):
@@ -152,31 +152,3 @@ class Grondmonster(AbstractDovType):
 
         """
         super().__init__('grondmonster', pkey)
-
-
-class GlauconietWaarden(AbstractDovFieldSet):
-    """Fieldset containing all the different glauconite values."""
-
-    intended_for = Grondmonster
-
-    fields = [
-        XmlField(name='glauconiet_gt500',
-                 source_xpath='/grondmonster/observatieData/observatie['
-                 'parameter="GLAUCONIET_GT500"]/'
-                              'waarde_numeriek',
-                 definition='Glauconiet fractie groter 500 micron (%)',
-                 datatype='float'),
-        XmlField(name='glauconiet_tss',
-                 source_xpath='/grondmonster/observatieData/observatie['
-                 'parameter="GLAUCONIET_TSS"]/'
-                              'waarde_numeriek',
-                 definition='Glauconiet fractie kleiner 500micron en '
-                 'groter 63micron (%)',
-                 datatype='float'),
-        XmlField(name='glauconiet_kl63',
-                 source_xpath='/grondmonster/observatieData/observatie['
-                 'parameter="GLAUCONIET_KL63"]/'
-                              'waarde_numeriek',
-                 definition='Glauconiet fractie kleiner 63micron (%)',
-                 datatype='float')
-    ]

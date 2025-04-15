@@ -113,7 +113,8 @@ class MethodeXyz(AbstractDovFieldSet):
 
     fields = [
         XmlField(name='methode_xy',
-                 source_xpath='/boring/xy/methode_opmeten',
+                 source_xpath='/boring/ligging/metadata_locatiebepaling'
+                 '/methode',
                  definition='Methode waarop de x en y-coordinaat opgemeten '
                  'werden.',
                  datatype='string',
@@ -121,50 +122,30 @@ class MethodeXyz(AbstractDovFieldSet):
                      xsd_schema=__generiekeDataCodes,
                      typename='MethodeOpmetenXyEnumType')),
         XmlField(name='betrouwbaarheid_xy',
-                 source_xpath='/boring/xy/betrouwbaarheid',
+                 source_xpath='/boring/ligging/metadata_locatiebepaling'
+                 '/betrouwbaarheid',
                  definition='Betrouwbaarheid van het opmeten van de x en '
                  'y-coordinaat.',
                  datatype='string',
                  xsd_type=XsdType(
                      xsd_schema=__generiekeDataCodes,
                      typename='BetrouwbaarheidXyzEnumType')),
-        XmlField(name='methode_mv',
-                 source_xpath='/boring/oorspronkelijk_maaiveld/'
-                 'methode_opmeten',
-                 definition='Methode waarop de Z-coördinaat van het maaiveld '
+        XmlField(name='methode_z',
+                 source_xpath='/boring/ligging/metadata_hoogtebepaling'
+                 '/methode',
+                 definition='Methode waarop de z-coordinaat '
                  'opgemeten werd.',
                  datatype='string',
                  xsd_type=XsdType(
                      xsd_schema=__generiekeDataCodes,
                      typename='MethodeOpmetenZEnumType')),
-        XmlField(name='betrouwbaarheid_mv',
-                 source_xpath='/boring/oorspronkelijk_maaiveld/'
-                 'betrouwbaarheid',
+        XmlField(name='betrouwbaarheid_z',
+                 source_xpath='/boring/ligging/metadata_hoogtebepaling'
+                 '/betrouwbaarheid',
                  definition='Betrouwbaarheid van het opmeten van de '
-                 'z-coordinaat van het maaiveld.',
+                 'z-coordinaat.',
                  datatype='string',
                  xsd_type=XsdType(
                      xsd_schema=__generiekeDataCodes,
-                     typename='BetrouwbaarheidXyzEnumType')),
-        XmlField(name='aanvangspeil_mtaw',
-                 source_xpath='/boring/aanvangspeil/waarde',
-                 definition='Hoogte in mTAW van het startpunt van de boring '
-                 '(boortafel, bouwput etc).',
-                 datatype='float'),
-        XmlField(name='methode_aanvangspeil',
-                 source_xpath='/boring/aanvangspeil/methode_opmeten',
-                 definition='Methode waarop de Z-coördinaat van het '
-                 'aanvangspeil opgemeten werd.',
-                 datatype='string',
-                 xsd_type=XsdType(
-                     xsd_schema=__generiekeDataCodes,
-                     typename='MethodeOpmetenZEnumType')),
-        XmlField(name='betrouwbaarheid_aanvangspeil',
-                 source_xpath='/boring/aanvangspeil/betrouwbaarheid',
-                 definition='Betrouwbaarheid van het opmeten van de '
-                 'z-coordinaat van het aanvangspeil.',
-                 datatype='string',
-                 xsd_type=XsdType(
-                     xsd_schema=__generiekeDataCodes,
-                     typename='MethodeOpmetenZEnumType')),
+                     typename='BetrouwbaarheidXyzEnumType'))
     ]

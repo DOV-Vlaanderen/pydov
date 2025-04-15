@@ -1,6 +1,7 @@
 """Module grouping tests for the pydov.types.boring module."""
-from pydov.types.fields import ReturnFieldList
-from pydov.types.grondwaterfilter import GrondwaterFilter
+from pydov.types.abstract import AbstractDovSubType
+from pydov.types.fields import ReturnFieldList, XmlField
+from pydov.types.grondwaterfilter import GrondwaterFilter, Peilmeting
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes
 
@@ -41,3 +42,26 @@ class TestGrondwaterFilter(AbstractTestTypes):
     valid_returnfields_subtype = ReturnFieldList.from_field_names('pkey_filter', 'peil_mtaw')
 
     inexistent_field = 'onbestaand'
+
+    def test_subtype_with_extra_fields_custom(self):
+        """Test the with_extra_fields method using a custom list of fields.
+
+        Test whether the fields are correctly added to the type.
+
+        """
+        new_subtype = Peilmeting.with_extra_fields([
+            XmlField(name='diepte_tov_referentiepunt',
+                     source_xpath='/diepte_tov_referentiepunt',
+                     datatype='float')
+        ])
+        assert issubclass(new_subtype, AbstractDovSubType)
+
+        own_field_names = Peilmeting.get_field_names()
+        extra_field_names = ['diepte_tov_referentiepunt']
+        all_field_names = new_subtype.get_field_names()
+
+        for field in extra_field_names:
+            assert field in all_field_names
+            all_field_names.remove(field)
+
+        assert all_field_names == own_field_names

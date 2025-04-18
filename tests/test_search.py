@@ -13,6 +13,7 @@ from pydov.search.bodemclassificatie import BodemclassificatieSearch
 from pydov.search.boring import BoringSearch
 from pydov.search.generic import WfsSearch
 from pydov.search.grondmonster import GrondmonsterSearch
+from pydov.search.monster import MonsterSearch
 from pydov.search.grondwaterfilter import GrondwaterFilterSearch
 from pydov.search.grondwatermonster import GrondwaterMonsterSearch
 from pydov.search.grondwatervergunning import GrondwaterVergunningSearch
@@ -48,6 +49,7 @@ search_objects = [BodemsiteSearch(),
                   GecodeerdeLithologieSearch(),
                   LithologischeBeschrijvingenSearch(),
                   GrondmonsterSearch(),
+                  MonsterSearch(),
                   WfsSearch('dov-pub:Opdrachten')]
 
 

@@ -705,6 +705,37 @@ Default dataframe output
 Generic
 *******
 
+Samples (Monsters)
+-------------
+
+Type
+    Monster (Sample)
+
+Subtype
+    No subtype
+
+Search class
+    :class:`pydov.search.monster.MonsterSearch`
+
+Default dataframe output
+      .. csv-table:: Samples (monsters)
+        :header-rows: 1
+
+        Field,Source,Cost,Datatype,Example
+        pkey_monster,Monster,1,string,https://www.dov.vlaanderen.be/data/monster/2017-141452
+        naam,Monster,1,string,000/00/2/M1
+        pkey_parents,Monster,1,string: Pipes,|https://www.dov.vlaanderen.be/data/boring/2003-025366|
+        materiaalklasse,Monster,1,string,sediment
+        datum_monstername,Monster,1,date,2003-04-08
+        diepte_van_m,Monster,1,float,0.90
+        diepte_tot_m,Monster,1,float,1.00
+        monstertype,Monster,1,string,geroerd
+        monstersamenstelling,Monster,1,string,ENKELVOUDIG
+        bemonsteringsprocedure,Monster,1,string,nan
+        bemonsteringsinstrument,Monster,1,string,avegaarbooras
+        bemonstering_door,Monster,1,string,BVMO
+
+
 DOV WFS layer
 -------------
 

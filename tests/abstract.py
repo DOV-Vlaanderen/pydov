@@ -17,7 +17,7 @@ from pydov.types.fields import ReturnField, ReturnFieldList
 from pydov.util.dovutil import build_dov_url
 from pydov.util.errors import InvalidFieldError
 from pydov.util.location import Box, Within
-from pydov.util.query import Join, PropertyInList
+from pydov.util.query import AbstractJoin, Join, PropertyInList
 
 
 class ServiceCheck:
@@ -183,6 +183,9 @@ class AbstractTestSearch(object):
             assert f['type'] in ['string', 'float', 'integer', 'date',
                                  'datetime', 'boolean', 'geometry']
 
+            assert 'list' in f
+            assert isinstance(f['list'], bool)
+
             assert 'notnull' in f
             assert isinstance(f['notnull'], bool)
 
@@ -195,7 +198,7 @@ class AbstractTestSearch(object):
 
             if 'values' in f:
                 assert sorted(f.keys()) == [
-                    'cost', 'definition', 'name', 'notnull', 'query', 'type',
+                    'cost', 'definition', 'list', 'name', 'notnull', 'query', 'type',
                     'values']
 
                 assert isinstance(f['values'], dict)
@@ -217,8 +220,9 @@ class AbstractTestSearch(object):
                     elif f['type'] == 'boolean':
                         assert isinstance(v, bool)
             else:
-                assert sorted(f.keys()) == ['cost', 'definition', 'name',
-                                            'notnull', 'query', 'type']
+                assert sorted(f.keys()) == [
+                    'cost', 'definition', 'list', 'name', 'notnull',
+                    'query', 'type']
 
     def test_search_both_location_query(self, mp_get_schema,
                                         mp_remote_describefeaturetype,
@@ -283,14 +287,18 @@ class AbstractTestSearch(object):
 
         assert len(df) >= 1
 
+        # dtype checks of the resulting df columns
+        fields = self.search_instance.get_fields()
+
         for field in list(df):
+            if fields[field]['list']:
+                # don't check uniqueness of list type values
+                continue
+
             if field in ownfields:
                 assert len(df[field].unique()) == 1
             elif field in subfields:
                 assert len(df[field].unique()) >= 1
-
-        # dtype checks of the resulting df columns
-        fields = self.search_instance.get_fields()
 
         for field in list(df):
             mandatory = fields[field]['notnull']
@@ -299,7 +307,14 @@ class AbstractTestSearch(object):
 
         for field in list(df):
             field_datatype = fields[field]['type']
-            datatypes = set((type(i) for i in df[field].dropna()))
+            field_listtype = fields[field]['list']
+
+            if field_listtype:
+                datatypes = set(
+                    (type(i) for i in
+                     AbstractJoin._get_unique_value_list(df, field)))
+            else:
+                datatypes = set((type(i) for i in df[field].dropna()))
 
             assert len(datatypes) <= 1
 
@@ -885,24 +900,32 @@ class AbstractTestTypes(object):
 
         assert isinstance(df_array, list)
 
+        def _test_data_type(field, value):
+            if field['type'] == 'string':
+                assert isinstance(value, str) or np.isnan(value)
+            elif field['type'] == 'float':
+                assert isinstance(value, float) or np.isnan(value)
+            elif field['type'] == 'integer':
+                assert isinstance(value, int) or np.isnan(value)
+            elif field['type'] == 'date':
+                assert isinstance(value, datetime.date) or np.isnan(value)
+            elif field['type'] == 'boolean':
+                assert isinstance(value, bool) or np.isnan(value)
+
+            if field['name'].startswith('pkey') and not pd.isnull(value):
+                assert value.startswith(build_dov_url('data/'))
+                assert not value.endswith('.xml')
+
         for record in df_array:
             assert len(record) == len(fields)
 
             for value, field in zip(record, fields):
-                if field['type'] == 'string':
-                    assert isinstance(value, str) or np.isnan(value)
-                elif field['type'] == 'float':
-                    assert isinstance(value, float) or np.isnan(value)
-                elif field['type'] == 'integer':
-                    assert isinstance(value, int) or np.isnan(value)
-                elif field['type'] == 'date':
-                    assert isinstance(value, datetime.date) or np.isnan(value)
-                elif field['type'] == 'boolean':
-                    assert isinstance(value, bool) or np.isnan(value)
-
-                if field['name'].startswith('pkey') and not pd.isnull(value):
-                    assert value.startswith(build_dov_url('data/'))
-                    assert not value.endswith('.xml')
+                if field['split_fn'] is not None:
+                    assert isinstance(value, list)
+                    for v in value:
+                        _test_data_type(field, v)
+                else:
+                    _test_data_type(field, value)
 
     def test_get_df_array_wrongreturnfields(self, wfs_feature):
         """Test the get_df_array specifying a nonexistent return field.

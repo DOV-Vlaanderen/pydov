@@ -128,7 +128,8 @@ class PropertyLikeList(OgcExpression):
 class AbstractJoin:
     """Abstract base class for the Join classes."""
 
-    def _is_iterable_type(self, dataframe, column):
+    @staticmethod
+    def _is_iterable_type(dataframe, column):
         """Check if the first element in a specified column of a dataframe is
         an iterable type (list or set).
 
@@ -149,6 +150,7 @@ class AbstractJoin:
         ------
         ValueError
             If the input dataframe is empty.
+
         """
         if len(dataframe) < 1:
             raise ValueError("dataframe should not be empty")
@@ -156,7 +158,8 @@ class AbstractJoin:
         return isinstance(dataframe[column].iloc[0], list) or \
             isinstance(dataframe[column].iloc[0], set)
 
-    def _get_unique_value_list(self, dataframe, column):
+    @staticmethod
+    def _get_unique_value_list(dataframe, column):
         """Retrieve a list of unique values from a specified column in a pandas
         DataFrame. If the values are iterable (list or set), it aggregates
         them.
@@ -178,8 +181,9 @@ class AbstractJoin:
         ------
         ValueError
             If the input dataframe is empty.
+
         """
-        if self._is_iterable_type(dataframe, column):
+        if AbstractJoin._is_iterable_type(dataframe, column):
             value_list = dataframe[column].dropna().aggregate('sum')
             return list(set(value_list))
 

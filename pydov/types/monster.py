@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """Module containing the DOV data type for monster, including
 subtypes."""
-from pydov.types.fields import WfsField, XmlField
+from pydov.types.fields import WfsField
 
-from .abstract import AbstractDovSubType, AbstractDovType
+from .abstract import AbstractDovType
+
 
 class Monster(AbstractDovType):
     """Class representing the DOV data type for ground samples."""
@@ -23,7 +24,8 @@ class Monster(AbstractDovType):
             Generator yielding non-empty parent keys extracted from the input.
         """
         return (pkey for pkey in agg_value.strip(
-            '| ').split('|') if pkey != '')
+            '| ').split('|') if pkey != ''
+                )
 
     fields = [
         WfsField(name='pkey_monster',

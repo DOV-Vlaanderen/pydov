@@ -18,5 +18,7 @@ class MonsterSearch(AbstractSearch):
             described in the documentation.
 
         """
-        super(MonsterSearch, self).__init__('monster:monsters',
-                                                 objecttype)
+        super(MonsterSearch, self).__init__(
+            'monster:monsters',
+            objecttype
+                                            )

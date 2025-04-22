@@ -22,17 +22,20 @@ class TestMonster(AbstractTestTypes):
         'pkey_monster', 'naam', 'pkey_parents', 'materiaalklasse',
         'datum_monstername', 'diepte_van_m', 'diepte_tot_m',
         'monstertype', 'monstersamenstelling', 'bemonsteringsprocedure', 'bemonsteringsinstrument',
-        'bemonstering_door']
+        'bemonstering_door', 'bemonsterd_object_type',
+        'bemonsterd_object_naam', 'bemonsterd_object_permkey']
+    field_names_subtypes = [
+        'bemonsterd_object_type',
+        'bemonsterd_object_naam', 'bemonsterd_object_permkey']
     field_names_nosubtypes = [
         'pkey_monster', 'naam', 'pkey_parents', 'materiaalklasse',
         'datum_monstername', 'diepte_van_m', 'diepte_tot_m',
         'monstertype', 'monstersamenstelling', 'bemonsteringsprocedure', 'bemonsteringsinstrument',
         'bemonstering_door']
-    valid_returnfields_subtype = None
-    field_names_subtypes = None
 
 
     valid_returnfields = ReturnFieldList.from_field_names(
         'pkey_monster', 'diepte_tot_m')
-
+    valid_returnfields_subtype = ReturnFieldList.from_field_names(
+        'monster_link','bemonsterd_object_type', 'bemonsterd_object_naam', 'bemonsterd_object_permkey')
     inexistent_field = 'onbestaand'

@@ -22,6 +22,8 @@ class TestQuartairStratigrafie(AbstractTestTypes):
     namespace = 'http://dov.vlaanderen.be/ocdov/interpretaties'
     pkey_base = build_dov_url('data/interpretatie/')
 
+    sorted_subtypes = ['QuartairStratigrafieLaag']
+
     field_names = [
         'pkey_interpretatie', 'pkey_boring',
         'betrouwbaarheid_interpretatie', 'x', 'y',

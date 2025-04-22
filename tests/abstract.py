@@ -109,12 +109,14 @@ class AbstractTestSearch(object):
     ----------
     search_instance : pydov.search.abstract.AbstractSearch
         Instance of subclass of this type used for searching.
+    search_class : pydov.search.abstract.AbstractSearch
+        Class reference for the search class.
     datatype_class : pydov.types.abstract.AbstractDovType
-            Class reference for the corresponding datatype.
+        Class reference for the corresponding datatype.
     valid_query_single : owslib.fes2.OgcExpression
         OGC expression of a valid query returning a single result.
     inexistent_field : str
-            The name of an inexistent field.
+        The name of an inexistent field.
     wfs_field : str
         The name of a WFS field.
     xml_field : str
@@ -231,7 +233,7 @@ class AbstractTestSearch(object):
         self.validate_get_fields(fields)
 
     def test_get_fields_with_extra_fields(
-        self, mp_wfs, mp_get_schema,
+            self, mp_wfs, mp_get_schema,
             mp_remote_describefeaturetype, mp_remote_md,
             mp_remote_fc, mp_remote_xsd):
         """Test the get_fields method with extra fieldsets.
@@ -265,6 +267,43 @@ class AbstractTestSearch(object):
                 self.validate_get_fields(fields)
 
                 for field in fs['class'].get_field_names():
+                    assert field in fields
+
+    def test_get_fields_with_subtype(
+        self, mp_wfs, mp_get_schema,
+            mp_remote_describefeaturetype, mp_remote_md,
+            mp_remote_fc, mp_remote_xsd):
+        """Test the get_fields method with other subtypes.
+
+        Test whether the returned fields match the format specified
+        in the documentation and the subtype fields are included.
+
+        Parameters
+        ----------
+        mp_wfs : pytest.fixture
+            Monkeypatch the call to the remote GetCapabilities request.
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType.
+        mp_remote_md : pytest.fixture
+            Monkeypatch the call to get the remote metadata.
+        mp_remote_fc : pytest.fixture
+            Monkeypatch the call to get the remote feature catalogue.
+
+        """
+        if len(self.datatype_class.get_subtypes()) > 0:
+            for st in self.datatype_class.get_subtypes().values():
+
+                search_instance = self.search_class(
+                    objecttype=self.datatype_class.with_subtype(
+                        st['class'])
+                )
+                fields = search_instance.get_fields()
+
+                self.validate_get_fields(fields)
+
+                for field in st['class'].get_field_names():
                     assert field in fields
 
     def test_search_both_location_query(self, mp_get_schema,
@@ -705,10 +744,12 @@ class AbstractTestTypes(object):
     valid_returnfields : tuple of str
         A tuple of valid return fields from the main type.
     valid_returnfields_subtype : typle of str
-            A tuple containing valid return fields, including fields from a
-            subtype.
+        A tuple containing valid return fields, including fields from a
+        subtype.
     inexistent_field : str
-            The name of an inexistent field.
+        The name of an inexistent field.
+    sorted_subtypes : list of str
+        Sorted list of all available subtypes (names) for this type.
 
     """
 
@@ -1071,3 +1112,13 @@ class AbstractTestTypes(object):
             instance_from_xml(clz.subtypes[0], dov_xml)
 
         instance_from_xml(self.datatype_class, dov_xml)
+
+    def test_get_subtypes(self):
+        """Test the get_subtypes method.
+
+        Test whether the correct subtypes are returned.
+
+        """
+
+        fieldsets = sorted(self.datatype_class.get_subtypes().keys())
+        assert fieldsets == self.sorted_subtypes

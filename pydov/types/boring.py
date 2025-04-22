@@ -11,6 +11,8 @@ from .abstract import AbstractDovFieldSet, AbstractDovSubType, AbstractDovType
 class BoorMethode(AbstractDovSubType):
     """Subtype listing the method used to make the borehole."""
 
+    intended_for = ['Boring']
+
     rootpath = './/boring/details/boormethode'
 
     fields = [
@@ -33,6 +35,8 @@ class BoorMethode(AbstractDovSubType):
 
 class Kleur(AbstractDovSubType):
     """Subtype listing the color values of the borehole."""
+
+    intended_for = ['Boring']
 
     rootpath = './/boring/details/kleur'
 
@@ -109,7 +113,7 @@ class MethodeXyz(AbstractDovFieldSet):
     __generiekeDataCodes = build_dov_url(
         'xdov/schema/latest/xsd/kern/generiek/GeneriekeDataCodes.xsd')
 
-    intended_for = Boring
+    intended_for = ['Boring']
 
     fields = [
         XmlField(name='methode_xy',

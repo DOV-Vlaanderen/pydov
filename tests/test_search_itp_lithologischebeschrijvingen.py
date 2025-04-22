@@ -32,6 +32,7 @@ location_xsd_base = \
 class TestLithologischeBeschrijvingenSearch(AbstractTestSearch):
 
     search_instance = LithologischeBeschrijvingenSearch()
+    search_class = LithologischeBeschrijvingenSearch
     datatype_class = LithologischeBeschrijvingen
 
     valid_query_single = PropertyIsEqualTo(propertyname='Proefnummer',

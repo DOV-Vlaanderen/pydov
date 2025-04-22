@@ -18,6 +18,8 @@ class TestGrondwaterFilter(AbstractTestTypes):
     namespace = 'http://dov.vlaanderen.be/grondwater/gw_meetnetten'
     pkey_base = build_dov_url('data/filter/')
 
+    sorted_subtypes = ['Gxg', 'Peilmeting']
+
     field_names = [
         'pkey_filter', 'pkey_grondwaterlocatie', 'gw_id',
         'filternummer', 'filtertype', 'x', 'y',

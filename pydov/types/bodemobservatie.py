@@ -7,6 +7,8 @@ from .abstract import AbstractDovSubType, AbstractDovType
 
 
 class Fractiemeting(AbstractDovSubType):
+    intended_for = ['Bodemobservatie']
+
     rootpath = './/bodemobservatie/fractiemeting'
 
     fields = [

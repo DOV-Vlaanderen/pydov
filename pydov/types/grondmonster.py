@@ -28,6 +28,8 @@ class KorrelverdelingMeetreeks(AbstractDovSubType):
 class Korrelverdeling(AbstractDovSubType):
     """Class representing the Korrelverdelingen."""
 
+    intended_for = ['Grondmonster']
+
     rootpath = (".//observatie[starts-with(parametergroep, "
                 "'Onderkenningsproeven-korrelverdeling')]")
 

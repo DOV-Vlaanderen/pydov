@@ -14,6 +14,8 @@ _filterDataCodes_xsd = build_dov_url(
 class Peilmeting(AbstractDovSubType):
     """Subtype listing the water head level measurements."""
 
+    intended_for = ['GrondwaterFilter']
+
     rootpath = './/filtermeting/peilmeting'
 
     fields = [
@@ -64,6 +66,8 @@ class Peilmeting(AbstractDovSubType):
 class Gxg(AbstractDovSubType):
     """Subtype listing the GxG values or precalculated groundwaterlevel
     statistics."""
+
+    intended_for = ['GrondwaterFilter']
 
     rootpath = './/filtermeting/gxg'
 

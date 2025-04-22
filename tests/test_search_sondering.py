@@ -23,6 +23,7 @@ location_xsd_base = 'tests/data/types/sondering/xsd_*.xml'
 class TestSonderingSearch(AbstractTestSearch):
 
     search_instance = SonderingSearch()
+    search_class = SonderingSearch
     datatype_class = Sondering
 
     valid_query_single = PropertyIsEqualTo(propertyname='sondeernummer',

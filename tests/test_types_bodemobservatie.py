@@ -19,6 +19,8 @@ class TestBodemobservatie(AbstractTestTypes):
     namespace = 'https://www.dov.vlaanderen.be/bodem'
     pkey_base = build_dov_url('data/bodemobservatie/')
 
+    sorted_subtypes = ['Fractiemeting']
+
     field_names = ['pkey_bodemobservatie', 'pkey_bodemlocatie',
                    'pkey_parent', 'x', 'y', 'mv_mtaw', 'diepte_van_cm',
                    'diepte_tot_cm', 'observatiedatum', 'invoerdatum',

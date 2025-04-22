@@ -12,6 +12,8 @@ _observatieDataCodes_xsd = build_dov_url(
 
 class Observatie(AbstractDovSubType):
 
+    intended_for = ['GrondwaterMonster']
+
     rootpath = './/filtermeting/watermonster/observatie'
 
     fields = [

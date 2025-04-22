@@ -10,6 +10,8 @@ from pydov.types.ligging import MvMtawField
 class Meetdata(AbstractDovSubType):
     """Subtype listing the CPT measurement results."""
 
+    intended_for = ['Sondering']
+
     rootpath = './/sondering/sondeonderzoek/penetratietest/meetdata'
 
     fields = [
@@ -55,6 +57,8 @@ class Meetdata(AbstractDovSubType):
 
 class Techniek(AbstractDovSubType):
     """Subtype listing the different techniques used to perform the CPT."""
+
+    intended_for = ['Sondering']
 
     rootpath = './/sondering/sondeonderzoek/penetratietest/technieken'
 

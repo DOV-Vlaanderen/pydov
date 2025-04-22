@@ -18,6 +18,8 @@ class TestBoring(AbstractTestTypes):
     namespace = 'http://dov.vlaanderen.be/ocdov/dov-pub'
     pkey_base = build_dov_url('data/boring/')
 
+    sorted_subtypes = ['BoorMethode', 'Kleur']
+
     field_names = [
         'pkey_boring', 'boornummer', 'x', 'y', 'mv_mtaw',
         'start_boring_mtaw', 'gemeente', 'diepte_boring_van',

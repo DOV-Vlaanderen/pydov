@@ -28,16 +28,18 @@ class AbstractDovFieldSet(object):
 
     Attributes
     ----------
-    intended_for : AbstractDovType or AbstractDovSubType
+    intended_for : list of string
         Use this fieldset to extend the fields of this type or subtype. Using
         the fieldset for another (sub)type might not yield the correct results.
+        The list should contain class names of subclassed of AbstractDovType
+        or AbstractDovSubType.
 
     fields : list of pydov.types.fields.AbstractField
         List of fields of this type.
 
     """
 
-    intended_for = None
+    intended_for = []
 
     fields = []
 
@@ -134,6 +136,13 @@ class AbstractTypeCommon(AbstractCommon):
         return fields
 
     @classmethod
+    def _filter_classes_intended_for(cls, c):
+        try:
+            return cls.__qualname__ in c.intended_for
+        except AttributeError:
+            return False
+
+    @classmethod
     def _get_module_classes_metadata(cls, base_class, filter_fn=None):
         """Get metadata of the specific classes in a the same module as this
         class.
@@ -207,15 +216,9 @@ class AbstractTypeCommon(AbstractCommon):
                 Class reference of this fieldset.
 
         """
-        def filter_fn(c):
-            try:
-                return c.intended_for.__qualname__ == cls.__qualname__
-            except AttributeError:
-                return False
-
         return cls._get_module_classes_metadata(
             AbstractDovFieldSet,
-            filter_fn=filter_fn
+            filter_fn=cls._filter_classes_intended_for
         )
 
     @classmethod
@@ -605,7 +608,10 @@ class AbstractDovType(AbstractTypeCommon):
                 Class reference of this subtype.
 
         """
-        return cls._get_module_classes_metadata(AbstractDovSubType)
+        return cls._get_module_classes_metadata(
+            AbstractDovSubType,
+            filter_fn=cls._filter_classes_intended_for
+        )
 
     @classmethod
     def with_subtype(cls, subtype):

@@ -17,6 +17,26 @@ While you'll need to instantiate a different search class for each datatype, que
 
 Generally the datasets consist of a main type and a subtype, where the resulting dataframe will contain multiple records for each instance of the main type based on the records of the subtype (you can think of this as a 'left join' between the main and the subtype).
 
+Some datasets have extra fieldsets available, that are not used by default but can be enabled easily. More information on how to find and enable them can be consulted in the :ref:`adding extra fields <adding_extra_fields>` section. For example, you could write::
+
+    from pydov.search.boring import BoringSearch
+    from pydov.types.boring import MethodeXyz
+
+    borehole_search = BoringSearch(
+        objecttype=Boring.with_extra_fields(MethodeXyz)
+    )
+    # df = borehole_search.search(...)
+
+For some datasets, multiple subtypes are available. One of them will be used by default, but you can easily select the subtype of your interest. More information on how to find the available subtypes and how to enable them can be found in the :ref:`adding or switching subtypes <switching_subtypes>` section. For example, you could write::
+
+    from pydov.search.boring import BoringSearch
+    from pydov.types.boring import Kleur
+
+    borehole_search = BoringSearch(
+        objecttype=Boring.with_subtype(Kleur)
+    )
+    # df = borehole_search.search(...)
+
 Currently, we support the following datasets:
 
 .. contents:: Datasets
@@ -214,7 +234,7 @@ Default dataframe output
         mv_mtaw,Bodemclassificatie,1,float,32.9
         classificatietype,Bodemclassificatie,1,string,Algemene Belgische classificatie
         bodemtype,Bodemclassificatie,1,string,Scbz
-        auteurs,Bodemclassificatie,1,string,Dondeyne, Stefaan (KULeuven)
+        auteurs,Bodemclassificatie,1,string,Dondeyne Stefaan (KULeuven)
 
 Subsoil
 *******
@@ -232,7 +252,7 @@ Extra fieldsets
     * MethodeXyz (Method of geolocation) - Method and quality assessment of geolocation of the borehole.
 
 Subtypes
-    * Boormethode (Method) - Method used to create the borehole, per depth interval.
+    * Boormethode (Method) (default) - Method used to create the borehole, per depth interval.
     * Kleur (Colour) - Colour of the soil retrieved from the borehole, per depth interval.
 
 Search class
@@ -339,7 +359,7 @@ Type
     Sondering (CPT measurement)
 
 Subtypes
-    * Meetdata (CPT data) - CPT measurement at each depth.
+    * Meetdata (CPT data) (default) - CPT measurement at each depth.
     * Techniek (technique) - Techniques used while performing the CPT measurement.
 
 Search class
@@ -641,7 +661,7 @@ Type
     GrondwaterFilter (Groundwater screen)
 
 Subtypes
-    * Peilmeting (Water head level) - Water head level measurements over time.
+    * Peilmeting (Water head level) (default) - Water head level measurements over time.
     * Gxg - Average water head levels per calendar year.
 
 Search class

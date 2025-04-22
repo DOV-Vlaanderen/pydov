@@ -97,9 +97,111 @@ Turning the result into a GeoPandas GeoDataFrame
       geo_df = GeoDataFrame(df, geometry='geom', crs='EPSG:4326')
       geo_df.to_file('boringen.geojson')
 
+Customizing object types and subtypes
+*************************************
+
+Next to the default objecttypes in pydov, that are used when creating a search object for the given type, some object types support extra (main) fieldsets, extra subtypes or both. It is also possible to fully customize a datatype by defining your own fields for a main type, or your own subtypes.
+
+.. _adding_extra_fields:
+
+Adding extra fields
+-------------------
+
+To list the available extra fieldsets of a type, you can use the ``get_fieldsets`` method. The result is a dictionary with for each of the fieldsets a new dictionary with more information::
+
+  from pydov.types.boring import Boring
+
+  fieldsets = Boring.get_fieldsets()
+  for f in fieldsets.values():
+      print(f)
+
+      # {
+      #    'name': 'MethodeXyz',
+      #    'class': <class 'pydov.types.boring.MethodeXyz'>,
+      #    'definition': 'Fieldset containing fields for method and reliability of the [...]'
+      # }
+
+For each fieldset, the following information is available:
+
+name
+    The name of the fieldset.
+
+    Example: ``'MethodeXyz'``
+
+class
+    The class where the fields of this fieldset are defined. This is also the class to import and use to add the extra fields to the main type.
+
+    Example: ``<class 'pydov.types.boring.MethodeXyz'>``
+
+definition
+    A description of the fieldset and how it could be used. It always includes a list of field names. To get a full definition of the fields themselves,
+    create a search instance with the extra fields and use the ``get_fields`` method.
+
+    Example: ``'Fieldset containing fields for method and reliability of the [...]'``
+
+To add the extra fieldset to the object type, you can use the ``with_extra_fields`` method. This can be done while instantiating a search class::
+
+  from pydov.search.boring import BoringSearch
+  from pydov.types.boring import MethodeXyz
+
+  borehole_search = BoringSearch(
+      objecttype=Boring.with_extra_fields(MethodeXyz)
+  )
+  # df = borehole_search.search(...)
+
+The extra fields will now be part of your object type, and will hence be available in the `get_fields` output as well as in the output dataframe.
+
+.. _switching_subtypes:
+
+Adding or switching subtypes
+----------------------------
+
+To list the available subtypes of a type, you can use the ``get_subtypes`` method. The result is a dictionary with for each of the subtypes a new dictionary with more information::
+
+  from pydov.types.boring import Boring
+
+  subtypes = Boring.get_subtypes()
+  for st in subtypes.values():
+      print(st)
+
+      # {
+      #    'name': 'Kleur',
+      #    'class': <class 'pydov.types.boring.Kleur'>,
+      #    'definition': 'Subtype listing the color values of the borehole. [...]'
+      # }
+
+For each subtype, the following information is available:
+
+name
+    The name of the subtype.
+
+    Example: ``'Kleur'``
+
+class
+    The class where the fields of this subtype are defined. This is also the class to import and use to add the subtype to the main type.
+
+    Example: ``<class 'pydov.types.boring.Kleur'>``
+
+definition
+    A description of the subtype and how it could be used. It always includes a list of field names. To get a full definition of the fields themselves,
+    create a search instance with the extra fields and use the ``get_fields`` method.
+
+    Example: ``'Subtype listing the color values of the borehole. [...]'``
+
+To use the subtype, you can use the ``with_subtype`` method of the main type. This can be done while instantiating a search class::
+
+  from pydov.search.boring import BoringSearch
+  from pydov.types.boring import Kleur
+
+  borehole_search = BoringSearch(
+      objecttype=Boring.with_subtype(Kleur)
+  )
+  # df = borehole_search.search(...)
+
+The extra fields from the subtype will now be part of your object type, and will hence be available in the `get_fields` output as well as in the output dataframe.
 
 Defining custom object types
-****************************
+----------------------------
 
 Should you want to make the returned dataframe fields more permanent or, more importantly, add extra XML fields to an existing object type, you can define your own object types and subtypes.
 
@@ -121,9 +223,7 @@ The three most common reasons to define custom types are listed below: adding an
 Adding an XML field to a main type
 ----------------------------------
 
-To add an extra XML field to an existing main type, you have to create a subclass and extend the base type's fields.
-
-To extend the field list of the basetype, use its ``extend_fields`` class method, allowing the base object type to be unaffected by your changes. It takes a new list as its argument, containing the fields to be added. These should all be instances of :class:`pydov.types.fields.XmlField`. While it is possible to add instances of :class:`pydov.types.fields.WfsField` as well, this is generally not necessary as those can be used in the return_fields argument without being explicitly defined in the object type.
+To add an extra XML field to an existing main type, you can use its ``with_extra_fields`` method.  It takes a new list as its argument, containing the fields to be added. These should all be instances of :class:`pydov.types.fields.XmlField`. While it is possible to add instances of :class:`pydov.types.fields.WfsField` as well, this is generally not necessary as those can be used in the return_fields argument without being explicitly defined in the object type.
 
 For example, to add the field 'methode_xy' to the Boring datatype, you'd write::
 
@@ -131,25 +231,22 @@ For example, to add the field 'methode_xy' to the Boring datatype, you'd write::
   from pydov.types.boring import Boring
   from pydov.types.fields import XmlField
 
-  class MyBoring(Boring):
-      fields = Boring.extend_fields([
-          XmlField(name='methode_xy',
-                   source_xpath='/boring/xy/methode_opmeten',
-                   datatype='string')
-      ])
+  MyBoring = Boring.with_extra_fields([
+      XmlField(name='methode_xy',
+               source_xpath='/boring/ligging/metadata_locatiebepaling/methode',
+               datatype='string')
+  ])
 
   bs = BoringSearch(objecttype=MyBoring)
-  df = bs.search(query=PropertyIsEqualTo('gemeente', 'Gent'))
+  df = bs.search(max_features=10)
 
 
 Adding an XML field to a subtype
 --------------------------------
 
-To add an extra XML field to an existing subtype, you have to create a subclass of the subtype and extend its fields. You also have to subclass the main type in order to register your new subtype.
+To add an extra XML field to an existing subtype you can use its ``with_extra_fields`` method.  It takes a new list as its argument, containing the fields to be added. These should all be instances of :class:`pydov.types.fields.XmlField`. The source_xpath will be interpreted relative to the base subtypes rootpath.
 
-To extend the field list of the subtype, use its ``extend_fields`` class method, allowing the base subtype to be unaffected by your changes. It takes a new list as its argument, containing the fields to be added. These should all be instances of :class:`pydov.types.fields.XmlField`. The source_xpath will be interpreted relative to the base subtypes rootpath.
-
-To register your new subtype in a custom main type, subclass the existing main type and overwrite its ``subtypes`` field with a new list containing your new subtype.
+To register your new subtype in a custom main type, use its ``with_subtype`` method using your new subtype.
 
 For example, to add the field 'opmeter' to the Peilmeting subtype, you'd write::
 
@@ -157,18 +254,16 @@ For example, to add the field 'opmeter' to the Peilmeting subtype, you'd write::
   from pydov.types.grondwaterfilter import GrondwaterFilter, Peilmeting
   from pydov.types.fields import XmlField
 
-  class MyPeilmeting(Peilmeting):
-      fields = Peilmeting.extend_fields([
-          XmlField(name='opmeter',
-                   source_xpath='/opmeter/naam',
-                   datatype='string')
-      ])
+  MyPeilmeting = Peilmeting.with_extra_fields([
+      XmlField(name='opmeter',
+               source_xpath='/opmeter/naam',
+               datatype='string')
+  ])
 
-  class MyGrondwaterFilter(GrondwaterFilter):
-      subtypes = [MyPeilmeting]
-
-  fs = GrondwaterFilterSearch(objecttype=MyGrondwaterFilter)
-  df = fs.search(query=PropertyIsEqualTo('gemeente', 'Gent'))
+  fs = GrondwaterFilterSearch(
+    objecttype=GrondwaterFilter.with_subtype(MyPeilmeting)
+  )
+  df = fs.search(max_features=10)
 
 
 Adding a new subtype to a main type
@@ -203,454 +298,7 @@ Suppose you are not interested in the actual measurements from the CPT data but 
                    datatype='string')
       ]
 
-  class MySondering(Sondering)
-      subtypes = [Technieken]
+  MySondering = Sondering.with_subtype(Technieken)
 
   ms = SonderingSearch(objecttype=MySondering)
-  df = ms.search(query=PropertyIsEqualTo('gemeente', 'Gent'))
-
-
-Default dataframe columns
-*************************
-
-Boreholes (boringen)
---------------------
-  .. csv-table:: Boreholes (boringen)
-    :header-rows: 1
-
-    Field,Cost,Datatype,Example
-    pkey_boring,1,string,https://www.dov.vlaanderen.be/data/boring/1930-120730
-    boornummer,1,string,kb15d28w-B164
-    x,1,float,152301.0
-    y,1,float,211682.0
-    mv_mtaw,10,float,8.00
-    start_boring_mtaw,1,float,8.00
-    gemeente,1,string,Wuustwezel
-    diepte_boring_van,10,float,0.00
-    diepte_boring_tot,1,float,19.00
-    datum_aanvang,1,date,1930-10-01
-    uitvoerder,1,string,Smet - Dessel
-    boorgatmeting,10,boolean,false
-    diepte_methode_van,10,float,0.00
-    diepte_methode_tot,10,float,19.00
-    boormethode,10,string,droge boring
-
-CPT measurements (sonderingen)
-------------------------------
-  .. csv-table:: CPT measurements (sonderingen)
-    :header-rows: 1
-
-    Field,Cost,Datatype,Example
-    pkey_sondering,1,string,https://www.dov.vlaanderen.be/data/sondering/2002-010317
-    sondeernummer,1,string,GEO-02/079-S3
-    x,1,float,142767
-    y,1,float,221907
-    mv_mtaw,10,float,NaN
-    start_sondering_mtaw,1,float,2.39
-    diepte_sondering_van,1,float,0
-    diepte_sondering_tot,1,float,16
-    datum_aanvang,1,date,2002-07-04
-    uitvoerder,1,string,MVG - Afdeling Geotechniek
-    sondeermethode,1,string,continu elektrisch
-    apparaat,1,string,200kN - RUPS
-    datum_gw_meting,10,datetime,2002-07-04 13:50:00
-    diepte_gw_m,10,float,1.2
-    lengte,10,float,1.2
-    diepte,10,float,1.2
-    qc,10,float,0.68
-    Qt,10,float,NaN
-    fs,10,float,10
-    u,10,float,7
-    i,10,float,0.1
-
-Groundwater screens (grondwaterfilters)
----------------------------------------
-
-Mind that the timeseries contains two columns referring to the time: `datum` and `tijdstip`, with datatype `date`, respectively `string`. This distinction is required because the `tijdstip` field is not mandatory whereas the `date` is. It is up to the user to combine these fields in a datetime object if required.
-
-  .. csv-table:: Groundwater screens (grondwaterfilters)
-    :header-rows: 1
-
-    Field,Cost,Datatype,Example
-    pkey_filter,1,string,https://www.dov.vlaanderen.be/data/filter/1989-001024
-    pkey_grondwaterlocatie,1,string,https://www.dov.vlaanderen.be/data/put/2017-000200
-    gw_id,1,string,4-0053
-    filternummer,1,string,1
-    filtertype,1,string,peilfilter
-    x,1,float,110490
-    y,1,float,194090
-    start_grondwaterlocatie_mtaw,1,float,NaN
-    mv_mtaw,10,float,NaN
-    gemeente,1,string,Destelbergen
-    meetnet_code,10,string,1
-    aquifer_code,10,string,0100
-    grondwaterlichaam_code,10,string,CVS_0160_GWL_1
-    regime,10,string,freatisch
-    diepte_onderkant_filter,1,float,13
-    lengte_filter,1,float,2
-    datum,10,date,2004-05-18
-    tijdstip,10,string,NaN
-    peil_mtaw,10,float,4.6
-    betrouwbaarheid,10,string,goed
-    methode,10,string,peillint
-    filterstatus,10,string,1
-    filtertoestand,10,string,in rust
-
-Groundwater samples (grondwatermonsters)
-----------------------------------------
-  .. csv-table:: Groundwater samples (grondwatermonsters)
-    :header-rows: 1
-
-    Field,Cost,Datatype,Example
-    pkey_grondwatermonster,1,string,https://www.dov.vlaanderen.be/data/watermonster/2010-001344
-    grondwatermonsternummer,1,string,2-0114/M2010
-    pkey_grondwaterlocatie,1,string,https://www.dov.vlaanderen.be/data/put/2017-000096
-    gw_id,1,string,2-0114
-    pkey_filter,1,string,https://www.dov.vlaanderen.be/data/filter/1996-001085
-    filternummer,1,string,1
-    x,1,float,153030
-    y,1,float,158805
-    start_grondwaterlocatie_mtaw,1,float,129.88
-    gemeente,1,string,Sint-Genesius-Rode
-    datum_monstername,1,date,2020-01-20
-    parametergroep,10,string,Zware metalen
-    parameter,10,string,Hg
-    detectie,10,string,<
-    waarde,10,float,0.5
-    eenheid,10,string,µg/l
-    veld_labo,10,string,LABO
-
-Groundwater permits (grondwatervergunningen)
----------------------------------------------
-  .. csv-table:: Groundwater permits (grondwatervergunningen)
-    :header-rows: 1
-
-    Field,Cost,Datatype,Example
-    id_vergunning,1,string,66229
-    pkey_installatie,1,string,https://www.dov.vlaanderen.be/data/installatie/2020-093103
-    x,1,float,157403.75
-    y,1,float,214471.32
-    diepte,1,float,10.0
-    exploitant_naam,1,string,AQUAFIN
-    watnr,1,string,VLA-0019-A
-    vlaremrubriek,1,string,53.2.2.b)2
-    vergund_jaardebiet,1,float,493000.0
-    vergund_dagdebiet,1,float,nan
-    van_datum_termijn,1,date,2019-08-09
-    tot_datum_termijn,1,date,nan
-    aquifer_vergunning,1,string,0200: Kempens Aquifersysteem
-    inrichtingsklasse,1,string,Klasse 1 - Vlaams project
-    nacebelcode,1,string,37000: Afvalwaterafvoer
-    actie_waakgebied,1,string,nan
-    cbbnr,1,string,00418870000022
-    kbonr,1,string,044691388
-
-Formal stratigraphy (Formele stratigrafie)
-------------------------------------------
-  .. csv-table:: Formal stratigraphy (Formele stratigrafie)
-    :header-rows: 1
-
-    Field,Cost,Datatype,Example
-    pkey_interpretatie,1,string,https://www.dov.vlaanderen.be/data/interpretatie/2002-227082
-    pkey_boring,1,string,NaN
-    pkey_sondering,1,string,https://www.dov.vlaanderen.be/data/sondering/1989-068788
-    betrouwbaarheid_interpretatie,1,string,goed
-    x,1,float,108455
-    y,1,float,194565
-    start_interpretatie_mtaw,1,float,6.62
-    diepte_laag_van,10,float,0
-    diepte_laag_tot,10,float,13
-    lid1,10,string,Q
-    relatie_lid1_lid2,10,string,T
-    lid2,10,string,Q
-
-Informal stratigraphy (Informele stratigrafie)
-----------------------------------------------
-  .. csv-table:: Informal stratigraphy (Informele stratigrafie)
-    :header-rows: 1
-
-    Field,Cost,Datatype,Example
-    pkey_interpretatie,1,string,https://www.dov.vlaanderen.be/data/interpretatie/2016-290843
-    pkey_boring,1,string,https://www.dov.vlaanderen.be/data/boring/1893-073690
-    pkey_sondering,1,string,NaN
-    betrouwbaarheid_interpretatie,1,string,onbekend
-    x,1,float,108900
-    y,1,float,194425
-    start_interpretatie_mtaw,1,float,6.00
-    diepte_laag_van,10,float,0
-    diepte_laag_tot,10,float,18.58
-    beschrijving,10,string,Q
-
-Hydrogeological stratigraphy (Hydrogeologische stratigrafie)
-------------------------------------------------------------
-  .. csv-table:: Hydrogeological stratigraphy (Hydrogeologische stratigrafie)
-    :header-rows: 1
-
-    Field,Cost,Datatype,Example
-    pkey_interpretatie,1,string,https://www.dov.vlaanderen.be/data/interpretatie/2001-198755
-    pkey_boring,1,string,https://www.dov.vlaanderen.be/data/boring/1890-073688
-    betrouwbaarheid_interpretatie,1,string,goed
-    x,1,float,108773
-    y,1,float,194124
-    start_interpretatie_mtaw,1,float,7.00
-    diepte_laag_van,10,float,0
-    diepte_laag_tot,10,float,8
-    aquifer,10,string,0110
-
-Informal hydrogeological stratigraphy (Informele hydrogeologische stratigrafie)
--------------------------------------------------------------------------------
-  .. csv-table:: Informal hydrogeological stratigraphy (Informele hydrogeologische stratigrafie)
-    :header-rows: 1
-
-    Field,Cost,Datatype,Example
-    pkey_interpretatie,1,string,https://www.dov.vlaanderen.be/data/interpretatie/2003-297769
-    pkey_boring,1,string,https://www.dov.vlaanderen.be/data/boring/2003-147935
-    betrouwbaarheid_interpretatie,1,string,goed
-    x,1,float,208607
-    y,1,float,210792
-    start_interpretatie_mtaw,1,float,38.94
-    diepte_laag_van,10,float,0
-    diepte_laag_tot,10,float,1.5
-    beschrijving,10,string,Quartair
-
-Coded lithology (Gecodeerde lithologie)
----------------------------------------
-  .. csv-table:: Coded lithology (Gecodeerde lithologie)
-    :header-rows: 1
-
-    Field,Cost,Datatype,Example
-    pkey_interpretatie,1,string,https://www.dov.vlaanderen.be/data/interpretatie/2003-205091
-    pkey_boring,1,string,https://www.dov.vlaanderen.be/data/boring/2003-076348
-    betrouwbaarheid_interpretatie,1,string,goed
-    x,1,float,110601
-    y,1,float,196625
-    start_interpretatie_mtaw,1,float,6.38
-    diepte_laag_van,10,float,4
-    diepte_laag_tot,10,float,4.5
-    hoofdnaam1_grondsoort,10,string,MZ
-    hoofdnaam2_grondsoort,10,string,NaN
-    bijmenging1_plaatselijk,10,boolean,False
-    bijmenging1_hoeveelheid,10,string,N
-    bijmenging1_grondsoort,10,string,SC
-    bijmenging2_plaatselijk,10,boolean,NaN
-    bijmenging2_hoeveelheid,10,string,NaN
-    bijmenging2_grondsoort,10,string,NaN
-    bijmenging3_plaatselijk,10,boolean,NaN
-    bijmenging3_hoeveelheid,10,string,NaN
-    bijmenging3_grondsoort,10,string,NaN
-
-Geotechnical encoding (Geotechnische codering)
-----------------------------------------------
-  .. csv-table:: Geotechnical encoding (Geotechnische codering)
-    :header-rows: 1
-
-    Field,Cost,Datatype,Example
-    pkey_interpretatie,1,string,https://www.dov.vlaanderen.be/data/interpretatie/2014-184535
-    pkey_boring,1,string,https://www.dov.vlaanderen.be/data/boring/1957-033538
-    betrouwbaarheid_interpretatie,1,string,goed
-    x,1,float,108851
-    y,1,float,196510
-    start_interpretatie_mtaw,1,float,10.55
-    diepte_laag_van,10,float,1
-    diepte_laag_tot,10,float,1.5
-    hoofdnaam1_grondsoort,10,string,XZ
-    hoofdnaam2_grondsoort,10,string,NaN
-    bijmenging1_plaatselijk,10,boolean,NaN
-    bijmenging1_hoeveelheid,10,string,NaN
-    bijmenging1_grondsoort,10,string,NaN
-    bijmenging2_plaatselijk,10,boolean,NaN
-    bijmenging2_hoeveelheid,10,string,NaN
-    bijmenging2_grondsoort,10,string,NaN
-    bijmenging3_plaatselijk,10,boolean,NaN
-    bijmenging3_hoeveelheid,10,string,NaN
-    bijmenging3_grondsoort,10,string,NaN
-
-Lithological descriptions (Lithologische beschrijvingen)
---------------------------------------------------------
-  .. csv-table:: Lithological descriptions (Lithologische beschrijvingen)
-    :header-rows: 1
-
-    Field,Cost,Datatype,Example
-    pkey_interpretatie,1,string,https://www.dov.vlaanderen.be/data/interpretatie/2017-302166
-    pkey_boring,1,string,https://www.dov.vlaanderen.be/data/boring/2017-151410
-    betrouwbaarheid_interpretatie,1,string,onbekend
-    x,1,float,109491
-    y,1,float,196700
-    start_interpretatie_mtaw,1,float,7.90
-    diepte_laag_van,10,float,0
-    diepte_laag_tot,10,float,1
-    beschrijving,10,string,klei/zand
-
-Quaternary stratigraphy (Quartaire stratigrafie)
---------------------------------------------------------
-  .. csv-table:: Quaternary stratigraphy (Quartaire stratigrafie)
-    :header-rows: 1
-
-    Field,Cost,Datatype,Example
-    pkey_interpretatie,1,string,https://www.dov.vlaanderen.be/data/interpretatie/1999-057087
-    pkey_boring,1,string,https://www.dov.vlaanderen.be/data/boring/1941-000322
-    betrouwbaarheid_interpretatie,1,string,onbekend
-    x,1,float,128277
-    y,1,float,178987
-    start_interpretatie_mtaw,1,float,9.56
-    diepte_laag_van,10,float,0
-    diepte_laag_tot,10,float,8
-    lid1,10,string,F1
-    relatie_lid1_lid2,10,string,T
-    lid2,10,string,F1
-
-Borehole samples (grondmonsters)
---------------------------------
-  .. csv-table:: Borehole samples (grondmonsters)
-    :header-rows: 1
-
-    Field,Cost,Datatype,Example
-    pkey_grondmonster,1,string,https://www.dov.vlaanderen.be/data/grondmonster/2017-168758
-    naam,1,string,N3A
-    pkey_boring,1,string,https://www.dov.vlaanderen.be/data/boring/2005-003015
-    boornummer,1,string,GEO-04/024-B6
-    datum,1,date,nan
-    x,1,float,123280
-    y,1,float,188129
-    gemeente,1,string,Wichelen
-    diepte_van_m,1,float,5.9
-    diepte_tot_m,1,float,6.05
-    peil_van_mtaw,1,float,0.26
-    peil_tot_mtaw,1,float,0.11
-    monstertype,1,string,ongeroerd
-    astm_naam,10,string,Organic silt
-    grondsoort_bggg,10,string,humush. klei
-    humusgehalte,10,float,15.6
-    kalkgehalte,10,float,4.4
-    uitrolgrens,10,float,50.4
-    vloeigrens,10,float,86.4
-    glauconiet_totaal,10,float,NaN
-    korrelvolumemassa,10,float,NaN
-    volumemassa,10,float,NaN
-    watergehalte,10,float,NaN
-    diameter,10,float,10
-    fractie,10,float,0
-    methode,10,string,ZEEFPROEF
-
-Soil sites (Bodemsites)
---------------------------------
-  .. csv-table:: Soil sites (Bodemsites)
-    :header-rows: 1
-
-    Field,Cost,Datatype,Example
-    pkey_bodemsite,1,string,https://www.dov.vlaanderen.be/data/bodemsite/2013-000180
-    naam,1,string,Meise_Neerpoorten
-    waarnemingsdatum,1,date,nan
-    beschrijving,1,string,grasland
-    invoerdatum,10,date,nan
-
-Soil plots (Bodemlocaties)
---------------------------------
-  .. csv-table:: Soil plots (Bodemlocaties)
-    :header-rows: 1
-
-    Field,Cost,Datatype,Example
-    pkey_bodemlocatie,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/2011-000002
-    pkey_bodemsite,1,string,https://www.dov.vlaanderen.be/data/bodemsite/2011-000245
-    naam,1,string,STARC_4
-    type,1,string,profielput
-    waarnemingsdatum,1,date,nan
-    doel,1,string,archeologische landschappelijke profielputten
-    x,1,float,206553.85
-    y,1,float,168891.11
-    mv_mtaw,1,float,44.00
-    erfgoed,1,boolean,true
-    bodemstreek,1,string,Zandleemstreek
-    invoerdatum,10,date,nan
-    educatieve_waarde,10,string,ZEER
-
-Soil intervals (Bodemdiepteintervallen)
----------------------------------------
-  .. csv-table:: Soil intervals (Bodemdiepteintervallen)
-    :header-rows: 1
-
-    Field,Cost,Datatype,Example
-    pkey_diepteinterval,1,string,https://www.dov.vlaanderen.be/data/bodemdiepteinterval/2018-000003
-    pkey_bodemopbouw,1,string,https://www.dov.vlaanderen.be/data/bodemopbouw/2018-000001
-    pkey_bodemlocatie,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/2014-000001
-    nr,1,integer,3
-    type,1,string,horizont
-    naam,1,string,Bg
-    bovengrens1_cm,1,float,40.0
-    bovengrens2_cm,1,float,NaN
-    ondergrens1_cm,1,float,65.0
-    ondergrens2_cm,1,float,NaN
-    ondergrens_bereikt,1,string,NVT
-    grensduidelijkheid,1,string,abrupt - overgang 0-2 cm breed
-    grensregelmatigheid,1,string,bijna vlak
-    beschrijving,1,string,onverweerd moedermateriaal met gleyverschijnselen
-    x,1,float,187237.11
-    y,1,float,163028.83
-    mv_mtaw,1,float,49.0
-
-
-Soil samples (Bodemmonsters)
---------------------------------
-  .. csv-table:: Soil samples (Bodemmonsters)
-    :header-rows: 1
-
-    Field,Cost,Datatype,Example
-    pkey_bodemmonster,1,string,https://www.dov.vlaanderen.be/data/bodemmonster/1964-264869
-    pkey_bodemlocatie,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/2015-000745
-    pkey_parent,1,string,https://www.dov.vlaanderen.be/data/diepteinterval/2019-003366
-    x,1,float,206553.85
-    y,1,float,168891.11
-    mv_mtaw,1,float,44.00
-    identificatie,1,string,KART_PROF_073E/12_H2_M1
-    datum_monstername,1,date,1964-11-12
-    tijdstip_monstername,10,string,NaN
-    type,1,string,ENK
-    monstername_door,1,string,Centrum voor Grondonderzoek (C.V.G.)
-    techniek,1,string,NaN
-    condities,1,string,Zie scan analoge profielbeschrijving
-    diepte_van_cm,1,float,30
-    diepte_tot_cm,1,float,45
-    labo,1,string,Centrum voor Grondonderzoek (C.V.G.)
-
-Soil observations (Bodemobservaties)
-------------------------------------
-  .. csv-table:: Soil observations (Bodemobservaties)
-    :header-rows: 1
-
-    Field,Cost,Datatype,Example
-    pkey_bodemobservatie,1,string,https://www.dov.vlaanderen.be/data/bodemobservatie/2019-349078
-    pkey_bodemlocatie,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/1952-007078
-    pkey_parent,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/1952-007078
-    x,1,float,206553.85
-    y,1,float,168891.11
-    mv_mtaw,1,float,44.00
-    diepte_van_cm,1,float,30
-    diepte_tot_cm,1,float,45
-    observatiedatum,10,date,1964-11-12
-    invoerdatum,10,date,NaN
-    parametergroep,10,string,Bodem_fysisch_structuur
-    parameter,1,string,organische_c_perc
-    detectie,10,string,<
-    waarde,1,string,0.38
-    eenheid,1,string,%
-    veld_labo,1,string,VELD
-    methode,1,string,Aardewerk nieuwe methode organische koolstof
-    betrouwbaarheid,10,string,onbekend
-    fractiemeting_ondergrens,10,float,NaN
-    fractiemeting_bovengrens,10,float,NaN
-    fractiemeting_waarde,10,float,NaN
-
-Soil classifications (Bodemclassificaties)
-------------------------------------------
-  .. csv-table:: Soil classifications (Bodemclassificaties)
-    :header-rows: 1
-
-    Field,Cost,Datatype,Example
-    pkey_bodemclassificatie,1,string,https://www.dov.vlaanderen.be/data/belgischebodemclassificatie/2018-000146
-    pkey_bodemlocatie,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/2015-000146
-    x,1,float,248905.67
-    y,1,float,200391.29
-    mv_mtaw,1,float,32.9
-    classificatietype,1,string,Algemene Belgische classificatie
-    bodemtype,1,string,Scbz
-    auteurs,1,string,Dondeyne, Stefaan (KULeuven)
+  df = ms.search(max_features=10)

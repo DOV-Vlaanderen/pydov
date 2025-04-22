@@ -5,6 +5,7 @@ from owslib.fes2 import PropertyIsEqualTo
 from pydov.search.grondmonster import GrondmonsterSearch
 from pydov.types.fields import ReturnFieldList
 from pydov.types.grondmonster import Grondmonster
+from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestSearch
 
 location_md_metadata = 'tests/data/types/grondmonster/md_metadata.xml'
@@ -24,24 +25,26 @@ class TestGrondmonsterSearch(AbstractTestSearch):
     search_class = GrondmonsterSearch
     datatype_class = Grondmonster
 
-    valid_query_single = PropertyIsEqualTo(propertyname='boornummer',
-                                           literal='GEO-04/024-B6')
+    valid_query_single = PropertyIsEqualTo(
+        propertyname='pkey_grondmonster',
+        literal=build_dov_url(
+            'data'
+            '/monster/2018-211728'))
 
     inexistent_field = 'onbestaand'
-    wfs_field = 'boornummer'
+    wfs_field = 'diepte_van_m'
     xml_field = 'astm_naam'
 
     valid_returnfields = ReturnFieldList.from_field_names(
-        'pkey_grondmonster', 'boornummer')
+        'pkey_grondmonster', 'naam')
     valid_returnfields_subtype = ReturnFieldList.from_field_names(
-        'pkey_grondmonster', 'boornummer', 'diameter')
+        'pkey_grondmonster', 'naam', 'diameter')
     valid_returnfields_extra = ReturnFieldList.from_field_names(
-        'pkey_grondmonster', 'korrelverdeling')
+        'pkey_grondmonster', 'gekoppeld_aan')
 
     df_default_columns = [
-        'pkey_grondmonster', 'naam', 'pkey_boring', 'boornummer',
-        'datum', 'x', 'y', 'gemeente', 'diepte_van_m', 'diepte_tot_m',
-        'peil_van_mtaw', 'peil_tot_mtaw', 'monstertype', 'astm_naam',
+        'pkey_grondmonster', 'naam', 'pkey_parents', 'datum', 'diepte_van_m',
+        'diepte_tot_m', 'monstertype', 'monstersamenstelling', 'astm_naam',
         'grondsoort_bggg', 'humusgehalte', 'kalkgehalte',
         'uitrolgrens', 'vloeigrens', 'glauconiet_totaal',
         'korrelvolumemassa', 'volumemassa', 'watergehalte',
@@ -69,8 +72,7 @@ class TestGrondmonsterSearch(AbstractTestSearch):
         """
         df = self.search_instance.search(
             query=self.valid_query_single,
-            return_fields=('pkey_grondmonster', 'boornummer', 'humusgehalte',
-                           'methode'))
+            return_fields=('pkey_grondmonster', 'humusgehalte', 'methode'))
 
         assert df.humusgehalte[0] == 4.7
         assert df.methode[0] == 'Korrelverdeling d.m.v. hydrometer/areometer'
@@ -95,8 +97,6 @@ class TestGrondmonsterSearch(AbstractTestSearch):
         df = self.search_instance.search(
             query=self.valid_query_single,
             return_fields=(
-                'boornummer',
-                'naam',
                 'korrelvolumemassa',
                 'volumemassa',
                 'watergehalte'))

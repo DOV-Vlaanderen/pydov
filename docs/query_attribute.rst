@@ -44,6 +44,11 @@ type
 
     Example: ``'string'``
 
+list
+    Whether the value of this field is a list type. When this is ``True`` the value of this field in the output dataframe will not be a single value, but a list of values of the datatype ``type`` instead.
+
+    Example: ``False``
+
 values
     (Optional) In case the field has a list of possible values, they are listed here as a dictionary mapping the values to a definition (if available).
 

@@ -16,14 +16,13 @@ class TestGrondmonster(AbstractTestTypes):
 
     datatype_class = Grondmonster
     namespace = 'http://dov.vlaanderen.be/ocdov/boringen'
-    pkey_base = build_dov_url('data/grondmonster/')
+    pkey_base = build_dov_url('data/monster/')
 
     sorted_subtypes = ['Korrelverdeling']
 
     field_names = [
-        'pkey_grondmonster', 'naam', 'pkey_boring', 'boornummer',
-        'datum', 'x', 'y', 'gemeente', 'diepte_van_m', 'diepte_tot_m',
-        'peil_van_mtaw', 'peil_tot_mtaw', 'monstertype', 'astm_naam',
+        'pkey_grondmonster', 'naam', 'pkey_parents', 'datum', 'diepte_van_m',
+        'diepte_tot_m', 'monstertype', 'monstersamenstelling', 'astm_naam',
         'grondsoort_bggg', 'humusgehalte', 'kalkgehalte',
         'uitrolgrens', 'vloeigrens', 'glauconiet_totaal',
         'korrelvolumemassa', 'volumemassa', 'watergehalte',
@@ -31,9 +30,8 @@ class TestGrondmonster(AbstractTestTypes):
     field_names_subtypes = [
         'methode', 'diameter', 'fractie']
     field_names_nosubtypes = [
-        'pkey_grondmonster', 'naam', 'pkey_boring', 'boornummer',
-        'datum', 'x', 'y', 'gemeente', 'diepte_van_m', 'diepte_tot_m',
-        'peil_van_mtaw', 'peil_tot_mtaw', 'monstertype', 'astm_naam',
+        'pkey_grondmonster', 'naam', 'pkey_parents', 'datum', 'diepte_van_m',
+        'diepte_tot_m', 'monstertype', 'monstersamenstelling', 'astm_naam',
         'grondsoort_bggg', 'humusgehalte', 'kalkgehalte',
         'uitrolgrens', 'vloeigrens', 'glauconiet_totaal',
         'korrelvolumemassa', 'volumemassa', 'watergehalte']

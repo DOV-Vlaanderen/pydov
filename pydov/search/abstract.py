@@ -440,6 +440,10 @@ class AbstractSearch(AbstractCommon):
             type (str)
                 The datatype of the field.
 
+            list (boolean)
+                Whether the field value is a list type. The items in the list
+                will be of the `type` specified above.
+
             notnull (boolean)
                 Whether the field is mandatory (True) or can be null (False).
 
@@ -485,45 +489,37 @@ class AbstractSearch(AbstractCommon):
             self._map_df_wfs_source[f['name']] = f['sourcefield']
 
         for wfs_field in wfs_schema['properties'].keys():
+            self._wfs_fields.append(wfs_field)
+
+            name = self._map_wfs_source_df.get(wfs_field, wfs_field)
+
+            is_list = False
+            for f in df_wfs_fields:
+                if f['name'] == name:
+                    is_list = f['split_fn'] is not None
+
+            field = {
+                'name': name,
+                'definition': None,
+                'type': _map_wfs_datatypes.get(
+                    wfs_schema['properties'][wfs_field],
+                    wfs_schema['properties'][wfs_field]),
+                'list': is_list,
+                'notnull': False,
+                'query': True,
+                'cost': 1
+            }
+
             if feature_catalogue is not None and \
                     wfs_field in feature_catalogue['attributes']:
                 fc_field = feature_catalogue['attributes'][wfs_field]
-                self._wfs_fields.append(wfs_field)
-
-                name = self._map_wfs_source_df.get(wfs_field, wfs_field)
-
-                field = {
-                    'name': name,
-                    'definition': fc_field['definition'],
-                    'type': _map_wfs_datatypes.get(
-                        wfs_schema['properties'][wfs_field],
-                        wfs_schema['properties'][wfs_field]),
-                    'notnull': fc_field['multiplicity'][0] > 0,
-                    'query': True,
-                    'cost': 1
-                }
+                field['definition'] = fc_field['definition']
+                field['notnull'] = fc_field['multiplicity'][0] > 0
 
                 if fc_field['values'] is not None:
                     field['values'] = fc_field['values']
 
-                fields[name] = field
-            else:
-                self._wfs_fields.append(wfs_field)
-
-                name = self._map_wfs_source_df.get(wfs_field, wfs_field)
-
-                field = {
-                    'name': name,
-                    'definition': None,
-                    'type': _map_wfs_datatypes.get(
-                        wfs_schema['properties'][wfs_field],
-                        wfs_schema['properties'][wfs_field]),
-                    'notnull': False,
-                    'query': True,
-                    'cost': 1
-                }
-
-                fields[name] = field
+            fields[name] = field
 
         if owsutil.has_geom_support() and 'geometry' in wfs_schema and \
                 'geometry_column' in wfs_schema:
@@ -534,6 +530,7 @@ class AbstractSearch(AbstractCommon):
                 'name': name,
                 'definition': None,
                 'type': 'geometry',
+                'list': False,
                 'notnull': False,
                 'query': False,
                 'cost': 1
@@ -545,6 +542,7 @@ class AbstractSearch(AbstractCommon):
             field = {
                 'name': xml_field['name'],
                 'type': xml_field['type'],
+                'list': xml_field['split_fn'] is not None,
                 'definition': xml_field['definition'],
                 'notnull': xml_field['notnull'],
                 'query': False,
@@ -562,6 +560,7 @@ class AbstractSearch(AbstractCommon):
             field = {
                 'name': custom_field['name'],
                 'type': custom_field['type'],
+                'list': False,
                 'definition': custom_field['definition'],
                 'notnull': custom_field['notnull'],
                 'query': False,
@@ -574,6 +573,7 @@ class AbstractSearch(AbstractCommon):
             field = {
                 'name': custom_field['name'],
                 'type': custom_field['type'],
+                'list': False,
                 'definition': custom_field['definition'],
                 'notnull': custom_field['notnull'],
                 'query': False,
@@ -1003,6 +1003,10 @@ class AbstractSearch(AbstractCommon):
 
             type (str)
                 The datatype of the field.
+
+            list (boolean)
+                Whether the field value is a list type. The items in the list
+                will be of the `type` specified above.
 
             notnull (boolean)
                 Whether the field is mandatory (True) or can be null (False).

@@ -8,6 +8,23 @@ from .abstract import AbstractDovSubType, AbstractDovType
 class Monster(AbstractDovType):
     """Class representing the DOV data type for ground samples."""
 
+    def _split_pkey_parents(agg_value):
+        """
+        Splits the given aggregated value into parent keys.
+
+        Parameters
+        ----------
+        agg_value : str
+            Aggregated value containing parent keys, separated by '|'.
+
+        Returns
+        -------
+        generator of str
+            Generator yielding non-empty parent keys extracted from the input.
+        """
+        return (pkey for pkey in agg_value.strip(
+            '| ').split('|') if pkey != '')
+
     fields = [
         WfsField(name='pkey_monster',
                  source_field='monster_link',
@@ -17,7 +34,8 @@ class Monster(AbstractDovType):
                  datatype='string'),
         WfsField(name='pkey_parents',
                  source_field='gekoppeld_aan_link',
-                 datatype='string'),
+                 datatype='string',
+                 split_fn=_split_pkey_parents),
         WfsField(name='materiaalklasse',
                  source_field='materiaalklasse',
                  datatype='string'),

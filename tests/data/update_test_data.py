@@ -1245,14 +1245,14 @@ if __name__ == '__main__':
     update_file(
         'types/observatie/wfsgetfeature.xml',
         build_dov_url(
-            'geoserver/ows?service=WFS&version=2.0.0&request=GetFeature&typeName=monster:observaties&maxFeatures=1&CQL_Filter=observatie_link=%27' + build_dov_url(
+            'geoserver/ows?service=WFS&version=2.0.0&request=GetFeature&typeName=monster:observaties&count=1&CQL_Filter=observatie_link=%27' + build_dov_url(
                 'data/observatie/2022-6766131%27'))
     )
 
     update_file(
         'types/observatie/feature.xml',
         build_dov_url(
-            'geoserver/ows?service=WFS&version=2.0.0&request=GetFeature&typeName=monster:observaties&maxFeatures=1&CQL_Filter=observatie_link=%27' + build_dov_url(
+            'geoserver/ows?service=WFS&version=2.0.0&request=GetFeature&typeName=monster:observaties&count=1&CQL_Filter=observatie_link=%27' + build_dov_url(
                 'data/observatie/2022-6766131%27')),
         get_first_featuremember)
     # build_dov_url(

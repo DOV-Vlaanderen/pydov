@@ -292,7 +292,7 @@ Suppose you are not interested in the actual measurements from the CPT data but 
                    datatype='float'),
           XmlField(name='techniek',
                    source_xpath='/techniek',
-                   datatype='string')
+                   datatype='string'),
           XmlField(name='techniek_andere',
                    source_xpath='/techniek_andere',
                    datatype='string')

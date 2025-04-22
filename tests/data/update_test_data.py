@@ -85,8 +85,10 @@ if __name__ == '__main__':
 
     pool = LocalSessionThreadPool()
 
+
     def update_file(filepath, url, process_fn=None):
         pool.execute(update_file_real, (filepath, url, process_fn))
+
 
     # types/boring
     update_file('types/boring/boring.xml',
@@ -617,14 +619,14 @@ if __name__ == '__main__':
                               '&version=2.0.0&request=GetFeature&typeName='
                               'gw_meetnetten:meetnetten&count=1&'
                               'CQL_Filter=filterfiche=%27' + build_dov_url(
-                                  'data/filter/2003-004471%27')))
+                    'data/filter/2003-004471%27')))
 
     update_file('types/grondwaterfilter/feature.xml',
                 build_dov_url('geoserver/ows?service=WFS'
                               '&version=2.0.0&request=GetFeature&typeName='
                               'gw_meetnetten:meetnetten&count=1&'
                               'CQL_Filter=filterfiche=%27' + build_dov_url(
-                                  'data/filter/2003-004471%27')),
+                    'data/filter/2003-004471%27')),
                 get_first_featuremember)
 
     update_file(
@@ -663,14 +665,14 @@ if __name__ == '__main__':
                               '&version=2.0.0&request=GetFeature&typeName='
                               'gw_meetnetten:meetnetten&count=1&'
                               'CQL_Filter=filterfiche=%27' + build_dov_url(
-                                  'data/filter/1976-101132%27')))
+                    'data/filter/1976-101132%27')))
 
     update_file('types/grondwaterfilter/feature_geenpeilmeting.xml',
                 build_dov_url('geoserver/ows?service=WFS'
                               '&version=2.0.0&request=GetFeature&typeName='
                               'gw_meetnetten:meetnetten&count=1&'
                               'CQL_Filter=filterfiche=%27' + build_dov_url(
-                                  'data/filter/1976-101132%27')),
+                    'data/filter/1976-101132%27')),
                 get_first_featuremember)
 
     # types/grondwatermonster
@@ -1240,27 +1242,23 @@ if __name__ == '__main__':
     # types/observatie
 
     update_file('types/observatie/observatie.xml',
-                build_dov_url('data/observatie/2019-993304.xml'))
+                build_dov_url('data/observatie/2022-6766131.xml'))
 
     update_file(
         'types/observatie/wfsgetfeature.xml',
         build_dov_url(
-            'geoserver/ows?service=WFS&version=2.0.0&request=GetFeature&typeName=monster:observaties&count=1&CQL_Filter=observatie_link=%27' + build_dov_url(
+            'geoserver/ows?service=WFS&version=2.0.0&request=GetFeature'
+            '&typeName=monster:observaties&count=1&CQL_Filter=observatie_link=%27' + build_dov_url(
                 'data/observatie/2022-6766131%27'))
     )
 
     update_file(
         'types/observatie/feature.xml',
         build_dov_url(
-            'geoserver/ows?service=WFS&version=2.0.0&request=GetFeature&typeName=monster:observaties&count=1&CQL_Filter=observatie_link=%27' + build_dov_url(
+            'geoserver/ows?service=WFS&version=2.0.0&request=GetFeature'
+            '&typeName=monster:observaties&count=1&CQL_Filter=observatie_link=%27' + build_dov_url(
                 'data/observatie/2022-6766131%27')),
         get_first_featuremember)
-    # build_dov_url(
-    #     'geoserver/ows?service=WFS'
-    #     '&version=2.0.0&request=GetFeature&typeName=monster:observaties'
-    #     '&maxFeatures=1&CQL_Filter=observatie_link=%27' +
-    #     build_dov_url('data/observatie/2019-993304%27')),
-    # get_first_featuremember)
 
     update_file(
         'types/observatie/fc_featurecatalogue.xml',

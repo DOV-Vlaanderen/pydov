@@ -1,5 +1,4 @@
 """Module grouping tests for the observatie search module."""
-import datetime
 
 from owslib.fes2 import PropertyIsEqualTo
 
@@ -19,23 +18,19 @@ location_xsd_base = 'tests/data/types/observatie/xsd_*.xml'
 
 
 class TestObservatieSearch(AbstractTestSearch):
-
     search_instance = ObservatieSearch()
     datatype_class = Observatie
-    valid_query_single = PropertyIsEqualTo(propertyname='pkey_observatie', literal=build_dov_url('data/observatie/2022-2759196'))
+    valid_query_single = PropertyIsEqualTo(propertyname='pkey_observatie',
+                                           literal=build_dov_url('data/observatie/2022-6766131'))
 
     inexistent_field = 'onbestaand'
     wfs_field = 'parameter'
     xml_field = None
 
-
     valid_returnfields = ReturnFieldList.from_field_names('pkey_observatie', 'fenomeentijd', 'diepte_van_m')
     valid_returnfields_subtype = ReturnFieldList.from_field_names()
     valid_returnfields_extra = ReturnFieldList.from_field_names()
 
-
     df_default_columns = ['pkey_observatie', 'pkey_parent', 'fenomeentijd', 'diepte_van_m', 'diepte_tot_m',
-                              'parametergroep', 'parameter', 'detectieconditie', 'resultaat', 'eenheid', 'methode',
-                              'uitvoerder', 'herkomst']
-
-
+                          'parametergroep', 'parameter', 'detectieconditie', 'resultaat', 'eenheid', 'methode',
+                          'uitvoerder', 'herkomst']

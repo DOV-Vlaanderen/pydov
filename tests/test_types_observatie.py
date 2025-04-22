@@ -1,4 +1,4 @@
-"""Module grouping tests for the pydov.types.boring module."""
+"""Module grouping tests for the pydov.types.observatie module."""
 
 from pydov.types.observatie import Observatie
 from pydov.types.fields import ReturnFieldList
@@ -11,7 +11,7 @@ location_dov_xml = 'tests/data/types/observatie/observatie.xml'
 
 
 class TestObservatie(AbstractTestTypes):
-    """Class grouping tests for the pydov.types.boring.Boring class."""
+    """Class grouping tests for the pydov.types.observatie.Observatie class."""
 
     datatype_class = Observatie
     namespace = 'http://dov.vlaanderen.be/ocdov/monster'
@@ -27,11 +27,3 @@ class TestObservatie(AbstractTestTypes):
     valid_returnfields = ReturnFieldList.from_field_names('pkey_observatie', 'diepte_van_m')
     valid_returnfields_subtype = ReturnFieldList.from_field_names()
     inexistent_field = 'onbestaand'
-
-
-
-
-
-
-
-

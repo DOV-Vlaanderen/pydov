@@ -700,6 +700,39 @@ Default dataframe output
 Generic
 *******
 
+Observations (Observaties)
+------------------------------------
+
+Type
+    Observatie (Observations)
+
+Subtype
+    No subtype
+
+Search class
+    :class:`pydov.search.observatie.ObservatieSearch`
+
+Default dataframe output
+      .. csv-table:: Observations (Observaties)
+        :header-rows: 1
+        :delim: ;
+
+        Field;Source;Cost;Datatype;Example
+        pkey_observatie;Observatie;1;string;https://oefen.dov.vlaanderen.be/data/observatie/2022-1667272
+        pkey_parent;Observatie;1;string;https://oefen.dov.vlaanderen.be/data/monster/2018-211698
+        fenomeentijd;Observatie;1;date;2018-01-09
+        diepte_van_m;Observatie;1;float;4.50
+        diepte_tot_m;Observatie;1;float;4.75
+        parametergroep;Observatie;1;string;Onderkenning-grondsoort
+        parameter;Observatie;1;string;Grondsoort volgens ASTM, de beschrijving (ASTM_naam)
+        detectieconditie;Observatie;1;string;nan
+        resultaat;Observatie;1;string;Silt with sand
+        eenheid;Observatie;1;string;nan
+        methode;Observatie;1;string;Onbekend
+        uitvoerder;Observatie;1;string;VO - Afdeling Geotechniek
+        herkomst;Observatie;1;string;LABO
+
+
 DOV WFS layer
 -------------
 

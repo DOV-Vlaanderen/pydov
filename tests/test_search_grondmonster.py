@@ -22,6 +22,7 @@ location_xsd_base = 'tests/data/types/grondmonster/xsd_*.xml'
 class TestGrondmonsterSearch(AbstractTestSearch):
 
     search_instance = GrondmonsterSearch()
+    search_class = GrondmonsterSearch
     datatype_class = Grondmonster
 
     valid_query_single = PropertyIsEqualTo(

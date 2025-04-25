@@ -18,6 +18,8 @@ class TestGrondwaterVergunning(AbstractTestTypes):
     namespace = 'http://dov.vlaanderen.be/grondwater/gw_vergunningen'
     pkey_base = None
 
+    sorted_subtypes = []
+
     field_names = [
         'id_vergunning', 'pkey_installatie', 'x', 'y',
         'diepte', 'exploitant_naam', 'watnr', 'vlaremrubriek',

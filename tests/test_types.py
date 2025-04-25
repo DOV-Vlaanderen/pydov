@@ -25,6 +25,7 @@ from pydov.types.interpretaties import (
     InformeleHydrogeologischeStratigrafie,
 )
 from pydov.types.sondering import Sondering
+from pydov.types.abstract import AbstractDovFieldSet, AbstractDovSubType
 
 
 type_objects = [Bodemsite,
@@ -127,3 +128,51 @@ def test_extend_fields_with_extra(objecttype):
     assert len(fields) == len(objecttype.fields) + len(extra_fields)
 
     assert fields[-1] == extra_fields[-1]
+
+
+@pytest.mark.parametrize("objecttype", type_objects)
+def test_get_fieldsets(objecttype):
+    """Test the get_fieldsets method.
+
+    Test whether the fieldsets are listed in the correct format.
+
+    """
+
+    fieldsets = objecttype.get_fieldsets()
+    assert isinstance(fieldsets, dict)
+
+    if len(fieldsets) > 0:
+        for fs_name, fs in fieldsets.items():
+            assert 'name' in fs
+            assert fs_name == fs['name']
+
+            assert 'class' in fs
+            assert issubclass(fs['class'], AbstractDovFieldSet)
+
+            assert 'definition' in fs
+            assert isinstance(fs['definition'], str)
+            assert 'following fields:' in fs['definition']
+
+
+@pytest.mark.parametrize("objecttype", type_objects)
+def test_get_subtypes(objecttype):
+    """Test the get_subtypes method.
+
+    Test whether the subtypes are listed in the correct format.
+
+    """
+
+    subtypes = objecttype.get_subtypes()
+    assert isinstance(subtypes, dict)
+
+    if len(subtypes) > 0:
+        for fs_name, fs in subtypes.items():
+            assert 'name' in fs
+            assert fs_name == fs['name']
+
+            assert 'class' in fs
+            assert issubclass(fs['class'], AbstractDovSubType)
+
+            assert 'definition' in fs
+            assert isinstance(fs['definition'], str)
+            assert 'following fields:' in fs['definition']

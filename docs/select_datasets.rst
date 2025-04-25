@@ -17,6 +17,26 @@ While you'll need to instantiate a different search class for each datatype, que
 
 Generally the datasets consist of a main type and a subtype, where the resulting dataframe will contain multiple records for each instance of the main type based on the records of the subtype (you can think of this as a 'left join' between the main and the subtype).
 
+Some datasets have extra fieldsets available, that are not used by default but can be enabled easily. More information on how to find and enable them can be consulted in the :ref:`adding extra fields <adding_extra_fields>` section. For example, you could write::
+
+    from pydov.search.boring import BoringSearch
+    from pydov.types.boring import MethodeXyz
+
+    borehole_search = BoringSearch(
+        objecttype=Boring.with_extra_fields(MethodeXyz)
+    )
+    # df = borehole_search.search(...)
+
+For some datasets, multiple subtypes are available. One of them will be used by default, but you can easily select the subtype of your interest. More information on how to find the available subtypes and how to enable them can be found in the :ref:`adding or switching subtypes <switching_subtypes>` section. For example, you could write::
+
+    from pydov.search.boring import BoringSearch
+    from pydov.types.boring import Kleur
+
+    borehole_search = BoringSearch(
+        objecttype=Boring.with_subtype(Kleur)
+    )
+    # df = borehole_search.search(...)
+
 Currently, we support the following datasets:
 
 .. contents:: Datasets
@@ -214,7 +234,7 @@ Default dataframe output
         mv_mtaw,Bodemclassificatie,1,float,32.9
         classificatietype,Bodemclassificatie,1,string,Algemene Belgische classificatie
         bodemtype,Bodemclassificatie,1,string,Scbz
-        auteurs,Bodemclassificatie,1,string,Dondeyne, Stefaan (KULeuven)
+        auteurs,Bodemclassificatie,1,string,Dondeyne Stefaan (KULeuven)
 
 Subsoil
 *******
@@ -228,8 +248,12 @@ Boreholes (Boringen)
 Type
     Boring (Borehole)
 
-Subtype
-    Boormethode (Method)
+Extra fieldsets
+    * MethodeXyz (Method of geolocation) - Method and quality assessment of geolocation of the borehole.
+
+Subtypes
+    * BoorMethode (Method) (default) - Method used to create the borehole, per depth interval.
+    * Kleur (Colour) - Colour of the soil retrieved from the borehole, per depth interval.
 
 Search class
     :class:`pydov.search.boring.BoringSearch`
@@ -251,9 +275,38 @@ Default dataframe output
         datum_aanvang,Boring,1,date,1930-10-01
         uitvoerder,Boring,1,string,Smet - Dessel
         boorgatmeting,Boring,10,boolean,false
-        diepte_methode_van,Boormethode,10,float,0.00
-        diepte_methode_tot,Boormethode,10,float,19.00
-        boormethode,Boormethode,10,string,droge boring
+        diepte_methode_van,BoorMethode,10,float,0.00
+        diepte_methode_tot,BoorMethode,10,float,19.00
+        boormethode,BoorMethode,10,string,droge boring
+
+Extra fieldsets
+    :class:`pydov.types.boring.MethodeXyz`
+
+    Extra fields to be used with the `Boring` type which add details regarding
+    the method and reliability of its location.
+
+    .. csv-table:: MethodeXyz
+      :header-rows: 1
+
+      Field,Source,Cost,Datatype,Example
+      methode_xy,MethodeXyz,10,string,gedigitaliseerd op topokaart
+      betrouwbaarheid_xy,MethodeXyz,10,string,onbekend
+      methode_z,MethodeXyz,10,string,afgeleid van topokaart
+      betrouwbaarheid_z,MethodeXyz,10,string,onbekend
+
+Extra subtypes
+    :class:`pydov.types.boring.Kleur`
+
+    Extra subtype which add details regarding the colour of the layers from
+    the borehole.
+
+    .. csv-table:: Kleur
+      :header-rows: 1
+
+      Field,Source,Cost,Datatype,Example
+      diepte_kleur_van,Kleur,10,0.0
+      diepte_kleur_tot,Kleur,10,1.25
+      kleur,Kleur,10,bruin
 
 Borehole samples (Grondmonsters)
 --------------------------------
@@ -300,8 +353,9 @@ CPT measurements (Sonderingen)
 Type
     Sondering (CPT measurement)
 
-Subtype
-    Meetdata (CPT data)
+Subtypes
+    * Meetdata (CPT data) (default) - CPT measurement at each depth.
+    * Techniek (technique) - Techniques used while performing the CPT measurement.
 
 Search class
     :class:`pydov.search.sondering.SonderingSearch`
@@ -333,6 +387,19 @@ Default dataframe output
         u,Meetdata,10,float,7
         i,Meetdata,10,float,0.1
 
+Extra subtypes
+    :class:`pydov.types.sondering.Techniek`
+
+    Extra subtype which add details regarding technique used for the CPT measurement.
+
+    .. csv-table:: Techniek
+      :header-rows: 1
+
+      Field,Source,Cost,Datatype,Example
+      techniek_diepte_van,Techniek,10,float,5.5
+      techniek_diepte,Techniek,10,float,1.2
+      techniek,Techniek,10,string,V
+      techniek_andere,Techniek,10,string,
 
 Formal stratigraphy (Formele stratigrafie)
 ------------------------------------------
@@ -588,8 +655,9 @@ Groundwater screens (Grondwaterfilters)
 Type
     GrondwaterFilter (Groundwater screen)
 
-Subtype
-    Peilmeting (Water head level)
+Subtypes
+    * Peilmeting (Water head level) (default) - Water head level measurements over time.
+    * Gxg - Average water head levels per calendar year.
 
 Search class
     :class:`pydov.search.grondwaterfilter.GrondwaterFilterSearch`
@@ -625,6 +693,21 @@ Default dataframe output
         methode,Peilmeting,10,string,peillint
         filterstatus,Peilmeting,10,string,1
         filtertoestand,Peilmeting,10,string,in rust
+
+Extra subtypes
+    :class:`pydov.types.grondwaterfilter.Gxg`
+
+    Extra subtype which add details regarding the average water head level 
+    per year.
+
+    .. csv-table:: Gxg
+      :header-rows: 1
+
+      Field,Source,Cost,Datatype,Example
+      gxg_jaar,Gxg,10,integer,2001
+      gxg_hg3,Gxg,10,float,3.03
+      gxg_lg3,Gxg,10,float,2.14
+      gxg_vg3,Gxg,10,float,3.2
 
 Groundwater samples (Grondwatermonsters)
 ----------------------------------------

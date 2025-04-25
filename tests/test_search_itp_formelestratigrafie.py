@@ -31,6 +31,7 @@ location_xsd_base = \
 class TestFormeleStratigrafieSearch(AbstractTestSearch):
 
     search_instance = FormeleStratigrafieSearch()
+    search_class = FormeleStratigrafieSearch
     datatype_class = FormeleStratigrafie
 
     valid_query_single = PropertyIsEqualTo(propertyname='Proefnummer',

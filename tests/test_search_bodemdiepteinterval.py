@@ -22,6 +22,7 @@ location_xsd_base = 'tests/data/types/bodemdiepteinterval/xsd_*.xml'
 class TestBodemdiepteintervalSearch(AbstractTestSearch):
 
     search_instance = BodemdiepteintervalSearch()
+    search_class = BodemdiepteintervalSearch
     datatype_class = Bodemdiepteinterval
 
     valid_query_single = PropertyIsEqualTo(

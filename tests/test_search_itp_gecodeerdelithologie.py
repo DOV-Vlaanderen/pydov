@@ -32,6 +32,7 @@ location_xsd_base = \
 class TestGecodeerdeLithologieSearch(AbstractTestSearch):
 
     search_instance = GecodeerdeLithologieSearch()
+    search_class = GecodeerdeLithologieSearch
     datatype_class = GecodeerdeLithologie
 
     valid_query_single = PropertyIsEqualTo(propertyname='Proefnummer',

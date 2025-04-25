@@ -23,6 +23,7 @@ location_xsd_base = 'tests/data/types/bodemmonster/xsd_*.xml'
 class TestBodemmonsterSearch(AbstractTestSearch):
 
     search_instance = BodemmonsterSearch()
+    search_class = BodemmonsterSearch
     datatype_class = Bodemmonster
 
     valid_query_single = PropertyIsEqualTo(propertyname='identificatie',

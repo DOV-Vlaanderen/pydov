@@ -22,6 +22,8 @@ class TestInformeleStratigrafie(AbstractTestTypes):
     namespace = 'http://dov.vlaanderen.be/ocdov/interpretaties'
     pkey_base = build_dov_url('data/interpretatie/')
 
+    sorted_subtypes = ['InformeleStratigrafieLaag']
+
     field_names = [
         'pkey_interpretatie', 'pkey_boring',
         'pkey_sondering', 'betrouwbaarheid_interpretatie', 'x', 'y',

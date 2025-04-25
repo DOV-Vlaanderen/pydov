@@ -17,6 +17,8 @@ class TestBodemlocatie(AbstractTestTypes):
     namespace = 'https://www.dov.vlaanderen.be/bodem'
     pkey_base = build_dov_url('data/bodemlocatie/')
 
+    sorted_subtypes = []
+
     field_names = [
         'pkey_bodemlocatie', 'pkey_bodemsite',
         'naam', 'type', 'waarnemingsdatum', 'doel',

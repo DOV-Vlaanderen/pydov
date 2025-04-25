@@ -22,6 +22,7 @@ location_xsd_base = 'tests/data/types/bodemsite/xsd_*.xml'
 class TestBodemsiteSearch(AbstractTestSearch):
 
     search_instance = BodemsiteSearch()
+    search_class = BodemsiteSearch
     datatype_class = Bodemsite
 
     valid_query_single = PropertyIsEqualTo(propertyname='naam',

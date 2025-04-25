@@ -18,6 +18,8 @@ class TestGrondmonster(AbstractTestTypes):
     namespace = 'http://dov.vlaanderen.be/ocdov/boringen'
     pkey_base = build_dov_url('data/monster/')
 
+    sorted_subtypes = ['Korrelverdeling']
+
     field_names = [
         'pkey_grondmonster', 'naam', 'pkey_parents', 'datum', 'diepte_van_m',
         'diepte_tot_m', 'monstertype', 'monstersamenstelling', 'astm_naam',

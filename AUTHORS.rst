@@ -9,3 +9,4 @@ Credits
 * Johan Van de Wauw
 * Roel Huybrechts <roel@huybrechts.re>
 * Joris Synaeve
+* Ruben Vijverman <ruben.vijverman@locus.earth>

@@ -14,6 +14,7 @@ from pydov.types.bodemsite import Bodemsite
 from pydov.types.bodemclassificatie import Bodemclassificatie
 from pydov.types.boring import Boring
 from pydov.types.grondmonster import Grondmonster
+from pydov.types.observatie import Observatie
 from pydov.types.grondwaterfilter import GrondwaterFilter
 from pydov.types.grondwatermonster import GrondwaterMonster
 from pydov.types.grondwatervergunning import GrondwaterVergunning
@@ -84,8 +85,10 @@ if __name__ == '__main__':
 
     pool = LocalSessionThreadPool()
 
+
     def update_file(filepath, url, process_fn=None):
         pool.execute(update_file_real, (filepath, url, process_fn))
+
 
     # types/boring
     update_file('types/boring/boring.xml',
@@ -616,14 +619,14 @@ if __name__ == '__main__':
                               '&version=2.0.0&request=GetFeature&typeName='
                               'gw_meetnetten:meetnetten&count=1&'
                               'CQL_Filter=filterfiche=%27' + build_dov_url(
-                                  'data/filter/2003-004471%27')))
+                    'data/filter/2003-004471%27')))
 
     update_file('types/grondwaterfilter/feature.xml',
                 build_dov_url('geoserver/ows?service=WFS'
                               '&version=2.0.0&request=GetFeature&typeName='
                               'gw_meetnetten:meetnetten&count=1&'
                               'CQL_Filter=filterfiche=%27' + build_dov_url(
-                                  'data/filter/2003-004471%27')),
+                    'data/filter/2003-004471%27')),
                 get_first_featuremember)
 
     update_file(
@@ -662,14 +665,14 @@ if __name__ == '__main__':
                               '&version=2.0.0&request=GetFeature&typeName='
                               'gw_meetnetten:meetnetten&count=1&'
                               'CQL_Filter=filterfiche=%27' + build_dov_url(
-                                  'data/filter/1976-101132%27')))
+                    'data/filter/1976-101132%27')))
 
     update_file('types/grondwaterfilter/feature_geenpeilmeting.xml',
                 build_dov_url('geoserver/ows?service=WFS'
                               '&version=2.0.0&request=GetFeature&typeName='
                               'gw_meetnetten:meetnetten&count=1&'
                               'CQL_Filter=filterfiche=%27' + build_dov_url(
-                                  'data/filter/1976-101132%27')),
+                    'data/filter/1976-101132%27')),
                 get_first_featuremember)
 
     # types/grondwatermonster
@@ -1235,6 +1238,53 @@ if __name__ == '__main__':
                     'geoserver/dov-pub/Opdrachten'
                     '/ows?service=wfs&version=2.0.0'
                     '&request=DescribeFeatureType'))
+
+    # types/observatie
+
+    update_file('types/observatie/observatie.xml',
+                build_dov_url('data/observatie/2022-6766131.xml'))
+
+    update_file(
+        'types/observatie/wfsgetfeature.xml',
+        build_dov_url(
+            'geoserver/ows?service=WFS&version=2.0.0&request=GetFeature'
+            '&typeName=monster:observaties&count=1&CQL_Filter=observatie_link=%27' + build_dov_url(
+                'data/observatie/2022-6766131%27'))
+    )
+
+    update_file(
+        'types/observatie/feature.xml',
+        build_dov_url(
+            'geoserver/ows?service=WFS&version=2.0.0&request=GetFeature'
+            '&typeName=monster:observaties&count=1&CQL_Filter=observatie_link=%27' + build_dov_url(
+                'data/observatie/2022-6766131%27')),
+        get_first_featuremember)
+
+    update_file(
+        'types/observatie/fc_featurecatalogue.xml',
+        build_dov_url(
+            'geonetwork/srv/dut/csw'
+            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+            '&outputSchema=http://www.isotc211.org/2005/gfc'
+            '&elementSetName=full&id=0ee52b15-12a5-4314-a8af-0b37ee8bf766'))
+
+    update_file(
+        'types/observatie/md_metadata.xml',
+        build_dov_url(
+            'geonetwork/srv/dut/csw'
+            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+            '&outputSchema=http://www.isotc211.org/2005/gmd'
+            '&elementSetName=full&id=7e166b29-f24b-494b-af66-acc82deb5af2'))
+
+    update_file(
+        'types/observatie/wfsdescribefeaturetype.xml',
+        build_dov_url(
+            'geoserver/monster/wfs?service=WFS&version=2.0.0&request=DescribeFeatureType&typeName=monster:observaties'))
+
+    for xsd_schema in Observatie.get_xsd_schemas():
+        update_file(
+            'types/observatie/xsd_{}.xml'.format(xsd_schema.split('/')[-1]),
+            xsd_schema)
 
     for r in pool.join():
         if r.get_error() is not None:

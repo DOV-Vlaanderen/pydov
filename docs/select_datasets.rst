@@ -252,7 +252,7 @@ Extra fieldsets
     * MethodeXyz (Method of geolocation) - Method and quality assessment of geolocation of the borehole.
 
 Subtypes
-    * Boormethode (Method) (default) - Method used to create the borehole, per depth interval.
+    * BoorMethode (Method) (default) - Method used to create the borehole, per depth interval.
     * Kleur (Colour) - Colour of the soil retrieved from the borehole, per depth interval.
 
 Search class
@@ -275,9 +275,9 @@ Default dataframe output
         datum_aanvang,Boring,1,date,1930-10-01
         uitvoerder,Boring,1,string,Smet - Dessel
         boorgatmeting,Boring,10,boolean,false
-        diepte_methode_van,Boormethode,10,float,0.00
-        diepte_methode_tot,Boormethode,10,float,19.00
-        boormethode,Boormethode,10,string,droge boring
+        diepte_methode_van,BoorMethode,10,float,0.00
+        diepte_methode_tot,BoorMethode,10,float,19.00
+        boormethode,BoorMethode,10,string,droge boring
 
 Extra fieldsets
     :class:`pydov.types.boring.MethodeXyz`

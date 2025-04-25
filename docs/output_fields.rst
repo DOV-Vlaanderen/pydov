@@ -269,7 +269,7 @@ For example, to add the field 'opmeter' to the Peilmeting subtype, you'd write::
 Adding a new subtype to a main type
 -----------------------------------
 
-To add a new subtype to an existing main type or, perhaps more likely, to replace the existing subtype of a main type, you have to specify the subtype and all of its fields. You also have to subclass the existing main type to register your subtype.
+To add a new subtype to an existing main type or, perhaps more likely, to replace the existing subtype of a main type, you have to specify the subtype and all of its fields. To register your new subtype in a custom main type, use its ``with_subtype`` method using your new subtype.
 
 Your new subtype should be a direct subclass of :class:`pydov.types.abstract.AbstractDovSubType` and should implement both the ``rootpath`` as well as the ``fields`` variables. The rootpath is the XPath expression of the root instances of this subtype in the XML document and should always start with ``.//``. There will be one instance of this subtype (and, consequently, one row in the output dataframe) for each element matched by this XPath expression.
 

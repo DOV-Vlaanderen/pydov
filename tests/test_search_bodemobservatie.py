@@ -23,6 +23,7 @@ location_xsd_base = 'tests/data/types/bodemobservatie/xsd_*.xml'
 class TestBodemobservatieSearch(AbstractTestSearch):
 
     search_instance = BodemobservatieSearch()
+    search_class = BodemobservatieSearch
     datatype_class = Bodemobservatie
 
     valid_query_single = PropertyIsEqualTo(propertyname='Bodemobservatie',

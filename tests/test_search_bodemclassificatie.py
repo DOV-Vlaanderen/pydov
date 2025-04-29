@@ -22,6 +22,7 @@ location_xsd_base = 'tests/data/types/bodemclassificatie/xsd_*.xml'
 class TestBodemclassificatieSearch(AbstractTestSearch):
 
     search_instance = BodemclassificatieSearch()
+    search_class = BodemclassificatieSearch
     datatype_class = Bodemclassificatie
 
     valid_query_single = PropertyIsEqualTo(

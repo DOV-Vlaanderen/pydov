@@ -196,6 +196,13 @@ Bodemclassificatie
     :members:
     :show-inheritance:
 
+Observatie
+*******
+
+.. automodule:: pydov.types.observatie
+    :members:
+    :show-inheritance:
+
 Generic
 *******
 

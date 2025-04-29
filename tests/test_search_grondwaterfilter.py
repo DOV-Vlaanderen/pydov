@@ -23,6 +23,7 @@ location_xsd_base = 'tests/data/types/grondwaterfilter/xsd_*.xml'
 class TestGrondwaterfilterSearch(AbstractTestSearch):
 
     search_instance = GrondwaterFilterSearch()
+    search_class = GrondwaterFilterSearch
     datatype_class = GrondwaterFilter
 
     valid_query_single = PropertyIsEqualTo(propertyname='filterfiche',

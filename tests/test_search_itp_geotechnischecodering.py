@@ -33,6 +33,7 @@ location_xsd_base = \
 class TestGeotechnischeCoderingSearch(AbstractTestSearch):
 
     search_instance = GeotechnischeCoderingSearch()
+    search_class = GeotechnischeCoderingSearch
     datatype_class = GeotechnischeCodering
 
     valid_query_single = PropertyIsEqualTo(propertyname='Proefnummer',

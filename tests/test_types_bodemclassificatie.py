@@ -18,6 +18,8 @@ class TestBodemclassificatie(AbstractTestTypes):
     namespace = 'https://www.dov.vlaanderen.be/bodem'
     pkey_base = build_dov_url('data/')
 
+    sorted_subtypes = []
+
     field_names = [
         'pkey_bodemclassificatie', 'pkey_bodemlocatie', 'x', 'y', 'mv_mtaw',
         'classificatietype', 'bodemtype', 'auteurs'

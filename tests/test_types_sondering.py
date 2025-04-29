@@ -17,6 +17,8 @@ class TestSondering(AbstractTestTypes):
     namespace = 'http://dov.vlaanderen.be/ocdov/dov-pub'
     pkey_base = build_dov_url('data/sondering/')
 
+    sorted_subtypes = ['Meetdata', 'Techniek']
+
     field_names = [
         'pkey_sondering', 'sondeernummer', 'x', 'y', 'mv_mtaw',
         'start_sondering_mtaw', 'diepte_sondering_van',

@@ -18,6 +18,8 @@ class TestBodemmonster(AbstractTestTypes):
     namespace = 'https://www.dov.vlaanderen.be/bodem'
     pkey_base = build_dov_url('data/bodemmonster/')
 
+    sorted_subtypes = []
+
     field_names = [
         'pkey_bodemmonster', 'pkey_bodemlocatie', 'pkey_parent',
         'x', 'y', 'mv_mtaw', 'identificatie',

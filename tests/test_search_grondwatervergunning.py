@@ -25,6 +25,7 @@ location_xsd_base = 'tests/data/types/grondwatervergunning/xsd_*.xml'
 class TestGrondwaterVergunningSearch(AbstractTestSearch):
 
     search_instance = GrondwaterVergunningSearch()
+    search_class = GrondwaterVergunningSearch
     datatype_class = GrondwaterVergunning
 
     valid_query_single = PropertyIsEqualTo(

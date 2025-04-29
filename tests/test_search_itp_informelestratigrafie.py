@@ -31,6 +31,7 @@ location_xsd_base = \
 class TestInformeleStratigrafieSearch(AbstractTestSearch):
 
     search_instance = InformeleStratigrafieSearch()
+    search_class = InformeleStratigrafieSearch
     datatype_class = InformeleStratigrafie
 
     valid_query_single = PropertyIsEqualTo(propertyname='Proefnummer',

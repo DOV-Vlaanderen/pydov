@@ -1,7 +1,6 @@
 """Module grouping tests for the search monster module."""
 
 from owslib.fes2 import PropertyIsEqualTo
-
 from pydov.search.monster import MonsterSearch
 from pydov.types.fields import ReturnFieldList
 from pydov.types.monster import Monster
@@ -32,8 +31,7 @@ class TestMonsterSearch(AbstractTestSearch):
     xml_field = 'bemonsterd_object_type'
     valid_returnfields = ReturnFieldList.from_field_names(
         'pkey_monster', 'diepte_van_m')
-    valid_returnfields_subtype = ReturnFieldList.from_field_names(
-        'bemonsterd_object_type', 'bemonsterd_object_naam', 'bemonsterd_object_permkey')
+    valid_returnfields_subtype = None
     valid_returnfields_extra = ReturnFieldList.from_field_names('observaties', 'opmerkingen')
 
 

@@ -2,25 +2,26 @@
 """Module containing the DOV data type for monster, including
 subtypes."""
 from pydov.types.fields import WfsField, XmlField
-
 from .abstract import AbstractDovSubType, AbstractDovType
+
 
 class BemonsterdObject(AbstractDovSubType):
 
-    rootpath = './/monster/bemonsterdObject'
+    rootpath = './/monster/bemonsterdobject'
 
     fields = [
         XmlField(name='bemonsterd_object_type',
-                 source_xpath='/monster/bemonsterdObject/objecttype',
+                 source_xpath='/monster/bemonsterdobject/objecttype',
                  definition='Objecttype',
                  datatype='string'),
         XmlField(name='bemonsterd_object_naam',
-                 source_xpath='/monster/bemonsterdObject/naam',
+                 source_xpath='/monster/bemonsterdobject/naam',
                  definition='DOV naam',
                  datatype='string'),
         XmlField(name='bemonsterd_object_permkey',
-                 source_xpath='/monster/bemonsterdObject/permkey',
-                 definition='Een unieke DOV identifier in de vorm van een permkey.',
+                 source_xpath='/monster/bemonsterdobject/permkey',
+                 definition='Een unieke DOV identifier '
+                            'in de vorm van een permkey.',
                  datatype='string')
     ]
 
@@ -45,7 +46,7 @@ class Monster(AbstractDovType):
         return (pkey for pkey in agg_value.strip(
             '| ').split('|') if pkey != '')
 
-    subtypes = [BemonsterdObject]
+
     fields = [
         WfsField(name='pkey_monster',
                  source_field='monster_link',

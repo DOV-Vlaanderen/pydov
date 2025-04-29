@@ -1,4 +1,4 @@
-"""Module grouping tests for the pydov.types.grondmonster module."""
+"""Module grouping tests for the pydov.types.monster module."""
 
 from pydov.types.fields import ReturnFieldList
 from pydov.types.monster import Monster
@@ -39,3 +39,5 @@ class TestMonster(AbstractTestTypes):
     valid_returnfields_subtype = ReturnFieldList.from_field_names(
         'monster_link','bemonsterd_object_type', 'bemonsterd_object_naam', 'bemonsterd_object_permkey')
     inexistent_field = 'onbestaand'
+
+

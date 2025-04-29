@@ -729,6 +729,20 @@ Default dataframe output
         bemonsteringsprocedure,Monster,1,string,nan
         bemonsteringsinstrument,Monster,1,string,avegaarbooras
         bemonstering_door,Monster,1,string,BVMO
+        tijdstip_monstername ,MonsterDetails,10,
+        bemonsterd_object_type,BemonsterdObject,10,
+        bemonsterd_object_naam,BemonsterdObject,10,
+        bemonsterd_object_permkey,BemonsterdObject,10,
+        opslaglocatie_naam,Opslaglocatie,10,
+        opslaglocatie_van,Opslaglocatie,10,
+        opslaglocatie_tot,Opslaglocatie,10,
+        monsterbehandeling_door,Monsterbehandeling,10,
+        monsterbehandeling_datum,Monsterbehandeling,10,
+        monsterbehandeling_tijdstip,Monsterbehandeling,10,
+        monsterbehandeling_behandeling,Monsterbehandeling,10,
+        monsterbehandeling_behandeling_waarde,Monsterbehandeling,10,
+
+
 
 
 DOV WFS layer

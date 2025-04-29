@@ -89,7 +89,7 @@ Bodemclassificatie
 Monster
 ************
 
-.. automodule:: pydov.types.monster
+.. automodule:: pydov.search.monster
     :members:
     :show-inheritance:
 
@@ -193,6 +193,13 @@ Bodemclassificatie
 ******************
 
 .. automodule:: pydov.types.bodemclassificatie
+    :members:
+    :show-inheritance:
+
+Monsters
+*******
+
+.. automodule:: pydov.types.monster
     :members:
     :show-inheritance:
 

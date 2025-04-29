@@ -24,8 +24,7 @@ class Monster(AbstractDovType):
             Generator yielding non-empty parent keys extracted from the input.
         """
         return (pkey for pkey in agg_value.strip(
-            '| ').split('|') if pkey != ''
-                )
+            '| ').split('|') if pkey != '')
 
     fields = [
         WfsField(name='pkey_monster',
@@ -65,7 +64,6 @@ class Monster(AbstractDovType):
         WfsField(name='bemonstering_door',
                  source_field='bemonstering_door',
                  datatype='string')
-
     ]
 
     pkey_fieldname = 'monster_link'

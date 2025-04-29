@@ -719,7 +719,7 @@ Default dataframe output
         Field,Source,Cost,Datatype,Example
         pkey_monster,Monster,1,string,https://www.dov.vlaanderen.be/data/monster/2017-141452
         naam,Monster,1,string,000/00/2/M1
-        pkey_parents,Monster,1,string: Pipes,|https://www.dov.vlaanderen.be/data/boring/2003-025366|
+        pkey_parents,Monster,1,list of strings,[https://www.dov.vlaanderen.be/data/boring/2003-025366]
         materiaalklasse,Monster,1,string,sediment
         datum_monstername,Monster,1,date,2003-04-08
         diepte_van_m,Monster,1,float,0.90

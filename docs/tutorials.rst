@@ -48,6 +48,7 @@ To run these interactively online without installation, use the following binder
    notebooks/search_geotechnische_codering.ipynb
    notebooks/search_quartaire_stratigrafie.ipynb
    notebooks/search_grondmonsters.ipynb
+   notebooks/search_monsters.ipynb
    notebooks/search_bodem.ipynb
    notebooks/search_generic_wfs.ipynb
    notebooks/customizing_object_types.ipynb

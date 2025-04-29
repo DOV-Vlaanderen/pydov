@@ -1,4 +1,4 @@
-"""Module grouping tests for the pydov.types.grondmonster module."""
+"""Module grouping tests for the pydov.types.monster module."""
 
 from pydov.types.fields import ReturnFieldList
 from pydov.types.monster import Monster

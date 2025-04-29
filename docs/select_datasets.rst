@@ -20,7 +20,7 @@ Generally the datasets consist of a main type and a subtype, where the resulting
 Some datasets have extra fieldsets available, that are not used by default but can be enabled easily. More information on how to find and enable them can be consulted in the :ref:`adding extra fields <adding_extra_fields>` section. For example, you could write::
 
     from pydov.search.boring import BoringSearch
-    from pydov.types.boring import MethodeXyz
+    from pydov.types.boring import Boring, MethodeXyz
 
     borehole_search = BoringSearch(
         objecttype=Boring.with_extra_fields(MethodeXyz)
@@ -30,7 +30,7 @@ Some datasets have extra fieldsets available, that are not used by default but c
 For some datasets, multiple subtypes are available. One of them will be used by default, but you can easily select the subtype of your interest. More information on how to find the available subtypes and how to enable them can be found in the :ref:`adding or switching subtypes <switching_subtypes>` section. For example, you could write::
 
     from pydov.search.boring import BoringSearch
-    from pydov.types.boring import Kleur
+    from pydov.types.boring import Boring, Kleur
 
     borehole_search = BoringSearch(
         objecttype=Boring.with_subtype(Kleur)

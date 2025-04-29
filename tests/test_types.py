@@ -13,6 +13,7 @@ from pydov.types.fields import XmlField
 from pydov.types.grondwaterfilter import GrondwaterFilter
 from pydov.types.grondwatermonster import GrondwaterMonster
 from pydov.types.grondmonster import Grondmonster
+from pydov.types.monster import Monster
 from pydov.types.observatie import Observatie
 from pydov.types.interpretaties import (
     GecodeerdeLithologie,
@@ -47,6 +48,7 @@ type_objects = [Bodemsite,
                 GeotechnischeCodering,
                 QuartairStratigrafie,
                 Grondmonster,
+                Monster,
                 Observatie]
 
 

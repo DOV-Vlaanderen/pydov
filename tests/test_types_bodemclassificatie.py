@@ -19,6 +19,7 @@ class TestBodemclassificatie(AbstractTestTypes):
     pkey_base = build_dov_url('data/')
 
     sorted_subtypes = []
+    sorted_fieldsets = []
 
     field_names = [
         'pkey_bodemclassificatie', 'pkey_bodemlocatie', 'x', 'y', 'mv_mtaw',

@@ -19,6 +19,7 @@ class TestBodemmonster(AbstractTestTypes):
     pkey_base = build_dov_url('data/bodemmonster/')
 
     sorted_subtypes = []
+    sorted_fieldsets = []
 
     field_names = [
         'pkey_bodemmonster', 'pkey_bodemlocatie', 'pkey_parent',

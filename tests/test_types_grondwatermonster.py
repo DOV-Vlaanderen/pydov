@@ -19,6 +19,7 @@ class TestGrondwaterMonster(AbstractTestTypes):
     pkey_base = build_dov_url('data/watermonster/')
 
     sorted_subtypes = ['Observatie']
+    sorted_fieldsets = []
 
     field_names = [
         'pkey_grondwatermonster', 'grondwatermonsternummer',

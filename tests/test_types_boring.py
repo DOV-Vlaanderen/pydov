@@ -19,6 +19,7 @@ class TestBoring(AbstractTestTypes):
     pkey_base = build_dov_url('data/boring/')
 
     sorted_subtypes = ['BoorMethode', 'Kleur']
+    sorted_fieldsets = ['MethodeXyz']
 
     field_names = [
         'pkey_boring', 'boornummer', 'x', 'y', 'mv_mtaw',
@@ -40,35 +41,6 @@ class TestBoring(AbstractTestTypes):
         'pkey_boring', 'diepte_methode_van', 'boormethode')
 
     inexistent_field = 'onbestaand'
-
-    def test_get_fieldsets(self):
-        """Test the get_fieldsets method.
-
-        Test whether the correct fieldsets are returned.
-
-        """
-
-        fieldsets = sorted(Boring.get_fieldsets().keys())
-        assert fieldsets == ['MethodeXyz']
-
-    def test_with_extra_fields_fieldset(self):
-        """Test the with_extra_fields method using a predefined fieldset.
-
-        Test whether the fields are correctly added to the type.
-
-        """
-        new_type = Boring.with_extra_fields(MethodeXyz)
-        assert issubclass(new_type, AbstractDovType)
-
-        own_field_names = Boring.get_field_names()
-        extra_field_names = MethodeXyz.get_field_names()
-        all_field_names = new_type.get_field_names()
-
-        for field in extra_field_names:
-            assert field in all_field_names
-            all_field_names.remove(field)
-
-        assert all_field_names == own_field_names
 
     def test_with_extra_fields_custom(self):
         """Test the with_extra_fields method using a custom list of fields.

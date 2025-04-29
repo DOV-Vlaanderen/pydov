@@ -23,6 +23,7 @@ class TestInformeleStratigrafie(AbstractTestTypes):
     pkey_base = build_dov_url('data/interpretatie/')
 
     sorted_subtypes = ['InformeleStratigrafieLaag']
+    sorted_fieldsets = []
 
     field_names = [
         'pkey_interpretatie', 'pkey_boring',

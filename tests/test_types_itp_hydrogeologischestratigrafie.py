@@ -24,6 +24,7 @@ class TestHydrogeologischeStratigrafie(AbstractTestTypes):
     pkey_base = build_dov_url('data/interpretatie/')
 
     sorted_subtypes = ['HydrogeologischeStratigrafieLaag']
+    sorted_fieldsets = []
 
     field_names = [
         'pkey_interpretatie', 'pkey_boring',

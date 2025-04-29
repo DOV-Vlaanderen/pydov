@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 """Module containing the DOV data type for monster, including
 subtypes."""
-from pydov.types.fields import WfsField
+import datetime
+import numpy as np
+from pydov.types.fields import _CustomXmlField, WfsField
 
-from .abstract import AbstractDovType
+from .abstract import AbstractDovFieldSet, AbstractDovType
 
 
 class Monster(AbstractDovType):
@@ -79,3 +81,49 @@ class Monster(AbstractDovType):
 
         """
         super().__init__('monster', pkey)
+
+
+class TijdstipMonsternameField(_CustomXmlField):
+    """Field for retrieving the time of the sampling from the relevant XML
+    field."""
+
+    def __init__(self):
+        super().__init__(
+            name='tijdstip_monstername',
+            definition=("Tijdstip waarop het monster werd verkregen uit het "
+                        "bemonsterdObject."),
+            datatype='string',
+            notnull=False
+        )
+
+    def calculate(self, cls, tree):
+        tijdstip = cls._parse(
+            func=tree.findtext,
+            xpath='.//bemonsteringstijdstip/tijdstip',
+            namespace=None,
+            returntype='string'
+        )
+        if tijdstip is not np.nan:
+            return tijdstip
+
+        datumtijd = cls._parse(
+            func=tree.findtext,
+            xpath='.//bemonsteringstijdstip/datumtijd',
+            namespace=None,
+            returntype='string'
+        )
+        if datumtijd is not np.nan:
+            timestamp = datetime.datetime.fromisoformat(datumtijd)
+            return timestamp.strftime('%H:%M:%S')
+
+        return np.nan
+
+
+class MonsterDetails(AbstractDovFieldSet):
+    """Fieldset containing fields with extra details about the sample."""
+
+    intended_for = ['Monster']
+
+    fields = [
+        TijdstipMonsternameField()
+    ]

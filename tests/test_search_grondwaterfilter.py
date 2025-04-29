@@ -77,7 +77,7 @@ class TestGrondwaterfilterSearch(AbstractTestSearch):
             query=self.valid_query_single)
 
         # specific test for the Zulu time wfs 1.1.0 issue
-        assert df.datum.sort_values()[0] == datetime.date(2004, 4, 7)
+        assert df.datum.sort_values().iloc[0] == datetime.date(1997, 11, 16)
 
     def test_search_xmlresolving(self, mp_get_schema,
                                  mp_remote_describefeaturetype,
@@ -104,4 +104,30 @@ class TestGrondwaterfilterSearch(AbstractTestSearch):
             return_fields=('pkey_filter', 'gw_id', 'filternummer',
                            'meetnet_code'))
 
-        assert df.meetnet_code[0] == '8'
+        assert df.meetnet_code[0] == '9'
+
+    def test_search_time(self, mp_get_schema,
+                         mp_remote_describefeaturetype,
+                         mp_remote_wfs_feature, mp_dov_xml):
+        """Test the search method with an objecttype with the MonsterDetails
+        fields.
+
+        Test whether the output dataframe contains the extra fields and the
+        values are correct.
+
+        Parameters
+        ----------
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType.
+        mp_remote_wfs_feature : pytest.fixture
+            Monkeypatch the call to get WFS features.
+        mp_dov_xml : pytest.fixture
+            Monkeypatch the call to get the remote XML data.
+
+        """
+        df = self.search_instance.search(
+            query=self.valid_query_single)
+
+        assert df.tijdstip.sort_values().iloc[0] == '00:01:00'

@@ -21,9 +21,9 @@ location_xsd_base = 'tests/data/types/grondwaterfilter/xsd_*.xml'
 class MyGrondwaterFilter(GrondwaterFilter):
 
     fields = GrondwaterFilter.extend_fields([
-        XmlField(name='grondwatersysteem',
-                 source_xpath='/filter/ligging/grondwatersysteem',
-                 definition='Grondwatersysteem waarin de filter hangt.',
+        XmlField(name='aquifer_hcovv2',
+                 source_xpath='/filter/ligging/aquifer_hcovv2',
+                 definition='Aquifercode volgens HCOVv2.',
                  datatype='string')
     ])
 
@@ -131,7 +131,7 @@ class TestMyGrondwaterFilter(object):
         fs = GrondwaterFilterSearch(objecttype=MyGrondwaterFilter)
         fields = fs.get_fields()
 
-        assert 'grondwatersysteem' in fields
+        assert 'aquifer_hcovv2' in fields
 
     def test_search(self, mp_wfs, mp_remote_describefeaturetype,
                     mp_remote_md, mp_remote_fc, mp_remote_wfs_feature,
@@ -163,8 +163,8 @@ class TestMyGrondwaterFilter(object):
             propertyname='filterfiche',
             literal=build_dov_url('data/filter/2003-004471')))
 
-        assert 'grondwatersysteem' in df
-        assert df.iloc[0].grondwatersysteem == 'Centraal Vlaams Systeem'
+        assert 'aquifer_hcovv2' in df
+        assert df.iloc[0].aquifer_hcovv2 == 'A0100'
 
 
 class TestMyGrondwaterFilterOpbouw(object):
@@ -224,6 +224,6 @@ class TestMyGrondwaterFilterOpbouw(object):
         assert 'opbouw_tot' in df
         assert 'opbouw_element' in df
 
-        assert df.iloc[-1].opbouw_van == 2.5
-        assert df.iloc[-1].opbouw_tot == 2.7
-        assert df.iloc[-1].opbouw_element == 'zandvang'
+        assert df.iloc[-1].opbouw_van == 3.6
+        assert df.iloc[-1].opbouw_tot == 4.0
+        assert df.iloc[-1].opbouw_element == 'filterelement'

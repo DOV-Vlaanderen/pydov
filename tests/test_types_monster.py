@@ -19,6 +19,7 @@ class TestMonster(AbstractTestTypes):
     pkey_base = build_dov_url('data/monster/')
 
     sorted_subtypes = []
+    sorted_fieldsets = ['MonsterDetails']
 
     field_names = [
         'pkey_monster', 'naam', 'pkey_parents', 'materiaalklasse',

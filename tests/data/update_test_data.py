@@ -609,21 +609,21 @@ if __name__ == '__main__':
     # types/grondwaterfilter
 
     update_file('types/grondwaterfilter/grondwaterfilter.xml',
-                build_dov_url('data/filter/2003-004471.xml'))
+                build_dov_url('data/filter/1997-000494.xml'))
 
     update_file('types/grondwaterfilter/wfsgetfeature.xml',
                 build_dov_url('geoserver/ows?service=WFS'
                               '&version=2.0.0&request=GetFeature&typeName='
                               'gw_meetnetten:meetnetten&count=1&'
                               'CQL_Filter=filterfiche=%27' + build_dov_url(
-                                  'data/filter/2003-004471%27')))
+                                  'data/filter/1997-000494%27')))
 
     update_file('types/grondwaterfilter/feature.xml',
                 build_dov_url('geoserver/ows?service=WFS'
                               '&version=2.0.0&request=GetFeature&typeName='
                               'gw_meetnetten:meetnetten&count=1&'
                               'CQL_Filter=filterfiche=%27' + build_dov_url(
-                                  'data/filter/2003-004471%27')),
+                                  'data/filter/1997-000494%27')),
                 get_first_featuremember)
 
     update_file(
@@ -1239,7 +1239,7 @@ if __name__ == '__main__':
     # types/monster
 
     update_file('types/monster/monster.xml',
-                build_dov_url('data/monster/2017-143287.xml'))
+                build_dov_url('data/monster/2022-324252.xml'))
 
     update_file(
         'types/monster/wfsgetfeature.xml',
@@ -1247,7 +1247,7 @@ if __name__ == '__main__':
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName='
             'monster:monsters&maxFeatures=1&CQL_Filter'
-            '=permkey_monster=%272017-143287%27'))
+            '=permkey_monster=%272022-324252%27'))
 
     update_file(
         'types/monster/feature.xml',
@@ -1255,7 +1255,7 @@ if __name__ == '__main__':
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName='
             'monster:monsters&maxFeatures=1&CQL_Filter'
-            '=permkey_monster=%272017-143287%27'),
+            '=permkey_monster=%272022-324252%27'),
         get_first_featuremember)
 
     update_file(

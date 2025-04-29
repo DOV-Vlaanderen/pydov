@@ -92,6 +92,13 @@ Monster
 .. automodule:: pydov.search.monster
     :members:
 
+Observatie
+************
+
+.. automodule:: pydov.search.observatie
+    :members:
+
+
 Generic
 *******
 
@@ -195,10 +202,17 @@ Bodemclassificatie
     :members:
     :show-inheritance:
 
-Monster
-************
+Monsters
+*******
 
 .. automodule:: pydov.types.monster
+    :members:
+    :show-inheritance:
+
+Observatie
+*******
+
+.. automodule:: pydov.types.observatie
     :members:
     :show-inheritance:
 

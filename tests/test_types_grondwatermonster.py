@@ -18,6 +18,8 @@ class TestGrondwaterMonster(AbstractTestTypes):
     namespace = 'http://dov.vlaanderen.be/grondwater/gw_meetnetten'
     pkey_base = build_dov_url('data/watermonster/')
 
+    sorted_subtypes = ['Observatie']
+
     field_names = [
         'pkey_grondwatermonster', 'grondwatermonsternummer',
         'pkey_grondwaterlocatie', 'gw_id', 'pkey_filter',

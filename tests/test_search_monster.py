@@ -25,7 +25,6 @@ class TestMonsterSearch(AbstractTestSearch):
     valid_query_single = PropertyIsEqualTo(propertyname='permkey_monster',
                                            literal='2017-143287')
 
-
     inexistent_field = 'onbestaand'
     wfs_field = 'bemonsteringsprocedure'
     xml_field = 'bemonsterd_object_type'

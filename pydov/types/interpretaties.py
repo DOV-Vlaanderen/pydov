@@ -134,6 +134,8 @@ class AbstractBoringInterpretatie(AbstractDovType):
 
 class InformeleStratigrafieLaag(AbstractDovSubType):
 
+    intended_for = ['InformeleStratigrafie']
+
     rootpath = './/informelestratigrafie/laag'
 
     fields = [
@@ -164,6 +166,8 @@ class InformeleStratigrafie(AbstractCommonInterpretatie):
 
 
 class FormeleStratigrafieLaag(AbstractDovSubType):
+
+    intended_for = ['FormeleStratigrafie']
 
     rootpath = './/formelestratigrafie/laag'
 
@@ -220,6 +224,8 @@ class FormeleStratigrafie(AbstractCommonInterpretatie):
 
 class HydrogeologischeStratigrafieLaag(AbstractDovSubType):
 
+    intended_for = ['HydrogeologischeStratigrafie']
+
     rootpath = './/hydrogeologischeinterpretatie/laag'
 
     fields = [
@@ -257,6 +263,8 @@ class HydrogeologischeStratigrafie(AbstractBoringInterpretatie):
 
 class LithologischeBeschrijvingLaag(AbstractDovSubType):
 
+    intended_for = ['LithologischeBeschrijvingen']
+
     rootpath = './/lithologischebeschrijving/laag'
 
     fields = [
@@ -286,6 +294,8 @@ class LithologischeBeschrijvingen(AbstractBoringInterpretatie):
 
 
 class GecodeerdeLithologieLaag(AbstractDovSubType):
+
+    intended_for = ['GecodeerdeLithologie']
 
     rootpath = './/gecodeerdelithologie/laag'
 
@@ -381,6 +391,8 @@ class GecodeerdeLithologie(AbstractBoringInterpretatie):
 
 
 class GeotechnischeCoderingLaag(AbstractDovSubType):
+
+    intended_for = ['GeotechnischeCodering']
 
     rootpath = './/geotechnischecodering/laag'
 
@@ -478,6 +490,8 @@ class GeotechnischeCodering(AbstractBoringInterpretatie):
 
 class QuartairStratigrafieLaag(AbstractDovSubType):
 
+    intended_for = ['QuartairStratigrafie']
+
     rootpath = './/quartairstratigrafie/laag'
 
     fields = [
@@ -532,6 +546,8 @@ class QuartairStratigrafie(AbstractBoringInterpretatie):
 
 
 class InformeleHydrogeologischeStratigrafieLaag(AbstractDovSubType):
+
+    intended_for = ['InformeleHydrogeologischeStratigrafie']
 
     rootpath = './/informelehydrostratigrafie/laag'
 

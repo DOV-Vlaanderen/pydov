@@ -18,6 +18,8 @@ class TestBodemdiepteinterval(AbstractTestTypes):
     namespace = 'https://www.dov.vlaanderen.be/bodem'
     pkey_base = build_dov_url('data/bodemdiepteinterval/')
 
+    sorted_subtypes = []
+
     field_names = [
         'pkey_diepteinterval', 'pkey_bodemopbouw', 'pkey_bodemlocatie',
         'nr', 'type', 'naam', 'bovengrens1_cm', 'bovengrens2_cm',

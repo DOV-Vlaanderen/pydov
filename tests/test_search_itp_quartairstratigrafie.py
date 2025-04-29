@@ -29,6 +29,7 @@ location_xsd_base = \
 class TestQuartairStratigrafieSearch(AbstractTestSearch):
 
     search_instance = QuartairStratigrafieSearch()
+    search_class = QuartairStratigrafieSearch
     datatype_class = QuartairStratigrafie
 
     valid_query_single = PropertyIsEqualTo(propertyname='Proefnummer',

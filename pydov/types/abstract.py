@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """Module containing the base DOV data types."""
 
+import inspect
+import sys
 import types
 import warnings
 from collections import OrderedDict
@@ -18,6 +20,41 @@ from pydov.util.net import LocalSessionThreadPool
 
 from ..util.errors import InvalidFieldError, XmlParseError, XmlParseWarning
 from ..util.hooks import HookRunner
+
+
+class AbstractDovFieldSet(object):
+    """Class representing a set of fields to be used to extend existing fields
+    of a certain AbstractDovType or AbstractDovSubType.
+
+    Attributes
+    ----------
+    intended_for : list of string
+        Use this fieldset to extend the fields of this type or subtype. Using
+        the fieldset for another (sub)type might not yield the correct results.
+        The list should contain class names of subclassed of AbstractDovType
+        or AbstractDovSubType.
+
+    fields : list of pydov.types.fields.AbstractField
+        List of fields of this type.
+
+    """
+
+    intended_for = []
+
+    fields = []
+
+    @classmethod
+    def get_field_names(cls):
+        """Return the names of the fields for this fieldset.
+
+        Returns
+        -------
+        list<str>
+            List of the field names available for this fieldset. These will
+            also be the names of the columns in the output dataframe.
+
+        """
+        return [f.get('name') for f in cls.fields]
 
 
 class AbstractTypeCommon(AbstractCommon):
@@ -97,6 +134,117 @@ class AbstractTypeCommon(AbstractCommon):
         fields = list(cls.fields)
         fields.extend(extra_fields)
         return fields
+
+    @classmethod
+    def _filter_classes_intended_for(cls, c):
+        try:
+            return cls.__qualname__ in c.intended_for
+        except AttributeError:
+            return False
+
+    @classmethod
+    def _get_module_classes_metadata(cls, base_class, filter_fn=None):
+        """Get metadata of the specific classes in a the same module as this
+        class.
+
+        Only returns metadata of the classes matched by the parameters.
+
+        Parameters
+        ----------
+        base_class : class
+            Only return classes that are a subclass of this class.
+        filter_fn : function accepting a single argument <class>, optional
+            Filter function to apply to matching classes to further
+            filter the results, by default None which will apply no additional
+            filtering.
+
+        Returns
+        -------
+        dict<str,dict>
+            Dictionary containing the metadata of the available classes.
+
+        """
+        classes = [
+            c[1] for c in inspect.getmembers(
+                sys.modules[cls.__module__], inspect.isclass)
+            if (issubclass(c[1], base_class)
+                and c[1] != base_class
+                and (filter_fn is None or filter_fn(c[1])))
+        ]
+
+        def get_definition(clazz):
+            if clazz.__doc__:
+                doc = [clazz.__doc__]
+            else:
+                doc = []
+
+            doc.extend(['It has the following fields: ' +
+                        ', '.join(clazz.get_field_names()) + '.'])
+
+            return ' '.join(doc)
+
+        return dict(zip(
+            [c.__name__ for c in classes],
+            [{
+                'name': c.__name__,
+                'class': c,
+                'definition': get_definition(c)
+            } for c in classes])
+        )
+
+    @classmethod
+    def get_fieldsets(cls):
+        """List all available fieldsets to use with this (sub)type.
+
+        Returns
+        -------
+        fieldsets : dict<str,dict>
+            Dictionary containing the metadata of the available fieldsets,
+            where the metadata dictionary includes:
+
+            name (str)
+                The name of the fieldsets.
+
+            definition (str)
+                The definition of the fieldsets and a list of its fields. For a
+                definition of all the fields, initialise a search object with
+                a type extended with this fieldset and use its `get_fields`
+                method. E.g. `ObjectSearch(DovType.with_extra_fields(FieldSet)
+                ).get_fields()`
+
+            class (class)
+                Class reference of this fieldset.
+
+        """
+        return cls._get_module_classes_metadata(
+            AbstractDovFieldSet,
+            filter_fn=cls._filter_classes_intended_for
+        )
+
+    @classmethod
+    def with_extra_fields(cls, extra_fields):
+        """Build a new subclass with the given extra fields
+        added to it.
+
+        Parameters
+        ----------
+        extra_fields : list of pydov.types.fields.AbstractField or subclass of
+                         AbstractDovFieldSet
+            Extra fields to be appended to the existing fields of this
+            (sub)type.
+
+        Returns
+        -------
+        AbstractDov(Sub)Type
+            New AbstractDov(Sub)Type with the given extra fields.
+        """
+        if inspect.isclass(extra_fields) \
+                and issubclass(extra_fields, AbstractDovFieldSet):
+            extra_fields = extra_fields.fields
+
+        class newType(cls):
+            fields = cls.extend_fields(extra_fields)
+        return newType
 
 
 class AbstractDovSubType(AbstractTypeCommon):
@@ -436,6 +584,69 @@ class AbstractDovType(AbstractTypeCommon):
                     "dataframe will be incomplete.").format(self.pkey),
                 XmlParseWarning)
             return False
+
+    @classmethod
+    def get_subtypes(cls):
+        """List all available subtypes to use with this type.
+
+        Returns
+        -------
+        subtypes : dict<str,dict>
+            Dictionary containing the metadata of the available subtypes,
+            where the metadata dictionary includes:
+
+            name (str)
+                The name of the subtype.
+
+            definition (str)
+                The definition of the subtype and a list of its fields. For a
+                definition of all the fields, initialise a search object with
+                a type having this subtype and use its `get_fields` method.
+                E.g. `ObjectSearch(DovType.with_subtype(SubType)).get_fields()`
+
+            class (class)
+                Class reference of this subtype.
+
+        """
+        return cls._get_module_classes_metadata(
+            AbstractDovSubType,
+            filter_fn=cls._filter_classes_intended_for
+        )
+
+    @classmethod
+    def with_subtype(cls, subtype):
+        """Build a new subclass of this type with the given subtype.
+
+        Parameters
+        ----------
+        subtype : AbstractDovSubType
+            Subtype to use in the new class.
+
+        Returns
+        -------
+        AbstractDovType
+            New AbstractDovType with the given subtype.
+
+        Raises
+        ------
+        TypeError
+            When the given subtype is not a class.
+
+        ValueError
+            When the given subtype is not a subclass of AbstractDovSubType.
+        """
+        if not inspect.isclass(subtype):
+            raise ValueError('subtype should be a class, specifically a '
+                             'subclass of AbstractDovSubType.')
+
+        if not issubclass(subtype, AbstractDovSubType):
+            raise ValueError(f"'{subtype.__name__}' is not a valid subtype, "
+                             "is it a subclass of AbstractDovSubType?")
+
+        class newType(cls):
+            subtypes = [subtype]
+
+        return newType
 
     @classmethod
     def from_wfs_element(cls, feature, namespace):

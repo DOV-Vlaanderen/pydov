@@ -19,5 +19,5 @@ class MonsterSearch(AbstractSearch):
 
         """
         super(MonsterSearch, self).__init__(
-            'monster:monsters', objecttype
-                )
+            'monster:monsters',
+            objecttype)

@@ -3,7 +3,7 @@
 subtypes."""
 from pydov.types.fields import WfsField, XmlField
 from .abstract import AbstractDovSubType, AbstractDovType
-
+from pydov.types.fields import WfsField
 
 class BemonsterdObject(AbstractDovSubType):
 
@@ -26,6 +26,7 @@ class BemonsterdObject(AbstractDovSubType):
     ]
 
 
+
 class Monster(AbstractDovType):
     """Class representing the DOV data type for ground samples."""
 
@@ -45,7 +46,6 @@ class Monster(AbstractDovType):
         """
         return (pkey for pkey in agg_value.strip(
             '| ').split('|') if pkey != '')
-
 
     fields = [
         WfsField(name='pkey_monster',
@@ -85,7 +85,6 @@ class Monster(AbstractDovType):
         WfsField(name='bemonstering_door',
                  source_field='bemonstering_door',
                  datatype='string')
-
     ]
 
     pkey_fieldname = 'monster_link'

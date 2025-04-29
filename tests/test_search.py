@@ -23,6 +23,7 @@ from pydov.search.interpretaties import (
     InformeleHydrogeologischeStratigrafieSearch, InformeleStratigrafieSearch,
     LithologischeBeschrijvingenSearch, QuartairStratigrafieSearch)
 from pydov.search.sondering import SonderingSearch
+from pydov.search.observatie import ObservatieSearch
 from pydov.util.errors import InvalidSearchParameterError
 from pydov.util.location import Point, WithinDistance
 from tests.abstract import ServiceCheck
@@ -50,6 +51,8 @@ search_objects = [BodemsiteSearch(),
                   LithologischeBeschrijvingenSearch(),
                   GrondmonsterSearch(),
                   MonsterSearch(),
+                  GrondmonsterSearch(),
+                  ObservatieSearch(),
                   WfsSearch('dov-pub:Opdrachten')]
 
 

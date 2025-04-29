@@ -197,14 +197,14 @@ Bodemclassificatie
     :show-inheritance:
 
 Monsters
-*******
+********
 
 .. automodule:: pydov.types.monster
     :members:
     :show-inheritance:
 
 Observatie
-*******
+**********
 
 .. automodule:: pydov.types.observatie
     :members:

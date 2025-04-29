@@ -784,7 +784,7 @@ Generic
 *******
 
 Samples (Monsters)
--------------
+------------------
 
 Type
     Monster (Sample)
@@ -815,7 +815,7 @@ Default dataframe output
 
 
 Observations (Observaties)
-------------------------------------
+--------------------------
 
 Type
     Observatie (Observations)

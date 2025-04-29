@@ -20,7 +20,7 @@ Generally the datasets consist of a main type and a subtype, where the resulting
 Some datasets have extra fieldsets available, that are not used by default but can be enabled easily. More information on how to find and enable them can be consulted in the :ref:`adding extra fields <adding_extra_fields>` section. For example, you could write::
 
     from pydov.search.boring import BoringSearch
-    from pydov.types.boring import MethodeXyz
+    from pydov.types.boring import Boring, MethodeXyz
 
     borehole_search = BoringSearch(
         objecttype=Boring.with_extra_fields(MethodeXyz)
@@ -30,7 +30,7 @@ Some datasets have extra fieldsets available, that are not used by default but c
 For some datasets, multiple subtypes are available. One of them will be used by default, but you can easily select the subtype of your interest. More information on how to find the available subtypes and how to enable them can be found in the :ref:`adding or switching subtypes <switching_subtypes>` section. For example, you could write::
 
     from pydov.search.boring import BoringSearch
-    from pydov.types.boring import Kleur
+    from pydov.types.boring import Boring, Kleur
 
     borehole_search = BoringSearch(
         objecttype=Boring.with_subtype(Kleur)
@@ -784,7 +784,7 @@ Generic
 *******
 
 Samples (Monsters)
--------------
+------------------
 
 Type
     Monster (Sample)
@@ -802,7 +802,7 @@ Default dataframe output
         Field,Source,Cost,Datatype,Example
         pkey_monster,Monster,1,string,https://www.dov.vlaanderen.be/data/monster/2017-141452
         naam,Monster,1,string,000/00/2/M1
-        pkey_parents,Monster,1,string: Pipes,|https://www.dov.vlaanderen.be/data/boring/2003-025366|
+        pkey_parents,Monster,1,list of string,[https://www.dov.vlaanderen.be/data/boring/2003-025366]
         materiaalklasse,Monster,1,string,sediment
         datum_monstername,Monster,1,date,2003-04-08
         diepte_van_m,Monster,1,float,0.90
@@ -827,7 +827,7 @@ Default dataframe output
 
 
 Observations (Observaties)
-------------------------------------
+--------------------------
 
 Type
     Observatie (Observations)

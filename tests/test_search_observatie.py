@@ -19,7 +19,9 @@ location_xsd_base = 'tests/data/types/observatie/xsd_*.xml'
 
 class TestObservatieSearch(AbstractTestSearch):
     search_instance = ObservatieSearch()
+    search_class = ObservatieSearch
     datatype_class = Observatie
+
     valid_query_single = PropertyIsEqualTo(propertyname='pkey_observatie',
                                            literal=build_dov_url('data/observatie/2022-6766131'))
 

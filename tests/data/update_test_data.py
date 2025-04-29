@@ -3,8 +3,6 @@ import os
 import sys
 
 from owslib.etree import etree
-import requests
-import pydov
 
 from pydov.types.bodemlocatie import Bodemlocatie
 from pydov.types.bodemdiepteinterval import Bodemdiepteinterval
@@ -1237,6 +1235,57 @@ if __name__ == '__main__':
                     'geoserver/dov-pub/Opdrachten'
                     '/ows?service=wfs&version=2.0.0'
                     '&request=DescribeFeatureType'))
+
+    # types/monster
+
+    update_file('types/monster/monster.xml',
+                build_dov_url('data/monster/2017-143287.xml'))
+
+    update_file(
+        'types/monster/wfsgetfeature.xml',
+        build_dov_url(
+            'geoserver/ows?service=WFS'
+            '&version=2.0.0&request=GetFeature&typeName='
+            'monster:monsters&maxFeatures=1&CQL_Filter'
+            '=permkey_monster=%272017-143287%27'))
+
+    update_file(
+        'types/monster/feature.xml',
+        build_dov_url(
+            'geoserver/ows?service=WFS'
+            '&version=2.0.0&request=GetFeature&typeName='
+            'monster:monsters&maxFeatures=1&CQL_Filter'
+            '=permkey_monster=%272017-143287%27'),
+        get_first_featuremember)
+
+    update_file(
+        'types/monster/fc_featurecatalogue.xml',
+        build_dov_url(
+            'geonetwork/srv/dut/csw'
+            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+            '&outputSchema=http://www.isotc211.org/2005/gfc'
+            '&elementSetName=full&id=d0770640-32b9-44a2-8784-32daa1d91fc5'))
+
+    update_file(
+        'types/monster/md_metadata.xml',
+        build_dov_url(
+            'geonetwork/srv/dut/csw'
+            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+            '&outputSchema=http://www.isotc211.org/2005/gmd'
+            '&elementSetName=full&'
+            'id=afd479f5-4f6a-41cf-9604-9993e54b1544'))
+
+    update_file(
+        'types/monster/wfsdescribefeaturetype'
+        '.xml',
+        build_dov_url('geoserver/monster'
+                      '/monsters/ows?service=wfs&version=2.0.0&request'
+                      '=DescribeFeatureType'))
+
+    for xsd_schema in Monster.get_xsd_schemas():
+        update_file(
+            'types/monster/xsd_%s.xml' %
+            xsd_schema.split('/')[-1], xsd_schema)
 
     # types/observatie
 

@@ -87,17 +87,17 @@ Bodemclassificatie
     :members:
 
 Monster
-************
+*******
 
 .. automodule:: pydov.search.monster
     :members:
 
+
 Observatie
-************
+**********
 
 .. automodule:: pydov.search.observatie
     :members:
-
 
 Generic
 *******
@@ -203,14 +203,14 @@ Bodemclassificatie
     :show-inheritance:
 
 Monsters
-*******
+********
 
 .. automodule:: pydov.types.monster
     :members:
     :show-inheritance:
 
 Observatie
-*******
+**********
 
 .. automodule:: pydov.types.observatie
     :members:

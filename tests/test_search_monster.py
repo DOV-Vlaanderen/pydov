@@ -20,6 +20,7 @@ location_xsd_base = 'tests/data/types/monster/xsd_*.xml'
 class TestMonsterSearch(AbstractTestSearch):
 
     search_instance = MonsterSearch()
+    search_class = MonsterSearch
     datatype_class = Monster
 
     valid_query_single = PropertyIsEqualTo(propertyname='permkey_monster',

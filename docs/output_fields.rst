@@ -142,7 +142,7 @@ definition
 To add the extra fieldset to the object type, you can use the ``with_extra_fields`` method. This can be done while instantiating a search class::
 
   from pydov.search.boring import BoringSearch
-  from pydov.types.boring import MethodeXyz
+  from pydov.types.boring import Boring, MethodeXyz
 
   borehole_search = BoringSearch(
       objecttype=Boring.with_extra_fields(MethodeXyz)
@@ -191,7 +191,7 @@ definition
 To use the subtype, you can use the ``with_subtype`` method of the main type. This can be done while instantiating a search class::
 
   from pydov.search.boring import BoringSearch
-  from pydov.types.boring import Kleur
+  from pydov.types.boring import Boring, Kleur
 
   borehole_search = BoringSearch(
       objecttype=Boring.with_subtype(Kleur)

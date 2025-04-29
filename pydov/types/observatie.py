@@ -48,7 +48,7 @@ class Observatie(AbstractDovType):
         ----------
         pkey : str
             Permanent key of the Observatie (observation),
-             being a URI of the form
+            being a URI of the form
             `https://www.dov.vlaanderen.be/data/observatie/<id>`.
 
         """

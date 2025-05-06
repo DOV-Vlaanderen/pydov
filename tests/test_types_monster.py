@@ -18,17 +18,14 @@ class TestMonster(AbstractTestTypes):
     namespace = 'http://dov.vlaanderen.be/ocdov/monster'
     pkey_base = build_dov_url('data/monster/')
 
-    sorted_subtypes = []
+    sorted_subtypes = ['BemonsterdObject']
 
     field_names = [
         'pkey_monster', 'naam', 'pkey_parents', 'materiaalklasse',
         'datum_monstername', 'diepte_van_m', 'diepte_tot_m',
         'monstertype', 'monstersamenstelling', 'bemonsteringsprocedure', 'bemonsteringsinstrument',
-        'bemonstering_door', 'bemonsterd_object_type',
-        'bemonsterd_object_naam', 'bemonsterd_object_permkey']
-    field_names_subtypes = [
-        'bemonsterd_object_type',
-        'bemonsterd_object_naam', 'bemonsterd_object_permkey']
+        'bemonstering_door']
+    field_names_subtypes = []
     field_names_nosubtypes = [
         'pkey_monster', 'naam', 'pkey_parents', 'materiaalklasse',
         'datum_monstername', 'diepte_van_m', 'diepte_tot_m',

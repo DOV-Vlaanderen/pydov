@@ -8,18 +8,19 @@ from pydov.types.fields import WfsField
 class BemonsterdObject(AbstractDovSubType):
 
     rootpath = './/monster/bemonsterdobject'
+    intended_for = ['Monster']
 
     fields = [
         XmlField(name='bemonsterd_object_type',
-                 source_xpath='/monster/bemonsterdobject/objecttype',
+                 source_xpath='/objecttype',
                  definition='Objecttype',
                  datatype='string'),
         XmlField(name='bemonsterd_object_naam',
-                 source_xpath='/monster/bemonsterdobject/naam',
+                 source_xpath='/naam',
                  definition='DOV naam',
                  datatype='string'),
         XmlField(name='bemonsterd_object_permkey',
-                 source_xpath='/monster/bemonsterdobject/permkey',
+                 source_xpath='/permkey',
                  definition='Een unieke DOV identifier '
                             'in de vorm van een permkey.',
                  datatype='string')
@@ -29,6 +30,7 @@ class BemonsterdObject(AbstractDovSubType):
 
 class Monster(AbstractDovType):
     """Class representing the DOV data type for ground samples."""
+
 
     def _split_pkey_parents(agg_value):
         """

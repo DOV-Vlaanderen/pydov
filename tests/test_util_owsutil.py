@@ -660,8 +660,8 @@ class TestWfsGetFeatureRequest(object):
             'service="WFS" version="2.0.0" startIndex="0" '
             'xsi:schemaLocation="http://www.opengis.net/wfs/2.0 '
             'http://schemas.opengis.net/wfs/2.0/wfs.xsd"><wfs:Query '
-            'typeNames="dov-pub:Boringen" srsName="EPSG:31370"/></wfs'
-            ':GetFeature>')
+            'typeNames="dov-pub:Boringen" '
+            'srsName="urn:ogc:def:crs:EPSG::31370"/></wfs:GetFeature>')
 
     def test_wfs_build_getfeature_request_srs_wrongtype(self):
         """Test the owsutil.wfs_build_getfeature_request method with only a

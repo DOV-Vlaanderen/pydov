@@ -2,6 +2,7 @@
 """Module grouping utility functions for OWS services."""
 import warnings
 from urllib.parse import urlparse
+import re
 
 from owslib.etree import etree
 from owslib.fes2 import BinaryLogicOpType, UnaryLogicOpType
@@ -25,6 +26,8 @@ def __get_namespaces():
 
 
 __namespaces = __get_namespaces()
+
+re_epsg = re.compile(r'^EPSG:[1-9]+[0-9]*')
 
 
 def has_geom_support():
@@ -435,10 +438,10 @@ def wfs_build_getfeature_request(typename, geometry_column=None, location=None,
         if not isinstance(crs, str):
             raise TypeError('crs should be a string starting with "EPSG"')
 
-        if not crs.lower().startswith('epsg'):
-            raise ValueError('crs should start with "EPSG"')
+        if not re_epsg.match(crs):
+            raise ValueError('crs should match the format "EPSG:1234"')
 
-        query.set('srsName', crs)
+        query.set('srsName', f'urn:ogc:def:crs:{crs.replace(":", "::")}')
 
     if propertyname and len(propertyname) > 0:
         for property in sorted(propertyname):

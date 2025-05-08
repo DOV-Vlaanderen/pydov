@@ -6,8 +6,9 @@ from .abstract import AbstractDovSubType, AbstractDovType
 from pydov.types.fields import WfsField
 
 class BemonsterdObject(AbstractDovSubType):
+    """Subtype listing the method used to make the borehole."""
 
-    rootpath = './/monster/bemonsterdobject'
+    rootpath = './/monster/bemonsterdObject'
     intended_for = ['Monster']
 
     fields = [

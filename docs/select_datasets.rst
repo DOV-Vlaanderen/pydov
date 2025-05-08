@@ -813,9 +813,22 @@ Default dataframe output
         bemonsteringsinstrument,Monster,1,string,avegaarbooras
         bemonstering_door,Monster,1,string,BVMO
         tijdstip_monstername ,MonsterDetails,10,
-        bemonsterd_object_type,BemonsterdObject,10,
-        bemonsterd_object_naam,BemonsterdObject,10,
-        bemonsterd_object_permkey,BemonsterdObject,10,
+
+
+Extra subtypes
+    :class:`pydov.types.monster.BemonsterdObject`
+
+    Extra subtype which add more information about the sampled object of a sample.
+
+    .. csv-table:: BemonsterdObject
+      :header-rows: 1
+
+      Field,Source,Cost,Datatype,Example
+      bemonsterd_object_type,BemonsterdObject,10,
+      bemonsterd_object_naam,BemonsterdObject,10,
+      bemonsterd_object_permkey,BemonsterdObject,10,
+
+        Field,Source,Cost,Datatype,Example
         opslaglocatie_naam,Opslaglocatie,10,
         opslaglocatie_van,Opslaglocatie,10,
         opslaglocatie_tot,Opslaglocatie,10,

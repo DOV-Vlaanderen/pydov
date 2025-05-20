@@ -92,6 +92,7 @@ Monster
 .. automodule:: pydov.search.monster
     :members:
 
+
 Observatie
 **********
 

@@ -1011,9 +1011,10 @@ class AbstractTestTypes(object):
 
             for value, field in zip(record, fields):
                 if field['split_fn'] is not None:
-                    assert isinstance(value, list)
-                    for v in value:
-                        _test_data_type(field, v)
+                    assert isinstance(value, list) or np.isnan(value)
+                    if not pd.isnull(value):
+                        for v in value:
+                            _test_data_type(field, v)
                 else:
                     _test_data_type(field, value)
 

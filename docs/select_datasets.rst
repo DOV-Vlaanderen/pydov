@@ -824,19 +824,9 @@ Extra subtypes
       :header-rows: 1
 
       Field,Source,Cost,Datatype,Example
-      bemonsterd_object_type,BemonsterdObject,10,
-      bemonsterd_object_naam,BemonsterdObject,10,
-      bemonsterd_object_permkey,BemonsterdObject,10,
-
-        Field,Source,Cost,Datatype,Example
-        opslaglocatie_naam,Opslaglocatie,10,
-        opslaglocatie_van,Opslaglocatie,10,
-        opslaglocatie_tot,Opslaglocatie,10,
-        monsterbehandeling_door,Monsterbehandeling,10,
-        monsterbehandeling_datum,Monsterbehandeling,10,
-        monsterbehandeling_tijdstip,Monsterbehandeling,10,
-        monsterbehandeling_behandeling,Monsterbehandeling,10,
-        monsterbehandeling_behandeling_waarde,Monsterbehandeling,10,
+      bemonsterd_object_type,BemonsterdObject,10,BORING
+      bemonsterd_object_naam,BemonsterdObject,10,GEO-02/028-B5
+      bemonsterd_object_permkey,BemonsterdObject,10,2002-003282
 
 
 Observations (Observaties)

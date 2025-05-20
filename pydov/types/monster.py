@@ -1,11 +1,34 @@
 # -*- coding: utf-8 -*-
 """Module containing the DOV data type for monster, including
 subtypes."""
+from pydov.types.fields import WfsField, XmlField, _CustomXmlField
+from .abstract import AbstractDovSubType, AbstractDovType, AbstractDovFieldSet
+
 import datetime
 import numpy as np
-from pydov.types.fields import _CustomXmlField, WfsField
 
-from .abstract import AbstractDovFieldSet, AbstractDovType
+
+class BemonsterdObject(AbstractDovSubType):
+    """Subtype listing the method used to make the borehole."""
+
+    rootpath = './/monster/bemonsterdObject'
+    intended_for = ['Monster']
+
+    fields = [
+        XmlField(name='bemonsterd_object_type',
+                 source_xpath='/objecttype',
+                 definition='Objecttype',
+                 datatype='string'),
+        XmlField(name='bemonsterd_object_naam',
+                 source_xpath='/naam',
+                 definition='DOV naam',
+                 datatype='string'),
+        XmlField(name='bemonsterd_object_permkey',
+                 source_xpath='/permkey',
+                 definition='Een unieke DOV identifier '
+                            'in de vorm van een permkey.',
+                 datatype='string')
+    ]
 
 
 class Monster(AbstractDovType):

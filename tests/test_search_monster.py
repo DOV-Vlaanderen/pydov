@@ -2,8 +2,6 @@
 
 import datetime
 from owslib.fes2 import PropertyIsEqualTo
-import pandas as pd
-
 from pydov.search.monster import MonsterSearch
 from pydov.types.fields import ReturnFieldList
 from pydov.types.monster import Monster, MonsterDetails
@@ -31,12 +29,12 @@ class TestMonsterSearch(AbstractTestSearch):
 
     inexistent_field = 'onbestaand'
     wfs_field = 'bemonsteringsprocedure'
-    xml_field = None
+    xml_field = 'bemonsterd_object_type'
     valid_returnfields = ReturnFieldList.from_field_names(
         'pkey_monster', 'diepte_van_m')
     valid_returnfields_subtype = None
-    valid_returnfields_extra = ReturnFieldList.from_field_names('observaties', 'opmerkingen')
-
+    valid_returnfields_extra = ReturnFieldList.from_field_names(
+        'observaties', 'opmerkingen')
 
     df_default_columns = [
         'pkey_monster', 'naam', 'pkey_parents', 'materiaalklasse',

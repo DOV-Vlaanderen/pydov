@@ -18,7 +18,7 @@ class TestMonster(AbstractTestTypes):
     namespace = 'http://dov.vlaanderen.be/ocdov/monster'
     pkey_base = build_dov_url('data/monster/')
 
-    sorted_subtypes = []
+    sorted_subtypes = ['BemonsterdObject']
     sorted_fieldsets = ['MonsterDetails']
 
     field_names = [
@@ -26,16 +26,14 @@ class TestMonster(AbstractTestTypes):
         'datum_monstername', 'diepte_van_m', 'diepte_tot_m',
         'monstertype', 'monstersamenstelling', 'bemonsteringsprocedure', 'bemonsteringsinstrument',
         'bemonstering_door']
+    field_names_subtypes = []
     field_names_nosubtypes = [
         'pkey_monster', 'naam', 'pkey_parents', 'materiaalklasse',
         'datum_monstername', 'diepte_van_m', 'diepte_tot_m',
         'monstertype', 'monstersamenstelling', 'bemonsteringsprocedure', 'bemonsteringsinstrument',
         'bemonstering_door']
-    valid_returnfields_subtype = None
-    field_names_subtypes = None
-
 
     valid_returnfields = ReturnFieldList.from_field_names(
         'pkey_monster', 'diepte_tot_m')
-
+    valid_returnfields_subtype = None
     inexistent_field = 'onbestaand'

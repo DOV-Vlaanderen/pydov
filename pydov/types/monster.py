@@ -9,7 +9,7 @@ import numpy as np
 
 
 class BemonsterdObject(AbstractDovSubType):
-    """Subtype listing the method used to make the borehole."""
+    """Subtype listing the sampled object(s) of the sample."""
 
     rootpath = './/monster/bemonsterdObject'
     intended_for = ['Monster']

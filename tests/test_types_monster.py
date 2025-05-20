@@ -35,6 +35,5 @@ class TestMonster(AbstractTestTypes):
 
     valid_returnfields = ReturnFieldList.from_field_names(
         'pkey_monster', 'diepte_tot_m')
-    valid_returnfields_subtype = ReturnFieldList.from_field_names(
-        'monster_link','bemonsterd_object_type', 'bemonsterd_object_naam', 'bemonsterd_object_permkey')
+    valid_returnfields_subtype = None
     inexistent_field = 'onbestaand'

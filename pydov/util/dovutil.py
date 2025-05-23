@@ -56,35 +56,6 @@ def get_remote_url(url, session=None):
     return request.text.encode('utf8')
 
 
-def get_xsd_schema(url):
-    """Request the XSD schema from DOV webservices and return it.
-
-    Parameters
-    ----------
-    url : str
-        URL of the XSD schema to download.
-
-    Returns
-    -------
-    xml : bytes
-        The raw XML data of this XSD schema as bytes.
-
-    """
-    response = HookRunner.execute_inject_meta_response(url)
-
-    if response is None:
-        try:
-            response = get_remote_url(url)
-        except RemoteFetchError:
-            warnings.warn("Failed to fetch remote XSD schema, metadata will "
-                          "be incomplete.", XsdFetchWarning)
-            response = None
-
-    HookRunner.execute_meta_received(url, response)
-
-    return response
-
-
 def get_dov_xml(url, session=None):
     """Request the XML from the remote DOV webservices and return it.
 

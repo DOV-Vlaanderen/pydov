@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 """Module containing the DOV data type for boreholes (Boring), including
 subtypes."""
-from pydov.types.fields import WfsField, XmlField, XsdType
+from pydov.types.fields import WfsField, XmlField
 from pydov.util.dovutil import build_dov_url
+from pydov.util.codelists import XsdType
 from pydov.types.ligging import MvMtawField
 
 from .abstract import AbstractDovFieldSet, AbstractDovSubType, AbstractDovType
@@ -122,34 +123,38 @@ class MethodeXyz(AbstractDovFieldSet):
                  definition='Methode waarop de x en y-coordinaat opgemeten '
                  'werden.',
                  datatype='string',
-                 xsd_type=XsdType(
+                 codelist=XsdType(
                      xsd_schema=__generiekeDataCodes,
-                     typename='MethodeOpmetenXyEnumType')),
+                     typename='MethodeOpmetenXyEnumType',
+                     datatype='string')),
         XmlField(name='betrouwbaarheid_xy',
                  source_xpath='/boring/ligging/metadata_locatiebepaling'
                  '/betrouwbaarheid',
                  definition='Betrouwbaarheid van het opmeten van de x en '
                  'y-coordinaat.',
                  datatype='string',
-                 xsd_type=XsdType(
+                 codelist=XsdType(
                      xsd_schema=__generiekeDataCodes,
-                     typename='BetrouwbaarheidXyzEnumType')),
+                     typename='BetrouwbaarheidXyzEnumType',
+                     datatype='string')),
         XmlField(name='methode_z',
                  source_xpath='/boring/ligging/metadata_hoogtebepaling'
                  '/methode',
                  definition='Methode waarop de z-coordinaat '
                  'opgemeten werd.',
                  datatype='string',
-                 xsd_type=XsdType(
+                 codelist=XsdType(
                      xsd_schema=__generiekeDataCodes,
-                     typename='MethodeOpmetenZEnumType')),
+                     typename='MethodeOpmetenZEnumType',
+                     datatype='string')),
         XmlField(name='betrouwbaarheid_z',
                  source_xpath='/boring/ligging/metadata_hoogtebepaling'
                  '/betrouwbaarheid',
                  definition='Betrouwbaarheid van het opmeten van de '
                  'z-coordinaat.',
                  datatype='string',
-                 xsd_type=XsdType(
+                 codelist=XsdType(
                      xsd_schema=__generiekeDataCodes,
-                     typename='BetrouwbaarheidXyzEnumType'))
+                     typename='BetrouwbaarheidXyzEnumType',
+                     datatype='string'))
     ]

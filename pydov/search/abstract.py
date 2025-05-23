@@ -20,7 +20,7 @@ import pydov
 from pydov.types.fields import (_WfsInjectedField, GeometryReturnField,
                                 ReturnFieldList)
 from pydov.util import owsutil
-from pydov.util.dovutil import build_dov_url, get_xsd_schema
+from pydov.util.dovutil import build_dov_url
 from pydov.util.errors import (InvalidFieldError, InvalidSearchParameterError,
                                LayerNotFoundError, WfsGetFeatureError,
                                DataParseWarning)
@@ -189,7 +189,6 @@ class AbstractSearch(AbstractCommon):
         self._wfs_max_features = None
         self._md_metadata = None
         self._fc_featurecatalogue = None
-        self._xsd_schemas = None
 
     def _get_wfs_endpoint(self):
         """Get the WFS endpoint URL to use for accessing the feature type.
@@ -258,13 +257,9 @@ class AbstractSearch(AbstractCommon):
                     self._fc_featurecatalogue = \
                         owsutil.get_remote_featurecatalogue(csw_url, fc_uuid)
 
-            if self._xsd_schemas is None:
-                self._xsd_schemas = self._get_remote_xsd_schemas()
-
             fields = self._build_fields(
                 self._wfs_schema,
-                self._fc_featurecatalogue,
-                self._xsd_schemas)
+                self._fc_featurecatalogue)
 
             for field in fields.values():
                 if field['name'] not in self._type.get_field_names(
@@ -275,8 +270,7 @@ class AbstractSearch(AbstractCommon):
 
             self._fields = self._build_fields(
                 self._wfs_schema,
-                self._fc_featurecatalogue,
-                self._xsd_schemas)
+                self._fc_featurecatalogue)
 
     def _get_layer(self):
         """Get the WFS metadata for the layer.
@@ -345,18 +339,6 @@ class AbstractSearch(AbstractCommon):
         wfs_layer = self._get_layer()
         return owsutil.get_remote_metadata(wfs_layer)
 
-    def _get_remote_xsd_schemas(self):
-        """Request and parse the remote XSD schemas associated with this type.
-
-        Returns
-        -------
-        list of etree.ElementTree
-            List of parsed XSD schemas associated with this type.
-
-        """
-        xsd_schemas = [get_xsd_schema(i) for i in self._type.get_xsd_schemas()]
-        return [etree.fromstring(i) for i in xsd_schemas if i is not None]
-
     def _get_csw_base_url(self):
         """Get the CSW base url for the remote metadata associated with the
         layer.
@@ -371,49 +353,7 @@ class AbstractSearch(AbstractCommon):
         wfs_layer = self._get_layer()
         return owsutil.get_csw_base_url(wfs_layer)
 
-    @classmethod
-    def _get_xsd_enum_values(cls, xsd_schemas, xml_field):
-        """Get the distinct enum values from XSD schemas for a given XML field.
-
-        Depending of the 'xsd_type' of the XML field, retrieve the distinct
-        enum values and definitions from the XSD schemas.
-
-        Parameters
-        ----------
-        xsd_schemas : list of etree.ElementTree
-            List of parsed XSD schemas.
-        xml_field : dict
-            Dictionary describing the XML field, including a 'xsd_type' key
-            linking the type to the enum type in (one of) the XSD schemas.
-
-        Returns
-        -------
-        values : dict
-            Dictionary containing the enum values as keys (in the datatype
-            of the XML field) and the definitions as values.
-
-        """
-        values = None
-        if xml_field.get('xsd_type', None):
-            values = {}
-            for schema in xsd_schemas:
-                tree_values = schema.findall(
-                    './/{{http://www.w3.org/2001/XMLSchema}}simpleType['
-                    '@name="{}"]/'
-                    '{{http://www.w3.org/2001/XMLSchema}}restriction/'
-                    '{{http://www.w3.org/2001/XMLSchema}}enumeration'.format(
-                        xml_field.get('xsd_type')))
-                for e in tree_values:
-                    value = cls._typeconvert(
-                        e.get('value'), xml_field.get('type'))
-                    values[value] = e.findtext(
-                        './{http://www.w3.org/2001/XMLSchema}annotation/{'
-                        'http://www.w3.org/2001/XMLSchema}documentation')
-            if len(values) == 0:
-                values = None
-        return values
-
-    def _build_fields(self, wfs_schema, feature_catalogue, xsd_schemas):
+    def _build_fields(self, wfs_schema, feature_catalogue):
         """Build the dictionary containing the metadata about the available
         fields.
 
@@ -549,9 +489,10 @@ class AbstractSearch(AbstractCommon):
                 'cost': 10
             }
 
-            values = self._get_xsd_enum_values(xsd_schemas, xml_field)
-            if values is not None:
-                field['values'] = values
+            if xml_field['codelist'] is not None:
+                values = xml_field['codelist'].get_values()
+                if values is not None:
+                    field['values'] = values
 
             fields[field['name']] = field
 

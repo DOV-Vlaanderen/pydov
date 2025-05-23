@@ -19,6 +19,7 @@ class TestGrondwaterFilter(AbstractTestTypes):
     pkey_base = build_dov_url('data/filter/')
 
     sorted_subtypes = ['Gxg', 'Peilmeting']
+    sorted_fieldsets = []
 
     field_names = [
         'pkey_filter', 'pkey_grondwaterlocatie', 'gw_id',

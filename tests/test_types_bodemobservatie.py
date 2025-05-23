@@ -20,6 +20,7 @@ class TestBodemobservatie(AbstractTestTypes):
     pkey_base = build_dov_url('data/bodemobservatie/')
 
     sorted_subtypes = ['Fractiemeting']
+    sorted_fieldsets = []
 
     field_names = ['pkey_bodemobservatie', 'pkey_bodemlocatie',
                    'pkey_parent', 'x', 'y', 'mv_mtaw', 'diepte_van_cm',

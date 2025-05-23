@@ -12,7 +12,7 @@ from owslib.fes2 import PropertyIsEqualTo, SortBy, SortProperty
 from pandas import DataFrame
 
 import pydov
-from pydov.types.abstract import AbstractField
+from pydov.types.abstract import AbstractDovType, AbstractField
 from pydov.types.fields import ReturnField, ReturnFieldList
 from pydov.util.dovutil import build_dov_url
 from pydov.util.errors import InvalidFieldError
@@ -765,6 +765,8 @@ class AbstractTestTypes(object):
         The name of an inexistent field.
     sorted_subtypes : list of str
         Sorted list of all available subtypes (names) for this type.
+    sorted_fieldsets : list of str
+        Sorted list of all available fieldsets (names) for this type.
 
     """
 
@@ -1009,9 +1011,10 @@ class AbstractTestTypes(object):
 
             for value, field in zip(record, fields):
                 if field['split_fn'] is not None:
-                    assert isinstance(value, list)
-                    for v in value:
-                        _test_data_type(field, v)
+                    assert isinstance(value, list) or np.isnan(value)
+                    if not pd.isnull(value):
+                        for v in value:
+                            _test_data_type(field, v)
                 else:
                     _test_data_type(field, value)
 
@@ -1143,5 +1146,37 @@ class AbstractTestTypes(object):
 
         """
 
-        fieldsets = sorted(self.datatype_class.get_subtypes().keys())
-        assert fieldsets == self.sorted_subtypes
+        subtypes = sorted(self.datatype_class.get_subtypes().keys())
+        assert subtypes == self.sorted_subtypes
+
+    def test_get_available_fieldsets(self):
+        """Test the get_fieldsets method.
+
+        Test whether the correct fieldsets are returned.
+
+        """
+
+        fieldsets = sorted(self.datatype_class.get_fieldsets().keys())
+        assert fieldsets == self.sorted_fieldsets
+
+    def test_with_extra_fields_fieldset(self):
+        """Test the with_extra_fields method using a predefined fieldset.
+
+        Test whether the fields are correctly added to the type.
+
+        """
+        for fieldset in self.datatype_class.get_fieldsets().values():
+            new_type = self.datatype_class.with_extra_fields(
+                fieldset['class']
+            )
+            assert issubclass(new_type, AbstractDovType)
+
+            own_field_names = self.datatype_class.get_field_names()
+            extra_field_names = fieldset['class'].get_field_names()
+            all_field_names = new_type.get_field_names()
+
+            for field in extra_field_names:
+                assert field in all_field_names
+                all_field_names.remove(field)
+
+            assert all_field_names == own_field_names

@@ -1,9 +1,10 @@
 """Module grouping tests for the search monster module."""
 
+import datetime
 from owslib.fes2 import PropertyIsEqualTo
 from pydov.search.monster import MonsterSearch
 from pydov.types.fields import ReturnFieldList
-from pydov.types.monster import Monster
+from pydov.types.monster import Monster, MonsterDetails
 from tests.abstract import AbstractTestSearch
 
 location_md_metadata = 'tests/data/types/monster/md_metadata.xml'
@@ -32,8 +33,8 @@ class TestMonsterSearch(AbstractTestSearch):
     valid_returnfields = ReturnFieldList.from_field_names(
         'pkey_monster', 'diepte_van_m')
     valid_returnfields_subtype = None
-    valid_returnfields_extra = ReturnFieldList.from_field_names('observaties', 'opmerkingen')
-
+    valid_returnfields_extra = ReturnFieldList.from_field_names(
+        'observaties', 'opmerkingen')
 
     df_default_columns = [
         'pkey_monster', 'naam', 'pkey_parents', 'materiaalklasse',
@@ -41,4 +42,63 @@ class TestMonsterSearch(AbstractTestSearch):
         'monstertype', 'monstersamenstelling', 'bemonsteringsprocedure', 'bemonsteringsinstrument',
         'bemonstering_door']
 
+    def test_search_with_extra_fields(self, mp_get_schema,
+                                      mp_remote_describefeaturetype,
+                                      mp_remote_wfs_feature, mp_dov_xml):
+        """Test the search method with an objecttype with extra fields.
 
+        Test whether the output dataframe contains the extra fields.
+
+        Parameters
+        ----------
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType.
+        mp_remote_wfs_feature : pytest.fixture
+            Monkeypatch the call to get WFS features.
+        mp_dov_xml : pytest.fixture
+            Monkeypatch the call to get the remote XML data.
+
+        """
+        search_type = Monster.with_extra_fields(MonsterDetails)
+
+        search_instance = self.search_class(
+            objecttype=search_type)
+
+        df = search_instance.search(
+            query=self.valid_query_single)
+
+        assert sorted(list(df)) == sorted(search_type.get_field_names())
+
+    def test_search_with_monster_details(self, mp_get_schema,
+                                         mp_remote_describefeaturetype,
+                                         mp_remote_wfs_feature, mp_dov_xml):
+        """Test the search method with an objecttype with the MonsterDetails
+        fields.
+
+        Test whether the output dataframe contains the extra fields and the
+        values are correct.
+
+        Parameters
+        ----------
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType.
+        mp_remote_wfs_feature : pytest.fixture
+            Monkeypatch the call to get WFS features.
+        mp_dov_xml : pytest.fixture
+            Monkeypatch the call to get the remote XML data.
+
+        """
+        search_type = Monster.with_extra_fields(MonsterDetails)
+
+        search_instance = self.search_class(
+            objecttype=search_type)
+
+        df = search_instance.search(
+            query=self.valid_query_single)
+
+        assert df.iloc[0].datum_monstername == datetime.date(2022, 1, 19)
+        assert df.iloc[0].tijdstip_monstername == '10:00:00'

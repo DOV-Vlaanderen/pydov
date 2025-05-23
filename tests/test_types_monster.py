@@ -19,6 +19,7 @@ class TestMonster(AbstractTestTypes):
     pkey_base = build_dov_url('data/monster/')
 
     sorted_subtypes = ['BemonsterdObject']
+    sorted_fieldsets = ['MonsterDetails']
 
     field_names = [
         'pkey_monster', 'naam', 'pkey_parents', 'materiaalklasse',
@@ -31,7 +32,6 @@ class TestMonster(AbstractTestTypes):
         'datum_monstername', 'diepte_van_m', 'diepte_tot_m',
         'monstertype', 'monstersamenstelling', 'bemonsteringsprocedure', 'bemonsteringsinstrument',
         'bemonstering_door']
-
 
     valid_returnfields = ReturnFieldList.from_field_names(
         'pkey_monster', 'diepte_tot_m')

@@ -19,6 +19,7 @@ class TestBodemdiepteinterval(AbstractTestTypes):
     pkey_base = build_dov_url('data/bodemdiepteinterval/')
 
     sorted_subtypes = []
+    sorted_fieldsets = []
 
     field_names = [
         'pkey_diepteinterval', 'pkey_bodemopbouw', 'pkey_bodemlocatie',

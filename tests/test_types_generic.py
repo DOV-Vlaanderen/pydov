@@ -31,6 +31,7 @@ class TestWfsTypeFactoryOpdracht(AbstractTestTypes):
     pkey_base = None
 
     sorted_subtypes = []
+    sorted_fieldsets = []
 
     field_names = []
     field_names_subtypes = None

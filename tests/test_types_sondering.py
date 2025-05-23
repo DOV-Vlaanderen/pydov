@@ -18,6 +18,7 @@ class TestSondering(AbstractTestTypes):
     pkey_base = build_dov_url('data/sondering/')
 
     sorted_subtypes = ['Meetdata', 'Techniek']
+    sorted_fieldsets = []
 
     field_names = [
         'pkey_sondering', 'sondeernummer', 'x', 'y', 'mv_mtaw',

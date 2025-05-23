@@ -19,6 +19,7 @@ class TestGrondmonster(AbstractTestTypes):
     pkey_base = build_dov_url('data/monster/')
 
     sorted_subtypes = ['Korrelverdeling']
+    sorted_fieldsets = []
 
     field_names = [
         'pkey_grondmonster', 'naam', 'pkey_parents', 'datum', 'diepte_van_m',

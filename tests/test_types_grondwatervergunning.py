@@ -19,6 +19,7 @@ class TestGrondwaterVergunning(AbstractTestTypes):
     pkey_base = None
 
     sorted_subtypes = []
+    sorted_fieldsets = []
 
     field_names = [
         'id_vergunning', 'pkey_installatie', 'x', 'y',

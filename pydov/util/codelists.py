@@ -1,8 +1,10 @@
 import warnings
+
 from pydov.search.abstract import AbstractCommon
 from pydov.util.dovutil import (
     build_dov_sparql_request, get_remote_url, get_sparql_xml)
-from pydov.util.errors import RemoteFetchError, XsdFetchWarning
+from pydov.util.errors import (
+    CodelistFetchWarning, RemoteFetchError, CodelistFetchWarning)
 from pydov.util.hooks import HookRunner
 
 from owslib.etree import etree
@@ -48,6 +50,11 @@ class AbstractResolvableCodeList(AbstractCommon, AbstractCodeList):
     def resolve(self):
         raise NotImplementedError
 
+    def get_values(self):
+        self.resolve()
+        return super().get_values()
+
+
 
 class OsloCodeList(AbstractResolvableCodeList):
     def __init__(self, conceptscheme, datatype):
@@ -85,7 +92,7 @@ class OsloCodeList(AbstractResolvableCodeList):
             except RemoteFetchError:
                 warnings.warn(
                     "Failed to fetch remote sparql data, metadata will "
-                    "be incomplete.", XsdFetchWarning)
+                    "be incomplete.", CodelistFetchWarning)
                 response = None
 
         HookRunner.execute_meta_received(request.url, response)
@@ -114,10 +121,6 @@ class OsloCodeList(AbstractResolvableCodeList):
     def resolve(self):
         self._codelist = self.get_remote_codelist()
         self.items = list(self._get_rdf_codelist_items())
-
-    def get_values(self):
-        self.resolve()
-        return super().get_values()
 
 
 class XsdType(AbstractResolvableCodeList):
@@ -166,8 +169,8 @@ class XsdType(AbstractResolvableCodeList):
                     self.get_id(), get_remote_url, self.source_url)
             except RemoteFetchError:
                 warnings.warn(
-                    "Failed to fetch remote XSD schema, metadata will "
-                    "be incomplete.", XsdFetchWarning)
+                    "Failed to fetch remote codelist, metadata will "
+                    "be incomplete.", CodelistFetchWarning)
                 response = None
 
         HookRunner.execute_meta_received(self.source_url, response)
@@ -196,7 +199,3 @@ class XsdType(AbstractResolvableCodeList):
     def resolve(self):
         self._schema = self.get_remote_codelist()
         self.items = list(self._get_xsd_enum_values())
-
-    def get_values(self):
-        self.resolve()
-        return super().get_values()

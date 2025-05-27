@@ -434,9 +434,11 @@ class AbstractSearch(AbstractCommon):
             name = self._map_wfs_source_df.get(wfs_field, wfs_field)
 
             is_list = False
+            codelist = None
             for f in df_wfs_fields:
                 if f['name'] == name:
                     is_list = f['split_fn'] is not None
+                    codelist = f['codelist']
 
             field = {
                 'name': name,
@@ -458,6 +460,11 @@ class AbstractSearch(AbstractCommon):
 
                 if fc_field['values'] is not None:
                     field['values'] = fc_field['values']
+
+            if codelist is not None:
+                values = codelist.get_values()
+                if values is not None:
+                    field['values'] = values
 
             fields[name] = field
 

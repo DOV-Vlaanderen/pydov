@@ -1,6 +1,7 @@
 import warnings
 from pydov.search.abstract import AbstractCommon
-from pydov.util.dovutil import get_remote_url
+from pydov.util.dovutil import (
+    build_dov_sparql_request, get_remote_url, get_sparql_xml)
 from pydov.util.errors import RemoteFetchError, XsdFetchWarning
 from pydov.util.hooks import HookRunner
 
@@ -34,17 +35,89 @@ class AbstractCodeList(object):
 
 
 class AbstractResolvableCodeList(AbstractCommon, AbstractCodeList):
-    def __init__(self, source_url, datatype):
+    def __init__(self, datatype):
         super().__init__()
-
-        self.source_url = source_url
         self.datatype = datatype
 
-    def get_source_url(self):
-        return self.source_url
+    def get_id(self):
+        raise NotImplementedError
+
+    def get_remote_codelist(self):
+        raise NotImplementedError
 
     def resolve(self):
         raise NotImplementedError
+
+
+class OsloCodeList(AbstractResolvableCodeList):
+    def __init__(self, conceptscheme, datatype):
+        super().__init__(datatype)
+        self.conceptscheme = conceptscheme
+        self._codelist = None
+
+    def get_id(self):
+        return f'{self.conceptscheme}.xml'
+
+    def build_sparql_query(self):
+        return """
+            PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+            PREFIX conceptscheme:
+            <https://data.bodemenondergrond.vlaanderen.be/id/conceptscheme/>
+
+            SELECT ?code ?label ?definition
+            WHERE {{
+            ?s skos:inScheme conceptscheme:{} .
+            ?s skos:notation ?code .
+            ?s skos:prefLabel ?label .
+            ?s skos:note ?definition .
+            }}
+        """.format(self.conceptscheme)
+
+    def get_remote_codelist(self):
+        request = build_dov_sparql_request(self.build_sparql_query())
+
+        response = HookRunner.execute_inject_meta_response(request.url)
+
+        if response is None:
+            try:
+                response = MemoryCache.get(
+                    self.get_id(), get_sparql_xml, request)
+            except RemoteFetchError:
+                warnings.warn(
+                    "Failed to fetch remote sparql data, metadata will "
+                    "be incomplete.", XsdFetchWarning)
+                response = None
+
+        HookRunner.execute_meta_received(request.url, response)
+
+        return response
+
+    def _get_rdf_codelist_items(self):
+        if self._codelist is not None:
+            tree = etree.fromstring(self._codelist)
+
+            tree_solutions = tree.findall(
+                './/{http://www.w3.org/2005/sparql-results#}solution'
+            )
+
+            for s in tree_solutions:
+                code = s.find(
+                    './/{http://www.w3.org/2005/sparql-results#}binding['
+                    '{http://www.w3.org/2005/sparql-results#}variable="code"]'
+                    '/{http://www.w3.org/2005/sparql-results#}value').text
+                label = s.find(
+                    './/{http://www.w3.org/2005/sparql-results#}binding['
+                    '{http://www.w3.org/2005/sparql-results#}variable="label"]'
+                    '/{http://www.w3.org/2005/sparql-results#}value').text
+                yield CodeListItem(code, label)
+
+    def resolve(self):
+        self._codelist = self.get_remote_codelist()
+        self.items = list(self._get_rdf_codelist_items())
+
+    def get_values(self):
+        self.resolve()
+        return super().get_values()
 
 
 class XsdType(AbstractResolvableCodeList):
@@ -62,12 +135,16 @@ class XsdType(AbstractResolvableCodeList):
             Name of the type.
 
         """
-        super().__init__(xsd_schema, datatype)
+        super().__init__(datatype)
 
+        self.source_url = xsd_schema
         self.typename = typename
         self._schema = None
 
-    def _get_xsd_schema(self):
+    def get_id(self):
+        return self.source_url.split('/')[-1]
+
+    def get_remote_codelist(self):
         """Request the XSD schema from DOV webservices and return it.
 
         Parameters
@@ -86,7 +163,7 @@ class XsdType(AbstractResolvableCodeList):
         if response is None:
             try:
                 response = MemoryCache.get(
-                    self.source_url, get_remote_url, self.source_url)
+                    self.get_id(), get_remote_url, self.source_url)
             except RemoteFetchError:
                 warnings.warn(
                     "Failed to fetch remote XSD schema, metadata will "
@@ -117,7 +194,7 @@ class XsdType(AbstractResolvableCodeList):
                 yield CodeListItem(code, label)
 
     def resolve(self):
-        self._schema = self._get_xsd_schema()
+        self._schema = self.get_remote_codelist()
         self.items = list(self._get_xsd_enum_values())
 
     def get_values(self):

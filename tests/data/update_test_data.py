@@ -41,11 +41,22 @@ def get_first_featuremember(wfs_response):
         return etree.tostring(first_feature_member[0]).decode('utf-8')
 
 
-def get_codelists(cls, path):
-    for codelist in cls.get_codelists():
-        url = codelist.get_source_url()
-        update_file(
-            '{}/codelist_{}'.format(path, url.split('/')[-1]), url)
+def update_file_raw(filepath, data, session=None):
+    output = 'Updating {} ... '.format(filepath)
+    failed = False
+    filepath = os.path.join(os.path.dirname(__file__), filepath)
+
+    if isinstance(data, bytes):
+        data = data.decode('utf-8')
+
+    if not os.path.isdir(os.path.dirname(filepath)):
+        os.makedirs(os.path.dirname(filepath))
+
+    with open(filepath, 'wb') as f:
+        f.write(data.encode('utf-8'))
+        output += ' OK.\n'
+
+    return output, failed
 
 
 def update_file_real(filepath, url, process_fn=None, session=None):
@@ -93,6 +104,16 @@ if __name__ == '__main__':
 
     def update_file(filepath, url, process_fn=None):
         pool.execute(update_file_real, (filepath, url, process_fn))
+
+    def update_file_fn(filepath, fn):
+        pool.execute(update_file_raw, (filepath, fn()))
+
+    def get_codelists(cls, path):
+        for codelist in cls.get_codelists():
+            id = codelist.get_id()
+            update_file_fn(
+                '{}/codelist_{}'.format(path, id),
+                codelist.get_remote_codelist)
 
     # types/boring
     update_file('types/boring/boring.xml',

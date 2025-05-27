@@ -426,14 +426,12 @@ def mp_remote_codelist(monkeypatch, request):
                 data = f.read()
                 if not isinstance(data, bytes):
                     data = data.encode('utf-8')
-                codelists[codelist_file.stem] = data
+                codelists[codelist_file.name] = data
 
-        if len(args) > 0 and '/' in args[0]:
-            key = args[0][args[0].rfind('/')+1:args[0].rfind('.')]
-            return codelists.get(f'codelist_{key}', None)
+        if len(args) > 0:
+            return codelists.get(f'codelist_{args[0]}', None)
 
-    monkeypatch.setattr(pydov.util.codelists.MemoryCache,
-                        'get', _get)
+    monkeypatch.setattr(pydov.util.codelists.MemoryCache, 'get', _get)
 
 
 @pytest.fixture

@@ -12,7 +12,7 @@ location_wfs_describefeaturetype = \
 location_wfs_getfeature = 'tests/data/types/bodemclassificatie/wfsgetfeature.xml'
 location_wfs_feature = 'tests/data/types/bodemclassificatie/feature.xml'
 location_dov_xml = 'tests/data/types/bodemclassificatie/bodemclassificatie.xml'
-location_xsd_base = 'tests/data/types/bodemclassificatie/xsd_*.xml'
+location_codelists = 'tests/data/types/bodemclassificatie'
 
 
 class TestGeometryReturn(object):

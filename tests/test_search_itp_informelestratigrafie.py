@@ -24,8 +24,8 @@ location_wfs_feature = \
 location_dov_xml = \
     'tests/data/types/interpretaties/informele_stratigrafie' \
     '/informele_stratigrafie.xml'
-location_xsd_base = \
-    'tests/data/types/interpretaties/informele_stratigrafie/xsd_*.xml'
+location_codelists = \
+    'tests/data/types/interpretaties/informele_stratigrafie'
 
 
 class TestInformeleStratigrafieSearch(AbstractTestSearch):

@@ -881,6 +881,18 @@ class AbstractDovType(AbstractTypeCommon):
         return fields
 
     @classmethod
+    def get_codelists(cls):
+        fields = cls.get_fields()
+
+        codelists = set()
+
+        for f in fields.values():
+            if 'codelist' in f and f['codelist'] is not None:
+                codelists.add(f['codelist'])
+
+        return codelists
+
+    @classmethod
     def to_df_array(cls, iterable, return_fields=None):
         """Returns a dataframe array with one or more arrays (rows) for each
         instance in the given iterable.

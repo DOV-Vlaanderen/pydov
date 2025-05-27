@@ -25,8 +25,8 @@ location_wfs_feature = \
 location_dov_xml = \
     'tests/data/types/interpretaties/lithologische_beschrijvingen' \
     '/lithologische_beschrijvingen.xml'
-location_xsd_base = \
-    'tests/data/types/interpretaties/lithologische_beschrijvingen/xsd_*.xml'
+location_codelists = \
+    'tests/data/types/interpretaties/lithologische_beschrijvingen'
 
 
 class TestLithologischeBeschrijvingenSearch(AbstractTestSearch):

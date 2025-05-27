@@ -213,7 +213,7 @@ class AbstractTestSearch(object):
 
     def test_get_fields(self, mp_wfs, mp_get_schema,
                         mp_remote_describefeaturetype, mp_remote_md,
-                        mp_remote_fc, mp_remote_xsd):
+                        mp_remote_fc, mp_remote_codelist):
         """Test the get_fields method.
 
         Test whether the returned fields match the format specified
@@ -239,7 +239,7 @@ class AbstractTestSearch(object):
     def test_get_fields_with_extra_fields(
             self, mp_wfs, mp_get_schema,
             mp_remote_describefeaturetype, mp_remote_md,
-            mp_remote_fc, mp_remote_xsd):
+            mp_remote_fc, mp_remote_codelist):
         """Test the get_fields method with extra fieldsets.
 
         Test whether the returned fields match the format specified
@@ -276,7 +276,7 @@ class AbstractTestSearch(object):
     def test_get_fields_with_subtype(
         self, mp_wfs, mp_get_schema,
             mp_remote_describefeaturetype, mp_remote_md,
-            mp_remote_fc, mp_remote_xsd):
+            mp_remote_fc, mp_remote_codelist):
         """Test the get_fields method with other subtypes.
 
         Test whether the returned fields match the format specified
@@ -682,56 +682,57 @@ class AbstractTestSearch(object):
         self.search_instance.search(
             query=Join(df1, self.df_default_columns[0]))
 
-    def test_get_fields_xsd_values(self, mp_remote_xsd):
-        """Test the result of get_fields when the XML field has an XSD type.
+    def test_get_fields_codelist(self, mp_remote_codelist):
+        """Test the result of get_fields when the XML field has an
+        associated codelist.
 
         Test whether the output from get_fields() returns the values from
-        the XSD.
+        the codelist.
 
         Parameters
         ----------
-        mp_remote_xsd : pytest.fixture
-            Monkeypatch the call to get XSD schemas.
+        mp_remote_codelist : pytest.fixture
+            Monkeypatch the call to get the codelists.
 
         """
-        xsd_schemas = self.datatype_class.get_xsd_schemas()
+        codelists = self.datatype_class.get_codelists()
 
-        if len(xsd_schemas) > 0:
-            xml_fields = self.datatype_class.get_fields(source='xml')
+        if len(codelists) > 0:
+            datatype_fields = self.datatype_class.get_fields()
             fields = self.search_instance.get_fields()
-            for f in xml_fields.values():
-                if 'xsd_type' in f:
+            for f in datatype_fields.values():
+                if 'codelist' in f and f['codelist'] is not None:
                     assert 'values' in fields[f['name']]
                     assert isinstance(fields[f['name']]['values'], dict)
 
-    def test_get_fields_no_xsd(self):
-        """Test whether no XML fields have an XSD type when no XSD schemas
+    def test_get_fields_no_codelist(self):
+        """Test whether no XML fields have a codelist when no codelists
         are available."""
-        xsd_schemas = self.datatype_class.get_xsd_schemas()
+        codelists = self.datatype_class.get_codelists()
 
-        if len(xsd_schemas) == 0:
-            xml_fields = self.datatype_class.get_fields(source='xml')
-            for f in xml_fields.values():
-                assert 'xsd_type' not in f
+        if len(codelists) == 0:
+            datatype_fields = self.datatype_class.get_fields()
+            for f in datatype_fields.values():
+                assert 'codelist' not in f or f['codelist'] is None
 
-    def test_get_fields_xsd_enums(self):
-        """Test whether at least one XML field has an XSD type when there
-        are XSD schemas available.
+    def test_get_fields_codelist_values(self):
+        """Test whether at least one field has an associated codelist when there
+        are codelists available.
 
-        Make sure XSD schemas are only listed (and downloaded) when they are
+        Make sure codelists are only listed (and downloaded) when they are
         needed.
 
         """
-        xsd_schemas = self.datatype_class.get_xsd_schemas()
+        codelists = self.datatype_class.get_codelists()
 
-        xsd_type_count = 0
+        codelist_field_count = 0
 
-        if len(xsd_schemas) > 0:
-            xml_fields = self.datatype_class.get_fields(source='xml')
-            for f in xml_fields.values():
-                if 'xsd_type' in f:
-                    xsd_type_count += 1
-            assert xsd_type_count > 0
+        if len(codelists) > 0:
+            datatype_fields = self.datatype_class.get_fields()
+            for f in datatype_fields.values():
+                if 'codelist' in f and f['codelist'] is not None:
+                    codelist_field_count += 1
+            assert codelist_field_count > 0
 
 
 class AbstractTestTypes(object):
@@ -904,11 +905,12 @@ class AbstractTestTypes(object):
             if field['source'] == 'wfs':
                 if 'wfs_injected' in field.keys():
                     assert sorted(field.keys()) == [
-                        'name', 'source', 'sourcefield', 'split_fn', 'type',
-                        'wfs_injected']
+                        'codelist', 'name', 'source', 'sourcefield',
+                        'split_fn', 'type', 'wfs_injected']
                 else:
                     assert sorted(field.keys()) == [
-                        'name', 'source', 'sourcefield', 'split_fn', 'type']
+                        'codelist', 'name', 'source', 'sourcefield',
+                        'split_fn', 'type']
             elif field['source'] == 'xml':
                 assert 'definition' in field
                 assert isinstance(field['definition'], str)
@@ -916,15 +918,9 @@ class AbstractTestTypes(object):
                 assert 'notnull' in field
                 assert isinstance(field['notnull'], bool)
 
-                if 'xsd_type' in field:
-                    assert sorted(field.keys()) == [
-                        'definition', 'name', 'notnull', 'source',
-                        'sourcefield', 'split_fn', 'type', 'xsd_schema',
-                        'xsd_type']
-                else:
-                    assert sorted(field.keys()) == [
-                        'definition', 'name', 'notnull', 'source',
-                        'sourcefield', 'split_fn', 'type']
+                assert sorted(field.keys()) == [
+                    'codelist', 'definition', 'name', 'notnull', 'source',
+                    'sourcefield', 'split_fn', 'type']
 
     def test_get_fields_nosubtypes(self):
         """Test the get_fields method not including subtypes.

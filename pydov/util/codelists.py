@@ -34,10 +34,14 @@ class AbstractCodeList(object):
 
 
 class AbstractResolvableCodeList(AbstractCommon, AbstractCodeList):
-    def __init__(self, datatype):
+    def __init__(self, source_url, datatype):
         super().__init__()
 
+        self.source_url = source_url
         self.datatype = datatype
+
+    def get_source_url(self):
+        return self.source_url
 
     def resolve(self):
         raise NotImplementedError
@@ -58,11 +62,9 @@ class XsdType(AbstractResolvableCodeList):
             Name of the type.
 
         """
-        super().__init__(datatype)
+        super().__init__(xsd_schema, datatype)
 
-        self.xsd_schema = xsd_schema
         self.typename = typename
-
         self._schema = None
 
     def _get_xsd_schema(self):
@@ -79,19 +81,19 @@ class XsdType(AbstractResolvableCodeList):
             The raw XML data of this XSD schema as bytes.
 
         """
-        response = HookRunner.execute_inject_meta_response(self.xsd_schema)
+        response = HookRunner.execute_inject_meta_response(self.source_url)
 
         if response is None:
             try:
                 response = MemoryCache.get(
-                    self.xsd_schema, get_remote_url, self.xsd_schema)
+                    self.source_url, get_remote_url, self.source_url)
             except RemoteFetchError:
                 warnings.warn(
                     "Failed to fetch remote XSD schema, metadata will "
                     "be incomplete.", XsdFetchWarning)
                 response = None
 
-        HookRunner.execute_meta_received(self.xsd_schema, response)
+        HookRunner.execute_meta_received(self.source_url, response)
 
         return response
 

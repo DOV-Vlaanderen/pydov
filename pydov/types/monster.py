@@ -7,6 +7,121 @@ from .abstract import AbstractDovSubType, AbstractDovType, AbstractDovFieldSet
 import datetime
 import numpy as np
 
+class TijdstipField(_CustomXmlField):
+    """Field for retrieving the time from the relevant XML
+    field."""
+
+    def __init__(self, name, definition, source_xpath):
+        super().__init__(
+            name=name,
+            definition=definition,
+            datatype='string',
+            notnull=False
+        )
+        self.source_xpath = source_xpath
+
+    def calculate(self, cls, tree):
+        tijdstip = cls._parse(
+            func=tree.findtext,
+            xpath=self.source_xpath + 'tijdstip',
+            namespace=None,
+            returntype='string'
+        )
+        if tijdstip is not np.nan:
+            return tijdstip
+
+        datumtijd = cls._parse(
+            func=tree.findtext,
+            xpath=self.source_xpath + 'datumtijd',
+            namespace=None,
+            returntype='string'
+        )
+        if datumtijd is not np.nan:
+            timestamp = datetime.datetime.fromisoformat(datumtijd)
+            return timestamp.strftime('%H:%M:%S')
+
+        return np.nan
+
+
+class DatumField(_CustomXmlField):
+    """Field for retrieving the date from the relevant XML
+    field."""
+
+    def __init__(self, name, definition, source_xpath):
+        super().__init__(
+            name=name,
+            definition=definition,
+            datatype='string',
+            notnull=False
+        )
+        self.source_xpath = source_xpath
+
+    def calculate(self, cls, tree):
+        tijdstip = cls._parse(
+            func=tree.findtext,
+            xpath=self.source_xpath + 'tijdstip',
+            namespace=None,
+            returntype='string'
+        )
+        if tijdstip is not np.nan:
+            return tijdstip
+
+        datumtijd = cls._parse(
+            func=tree.findtext,
+            xpath=self.source_xpath + 'datumtijd',
+            namespace=None,
+            returntype='string'
+        )
+        if datumtijd is not np.nan:
+            timestamp = datetime.datetime.fromisoformat(datumtijd)
+            return timestamp.strftime('%H:%M:%S')
+
+        return np.nan
+
+class MonsterBehandelingField(_CustomXmlField):
+    """Field for retrieving the treatment of the sampling from the relevant XML
+    field."""
+
+    def __init__(self, name, definition):
+        super().__init__(
+            name=name,
+            definition=definition,
+            datatype='string',
+            notnull=False
+        )
+
+    def calculate(self, cls, tree):
+        behandeling = cls._parse(
+            func=tree.findtext,
+            xpath='.//verwerkingsdetails/behandeling',
+            namespace=None,
+            returntype='string'
+        )
+        if behandeling is not np.nan:
+            return behandeling
+
+        monstervoorbereiding = cls._parse(
+            func=tree.findtext,
+            xpath='.//verwerkingsdetails/monstervoorbereiding',
+            namespace=None,
+            returntype='string'
+        )
+        if monstervoorbereiding is not np.nan:
+            return monstervoorbereiding
+
+        return np.nan
+
+class MonsterDetails(AbstractDovFieldSet):
+    """Fieldset containing fields with extra details about the sample."""
+
+    intended_for = ['Monster']
+
+    fields = [
+        TijdstipField(name='tijdstip_monstername',
+                      definition="Tijdstip waarop het monster werd verkregen uit het "
+                                 "bemonsterdObject.",
+                      source_xpath='.//bemonsteringstijdstip/')
+    ]
 
 class BemonsterdObject(AbstractDovSubType):
     """Subtype listing the sampled object(s) of the sample."""
@@ -30,6 +145,30 @@ class BemonsterdObject(AbstractDovSubType):
                  datatype='string')
     ]
 
+class Monsterbehandeling(AbstractDovSubType):
+    """Subtype containing fields about the treatment of the sample."""
+
+    intended_for = ['Monster']
+    rootpath = './/monster/verwerkingsdetails'
+
+    fields = [
+        XmlField(name='monsterbehandeling_door',
+                 source_xpath='procesoperator',
+                 definition=("Operator die het monster behandeld heeft"),
+                 datatype='string'),
+        DatumField(name='monsterbehandeling_datum',
+                   source_xpath='.//verwerkingsdetails/tijdstip/',
+                   definition="Datum waarop het monster behandeld werd."),
+        TijdstipField(name='monsterbehandeling_tijdstip',
+                      definition="Tijdstip waarop het monster behandeld werd.",
+                      source_xpath='.//verwerkingsdetails/tijdstip/'),
+        MonsterBehandelingField(name='monsterbehandeling_behandeling',
+                                definition="De behandeling of voorbereiding van het monster"),
+        XmlField(name='monsterbehandeling_behandeling_waarde',
+                 source_xpath='behandeling',
+                 definition=("De behandeling van het monster"),
+                 datatype='string')
+    ]
 
 class Monster(AbstractDovType):
     """Class representing the DOV data type for ground samples."""
@@ -106,47 +245,5 @@ class Monster(AbstractDovType):
         super().__init__('monster', pkey)
 
 
-class TijdstipMonsternameField(_CustomXmlField):
-    """Field for retrieving the time of the sampling from the relevant XML
-    field."""
-
-    def __init__(self):
-        super().__init__(
-            name='tijdstip_monstername',
-            definition=("Tijdstip waarop het monster werd verkregen uit het "
-                        "bemonsterdObject."),
-            datatype='string',
-            notnull=False
-        )
-
-    def calculate(self, cls, tree):
-        tijdstip = cls._parse(
-            func=tree.findtext,
-            xpath='.//bemonsteringstijdstip/tijdstip',
-            namespace=None,
-            returntype='string'
-        )
-        if tijdstip is not np.nan:
-            return tijdstip
-
-        datumtijd = cls._parse(
-            func=tree.findtext,
-            xpath='.//bemonsteringstijdstip/datumtijd',
-            namespace=None,
-            returntype='string'
-        )
-        if datumtijd is not np.nan:
-            timestamp = datetime.datetime.fromisoformat(datumtijd)
-            return timestamp.strftime('%H:%M:%S')
-
-        return np.nan
 
 
-class MonsterDetails(AbstractDovFieldSet):
-    """Fieldset containing fields with extra details about the sample."""
-
-    intended_for = ['Monster']
-
-    fields = [
-        TijdstipMonsternameField()
-    ]

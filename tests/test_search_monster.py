@@ -29,7 +29,7 @@ class TestMonsterSearch(AbstractTestSearch):
 
     inexistent_field = 'onbestaand'
     wfs_field = 'bemonsteringsprocedure'
-    xml_field = 'bemonsterd_object_type'
+    xml_field = ['bemonsterd_object_type', 'monsterbehandeling_datum']
     valid_returnfields = ReturnFieldList.from_field_names(
         'pkey_monster', 'diepte_van_m')
     valid_returnfields_subtype = None

@@ -828,6 +828,20 @@ Extra subtypes
       bemonsterd_object_naam,BemonsterdObject,10,GEO-02/028-B5
       bemonsterd_object_permkey,BemonsterdObject,10,2002-003282
 
+    :class:`pydov.types.monster.Monsterbehandeling`
+
+    Extra subtype which add more information about the sampled object of a sample.
+
+    .. csv-table:: Monsterbehandeling
+      :header-rows: 1
+
+      Field,Source,Cost,Datatype,Example
+      monsterbehandeling_door,Monsterbehandeling,10,BORING
+      monsterbehandeling_datum,Monsterbehandeling,10,2024-05-07
+      monsterbehandeling_tijdstip,Monsterbehandeling,10,14:20
+      monsterbehandeling_behandeling,Monsterbehandeling,10,Type malen vooraf opslag
+      monsterbehandeling_behandeling_waarde,Monsterbehandeling,10,Niet gemalen
+
 
 Observations (Observaties)
 --------------------------

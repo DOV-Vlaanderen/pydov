@@ -828,6 +828,18 @@ Extra subtypes
       bemonsterd_object_naam,BemonsterdObject,10,GEO-02/028-B5
       bemonsterd_object_permkey,BemonsterdObject,10,2002-003282
 
+    :class:`pydov.types.monster.BemonsterdOpslagloactie`
+
+    Extra subtype which add more information about the sampled object of a sample.
+
+    .. csv-table:: Opslagloactie
+      :header-rows: 1
+
+      Field,Source,Cost,Datatype,Example
+      opslaglocatie_naam,Opslagloactie,10,Afdeling Geotechniek (Zwijnaarde)
+      opslaglocatie_van,Opslagloactie,10,2022-10-12
+      opslaglocatie_tot,Opslagloactie,10,2024-03-12
+
 
 Observations (Observaties)
 --------------------------

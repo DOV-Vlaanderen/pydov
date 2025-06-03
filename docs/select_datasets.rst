@@ -274,17 +274,12 @@ Default dataframe output
         Field,Source,Cost,Datatype,Example
         pkey_grondmonster,Grondmonster,1,string,https://www.dov.vlaanderen.be/data/grondmonster/2017-168758
         naam,Grondmonster,1,string,N3A
-        pkey_boring,Grondmonster,1,string,https://www.dov.vlaanderen.be/data/boring/2005-003015
-        boornummer,Grondmonster,1,string,GEO-04/024-B6
-        datum,Grondmonster,1,date,nan
-        x,Grondmonster,1,float,123280
-        y,Grondmonster,1,float,188129
-        gemeente,Grondmonster,1,string,Wichelen
+        pkey_parents,Grondmonster,1,list of string,[https://www.dov.vlaanderen.be/data/boring/2005-003015]
+        datum,Grondmonster,1,date,2005-02-02
         diepte_van_m,Grondmonster,1,float,5.9
         diepte_tot_m,Grondmonster,1,float,6.05
-        peil_van_mtaw,Grondmonster,1,float,0.26
-        peil_tot_mtaw,Grondmonster,1,float,0.11
-        monstertype,Grondmonster,10,string,ongeroerd
+        monstertype,Grondmonster,1,string,ongeroerd
+        monstersamenstelling,Grondmonster,1,string,ENKELVOUDIG
         astm_naam,Grondmonster,10,string,Organic silt
         grondsoort_bggg,Grondmonster,10,string,humush. klei
         humusgehalte,Grondmonster,10,float,15.6
@@ -296,8 +291,8 @@ Default dataframe output
         volumemassa,Grondmonster,10,float,NaN
         watergehalte,Grondmonster,10,float,NaN
         methode,Korrelverdeling,10,string,Korrelverdeling d.m.v. hydrometer/areometer
-        diameter,Korrelverdeling,10,float,0.001575
-        fractie,Korrelverdeling,10,float,68.4
+        diameter,Korrelverdeling,10,float,0.001
+        fractie,Korrelverdeling,10,float,45.8
 
 CPT measurements (Sonderingen)
 ------------------------------

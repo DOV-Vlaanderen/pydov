@@ -96,7 +96,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName=dov-pub:Boringen'
-            '&maxFeatures=1&CQL_Filter=fiche=%27' +
+            '&count=1&CQL_Filter=fiche=%27' +
             build_dov_url('data/boring/2004-103984%27')))
 
     update_file(
@@ -104,7 +104,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName=dov-pub:Boringen'
-            '&maxFeatures=1&CQL_Filter=fiche=%27' +
+            '&count=1&CQL_Filter=fiche=%27' +
             build_dov_url('data/boring/2004-103984%27')),
         get_first_featuremember)
 
@@ -147,7 +147,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName=dov-pub'
-            ':Sonderingen&maxFeatures=1&CQL_Filter=fiche=%27' +
+            ':Sonderingen&count=1&CQL_Filter=fiche=%27' +
             build_dov_url('data/sondering/2002-018435%27')))
 
     update_file(
@@ -155,7 +155,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName=dov-pub'
-            ':Sonderingen&maxFeatures=1&CQL_Filter=fiche=%27' +
+            ':Sonderingen&count=1&CQL_Filter=fiche=%27' +
             build_dov_url('data/sondering/2002-018435%27')),
         get_first_featuremember)
 
@@ -200,7 +200,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName=interpretaties'
-            ':informele_stratigrafie&maxFeatures=1&CQL_Filter'
+            ':informele_stratigrafie&count=1&CQL_Filter'
             '=Interpretatiefiche=%27') +
         build_dov_url(
             'data'
@@ -211,7 +211,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName=interpretaties'
-            ':informele_stratigrafie&maxFeatures=1&CQL_Filter'
+            ':informele_stratigrafie&count=1&CQL_Filter'
             '=Interpretatiefiche=%27') +
         build_dov_url(
             'data'
@@ -259,7 +259,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName=interpretaties'
-            ':formele_stratigrafie&maxFeatures=1&CQL_Filter'
+            ':formele_stratigrafie&count=1&CQL_Filter'
             '=Interpretatiefiche=%27') +
         build_dov_url(
             'data'
@@ -270,7 +270,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName=interpretaties'
-            ':formele_stratigrafie&maxFeatures=1&CQL_Filter'
+            ':formele_stratigrafie&count=1&CQL_Filter'
             '=Interpretatiefiche=%27') +
         build_dov_url(
             'data'
@@ -318,7 +318,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName=interpretaties'
-            ':hydrogeologische_stratigrafie&maxFeatures=1&CQL_Filter'
+            ':hydrogeologische_stratigrafie&count=1&CQL_Filter'
             '=Interpretatiefiche=%27') +
         build_dov_url(
             'data'
@@ -330,7 +330,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName=interpretaties'
-            ':hydrogeologische_stratigrafie&maxFeatures=1&CQL_Filter'
+            ':hydrogeologische_stratigrafie&count=1&CQL_Filter'
             '=Interpretatiefiche=%27') +
         build_dov_url(
             'data/'
@@ -378,7 +378,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName=interpretaties'
-            ':lithologische_beschrijvingen&maxFeatures=1&CQL_Filter'
+            ':lithologische_beschrijvingen&count=1&CQL_Filter'
             '=Interpretatiefiche=%27') +
         build_dov_url(
             'data'
@@ -389,7 +389,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName=interpretaties'
-            ':lithologische_beschrijvingen&maxFeatures=1&CQL_Filter'
+            ':lithologische_beschrijvingen&count=1&CQL_Filter'
             '=Interpretatiefiche=%27') +
         build_dov_url(
             'data'
@@ -438,7 +438,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName=interpretaties'
-            ':gecodeerde_lithologie&maxFeatures=1&CQL_Filter'
+            ':gecodeerde_lithologie&count=1&CQL_Filter'
             '=Interpretatiefiche=%27') +
         build_dov_url(
             'data'
@@ -449,7 +449,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName=interpretaties'
-            ':gecodeerde_lithologie&maxFeatures=1&CQL_Filter'
+            ':gecodeerde_lithologie&count=1&CQL_Filter'
             '=Interpretatiefiche=%27') +
         build_dov_url(
             'data'
@@ -497,7 +497,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName=interpretaties'
-            ':geotechnische_coderingen&maxFeatures=1&CQL_Filter'
+            ':geotechnische_coderingen&count=1&CQL_Filter'
             '=Interpretatiefiche=%27') +
         build_dov_url(
             'data'
@@ -508,7 +508,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName=interpretaties'
-            ':geotechnische_coderingen&maxFeatures=1&CQL_Filter'
+            ':geotechnische_coderingen&count=1&CQL_Filter'
             '=Interpretatiefiche=%27') +
         build_dov_url(
             'data'
@@ -556,7 +556,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName=interpretaties'
-            ':informele_hydrogeologische_stratigrafie&maxFeatures=1'
+            ':informele_hydrogeologische_stratigrafie&count=1'
             '&CQL_Filter=Interpretatiefiche=%27') +
         build_dov_url(
             'data'
@@ -568,7 +568,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName=interpretaties'
-            ':informele_hydrogeologische_stratigrafie&maxFeatures=1'
+            ':informele_hydrogeologische_stratigrafie&count=1'
             '&CQL_Filter=Interpretatiefiche=%27') +
         build_dov_url(
             'data'
@@ -614,14 +614,14 @@ if __name__ == '__main__':
     update_file('types/grondwaterfilter/wfsgetfeature.xml',
                 build_dov_url('geoserver/ows?service=WFS'
                               '&version=2.0.0&request=GetFeature&typeName='
-                              'gw_meetnetten:meetnetten&maxFeatures=1&'
+                              'gw_meetnetten:meetnetten&count=1&'
                               'CQL_Filter=filterfiche=%27' + build_dov_url(
                                   'data/filter/2003-004471%27')))
 
     update_file('types/grondwaterfilter/feature.xml',
                 build_dov_url('geoserver/ows?service=WFS'
                               '&version=2.0.0&request=GetFeature&typeName='
-                              'gw_meetnetten:meetnetten&maxFeatures=1&'
+                              'gw_meetnetten:meetnetten&count=1&'
                               'CQL_Filter=filterfiche=%27' + build_dov_url(
                                   'data/filter/2003-004471%27')),
                 get_first_featuremember)
@@ -660,14 +660,14 @@ if __name__ == '__main__':
     update_file('types/grondwaterfilter/wfsgetfeature_geenpeilmeting.xml',
                 build_dov_url('geoserver/ows?service=WFS'
                               '&version=2.0.0&request=GetFeature&typeName='
-                              'gw_meetnetten:meetnetten&maxFeatures=1&'
+                              'gw_meetnetten:meetnetten&count=1&'
                               'CQL_Filter=filterfiche=%27' + build_dov_url(
                                   'data/filter/1976-101132%27')))
 
     update_file('types/grondwaterfilter/feature_geenpeilmeting.xml',
                 build_dov_url('geoserver/ows?service=WFS'
                               '&version=2.0.0&request=GetFeature&typeName='
-                              'gw_meetnetten:meetnetten&maxFeatures=1&'
+                              'gw_meetnetten:meetnetten&count=1&'
                               'CQL_Filter=filterfiche=%27' + build_dov_url(
                                   'data/filter/1976-101132%27')),
                 get_first_featuremember)
@@ -682,7 +682,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName='
-            'gw_meetnetten:grondwatermonsters&maxFeatures=1&'
+            'gw_meetnetten:grondwatermonsters&count=1&'
             'CQL_Filter=grondwatermonsterfiche=%27' +
             build_dov_url('data/watermonster/2006-115684') +
             '%27'))
@@ -692,7 +692,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName='
-            'gw_meetnetten:grondwatermonsters&maxFeatures=1&'
+            'gw_meetnetten:grondwatermonsters&count=1&'
             'CQL_Filter=grondwatermonsterfiche=%27' +
             build_dov_url('data/watermonster/2006-115684') +
             '%27'),
@@ -755,7 +755,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName=interpretaties'
-            ':quartaire_stratigrafie&maxFeatures=1&CQL_Filter'
+            ':quartaire_stratigrafie&count=1&CQL_Filter'
             '=Interpretatiefiche=%27') +
         build_dov_url(
             'data'
@@ -766,7 +766,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName=interpretaties'
-            ':quartaire_stratigrafie&maxFeatures=1&CQL_Filter'
+            ':quartaire_stratigrafie&count=1&CQL_Filter'
             '=Interpretatiefiche=%27') +
         build_dov_url(
             'data'
@@ -812,11 +812,11 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName='
-            'boringen:grondmonsters&maxFeatures=1&CQL_Filter'
-            '=grondmonsterfiche=%27' +
+            'boringen:grondmonsters&count=1&CQL_Filter'
+            '=monster_link=%27' +
             build_dov_url(
                 'data'
-                '/grondmonster/2018-211728') +
+                '/monster/2018-211728') +
             '%27'))
 
     update_file(
@@ -824,11 +824,11 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName='
-            'boringen:grondmonsters&maxFeatures=1&CQL_Filter'
-            '=grondmonsterfiche=%27' +
+            'boringen:grondmonsters&count=1&CQL_Filter'
+            '=monster_link=%27' +
             build_dov_url(
                 'data'
-                '/grondmonster/2018-211728') +
+                '/monster/2018-211728') +
             '%27'),
         get_first_featuremember)
 
@@ -870,7 +870,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName=bodem:bodemlocaties'
-            '&maxFeatures=1&CQL_Filter=Bodemlocatiefiche=%27' +
+            '&count=1&CQL_Filter=Bodemlocatiefiche=%27' +
             build_dov_url('data/bodemlocatie/2011-000002%27')))
 
     update_file(
@@ -878,7 +878,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName=bodem:bodemlocaties'
-            '&maxFeatures=1&CQL_Filter=Bodemlocatiefiche=%27' +
+            '&count=1&CQL_Filter=Bodemlocatiefiche=%27' +
             build_dov_url('data/bodemlocatie/2011-000002%27')),
         get_first_featuremember)
 
@@ -915,7 +915,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName='
-            'bodem:bodemdiepteintervallen&maxFeatures=1&'
+            'bodem:bodemdiepteintervallen&count=1&'
             'CQL_Filter=Diepteintervalfiche=%27' +
             build_dov_url('data/bodemdiepteinterval/2018-000004%27')))
 
@@ -924,7 +924,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName='
-            'bodem:bodemdiepteintervallen&maxFeatures=1&'
+            'bodem:bodemdiepteintervallen&count=1&'
             'CQL_Filter=Diepteintervalfiche=%27' +
             build_dov_url('data/bodemdiepteinterval/2018-000004%27')),
         get_first_featuremember)
@@ -966,7 +966,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName=bodem:bodemobservaties'
-            '&maxFeatures=1&CQL_Filter=Bodemobservatiefiche=%27' +
+            '&count=1&CQL_Filter=Bodemobservatiefiche=%27' +
             build_dov_url('data/bodemobservatie/2019-001221%27')))
 
     update_file(
@@ -974,7 +974,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName=bodem:bodemobservaties'
-            '&maxFeatures=1&CQL_Filter=Bodemobservatiefiche=%27' +
+            '&count=1&CQL_Filter=Bodemobservatiefiche=%27' +
             build_dov_url('data/bodemobservatie/2019-001221%27')),
         get_first_featuremember)
 
@@ -1015,7 +1015,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName=bodem:bodemmonsters'
-            '&maxFeatures=1&CQL_Filter=Bodemmonsterfiche=%27' +
+            '&count=1&CQL_Filter=Bodemmonsterfiche=%27' +
             build_dov_url('data/bodemmonster/2015-211807%27')))
 
     update_file(
@@ -1023,7 +1023,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName=bodem:bodemmonsters'
-            '&maxFeatures=1&CQL_Filter=Bodemmonsterfiche=%27' +
+            '&count=1&CQL_Filter=Bodemmonsterfiche=%27' +
             build_dov_url('data/bodemmonster/2015-211807%27')),
         get_first_featuremember)
 
@@ -1063,7 +1063,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName=bodem:bodemsites'
-            '&maxFeatures=1&CQL_Filter=Bodemsitefiche=%27' +
+            '&count=1&CQL_Filter=Bodemsitefiche=%27' +
             build_dov_url('data/bodemsite/2013-000180%27')))
 
     update_file(
@@ -1071,7 +1071,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName=bodem:bodemsites'
-            '&maxFeatures=1&CQL_Filter=Bodemsitefiche=%27' +
+            '&count=1&CQL_Filter=Bodemsitefiche=%27' +
             build_dov_url('data/bodemsite/2013-000180%27')),
         get_first_featuremember)
 
@@ -1108,7 +1108,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName='
-            'bodem:bodemclassificaties&maxFeatures=1&'
+            'bodem:bodemclassificaties&count=1&'
             'CQL_Filter=Bodemclassificatiefiche=%27' +
             build_dov_url('data/belgischebodemclassificatie/2018-000146%27')))
 
@@ -1117,7 +1117,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName='
-            'bodem:bodemclassificaties&maxFeatures=1&'
+            'bodem:bodemclassificaties&count=1&'
             'CQL_Filter=Bodemclassificatiefiche=%27' +
             build_dov_url('data/belgischebodemclassificatie/2018-000146%27')),
         get_first_featuremember)
@@ -1155,7 +1155,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName='
-            'gw_vergunningen:alle_verg&maxFeatures=1&CQL_Filter'
+            'gw_vergunningen:alle_verg&count=1&CQL_Filter'
             '=id=38598'))
 
     update_file(
@@ -1163,7 +1163,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName='
-            'gw_vergunningen:alle_verg&maxFeatures=1&CQL_Filter'
+            'gw_vergunningen:alle_verg&count=1&CQL_Filter'
             '=id=38598'), get_first_featuremember)
 
     update_file(
@@ -1200,7 +1200,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName='
-            'dov-pub:Opdrachten&maxFeatures=1&CQL_Filter'
+            'dov-pub:Opdrachten&count=1&CQL_Filter'
             '=fiche=%27' +
             build_dov_url('data/opdracht/2021-026141%27')))
 
@@ -1209,7 +1209,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName='
-            'dov-pub:Opdrachten&maxFeatures=1&CQL_Filter'
+            'dov-pub:Opdrachten&count=1&CQL_Filter'
             '=fiche=%27' +
             build_dov_url('data/opdracht/2021-026141%27')),
         get_first_featuremember)

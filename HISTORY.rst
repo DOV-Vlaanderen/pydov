@@ -4,6 +4,22 @@
 History
 =======
 
+v3.3.0
+------
+
+- New features
+
+  - Introduce PropertyLikeList and FuzzyJoin query utilities to search for, and join on, fuzzy (non-exact) matches. (#406)
+
+  - Add support for splitting field values into a list of values. (#407)
+
+- Fixes and improvements
+
+  - Update grondmonster type based on WFS/XSD schema updates. (#408)
+
+  - Always request geometry using urn:ogc: srsName to fix coordinate ordering. (#413, #418)
+
+
 v3.2.0
 ------
 

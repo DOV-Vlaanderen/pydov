@@ -2,7 +2,7 @@ import warnings
 
 from pydov.search.abstract import AbstractCommon
 from pydov.util.dovutil import (
-    build_dov_sparql_request, get_remote_url, get_sparql_xml)
+    build_dov_sparql_request, get_remote_url, get_remote_request)
 from pydov.util.errors import (
     CodelistFetchWarning, RemoteFetchError, CodelistFetchWarning)
 from pydov.util.hooks import HookRunner
@@ -88,7 +88,7 @@ class OsloCodeList(AbstractResolvableCodeList):
         if response is None:
             try:
                 response = MemoryCache.get(
-                    self.get_id(), get_sparql_xml, request)
+                    self.get_id(), get_remote_request, request)
             except RemoteFetchError:
                 warnings.warn(
                     "Failed to fetch remote sparql data, metadata will "

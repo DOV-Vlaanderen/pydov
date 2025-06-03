@@ -33,6 +33,20 @@ def build_dov_url(path):
 
 
 def build_dov_sparql_request(query):
+    """Build a request with the given SPARQL query for execution on the DOV
+    SPARQL endpoint.
+
+    Parameters
+    ----------
+    query : str
+        SPARQL query to execute.
+
+    Returns
+    -------
+    requests.Request
+        Request prepared with the correct endpoint, parameters and headers
+        to execute the SPARQL query.
+    """
     base_url = build_dov_url('')
     env = ('-' + re_environment.search(base_url).group(1)).replace(
         '-www', '')
@@ -74,13 +88,29 @@ def get_remote_url(url, session=None):
     return request.text.encode('utf8')
 
 
-def get_sparql_xml(request, session=None):
+def get_remote_request(request, session=None):
+    """Prepare the request, execute it and return its contents.
+
+    Parameters
+    ----------
+    request : requests.Request
+        Request to execute.
+    session : requests.Session
+        Session to use to perform HTTP requests for data. Defaults to None,
+        which means a new session will be created for each request.
+
+    Returns
+    -------
+    xml : bytes
+        The raw XML data as bytes.
+
+    """
     if session is None:
         session = SessionFactory.get_session()
 
     req = session.send(session.prepare_request(request))
     if req.status_code != 200:
-        raise RemoteFetchError("Failed to fetch sparql data at {}".format(
+        raise RemoteFetchError("Failed to fetch data at {}".format(
             req.url))
 
     req.encoding = 'utf-8'

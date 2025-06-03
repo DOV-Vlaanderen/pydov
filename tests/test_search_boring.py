@@ -1,12 +1,14 @@
 """Module grouping tests for the boring search module."""
 import datetime
 
+import pytest
+
 from owslib.fes2 import PropertyIsEqualTo
 
 from pydov.search.boring import BoringSearch
 from pydov.types.boring import Boring
-from pydov.types.fields import ReturnFieldList
-from tests.abstract import AbstractTestSearch
+from pydov.types.fields import GeometryReturnField, ReturnFieldList
+from tests.abstract import AbstractTestSearch, ServiceCheck
 
 location_md_metadata = 'tests/data/types/boring/md_metadata.xml'
 location_fc_featurecatalogue = \
@@ -35,7 +37,8 @@ class TestBoringSearch(AbstractTestSearch):
                                                           'datum_aanvang')
     valid_returnfields_subtype = ReturnFieldList.from_field_names('pkey_boring', 'boornummer',
                                                                   'diepte_methode_van', 'diepte_methode_tot')
-    valid_returnfields_extra = ReturnFieldList.from_field_names('pkey_boring', 'doel')
+    valid_returnfields_extra = ReturnFieldList.from_field_names(
+        'pkey_boring', 'doel')
 
     df_default_columns = ['pkey_boring', 'boornummer', 'x', 'y', 'mv_mtaw',
                           'start_boring_mtaw', 'gemeente',
@@ -130,3 +133,37 @@ class TestBoringSearch(AbstractTestSearch):
             return_fields=('pkey_boring', 'boornummer', 'boorgatmeting'))
 
         assert not df.boorgatmeting[0]
+
+    @pytest.mark.online
+    @pytest.mark.skipif(not ServiceCheck.service_ok(),
+                        reason="DOV service is unreachable")
+    def test_geometry_coordinate_order_4326(self):
+        """Test whether the order of the returned coordinates is correct for
+        the EPSG:4326 coordinate system.
+
+        """
+        df = self.search_instance.search(
+            query=self.valid_query_single,
+            return_fields=[
+                'pkey_boring', GeometryReturnField('geom', 4326)]
+        )
+
+        assert round(df.geom.iloc[0].x, 2) == 4.39
+        assert round(df.geom.iloc[0].y, 2) == 51.24
+
+    @pytest.mark.online
+    @pytest.mark.skipif(not ServiceCheck.service_ok(),
+                        reason="DOV service is unreachable")
+    def test_geometry_coordinate_order_31370(self):
+        """Test whether the order of the returned coordinates is correct for
+        the EPSG:31370 coordinate system.
+
+        """
+        df = self.search_instance.search(
+            query=self.valid_query_single,
+            return_fields=[
+                'pkey_boring', GeometryReturnField('geom', 31370)]
+        )
+
+        assert round(df.geom.iloc[0].x, 2) == 151680.75
+        assert round(df.geom.iloc[0].y, 2) == 214678.06

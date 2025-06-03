@@ -17,6 +17,8 @@ v3.3.0
 
   - Update grondmonster type based on WFS/XSD schema updates. (#408)
 
+  - Always request geometry using urn:ogc: srsName to fix coordinate ordering. (#413, #418)
+
 
 v3.2.0
 ------

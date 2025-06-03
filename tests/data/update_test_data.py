@@ -28,6 +28,7 @@ from pydov.types.interpretaties import (FormeleStratigrafie,
 from pydov.types.sondering import Sondering
 from pydov.util.dovutil import build_dov_url, get_remote_url
 from pydov.util.net import LocalSessionThreadPool
+from pydov.util.codelists import AbstractResolvableCodeList
 from tests.abstract import ServiceCheck
 
 
@@ -109,7 +110,7 @@ if __name__ == '__main__':
         pool.execute(update_file_raw, (filepath, fn()))
 
     def get_codelists(cls, path):
-        for codelist in cls.get_codelists():
+        for codelist in cls.get_codelists(AbstractResolvableCodeList):
             id = codelist.get_id()
             update_file_fn(
                 '{}/codelist_{}'.format(path, id),
@@ -902,10 +903,7 @@ if __name__ == '__main__':
             'geoserver/bodem/bodemlocaties'
             '/ows?service=wfs&version=2.0.0&request=DescribeFeatureType'))
 
-    for codelist in Bodemlocatie.get_codelists():
-        update_file(
-            'types/bodemlocatie/codelist_{}'.format(codelist.split('/')[-1]),
-            codelist)
+    get_codelists(Bodemlocatie, 'types/bodemlocatie')
 
     # types/bodemdiepteinterval
     update_file(

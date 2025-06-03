@@ -881,14 +881,28 @@ class AbstractDovType(AbstractTypeCommon):
         return fields
 
     @classmethod
-    def get_codelists(cls):
+    def get_codelists(cls, superclass=None):
+        """Get a set of codelists defined in the class fields.
+
+        Parameters
+        ----------
+        superclass : type, optional
+            The superclass to check against. If provided, only codelists from
+            subclasses of the given superclass will be returned.
+
+        Returns
+        -------
+        set
+            A set of codelists defined in the class fields.
+        """
         fields = cls.get_fields()
 
         codelists = set()
 
         for f in fields.values():
             if 'codelist' in f and f['codelist'] is not None:
-                codelists.add(f['codelist'])
+                if superclass is None or issubclass(cls, superclass):
+                    codelists.add(f['codelist'])
 
         return codelists
 

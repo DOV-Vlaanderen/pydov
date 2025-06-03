@@ -828,7 +828,7 @@ Extra subtypes
       bemonsterd_object_naam,BemonsterdObject,10,GEO-02/028-B5
       bemonsterd_object_permkey,BemonsterdObject,10,2002-003282
 
-    :class:`pydov.types.monster.BemonsterdOpslaglocatie`
+    :class:`pydov.types.monster.Opslaglocatie`
 
     Extra subtype which add more information about the storage location of a sample.
 

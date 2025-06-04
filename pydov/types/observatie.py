@@ -1,9 +1,34 @@
 # -*- coding: utf-8 -*-
 """Module containing the DOV data type for observations (Observatie), including
 subtypes."""
-from pydov.types.fields import WfsField
-from .abstract import AbstractDovType
+from pydov.types.fields import WfsField, XmlField
+from .abstract import AbstractDovType, AbstractDovFieldSet
 
+class ObservationDetails(AbstractDovFieldSet):
+    """Fieldset containing fields with extra details about the observation."""
+
+    rootpath = './/observatie'
+    intended_for = ['Observatie']
+
+    fields = [
+        XmlField(name='betrouwbaarheid',
+                 source_xpath='/betrouwbaarheid',
+                 definition='Betrouwbaarheid van de observatie',
+                 datatype='string'),
+        XmlField(name='geobserveerd_object_type',
+                 source_xpath='/geobserveerd_object/objecttype',
+                 definition='Objecttype',
+                 datatype='string'),
+        XmlField(name='geobserveerd_object_naam',
+                 source_xpath='/geobserveerd_object/naam',
+                 definition='DOV naam',
+                 datatype='string'),
+        XmlField(name='geobserveerd_object_permkey',
+                 source_xpath='/geobserveerd_object/permkey',
+                 definition='Een unieke DOV identifier '
+                            'in de vorm van een permkey.',
+                 datatype='string')
+    ]
 
 class Observatie(AbstractDovType):
     """Class representing the DOV data type for observations."""
@@ -48,7 +73,7 @@ class Observatie(AbstractDovType):
         ----------
         pkey : str
             Permanent key of the Observatie (observation),
-            being a URI of the form
+             being a URI of the form
             `https://www.dov.vlaanderen.be/data/observatie/<id>`.
 
         """

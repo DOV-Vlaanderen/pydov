@@ -4,6 +4,7 @@ subtypes."""
 from pydov.types.fields import WfsField, XmlField
 from .abstract import AbstractDovType, AbstractDovFieldSet
 
+
 class ObservationDetails(AbstractDovFieldSet):
     """Fieldset containing fields with extra details about the observation."""
 
@@ -29,6 +30,7 @@ class ObservationDetails(AbstractDovFieldSet):
                             'in de vorm van een permkey.',
                  datatype='string')
     ]
+
 
 class Observatie(AbstractDovType):
     """Class representing the DOV data type for observations."""

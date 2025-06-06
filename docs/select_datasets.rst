@@ -789,8 +789,13 @@ Samples (Monsters)
 Type
     Monster (Sample)
 
-Subtype
-    No subtype
+Extra fieldsets
+    * MonsterDetails (Details of sample) - For instance the time the sample was taken.
+
+Subtypes
+    * BemonsterdObject (Sampled object) - More information about the sampled object(s) of a sample.
+    * Opslaglocatie (Location of sample) - More information about the storage location of a sample.
+    * Monsterbehandeling (Sample treatment) - More information about the treatment of a sample.
 
 Search class
     :class:`pydov.search.monster.MonsterSearch`
@@ -812,13 +817,25 @@ Default dataframe output
         bemonsteringsprocedure,Monster,1,string,nan
         bemonsteringsinstrument,Monster,1,string,avegaarbooras
         bemonstering_door,Monster,1,string,BVMO
-        tijdstip_monstername ,MonsterDetails,10,
+
+
+Extra fieldsets
+    :class:`pydov.types.monster.MonsterDetails`
+
+    Extra fields to be used with the `Monster` type which add details regarding
+    the time the sample was taken.
+
+    .. csv-table:: MonsterDetails
+      :header-rows: 1
+
+      Field,Source,Cost,Datatype,Example
+      tijdstip_monstername,MonsterDetails,10,string,13:37
 
 
 Extra subtypes
     :class:`pydov.types.monster.BemonsterdObject`
 
-    Extra subtype which adds more information about the sampled object of a sample.
+    Extra subtype which adds more information about the sampled object(s) of a sample.
 
     .. csv-table:: BemonsterdObject
       :header-rows: 1
@@ -839,6 +856,36 @@ Extra subtypes
       opslaglocatie_naam,Opslaglocatie,10,string,Afdeling Geotechniek (Zwijnaarde)
       opslaglocatie_van,Opslaglocatie,10,string,2022-10-12
       opslaglocatie_tot,Opslaglocatie,10,string,2024-03-12
+
+    :class:`pydov.types.monster.Monsterbehandeling`
+
+    Extra subtype which add more information about the treatment of a sample.
+
+    .. csv-table:: Monsterbehandeling
+      :header-rows: 1
+      :delim: ;
+
+      Field;Source;Cost;Datatype;Example
+      monsterbehandeling_door;Monsterbehandeling;10;string;VO - Instituut voor Landbouw-, Visserij- en Voedingsonderzoek (ILVO)
+      monsterbehandeling_datum;Monsterbehandeling;10;string;2024-05-07
+      monsterbehandeling_tijdstip;Monsterbehandeling;10;string;14:20
+      monsterbehandeling_behandeling;Monsterbehandeling;10;string;Type droging vooraf opslag
+      monsterbehandeling_behandeling_waarde;Monsterbehandeling;10;string;Ovengedroogd op 40°C
+
+    :class:`pydov.types.monster.Monsterbehandeling`
+
+    Extra subtype which add more information about the treatment of a sample.
+
+    .. csv-table:: Monsterbehandeling
+      :header-rows: 1
+      :delim: ;
+
+      Field;Source;Cost;Datatype;Example
+      monsterbehandeling_door;Monsterbehandeling;10;string;VO - Instituut voor Landbouw-, Visserij- en Voedingsonderzoek (ILVO)
+      monsterbehandeling_datum;Monsterbehandeling;10;string;2024-05-07
+      monsterbehandeling_tijdstip;Monsterbehandeling;10;string;14:20
+      monsterbehandeling_behandeling;Monsterbehandeling;10;string;Type droging vooraf opslag
+      monsterbehandeling_behandeling_waarde;Monsterbehandeling;10;string;Ovengedroogd op 40°C
 
 
 Observations (Observaties)

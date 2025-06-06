@@ -9,29 +9,48 @@ import numpy as np
 
 
 class TijdstipField(_CustomXmlField):
-    """Retrieves the time from the relevant XML field.
-
-    Returns
-    -------
-    str
-        Timestamp in the format '%H:%M:%S'. Returns the value of the 'tijdstip'
-        field from the XML. If 'tijdstip' is null, returns the time part of
-        the 'datumtijd' field.
-    """
+    """Retrieves the time from a TemporeelType XML field."""
 
     def __init__(self, name, definition, base_xpath):
+        """Initialisation.
+
+        Parameters
+        ----------
+        name : str
+            Name of this field in the return dataframe.
+        definition : str
+            Definition of this field.
+        base_xpath : str
+            XPath expression of the TemporeelType XML element.
+        """
         super().__init__(
             name=name,
             definition=definition,
             datatype='string',
             notnull=False
         )
-        self.base_xpath = base_xpath
+        self.base_xpath = base_xpath.rstrip('/')
 
     def calculate(self, cls, tree):
+        """Calculate the value for the custom field.
+
+        Parameters
+        ----------
+        cls : AbstractDovType
+            Class of the type this field belongs to.
+        tree : etree.ElementTree
+            ElementTree of the DOV XML for this instance.
+
+        Returns
+        -------
+        str
+            Timestamp in the format '%H:%M:%S'. Returns the value of the
+            'tijdstip' field from the TemporeelType field. If 'tijdstip' is
+            null, returns the time part of the 'datumtijd' field.
+        """
         tijdstip = cls._parse(
             func=tree.findtext,
-            xpath=self.base_xpath + 'tijdstip',
+            xpath=self.base_xpath + '/tijdstip',
             namespace=None,
             returntype='string'
         )
@@ -40,7 +59,7 @@ class TijdstipField(_CustomXmlField):
 
         datumtijd = cls._parse(
             func=tree.findtext,
-            xpath=self.base_xpath + 'datumtijd',
+            xpath=self.base_xpath + '/datumtijd',
             namespace=None,
             returntype='string'
         )
@@ -52,29 +71,48 @@ class TijdstipField(_CustomXmlField):
 
 
 class DatumField(_CustomXmlField):
-    """Retrieves the date from the relevant XML field.
-
-    Returns
-    -------
-    str
-        Date in the format '%Y-%m-%d'. Returns the value of the 'datum' field
-        from the XML. If 'datum' is null, returns the value of the
-        'datumtijd' field.
-    """
+    """Retrieves the time from a TemporeelType XML field."""
 
     def __init__(self, name, definition, base_xpath):
+        """Initialisation.
+
+        Parameters
+        ----------
+        name : str
+            Name of this field in the return dataframe.
+        definition : str
+            Definition of this field.
+        base_xpath : str
+            XPath expression of the TemporeelType XML element.
+        """
         super().__init__(
             name=name,
             definition=definition,
             datatype='string',
             notnull=False
         )
-        self.base_xpath = base_xpath
+        self.base_xpath = base_xpath.rstrip('/')
 
     def calculate(self, cls, tree):
+        """Calculate the value for the custom field.
+
+        Parameters
+        ----------
+        cls : AbstractDovType
+            Class of the type this field belongs to.
+        tree : etree.ElementTree
+            ElementTree of the DOV XML for this instance.
+
+        Returns
+        -------
+        str
+            Date in the format '%Y-%m-%d'. Returns the value of the 'datum'
+            field from the TemporeelType field. If 'datum' is null, returns the
+            date part of the 'datumtijd' field.
+        """
         date = cls._parse(
             func=tree.findtext,
-            xpath=self.base_xpath + 'datum',
+            xpath=self.base_xpath + '/datum',
             namespace=None,
             returntype='string'
         )
@@ -83,7 +121,7 @@ class DatumField(_CustomXmlField):
 
         date = cls._parse(
             func=tree.findtext,
-            xpath=self.base_xpath + 'datumtijd',
+            xpath=self.base_xpath + '/datumtijd',
             namespace=None,
             returntype='string'
         )
@@ -109,23 +147,14 @@ class MonsterBehandelingField(_CustomXmlField):
     def calculate(self, cls, tree):
         behandeling = cls._parse(
             func=tree.findtext,
-            xpath='.//verwerkingsdetails/behandeling',
+            xpath='/behandeling',
             namespace=None,
             returntype='string'
         )
-        if behandeling is not np.nan:
+        if behandeling is not np.nan and behandeling != '':
             return behandeling
-
-        monstervoorbereiding = cls._parse(
-            func=tree.findtext,
-            xpath='.//verwerkingsdetails/monstervoorbereiding',
-            namespace=None,
-            returntype='string'
-        )
-        if monstervoorbereiding is not np.nan:
-            return monstervoorbereiding
-
-        return np.nan
+        else:
+            return 'monstervoorbereiding'
 
 
 class MonsterDetails(AbstractDovFieldSet):
@@ -139,7 +168,7 @@ class MonsterDetails(AbstractDovFieldSet):
         TijdstipField(name='tijdstip_monstername',
                       definition="Tijdstip waarop het monster werd "
                                  "verkregen uit het bemonsterdObject.",
-                      base_xpath='.//bemonsteringstijdstip/')
+                      base_xpath='.//bemonsteringstijdstip')
     ]
 
 
@@ -175,21 +204,21 @@ class Monsterbehandeling(AbstractDovSubType):
 
     fields = [
         XmlField(name='monsterbehandeling_door',
-                 source_xpath='procesoperator',
-                 definition=("Operator die het monster behandeld heeft"),
+                 source_xpath='.//procesoperator/naam',
+                 definition="Operator die het monster behandeld heeft",
                  datatype='string'),
         DatumField(name='monsterbehandeling_datum',
-                   base_xpath='.//verwerkingsdetails/tijdstip/',
+                   base_xpath='.//verwerkingsdetails/tijdstip',
                    definition="Datum waarop het monster behandeld werd."),
         TijdstipField(name='monsterbehandeling_tijdstip',
                       definition="Tijdstip waarop het monster behandeld werd.",
-                      base_xpath='.//verwerkingsdetails/tijdstip/'),
+                      base_xpath='.//verwerkingsdetails/tijdstip'),
         MonsterBehandelingField(name='monsterbehandeling_behandeling',
                                 definition="De behandeling of voorbereiding "
                                            "van het monster"),
         XmlField(name='monsterbehandeling_behandeling_waarde',
-                 source_xpath='behandeling',
-                 definition=("De behandeling van het monster"),
+                 source_xpath='behandeling_waarde',
+                 definition=("De waarde van de behandeling van het monster"),
                  datatype='string')
     ]
 

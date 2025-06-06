@@ -830,17 +830,18 @@ Extra subtypes
 
     :class:`pydov.types.monster.Monsterbehandeling`
 
-    Extra subtype which add more information about the sampled object of a sample.
+    Extra subtype which add more information about the about the treatment of a sample.
 
     .. csv-table:: Monsterbehandeling
       :header-rows: 1
+      :delim: ;
 
-      Field,Source,Cost,Datatype,Example
-      monsterbehandeling_door,Monsterbehandeling,10,BORING
-      monsterbehandeling_datum,Monsterbehandeling,10,2024-05-07
-      monsterbehandeling_tijdstip,Monsterbehandeling,10,14:20
-      monsterbehandeling_behandeling,Monsterbehandeling,10,Type malen vooraf opslag
-      monsterbehandeling_behandeling_waarde,Monsterbehandeling,10,Niet gemalen
+      Field;Source;Cost;Datatype;Example
+      monsterbehandeling_door;Monsterbehandeling;10;string;VO - Instituut voor Landbouw-, Visserij- en Voedingsonderzoek (ILVO)
+      monsterbehandeling_datum;Monsterbehandeling;10;string;2024-05-07
+      monsterbehandeling_tijdstip;Monsterbehandeling;10;string;14:20
+      monsterbehandeling_behandeling;Monsterbehandeling;10;string;Type droging vooraf opslag
+      monsterbehandeling_behandeling_waarde;Monsterbehandeling;10;string;Ovengedroogd op 40°C
 
 
 Observations (Observaties)

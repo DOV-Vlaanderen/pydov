@@ -4,7 +4,7 @@ import datetime
 from owslib.fes2 import PropertyIsEqualTo
 from pydov.search.monster import MonsterSearch
 from pydov.types.fields import ReturnFieldList
-from pydov.types.monster import Monster, MonsterDetails
+from pydov.types.monster import Monster, MonsterDetails, Monsterbehandeling
 from tests.abstract import AbstractTestSearch
 
 location_md_metadata = 'tests/data/types/monster/md_metadata.xml'
@@ -29,7 +29,7 @@ class TestMonsterSearch(AbstractTestSearch):
 
     inexistent_field = 'onbestaand'
     wfs_field = 'bemonsteringsprocedure'
-    xml_field = ['bemonsterd_object_type', 'monsterbehandeling_datum']
+    xml_field = None
     valid_returnfields = ReturnFieldList.from_field_names(
         'pkey_monster', 'diepte_van_m')
     valid_returnfields_subtype = None

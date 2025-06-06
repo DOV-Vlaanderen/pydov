@@ -31,6 +31,30 @@ class BemonsterdObject(AbstractDovSubType):
     ]
 
 
+class Opslaglocatie(AbstractDovSubType):
+    """Subtype listing the storage location(s) of the sample."""
+
+    rootpath = './/monster/opslaglocatie'
+    intended_for = ['Monster']
+
+    fields = [
+        XmlField(name='opslaglocatie_naam',
+                 source_xpath='/locatie',
+                 definition='Oplaglocatie',
+                 datatype='string'),
+        XmlField(name='opslaglocatie_van',
+                 source_xpath='/beschikbaar_vanaf',
+                 definition='Startdatum van de opslag van '
+                            'het monster op die locatie.',
+                 datatype='string'),
+        XmlField(name='opslaglocatie_tot',
+                 source_xpath='/beschikbaar_tot',
+                 definition='Einddatum van de opslag '
+                            'van het monster op die locatie.',
+                 datatype='string')
+    ]
+
+
 class Monster(AbstractDovType):
     """Class representing the DOV data type for ground samples."""
 

@@ -838,6 +838,9 @@ Type
 Subtype
     No subtype
 
+Extra fieldsets
+    * ObservatieDetails (Details of observation) - Extra details about the observation.
+
 Search class
     :class:`pydov.search.observatie.ObservatieSearch`
 
@@ -860,10 +863,23 @@ Default dataframe output
         methode;Observatie;1;string;Onbekend
         uitvoerder;Observatie;1;string;VO - Afdeling Geotechniek
         herkomst;Observatie;1;string;LABO
-        betrouwbaarheid;ObservatieDetails;10;string;goed
-        geobserveerd_object_type;ObservatieDetails;1;string;Onbekend
-        geobserveerd_object_naam;ObservatieDetails;1;string;VO - Afdeling Geotechniek
-        geobserveerd_object_permkey;ObservatieDetails;1;string;LABO
+
+
+Extra fieldsets
+    :class:`pydov.types.observate.ObservatieDetails`
+
+    Extra fields to be used with the `Observatie` type which add details regarding
+    the reliability and observed object.
+
+    .. csv-table:: ObservatieDetails
+      :header-rows: 1
+      :delim: ;
+
+      Field;Source;Cost;Datatype;Example
+      betrouwbaarheid;ObservatieDetails;10;string;goed
+      geobserveerd_object_type;ObservatieDetails;10;string;Onbekend
+      geobserveerd_object_naam;ObservatieDetails;10;string;VO - Afdeling Geotechniek
+      geobserveerd_object_permkey;ObservatieDetails;10;string;LABO
 
 
 DOV WFS layer

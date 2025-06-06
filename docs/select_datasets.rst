@@ -794,6 +794,7 @@ Extra fieldsets
 
 Subtypes
     * BemonsterdObject (Sampled object) - More information about the sampled object(s) of a sample.
+    * Opslaglocatie (Location of sample) - More information about the storage location of a sample.
     * Monsterbehandeling (Sample treatment) - More information about the treatment of a sample.
 
 Search class

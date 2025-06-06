@@ -789,8 +789,12 @@ Samples (Monsters)
 Type
     Monster (Sample)
 
-Subtype
-    No subtype
+Extra fieldsets
+    * MonsterDetails (Details of sample) - For instance the time the sample was taken.
+
+Subtypes
+    * BemonsterdObject (Sampled object) - More information about the sampled object(s) of a sample.
+    * Monsterbehandeling (Sample treatment) - More information about the treatment of a sample.
 
 Search class
     :class:`pydov.search.monster.MonsterSearch`
@@ -812,13 +816,25 @@ Default dataframe output
         bemonsteringsprocedure,Monster,1,string,nan
         bemonsteringsinstrument,Monster,1,string,avegaarbooras
         bemonstering_door,Monster,1,string,BVMO
-        tijdstip_monstername ,MonsterDetails,10,
+
+
+Extra fieldsets
+    :class:`pydov.types.monster.MonsterDetails`
+
+    Extra fields to be used with the `Monster` type which add details regarding
+    the time the sample was taken.
+
+    .. csv-table:: MonsterDetails
+      :header-rows: 1
+
+      Field,Source,Cost,Datatype,Example
+      tijdstip_monstername,MonsterDetails,10,string,13:37
 
 
 Extra subtypes
     :class:`pydov.types.monster.BemonsterdObject`
 
-    Extra subtype which add more information about the sampled object of a sample.
+    Extra subtype which add more information about the sampled object(s) of a sample.
 
     .. csv-table:: BemonsterdObject
       :header-rows: 1
@@ -830,7 +846,7 @@ Extra subtypes
 
     :class:`pydov.types.monster.Monsterbehandeling`
 
-    Extra subtype which add more information about the about the treatment of a sample.
+    Extra subtype which add more information about the treatment of a sample.
 
     .. csv-table:: Monsterbehandeling
       :header-rows: 1

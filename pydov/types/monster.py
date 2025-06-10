@@ -2,6 +2,7 @@
 """Module containing the DOV data type for monster, including
 subtypes."""
 from pydov.types.fields import WfsField, XmlField, _CustomXmlField
+from pydov.util.codelists import OsloCodeList
 from .abstract import AbstractDovSubType, AbstractDovType, AbstractDovFieldSet
 
 import datetime
@@ -76,7 +77,10 @@ class Monster(AbstractDovType):
                  datatype='float'),
         WfsField(name='monstertype',
                  source_field='monstertype',
-                 datatype='string'),
+                 datatype='string',
+                 codelist=OsloCodeList(
+                     'bemonsteringstype', 'string'
+                 )),
         WfsField(name='monstersamenstelling',
                  source_field='monstersamenstelling',
                  datatype='string'),

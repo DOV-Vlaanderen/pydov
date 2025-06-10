@@ -1,9 +1,9 @@
 """Module grouping session scoped PyTest fixtures."""
 
 import datetime
-import glob
 import os
 import tempfile
+import pathlib
 
 import pytest
 from owslib.etree import etree
@@ -401,11 +401,11 @@ def mp_geonetwork_broken(monkeypatch):
 
 
 @pytest.fixture
-def mp_remote_xsd(monkeypatch, request):
-    """Monkeypatch the call to get the remote XSD schemas.
+def mp_remote_codelist(monkeypatch, request):
+    """Monkeypatch the call to get the remote codelists.
 
-    This monkeypatch requires a module variable ``location_xsd_base``
-    with a glob expression to the XSD file(s) on disk.
+    This monkeypatch requires a module variable ``location_codelists``
+    with a glob expression to the codelist file(s) on disk.
 
     Parameters
     ----------
@@ -416,21 +416,22 @@ def mp_remote_xsd(monkeypatch, request):
 
     """
 
-    def _get_remote_xsd(*args, **kwargs):
-        xsd_base_path = getattr(request.module, "location_xsd_base")
-        schemas = []
+    def _get(*args, **kwargs):
+        codelist_base_path = pathlib.Path(
+            getattr(request.module, "location_codelists"))
+        codelists = {}
 
-        for xsd_file in glob.glob(xsd_base_path):
-            with open(xsd_file, 'r', encoding="utf-8") as f:
+        for codelist_file in codelist_base_path.glob('codelist_*'):
+            with codelist_file.open('r', encoding="utf-8") as f:
                 data = f.read()
                 if not isinstance(data, bytes):
                     data = data.encode('utf-8')
-                schemas.append(etree.fromstring(data))
+                codelists[codelist_file.name] = data
 
-        return schemas
+        if len(args) > 0:
+            return codelists.get(f'codelist_{args[0]}', None)
 
-    monkeypatch.setattr(pydov.search.abstract.AbstractSearch,
-                        '_get_remote_xsd_schemas', _get_remote_xsd)
+    monkeypatch.setattr(pydov.util.codelists.MemoryCache, 'get', _get)
 
 
 @pytest.fixture

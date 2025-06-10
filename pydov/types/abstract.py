@@ -881,25 +881,31 @@ class AbstractDovType(AbstractTypeCommon):
         return fields
 
     @classmethod
-    def get_xsd_schemas(cls):
-        """Get a set of distinct XSD schema URLs for this type and its
-        subtypes.
+    def get_codelists(cls, superclass=None):
+        """Get a set of codelists defined in the class fields.
+
+        Parameters
+        ----------
+        superclass : type, optional
+            The superclass to check against. If provided, only codelists from
+            subclasses of the given superclass will be returned.
 
         Returns
         -------
-        set of str
-            A set of XSD schema URLs.
-
+        set
+            A set of codelists defined in the class fields.
         """
-        xsd_schemas = set()
+        fields = cls.get_fields()
 
-        fields = cls.get_fields(source='xml', include_subtypes=True)
+        codelists = set()
 
         for f in fields.values():
-            if 'xsd_type' in f:
-                xsd_schemas.add(f['xsd_schema'])
+            if 'codelist' in f and f['codelist'] is not None:
+                if superclass is None or issubclass(
+                        f['codelist'].__class__, superclass):
+                    codelists.add(f['codelist'])
 
-        return xsd_schemas
+        return codelists
 
     @classmethod
     def to_df_array(cls, iterable, return_fields=None):

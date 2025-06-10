@@ -26,8 +26,8 @@ location_wfs_feature = \
 location_dov_xml = \
     'tests/data/types/interpretaties/hydrogeologische_stratigrafie' \
     '/hydrogeologische_stratigrafie.xml'
-location_xsd_base = \
-    'tests/data/types/interpretaties/hydrogeologische_stratigrafie/xsd_*.xml'
+location_codelists = \
+    'tests/data/types/interpretaties/hydrogeologische_stratigrafie'
 
 
 class TestHydrogeologischeStratigrafieSearch(AbstractTestSearch):

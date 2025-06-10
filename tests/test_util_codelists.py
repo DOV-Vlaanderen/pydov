@@ -6,7 +6,8 @@ import pytest
 from owslib.etree import etree
 
 import pydov
-from pydov.util.codelists import AbstractCodeList, CodeListItem, MemoryCache, OsloCodeList
+from pydov.util.codelists import AbstractCodeList, CodeListItem, MemoryCache, OsloCodeList, XsdType
+from pydov.util.dovutil import build_dov_url
 
 
 class TestMemoryCache:
@@ -214,4 +215,121 @@ class TestOsloCodeList:
             "geroerd": "Geroerd",
             "ongeroerd": "Ongeroerd",
             "vloeistof": "Vloeistof"
+        }
+
+
+class TestXsdType:
+    """Test suite for the XsdType class."""
+
+    @pytest.fixture(scope='function')
+    def mp_remote_request(self, monkeypatch):
+        """Mock the remote request for the code list.
+
+        This fixture monkeypatches the `get_remote_request` function
+        from the `pydov.util.dovutil` module to return a fixed
+        code list data.
+
+        Parameters
+        ----------
+        monkeypatch : pytest.MonkeyPatch
+            The MonkeyPatch fixture provided by pytest.
+        """
+        def _get(*args, **kwargs):
+            codelist_path = pathlib.Path(
+                'tests/data/types/grondwaterfilter/'
+                'codelist_FilterDataCodes.xsd')
+
+            with codelist_path.open('r', encoding="utf-8") as f:
+                data = f.read()
+                if not isinstance(data, bytes):
+                    data = data.encode('utf-8')
+            return data
+
+        monkeypatch.setattr(pydov.util.dovutil, 'get_remote_request', _get)
+
+    def test_init(self):
+        """Test the initialization of the XsdType class.
+
+        This test checks that an instance of the XsdType class
+        can be created successfully.
+        """
+        codelist = XsdType(
+            xsd_schema=build_dov_url(
+                'xdov/schema/latest/xsd/kern/interpretatie/'
+                'FormeleStratigrafieDataCodes.xsd'),
+            typename='FormeleStratigrafieLedenEnumType',
+            datatype='string')
+        assert isinstance(codelist, XsdType)
+
+    def test_get_id_unique(self):
+        """Test that the IDs of different code lists are unique.
+
+        This test creates two instances of the XsdType class
+        with different code list names and checks that their IDs
+        are different.
+        """
+        codelist1 = XsdType(
+            xsd_schema=build_dov_url(
+                'xdov/schema/latest/xsd/kern/interpretatie/'
+                'FormeleStratigrafieDataCodes.xsd'),
+            typename='FormeleStratigrafieLedenEnumType',
+            datatype='string')
+
+        codelist2 = XsdType(
+            xsd_schema=build_dov_url(
+                'xdov/schema/latest/xsd/kern/gwmeetnet/FilterDataCodes.xsd'),
+            typename='FilterstatusEnumType',
+            datatype='string')
+
+        assert codelist1.get_id() != codelist2.get_id()
+
+    def test_get_remote_codelist(self, mp_remote_request):
+        """Test the retrieval of the remote code list.
+
+        This test creates an instance of the XsdType class
+        and checks that the remote code list data can be retrieved
+        successfully.
+
+        Parameters
+        ----------
+        mp_remote_request : fixture
+            The `mp_remote_request` fixture, which mocks the
+            remote request for the code list.
+        """
+        codelist = XsdType(
+            xsd_schema=build_dov_url(
+                'xdov/schema/latest/xsd/kern/gwmeetnet/FilterDataCodes.xsd'),
+            typename='FilterstatusEnumType',
+            datatype='string')
+        remote_codelist = codelist.get_remote_codelist()
+
+        assert isinstance(remote_codelist, bytes)
+
+        tree = etree.fromstring(remote_codelist)
+        assert tree is not None
+
+    def test_get_values(self, mp_remote_request):
+        """Test the retrieval of the code list values.
+
+        This test creates an instance of the XsdType class
+        and checks that the values retrieved from the remote
+        code list match the expected values.
+
+        Parameters
+        ----------
+        mp_remote_request : fixture
+            The `mp_remote_request` fixture, which mocks the
+            remote request for the code list.
+        """
+        codelist = XsdType(
+            xsd_schema=build_dov_url(
+                'xdov/schema/latest/xsd/kern/gwmeetnet/FilterDataCodes.xsd'),
+            typename='FilterstatusEnumType',
+            datatype='string')
+        values = codelist.get_values()
+
+        assert values == {
+            "in rust": None,
+            "werking": None,
+            "onbekend": None
         }

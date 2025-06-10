@@ -901,7 +901,8 @@ class AbstractDovType(AbstractTypeCommon):
 
         for f in fields.values():
             if 'codelist' in f and f['codelist'] is not None:
-                if superclass is None or issubclass(cls, superclass):
+                if superclass is None or issubclass(
+                        f['codelist'].__class__, superclass):
                     codelists.add(f['codelist'])
 
         return codelists

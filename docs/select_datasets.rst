@@ -297,7 +297,7 @@ Extra fieldsets
 Extra subtypes
     :class:`pydov.types.boring.Kleur`
 
-    Extra subtype which add details regarding the colour of the layers from
+    Extra subtype which adds details regarding the colour of the layers from
     the borehole.
 
     .. csv-table:: Kleur
@@ -390,7 +390,7 @@ Default dataframe output
 Extra subtypes
     :class:`pydov.types.sondering.Techniek`
 
-    Extra subtype which add details regarding technique used for the CPT measurement.
+    Extra subtype which adds details regarding technique used for the CPT measurement.
 
     .. csv-table:: Techniek
       :header-rows: 1
@@ -697,7 +697,7 @@ Default dataframe output
 Extra subtypes
     :class:`pydov.types.grondwaterfilter.Gxg`
 
-    Extra subtype which add details regarding the average water head level
+    Extra subtype which adds details regarding the average water head level
     per year.
 
     .. csv-table:: Gxg
@@ -818,15 +818,27 @@ Default dataframe output
 Extra subtypes
     :class:`pydov.types.monster.BemonsterdObject`
 
-    Extra subtype which add more information about the sampled object of a sample.
+    Extra subtype which adds more information about the sampled object of a sample.
 
     .. csv-table:: BemonsterdObject
       :header-rows: 1
 
       Field,Source,Cost,Datatype,Example
-      bemonsterd_object_type,BemonsterdObject,10,BORING
-      bemonsterd_object_naam,BemonsterdObject,10,GEO-02/028-B5
-      bemonsterd_object_permkey,BemonsterdObject,10,2002-003282
+      bemonsterd_object_type,BemonsterdObject,10,string,BORING
+      bemonsterd_object_naam,BemonsterdObject,10,string,GEO-02/028-B5
+      bemonsterd_object_permkey,BemonsterdObject,10,string,2002-003282
+
+    :class:`pydov.types.monster.Opslaglocatie`
+
+    Extra subtype which adds more information about the storage location of a sample.
+
+    .. csv-table:: Opslaglocatie
+      :header-rows: 1
+
+      Field,Source,Cost,Datatype,Example
+      opslaglocatie_naam,Opslaglocatie,10,string,Afdeling Geotechniek (Zwijnaarde)
+      opslaglocatie_van,Opslaglocatie,10,string,2022-10-12
+      opslaglocatie_tot,Opslaglocatie,10,string,2024-03-12
 
 
 Observations (Observaties)

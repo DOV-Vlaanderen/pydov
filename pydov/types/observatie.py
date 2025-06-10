@@ -1,38 +1,10 @@
 # -*- coding: utf-8 -*-
 """Module containing the DOV data type for observations (Observatie), including
 subtypes."""
-import numpy as np
-
-from pydov.types.fields import _CustomXmlField, WfsField, XmlField
-from pydov.util.codelists import OsloCodeList
+from pydov.types.fields import WfsField, XmlField
+from pydov.types.fields_custom import OsloCodeListValueField
 
 from .abstract import AbstractDovType, AbstractDovFieldSet
-
-
-class OsloCodelistValueField(_CustomXmlField):
-    def __init__(self, name, source_xpath, datatype, definition, conceptscheme,
-                 notnull=False):
-        super().__init__(name, datatype, definition, notnull)
-        self.source_xpath = source_xpath
-        self.conceptscheme = conceptscheme
-
-        self.__setitem__('codelist', OsloCodeList(
-            self.conceptscheme, datatype
-        ))
-
-    def calculate(self, cls, tree):
-        value_uri = cls._parse(
-            func=tree.findtext,
-            xpath=self.source_xpath,
-            namespace=None,
-            returntype=self.get('type')
-        )
-        if value_uri is np.nan or value_uri == '':
-            return np.nan
-
-        code = value_uri.split('/')[-1]
-        return cls._typeconvert(code, self.get('type'))
-
 
 
 class ObservatieDetails(AbstractDovFieldSet):
@@ -41,7 +13,7 @@ class ObservatieDetails(AbstractDovFieldSet):
     intended_for = ['Observatie']
 
     fields = [
-        OsloCodelistValueField(name='betrouwbaarheid',
+        OsloCodeListValueField(name='betrouwbaarheid',
                                source_xpath='.//betrouwbaarheid',
                                conceptscheme='betrouwbaarheid',
                                definition='Betrouwbaarheid van de observatie',

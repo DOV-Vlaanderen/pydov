@@ -4,6 +4,7 @@
 import numpy as np
 
 from pydov.types.fields import _CustomXmlField
+from pydov.util.codelists import OsloCodeList
 
 
 class MvMtawField(_CustomXmlField):
@@ -59,3 +60,51 @@ class MvMtawField(_CustomXmlField):
             return hoogte
         else:
             return np.nan
+
+
+class OsloCodeListValueField(_CustomXmlField):
+    def __init__(self, name, source_xpath, datatype, definition, conceptscheme,
+                 notnull=False):
+        """Initialise an OsloCodeListValueField.
+
+        This field will return the code part of an OSLO codelist value URI,
+        and associate it with an OsloCodeList based on the given
+        conceptscheme.
+
+        Parameters
+        ----------
+        name : str
+            Name of this field in the return dataframe.
+        source_xpath : str
+            XPath expression of the values of this field in the source XML
+            document.
+        datatype : one of 'string', 'integer', 'float', 'date', 'datetime' \
+                   or 'boolean'
+            Datatype of the values of this field in the return dataframe.
+        definition : str
+            Definition of this field.
+        conceptscheme : str
+            OSLO conceptscheme which will be used for the associated codelist.
+        notnull : bool, optional, defaults to False
+            True if this field is always present (mandatory), False otherwise.
+        """
+        super().__init__(name, datatype, definition, notnull)
+        self.source_xpath = source_xpath
+        self.conceptscheme = conceptscheme
+
+        self.__setitem__('codelist', OsloCodeList(
+            self.conceptscheme, datatype
+        ))
+
+    def calculate(self, cls, tree):
+        value_uri = cls._parse(
+            func=tree.findtext,
+            xpath=self.source_xpath,
+            namespace=None,
+            returntype=self.get('type')
+        )
+        if value_uri is np.nan or value_uri == '':
+            return np.nan
+
+        code = value_uri.split('/')[-1]
+        return cls._typeconvert(code, self.get('type'))

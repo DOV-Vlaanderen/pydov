@@ -5,8 +5,7 @@ from dataclasses import dataclass
 from pydov.search.abstract import AbstractCommon
 from pydov.util.dovutil import (
     build_dov_sparql_request, get_remote_url, get_remote_request)
-from pydov.util.errors import (
-    CodelistFetchWarning, RemoteFetchError, CodelistFetchWarning)
+from pydov.util.errors import CodelistFetchWarning, RemoteFetchError
 from pydov.util.hooks import HookRunner
 
 from owslib.etree import etree
@@ -27,8 +26,8 @@ class MemoryCache(object):
         present.
 
         This method checks if the provided `key` is present in the cache. If
-        the key is not found, it calls the provided `fn` function with the given
-        `*args` and `**kwargs`, and stores the result in the cache under
+        the key is not found, it calls the provided `fn` function with the
+        given `*args` and `**kwargs`, and stores the result in the cache under
         the `key`.
 
         If the key is found in the cache, the method simply returns the cached
@@ -167,7 +166,6 @@ class AbstractResolvableCodeList(AbstractCommon, AbstractCodeList):
         return super().get_values()
 
 
-
 class OsloCodeList(AbstractResolvableCodeList):
     """Class representing a codelist in the OSLO linked data format."""
 
@@ -249,7 +247,6 @@ class OsloCodeList(AbstractResolvableCodeList):
                     '{http://www.w3.org/2005/sparql-results#}variable="label"]'
                     '/{http://www.w3.org/2005/sparql-results#}value').text
                 yield CodeListItem(code, label)
-
 
 
 class XsdType(AbstractResolvableCodeList):

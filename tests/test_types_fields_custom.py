@@ -6,7 +6,7 @@ import numpy as np
 from owslib.etree import etree
 
 from pydov.types.boring import Boring
-from pydov.types.ligging import MvMtawField
+from pydov.types.fields_custom import MvMtawField
 
 
 class TestMvMtawField:

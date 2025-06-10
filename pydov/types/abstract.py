@@ -341,13 +341,17 @@ class AbstractDovSubType(AbstractTypeCommon):
         instance = cls()
 
         for field in cls.get_fields().values():
-            instance.data[field['name']] = instance._parse(
-                func=element.findtext,
-                xpath=field['sourcefield'],
-                namespace=None,
-                returntype=field.get('type', None),
-                split_fn=field.get('split_fn', None)
-            )
+            if field['source'] == 'xml':
+                instance.data[field['name']] = instance._parse(
+                    func=element.findtext,
+                    xpath=field['sourcefield'],
+                    namespace=None,
+                    returntype=field.get('type', None),
+                    split_fn=field.get('split_fn', None)
+                )
+            elif field['source'] == 'custom_xml':
+                instance.data[field['name']] = field.calculate(
+                    cls, element) or np.nan
 
         instance._parse_subtypes(etree.tostring(element))
         return instance

@@ -516,6 +516,11 @@ class AbstractSearch(AbstractCommon):
             }
             fields[field['name']] = field
 
+            if custom_field['codelist'] is not None:
+                values = custom_field['codelist'].get_values()
+                if values is not None:
+                    field['values'] = values
+
         for custom_field in self._type.get_fields(
                 source=['custom_xml']).values():
             field = {
@@ -528,6 +533,11 @@ class AbstractSearch(AbstractCommon):
                 'cost': 10
             }
             fields[field['name']] = field
+
+            if custom_field['codelist'] is not None:
+                values = custom_field['codelist'].get_values()
+                if values is not None:
+                    field['values'] = values
 
         return fields
 

@@ -17,7 +17,7 @@ location_wfs_describefeaturetype = \
 location_wfs_getfeature = 'tests/data/types/sondering/wfsgetfeature.xml'
 location_wfs_feature = 'tests/data/types/sondering/feature.xml'
 location_dov_xml = 'tests/data/types/sondering/sondering.xml'
-location_xsd_base = 'tests/data/types/sondering/xsd_*.xml'
+location_codelists = 'tests/data/types/sondering'
 
 
 class TestSonderingSearch(AbstractTestSearch):

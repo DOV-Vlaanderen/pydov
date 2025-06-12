@@ -29,9 +29,9 @@ location_dov_xml = \
     'tests/data/types/interpretaties/' \
     'informele_hydrogeologische_stratigrafie' \
     '/informele_hydrogeologische_stratigrafie.xml'
-location_xsd_base = \
+location_codelists = \
     'tests/data/types/interpretaties/' \
-    'informele_hydrogeologische_stratigrafie/xsd_*.xml'
+    'informele_hydrogeologische_stratigrafie'
 
 
 class TestInformeleHydrogeologischeStratigrafieSearch(AbstractTestSearch):

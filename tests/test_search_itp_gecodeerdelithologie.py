@@ -25,8 +25,8 @@ location_wfs_feature = \
 location_dov_xml = \
     'tests/data/types/interpretaties/gecodeerde_lithologie' \
     '/gecodeerde_lithologie.xml'
-location_xsd_base = \
-    'tests/data/types/interpretaties/gecodeerde_lithologie/xsd_*.xml'
+location_codelists = \
+    'tests/data/types/interpretaties/gecodeerde_lithologie'
 
 
 class TestGecodeerdeLithologieSearch(AbstractTestSearch):

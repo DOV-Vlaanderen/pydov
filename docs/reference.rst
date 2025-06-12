@@ -263,6 +263,13 @@ DOV utilities
     :members:
     :show-inheritance:
 
+Codelists
+*********
+
+.. automodule:: pydov.util.codelists
+    :members:
+    :show-inheritance:
+
 Caching
 -------
 

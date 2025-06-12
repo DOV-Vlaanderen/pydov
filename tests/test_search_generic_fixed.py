@@ -13,14 +13,14 @@ location_wfs_getfeature = 'tests/data/types/generic/fixed/' \
 location_wfs_feature = \
     'tests/data/types/generic/fixed/feature.xml'
 location_dov_xml = None
-location_xsd_base = 'tests/data/types/generic/fixed/xsd_*.xml'
+location_codelists = 'tests/data/types/generic/fixed'
 
 
 class TestWfsSearchFixed:
     def test_get_fields_missing_from_fc(
             self, mp_wfs, mp_get_schema,
             mp_remote_describefeaturetype, mp_remote_md,
-            mp_remote_fc, mp_remote_xsd):
+            mp_remote_fc, mp_remote_codelist):
         """Test whether fields that are missing from the feature catalogue are
         still included in the get_fields."""
 

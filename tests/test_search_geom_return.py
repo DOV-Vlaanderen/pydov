@@ -18,13 +18,15 @@ location_codelists = 'tests/data/types/bodemclassificatie'
 class TestGeometryReturn(object):
     """Class grouping tests for returning geometry fields."""
 
-    def test_return_geometry(self, mp_get_schema,
+    def test_return_geometry(self, mp_wfs, mp_get_schema,
                              mp_remote_describefeaturetype,
                              mp_remote_wfs_feature):
         """Test whether the geometry field is returned when requested.
 
         Parameters
         ----------
+        mp_wfs : pytest.fixture
+            Monkeypatch the call to the remote GetCapabilities request.
         mp_get_schema : pytest.fixture
             Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
@@ -44,13 +46,15 @@ class TestGeometryReturn(object):
         assert len(df.geom.notna()) == 1
         assert Point(248905.6718, 200391.287).equals_exact(df.geom[0], tolerance=0.01)
 
-    def test_to_geopandas(self, mp_get_schema,
+    def test_to_geopandas(self, mp_wfs, mp_get_schema,
                           mp_remote_describefeaturetype,
                           mp_remote_wfs_feature):
         """Test whether the resulting dataframe can be turned into a GeoPandas GeoDataFrame.
 
         Parameters
         ----------
+        mp_wfs : pytest.fixture
+            Monkeypatch the call to the remote GetCapabilities request.
         mp_get_schema : pytest.fixture
             Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture

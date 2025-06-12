@@ -231,6 +231,8 @@ class AbstractTestSearch(object):
             Monkeypatch the call to get the remote metadata.
         mp_remote_fc : pytest.fixture
             Monkeypatch the call to get the remote feature catalogue.
+        mp_remote_codelist : pytest.fixture
+            Monkeypatch the call to get remote codelists.
 
         """
         fields = self.search_instance.get_fields()
@@ -257,6 +259,8 @@ class AbstractTestSearch(object):
             Monkeypatch the call to get the remote metadata.
         mp_remote_fc : pytest.fixture
             Monkeypatch the call to get the remote feature catalogue.
+        mp_remote_codelist : pytest.fixture
+            Monkeypatch the call to get remote codelists.
 
         """
         if len(self.datatype_class.get_fieldsets()) > 0:
@@ -294,6 +298,8 @@ class AbstractTestSearch(object):
             Monkeypatch the call to get the remote metadata.
         mp_remote_fc : pytest.fixture
             Monkeypatch the call to get the remote feature catalogue.
+        mp_remote_codelist : pytest.fixture
+            Monkeypatch the call to get remote codelists.
 
         """
         if len(self.datatype_class.get_subtypes()) > 0:
@@ -692,7 +698,7 @@ class AbstractTestSearch(object):
         Parameters
         ----------
         mp_remote_codelist : pytest.fixture
-            Monkeypatch the call to get the codelists.
+            Monkeypatch the call to get remote codelists.
 
         """
         codelists = self.datatype_class.get_codelists()

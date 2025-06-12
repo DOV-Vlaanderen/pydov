@@ -134,7 +134,8 @@ class TestBoringSearch(AbstractTestSearch):
 
         assert not df.boorgatmeting[0]
 
-    def test_get_fields_with_extra_fields(self, mp_get_schema,
+    def test_get_fields_with_extra_fields(self, mp_wfs, mp_get_schema,
+                                          mp_remote_codelist,
                                           mp_remote_describefeaturetype,
                                           mp_remote_wfs_feature, mp_dov_xml):
         """Test the get_fields method with an objecttype with extra fields.
@@ -143,8 +144,12 @@ class TestBoringSearch(AbstractTestSearch):
 
         Parameters
         ----------
+        mp_wfs : pytest.fixture
+            Monkeypatch the call to the remote GetCapabilities request.
         mp_get_schema : pytest.fixture
             Monkeypatch the call to a remote OWSLib schema.
+        mp_remote_codelist : pytest.fixture
+            Monkeypatch the call to get remote codelists.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_wfs_feature : pytest.fixture
@@ -161,7 +166,8 @@ class TestBoringSearch(AbstractTestSearch):
         for field in MethodeXyz.get_field_names():
             assert field in fields
 
-    def test_search_with_extra_fields(self, mp_get_schema,
+    def test_search_with_extra_fields(self, mp_wfs, mp_get_schema,
+                                      mp_remote_codelist,
                                       mp_remote_describefeaturetype,
                                       mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with an objecttype with extra fields.
@@ -170,8 +176,12 @@ class TestBoringSearch(AbstractTestSearch):
 
         Parameters
         ----------
+        mp_wfs : pytest.fixture
+            Monkeypatch the call to the remote GetCapabilities request.
         mp_get_schema : pytest.fixture
             Monkeypatch the call to a remote OWSLib schema.
+        mp_remote_codelist : pytest.fixture
+            Monkeypatch the call to get remote codelists.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_wfs_feature : pytest.fixture

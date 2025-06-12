@@ -16,7 +16,8 @@ from pydov.search.boring import BoringSearch
 from pydov.search.grondwaterfilter import GrondwaterFilterSearch
 from pydov.util.caching import GzipTextFileCache
 from pydov.util.dovutil import build_dov_url
-from pydov.util.errors import XmlFetchWarning, XmlStaleWarning, XsdFetchWarning
+from pydov.util.errors import (
+    XmlFetchWarning, XmlStaleWarning, CodelistFetchWarning)
 from pydov.util.hooks import Hooks
 from tests.abstract import ServiceCheck
 from tests.test_util_hooks import HookCounter
@@ -248,11 +249,11 @@ class TestNoXDOV(object):
     @pytest.mark.online
     @pytest.mark.skipif(not ServiceCheck.service_ok(),
                         reason="DOV service is unreachable")
-    def test_no_xsd_warning(self):
+    def test_no_codelist_warning(self):
         """Test whether the metadata can still be retrieved, and that the
-        XSD values are unavailable. Also test if a warning is given to the
+        codelist values are unavailable. Also test if a warning is given to the
         user."""
-        with pytest.warns(XsdFetchWarning):
+        with pytest.warns(CodelistFetchWarning):
             gwf = GrondwaterFilterSearch(
                 objecttype=pydov.types.grondwaterfilter.GrondwaterFilter)
             fields = gwf.get_fields()
@@ -262,8 +263,8 @@ class TestNoXDOV(object):
     @pytest.mark.online
     @pytest.mark.skipif(not ServiceCheck.service_ok(),
                         reason="DOV service is unreachable")
-    def test_no_xsd_wfs_only(self):
-        """Test whether the WFS data is available, even if XSD schemas cannot
+    def test_no_codelists_wfs_only(self):
+        """Test whether the WFS data is available, even if codelists cannot
         be resolved."""
         gwf = GrondwaterFilterSearch(
             objecttype=pydov.types.grondwaterfilter.GrondwaterFilter)

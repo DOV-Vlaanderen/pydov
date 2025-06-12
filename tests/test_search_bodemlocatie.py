@@ -16,7 +16,7 @@ location_wfs_describefeaturetype = \
 location_wfs_getfeature = 'tests/data/types/bodemlocatie/wfsgetfeature.xml'
 location_wfs_feature = 'tests/data/types/bodemlocatie/feature.xml'
 location_dov_xml = 'tests/data/types/bodemlocatie/bodemlocatie.xml'
-location_xsd_base = 'tests/data/types/bodemlocatie/xsd_*.xml'
+location_codelists = 'tests/data/types/bodemlocatie'
 
 
 class TestBodemlocatieSearch(AbstractTestSearch):

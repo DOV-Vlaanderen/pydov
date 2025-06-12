@@ -17,7 +17,7 @@ location_wfs_describefeaturetype = \
 location_wfs_getfeature = 'tests/data/types/grondwaterfilter/wfsgetfeature.xml'
 location_wfs_feature = 'tests/data/types/grondwaterfilter/feature.xml'
 location_dov_xml = 'tests/data/types/grondwaterfilter/grondwaterfilter.xml'
-location_xsd_base = 'tests/data/types/grondwaterfilter/xsd_*.xml'
+location_codelists = 'tests/data/types/grondwaterfilter'
 
 
 class TestGrondwaterfilterSearch(AbstractTestSearch):

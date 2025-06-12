@@ -18,7 +18,7 @@ location_wfs_getfeature = 'tests/data/types/generic/' \
 location_wfs_feature = \
     'tests/data/types/generic/feature.xml'
 location_dov_xml = None
-location_xsd_base = 'tests/data/types/generic/xsd_*.xml'
+location_codelists = 'tests/data/types/generic'
 
 
 class TestWfsSearch(AbstractTestSearch):

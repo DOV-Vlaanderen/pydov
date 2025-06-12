@@ -19,7 +19,7 @@ location_wfs_getfeature = 'tests/data/types/grondwatervergunning/' \
 location_wfs_feature = \
     'tests/data/types/grondwatervergunning/feature.xml'
 location_dov_xml = None
-location_xsd_base = 'tests/data/types/grondwatervergunning/xsd_*.xml'
+location_codelists = 'tests/data/types/grondwatervergunning'
 
 
 class TestGrondwaterVergunningSearch(AbstractTestSearch):

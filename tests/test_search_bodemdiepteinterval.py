@@ -16,7 +16,7 @@ location_wfs_describefeaturetype = \
     'tests/data/types/bodemdiepteinterval/wfsdescribefeaturetype.xml'
 location_wfs_getfeature = 'tests/data/types/bodemdiepteinterval/wfsgetfeature.xml'
 location_wfs_feature = 'tests/data/types/bodemdiepteinterval/feature.xml'
-location_xsd_base = 'tests/data/types/bodemdiepteinterval/xsd_*.xml'
+location_codelists = 'tests/data/types/bodemdiepteinterval'
 
 
 class TestBodemdiepteintervalSearch(AbstractTestSearch):

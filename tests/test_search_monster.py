@@ -15,7 +15,7 @@ location_wfs_describefeaturetype = \
 location_wfs_getfeature = 'tests/data/types/monster/wfsgetfeature.xml'
 location_wfs_feature = 'tests/data/types/monster/feature.xml'
 location_dov_xml = 'tests/data/types/monster/monster.xml'
-location_xsd_base = 'tests/data/types/monster/xsd_*.xml'
+location_codelists = 'tests/data/types/monster'
 
 
 class TestMonsterSearch(AbstractTestSearch):
@@ -42,7 +42,8 @@ class TestMonsterSearch(AbstractTestSearch):
         'monstertype', 'monstersamenstelling', 'bemonsteringsprocedure', 'bemonsteringsinstrument',
         'bemonstering_door']
 
-    def test_search_with_extra_fields(self, mp_get_schema,
+    def test_search_with_extra_fields(self, mp_wfs, mp_get_schema,
+                                      mp_remote_codelist,
                                       mp_remote_describefeaturetype,
                                       mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with an objecttype with extra fields.
@@ -51,8 +52,12 @@ class TestMonsterSearch(AbstractTestSearch):
 
         Parameters
         ----------
+        mp_wfs : pytest.fixture
+            Monkeypatch the call to the remote GetCapabilities request.
         mp_get_schema : pytest.fixture
             Monkeypatch the call to a remote OWSLib schema.
+        mp_remote_codelist : pytest.fixture
+            Monkeypatch the call to get remote codelists.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_wfs_feature : pytest.fixture
@@ -71,7 +76,8 @@ class TestMonsterSearch(AbstractTestSearch):
 
         assert sorted(list(df)) == sorted(search_type.get_field_names())
 
-    def test_search_with_monster_details(self, mp_get_schema,
+    def test_search_with_monster_details(self, mp_wfs, mp_get_schema,
+                                         mp_remote_codelist,
                                          mp_remote_describefeaturetype,
                                          mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with an objecttype with the MonsterDetails
@@ -82,8 +88,12 @@ class TestMonsterSearch(AbstractTestSearch):
 
         Parameters
         ----------
+        mp_wfs : pytest.fixture
+            Monkeypatch the call to the remote GetCapabilities request.
         mp_get_schema : pytest.fixture
             Monkeypatch the call to a remote OWSLib schema.
+        mp_remote_codelist : pytest.fixture
+            Monkeypatch the call to get remote codelists.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_wfs_feature : pytest.fixture
@@ -104,8 +114,8 @@ class TestMonsterSearch(AbstractTestSearch):
         assert df.iloc[0].tijdstip_monstername == '10:00:00'
 
     def test_search_subtype_with_customxmlfield(
-            self, mp_get_schema, mp_remote_describefeaturetype,
-            mp_remote_wfs_feature, mp_dov_xml):
+            self, mp_wfs, mp_get_schema, mp_remote_describefeaturetype,
+            mp_remote_wfs_feature, mp_dov_xml, mp_remote_codelist):
         """Test the search method with an objecttype with the Monsterbehandeling
         subtype.
 
@@ -115,6 +125,8 @@ class TestMonsterSearch(AbstractTestSearch):
 
         Parameters
         ----------
+        mp_wfs : pytest.fixture
+            Monkeypatch the call to the remote GetCapabilities request.
         mp_get_schema : pytest.fixture
             Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
@@ -123,6 +135,8 @@ class TestMonsterSearch(AbstractTestSearch):
             Monkeypatch the call to get WFS features.
         mp_dov_xml : pytest.fixture
             Monkeypatch the call to get the remote XML data.
+        mp_remote_codelist : pytest.fixture
+            Monkeypatch the call to get remote codelists.
 
         """
         search_type = Monster.with_subtype(Monsterbehandeling)

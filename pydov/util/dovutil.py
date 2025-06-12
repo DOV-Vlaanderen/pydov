@@ -1,13 +1,17 @@
 # -*- coding: utf-8 -*-
 """Module grouping utility functions for DOV XML services."""
 import os
-import warnings
+import requests
 
 from owslib.etree import etree
 
-from pydov.util.errors import RemoteFetchError, XmlParseError, XsdFetchWarning
+from pydov.util.errors import RemoteFetchError, XmlParseError
 from pydov.util.hooks import HookRunner
 from pydov.util.net import SessionFactory
+
+import re
+
+re_environment = re.compile(r'https://([^\.]+)\.dov\.vlaanderen\.be.*')
 
 
 def build_dov_url(path):
@@ -26,6 +30,34 @@ def build_dov_url(path):
         base_url = 'https://www.dov.vlaanderen.be/'
 
     return base_url + path.lstrip('/')
+
+
+def build_dov_sparql_request(query):
+    """Build a request with the given SPARQL query for execution on the DOV
+    SPARQL endpoint.
+
+    Parameters
+    ----------
+    query : str
+        SPARQL query to execute.
+
+    Returns
+    -------
+    requests.Request
+        Request prepared with the correct endpoint, parameters and headers
+        to execute the SPARQL query.
+    """
+    base_url = build_dov_url('')
+    env = ('-' + re_environment.search(base_url).group(1)).replace(
+        '-www', '')
+
+    endpoint = f'https://data{env}.bodemenondergrond.vlaanderen.be/sparql'
+    return requests.Request(
+        method='GET',
+        url=endpoint,
+        params={'query': query},
+        headers={'Accept': 'application/rdf+xml'}
+    )
 
 
 def get_remote_url(url, session=None):
@@ -56,33 +88,33 @@ def get_remote_url(url, session=None):
     return request.text.encode('utf8')
 
 
-def get_xsd_schema(url):
-    """Request the XSD schema from DOV webservices and return it.
+def get_remote_request(request, session=None):
+    """Prepare the request, execute it and return its contents.
 
     Parameters
     ----------
-    url : str
-        URL of the XSD schema to download.
+    request : requests.Request
+        Request to execute.
+    session : requests.Session
+        Session to use to perform HTTP requests for data. Defaults to None,
+        which means a new session will be created for each request.
 
     Returns
     -------
     xml : bytes
-        The raw XML data of this XSD schema as bytes.
+        The raw XML data as bytes.
 
     """
-    response = HookRunner.execute_inject_meta_response(url)
+    if session is None:
+        session = SessionFactory.get_session()
 
-    if response is None:
-        try:
-            response = get_remote_url(url)
-        except RemoteFetchError:
-            warnings.warn("Failed to fetch remote XSD schema, metadata will "
-                          "be incomplete.", XsdFetchWarning)
-            response = None
+    req = session.send(session.prepare_request(request))
+    if req.status_code != 200:
+        raise RemoteFetchError("Failed to fetch data at {}".format(
+            req.url))
 
-    HookRunner.execute_meta_received(url, response)
-
-    return response
+    req.encoding = 'utf-8'
+    return req.text.encode('utf8')
 
 
 def get_dov_xml(url, session=None):

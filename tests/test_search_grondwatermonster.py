@@ -18,7 +18,7 @@ location_wfs_getfeature = 'tests/data/types/grondwatermonster/' \
     'wfsgetfeature.xml'
 location_wfs_feature = 'tests/data/types/grondwatermonster/feature.xml'
 location_dov_xml = 'tests/data/types/grondwatermonster/grondwatermonster.xml'
-location_xsd_base = 'tests/data/types/grondwatermonster/xsd_*.xml'
+location_codelists = 'tests/data/types/grondwatermonster'
 
 
 class TestGrondwaterMonsterSearch(AbstractTestSearch):

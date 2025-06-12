@@ -15,7 +15,7 @@ location_wfs_describefeaturetype = \
 location_wfs_getfeature = 'tests/data/types/grondwaterfilter/wfsgetfeature.xml'
 location_wfs_feature = 'tests/data/types/grondwaterfilter/feature.xml'
 location_dov_xml = 'tests/data/types/grondwaterfilter/grondwaterfilter.xml'
-location_xsd_base = 'tests/data/types/grondwaterfilter/xsd_*.xml'
+location_codelists = 'tests/data/types/grondwaterfilter'
 
 
 class MyGrondwaterFilter(GrondwaterFilter):
@@ -72,7 +72,7 @@ class TestMyWrongGrondwaterFilter(object):
 
     def test_get_fields(
             self, mp_wfs, mp_get_schema, mp_remote_describefeaturetype,
-            mp_remote_md, mp_remote_fc, mp_remote_xsd, mp_remote_wfs_feature,
+            mp_remote_md, mp_remote_fc, mp_remote_codelist, mp_remote_wfs_feature,
             mp_dov_xml):
         """Test the get_fields method.
 
@@ -86,7 +86,7 @@ class TestMyWrongGrondwaterFilter(object):
 
     def test_search(
             self, mp_wfs, mp_get_schema, mp_remote_describefeaturetype,
-            mp_remote_md, mp_remote_fc, mp_remote_xsd, mp_remote_wfs_feature,
+            mp_remote_md, mp_remote_fc, mp_remote_codelist, mp_remote_wfs_feature,
             mp_dov_xml):
         """Test the search method.
 
@@ -121,7 +121,7 @@ class TestMyGrondwaterFilter(object):
 
     def test_get_fields(self, mp_wfs, mp_remote_describefeaturetype,
                         mp_remote_md, mp_remote_fc, mp_remote_wfs_feature,
-                        mp_dov_xml):
+                        mp_dov_xml, mp_get_schema, mp_remote_codelist):
         """Test the get_fields method.
 
         Test whether the extra field is available in the output of the
@@ -135,7 +135,7 @@ class TestMyGrondwaterFilter(object):
 
     def test_search(self, mp_wfs, mp_remote_describefeaturetype,
                     mp_remote_md, mp_remote_fc, mp_remote_wfs_feature,
-                    mp_dov_xml):
+                    mp_dov_xml, mp_get_schema, mp_remote_codelist):
         """Test the search method.
 
         Test whether the extra fields from the custom type are resolved into
@@ -173,7 +173,7 @@ class TestMyGrondwaterFilterOpbouw(object):
 
     def test_get_fields(self, mp_wfs, mp_remote_describefeaturetype,
                         mp_remote_md, mp_remote_fc, mp_remote_wfs_feature,
-                        mp_dov_xml):
+                        mp_dov_xml, mp_get_schema, mp_remote_codelist):
         """Test the get_fields method.
 
         Test whether the extra field is available in the output of the
@@ -192,7 +192,7 @@ class TestMyGrondwaterFilterOpbouw(object):
 
     def test_search(self, mp_wfs, mp_remote_describefeaturetype,
                     mp_remote_md, mp_remote_fc, mp_remote_wfs_feature,
-                    mp_dov_xml):
+                    mp_dov_xml, mp_get_schema, mp_remote_codelist):
         """Test the search method.
 
         Test whether the extra fields from the custom type are resolved into
@@ -212,6 +212,8 @@ class TestMyGrondwaterFilterOpbouw(object):
             Monkeypatch the call to get WFS features.
         mp_dov_xml : pytest.fixture
             Monkeypatch the call to get the remote XML data.
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
 
         """
         fs = GrondwaterFilterSearch(objecttype=MyGrondwaterFilterOpbouw)

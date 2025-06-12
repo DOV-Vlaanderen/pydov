@@ -114,8 +114,8 @@ class TestMonsterSearch(AbstractTestSearch):
         assert df.iloc[0].tijdstip_monstername == '10:00:00'
 
     def test_search_subtype_with_customxmlfield(
-            self, mp_get_schema, mp_remote_describefeaturetype,
-            mp_remote_wfs_feature, mp_dov_xml):
+            self, mp_wfs, mp_get_schema, mp_remote_describefeaturetype,
+            mp_remote_wfs_feature, mp_dov_xml, mp_remote_codelist):
         """Test the search method with an objecttype with the Monsterbehandeling
         subtype.
 
@@ -125,6 +125,8 @@ class TestMonsterSearch(AbstractTestSearch):
 
         Parameters
         ----------
+        mp_wfs : pytest.fixture
+            Monkeypatch the call to the remote GetCapabilities request.
         mp_get_schema : pytest.fixture
             Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
@@ -133,6 +135,8 @@ class TestMonsterSearch(AbstractTestSearch):
             Monkeypatch the call to get WFS features.
         mp_dov_xml : pytest.fixture
             Monkeypatch the call to get the remote XML data.
+        mp_remote_codelist : pytest.fixture
+            Monkeypatch the call to get remote codelists.
 
         """
         search_type = Monster.with_subtype(Monsterbehandeling)

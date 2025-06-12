@@ -127,7 +127,8 @@ class TestOsloCodeList:
                     data = data.encode('utf-8')
             return data
 
-        monkeypatch.setattr(pydov.util.dovutil, 'get_remote_request', _get)
+        monkeypatch.setattr(pydov.util.codelists.OsloCodeList,
+                            'get_remote_codelist', _get)
 
     def test_init(self):
         """Test the initialization of the OsloCodeList class.
@@ -245,7 +246,8 @@ class TestXsdType:
                     data = data.encode('utf-8')
             return data
 
-        monkeypatch.setattr(pydov.util.dovutil, 'get_remote_request', _get)
+        monkeypatch.setattr(pydov.util.codelists.XsdType,
+                            'get_remote_codelist', _get)
 
     def test_init(self):
         """Test the initialization of the XsdType class.

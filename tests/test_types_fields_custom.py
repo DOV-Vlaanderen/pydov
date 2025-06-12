@@ -6,7 +6,9 @@ import numpy as np
 from owslib.etree import etree
 
 from pydov.types.boring import Boring
-from pydov.types.fields_custom import MvMtawField
+from pydov.types.fields_custom import MvMtawField, OsloCodeListValueField
+from pydov.types.observatie import Observatie
+from pydov.util.codelists import OsloCodeList
 
 
 class TestMvMtawField:
@@ -277,3 +279,66 @@ class TestMvMtawField:
 
         mv_mtaw = mv_mtaw_field.calculate(Boring, boring_tree)
         assert mv_mtaw is np.nan
+
+
+class TestOsloCodeListValueField:
+    def test_get_code(self):
+        """Test whether the correct code is returned from the URI in the XML."""
+        oslo_codelist_field = OsloCodeListValueField(
+            name='betrouwbaarheid',
+            source_xpath='.//betrouwbaarheid',
+            datatype='string',
+            definition='De betrouwbaarheid',
+            conceptscheme='betrouwbaarheid'
+        )
+
+        xml_tree = etree.fromstring(
+            """<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+                <ns4:dov-schema xmlns:gml="http://www.opengis.net/gml/3.2"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xmlns:ns4="http://kern.schemas.dov.vlaanderen.be"
+                    xsi:schemaLocation="http://kern.schemas.dov.vlaanderen.be https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/dov.xsd">
+                    <observatie>
+                        <dataidentifier>
+                            <permkey>2022-6766131</permkey>
+                            <uri>https://oefen.dov.vlaanderen.be/data/observatie/2022-6766131</uri>
+                        </dataidentifier>
+                        <geobserveerd_object>
+                            <objecttype>monster</objecttype>
+                            <naam>N001B</naam>
+                            <permkey>2018-211712</permkey>
+                        </geobserveerd_object>
+                        <diepte_van>4.75</diepte_van>
+                        <diepte_tot>5.0</diepte_tot>
+                        <parameter>Grondsoort BGGG</parameter>
+                        <parametergroep>Onderkenning-grondsoort</parametergroep>
+                        <waarde_text>kalkh. zandh. leem</waarde_text>
+                        <eenheid>-</eenheid>
+                        <methode>Classificatie volgens de norm</methode>
+                        <fenomeentijd>2018-01-09</fenomeentijd>
+                        <betrouwbaarheid>https://data.bodemenondergrond.vlaanderen.be/id/concept/betrouwbaarheid/B</betrouwbaarheid>
+                        <herkomst>LABO</herkomst>
+                        <uitvoerder>
+                            <organisatie>
+                                <naam>VO - Afdeling Geotechniek</naam>
+                            </organisatie>
+                        </uitvoerder>
+                    </observatie>
+                </ns4:dov-schema>""".encode('utf8'))
+
+        value = oslo_codelist_field.calculate(Observatie, xml_tree)
+        assert value == 'B'
+
+    def test_has_codelist(self):
+        """Test whether the field has an associated OSLO codelist."""
+        oslo_codelist_field = OsloCodeListValueField(
+            name='betrouwbaarheid',
+            source_xpath='.//betrouwbaarheid',
+            datatype='string',
+            definition='De betrouwbaarheid',
+            conceptscheme='betrouwbaarheid'
+        )
+
+        assert 'codelist' in oslo_codelist_field
+        assert oslo_codelist_field['codelist'] is not None
+        assert isinstance(oslo_codelist_field['codelist'], OsloCodeList)

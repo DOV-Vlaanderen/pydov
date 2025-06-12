@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Module containing generic fields for the location (ligging) of objects."""
+"""Module containing generic custom fields."""
 
 import numpy as np
 

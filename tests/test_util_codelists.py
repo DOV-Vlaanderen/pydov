@@ -171,7 +171,7 @@ class TestOsloCodeList:
             ?s skos:inScheme conceptscheme:bemonsteringstype .
             ?s skos:notation ?code .
             ?s skos:prefLabel ?label .
-            ?s skos:note ?definition .
+            OPTIONAL { ?s skos:note ?definition . }
             }
         """
 

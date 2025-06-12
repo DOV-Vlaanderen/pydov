@@ -206,7 +206,7 @@ class OsloCodeList(AbstractResolvableCodeList):
             ?s skos:inScheme conceptscheme:{} .
             ?s skos:notation ?code .
             ?s skos:prefLabel ?label .
-            ?s skos:note ?definition .
+            OPTIONAL {{ ?s skos:note ?definition . }}
             }}
         """.format(self.conceptscheme)
 

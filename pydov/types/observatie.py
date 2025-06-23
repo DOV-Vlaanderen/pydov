@@ -34,8 +34,6 @@ class ObservatieHerhaling(AbstractDovSubType):
 class Observatie(AbstractDovType):
     """Class representing the DOV data type for observations."""
 
-    # subtypes = [ObservatieHerhaling] #nodig of niet?
-
     fields = [
         WfsField(name='pkey_observatie', source_field='observatie_link',
                  datatype='string'),

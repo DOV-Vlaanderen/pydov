@@ -1290,14 +1290,14 @@ if __name__ == '__main__':
     # types/observatie
 
     update_file('types/observatie/observatie.xml',
-                build_dov_url('data/observatie/2022-6766131.xml'))
+                build_dov_url('data/observatie/2022-11963810.xml'))
 
     update_file(
         'types/observatie/wfsgetfeature.xml',
         build_dov_url(
             'geoserver/ows?service=WFS&version=2.0.0&request=GetFeature'
             '&typeName=monster:observaties&count=1&CQL_Filter=observatie_link=%27' + build_dov_url(
-                'data/observatie/2022-6766131%27'))
+                'data/observatie/2022-11963810%27'))
     )
 
     update_file(
@@ -1305,7 +1305,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS&version=2.0.0&request=GetFeature'
             '&typeName=monster:observaties&count=1&CQL_Filter=observatie_link=%27' + build_dov_url(
-                'data/observatie/2022-6766131%27')),
+                'data/observatie/2022-11963810%27')),
         get_first_featuremember)
 
     update_file(

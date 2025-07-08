@@ -22,8 +22,8 @@ location_wfs_feature = \
 location_dov_xml = \
     'tests/data/types/interpretaties/quartaire_stratigrafie/' \
     'quartaire_stratigrafie.xml'
-location_xsd_base = \
-    'tests/data/types/interpretaties/quartaire_stratigrafie/xsd_*.xml'
+location_codelists = \
+    'tests/data/types/interpretaties/quartaire_stratigrafie'
 
 
 class TestQuartairStratigrafieSearch(AbstractTestSearch):

@@ -26,8 +26,8 @@ location_wfs_feature = \
 location_dov_xml = \
     'tests/data/types/interpretaties/geotechnische_codering' \
     '/geotechnische_codering.xml'
-location_xsd_base = \
-    'tests/data/types/interpretaties/geotechnische_codering/xsd_*.xml'
+location_codelists = \
+    'tests/data/types/interpretaties/geotechnische_codering'
 
 
 class TestGeotechnischeCoderingSearch(AbstractTestSearch):

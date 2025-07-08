@@ -14,7 +14,7 @@ location_wfs_describefeaturetype = 'tests/data/types/observatie/wfsdescribefeatu
 location_wfs_getfeature = 'tests/data/types/observatie/wfsgetfeature.xml'
 location_wfs_feature = 'tests/data/types/observatie/feature.xml'
 location_dov_xml = 'tests/data/types/observatie/observatie.xml'
-location_xsd_base = 'tests/data/types/observatie/xsd_*.xml'
+location_codelists = 'tests/data/types/observatie'
 
 
 class TestObservatieSearch(AbstractTestSearch):

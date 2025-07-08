@@ -16,7 +16,7 @@ location_wfs_describefeaturetype = \
 location_wfs_getfeature = 'tests/data/types/grondmonster/wfsgetfeature.xml'
 location_wfs_feature = 'tests/data/types/grondmonster/feature.xml'
 location_dov_xml = 'tests/data/types/grondmonster/grondmonster.xml'
-location_xsd_base = 'tests/data/types/grondmonster/xsd_*.xml'
+location_codelists = 'tests/data/types/grondmonster'
 
 
 class TestGrondmonsterSearch(AbstractTestSearch):

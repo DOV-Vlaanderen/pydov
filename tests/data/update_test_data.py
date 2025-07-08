@@ -28,6 +28,7 @@ from pydov.types.interpretaties import (FormeleStratigrafie,
 from pydov.types.sondering import Sondering
 from pydov.util.dovutil import build_dov_url, get_remote_url
 from pydov.util.net import LocalSessionThreadPool
+from pydov.util.codelists import AbstractResolvableCodeList
 from tests.abstract import ServiceCheck
 
 
@@ -39,6 +40,24 @@ def get_first_featuremember(wfs_response):
 
     if first_feature_member is not None:
         return etree.tostring(first_feature_member[0]).decode('utf-8')
+
+
+def update_file_raw(filepath, data, session=None):
+    output = 'Updating {} ... '.format(filepath)
+    failed = False
+    filepath = os.path.join(os.path.dirname(__file__), filepath)
+
+    if isinstance(data, bytes):
+        data = data.decode('utf-8')
+
+    if not os.path.isdir(os.path.dirname(filepath)):
+        os.makedirs(os.path.dirname(filepath))
+
+    with open(filepath, 'wb') as f:
+        f.write(data.encode('utf-8'))
+        output += ' OK.\n'
+
+    return output, failed
 
 
 def update_file_real(filepath, url, process_fn=None, session=None):
@@ -87,6 +106,16 @@ if __name__ == '__main__':
     def update_file(filepath, url, process_fn=None):
         pool.execute(update_file_real, (filepath, url, process_fn))
 
+    def update_file_fn(filepath, fn):
+        pool.execute(update_file_raw, (filepath, fn()))
+
+    def get_codelists(cls, path):
+        for codelist in cls.get_codelists(AbstractResolvableCodeList):
+            id = codelist.get_id()
+            update_file_fn(
+                '{}/codelist_{}'.format(path, id),
+                codelist.get_remote_codelist)
+
     # types/boring
     update_file('types/boring/boring.xml',
                 build_dov_url('data/boring/2004-103984.xml'))
@@ -132,10 +161,7 @@ if __name__ == '__main__':
             'geoserver/dov-pub/Boringen'
             '/ows?service=wfs&version=2.0.0&request=DescribeFeatureType'))
 
-    for xsd_schema in Boring.get_xsd_schemas():
-        update_file(
-            'types/boring/xsd_{}.xml'.format(xsd_schema.split('/')[-1]),
-            xsd_schema)
+    get_codelists(Boring, 'types/boring')
 
     # types/sondering
 
@@ -183,10 +209,7 @@ if __name__ == '__main__':
             'geoserver/dov-pub/Sonderingen'
             '/ows?service=wfs&version=2.0.0&request=DescribeFeatureType'))
 
-    for xsd_schema in Sondering.get_xsd_schemas():
-        update_file(
-            'types/sondering/xsd_{}.xml'.format(xsd_schema.split('/')[-1]),
-            xsd_schema)
+    get_codelists(Sondering, 'types/sondering')
 
     # types/interpretaties/informele_stratigrafie
 
@@ -242,10 +265,8 @@ if __name__ == '__main__':
             '/informele_stratigrafie/ows?service=wfs&version=2.0.0&request'
             '=DescribeFeatureType'))
 
-    for xsd_schema in InformeleStratigrafie.get_xsd_schemas():
-        update_file(
-            'types/interpretaties/informele_stratigrafie/xsd_%s.xml' %
-            xsd_schema.split('/')[-1], xsd_schema)
+    get_codelists(InformeleStratigrafie,
+                  'types/interpretaties/informele_stratigrafie')
 
     # types/interpretaties/formele_stratigrafie
 
@@ -301,10 +322,8 @@ if __name__ == '__main__':
             '/formele_stratigrafie/ows?service=wfs&version=2.0.0&request'
             '=DescribeFeatureType'))
 
-    for xsd_schema in FormeleStratigrafie.get_xsd_schemas():
-        update_file(
-            'types/interpretaties/formele_stratigrafie/xsd_%s.xml' %
-            xsd_schema.split('/')[-1], xsd_schema)
+    get_codelists(FormeleStratigrafie,
+                  'types/interpretaties/formele_stratigrafie')
 
     # types/interpretaties/hydrogeologische_stratigrafie
 
@@ -361,10 +380,8 @@ if __name__ == '__main__':
             '/hydrogeologische_stratigrafie/ows?service=wfs&version=2.0.0'
             '&request=DescribeFeatureType'))
 
-    for xsd_schema in HydrogeologischeStratigrafie.get_xsd_schemas():
-        update_file(
-            'types/interpretaties/hydrogeologische_stratigrafie/xsd_%s.xml' %
-            xsd_schema.split('/')[-1], xsd_schema)
+    get_codelists(HydrogeologischeStratigrafie,
+                  'types/interpretaties/hydrogeologische_stratigrafie')
 
     # types/interpretaties/lithologische_beschrijvingen
 
@@ -421,10 +438,8 @@ if __name__ == '__main__':
             '/lithologische_beschrijvingen/ows?service=wfs&version=2.0.0'
             '&request=DescribeFeatureType'))
 
-    for xsd_schema in LithologischeBeschrijvingen.get_xsd_schemas():
-        update_file(
-            'types/interpretaties/lithologische_beschrijvingen/xsd_%s.xml' %
-            xsd_schema.split('/')[-1], xsd_schema)
+    get_codelists(LithologischeBeschrijvingen,
+                  'types/interpretaties/lithologische_beschrijvingen')
 
     # types/interpretaties/gecodeerde_lithologie
 
@@ -480,10 +495,8 @@ if __name__ == '__main__':
             '/gecodeerde_lithologie/ows?service=wfs&version=2.0.0&request'
             '=DescribeFeatureType'))
 
-    for xsd_schema in GecodeerdeLithologie.get_xsd_schemas():
-        update_file(
-            'types/interpretaties/gecodeerde_lithologie/xsd_%s.xml' %
-            xsd_schema.split('/')[-1], xsd_schema)
+    get_codelists(GecodeerdeLithologie,
+                  'types/interpretaties/gecodeerde_lithologie')
 
     # types/interpretaties/geotechnische_codering
 
@@ -539,10 +552,8 @@ if __name__ == '__main__':
             '/geotechnische_coderingen/ows?service=wfs&version=2.0.0&request'
             '=DescribeFeatureType'))
 
-    for xsd_schema in GeotechnischeCodering.get_xsd_schemas():
-        update_file(
-            'types/interpretaties/geotechnische_codering/xsd_%s.xml' %
-            xsd_schema.split('/')[-1], xsd_schema)
+    get_codelists(GeotechnischeCodering,
+                  'types/interpretaties/geotechnische_codering')
 
     # types/interpretaties/informele_hydrogeologische_stratigrafie
 
@@ -601,10 +612,9 @@ if __name__ == '__main__':
             '/informele_hydrogeologische_stratigrafie/'
             'ows?service=wfs&version=2.0.0&request=DescribeFeatureType'))
 
-    for xsd_schema in InformeleHydrogeologischeStratigrafie.get_xsd_schemas():
-        update_file(
-            'types/interpretaties/informele_hydrogeologische_stratigrafie/'
-            'xsd_%s.xml' % xsd_schema.split('/')[-1], xsd_schema)
+    get_codelists(
+        InformeleHydrogeologischeStratigrafie,
+        'types/interpretaties/informele_hydrogeologische_stratigrafie')
 
     # types/grondwaterfilter
 
@@ -649,10 +659,7 @@ if __name__ == '__main__':
                               'meetnetten/ows?service=wfs&version=2.0.0&'
                               'request=DescribeFeatureType'))
 
-    for xsd_schema in GrondwaterFilter.get_xsd_schemas():
-        update_file(
-            'types/grondwaterfilter/xsd_%s.xml' % xsd_schema.split('/')[-1],
-            xsd_schema)
+    get_codelists(GrondwaterFilter, 'types/grondwaterfilter')
 
     update_file('types/grondwaterfilter/grondwaterfilter_geenpeilmeting.xml',
                 build_dov_url('data/filter/1976-101132.xml'))
@@ -723,10 +730,7 @@ if __name__ == '__main__':
             'grondwatermonsters/ows?service=wfs&version=2.0.0&'
             'request=DescribeFeatureType'))
 
-    for xsd_schema in GrondwaterMonster.get_xsd_schemas():
-        update_file(
-            'types/grondwatermonster/xsd_%s.xml' % xsd_schema.split('/')[-1],
-            xsd_schema)
+    get_codelists(GrondwaterMonster, 'types/grondwatermonster')
 
     # util/owsutil
 
@@ -797,10 +801,8 @@ if __name__ == '__main__':
             '/quartaire_stratigrafie/ows?service=wfs&version=2.0.0&request'
             '=DescribeFeatureType'))
 
-    for xsd_schema in QuartairStratigrafie.get_xsd_schemas():
-        update_file(
-            'types/interpretaties/quartaire_stratigrafie/xsd_%s.xml' %
-            xsd_schema.split('/')[-1], xsd_schema)
+    get_codelists(QuartairStratigrafie,
+                  'types/interpretaties/quartaire_stratigrafie')
 
     # types/grondmonster
 
@@ -856,10 +858,7 @@ if __name__ == '__main__':
                       '/grondmonsters/ows?service=wfs&version=2.0.0&request'
                       '=DescribeFeatureType'))
 
-    for xsd_schema in Grondmonster.get_xsd_schemas():
-        update_file(
-            'types/grondmonster/xsd_%s.xml' %
-            xsd_schema.split('/')[-1], xsd_schema)
+    get_codelists(Grondmonster, 'types/grondmonster')
 
     # types/bodemlocatie
     update_file('types/bodemlocatie/bodemlocatie.xml',
@@ -904,10 +903,7 @@ if __name__ == '__main__':
             'geoserver/bodem/bodemlocaties'
             '/ows?service=wfs&version=2.0.0&request=DescribeFeatureType'))
 
-    for xsd_schema in Bodemlocatie.get_xsd_schemas():
-        update_file(
-            'types/bodemlocatie/xsd_{}.xml'.format(xsd_schema.split('/')[-1]),
-            xsd_schema)
+    get_codelists(Bodemlocatie, 'types/bodemlocatie')
 
     # types/bodemdiepteinterval
     update_file(
@@ -951,11 +947,7 @@ if __name__ == '__main__':
             'geoserver/bodem/bodemdiepteintervallen'
             '/ows?service=wfs&version=2.0.0&request=DescribeFeatureType'))
 
-    for xsd_schema in Bodemdiepteinterval.get_xsd_schemas():
-        update_file(
-            'types/bodemdiepteinterval/xsd_{}.xml'.format(
-                xsd_schema.split('/')[-1]),
-            xsd_schema)
+    get_codelists(Bodemdiepteinterval, 'types/bodemdiepteinterval')
 
     # types/bodemobservatie
     update_file('types/bodemobservatie/bodemobservatie.xml',
@@ -1000,11 +992,7 @@ if __name__ == '__main__':
             'geoserver/bodem/bodemobservaties'
             '/ows?service=wfs&version=2.0.0&request=DescribeFeatureType'))
 
-    for xsd_schema in Bodemobservatie.get_xsd_schemas():
-        update_file(
-            'types/bodemobservatie/xsd_{}.xml'.format(
-                xsd_schema.split('/')[-1]),
-            xsd_schema)
+    get_codelists(Bodemobservatie, 'types/bodemobservatie')
 
     # types/bodemmonster
     update_file('types/bodemmonster/bodemmonster.xml',
@@ -1049,10 +1037,7 @@ if __name__ == '__main__':
             'geoserver/bodem/bodemmonsters'
             '/ows?service=wfs&version=2.0.0&request=DescribeFeatureType'))
 
-    for xsd_schema in Bodemmonster.get_xsd_schemas():
-        update_file(
-            'types/bodemmonster/xsd_{}.xml'.format(xsd_schema.split('/')[-1]),
-            xsd_schema)
+    get_codelists(Bodemmonster, 'types/bodemmonster')
 
     # types/bodemsite
     update_file('types/bodemsite/bodemsite.xml',
@@ -1097,10 +1082,7 @@ if __name__ == '__main__':
             'geoserver/bodem/bodemsites'
             '/ows?service=wfs&version=2.0.0&request=DescribeFeatureType'))
 
-    for xsd_schema in Bodemsite.get_xsd_schemas():
-        update_file(
-            'types/bodemsite/xsd_{}.xml'.format(xsd_schema.split('/')[-1]),
-            xsd_schema)
+    get_codelists(Bodemsite, 'types/bodemsite')
 
     # types/bodemclassificatie
     update_file(
@@ -1144,10 +1126,7 @@ if __name__ == '__main__':
                     '/ows?service=wfs&version=2.0.0'
                     '&request=DescribeFeatureType'))
 
-    for xsd_schema in Bodemclassificatie.get_xsd_schemas():
-        update_file(
-            'types/bodemclassificatie/xsd_%s.xml' %
-            xsd_schema.split('/')[-1], xsd_schema)
+    get_codelists(Bodemclassificatie, 'types/bodemclassificatie')
 
     # types/gw_vergunningen
     update_file(
@@ -1188,10 +1167,7 @@ if __name__ == '__main__':
                     '/ows?service=wfs&version=2.0.0'
                     '&request=DescribeFeatureType'))
 
-    for xsd_schema in GrondwaterVergunning.get_xsd_schemas():
-        update_file(
-            'types/grondwatervergunning/xsd_%s.xml' %
-            xsd_schema.split('/')[-1], xsd_schema)
+    get_codelists(GrondwaterVergunning, 'types/grondwatervergunning')
 
     # types/generic
 
@@ -1282,10 +1258,7 @@ if __name__ == '__main__':
                       '/monsters/ows?service=wfs&version=2.0.0&request'
                       '=DescribeFeatureType'))
 
-    for xsd_schema in Monster.get_xsd_schemas():
-        update_file(
-            'types/monster/xsd_%s.xml' %
-            xsd_schema.split('/')[-1], xsd_schema)
+    get_codelists(Monster, 'types/monster')
 
     # types/observatie
 
@@ -1329,10 +1302,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/monster/wfs?service=WFS&version=2.0.0&request=DescribeFeatureType&typeName=monster:observaties'))
 
-    for xsd_schema in Observatie.get_xsd_schemas():
-        update_file(
-            'types/observatie/xsd_{}.xml'.format(xsd_schema.split('/')[-1]),
-            xsd_schema)
+    get_codelists(Observatie, 'types/observatie')
 
     for r in pool.join():
         if r.get_error() is not None:

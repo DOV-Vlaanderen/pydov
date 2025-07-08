@@ -4,7 +4,7 @@ subtypes."""
 from pydov.types.fields import WfsField, XmlField
 from pydov.types.fields_custom import OsloCodeListValueField
 
-from .abstract import AbstractDovType, AbstractDovFieldSet
+from .abstract import AbstractDovType, AbstractDovSubType, AbstractDovFieldSet
 
 
 class ObservatieDetails(AbstractDovFieldSet):
@@ -34,10 +34,34 @@ class ObservatieDetails(AbstractDovFieldSet):
     ]
 
 
+class ObservatieHerhaling(AbstractDovSubType):
+    """Subtype showing the repetition information of an observation."""
+
+    rootpath = './/observatie/herhaling'
+    intended_for = ['Observatie']
+
+    fields = [
+        XmlField(name='herhaling_aantal',
+                 source_xpath='/aantal',
+                 definition='Aantal herhalingen',
+                 datatype='integer'),
+        XmlField(name='herhaling_minimum',
+                 source_xpath='/minimum',
+                 definition='Minimum waarde',
+                 datatype='float'),
+        XmlField(name='herhaling_maximum',
+                 source_xpath='/maximum',
+                 definition='Maximum waarde',
+                 datatype='float'),
+        XmlField(name='herhaling_standaardafwijking',
+                 source_xpath='/standaardafwijking',
+                 definition='Standaardafwijking metingen',
+                 datatype='float')
+    ]
+
+
 class Observatie(AbstractDovType):
     """Class representing the DOV data type for observations."""
-
-    subtypes = []
 
     fields = [
         WfsField(name='pkey_observatie', source_field='observatie_link',

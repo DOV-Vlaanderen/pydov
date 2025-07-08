@@ -895,7 +895,7 @@ Type
     Observatie (Observations)
 
 Subtype
-    No subtype
+    * ObservatieHerhaling (Repetition of the observation) - More information about the repetition(s) of the observation.
 
 Extra fieldsets
     * ObservatieDetails (Details of observation) - Extra details about the observation.
@@ -923,6 +923,19 @@ Default dataframe output
         uitvoerder;Observatie;1;string;VO - Afdeling Geotechniek
         herkomst;Observatie;1;string;LABO
 
+Extra subtypes
+    :class:`pydov.types.observatie.ObservatieHerhaling`
+
+    Extra subtype which adds more information about the repetitions of the observations data.
+
+    .. csv-table:: ObservatieHerhaling
+      :header-rows: 1
+
+      Field,Source,Cost,Datatype,Example
+      herhaling_aantal,ObservatieHerhaling,10,integer,16
+      herhaling_minimum,ObservatieHerhaling,10,float,2.00000000
+      herhaling_maximum,ObservatieHerhaling,10,float,8.00000000
+      herhaling_standaardafwijking,ObservatieHerhaling,10,float,2.75680975
 
 Extra fieldsets
     :class:`pydov.types.observate.ObservatieDetails`

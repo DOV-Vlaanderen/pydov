@@ -17,7 +17,7 @@ class TestObservatie(AbstractTestTypes):
     namespace = 'http://dov.vlaanderen.be/ocdov/monster'
     pkey_base = build_dov_url('data/observatie/')
 
-    sorted_subtypes = []
+    sorted_subtypes = ['ObservatieHerhaling']
     sorted_fieldsets = ['ObservatieDetails']
 
     field_names = ['pkey_observatie', 'pkey_parent', 'fenomeentijd', 'diepte_van_m', 'diepte_tot_m', 'parametergroep',
@@ -27,6 +27,7 @@ class TestObservatie(AbstractTestTypes):
                               'parametergroep', 'parameter', 'detectieconditie', 'resultaat', 'eenheid', 'methode',
                               'uitvoerder', 'herkomst']
 
-    valid_returnfields = ReturnFieldList.from_field_names('pkey_observatie', 'diepte_van_m')
+    valid_returnfields = ReturnFieldList.from_field_names(
+        'pkey_observatie', 'diepte_van_m')
     valid_returnfields_subtype = ReturnFieldList.from_field_names()
     inexistent_field = 'onbestaand'

@@ -110,11 +110,25 @@ if __name__ == '__main__':
         pool.execute(update_file_raw, (filepath, fn()))
 
     def get_codelists(cls, path):
-        for codelist in cls.get_codelists(AbstractResolvableCodeList):
+
+        def update_codelist_file(codelist):
             id = codelist.get_id()
             update_file_fn(
                 '{}/codelist_{}'.format(path, id),
                 codelist.get_remote_codelist)
+
+        for codelist in cls.get_codelists(AbstractResolvableCodeList):
+            update_codelist_file(codelist)
+
+        for fieldset in cls.get_fieldsets().values():
+            for codelist in \
+                    fieldset['class'].get_codelists(AbstractResolvableCodeList):
+                update_codelist_file(codelist)
+
+        for subtype in cls.get_subtypes().values():
+            for codelist in \
+                    subtype['class'].get_codelists(AbstractResolvableCodeList):
+                update_codelist_file(codelist)
 
     # types/boring
     update_file('types/boring/boring.xml',

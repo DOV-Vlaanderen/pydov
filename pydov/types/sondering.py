@@ -5,7 +5,7 @@ from pydov.types.abstract import AbstractDovSubType, AbstractDovType
 from pydov.types.fields import WfsField, XmlField
 from pydov.util.dovutil import build_dov_url
 from pydov.util.codelists import XsdType
-from pydov.types.ligging import MvMtawField
+from pydov.types.fields_custom import MvMtawField
 
 
 class Meetdata(AbstractDovSubType):

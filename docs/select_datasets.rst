@@ -897,6 +897,9 @@ Type
 Subtype
     * ObservatieHerhaling (Repetition of the observation) - More information about the repetition(s) of the observation.
 
+Extra fieldsets
+    * ObservatieDetails (Details of observation) - Extra details about the observation.
+
 Search class
     :class:`pydov.search.observatie.ObservatieSearch`
 
@@ -933,6 +936,23 @@ Extra subtypes
       herhaling_minimum,ObservatieHerhaling,10,float,2.00000000
       herhaling_maximum,ObservatieHerhaling,10,float,8.00000000
       herhaling_standaardafwijking,ObservatieHerhaling,10,float,2.75680975
+
+Extra fieldsets
+    :class:`pydov.types.observate.ObservatieDetails`
+
+    Extra fields to be used with the `Observatie` type which add details regarding
+    the reliability and observed object.
+
+    .. csv-table:: ObservatieDetails
+      :header-rows: 1
+      :delim: ;
+
+      Field;Source;Cost;Datatype;Example
+      betrouwbaarheid;ObservatieDetails;10;string;goed
+      geobserveerd_object_type;ObservatieDetails;10;string;Onbekend
+      geobserveerd_object_naam;ObservatieDetails;10;string;VO - Afdeling Geotechniek
+      geobserveerd_object_permkey;ObservatieDetails;10;string;LABO
+
 
 DOV WFS layer
 -------------

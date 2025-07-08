@@ -3,7 +3,7 @@
 from owslib.fes2 import PropertyIsEqualTo
 
 from pydov.search.observatie import ObservatieSearch
-from pydov.types.observatie import Observatie, ObservatieHerhaling
+from pydov.types.observatie import Observatie, ObservatieHerhaling, ObservatieDetails
 from pydov.types.fields import ReturnFieldList
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestSearch
@@ -39,6 +39,7 @@ class TestObservatieSearch(AbstractTestSearch):
                           'uitvoerder', 'herkomst']
 
     def test_search_with_herhalingen(self, mp_wfs, mp_get_schema,
+                                     mp_remote_codelist,
                                      mp_remote_describefeaturetype,
                                      mp_remote_wfs_feature, mp_dov_xml):
         """Test the search method with the subtype ObservatieHerhaling.
@@ -70,3 +71,41 @@ class TestObservatieSearch(AbstractTestSearch):
         assert df.iloc[0].herhaling_minimum == 1
         assert df.iloc[0].herhaling_maximum == 1
         assert df.iloc[0].herhaling_standaardafwijking == 0
+
+    def test_get_fields_with_extra_fields(self, mp_wfs, mp_get_schema,
+                                          mp_remote_codelist,
+                                          mp_remote_describefeaturetype,
+                                          mp_remote_wfs_feature, mp_dov_xml):
+        """Test the get_fields method with an objecttype with extra fields.
+
+        Test whether the output contains the extra fields and their values.
+
+        Parameters
+        ----------
+        mp_wfs : pytest.fixture
+            Monkeypatch the call to the remote GetCapabilities request.
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
+        mp_remote_codelist : pytest.fixture
+            Monkeypatch the call to get remote codelists.
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType.
+        mp_remote_wfs_feature : pytest.fixture
+            Monkeypatch the call to get WFS features.
+        mp_dov_xml : pytest.fixture
+            Monkeypatch the call to get the remote XML data.
+
+        """
+        search_type = Observatie.with_extra_fields(ObservatieDetails)
+
+        search_instance = self.search_class(
+            objecttype=search_type)
+
+        fields = search_instance.get_fields()
+
+        assert 'betrouwbaarheid' in fields
+        assert 'values' in fields['betrouwbaarheid']
+        assert len(fields['betrouwbaarheid']['values']) > 0
+
+        for field_name in ObservatieDetails.get_field_names():
+            assert field_name in fields

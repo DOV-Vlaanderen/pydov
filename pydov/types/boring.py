@@ -4,7 +4,7 @@ subtypes."""
 from pydov.types.fields import WfsField, XmlField
 from pydov.util.dovutil import build_dov_url
 from pydov.util.codelists import XsdType
-from pydov.types.ligging import MvMtawField
+from pydov.types.fields_custom import MvMtawField
 
 from .abstract import AbstractDovFieldSet, AbstractDovSubType, AbstractDovType
 

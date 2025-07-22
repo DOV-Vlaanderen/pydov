@@ -60,6 +60,28 @@ class ObservatieHerhaling(AbstractDovSubType):
     ]
 
 
+class Fractiemeting(AbstractDovSubType):
+    """Subtype showing the details of a fraction measurement."""
+
+    rootpath = './/waarde_fractiemeting/meting'
+    intended_for = ['Observatie']
+
+    fields = [
+        XmlField(name='fractiemeting_ondergrens',
+                 source_xpath='/ondergrens',
+                 definition='Ondergrens van de fractiemeting in µm',
+                 datatype='float'),
+        XmlField(name='fractiemeting_bovengrens',
+                 source_xpath='/bovengrens',
+                 definition='Bovengrens van de fractiemeting in µm',
+                 datatype='float'),
+        XmlField(name='fractiemeting_waarde',
+                 source_xpath='/waarde',
+                 definition='Gemeten massaprocent van de fractie',
+                 datatype='float')
+    ]
+
+
 class Observatie(AbstractDovType):
     """Class representing the DOV data type for observations."""
 

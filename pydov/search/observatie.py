@@ -53,8 +53,8 @@ class ObservatieFractiemetingSearch(ObservatieSearch):
         `query` and/or `max_features`.
         When `return_fields` is None, all fields are returned.
 
-        Excludes 'empty' filters (i.e. Putten without Filters) by extending
-        the `query` with a not-null check on pkey_filter.
+        Will return only observations of type 'Textuurmeting', by
+        extending the query with a filter on the `observatietype` field.
 
         Parameters
         ----------

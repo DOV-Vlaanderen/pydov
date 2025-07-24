@@ -896,12 +896,14 @@ Type
 
 Subtype
     * ObservatieHerhaling (Repetition of the observation) - More information about the repetition(s) of the observation.
+    * Fractiemeting (Fraction measurement) - More information about the fraction measurement of observations of type 'Textuurmeting'.
 
 Extra fieldsets
     * ObservatieDetails (Details of observation) - Extra details about the observation.
 
-Search class
-    :class:`pydov.search.observatie.ObservatieSearch`
+Search classes
+    * :class:`pydov.search.observatie.ObservatieSearch` - This will return all observations, without extra fields or subtypes.
+    * :class:`pydov.search.observatie.ObservatieFractiemetingSearch` - This will return only observations of type 'Textuurmeting' and will include the fraction measurement subtype.
 
 Default dataframe output
       .. csv-table:: Observations (Observaties)
@@ -936,6 +938,18 @@ Extra subtypes
       herhaling_minimum,ObservatieHerhaling,10,float,2.00000000
       herhaling_maximum,ObservatieHerhaling,10,float,8.00000000
       herhaling_standaardafwijking,ObservatieHerhaling,10,float,2.75680975
+
+    :class:`pydov.types.observatie.Fractiemeting`
+
+    Extra subtype which adds more information about the fraction measurement of observations of type 'Textuurmeting'.
+
+    .. csv-table:: Fractiemeting
+      :header-rows: 1
+
+      Field,Source,Cost,Datatype,Example
+      fractiemeting_ondergrens,Fractiemeting,10,float,0.0
+      fractiemeting_bovengrens,Fractiemeting,10,float,0.2
+      fractiemeting_waarde,Fractiemeting,10,float,10.17
 
 Extra fieldsets
     :class:`pydov.types.observate.ObservatieDetails`

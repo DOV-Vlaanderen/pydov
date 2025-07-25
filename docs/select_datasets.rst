@@ -894,7 +894,7 @@ Observations (Observaties)
 Type
     Observatie (Observations)
 
-Subtype
+Subtypes
     * ObservatieHerhaling (Repetition of the observation) - More information about the repetition(s) of the observation.
     * Fractiemeting (Fraction measurement) - More information about the fraction measurement of observations of type 'Textuurmeting'.
 
@@ -902,8 +902,8 @@ Extra fieldsets
     * ObservatieDetails (Details of observation) - Extra details about the observation.
 
 Search classes
-    * :class:`pydov.search.observatie.ObservatieSearch` - This will return all observations, without extra fields or subtypes.
-    * :class:`pydov.search.observatie.ObservatieFractiemetingSearch` - This will return only observations of type 'Textuurmeting' and will include the fraction measurement subtype.
+    * :class:`pydov.search.observatie.ObservatieSearch` - This will return all observations, by default without extra fields or subtypes.
+    * :class:`pydov.search.observatie.ObservatieFractiemetingSearch` - This will return only observations of type 'Textuurmeting' and will by default include the fraction measurement subtype.
 
 Default dataframe output
       .. csv-table:: Observations (Observaties)

@@ -118,6 +118,13 @@ class ObservatieFractiemetingSearch(ObservatieSearch):
         else:
             query = observatietype_filter
 
+        omitted_fields = ['resultaat', 'detectieconditie']
+        if return_fields is None:
+            return_fields = [
+                f for f in self._type.get_field_names()
+                if f not in omitted_fields
+            ]
+
         return super().search(
             location=location, query=query, sort_by=sort_by,
             return_fields=return_fields, max_features=max_features)

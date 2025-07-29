@@ -32,13 +32,16 @@ class TestObservatieFractiemetingSearch(AbstractTestSearch):
 
     valid_returnfields = ReturnFieldList.from_field_names(
         'pkey_observatie', 'fenomeentijd', 'diepte_van_m')
-    valid_returnfields_subtype = ReturnFieldList.from_field_names()
-    valid_returnfields_extra = ReturnFieldList.from_field_names()
+    valid_returnfields_subtype = ReturnFieldList.from_field_names(
+        'fractiemeting_ondergrens', 'fractiemeting_bovengrens',
+        'fractiemeting_waarde' )
+    valid_returnfields_extra = ReturnFieldList.from_field_names(
+        'detectieconditie', 'resultaat')
 
     df_default_columns = [
         'pkey_observatie', 'pkey_parent', 'fenomeentijd', 'diepte_van_m', 'diepte_tot_m',
-        'parametergroep', 'parameter', 'detectieconditie', 'resultaat', 'eenheid', 'methode',
-        'uitvoerder', 'herkomst', 'fractiemeting_ondergrens', 'fractiemeting_bovengrens',
+        'parametergroep', 'parameter', 'eenheid', 'methode', 'uitvoerder', 'herkomst',
+        'fractiemeting_ondergrens', 'fractiemeting_bovengrens',
         'fractiemeting_waarde']
 
     def test_search(self, mp_wfs, mp_get_schema,

@@ -1,30 +1,31 @@
 """Module grouping tests for the observatie search module, focussing on
-observaties with fractiemetingen."""
+observaties with meetreeksen."""
 
 from owslib.fes2 import PropertyIsEqualTo
 
-from pydov.search.observatie import ObservatieFractiemetingSearch, Fractiemeting, ObservatieSearch
+from pydov.search.observatie import ObservatieMeetreeksSearch, Meetreeks, ObservatieSearch
 from pydov.types.fields import ReturnFieldList
 from pydov.types.observatie import Observatie
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestSearch
 
-location_md_metadata = 'tests/data/types/observatie_fractiemeting/md_metadata.xml'
-location_fc_featurecatalogue = 'tests/data/types/observatie_fractiemeting/fc_featurecatalogue.xml'
-location_wfs_describefeaturetype = 'tests/data/types/observatie_fractiemeting/wfsdescribefeaturetype.xml'
-location_wfs_getfeature = 'tests/data/types/observatie_fractiemeting/wfsgetfeature.xml'
-location_wfs_feature = 'tests/data/types/observatie_fractiemeting/feature.xml'
-location_dov_xml = 'tests/data/types/observatie_fractiemeting/observatie.xml'
-location_codelists = 'tests/data/types/observatie_fractiemeting'
+location_md_metadata = 'tests/data/types/observatie_meetreeks/md_metadata.xml'
+location_fc_featurecatalogue = 'tests/data/types/observatie_meetreeks/fc_featurecatalogue.xml'
+location_wfs_describefeaturetype = 'tests/data/types/observatie_meetreeks/wfsdescribefeaturetype.xml'
+location_wfs_getfeature = 'tests/data/types/observatie_meetreeks/wfsgetfeature.xml'
+location_wfs_feature = 'tests/data/types/observatie_meetreeks/feature.xml'
+location_dov_xml = 'tests/data/types/observatie_meetreeks/observatie.xml'
+location_codelists = 'tests/data/types/observatie_meetreeks'
 
 
-class TestObservatieFractiemetingSearch(AbstractTestSearch):
-    search_instance = ObservatieFractiemetingSearch()
-    search_class = ObservatieFractiemetingSearch
-    datatype_class = Observatie.with_subtype(Fractiemeting)
+class TestObservatieMeetreeksSearch(AbstractTestSearch):
+    search_instance = ObservatieMeetreeksSearch()
+    search_class = ObservatieMeetreeksSearch
+    datatype_class = Observatie.with_subtype(Meetreeks)
 
-    valid_query_single = PropertyIsEqualTo(propertyname='pkey_observatie',
-                                           literal=build_dov_url('data/observatie/1995-10282748'))
+    valid_query_single = PropertyIsEqualTo(
+        propertyname='pkey_observatie',
+        literal=build_dov_url('data/observatie/2025-43568400'))
 
     inexistent_field = 'onbestaand'
     wfs_field = 'parameter'
@@ -33,16 +34,18 @@ class TestObservatieFractiemetingSearch(AbstractTestSearch):
     valid_returnfields = ReturnFieldList.from_field_names(
         'pkey_observatie', 'fenomeentijd', 'diepte_van_m')
     valid_returnfields_subtype = ReturnFieldList.from_field_names(
-        'fractiemeting_ondergrens', 'fractiemeting_bovengrens',
-        'fractiemeting_waarde' )
+        'meetreeks_meetpunt_parameter', 'meetreeks_meetpunt',
+        'meetreeks_meetpunt_eenheid', 'meetreeks_meetwaarde_parameter',
+        'meetreeks_meetwaarde', 'meetreeks_meetwaarde_eenheid')
     valid_returnfields_extra = ReturnFieldList.from_field_names(
         'detectieconditie', 'resultaat')
 
     df_default_columns = [
         'pkey_observatie', 'pkey_parent', 'fenomeentijd', 'diepte_van_m', 'diepte_tot_m',
-        'parametergroep', 'parameter', 'eenheid', 'methode', 'uitvoerder', 'herkomst',
-        'fractiemeting_ondergrens', 'fractiemeting_bovengrens',
-        'fractiemeting_waarde']
+        'parametergroep', 'parameter', 'methode', 'uitvoerder', 'herkomst',
+        'meetreeks_meetpunt_parameter', 'meetreeks_meetpunt',
+        'meetreeks_meetpunt_eenheid', 'meetreeks_meetwaarde_parameter',
+        'meetreeks_meetwaarde', 'meetreeks_meetwaarde_eenheid']
 
     def test_search(self, mp_wfs, mp_get_schema,
                     mp_remote_codelist,
@@ -70,9 +73,12 @@ class TestObservatieFractiemetingSearch(AbstractTestSearch):
         df = self.search_instance.search(
             query=self.valid_query_single)
 
-        assert round(df.iloc[0].fractiemeting_ondergrens, 2) == 0
-        assert round(df.iloc[0].fractiemeting_bovengrens, 2) == 2
-        assert round(df.iloc[0].fractiemeting_waarde, 2) == 10.17
+        assert df.iloc[0].meetreeks_meetpunt_parameter == 'Diameter'
+        assert df.iloc[0].meetreeks_meetpunt == '4.4E-5'
+        assert df.iloc[0].meetreeks_meetpunt_eenheid == 'mm'
+        assert df.iloc[0].meetreeks_meetwaarde_parameter == 'Fractie met grotere diameter'
+        assert df.iloc[0].meetreeks_meetwaarde == '99.99'
+        assert df.iloc[0].meetreeks_meetwaarde_eenheid == '%'
 
     def test_search_observatie(self, mp_wfs, mp_get_schema,
                                mp_remote_codelist,
@@ -99,11 +105,14 @@ class TestObservatieFractiemetingSearch(AbstractTestSearch):
             Monkeypatch the call to get the remote XML data.
         """
         search_instance = ObservatieSearch(
-            Observatie.with_subtype(Fractiemeting))
+            Observatie.with_subtype(Meetreeks))
 
         df = search_instance.search(
             query=self.valid_query_single)
 
-        assert round(df.iloc[0].fractiemeting_ondergrens, 2) == 0
-        assert round(df.iloc[0].fractiemeting_bovengrens, 2) == 2
-        assert round(df.iloc[0].fractiemeting_waarde, 2) == 10.17
+        assert df.iloc[0].meetreeks_meetpunt_parameter == 'Diameter'
+        assert df.iloc[0].meetreeks_meetpunt == '4.4E-5'
+        assert df.iloc[0].meetreeks_meetpunt_eenheid == 'mm'
+        assert df.iloc[0].meetreeks_meetwaarde_parameter == 'Fractie met grotere diameter'
+        assert df.iloc[0].meetreeks_meetwaarde == '99.99'
+        assert df.iloc[0].meetreeks_meetwaarde_eenheid == '%'

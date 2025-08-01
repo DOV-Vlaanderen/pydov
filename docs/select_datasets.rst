@@ -894,16 +894,22 @@ Observations (Observaties)
 Type
     Observatie (Observations)
 
-Subtype
+Subtypes
     * ObservatieHerhaling (Repetition of the observation) - More information about the repetition(s) of the observation.
+    * Fractiemeting (Fraction measurement) - More information about the fraction measurement of observations of type 'Textuurmeting'.
 
 Extra fieldsets
     * ObservatieDetails (Details of observation) - Extra details about the observation.
 
-Search class
-    :class:`pydov.search.observatie.ObservatieSearch`
+Search classes
+    * :class:`pydov.search.observatie.ObservatieSearch` - This will return all observations, by default without extra fields or subtypes.
+    * :class:`pydov.search.observatie.ObservatieFractiemetingSearch` - This will return only observations of type 'Textuurmeting' and will by default include the fraction measurement subtype.
 
 Default dataframe output
+    :class:`pydov.search.observatie.ObservatieSearch`
+
+    This search class will return all observations, by default without extra fields or subtypes.
+
       .. csv-table:: Observations (Observaties)
         :header-rows: 1
         :delim: ;
@@ -923,6 +929,30 @@ Default dataframe output
         uitvoerder;Observatie;1;string;VO - Afdeling Geotechniek
         herkomst;Observatie;1;string;LABO
 
+    :class:`pydov.search.observatie.ObservatieFractiemetingSearch`
+
+    This search class will return only observations of type 'Textuurmeting' and will by default include the fraction measurement subtype.
+
+      .. csv-table:: Observations of type 'Textuurmeting' (Observaties van type 'Textuurmeting')
+        :header-rows: 1
+        :delim: ;
+
+        Field;Source;Cost;Datatype;Example
+        pkey_observatie;Observatie;1;string;https://oefen.dov.vlaanderen.be/data/observatie/2019-317331
+        pkey_parent;Observatie;1;string;https://oefen.dov.vlaanderen.be/data/monster/1951-263333
+        fenomeentijd;Observatie;1;date;1951-12-12
+        diepte_van_m;Observatie;1;float;Nan
+        diepte_tot_m;Observatie;1;float;NaN
+        parametergroep;Observatie;1;string;Bodem_fysisch_textuur
+        parameter;Observatie;1;string;Textuurfracties (textuurmeting)
+        eenheid;Observatie;1;string;%
+        methode;Observatie;1;string;Onbekend
+        uitvoerder;Observatie;1;string;Nan
+        herkomst;Observatie;1;string;VELD
+        fractiemeting_ondergrens;ObservatieFractiemeting;10;float;0.0
+        fractiemeting_bovengrens;ObservatieFractiemeting;10;float;2.0
+        fractiemeting_waarde;ObservatieFractiemeting;10;float;5.5
+
 Extra subtypes
     :class:`pydov.types.observatie.ObservatieHerhaling`
 
@@ -936,6 +966,18 @@ Extra subtypes
       herhaling_minimum,ObservatieHerhaling,10,float,2.00000000
       herhaling_maximum,ObservatieHerhaling,10,float,8.00000000
       herhaling_standaardafwijking,ObservatieHerhaling,10,float,2.75680975
+
+    :class:`pydov.types.observatie.Fractiemeting`
+
+    Extra subtype which adds more information about the fraction measurement of observations of type 'Textuurmeting'.
+
+    .. csv-table:: Fractiemeting
+      :header-rows: 1
+
+      Field,Source,Cost,Datatype,Example
+      fractiemeting_ondergrens,Fractiemeting,10,float,0.0
+      fractiemeting_bovengrens,Fractiemeting,10,float,0.2
+      fractiemeting_waarde,Fractiemeting,10,float,10.17
 
 Extra fieldsets
     :class:`pydov.types.observate.ObservatieDetails`

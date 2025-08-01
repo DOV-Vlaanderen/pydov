@@ -17,7 +17,7 @@ class TestObservatie(AbstractTestTypes):
     namespace = 'http://dov.vlaanderen.be/ocdov/monster'
     pkey_base = build_dov_url('data/observatie/')
 
-    sorted_subtypes = ['ObservatieHerhaling']
+    sorted_subtypes = ['Fractiemeting', 'ObservatieHerhaling']
     sorted_fieldsets = ['ObservatieDetails']
 
     field_names = ['pkey_observatie', 'pkey_parent', 'fenomeentijd', 'diepte_van_m', 'diepte_tot_m', 'parametergroep',

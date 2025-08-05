@@ -17,7 +17,7 @@ import pandas as pd
 import numpy as np
 
 import pydov
-from pydov.types.fields import (_WfsInjectedField, GeometryReturnField,
+from pydov.types.fields import (_WfsInjectedField, FieldMetadata, FieldMetadataList, GeometryReturnField,
                                 ReturnFieldList)
 from pydov.util import owsutil
 from pydov.util.dovutil import build_dov_url
@@ -189,6 +189,15 @@ class AbstractSearch(AbstractCommon):
         self._wfs_max_features = None
         self._md_metadata = None
         self._fc_featurecatalogue = None
+
+    def _repr_html_(self):
+        html = (f'<p><b>{self.__class__.__name__}</b> '
+                f'- {self.get_description()}</p>')
+
+        html += '<div style="margin-left: 20px">'
+        html += self.get_fields()._repr_html_()
+        html += '</div>'
+        return html
 
     def _get_wfs_endpoint(self):
         """Get the WFS endpoint URL to use for accessing the feature type.
@@ -462,9 +471,7 @@ class AbstractSearch(AbstractCommon):
                     field['values'] = fc_field['values']
 
             if codelist is not None:
-                values = codelist.get_values()
-                if values is not None:
-                    field['values'] = values
+                field['values'] = codelist.get()
 
             fields[name] = field
 
@@ -497,9 +504,7 @@ class AbstractSearch(AbstractCommon):
             }
 
             if xml_field['codelist'] is not None:
-                values = xml_field['codelist'].get_values()
-                if values is not None:
-                    field['values'] = values
+                field['values'] = xml_field['codelist'].get()
 
             fields[field['name']] = field
 
@@ -517,9 +522,7 @@ class AbstractSearch(AbstractCommon):
             fields[field['name']] = field
 
             if custom_field['codelist'] is not None:
-                values = custom_field['codelist'].get_values()
-                if values is not None:
-                    field['values'] = values
+                field['values'] = custom_field['codelist'].get()
 
         for custom_field in self._type.get_fields(
                 source=['custom_xml']).values():
@@ -535,9 +538,7 @@ class AbstractSearch(AbstractCommon):
             fields[field['name']] = field
 
             if custom_field['codelist'] is not None:
-                values = custom_field['codelist'].get_values()
-                if values is not None:
-                    field['values'] = values
+                field['values'] = custom_field['codelist'].get()
 
         return fields
 
@@ -983,7 +984,11 @@ class AbstractSearch(AbstractCommon):
 
         """
         self._init_fields()
-        return self._fields
+
+        field_metadata = FieldMetadataList()
+        for field in self._fields.values():
+            field_metadata.add(FieldMetadata.from_dict(field))
+        return field_metadata
 
     def search(self, location=None, query=None,
                sort_by=None, return_fields=None, max_features=None):

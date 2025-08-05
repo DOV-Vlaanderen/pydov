@@ -363,3 +363,79 @@ class GeometryReturnField(AbstractReturnField):
                 raise TypeError('epsg should be an integer value')
 
         self.epsg = epsg
+
+
+class FieldMetadataList:
+    def __init__(self):
+        self.fields = {}
+
+    def add(self, field_metadata):
+        self.fields[field_metadata.name] = field_metadata
+
+    def __getitem__(self, name):
+        if name in self.fields:
+            return self.fields.get(name)
+        raise KeyError(f'{name}')
+
+    def __getattr__(self, name):
+        if name in self.fields:
+            return self.fields.get(name)
+        raise AttributeError(
+            f"'{self.__class__.__name__}' object has not attribute '{name}'")
+
+    def __repr__(self):
+       return self.fields.__repr__()
+       s = ', '.join(i.__repr__() for i in self.fields.values())
+
+       return f'<pydov.types.fields.FieldMetadataList: {s}>'
+
+    def _repr_html_(self):
+        s = ''.join(i._repr_html_() for i in self.fields.values())
+        return f'<div>{s}</div>'
+
+
+class FieldMetadata:
+    @staticmethod
+    def from_dict(field):
+        fm = FieldMetadata()
+        fm.__field = field
+        return fm
+
+    def __getitem__(self, name):
+        if name in self.__field:
+            return self.__field.get(name)
+        raise KeyError(f'{name}')
+
+    def __getattr__(self, name):
+        if name in self.__field:
+            return self.__field.get(name)
+        raise AttributeError(
+            f"'{self.__class__.__name__}' object has not attribute '{name}'")
+
+    def __repr__(self):
+        return self.__field.__repr__()
+
+    def _repr_html_(self):
+        html = '<div style="border-left: 2px dashed #fee439; padding-left: 10px">'
+        html += (f"<p><b>{self.__field['name']}</b>"
+                 f" - {self.__field['definition']}</p>")
+
+        html += '<ul>'
+        html += f'<li>type: {self.type}</li>'
+        html += f'<li>notnull: {self.notnull}</li>'
+        html += f'<li>query: {self.query}</li>'
+        html += f'<li>cost: {self.cost}</li>'
+        html += f'<li>list: {self.list}</li>'
+
+        if self.__field.get('values') is not None:
+            html += f'<li>values:</li>'
+            html += '<div style="margin-left: 20px">'
+            try:
+                html += self.values._repr_html_()
+            except AttributeError:
+                for key, value in self.values.items():
+                    html += f'<p><b>{key}</b> - <i>{value}</i></p>'
+            html += '</div>'
+        html += '</ul></div>'
+
+        return html

@@ -10,6 +10,7 @@ from owslib.namespaces import Namespaces
 from owslib.util import nspath_eval
 
 import pydov
+from pydov.util.codelists import CodeListItem, FeatureCatalogueValues
 from pydov.util.net import SessionFactory
 
 from .hooks import HookRunner
@@ -235,23 +236,31 @@ def get_remote_featurecatalogue(csw_url, fc_uuid):
             multiplicity_upper = 'Inf'
 
         values = {}
+        codelist = FeatureCatalogueValues()
+        def clean(x): return x.strip() if x.strip() != '' else None
+
         for lv in a.findall(nspath_eval('gfc:listedValue/gfc:FC_ListedValue',
                                         __namespaces)):
-            label = lv.findtext(nspath_eval('gfc:label/gco:CharacterString',
-                                            __namespaces))
-            definition = lv.findtext(nspath_eval(
-                'gfc:definition/gco:CharacterString', __namespaces))
+            code = clean(
+                lv.findtext(nspath_eval('gfc:code/gco:CharacterString',
+                                        __namespaces)) or '')
+            label = clean(
+                lv.findtext(nspath_eval('gfc:label/gco:CharacterString',
+                                        __namespaces)) or '')
+            definition = clean(
+                lv.findtext(nspath_eval(
+                    'gfc:definition/gco:CharacterString', __namespaces)) or '')
 
             if label is not None:
-                label = label.strip()
-                if label != '':
-                    if definition is not None:
-                        values[label] = definition.strip() if \
-                            definition.strip() != '' else None
-                    else:
-                        values[label] = None
+                values[label] = definition
+
+            if code is None:
+                code = label
+
+            codelist.add_item(CodeListItem(code, label, definition))
 
         attr['values'] = values if len(values) > 0 else None
+        attr['codelist'] = codelist if len(codelist.items) > 0 else None
 
         attr['multiplicity'] = (multiplicity_lower, multiplicity_upper)
         attributes[name] = attr

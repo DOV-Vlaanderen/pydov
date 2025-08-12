@@ -17,8 +17,9 @@ import pandas as pd
 import numpy as np
 
 import pydov
-from pydov.types.fields import (_WfsInjectedField, FieldMetadata, FieldMetadataList, GeometryReturnField,
-                                ReturnFieldList)
+from pydov.search.fields import (
+    FieldMetadata, FieldMetadataList, GeometryReturnField, ReturnFieldList)
+from pydov.types.fields import _WfsInjectedField
 from pydov.util import owsutil
 from pydov.util.dovutil import build_dov_url
 from pydov.util.errors import (InvalidFieldError, InvalidSearchParameterError,
@@ -26,6 +27,7 @@ from pydov.util.errors import (InvalidFieldError, InvalidSearchParameterError,
                                DataParseWarning)
 from pydov.util.hooks import HookRunner
 from pydov.util.net import LocalSessionThreadPool
+from pydov.util.notebook import HtmlFormatter
 
 # compile regex for matching datetime
 re_datetime = re.compile(
@@ -158,7 +160,7 @@ class AbstractCommon(object):
             return np.nan
 
 
-class AbstractSearch(AbstractCommon):
+class AbstractSearch(AbstractCommon, HtmlFormatter):
     """Abstract search class grouping methods common to all DOV search
     classes. Not to be instantiated or used directly."""
 
@@ -191,13 +193,9 @@ class AbstractSearch(AbstractCommon):
         self._fc_featurecatalogue = None
 
     def _repr_html_(self):
-        html = (f'<p><b>{self.__class__.__name__}</b> '
-                f'- {self.get_description()}</p>')
-
-        html += '<div style="margin-left: 20px">'
-        html += self.get_fields()._repr_html_()
-        html += '</div>'
-        return html
+        html = f'<div class="description"><p>{self.get_description()}</p><div>'
+        html += f'<div class="fields">{self.get_fields()._repr_html_()}</p><div>'
+        return super()._repr_html_(html)
 
     def _get_wfs_endpoint(self):
         """Get the WFS endpoint URL to use for accessing the feature type.
@@ -467,8 +465,8 @@ class AbstractSearch(AbstractCommon):
                 field['definition'] = fc_field['definition']
                 field['notnull'] = fc_field['multiplicity'][0] > 0
 
-                if fc_field['values'] is not None:
-                    field['values'] = fc_field['values']
+                if fc_field['codelist'] is not None:
+                    field['values'] = fc_field['codelist']
 
             if codelist is not None:
                 field['values'] = codelist.get()
@@ -945,7 +943,7 @@ class AbstractSearch(AbstractCommon):
         wfs_layer = self._get_layer()
         return wfs_layer.abstract
 
-    def get_fields(self):
+    def get_fields(self, query=None, type=None):
         """Get the metadata of the fields that are available.
 
         Returns
@@ -987,6 +985,12 @@ class AbstractSearch(AbstractCommon):
 
         field_metadata = FieldMetadataList()
         for field in self._fields.values():
+            if type is not None:
+                if field['type'] != type:
+                    continue
+            if query is not None:
+                if field['query'] != query:
+                    continue
             field_metadata.add(FieldMetadata.from_dict(field))
         return field_metadata
 

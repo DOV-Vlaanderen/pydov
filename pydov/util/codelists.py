@@ -2,13 +2,14 @@ import warnings
 
 from dataclasses import dataclass
 
-from pydov.search.abstract import AbstractCommon
 from pydov.util.dovutil import (
     build_dov_sparql_request, get_remote_url, get_remote_request)
 from pydov.util.errors import CodelistFetchWarning, RemoteFetchError
 from pydov.util.hooks import HookRunner
 
 from owslib.etree import etree
+
+from pydov.util.notebook import HtmlFormatter
 
 
 class MemoryCache(object):
@@ -54,7 +55,7 @@ class MemoryCache(object):
 
 
 @dataclass
-class CodeListItem:
+class CodeListItem(HtmlFormatter):
     """Class to represent an item in a codelist.
     """
     code: str
@@ -69,12 +70,13 @@ class CodeListItem:
 
     def _repr_html_(self):
         if self.definition is not None:
-            return f'<p><b>{self.code}</b> - {self.label} - <i>{self.definition}</i></p>'
+            html = f'<p><b>{self.code}</b> - {self.label} - <i>{self.definition}</i></p>'
         else:
-            return f'<p><b>{self.code}</b> - {self.label}</p>'
+            html = f'<p><b>{self.code}</b> - {self.label}</p>'
+        return super()._repr_html_(html, with_header=False)
 
 
-class AbstractCodeList(object):
+class AbstractCodeList(HtmlFormatter):
     """Abstract base class for codelists."""
     def __init__(self):
         """Initialisation."""
@@ -90,8 +92,14 @@ class AbstractCodeList(object):
         if item is not None:
             return item.definition
 
-    def get(self):
+    def get_codelist(self):
         return self
+
+    def get(self, *args, **kwargs):
+        return self.items.get(*args, **kwargs)
+
+    def add_item(self, item):
+        self.items[item.code] = item
 
     def __getitem__(self, name):
         if name in self.items:
@@ -104,6 +112,9 @@ class AbstractCodeList(object):
         raise AttributeError(
             f"'{self.__class__.__name__}' object has not attribute '{name}'")
 
+    def __dir__(self):
+        return list(self.items.keys())
+
     def __repr__(self):
        s = ', '.join(i.__repr__() for i in sorted(
            self.items.values(), key=lambda x: x.code))
@@ -113,11 +124,10 @@ class AbstractCodeList(object):
     def _repr_html_(self):
         s = ''.join(i._repr_html_() for i in sorted(
             self.items.values(), key=lambda x: x.code))
-        return f'<div>{s}</div>'
+        return super()._repr_html_(s)
 
 
-
-class AbstractResolvableCodeList(AbstractCommon, AbstractCodeList):
+class AbstractResolvableCodeList(AbstractCodeList):
     """Abstract base class for resolvable codelists.
 
     A resolvable codelist will load its values from another datasource.
@@ -190,11 +200,11 @@ class AbstractResolvableCodeList(AbstractCommon, AbstractCodeList):
         codelist = self.get_remote_codelist()
 
         for item in self.parse_codelist_items(codelist):
-            self.items[item.code] = item
+            self.add_item(item)
 
-    def get(self):
+    def get_codelist(self):
         self.resolve()
-        return super().get()
+        return super().get_codelist()
 
 
 class OsloCodeList(AbstractResolvableCodeList):
@@ -348,3 +358,7 @@ class XsdType(AbstractResolvableCodeList):
                     './{http://www.w3.org/2001/XMLSchema}annotation/{'
                     'http://www.w3.org/2001/XMLSchema}documentation')
                 yield CodeListItem(code, label)
+
+
+class FeatureCatalogueValues(AbstractCodeList):
+    """Class representing a codelist from feature catalogue values."""

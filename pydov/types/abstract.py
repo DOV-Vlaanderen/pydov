@@ -12,11 +12,13 @@ from owslib.etree import etree
 
 import pydov
 from pydov.search.abstract import AbstractCommon
-from pydov.types.fields import AbstractField, ReturnFieldList
+from pydov.search.fields import ReturnFieldList
+from pydov.types.fields import AbstractField
 from pydov.util import owsutil
 from pydov.util.dovutil import get_dov_xml, parse_dov_xml
 from pydov.util.errors import RemoteFetchError, XmlFetchWarning
 from pydov.util.net import LocalSessionThreadPool
+from pydov.util.notebook import HtmlFormatter
 
 from ..util.errors import InvalidFieldError, XmlParseError, XmlParseWarning
 from ..util.hooks import HookRunner
@@ -135,7 +137,7 @@ class AbstractFieldsObject(object):
         return newType
 
 
-class AbstractDovFieldSet(AbstractFieldsObject):
+class AbstractDovFieldSet(AbstractFieldsObject, HtmlFormatter):
     """Class representing a set of fields to be used to extend existing fields
     of a certain AbstractDovType or AbstractDovSubType.
 
@@ -155,6 +157,11 @@ class AbstractDovFieldSet(AbstractFieldsObject):
     intended_for = []
 
     fields = []
+
+    def _repr_html_(self):
+        html = f'<div class="description"><p>{self.get_description()}</p><div>'
+        html += f'<div class="fields">{self.get_fields()._repr_html_()}</p><div>'
+        return super()._repr_html_(html)
 
     @classmethod
     def get_fields(cls):

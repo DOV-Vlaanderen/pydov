@@ -469,7 +469,7 @@ class AbstractSearch(AbstractCommon, HtmlFormatter):
                     field['values'] = fc_field['codelist']
 
             if codelist is not None:
-                field['values'] = codelist.get()
+                field['values'] = codelist.get_codelist()
 
             fields[name] = field
 
@@ -502,7 +502,7 @@ class AbstractSearch(AbstractCommon, HtmlFormatter):
             }
 
             if xml_field['codelist'] is not None:
-                field['values'] = xml_field['codelist'].get()
+                field['values'] = xml_field['codelist'].get_codelist()
 
             fields[field['name']] = field
 
@@ -520,7 +520,7 @@ class AbstractSearch(AbstractCommon, HtmlFormatter):
             fields[field['name']] = field
 
             if custom_field['codelist'] is not None:
-                field['values'] = custom_field['codelist'].get()
+                field['values'] = custom_field['codelist'].get_codeliiist()
 
         for custom_field in self._type.get_fields(
                 source=['custom_xml']).values():
@@ -536,7 +536,7 @@ class AbstractSearch(AbstractCommon, HtmlFormatter):
             fields[field['name']] = field
 
             if custom_field['codelist'] is not None:
-                field['values'] = custom_field['codelist'].get()
+                field['values'] = custom_field['codelist'].get_codelist()
 
         return fields
 

@@ -5,7 +5,7 @@ import numpy as np
 
 from tests.test_search_grondwatervergunning import (
     location_md_metadata, location_fc_featurecatalogue,
-    location_wfs_describefeaturetype, location_xsd_base
+    location_wfs_describefeaturetype, location_codelists
 )
 
 from pydov.search.grondwatervergunning import GrondwaterVergunningSearch

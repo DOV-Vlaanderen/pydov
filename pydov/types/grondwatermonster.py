@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 """Module containing the DOV data type for groundwater samples
 (GrondwaterMonsters), including subtypes."""
-from pydov.types.fields import WfsField, XmlField, XsdType
+from pydov.types.fields import WfsField, XmlField
 from pydov.util.dovutil import build_dov_url
+from pydov.util.codelists import XsdType
 
 from .abstract import AbstractDovSubType, AbstractDovType
 
@@ -25,9 +26,10 @@ class Observatie(AbstractDovSubType):
                  source_xpath='/parameter',
                  definition='Parameter',
                  datatype='string',
-                 xsd_type=XsdType(
+                 codelist=XsdType(
                      xsd_schema=_observatieDataCodes_xsd,
-                     typename='ParameterEnumType')),
+                     typename='ParameterEnumType',
+                     datatype='string')),
         XmlField(name='detectie',
                  source_xpath='/detectieconditie',
                  definition='boven/onder detectielimiet',
@@ -40,9 +42,10 @@ class Observatie(AbstractDovSubType):
                  source_xpath='/eenheid',
                  definition='Eenheid',
                  datatype='string',
-                 xsd_type=XsdType(
+                 codelist=XsdType(
                      xsd_schema=_observatieDataCodes_xsd,
-                     typename='MeeteenheidEnumType')),
+                     typename='MeeteenheidEnumType',
+                     datatype='string')),
         XmlField(name='veld_labo',
                  source_xpath='/veld_labo',
                  definition='observatie in het LABO of op het VELD',

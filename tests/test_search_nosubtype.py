@@ -10,7 +10,7 @@ location_fc_featurecatalogue = \
     'tests/data/types/grondwaterfilter/fc_featurecatalogue.xml'
 location_wfs_describefeaturetype = \
     'tests/data/types/grondwaterfilter/wfsdescribefeaturetype.xml'
-location_xsd_base = 'tests/data/types/grondwaterfilter/xsd_*.xml'
+location_codelists = 'tests/data/types/grondwaterfilter'
 
 location_wfs_getfeature = \
     'tests/data/types/grondwaterfilter/wfsgetfeature_geenpeilmeting.xml'
@@ -23,7 +23,7 @@ location_dov_xml = \
 class TestSearchNoSubtype(object):
     def test_search_nosubtype(self, mp_wfs, mp_remote_md, mp_remote_fc,
                               mp_get_schema, mp_remote_describefeaturetype,
-                              mp_remote_wfs_feature, mp_remote_xsd,
+                              mp_remote_wfs_feature, mp_remote_codelist,
                               mp_dov_xml):
         """Test the search method with a result containing no elements from
         the subtype.
@@ -45,8 +45,8 @@ class TestSearchNoSubtype(object):
             Monkeypatch the call to get the remote feature catalogue.
         mp_remote_wfs_feature : pytest.fixture
             Monkeypatch the call to get WFS features.
-        mp_remote_xsd : pytest.fixture
-            Monkeypatch the call to get XSD schemas.
+        mp_remote_codelist : pytest.fixture
+            Monkeypatch the call to get remote codelists.
         mp_dov_xml : pytest.fixture
             Monkeypatch the call to get the remote XML data.
 

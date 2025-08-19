@@ -2,9 +2,10 @@
 """Module containing the DOV data type for CPT measurements (Sonderingen),
 including subtypes."""
 from pydov.types.abstract import AbstractDovSubType, AbstractDovType
-from pydov.types.fields import WfsField, XmlField, XsdType
+from pydov.types.fields import WfsField, XmlField
 from pydov.util.dovutil import build_dov_url
-from pydov.types.ligging import MvMtawField
+from pydov.util.codelists import XsdType
+from pydov.types.fields_custom import MvMtawField
 
 
 class Meetdata(AbstractDovSubType):
@@ -77,11 +78,12 @@ class Techniek(AbstractDovSubType):
                  source_xpath='/techniek',
                  definition='De gebruikte techniek.',
                  datatype='string',
-                 xsd_type=XsdType(
+                 codelist=XsdType(
                      xsd_schema=build_dov_url(
                          'xdov/schema/latest/xsd/kern/sondering/'
                          'SonderingDataCodes.xsd'),
-                     typename='SondeerTechniekEnumType')),
+                     typename='SondeerTechniekEnumType',
+                     datatype='string')),
         XmlField(name='techniek_andere',
                  source_xpath='/techniek_andere',
                  definition="De gebruikte techniek (enkel van toepassing ' + \

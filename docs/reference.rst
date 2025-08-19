@@ -230,7 +230,7 @@ Fields
     :members:
     :show-inheritance:
 
-.. automodule:: pydov.types.ligging
+.. automodule:: pydov.types.fields_custom
     :members:
 
 Search utilities

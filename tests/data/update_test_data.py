@@ -1318,6 +1318,94 @@ if __name__ == '__main__':
 
     get_codelists(Observatie, 'types/observatie')
 
+    # types/observatie_fractiemetingen
+
+    update_file('types/observatie_fractiemeting/observatie.xml',
+                build_dov_url('data/observatie/1995-10282748.xml'))
+
+    update_file(
+        'types/observatie_fractiemeting/wfsgetfeature.xml',
+        build_dov_url(
+            'geoserver/ows?service=WFS&version=2.0.0&request=GetFeature'
+            '&typeName=monster:observaties&count=1&CQL_Filter=observatie_link=%27' + build_dov_url(
+                'data/observatie/1995-10282748%27'))
+    )
+
+    update_file(
+        'types/observatie_fractiemeting/feature.xml',
+        build_dov_url(
+            'geoserver/ows?service=WFS&version=2.0.0&request=GetFeature'
+            '&typeName=monster:observaties&count=1&CQL_Filter=observatie_link=%27' + build_dov_url(
+                'data/observatie/1995-10282748%27')),
+        get_first_featuremember)
+
+    update_file(
+        'types/observatie_fractiemeting/fc_featurecatalogue.xml',
+        build_dov_url(
+            'geonetwork/srv/dut/csw'
+            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+            '&outputSchema=http://www.isotc211.org/2005/gfc'
+            '&elementSetName=full&id=0ee52b15-12a5-4314-a8af-0b37ee8bf766'))
+
+    update_file(
+        'types/observatie_fractiemeting/md_metadata.xml',
+        build_dov_url(
+            'geonetwork/srv/dut/csw'
+            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+            '&outputSchema=http://www.isotc211.org/2005/gmd'
+            '&elementSetName=full&id=7e166b29-f24b-494b-af66-acc82deb5af2'))
+
+    update_file(
+        'types/observatie_fractiemeting/wfsdescribefeaturetype.xml',
+        build_dov_url(
+            'geoserver/monster/wfs?service=WFS&version=2.0.0&request=DescribeFeatureType&typeName=monster:observaties'))
+
+    get_codelists(Observatie, 'types/observatie_fractiemeting')
+
+    # types/observatie_meetreeks
+
+    update_file('types/observatie_meetreeks/observatie.xml',
+                build_dov_url('data/observatie/2025-43568400.xml'))
+
+    update_file(
+        'types/observatie_meetreeks/wfsgetfeature.xml',
+        build_dov_url(
+            'geoserver/ows?service=WFS&version=2.0.0&request=GetFeature'
+            '&typeName=monster:observaties&count=1&CQL_Filter=observatie_link=%27' + build_dov_url(
+                'data/observatie/2025-43568400%27'))
+    )
+
+    update_file(
+        'types/observatie_meetreeks/feature.xml',
+        build_dov_url(
+            'geoserver/ows?service=WFS&version=2.0.0&request=GetFeature'
+            '&typeName=monster:observaties&count=1&CQL_Filter=observatie_link=%27' + build_dov_url(
+                'data/observatie/2025-43568400%27')),
+        get_first_featuremember)
+
+    update_file(
+        'types/observatie_meetreeks/fc_featurecatalogue.xml',
+        build_dov_url(
+            'geonetwork/srv/dut/csw'
+            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+            '&outputSchema=http://www.isotc211.org/2005/gfc'
+            '&elementSetName=full&id=0ee52b15-12a5-4314-a8af-0b37ee8bf766'))
+
+    update_file(
+        'types/observatie_meetreeks/md_metadata.xml',
+        build_dov_url(
+            'geonetwork/srv/dut/csw'
+            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+            '&outputSchema=http://www.isotc211.org/2005/gmd'
+            '&elementSetName=full&id=7e166b29-f24b-494b-af66-acc82deb5af2'))
+
+    update_file(
+        'types/observatie_meetreeks/wfsdescribefeaturetype.xml',
+        build_dov_url(
+            'geoserver/monster/wfs?service=WFS&version=2.0.0&request=DescribeFeatureType&typeName=monster:observaties'))
+
+    get_codelists(Observatie, 'types/observatie_meetreeks')
+
     for r in pool.join():
         if r.get_error() is not None:
             sys.stdout.write('{}: {}\n'.format(

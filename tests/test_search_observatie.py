@@ -52,6 +52,8 @@ class TestObservatieSearch(AbstractTestSearch):
             Monkeypatch the call to the remote GetCapabilities request.
         mp_get_schema : pytest.fixture
             Monkeypatch the call to a remote OWSLib schema.
+        mp_remote_codelist : pytest.fixture
+            Monkeypatch the call to get remote codelists.
         mp_remote_describefeaturetype : pytest.fixture
             Monkeypatch the call to a remote DescribeFeatureType.
         mp_remote_wfs_feature : pytest.fixture

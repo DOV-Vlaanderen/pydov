@@ -894,16 +894,24 @@ Observations (Observaties)
 Type
     Observatie (Observations)
 
-Subtype
+Subtypes
+    * Fractiemeting (Fraction measurement) - More information about the fraction measurement of observations of type 'Textuurmeting'.
+    * Meetreeks (Measurement series) - More information about the measurement series of observations of type 'Meetreeks'.
     * ObservatieHerhaling (Repetition of the observation) - More information about the repetition(s) of the observation.
 
 Extra fieldsets
     * ObservatieDetails (Details of observation) - Extra details about the observation.
 
-Search class
-    :class:`pydov.search.observatie.ObservatieSearch`
+Search classes
+    * :class:`pydov.search.observatie.ObservatieSearch` - This will return all observations, by default without extra fields or subtypes.
+    * :class:`pydov.search.observatie.ObservatieFractiemetingSearch` - This will return only observations of type 'Textuurmeting' and will by default include the fraction measurement subtype.
+    * :class:`pydov.search.observatie.ObservatieMeetreeksSearch` - This will return only observations of type 'Meetreeks' and will by default include the measurement series subtype.
 
 Default dataframe output
+    :class:`pydov.search.observatie.ObservatieSearch`
+
+    This search class will return all observations, by default without extra fields or subtypes.
+
       .. csv-table:: Observations (Observaties)
         :header-rows: 1
         :delim: ;
@@ -923,6 +931,56 @@ Default dataframe output
         uitvoerder;Observatie;1;string;VO - Afdeling Geotechniek
         herkomst;Observatie;1;string;LABO
 
+    :class:`pydov.search.observatie.ObservatieFractiemetingSearch`
+
+    This search class will return only observations of type 'Textuurmeting' and will by default include the fraction measurement subtype.
+
+      .. csv-table:: Observations of type 'Textuurmeting' (Observaties van type 'Textuurmeting')
+        :header-rows: 1
+        :delim: ;
+
+        Field;Source;Cost;Datatype;Example
+        pkey_observatie;Observatie;1;string;https://oefen.dov.vlaanderen.be/data/observatie/2019-317331
+        pkey_parent;Observatie;1;string;https://oefen.dov.vlaanderen.be/data/monster/1951-263333
+        fenomeentijd;Observatie;1;date;1951-12-12
+        diepte_van_m;Observatie;1;float;Nan
+        diepte_tot_m;Observatie;1;float;NaN
+        parametergroep;Observatie;1;string;Bodem_fysisch_textuur
+        parameter;Observatie;1;string;Textuurfracties (textuurmeting)
+        eenheid;Observatie;1;string;%
+        methode;Observatie;1;string;Onbekend
+        uitvoerder;Observatie;1;string;NaN
+        herkomst;Observatie;1;string;VELD
+        fractiemeting_ondergrens;Fractiemeting;10;float;0.0
+        fractiemeting_bovengrens;Fractiemeting;10;float;2.0
+        fractiemeting_waarde;Fractiemeting;10;float;5.5
+
+    :class:`pydov.search.observatie.ObservatieMeetreeksSearch`
+
+    This search class will return only observations of type 'Meetreeks' and will by default include the measurement series subtype.
+
+      .. csv-table:: Observations of type 'Meetreeks' (Observaties van type 'Meetreeks')
+        :header-rows: 1
+        :delim: ;
+
+        Field;Source;Cost;Datatype;Example
+        pkey_observatie;Observatie;1;string;https://oefen.dov.vlaanderen.be/data/observatie/2024-33862493
+        pkey_parent;Observatie;1;string;https://oefen.dov.vlaanderen.be/data/monster/2024-367983
+        fenomeentijd;Observatie;1;date;2024-040-03
+        diepte_van_m;Observatie;1;float;NaN
+        diepte_tot_m;Observatie;1;float;NaN
+        parametergroep;Observatie;1;string;Bodem_spectra
+        parameter;Observatie;1;string;NIRS (nirs)
+        methode;Observatie;1;string;NIRS met FOSS XDS toestel (Cmon analyseprotocol)
+        uitvoerder;Observatie;1;string;NaN
+        herkomst;Observatie;1;string;LABO
+        meetreeks_meetpunt_parameter;Meetreeks;10;string;golflengte
+        meetreeks_meetpunt;Meetreeks;10;string;400.0
+        meetreeks_meetpunt_eenheid;Meetreeks;10;string;nm
+        meetreeks_meetwaarde_parameter;Meetreeks;10;string;nir_spectrale_absorptie
+        meetreeks_meetwaarde;Meetreeks;10;float;0.6227
+        meetreeks_meetwaarde_eenheid;Meetreeks;10;string;`-`
+
 Extra subtypes
     :class:`pydov.types.observatie.ObservatieHerhaling`
 
@@ -936,6 +994,33 @@ Extra subtypes
       herhaling_minimum,ObservatieHerhaling,10,float,2.00000000
       herhaling_maximum,ObservatieHerhaling,10,float,8.00000000
       herhaling_standaardafwijking,ObservatieHerhaling,10,float,2.75680975
+
+    :class:`pydov.types.observatie.Fractiemeting`
+
+    Extra subtype which adds more information about the fraction measurement of observations of type 'Textuurmeting'.
+
+    .. csv-table:: Fractiemeting
+      :header-rows: 1
+
+      Field,Source,Cost,Datatype,Example
+      fractiemeting_ondergrens,Fractiemeting,10,float,0.0
+      fractiemeting_bovengrens,Fractiemeting,10,float,0.2
+      fractiemeting_waarde,Fractiemeting,10,float,10.17
+
+    :class:`pydov.types.observatie.Meetreeks`
+
+    Extra subtype which adds more information about the measurement series of observations of type 'Meetreeks'.
+
+    .. csv-table:: Meetreeks
+      :header-rows: 1
+
+      Field,Source,Cost,Datatype,Example
+      meetreeks_meetpunt_parameter,Meetreeks,10,string,Diameter
+      meetreeks_meetpunt,Meetreeks,10,string,0.074
+      meetreeks_meetpunt_eenheid,Meetreeks,10,string,mm
+      meetreeks_meetwaarde_parameter,Meetreeks,10,string,Fractie met grotere diameter
+      meetreeks_meetwaarde,Meetreeks,10,float,89.94
+      meetreeks_meetwaarde_eenheid,Meetreeks,10,string,%
 
 Extra fieldsets
     :class:`pydov.types.observate.ObservatieDetails`

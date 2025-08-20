@@ -1004,9 +1004,9 @@ Extra subtypes
       :header-rows: 1
 
       Field,Source,Cost,Datatype,Example
-      secundaireparameter_parameter,SecundaireParameter,10,string,pH
-      herhaling_minimum,SecundaireParameter,10,float,7.0
-      herhaling_maximum,SecundaireParameter,10,string,/
+      secundaireparameter_parameter,SecundaireParameter,10,string,temp_water
+      herhaling_minimum,SecundaireParameter,10,float,5.0
+      herhaling_maximum,SecundaireParameter,10,string,°C
 
 
     :class:`pydov.types.observatie.Fractiemeting`

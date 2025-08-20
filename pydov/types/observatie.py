@@ -3,12 +3,10 @@
 subtypes."""
 from collections import OrderedDict
 
-import numpy as np
-
-from pydov.types.fields import WfsField, XmlField, _CustomXmlField
 from pydov.types.fields_custom import OsloCodeListValueField
-
-from .abstract import AbstractDovSubType, AbstractDovFieldSet
+from pydov.types.fields import WfsField, XmlField, _CustomXmlField
+from .abstract import AbstractDovType, AbstractDovSubType, AbstractDovFieldSet
+import numpy as np
 
 
 class NumeriekTekstField(_CustomXmlField):
@@ -124,9 +122,6 @@ class ObservatieHerhaling(AbstractDovSubType):
                  definition='Standaardafwijking metingen',
                  datatype='float')
     ]
-from pydov.types.fields import WfsField, XmlField, _CustomXmlField
-from .abstract import AbstractDovType, AbstractDovSubType
-import numpy as np
 
 
 class ObservatieSecParResultField(_CustomXmlField):

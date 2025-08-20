@@ -995,6 +995,20 @@ Extra subtypes
       herhaling_maximum,ObservatieHerhaling,10,float,8.00000000
       herhaling_standaardafwijking,ObservatieHerhaling,10,float,2.75680975
 
+
+    :class:`pydov.types.observatie.SecundaireParameter`
+
+    Extra subtype which adds more information about additional recorded parameters.
+
+    .. csv-table:: ObservatieHerhaling
+      :header-rows: 1
+
+      Field,Source,Cost,Datatype,Example
+      secundaireparameter_parameter,SecundaireParameter,10,string,pH
+      herhaling_minimum,SecundaireParameter,10,float,7.0
+      herhaling_maximum,SecundaireParameter,10,string,/
+
+
     :class:`pydov.types.observatie.Fractiemeting`
 
     Extra subtype which adds more information about the fraction measurement of observations of type 'Textuurmeting'.

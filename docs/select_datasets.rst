@@ -1005,7 +1005,7 @@ Extra subtypes
 
       Field,Source,Cost,Datatype,Example
       secundaireparameter_parameter,SecundaireParameter,10,string,temp_water
-      herhaling_minimum,SecundaireParameter,10,float,5.0
+      herhaling_minimum,SecundaireParameter,10,string,5.0
       herhaling_maximum,SecundaireParameter,10,string,°C
 
 

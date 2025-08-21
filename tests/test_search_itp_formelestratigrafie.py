@@ -5,7 +5,7 @@ from owslib.fes2 import PropertyIsEqualTo
 from pandas import DataFrame
 
 from pydov.search.interpretaties import FormeleStratigrafieSearch
-from pydov.types.fields import ReturnFieldList
+from pydov.search.fields import ReturnFieldList
 from pydov.types.interpretaties import FormeleStratigrafie
 from tests.abstract import AbstractTestSearch
 

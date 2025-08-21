@@ -4,7 +4,7 @@ from owslib.fes2 import PropertyIsEqualTo
 
 from pydov.search.observatie import ObservatieSearch
 from pydov.types.observatie import Observatie, ObservatieHerhaling, ObservatieDetails
-from pydov.types.fields import ReturnFieldList
+from pydov.search.fields import ReturnFieldList
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestSearch
 
@@ -107,7 +107,7 @@ class TestObservatieSearch(AbstractTestSearch):
 
         assert 'betrouwbaarheid' in fields
         assert 'values' in fields['betrouwbaarheid']
-        assert len(fields['betrouwbaarheid']['values']) > 0
+        assert not fields['betrouwbaarheid']['values'].is_empty() > 0
 
         for field_name in ObservatieDetails.get_field_names():
             assert field_name in fields

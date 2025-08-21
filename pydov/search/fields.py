@@ -1,5 +1,5 @@
 
-from pydov.util.notebook import HtmlFormatter
+from pydov.util.notebook import AbstractDictLike, HtmlFormatter
 
 
 class ReturnFieldList(list):
@@ -141,78 +141,36 @@ class GeometryReturnField(AbstractReturnField):
         self.epsg = epsg
 
 
-class FieldMetadataList:
-    def __init__(self):
-        self.fields = {}
-
+class FieldMetadataList(AbstractDictLike):
     def add(self, field_metadata):
-        self.fields[field_metadata.name] = field_metadata
-
-    def __dir__(self):
-        return list(self.fields.keys())
-
-    def __getitem__(self, name):
-        if name in self.fields:
-            return self.fields.get(name)
-        raise KeyError(f'{name}')
-
-    def __getattr__(self, name):
-        if name in self.fields:
-            return self.fields.get(name)
-        raise AttributeError(
-            f"'{self.__class__.__name__}' object has not attribute '{name}'")
-
-    def __repr__(self):
-        return self.fields.__repr__()
-        s = ', '.join(i.__repr__() for i in self.fields.values())
-
-        return f'<pydov.types.fields.FieldMetadataList: {s}>'
+        self.base_dict[field_metadata.name] = field_metadata
 
     def _repr_html_(self):
-        s = ''.join(i._repr_html_() for i in self.fields.values())
+        s = ''.join(i._repr_html_() for i in self.base_dict.values())
         return f'<div>{s}</div>'
 
 
-class FieldMetadata(HtmlFormatter):
+class FieldMetadata(AbstractDictLike, HtmlFormatter):
     @staticmethod
     def from_dict(field):
-        fm = FieldMetadata()
-        fm.__field = field
+        fm = FieldMetadata(field)
         return fm
 
-    def __dir__(self):
-        return list(self.__field.keys())
-
-    def __getitem__(self, name):
-        if name in self.__field:
-            return self.__field.get(name)
-        raise KeyError(f'{name}')
-
-    def __getattr__(self, name):
-        if name in self.__field:
-            return self.__field.get(name)
-        raise AttributeError(
-            f"'{self.__class__.__name__}' object has not attribute '{name}'")
-
-    def __repr__(self):
-        return self.__field.__repr__()
-
     def _repr_html_(self):
-        html = (f"<p><b>{self.__field['name']}</b>"
-                f" - {self.__field['definition']}</p>")
+        html = (f"<p><b>{self.base_dict['name']}</b>"
+                f" - {self.base_dict['definition']}</p>")
 
         html += '<ul>'
-        html += f'<li>type: {self.type}</li>'
-        html += f'<li>notnull: {self.notnull}</li>'
-        html += f'<li>query: {self.query}</li>'
-        html += f'<li>cost: {self.cost}</li>'
-        html += f'<li>list: {self.list}</li>'
+        html += f'<li>type: <span class="code small">{self.type}</span></li>'
+        html += (f'<li>notnull: <span class="code small">{self.notnull}'
+                 '</span></li>')
+        html += f'<li>query: <span class="code small">{self.query}</span></li>'
+        html += f'<li>cost: <span class="code small">{self.cost}</span></li>'
+        html += f'<li>list: <span class="code small">{self.list}</span></li>'
 
-        if self.__field.get('values') is not None:
-            html += f'<li>values:</li>'
-            # html += '<div class="indent">'
-            html += self.values._repr_html_()
-            # html += '</div>'
+        if self.base_dict.get('codelist') is not None:
+            html += f'<li>codelist:</li>'
+            html += self.base_dict.get('codelist')._repr_html_()
         html += '</ul>'
 
         return super()._repr_html_(html, with_header=False)

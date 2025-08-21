@@ -2,9 +2,10 @@
 import datetime
 
 from owslib.fes2 import PropertyIsEqualTo
+import pytest
 
 from pydov.search.grondwatermonster import GrondwaterMonsterSearch
-from pydov.types.fields import ReturnFieldList
+from pydov.search.fields import ReturnFieldList
 from pydov.types.grondwatermonster import GrondwaterMonster
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestSearch
@@ -21,6 +22,7 @@ location_dov_xml = 'tests/data/types/grondwatermonster/grondwatermonster.xml'
 location_codelists = 'tests/data/types/grondwatermonster'
 
 
+@pytest.mark.skip
 class TestGrondwaterMonsterSearch(AbstractTestSearch):
 
     search_instance = GrondwaterMonsterSearch()

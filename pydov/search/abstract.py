@@ -14,7 +14,6 @@ from owslib.feature import get_schema
 from owslib.fes2 import FilterRequest
 from owslib.wfs import WebFeatureService
 import pandas as pd
-import numpy as np
 
 import pydov
 from pydov.search.fields import (
@@ -23,144 +22,13 @@ from pydov.types.fields import _WfsInjectedField
 from pydov.util import owsutil
 from pydov.util.dovutil import build_dov_url
 from pydov.util.errors import (InvalidFieldError, InvalidSearchParameterError,
-                               LayerNotFoundError, WfsGetFeatureError,
-                               DataParseWarning)
+                               LayerNotFoundError, WfsGetFeatureError)
 from pydov.util.hooks import HookRunner
 from pydov.util.net import LocalSessionThreadPool
 from pydov.util.notebook import HtmlFormatter
 
-# compile regex for matching datetime
-re_datetime = re.compile(
-    r'([0-9]{4}-[0-9]{2}-[0-9]{2}T'
-    r'[0-9]{2}:[0-9]{2}:[0-9]{2})'
-    r'(\.[0-9]+)?([\+\-][0-9]{2}:?[0-9]{2})?(Z?)')
 
-
-class AbstractCommon(object):
-    """Class grouping methods common to AbstractSearch and
-    AbstractTypeCommon."""
-
-    @classmethod
-    def __strtobool(cls, val):
-        """Convert a string representation of truth to true (1) or false (0).
-
-        True values are 'y', 'yes', 't', 'true', 'on', and '1'; false values
-        are 'n', 'no', 'f', 'false', 'off', and '0'.  Raises ValueError if
-        'val' is anything else.
-
-        Parameters
-        ----------
-        val : str
-            String representation to convert to boolean.
-
-        Returns
-        -------
-        boolean
-            The converted boolean value.
-
-        Raises
-        ------
-        ValueError
-            If the string cannot be converted to a boolean value.
-        """
-        val = val.lower()
-        if val in ('y', 'yes', 't', 'true', 'on', '1'):
-            return True
-        elif val in ('n', 'no', 'f', 'false', 'off', '0'):
-            return False
-        else:
-            raise ValueError(
-                "Cannot convert truth value %r to boolean." % (val,))
-
-    @classmethod
-    def _typeconvert(cls, text, returntype):
-        """Parse the text to the given returntype.
-
-        Parameters
-        ----------
-        text : str
-           Text to convert
-        returntype : str
-            Parse the text to this output datatype. One of
-            `string`, `float`, `integer`, `date`, `datetime`, `boolean`.
-
-        Returns
-        -------
-        str or float or int or bool or datetime.date or datetime.datetime
-            Returns the parsed text converted to the type described by
-            `returntype`.
-
-        """
-        if returntype == 'string':
-            def typeconvert(x):
-                return u'' + (x.strip())
-        elif returntype == 'integer':
-            def typeconvert(x):
-                return int(x)
-        elif returntype == 'float':
-            def typeconvert(x):
-                return float(x)
-        elif returntype == 'date':
-            def typeconvert(x):
-                # Patch for Zulu-time issue of geoserver for WFS 1.1.0
-                if x.endswith('Z'):
-                    return datetime.datetime.strptime(x, '%Y-%m-%dZ').date() \
-                        + datetime.timedelta(days=1)
-                else:
-                    return datetime.datetime.strptime(x, '%Y-%m-%d').date()
-        elif returntype == 'datetime':
-            def typeconvert(x):
-                x_match = re_datetime.search(x)
-                if x_match is None:
-                    raise ValueError(f'Cannot parse datetime from value "{x}"')
-                x_datetime, x_millisecs, x_tz, x_zulu = x_match.groups()
-
-                fmt = '%Y-%m-%dT%H:%M:%S'
-                val = x_datetime
-
-                if x_millisecs is not None:
-                    x_millisecs = int(x_millisecs[1:])
-                    fmt += '.%f'
-                    val += f'.{x_millisecs:0>6}'
-
-                if x_tz is not None:
-                    fmt += '%z'
-                    val += x_tz
-
-                dtime = datetime.datetime.strptime(val, fmt)
-                if x_zulu == 'Z':
-                    dtime += datetime.timedelta(hours=1)
-                return dtime
-        elif returntype == 'boolean':
-            def typeconvert(x):
-                return cls.__strtobool(x)
-        elif returntype == 'geometry':
-            def typeconvert(x):
-                if isinstance(x, etree._Element):
-                    if owsutil.has_geom_support():
-                        import shapely.geometry
-                        import pygml
-                        return shapely.geometry.shape(
-                            pygml.parse(etree.tostring(x[0]).decode('utf8')))
-                    else:
-                        # this shouldn't happen
-                        return etree.tostring(x[0]).decode('utf8')
-                return np.nan
-        else:
-            def typeconvert(x):
-                return x
-
-        try:
-            return typeconvert(text)
-        except ValueError as e:
-            warnings.warn(
-                f"Failed to convert data to correct datatype: {e}. Resulting "
-                "dataframe will be incomplete.",
-                DataParseWarning)
-            return np.nan
-
-
-class AbstractSearch(AbstractCommon, HtmlFormatter):
+class AbstractSearch(HtmlFormatter):
     """Abstract search class grouping methods common to all DOV search
     classes. Not to be instantiated or used directly."""
 
@@ -466,10 +334,10 @@ class AbstractSearch(AbstractCommon, HtmlFormatter):
                 field['notnull'] = fc_field['multiplicity'][0] > 0
 
                 if fc_field['codelist'] is not None:
-                    field['values'] = fc_field['codelist']
+                    field['codelist'] = fc_field['codelist']
 
-            if codelist is not None:
-                field['values'] = codelist.get_codelist()
+            if codelist is not None and not codelist.is_empty():
+                field['codelist'] = codelist.get_codelist()
 
             fields[name] = field
 
@@ -501,8 +369,9 @@ class AbstractSearch(AbstractCommon, HtmlFormatter):
                 'cost': 10
             }
 
-            if xml_field['codelist'] is not None:
-                field['values'] = xml_field['codelist'].get_codelist()
+            if xml_field['codelist'] is not None \
+                    and not xml_field['codelist'].is_empty():
+                field['codelist'] = xml_field['codelist'].get_codelist()
 
             fields[field['name']] = field
 
@@ -519,8 +388,9 @@ class AbstractSearch(AbstractCommon, HtmlFormatter):
             }
             fields[field['name']] = field
 
-            if custom_field['codelist'] is not None:
-                field['values'] = custom_field['codelist'].get_codeliiist()
+            if custom_field['codelist'] is not None \
+                    and not custom_field['codelist'].is_empty():
+                field['codelist'] = custom_field['codelist'].get_codelist()
 
         for custom_field in self._type.get_fields(
                 source=['custom_xml']).values():
@@ -535,8 +405,9 @@ class AbstractSearch(AbstractCommon, HtmlFormatter):
             }
             fields[field['name']] = field
 
-            if custom_field['codelist'] is not None:
-                field['values'] = custom_field['codelist'].get_codelist()
+            if custom_field['codelist'] is not None \
+                    and not custom_field['codelist'].is_empty():
+                field['codelist'] = custom_field['codelist'].get_codelist()
 
         return fields
 

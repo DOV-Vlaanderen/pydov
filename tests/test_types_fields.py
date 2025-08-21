@@ -1,7 +1,7 @@
 """Class grouping tests for the fields module."""
 
 import pytest
-from pydov.types.fields import AbstractReturnField, GeometryReturnField, ReturnField, ReturnFieldList
+from pydov.search.fields import AbstractReturnField, GeometryReturnField, ReturnField, ReturnFieldList
 
 
 class TestReturnFieldList():

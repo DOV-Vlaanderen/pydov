@@ -3,7 +3,7 @@
 import datetime
 from owslib.fes2 import PropertyIsEqualTo
 from pydov.search.monster import MonsterSearch
-from pydov.types.fields import ReturnFieldList
+from pydov.search.fields import ReturnFieldList
 from pydov.types.monster import Monster, MonsterDetails, Monsterbehandeling
 from tests.abstract import AbstractTestSearch
 
@@ -34,7 +34,7 @@ class TestMonsterSearch(AbstractTestSearch):
         'pkey_monster', 'diepte_van_m')
     valid_returnfields_subtype = None
     valid_returnfields_extra = ReturnFieldList.from_field_names(
-        'observaties', 'opmerkingen')
+        'aantal_observaties', 'opmerkingen')
 
     df_default_columns = [
         'pkey_monster', 'naam', 'pkey_parents', 'materiaalklasse',

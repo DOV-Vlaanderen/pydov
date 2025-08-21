@@ -10,6 +10,7 @@ from pydov.util.hooks import HookRunner
 from owslib.etree import etree
 
 from pydov.util.notebook import HtmlFormatter
+from pydov.util.owsutil import typeconvert
 
 
 class MemoryCache(object):
@@ -101,6 +102,9 @@ class AbstractCodeList(HtmlFormatter):
     def add_item(self, item):
         self.items[item.code] = item
 
+    def is_empty(self):
+        return len(self.items) == 0
+
     def __getitem__(self, name):
         if name in self.items:
             return self.items.get(name)
@@ -144,6 +148,7 @@ class AbstractResolvableCodeList(AbstractCodeList):
         """
         super().__init__()
         self.datatype = datatype
+        self._is_resolved = False
 
     def get_id(self):
         """Get a unique id for this codelist. Needs to be unique among all
@@ -197,10 +202,16 @@ class AbstractResolvableCodeList(AbstractCodeList):
 
     def resolve(self):
         """Resolve the remote codelist values."""
-        codelist = self.get_remote_codelist()
+        if not self._is_resolved:
+            codelist = self.get_remote_codelist()
 
-        for item in self.parse_codelist_items(codelist):
-            self.add_item(item)
+            for item in self.parse_codelist_items(codelist):
+                self.add_item(item)
+            self._is_resolved = True
+
+    def is_empty(self):
+        self.resolve()
+        return super().is_empty()
 
     def get_codelist(self):
         self.resolve()
@@ -352,7 +363,7 @@ class XsdType(AbstractResolvableCodeList):
                     self.typename))
 
             for e in tree_values:
-                code = self._typeconvert(
+                code = typeconvert(
                     e.get('value'), self.datatype)
                 label = e.findtext(
                     './{http://www.w3.org/2001/XMLSchema}annotation/{'

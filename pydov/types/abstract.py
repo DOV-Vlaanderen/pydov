@@ -11,7 +11,6 @@ import numpy as np
 from owslib.etree import etree
 
 import pydov
-from pydov.search.abstract import AbstractCommon
 from pydov.search.fields import ReturnFieldList
 from pydov.types.fields import AbstractField
 from pydov.util import owsutil
@@ -185,7 +184,7 @@ class AbstractDovFieldSet(AbstractFieldsObject, HtmlFormatter):
         return [f.get('name') for f in cls.fields]
 
 
-class AbstractTypeCommon(AbstractCommon, AbstractFieldsObject):
+class AbstractTypeCommon(AbstractFieldsObject):
     """Class grouping methods common to AbstractDovType and
     AbstractDovSubType.
 
@@ -238,9 +237,9 @@ class AbstractTypeCommon(AbstractCommon, AbstractFieldsObject):
 
         if split_fn is not None:
             items = split_fn(text)
-            return [cls._typeconvert(item, returntype) for item in items]
+            return [owsutil.typeconvert(item, returntype) for item in items]
 
-        return cls._typeconvert(text, returntype)
+        return owsutil.typeconvert(text, returntype)
 
     @classmethod
     def _filter_classes_intended_for(cls, c):

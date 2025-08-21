@@ -71,9 +71,9 @@ Default coordinate reference system
     0  https://www.dov.vlaanderen.be/data/boring/2016...  POINT (92424 170752)
 
 Custom coordinate reference systems
-  To get the geometry in another CRS, instead of adding just the fieldname as return field, you can add an instance of :class:`pydov.types.fields.GeometryReturnField` specifying both the field name and the desired CRS. If you'd like to receive the geometries in GPS coordinates (lon/lat, or EPSG:4326) instead of Belgian Lambert 72, you could::
+  To get the geometry in another CRS, instead of adding just the fieldname as return field, you can add an instance of :class:`pydov.search.fields.GeometryReturnField` specifying both the field name and the desired CRS. If you'd like to receive the geometries in GPS coordinates (lon/lat, or EPSG:4326) instead of Belgian Lambert 72, you could::
 
-      from pydov.types.fields import GeometryReturnField
+      from pydov.search.fields import GeometryReturnField
 
       df = bs.search(
           return_fields=['pkey_boring', GeometryReturnField('geom', epsg=4326)],

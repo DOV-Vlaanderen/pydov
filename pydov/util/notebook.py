@@ -1,9 +1,44 @@
+
+class AbstractDictLike:
+    def __init__(self, base_dict=dict()):
+        self.base_dict = base_dict
+
+    def __dir__(self):
+        return list(self.base_dict.keys())
+
+    def __contains__(self, name):
+        return name in self.base_dict
+
+    def __iter__(self):
+        return self.base_dict.__iter__()
+
+    def __getitem__(self, name):
+        if name in self.base_dict:
+            return self.base_dict.get(name)
+        raise KeyError(f'{name}')
+
+    def __getattr__(self, name):
+        if name in self.base_dict:
+            return self.base_dict.get(name)
+        raise AttributeError(
+            f"'{self.__class__.__name__}' object has not attribute '{name}'")
+
+    def __repr__(self):
+        return self.base_dict.__repr__()
+
+    def keys(self):
+        return self.base_dict.keys()
+
+    def values(self):
+        return self.base_dict.values()
+
+
 class HtmlFormatter:
     def _repr_html_(self, content=None, with_header=True):
         html = """
             <style type="text/css">
                 div.pydov {
-                    background-color: rgba(128,128,128,0.05);
+                    background-color: rgba(170,170,170,0.05);
                     padding: 10px;
                     padding-left: 20px;
                     border-left: 1px solid #fee439;
@@ -15,8 +50,8 @@ class HtmlFormatter:
                     font-family: monospace;
                 }
 
-                .methods {
-                    margin-left: 10px;
+                .small {
+                    font-size: 0.8rem;
                 }
             </style>
             <div class="pydov">

@@ -17,7 +17,7 @@ location_dov_xml = 'tests/data/types/observatie_secundaire_parameter/observatie.
 location_codelists = 'tests/data/types/observatie'
 
 
-class TestObservatieSearch(AbstractTestSearch):
+class TestObservatieSecundaireParameterSearch(AbstractTestSearch):
     search_instance = ObservatieSearch()
     search_class = ObservatieSearch
     datatype_class = Observatie
@@ -42,7 +42,7 @@ class TestObservatieSearch(AbstractTestSearch):
                                                mp_remote_codelist,
                                                mp_remote_describefeaturetype,
                                                mp_remote_wfs_feature, mp_dov_xml):
-        """Test the search method with the subtype ObservatieHerhaling.
+        """Test the search method with the subtype SecundaireParameter.
 
         Test whether the output dataframe contains the extra fields.
 
@@ -69,6 +69,10 @@ class TestObservatieSearch(AbstractTestSearch):
         df = search_instance.search(
             query=self.valid_query_single)
 
-        assert df.iloc[0].secundaireparameter_parameter == 'proefvlak_diepte'
-        assert df.iloc[0].secundaireparameter_resultaat == '60.0'
-        assert df.iloc[0].secundaireparameter_eenheid == 'cm'
+        testrecord = df[df.secundaireparameter_parameter == 'proefvlak_diepte']
+        assert len(testrecord) > 0
+
+        assert testrecord.iloc[0].secundaireparameter_resultaat == '60.0'
+        assert testrecord.iloc[0].secundaireparameter_eenheid == 'cm'
+
+

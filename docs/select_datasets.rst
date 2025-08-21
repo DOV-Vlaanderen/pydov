@@ -898,6 +898,7 @@ Subtypes
     * Fractiemeting (Fraction measurement) - More information about the fraction measurement of observations of type 'Textuurmeting'.
     * Meetreeks (Measurement series) - More information about the measurement series of observations of type 'Meetreeks'.
     * ObservatieHerhaling (Repetition of the observation) - More information about the repetition(s) of the observation.
+    * SecundaireParameter (Secondary observations related to the first observation) - More information about the related observations.
 
 Extra fieldsets
     * ObservatieDetails (Details of observation) - Extra details about the observation.
@@ -1000,13 +1001,13 @@ Extra subtypes
 
     Extra subtype which adds more information about additional recorded parameters.
 
-    .. csv-table:: ObservatieHerhaling
+    .. csv-table:: SecundaireParameter
       :header-rows: 1
 
       Field,Source,Cost,Datatype,Example
       secundaireparameter_parameter,SecundaireParameter,10,string,temp_water
-      herhaling_minimum,SecundaireParameter,10,string,5.0
-      herhaling_maximum,SecundaireParameter,10,string,°C
+      secundaireparameter_resultaat,SecundaireParameter,10,string,5.0
+      secundaireparameter_eenheid,SecundaireParameter,10,string,°C
 
 
     :class:`pydov.types.observatie.Fractiemeting`

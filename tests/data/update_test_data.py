@@ -1406,6 +1406,50 @@ if __name__ == '__main__':
 
     get_codelists(Observatie, 'types/observatie_meetreeks')
 
+    # types/observatie_secundaire_parameter
+
+    update_file('types/observatie_secundaire_parameter/observatie.xml',
+                build_dov_url('data/observatie/2019-000555.xml'))
+
+    update_file(
+        'types/observatie_secundaire_parameter/wfsgetfeature.xml',
+        build_dov_url(
+            'geoserver/ows?service=WFS&version=2.0.0&request=GetFeature'
+            '&typeName=monster:observaties&count=1&CQL_Filter=observatie_link=%27' + build_dov_url(
+                'data/observatie/2019-000555%27'))
+    )
+
+    update_file(
+        'types/observatie_secundaire_parameter/feature.xml',
+        build_dov_url(
+            'geoserver/ows?service=WFS&version=2.0.0&request=GetFeature'
+            '&typeName=monster:observaties&count=1&CQL_Filter=observatie_link=%27' + build_dov_url(
+                'data/observatie/2019-000555%27')),
+        get_first_featuremember)
+
+    update_file(
+        'types/observatie_secundaire_parameter/fc_featurecatalogue.xml',
+        build_dov_url(
+            'geonetwork/srv/dut/csw'
+            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+            '&outputSchema=http://www.isotc211.org/2005/gfc'
+            '&elementSetName=full&id=0ee52b15-12a5-4314-a8af-0b37ee8bf766'))
+
+    update_file(
+        'types/observatie_secundaire_parameter/md_metadata.xml',
+        build_dov_url(
+            'geonetwork/srv/dut/csw'
+            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+            '&outputSchema=http://www.isotc211.org/2005/gmd'
+            '&elementSetName=full&id=7e166b29-f24b-494b-af66-acc82deb5af2'))
+
+    update_file(
+        'types/observatie_secundaire_parameter/wfsdescribefeaturetype.xml',
+        build_dov_url(
+            'geoserver/monster/wfs?service=WFS&version=2.0.0&request=DescribeFeatureType&typeName=monster:observaties'))
+
+    get_codelists(Observatie, 'types/observatie_secundaire_parameter')
+
     for r in pool.join():
         if r.get_error() is not None:
             sys.stdout.write('{}: {}\n'.format(

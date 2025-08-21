@@ -3,12 +3,10 @@
 subtypes."""
 from collections import OrderedDict
 
-import numpy as np
-
-from pydov.types.fields import WfsField, XmlField, _CustomXmlField
 from pydov.types.fields_custom import OsloCodeListValueField
-
+from pydov.types.fields import WfsField, XmlField, _CustomXmlField
 from .abstract import AbstractDovType, AbstractDovSubType, AbstractDovFieldSet
+import numpy as np
 
 
 class NumeriekTekstField(_CustomXmlField):
@@ -123,6 +121,27 @@ class ObservatieHerhaling(AbstractDovSubType):
                  source_xpath='/standaardafwijking',
                  definition='Standaardafwijking metingen',
                  datatype='float')
+    ]
+
+
+class SecundaireParameter(AbstractDovSubType):
+    """Subtype showing the secondary parameter of an observation."""
+
+    rootpath = './/observatie/secundaireparameter'
+    intended_for = ['Observatie']
+
+    fields = [
+        XmlField(name='secundaireparameter_parameter',
+                 source_xpath='/parameter',
+                 definition='Secundaire parameter',
+                 datatype='string'),
+        NumeriekTekstField(name='secundaireparameter_resultaat',
+                           definition='Resultaat van de secudaire parameter',
+                           basename='waarde'),
+        XmlField(name='secundaireparameter_eenheid',
+                 source_xpath='/eenheid',
+                 definition='Eenheid',
+                 datatype='string')
     ]
 
 

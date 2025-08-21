@@ -124,39 +124,6 @@ class ObservatieHerhaling(AbstractDovSubType):
     ]
 
 
-class ObservatieSecParResultField(_CustomXmlField):
-    """Field for retrieving the treatment of the sampling from the relevant XML
-    field."""
-
-    def __init__(self, name, definition):
-        super().__init__(
-            name=name,
-            definition=definition,
-            datatype='string',
-            notnull=False
-        )
-
-    def calculate(self, cls, tree):
-        waarde_num = cls._parse(
-            func=tree.findtext,
-            xpath='/waarde_numeriek',
-            namespace=None,
-            returntype='string'
-        )
-        if waarde_num is not np.nan and waarde_num != '':
-            return waarde_num
-        waarde_text = cls._parse(
-            func=tree.findtext,
-            xpath='/waarde_text',
-            namespace=None,
-            returntype='string'
-        )
-        if waarde_text is not np.nan and waarde_text != '':
-            return waarde_text
-        else:
-            return np.nan
-
-
 class SecundaireParameter(AbstractDovSubType):
     """Subtype showing the secondary parameter of an observation."""
 
@@ -168,9 +135,8 @@ class SecundaireParameter(AbstractDovSubType):
                  source_xpath='/parameter',
                  definition='Secundaire parameter',
                  datatype='string'),
-        ObservatieSecParResultField(name='secundaireparameter_resultaat',
-                                    definition="Resultaat van de "
-                                               "secudaire parameter"),
+        NumeriekTekstField(name='secundaireparameter_resultaat', definition='Resultaat van de secudaire parameter',
+                           basename='waarde'),
         XmlField(name='secundaireparameter_eenheid',
                  source_xpath='/eenheid',
                  definition='Eenheid',

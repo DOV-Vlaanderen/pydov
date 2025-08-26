@@ -171,7 +171,6 @@ class TestMyGrondwaterFilterOpbouw(object):
     """Class grouping tests for the MyGrondwaterFilterOpbouw and
     MyFilterOpbouw custom type."""
 
-    @pytest.mark.skip(reason="te debuggen")
     def test_get_fields(self, mp_wfs, mp_remote_describefeaturetype,
                         mp_remote_md, mp_remote_fc, mp_remote_wfs_feature,
                         mp_dov_xml, mp_get_schema, mp_remote_codelist):

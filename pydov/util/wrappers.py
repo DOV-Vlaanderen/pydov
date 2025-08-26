@@ -4,14 +4,26 @@
 class AbstractDictLike:
     """A class that provides a dictionary-like interface with attribute access."""
 
-    def __init__(self, base_dict=dict()):
+    def __init__(self, base_dict=None):
         """Initialisation.
 
         Parameters
         ----------
-        base_dict : dict
-            The base dictionary to wrap.
+        base_dict : dict, optional
+            The base dictionary to wrap. Defaults to None, which means an empty
+            dictionary is used.
+
+        Raises
+        ------
+        TypeError
+            If base_dict is not a dictionary.
         """
+        if base_dict is None:
+            base_dict = dict()
+
+        if not isinstance(base_dict, dict):
+            raise TypeError('base_dict should be a dictionary')
+
         self.base_dict = base_dict
 
     def __dir__(self):
@@ -94,6 +106,16 @@ class AbstractDictLike:
             return self.base_dict.get(name)
         raise AttributeError(
             f"'{self.__class__.__name__}' object has not attribute '{name}'")
+
+    def __len__(self):
+        """Get the number of items in the dictionary.
+
+        Returns
+        -------
+        length : int
+            The number of items in the dictionary.
+        """
+        return len(self.base_dict)
 
     def __repr__(self):
         """String representation of the dictionary.

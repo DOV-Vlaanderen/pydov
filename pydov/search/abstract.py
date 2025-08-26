@@ -818,14 +818,30 @@ class AbstractSearch(HtmlFormatter):
         wfs_layer = self._get_layer()
         return wfs_layer.abstract
 
-    def get_fields(self, query=None, type=None):
+    def get_fields(self, query=None, type=None, max_cost=None):
         """Get the metadata of the fields that are available.
+
+        Parameters
+        ----------
+        query : boolean, optional
+            Whether to only return fields that can be used in an attribute
+            query (True), fields that cannot be used in an attribute query
+            (False) or all fields (None, default).
+        type : str, optional
+            Whether to only return fields of a certain type. Possible values
+            are 'integer', 'float', 'string', 'date', 'datetime', 'boolean' and
+            'geometry'. Default is None, meaning fields of all types are
+            returned.
+        max_cost : int, optional
+            Whether to only return fields with a cost lower or equal to the
+            provided value. Default is None, meaning fields of all costs are
+            returned.
 
         Returns
         -------
-        fields : dict<str,dict>
-            Dictionary containing the metadata of the available fields,
-            where the metadata dictionary includes:
+        fields : pydov.search.fields.FieldMetadataList
+            List containing the metadata of the available fields, where each
+            field metadata includes:
 
             name (str)
                 The name of the field.
@@ -852,8 +868,10 @@ class AbstractSearch(HtmlFormatter):
 
             Optionally, it can contain:
 
-            values (list)
-                A list of possible values for this field.
+            codelist (list)
+                A list of valid values for this field, if such a list is
+                available. A codelist contains codes, labels and optionnally
+                definitions.
 
         """
         self._init_fields()
@@ -866,7 +884,10 @@ class AbstractSearch(HtmlFormatter):
             if query is not None:
                 if field['query'] != query:
                     continue
-            field_metadata.add(FieldMetadata.from_dict(field))
+            if max_cost is not None:
+                if field['cost'] > max_cost:
+                    continue
+            field_metadata.add(FieldMetadata(field))
         return field_metadata
 
     def search(self, location=None, query=None,

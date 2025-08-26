@@ -170,23 +170,6 @@ class FieldMetadataList(AbstractDictLike):
 class FieldMetadata(AbstractDictLike, HtmlFormatter):
     """Class holding metadata for a field."""
 
-    @staticmethod
-    def from_dict(field):
-        """Initialise a FieldMetadata object from a dictionary.
-
-        Parameters
-        ----------
-        field : dict
-            Dictionary with field metadata.
-
-        Returns
-        -------
-        FieldMetadata
-            The FieldMetadata object.
-        """
-        fm = FieldMetadata(field)
-        return fm
-
     def _repr_html_(self):
         """HTML representation for Jupyter notebooks.
 

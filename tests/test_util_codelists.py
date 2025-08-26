@@ -281,6 +281,19 @@ class TestAbstractCodeList:
 
         assert codes == {"code1", "code2", "code3"}
 
+    def test_len(self, codelist):
+        """Test that __len__ returns the correct number of items in the codelist.
+
+        Parameters
+        ----------
+        codelist : AbstractCodeList
+            An instance of the AbstractCodeList class with items.
+        """
+        assert len(codelist) == 3
+
+        codelist.add_item(CodeListItem("code4", "label4", "definition4"))
+        assert len(codelist) == 4
+
 
 class TestOsloCodeList:
     """Test suite for the OsloCodeList class."""

@@ -322,6 +322,99 @@ class AbstractTestSearch(object):
                 for field in st['class'].get_field_names():
                     assert field in fields
 
+    def test_get_fields_query_only(self, mp_wfs, mp_get_schema,
+                                   mp_remote_describefeaturetype, mp_remote_md,
+                                   mp_remote_fc, mp_remote_codelist):
+        """Test the get_fields method with the query parameter.
+
+        Test whether the returned fields match the query parameter.
+
+        Parameters
+        ----------
+        mp_wfs : pytest.fixture
+            Monkeypatch the call to the remote GetCapabilities request.
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType.
+        mp_remote_md : pytest.fixture
+            Monkeypatch the call to get the remote metadata.
+        mp_remote_fc : pytest.fixture
+            Monkeypatch the call to get the remote feature catalogue.
+        mp_remote_codelist : pytest.fixture
+            Monkeypatch the call to get remote codelists.
+
+        """
+        fields = self.search_instance.get_fields(query=True)
+
+        for field in fields:
+            print(field)
+            print(fields[field])
+            print(fields[field]['query'])
+            assert fields[field]['query']
+
+    def test_get_fields_with_type(self, mp_wfs, mp_get_schema,
+                                  mp_remote_describefeaturetype, mp_remote_md,
+                                  mp_remote_fc, mp_remote_codelist):
+        """Test the get_fields method with the type parameter.
+
+        Test whether the returned fields match the type parameter.
+
+        Parameters
+        ----------
+        mp_wfs : pytest.fixture
+            Monkeypatch the call to the remote GetCapabilities request.
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType.
+        mp_remote_md : pytest.fixture
+            Monkeypatch the call to get the remote metadata.
+        mp_remote_fc : pytest.fixture
+            Monkeypatch the call to get the remote feature catalogue.
+        mp_remote_codelist : pytest.fixture
+            Monkeypatch the call to get remote codelists.
+
+        """
+        for t in ['string', 'float', 'integer', 'date', 'datetime',
+                  'boolean', 'geometry']:
+            fields = self.search_instance.get_fields(type=t)
+
+            for field in fields:
+                print(field)
+                print(fields[field])
+                print(t, fields[field]['type'])
+                assert fields[field]['type'] == t
+
+    def test_get_fields_with_max_cost(
+        self, mp_wfs, mp_get_schema,
+            mp_remote_describefeaturetype, mp_remote_md,
+            mp_remote_fc, mp_remote_codelist):
+        """Test the get_fields method with the max_cost parameter.
+
+        Test whether the returned fields match the max_cost parameter.
+
+        Parameters
+        ----------
+        mp_wfs : pytest.fixture
+            Monkeypatch the call to the remote GetCapabilities request.
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType.
+        mp_remote_md : pytest.fixture
+            Monkeypatch the call to get the remote metadata.
+        mp_remote_fc : pytest.fixture
+            Monkeypatch the call to get the remote feature catalogue.
+        mp_remote_codelist : pytest.fixture
+            Monkeypatch the call to get remote codelists.
+
+        """
+        fields = self.search_instance.get_fields(max_cost=1)
+
+        for field in fields:
+            assert fields[field]['cost'] <= 1
+
     def test_search_both_location_query(self, mp_get_schema,
                                         mp_remote_describefeaturetype,
                                         mp_remote_wfs_feature):

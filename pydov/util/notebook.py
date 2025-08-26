@@ -1,40 +1,24 @@
-
-class AbstractDictLike:
-    def __init__(self, base_dict=dict()):
-        self.base_dict = base_dict
-
-    def __dir__(self):
-        return list(self.base_dict.keys())
-
-    def __contains__(self, name):
-        return name in self.base_dict
-
-    def __iter__(self):
-        return self.base_dict.__iter__()
-
-    def __getitem__(self, name):
-        if name in self.base_dict:
-            return self.base_dict.get(name)
-        raise KeyError(f'{name}')
-
-    def __getattr__(self, name):
-        if name in self.base_dict:
-            return self.base_dict.get(name)
-        raise AttributeError(
-            f"'{self.__class__.__name__}' object has not attribute '{name}'")
-
-    def __repr__(self):
-        return self.base_dict.__repr__()
-
-    def keys(self):
-        return self.base_dict.keys()
-
-    def values(self):
-        return self.base_dict.values()
+"""Utility classes for Jupyter notebook integration."""
 
 
 class HtmlFormatter:
+    """A mixin class to provide HTML representation for Jupyter notebooks."""
+
     def _repr_html_(self, content=None, with_header=True):
+        """HTML representation for Jupyter notebooks.
+
+        Parameters
+        ----------
+        content : str, optional
+            The main content to display in HTML format. Defaults to None.
+        with_header : bool, optional
+            Whether to include a header with the class name. Defaults to True.
+
+        Returns
+        -------
+        str
+            The HTML representation.
+        """
         html = """
             <style type="text/css">
                 div.pydov {

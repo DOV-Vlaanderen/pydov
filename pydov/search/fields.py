@@ -1,5 +1,6 @@
 
-from pydov.util.notebook import AbstractDictLike, HtmlFormatter
+from pydov.util.notebook import HtmlFormatter
+from pydov.util.wrappers import AbstractDictLike
 
 
 class ReturnFieldList(list):
@@ -142,21 +143,58 @@ class GeometryReturnField(AbstractReturnField):
 
 
 class FieldMetadataList(AbstractDictLike):
+    """List of FieldMetadata objects. """
+
     def add(self, field_metadata):
+        """Add a FieldMetadata object to this list.
+
+        Parameters
+        ----------
+        field_metadata : FieldMetadata
+            The FieldMetadata object to add.
+        """
         self.base_dict[field_metadata.name] = field_metadata
 
     def _repr_html_(self):
+        """HTML representation for Jupyter notebooks.
+
+        Returns
+        -------
+        str
+            The HTML representation.
+        """
         s = ''.join(i._repr_html_() for i in self.base_dict.values())
         return f'<div>{s}</div>'
 
 
 class FieldMetadata(AbstractDictLike, HtmlFormatter):
+    """Class holding metadata for a field."""
+
     @staticmethod
     def from_dict(field):
+        """Initialise a FieldMetadata object from a dictionary.
+
+        Parameters
+        ----------
+        field : dict
+            Dictionary with field metadata.
+
+        Returns
+        -------
+        FieldMetadata
+            The FieldMetadata object.
+        """
         fm = FieldMetadata(field)
         return fm
 
     def _repr_html_(self):
+        """HTML representation for Jupyter notebooks.
+
+        Returns
+        -------
+        str
+            The HTML representation.
+        """
         html = (f"<p><b>{self.base_dict['name']}</b>"
                 f" - {self.base_dict['definition']}</p>")
 

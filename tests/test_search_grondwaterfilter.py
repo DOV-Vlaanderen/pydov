@@ -49,7 +49,7 @@ class TestGrondwaterfilterSearch(AbstractTestSearch):
                           'betrouwbaarheid', 'methode', 'filterstatus',
                           'filtertoestand']
 
-    @pytest.mark.skip
+    @pytest.mark.skip(reason="filters zonder peilmetingen in oefen")
     def test_search_date(self, mp_wfs, mp_get_schema,
                          mp_remote_describefeaturetype, mp_remote_md,
                          mp_remote_fc, mp_remote_wfs_feature, mp_dov_xml):
@@ -108,7 +108,7 @@ class TestGrondwaterfilterSearch(AbstractTestSearch):
 
         assert df.meetnet_code[0] == '9'
 
-    @pytest.mark.skip
+    @pytest.mark.skip(reason="filters zonder peilmetingen in oefen")
     def test_search_time(self, mp_get_schema,
                          mp_remote_describefeaturetype,
                          mp_remote_wfs_feature, mp_dov_xml):

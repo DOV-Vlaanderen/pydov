@@ -2,10 +2,7 @@
 """Module containing the abstract search classes to retrieve DOV data."""
 
 from itertools import chain
-import datetime
 import math
-import warnings
-import re
 
 import owslib
 import owslib.fes2
@@ -61,6 +58,13 @@ class AbstractSearch(HtmlFormatter):
         self._fc_featurecatalogue = None
 
     def _repr_html_(self):
+        """Get the HTML representation of this search class.
+
+        Returns
+        -------
+        str
+            HTML representation of this search class.
+        """
         html = f'<div class="description"><p>{self.get_description()}</p><div>'
         html += f'<div class="fields">{self.get_fields()._repr_html_()}</p><div>'
         return super()._repr_html_(html)

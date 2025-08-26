@@ -14,7 +14,7 @@ from pandas import DataFrame
 import pydov
 from pydov.types.abstract import AbstractDovType, AbstractField
 from pydov.search.fields import FieldMetadata, FieldMetadataList, ReturnField, ReturnFieldList
-from pydov.util.codelists import AbstractCodeList
+from pydov.util.codelists import AbstractCodeList, CodeListItem
 from pydov.util.dovutil import build_dov_url
 from pydov.util.errors import InvalidFieldError
 from pydov.util.location import Box, Within
@@ -191,22 +191,27 @@ class AbstractTestSearch(object):
 
                 assert isinstance(f['codelist'], AbstractCodeList)
 
-                # for v in f['values'].keys():
-                #     assert isinstance(f['values'][v], str) or f[
-                #         'values'][v] is None
+                for code in f['codelist']:
+                    v = f['codelist'].get(code)
 
-                #     if f['type'] == 'string':
-                #         assert isinstance(v, str)
-                #     elif f['type'] == 'float':
-                #         assert isinstance(v, float)
-                #     elif f['type'] == 'integer':
-                #         assert isinstance(v, int)
-                #     elif f['type'] == 'date':
-                #         assert isinstance(v, datetime.date)
-                #     elif f['type'] == 'datetime':
-                #         assert isinstance(v, datetime.datetime)
-                #     elif f['type'] == 'boolean':
-                #         assert isinstance(v, bool)
+                    if f['type'] == 'string':
+                        assert isinstance(v.code, str)
+                    elif f['type'] == 'float':
+                        assert isinstance(v.code, float)
+                    elif f['type'] == 'integer':
+                        assert isinstance(v.code, int)
+                    elif f['type'] == 'date':
+                        assert isinstance(v.code, datetime.date)
+                    elif f['type'] == 'datetime':
+                        assert isinstance(v.code, datetime.datetime)
+                    elif f['type'] == 'boolean':
+                        assert isinstance(v.code, bool)
+
+                    assert v.label is not None
+                    assert isinstance(v.label, str)
+
+                    assert v.definition is None or isinstance(
+                        v.definition, str)
             else:
                 assert sorted(f.keys()) == [
                     'cost', 'definition', 'list', 'name', 'notnull',
@@ -1120,7 +1125,7 @@ class AbstractTestTypes(object):
         with pytest.raises(ValueError):
             self.datatype_class(None)
 
-    @pytest.mark.skip
+    @pytest.mark.skip(reason="filters zonder peilmetingen in oefen")
     def test_nested_subtype_from_xml_element(self, dov_xml):
         """Test initialising the subtype(s) from the XML document.
 

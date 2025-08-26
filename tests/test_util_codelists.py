@@ -6,7 +6,7 @@ import pytest
 from owslib.etree import etree
 
 import pydov
-from pydov.util.codelists import AbstractCodeList, CodeListItem, MemoryCache, OsloCodeList, XsdType
+from pydov.util.codelists import AbstractCodeList, CodeListItem, FeatureCatalogueValues, MemoryCache, OsloCodeList, XsdType
 from pydov.util.dovutil import build_dov_url
 
 
@@ -67,9 +67,28 @@ class TestCodeListItem:
         assert codelistitem.code == 'code'
         assert codelistitem.label == 'label'
 
+    def test_init_with_definition(self):
+        """Test whether a CodeListItem can be initialised with a definition."""
+        codelistitem = CodeListItem(code='code', label="label",
+                                    definition="definition")
+        assert codelistitem.code == 'code'
+        assert codelistitem.label == 'label'
+        assert codelistitem.definition == 'definition'
+
 
 class TestAbstractCodeList:
     """Test suite for the AbstractCodeList class."""
+
+    @pytest.fixture
+    def codelist(self):
+        """Fixture providing an instance of the AbstractCodeList class."""
+        codelist = AbstractCodeList()
+        codelist.add_items([
+            CodeListItem("code1", "label1", "definition1"),
+            CodeListItem("code2", "label2", "definition2"),
+            CodeListItem("code3", "label3", "definition3")
+        ])
+        yield codelist
 
     def test_get_values_empty(self):
         """Test that get_values returns None when the codelist is empty.
@@ -78,21 +97,18 @@ class TestAbstractCodeList:
         """
         codelist = AbstractCodeList()
         assert codelist.items == {}
-        # assert codelist.get_values() is None
+        assert codelist.get_values() is None
 
-    @pytest.mark.skip
-    def test_get_values_non_empty(self):
+    def test_get_values_non_empty(self, codelist):
         """Test that get_values returns a dictionary of codes and labels.
 
         Checks that the dictionary contains the expected key-value pairs.
-        """
-        codelist = AbstractCodeList()
-        codelist.items = [
-            CodeListItem("code1", "label1"),
-            CodeListItem("code2", "label2"),
-            CodeListItem("code3", "label3")
-        ]
 
+        Parameters
+        ----------
+        codelist : AbstractCodeList
+            An instance of the AbstractCodeList class with items.
+        """
         result = codelist.get_values()
         assert isinstance(result, dict)
         assert result == {
@@ -100,6 +116,170 @@ class TestAbstractCodeList:
             "code2": "label2",
             "code3": "label3"
         }
+
+    def test_get_label(self, codelist):
+        """Test that get_label returns the correct label for a given code.
+
+        Checks that the method returns the expected label for existing codes
+        and None for non-existing codes.
+        
+        Parameters
+        ----------
+        codelist : AbstractCodeList
+            An instance of the AbstractCodeList class with items.
+        """
+        assert codelist.get_label("code1") == "label1"
+        assert codelist.get_label("code2") == "label2"
+        assert codelist.get_label("code3") == "label3"
+        assert codelist.get_label("non_existing_code") is None
+
+    def test_get_definition(self, codelist):
+        """Test that get_definition returns the correct definition for a given code.
+
+        Checks that the method returns the expected definition for existing codes
+        and None for non-existing codes.
+
+        Parameters
+        ----------
+        codelist : AbstractCodeList
+            An instance of the AbstractCodeList class with items.
+        """
+        assert codelist.get_definition("code1") == "definition1"
+        assert codelist.get_definition("code2") == "definition2"
+        assert codelist.get_definition("code3") == "definition3"
+        assert codelist.get_definition("non_existing_code") is None
+
+    def test_get_codelist(self, codelist):
+        """Test that get_codelist returns the codelist itself.
+
+        Checks that the returned object is the same as the original codelist.
+
+        Parameters
+        ----------
+        codelist : AbstractCodeList
+            An instance of the AbstractCodeList class with items.
+        """
+        result = codelist.get_codelist()
+        assert result is codelist
+
+    def test_get(self, codelist):
+        """Test that get retrieves the correct CodeListItem for a given code.
+
+        Checks that the method returns the expected CodeListItem for existing codes
+        and None for non-existing codes.
+
+        Parameters
+        ----------
+        codelist : AbstractCodeList
+            An instance of the AbstractCodeList class with items.
+        """
+        item1 = codelist.get("code1")
+        assert isinstance(item1, CodeListItem)
+        assert item1.code == "code1"
+        assert item1.label == "label1"
+        assert item1.definition == "definition1"
+
+        assert codelist.get("non_existing_code") is None
+        assert codelist.get("non_existing_code", 'default') is 'default'
+
+    def test_add_item(self):
+        """Test that add_item adds a CodeListItem to the codelist.
+
+        Checks that the item is added correctly and can be retrieved.
+        """
+        codelist = AbstractCodeList()
+        item = CodeListItem("code1", "label1", "definition1")
+        codelist.add_item(item)
+
+        assert "code1" in codelist.items
+        assert codelist.items["code1"] is item
+
+    def test_add_items(self):
+        """Test that add_items adds multiple CodeListItems to the codelist.
+
+        Checks that all items are added correctly and can be retrieved.
+        """
+        codelist = AbstractCodeList()
+        items = [
+            CodeListItem("code1", "label1", "definition1"),
+            CodeListItem("code2", "label2", "definition2"),
+            CodeListItem("code3", "label3", "definition3")
+        ]
+        codelist.add_items(items)
+
+        for item in items:
+            assert item.code in codelist.items
+            assert codelist.items[item.code] is item
+
+    def test_is_empty(self):
+        """Test that is_empty returns True for an empty codelist and False otherwise."""
+        codelist = AbstractCodeList()
+        assert codelist.is_empty() is True
+
+        item = CodeListItem("code1", "label1", "definition1")
+        codelist.add_item(item)
+        assert codelist.is_empty() is False
+
+    def test_get_item(self, codelist):
+        """Test that get retrieves the correct CodeListItem for a given code.
+
+        Checks that the method returns the expected CodeListItem for existing codes
+        and None for non-existing codes.
+
+        Parameters
+        ----------
+        codelist : AbstractCodeList
+            An instance of the AbstractCodeList class with items.
+        """
+        item1 = codelist['code1']
+        assert isinstance(item1, CodeListItem)
+        assert item1.code == "code1"
+        assert item1.label == "label1"
+        assert item1.definition == "definition1"
+
+        with pytest.raises(KeyError):
+            codelist["non_existing_code"]
+
+    def test_get_attr(self, codelist):
+        """Test that __getattr__ retrieves the correct CodeListItem for a given code.
+
+        Checks that the method returns the expected CodeListItem for existing codes
+        and None for non-existing codes.
+
+        Parameters
+        ----------
+        codelist : AbstractCodeList
+            An instance of the AbstractCodeList class with items.
+        """
+        item1 = codelist.code1
+        assert isinstance(item1, CodeListItem)
+        assert item1.code == "code1"
+        assert item1.label == "label1"
+        assert item1.definition == "definition1"
+
+        with pytest.raises(AttributeError):
+            codelist.non_existing_code
+
+    def test_iter(self, codelist):
+        """Test that __iter__ iterates over the CodeListItems in the codelist.
+
+        Checks that all items are returned in the iteration.
+
+        Parameters
+        ----------
+        codelist : AbstractCodeList
+            An instance of the AbstractCodeList class with items.
+        """
+        codes = set()
+        for code in codelist:
+            assert isinstance(code, str)
+
+            item = codelist.get(code)
+            assert isinstance(item, CodeListItem)
+
+            codes.add(item.code)
+
+        assert codes == {"code1", "code2", "code3"}
 
 
 class TestOsloCodeList:
@@ -197,7 +377,6 @@ class TestOsloCodeList:
         tree = etree.fromstring(remote_codelist)
         assert tree is not None
 
-    @pytest.mark.skip
     def test_get_values(self, mp_remote_request):
         """Test the retrieval of the code list values.
 
@@ -219,6 +398,51 @@ class TestOsloCodeList:
             "ongeroerd": "Ongeroerd",
             "vloeistof": "Vloeistof"
         }
+
+    def test_get_label(self, mp_remote_request):
+        """Test that get_label returns the correct label for a given code.
+
+        Checks that the method returns the expected label for existing codes
+        and None for non-existing codes.
+
+        Parameters
+        ----------
+        mp_remote_request : fixture
+            The `mp_remote_request` fixture, which mocks the
+            remote request for the code list.
+        """
+        codelist = OsloCodeList('bemonsteringstype', 'string')
+
+        assert codelist.get_label("geroerd") == "Geroerd"
+        assert codelist.get_label("ongeroerd") == "Ongeroerd"
+        assert codelist.get_label("vloeistof") == "Vloeistof"
+        assert codelist.get_label("non_existing_code") is None
+
+    def test_get_definition(self, mp_remote_request):
+        """Test that get_definition returns the correct definition for a given code.
+
+        Checks that the method returns the expected definition for existing codes
+        and None for non-existing codes.
+
+        Parameters
+        ----------
+        mp_remote_request : fixture
+            The `mp_remote_request` fixture, which mocks the
+            remote request for the code list.
+        """
+        codelist = OsloCodeList('bemonsteringstype', 'string')
+
+        assert codelist.get_definition("geroerd") == \
+            ("Monstername waarbij de oorspronkelijke structuur en gelaagdheid "
+             "van het materiaal niet bewaard wordt. Het resulterende monster "
+             "laat het niet toe een gedetailleerde beschrijving of bepaalde "
+             "analyses met betrekking tot de structuur of gelaagdheid  (bv. "
+             "Bulkdensiteit, volumemassa, grondmechanische proeven, ....) uit "
+             "te voeren.")
+
+        assert codelist.get_definition("ongeroerd") is not None
+        assert codelist.get_definition("vloeistof") is not None
+        assert codelist.get_definition("non_existing_code") is None
 
 
 class TestXsdType:
@@ -312,7 +536,6 @@ class TestXsdType:
         tree = etree.fromstring(remote_codelist)
         assert tree is not None
 
-    @pytest.mark.skip
     def test_get_values(self, mp_remote_request):
         """Test the retrieval of the code list values.
 
@@ -334,7 +557,67 @@ class TestXsdType:
         values = codelist.get_values()
 
         assert values == {
-            "in rust": None,
-            "werking": None,
-            "onbekend": None
+            "in rust": "in rust",
+            "werking": "werking",
+            "onbekend": "onbekend"
         }
+
+    def test_get_label(self, mp_remote_request):
+        """Test that get_label returns the correct label for a given code.
+
+        Checks that the method returns the expected label for existing codes
+        and None for non-existing codes.
+
+        Parameters
+        ----------
+        mp_remote_request : fixture
+            The `mp_remote_request` fixture, which mocks the
+            remote request for the code list.
+        """
+        codelist = XsdType(
+            xsd_schema=build_dov_url(
+                'xdov/schema/latest/xsd/kern/gwmeetnet/FilterDataCodes.xsd'),
+            typename='FilterstatusEnumType',
+            datatype='string')
+
+        assert codelist.get_label("in rust") == "in rust"
+        assert codelist.get_label("werking") == "werking"
+        assert codelist.get_label("onbekend") == "onbekend"
+        assert codelist.get_label("non_existing_code") is None
+
+    def test_get_definition(self, mp_remote_request):
+        """Test that get_definition returns the correct definition for a given code.
+
+        Checks that the method returns the expected definition for existing codes
+        and None for non-existing codes.
+
+        Parameters
+        ----------
+        mp_remote_request : fixture
+            The `mp_remote_request` fixture, which mocks the
+            remote request for the code list.
+        """
+        codelist = XsdType(
+            xsd_schema=build_dov_url(
+                'xdov/schema/latest/xsd/kern/gwmeetnet/FilterDataCodes.xsd'),
+            typename='FilterstatusEnumType',
+            datatype='string')
+
+        assert codelist.get_definition("in rust") is None
+        assert codelist.get_definition("werking") is None
+        assert codelist.get_definition("onbekend") is None
+        assert codelist.get_definition("non_existing_code") is None
+
+
+class TestFeatureCatalogueValues:
+    """Test suite for the FeatureCatalogueValues class."""
+
+    def test_init(self):
+        """Test the initialization of the FeatureCatalogueValues class.
+
+        This test checks that an instance of the FeatureCatalogueValues class
+        can be created successfully.
+        """
+        codelist = FeatureCatalogueValues()
+        assert isinstance(codelist, FeatureCatalogueValues)
+        assert isinstance(codelist, AbstractCodeList)

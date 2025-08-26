@@ -106,8 +106,8 @@ class TestObservatieSearch(AbstractTestSearch):
         fields = search_instance.get_fields()
 
         assert 'betrouwbaarheid' in fields
-        assert 'values' in fields['betrouwbaarheid']
-        assert not fields['betrouwbaarheid']['values'].is_empty() > 0
+        assert 'codelist' in fields['betrouwbaarheid']
+        assert not fields['betrouwbaarheid']['codelist'].is_empty()
 
         for field_name in ObservatieDetails.get_field_names():
             assert field_name in fields

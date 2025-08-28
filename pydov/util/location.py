@@ -212,16 +212,20 @@ class Box(AbstractLocation):
             X coordinate of the upper right corner of the box.
         maxy : float
             Y coordinate of the upper right corner of the box.
-        epsg : int, optional
+        epsg : int
             EPSG code of the coordinate reference system (CRS) of the
-            coordinates specified in `minx`, `miny`, `maxx`, `maxy`. Defaults
-            to 31370 (Belgian Lambert72).
+            coordinates specified in `minx`, `miny`, `maxx`, `maxy`.
 
         Raises
         ------
         ValueError
             If `maxx` is lower than or equal to `minx`.
             If `maxy` is lower than or equal to `miny`.
+            If `epsg` is None or invalid
+
+        See Also
+        --------
+        https://epsg.io for a list of valid EPSG codes.
 
         """
 
@@ -281,10 +285,18 @@ class Point(AbstractLocation):
             X coordinate (or longitude) of the point.
         y : float
             Y coordinate (or latitude) of the point.
-        epsg : int, optional
+        epsg : int
             EPSG code of the coordinate reference system (CRS) of the
-            coordinates specified in `x`, `y`. Defaults to
-            31370 (Belgian Lambert72).
+            coordinates specified in `x`, `y`.
+
+        Raises
+        ------
+        ValueError
+            If `epsg` is None or invalid
+
+        See Also
+        --------
+        https://epsg.io for a list of valid EPSG codes.
 
         """
 

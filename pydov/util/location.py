@@ -14,6 +14,8 @@ import string
 
 from owslib.etree import etree
 from owslib.fes2 import Or
+from pyproj import CRS
+from pyproj.exceptions import CRSError
 
 
 class AbstractLocation(object):
@@ -36,6 +38,45 @@ class AbstractLocation(object):
         Should return the same value for locations considered equal.
         """
         raise NotImplementedError('This should be implemented in a subclass.')
+
+    def _validate_epsg(self, epsg):
+        """
+        Validate the provided EPSG code.
+
+        Parameters
+        ----------
+        epsg : int or None
+            The EPSG code to validate. Must be a valid coordinate reference system
+            identifier. If None, a ValueError is raised with usage guidance.
+            If invalid EPSG code, a CRSError is raised
+
+        Raises
+        ------
+        ValueError
+            If `epsg` is None or invalid, with a message explaining how to provide a valid code.
+
+        See Also
+        --------
+        https://epsg.io for a list of valid EPSG codes.
+        """
+
+        generic_error = (f"Example usage: {self.__class__.__name__}(..., epsg=3812)\n"
+                         "Useful EPSG codes:\n"
+                         "\t- 3812: Lambert 2008\n"
+                         "\t- 31370: Lambert 72\n"
+                         "\t- 4326: WGS84\n"
+                         "Refer to https://epsg.io for other valid codes.")
+
+        if epsg is None:
+            raise ValueError("Missing required parameter 'epsg'.\n" + generic_error)
+
+        if not isinstance(epsg, int):
+            raise ValueError(f"EPSG code must be an integer, got {type(epsg).__name__}\n" + generic_error)
+
+        try:
+            CRS.from_epsg(epsg)
+        except CRSError:
+            raise ValueError("Invalid EPSG code.\n" + generic_error)
 
     def _get_id(self):
         random.seed(self._get_id_seed())
@@ -154,7 +195,7 @@ class Box(AbstractLocation):
     """Class representing a box location, also known as bounding box,
     envelope, extent."""
 
-    def __init__(self, minx, miny, maxx, maxy, epsg=31370):
+    def __init__(self, minx, miny, maxx, maxy, epsg=None):
         """Initialise a Box.
 
         To initialise a Box using GPS coordinates in decimal degrees,
@@ -183,6 +224,9 @@ class Box(AbstractLocation):
             If `maxy` is lower than or equal to `miny`.
 
         """
+
+        self._validate_epsg(epsg)
+
         if maxx <= minx:
             raise ValueError("MaxX should be greater than MinX.")
 
@@ -225,7 +269,7 @@ class Box(AbstractLocation):
 class Point(AbstractLocation):
     """Class representing a point location."""
 
-    def __init__(self, x, y, epsg=31370):
+    def __init__(self, x, y, epsg=None):
         """Initialise a Point.
 
         To initialise a Point using GPS coordinates in decimal degrees,
@@ -243,6 +287,9 @@ class Point(AbstractLocation):
             31370 (Belgian Lambert72).
 
         """
+
+        self._validate_epsg(epsg)
+
         self.x = x
         self.y = y
         self.epsg = epsg

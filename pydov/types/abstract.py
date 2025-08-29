@@ -158,8 +158,8 @@ class AbstractDovFieldSet(AbstractFieldsObject, HtmlFormatter):
     fields = []
 
     def _repr_html_(self):
-        html = f'<div class="description"><p>{self.get_description()}</p><div>'
-        html += f'<div class="fields">{self.get_fields()._repr_html_()}</p><div>'
+        html = f'<div class="description"><p>{self.get_description()}</p></div>'
+        html += f'<div class="fields">{self.get_fields()._repr_html_()}</p></div>'
         return super()._repr_html_(html)
 
     @classmethod

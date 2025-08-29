@@ -28,6 +28,8 @@ class HtmlFormatter:
                     border-left: 1px solid #fee439;
                     border-radius: 10px;
                     margin: 10px 0;
+                    max-height: 50vh;
+                    overflow: auto;
                 }
 
                 .code {

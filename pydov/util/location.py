@@ -14,8 +14,6 @@ import string
 
 from owslib.etree import etree
 from owslib.fes2 import Or
-from pyproj import CRS
-from pyproj.exceptions import CRSError
 
 
 class AbstractLocation(object):
@@ -39,6 +37,16 @@ class AbstractLocation(object):
         """
         raise NotImplementedError('This should be implemented in a subclass.')
 
+    def _is_valid_epsg(self, epsg):
+        try:
+            from pyproj import CRS
+            from pyproj.exceptions import CRSError
+            CRS.from_epsg(epsg)
+        except ImportError:
+            pass
+        except CRSError:
+            raise ValueError
+
     def _validate_epsg(self, epsg):
         """
         Validate the provided EPSG code.
@@ -46,21 +54,24 @@ class AbstractLocation(object):
         Parameters
         ----------
         epsg : int or None
-            The EPSG code to validate. Must be a valid coordinate reference system
-            identifier. If None, a ValueError is raised with usage guidance.
+            The EPSG code to validate. Must be a valid coordinate reference
+            system identifier. If None, a ValueError is raised
+            with usage guidance.
             If invalid EPSG code, a CRSError is raised
 
         Raises
         ------
         ValueError
-            If `epsg` is None or invalid, with a message explaining how to provide a valid code.
+            If `epsg` is None or invalid, with a message explaining
+            how to provide a valid code.
 
         See Also
         --------
         https://epsg.io for a list of valid EPSG codes.
         """
 
-        generic_error = (f"Example usage: {self.__class__.__name__}(..., epsg=3812)\n"
+        generic_error = (f"Example usage: {self.__class__.__name__}"
+                         "(..., epsg=3812)\n"
                          "Useful EPSG codes:\n"
                          "\t- 3812: Lambert 2008\n"
                          "\t- 31370: Lambert 72\n"
@@ -68,15 +79,17 @@ class AbstractLocation(object):
                          "Refer to https://epsg.io for other valid codes.")
 
         if epsg is None:
-            raise ValueError("Missing required parameter 'epsg'.\n" + generic_error)
+            raise ValueError("Missing required parameter 'epsg'.\n" +
+                             generic_error)
 
         if not isinstance(epsg, int):
-            raise ValueError(f"EPSG code must be an integer, got {type(epsg).__name__}\n" + generic_error)
+            raise ValueError("EPSG code must be an integer, "
+                             f"got {type(epsg).__name__}\n" + generic_error)
 
         try:
-            CRS.from_epsg(epsg)
-        except CRSError:
-            raise ValueError("Invalid EPSG code.\n" + generic_error)
+            self._is_valid_epsg(epsg)
+        except ValueError:
+            raise ValueError("Invalid EPSG code.\n" + generic_error) from None
 
     def _get_id(self):
         random.seed(self._get_id_seed())
@@ -358,6 +371,15 @@ class GmlObject(AbstractLocation):
                     'older.')
 
             raise ValueError('GML element appears not to be valid GML3.2')
+
+        if not self.element.attrib.get("srsName"):
+            raise ValueError("GML element is missing the attribute srsName")
+
+        try:
+            epsg = int(self.element.attrib.get("srsName").split(':')[-1])
+            self._is_valid_epsg(epsg)
+        except ValueError:
+            raise ValueError("GML element has an invalid attribute srsName")
 
     def get_element(self):
         return self.element

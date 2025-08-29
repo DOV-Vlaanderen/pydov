@@ -4,6 +4,14 @@
 History
 =======
 
+v3.3.1
+------
+
+- Fixes and improvements
+
+  - Following WFS/XSD schema updates, update the GrondwaterVergunning and GrondwaterFilter types to support HCOVv2 coding (#428)
+
+
 v3.3.0
 ------
 

@@ -419,7 +419,7 @@ The following example gets borehole information based on a search for groundwate
     fs = GrondwaterFilterSearch()
     bs = BoringSearch()
 
-    filters = fs.search(location=WithinDistance(Point(96540, 186900), 10, 'km'),
+    filters = fs.search(location=WithinDistance(Point(96540, 186900, epsg=31370), 10, 'km'),
                         return_fields=('pkey_filter', 'boringfiche'))
 
     print(filters.head())

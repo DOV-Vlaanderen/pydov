@@ -15,27 +15,27 @@ You can use the following location filters:
 Within
     Search for points entirely within a given location. This does not include points on the boundary.
 
-    Example: ``Within(Box(200000, 211000, 205000, 214000))``
+    Example: ``Within(Box(200000, 211000, 205000, 214000, epsg=31370))``
 
 Intersects
     Search for points within or on the boundary of a given location.
 
-    Example: ``Intersects(Box(200000, 211000, 205000, 214000))``
+    Example: ``Intersects(Box(200000, 211000, 205000, 214000, epsg=31370))``
 
 Touches
     Search for points on the boundary but not inside a given location.
 
-    Example: ``Touches(Box(200000, 211000, 205000, 214000))``
+    Example: ``Touches(Box(200000, 211000, 205000, 214000, epsg=31370))``
 
 Disjoint
     Search for points that don't share any part with the given location. This means points that are completely outside of a polygon and its boundary.
 
-    Example: ``Disjoint(Box(200000, 211000, 205000, 214000))``
+    Example: ``Disjoint(Box(200000, 211000, 205000, 214000, epsg=31370))``
 
 Equals
     Search for points exactly equal to the given location.
 
-    Example: ``Equals(Point(200000, 205000))``
+    Example: ``Equals(Point(200000, 205000, epsg=31370))``
 
 
 A special location filter exists for spatial buffers, requiring a location and a distance:
@@ -43,9 +43,9 @@ A special location filter exists for spatial buffers, requiring a location and a
 WithinDistance
     Search for points within a given distance from a given location. By default, the distance is expressed in meters, but this can optionally by changed with the `distance_unit` parameter.
 
-    Example: ``WithinDistance(Point(200000, 205000), distance=100)``
+    Example: ``WithinDistance(Point(200000, 205000, epsg=31370), distance=100)``
 
-    Example: ``WithinDistance(location=Point(200000, 205000), distance=1, distance_unit='kilometer')``
+    Example: ``WithinDistance(location=Point(200000, 205000, epsg=31370), distance=1, distance_unit='kilometer')``
 
 
 Using locations
@@ -55,18 +55,14 @@ You can define three different types of locations for use in a spatial filter: a
 Box
     A rectangular twodimensional box defined by its lower left and upper right corners. The coordinate order for creating a Box is: lower left (minimum) x, lower left y, upper right (maximum) x, upper right y.
 
-    By default, boxes use the Belgian Lambert 72 coordinate reference system (EPSG:31370). Should you want to create a Box using GPS coordinates in decimal degrees, use the parameter `epsg` to change the coordinate reference system and enter the longitude range as `minx` and `maxx` and the latitude range as `miny` and `maxy`.
-
-    Example: ``Box(94720, 186910, 112220, 202870)``
+    When creating boxes, you always have to include the coordinate reference system. Should you want to create a Box using GPS coordinates in decimal degrees, you can set the parameter `epsg` to the value 4326 to change the coordinate reference system and enter the longitude range as `minx` and `maxx` and the latitude range as `miny` and `maxy`.
 
     Example: ``Box(3.6214, 50.9850, 3.8071, 51.1270, epsg=4326)``
 
 Point
     A twodimensional point defined by its x and y coordinate.
 
-    By default, points use the Belgian Lambert 72 coordinate reference system (EPSG:31370). Should you want to create a Point using GPS coordinates in decimal degrees, use the parameter `epsg` to change the coordinate reference system and enter the longitude as `x` and the latitude `y`.
-
-    Example: ``Point(110680, 202030)``
+    When creating points, you always have to include the coordinate reference system. For example, should you want to create a Point using GPS coordinates in decimal degrees, set the parameter `epsg` to 4326 and enter the longitude as `x` and the latitude `y`.
 
     Example: ``Point(3.8071, 51.1270, epsg=4326)``
 
@@ -95,14 +91,14 @@ Each of `And`, `Or` and `Not` take a list as argument, in the case of `And` and 
 And
     Return results that match all listed location filters.
 
-    Example: ``And([Within(Box(94720, 186910, 112220, 202870), WithinDistance(Point(94720, 186910), distance=200)])``
+    Example: ``And([Within(Box(94720, 186910, 112220, 202870, epsg=31370), WithinDistance(Point(94720, 186910, epsg=31370), distance=200)])``
 
-    Example: ``And([Disjoint(Box(94720, 186910, 112220, 202870), Disjoint(Box(194720, 286910, 212220, 302870)])``
+    Example: ``And([Disjoint(Box(94720, 186910, 112220, 202870, epsg=31370), Disjoint(Box(194720, 286910, 212220, 302870, epsg=31370)])``
 
 Or
     Return results that match one or more listed location filters.
 
-    Example: ``Or([Within(Box(94720, 186910, 112220, 202870), Within(Box(194720, 286910, 212220, 302870)])``
+    Example: ``Or([Within(Box(94720, 186910, 112220, 202870, epsg=31370), Within(Box(194720, 286910, 212220, 302870, epsg=31370)])``
 
 Not
     Return results that do not match any of the listed filters.

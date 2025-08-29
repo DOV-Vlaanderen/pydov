@@ -59,7 +59,7 @@ To query on location, we use location objects and spatial filters from the pydov
     from pydov.util.location import Within, Box
 
     dataframe = boringsearch.search(
-        location=Within(Box(107500, 202000, 108500, 203000))
+        location=Within(Box(107500, 202000, 108500, 203000, epsg=31370))
     )
     dataframe.head()
 
@@ -89,7 +89,7 @@ Attribute queries can be combined with location filtering by specifying both par
     dataframe = boringsearch.search(
         query=PropertyIsGreaterThan(
             propertyname='diepte_tot_m', literal='550'),
-        location=Within(Box(107500, 202000, 108500, 203000))
+        location=Within(Box(107500, 202000, 108500, 203000, epsg=31370))
     )
     dataframe
 

@@ -35,7 +35,7 @@ class TestOwsutil(object):
         """
         contentmetadata = wfs.contents['dov-pub:Boringen']
         assert owsutil.get_csw_base_url(contentmetadata) == \
-            build_dov_url('geonetwork/srv/dut/csw')
+               build_dov_url('geonetwork/srv/dut/csw')
 
     def test_get_csw_base_url_nometadataurls(self, wfs):
         """Test the owsutil.get_csw_base_url method for a layer without
@@ -69,7 +69,7 @@ class TestOwsutil(object):
 
         """
         assert owsutil.get_featurecatalogue_uuid(md_metadata) == \
-            'c0cbd397-520f-4ee1-aca7-d70e271eeed6'
+               'c0cbd397-520f-4ee1-aca7-d70e271eeed6'
 
     def test_get_featurecatalogue_uuid_nocontentinfo(self, md_metadata):
         """Test the owsutil.get_featurecatalogue_uuid method when the
@@ -107,9 +107,9 @@ class TestOwsutil(object):
         """
         tree = etree.fromstring(md_metadata.xml)
         for ci in tree.findall(nspath_eval(
-            'gmd:contentInfo/'
-            'gmd:MD_FeatureCatalogueDescription/'
-            'gmd:featureCatalogueCitation',
+                'gmd:contentInfo/'
+                'gmd:MD_FeatureCatalogueDescription/'
+                'gmd:featureCatalogueCitation',
                 {'gmd': 'http://www.isotc211.org/2005/gmd'})):
             ci.attrib.pop('uuidref')
         md_metadata = MD_Metadata(tree)
@@ -131,7 +131,7 @@ class TestOwsutil(object):
 
         """
         assert owsutil.get_namespace(wfs, 'dov-pub:Boringen') == \
-            'http://dov.vlaanderen.be/ocdov/dov-pub'
+               'http://dov.vlaanderen.be/ocdov/dov-pub'
 
     def test_get_remote_featurecatalogue(self, mp_remote_fc):
         """Test the owsutil.get_remote_featurecatalogue method.
@@ -174,7 +174,7 @@ class TestOwsutil(object):
                     for v in attr['values'].keys():
                         assert isinstance(v, str)
                         assert isinstance(attr['values'][v], str) or \
-                            attr['values'][v] is None
+                               attr['values'][v] is None
                     assert len(attr['values'].keys()) == len(
                         set(attr['values'].keys()))
 
@@ -376,7 +376,7 @@ class TestWfsGetFeatureRequest(object):
         with pytest.raises(AttributeError):
             owsutil.wfs_build_getfeature_request(
                 'dov-pub:Boringen',
-                location=Within(Box(151650, 214675, 151750, 214775)))
+                location=Within(Box(151650, 214675, 151750, 214775, epsg=31370)))
 
     def test_wfs_build_getfeature_request_bbox(self, mp_gml_id):
         """Test the owsutil.wfs_build_getfeature_request method with a
@@ -387,7 +387,7 @@ class TestWfsGetFeatureRequest(object):
         """
         xml = owsutil.wfs_build_getfeature_request(
             'dov-pub:Boringen',
-            location=Within(Box(151650, 214675, 151750, 214775)),
+            location=Within(Box(151650, 214675, 151750, 214775, epsg=31370)),
             geometry_column='geom')
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
@@ -413,12 +413,12 @@ class TestWfsGetFeatureRequest(object):
         """
         xml1 = owsutil.wfs_build_getfeature_request(
             'dov-pub:Boringen',
-            location=Within(Box(151650, 214675, 151750, 214775)),
+            location=Within(Box(151650, 214675, 151750, 214775, epsg=31370)),
             geometry_column='geom')
 
         xml2 = owsutil.wfs_build_getfeature_request(
             'dov-pub:Boringen',
-            location=Within(Box(151650, 214675, 151750, 214775)),
+            location=Within(Box(151650, 214675, 151750, 214775, epsg=31370)),
             geometry_column='geom')
 
         assert etree.tostring(xml1) == etree.tostring(xml2)
@@ -431,8 +431,8 @@ class TestWfsGetFeatureRequest(object):
         xml = owsutil.wfs_build_getfeature_request(
             'dov-pub:Boringen',
             location=Or([
-                Within(Box(100000, 120000, 200000, 220000)),
-                WithinDistance(Box(100000, 120000, 200000, 220000), 10)
+                Within(Box(100000, 120000, 200000, 220000, epsg=31370)),
+                WithinDistance(Box(100000, 120000, 200000, 220000, epsg=31370), 10)
             ]),
             geometry_column='geom')
 
@@ -522,7 +522,7 @@ class TestWfsGetFeatureRequest(object):
 
         xml = owsutil.wfs_build_getfeature_request(
             'dov-pub:Boringen', filter=filter_request,
-            location=Within(Box(151650, 214675, 151750, 214775)),
+            location=Within(Box(151650, 214675, 151750, 214775, epsg=31370)),
             geometry_column='geom')
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
@@ -562,7 +562,7 @@ class TestWfsGetFeatureRequest(object):
 
         xml = owsutil.wfs_build_getfeature_request(
             'dov-pub:Boringen', filter=filter_request,
-            location=Within(Box(151650, 214675, 151750, 214775)),
+            location=Within(Box(151650, 214675, 151750, 214775, epsg=31370)),
             geometry_column='geom', propertyname=['fiche', 'diepte_tot_m'])
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(

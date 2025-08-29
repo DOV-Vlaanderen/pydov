@@ -37,6 +37,60 @@ class AbstractLocation(object):
         """
         raise NotImplementedError('This should be implemented in a subclass.')
 
+    def _is_valid_epsg(self, epsg):
+        try:
+            from pyproj import CRS
+            from pyproj.exceptions import CRSError
+            CRS.from_epsg(epsg)
+        except ImportError:
+            pass
+        except CRSError:
+            raise ValueError
+
+    def _validate_epsg(self, epsg):
+        """
+        Validate the provided EPSG code.
+
+        Parameters
+        ----------
+        epsg : int or None
+            The EPSG code to validate. Must be a valid coordinate reference
+            system identifier. If None, a ValueError is raised
+            with usage guidance.
+            If invalid EPSG code, a CRSError is raised
+
+        Raises
+        ------
+        ValueError
+            If `epsg` is None or invalid, with a message explaining
+            how to provide a valid code.
+
+        See Also
+        --------
+        https://epsg.io for a list of valid EPSG codes.
+        """
+
+        generic_error = (f"Example usage: {self.__class__.__name__}"
+                         "(..., epsg=3812)\n"
+                         "Useful EPSG codes:\n"
+                         "\t- 3812: Lambert 2008\n"
+                         "\t- 31370: Lambert 72\n"
+                         "\t- 4326: WGS84\n"
+                         "Refer to https://epsg.io for other valid codes.")
+
+        if epsg is None:
+            raise ValueError("Missing required parameter 'epsg'.\n" +
+                             generic_error)
+
+        if not isinstance(epsg, int):
+            raise ValueError("EPSG code must be an integer, "
+                             f"got {type(epsg).__name__}\n" + generic_error)
+
+        try:
+            self._is_valid_epsg(epsg)
+        except ValueError:
+            raise ValueError("Invalid EPSG code.\n" + generic_error) from None
+
     def _get_id(self):
         random.seed(self._get_id_seed())
         random_id = ''.join(random.choice(
@@ -154,7 +208,7 @@ class Box(AbstractLocation):
     """Class representing a box location, also known as bounding box,
     envelope, extent."""
 
-    def __init__(self, minx, miny, maxx, maxy, epsg=31370):
+    def __init__(self, minx, miny, maxx, maxy, epsg=None):
         """Initialise a Box.
 
         To initialise a Box using GPS coordinates in decimal degrees,
@@ -171,18 +225,25 @@ class Box(AbstractLocation):
             X coordinate of the upper right corner of the box.
         maxy : float
             Y coordinate of the upper right corner of the box.
-        epsg : int, optional
+        epsg : int
             EPSG code of the coordinate reference system (CRS) of the
-            coordinates specified in `minx`, `miny`, `maxx`, `maxy`. Defaults
-            to 31370 (Belgian Lambert72).
+            coordinates specified in `minx`, `miny`, `maxx`, `maxy`.
 
         Raises
         ------
         ValueError
             If `maxx` is lower than or equal to `minx`.
             If `maxy` is lower than or equal to `miny`.
+            If `epsg` is None or invalid
+
+        See Also
+        --------
+        https://epsg.io for a list of valid EPSG codes.
 
         """
+
+        self._validate_epsg(epsg)
+
         if maxx <= minx:
             raise ValueError("MaxX should be greater than MinX.")
 
@@ -225,7 +286,7 @@ class Box(AbstractLocation):
 class Point(AbstractLocation):
     """Class representing a point location."""
 
-    def __init__(self, x, y, epsg=31370):
+    def __init__(self, x, y, epsg=None):
         """Initialise a Point.
 
         To initialise a Point using GPS coordinates in decimal degrees,
@@ -237,12 +298,23 @@ class Point(AbstractLocation):
             X coordinate (or longitude) of the point.
         y : float
             Y coordinate (or latitude) of the point.
-        epsg : int, optional
+        epsg : int
             EPSG code of the coordinate reference system (CRS) of the
-            coordinates specified in `x`, `y`. Defaults to
-            31370 (Belgian Lambert72).
+            coordinates specified in `x`, `y`.
+
+        Raises
+        ------
+        ValueError
+            If `epsg` is None or invalid
+
+        See Also
+        --------
+        https://epsg.io for a list of valid EPSG codes.
 
         """
+
+        self._validate_epsg(epsg)
+
         self.x = x
         self.y = y
         self.epsg = epsg
@@ -299,6 +371,15 @@ class GmlObject(AbstractLocation):
                     'older.')
 
             raise ValueError('GML element appears not to be valid GML3.2')
+
+        if not self.element.attrib.get("srsName"):
+            raise ValueError("GML element is missing the attribute srsName")
+
+        try:
+            epsg = int(self.element.attrib.get("srsName").split(':')[-1])
+            self._is_valid_epsg(epsg)
+        except ValueError:
+            raise ValueError("GML element has an invalid attribute srsName")
 
     def get_element(self):
         return self.element

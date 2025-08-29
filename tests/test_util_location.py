@@ -27,10 +27,10 @@ class TestLocation(object):
 
     def test_gml_id_unique(self):
         """Test whether GML id's for two different locations are unique."""
-        box1 = Box(94720, 186910, 112220, 202870)
+        box1 = Box(94720, 186910, 112220, 202870, epsg=31370)
         id1 = box1.get_element().get('{http://www.opengis.net/gml/3.2}id')
 
-        box2 = Box(94721, 186911, 112221, 202871)
+        box2 = Box(94721, 186911, 112221, 202871, epsg=31370)
         id2 = box2.get_element().get('{http://www.opengis.net/gml/3.2}id')
 
         assert id1.startswith('pydov')
@@ -39,10 +39,10 @@ class TestLocation(object):
 
     def test_gml_id_stable(self):
         """Test whether GML id's for two equal locations are the same."""
-        box1 = Box(94720, 186910, 112220, 202870)
+        box1 = Box(94720, 186910, 112220, 202870, epsg=31370)
         id1 = box1.get_element().get('{http://www.opengis.net/gml/3.2}id')
 
-        box2 = Box(94720, 186910, 112220, 202870)
+        box2 = Box(94720, 186910, 112220, 202870, epsg=31370)
         id2 = box2.get_element().get('{http://www.opengis.net/gml/3.2}id')
 
         assert id1.startswith('pydov')
@@ -55,7 +55,7 @@ class TestLocation(object):
         Test whether the generated XML is correct.
 
         """
-        box = Box(94720, 186910, 112220, 202870)
+        box = Box(94720, 186910, 112220, 202870, epsg=31370)
         xml = box.get_element()
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
@@ -90,7 +90,7 @@ class TestLocation(object):
 
         """
         with pytest.raises(ValueError):
-            Box(94720, 202870, 186910, 112220)
+            Box(94720, 202870, 186910, 112220, epsg=31370)
 
     def test_box_invalid_wgs84(self):
         """Test the Box type with the wrong ordering of WGS84 coordinates.
@@ -107,7 +107,7 @@ class TestLocation(object):
         Test whether the generated XML is correct.
 
         """
-        point = Point(110680, 202030)
+        point = Point(110680, 202030, epsg=31370)
         xml = point.get_element()
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
@@ -248,7 +248,7 @@ class TestBinarySpatialFilters(object):
         Test whether the generated XML is correct.
 
         """
-        equals = Equals(Point(150000, 150000))
+        equals = Equals(Point(150000, 150000, epsg=31370))
         equals.set_geometry_column('geom')
         xml = equals.toXML()
 
@@ -266,7 +266,7 @@ class TestBinarySpatialFilters(object):
         Test whether a RuntimeError is raised.
 
         """
-        equals = Equals(Point(150000, 150000))
+        equals = Equals(Point(150000, 150000, epsg=31370))
 
         with pytest.raises(RuntimeError):
             equals.toXML()
@@ -277,7 +277,7 @@ class TestBinarySpatialFilters(object):
         Test whether the generated XML is correct.
 
         """
-        disjoint = Disjoint(Box(94720, 186910, 112220, 202870))
+        disjoint = Disjoint(Box(94720, 186910, 112220, 202870, epsg=31370))
         disjoint.set_geometry_column('geom')
         xml = disjoint.toXML()
 
@@ -296,7 +296,7 @@ class TestBinarySpatialFilters(object):
         Test whether a RuntimeError is raised.
 
         """
-        disjoint = Disjoint(Point(150000, 150000))
+        disjoint = Disjoint(Point(150000, 150000, epsg=31370))
 
         with pytest.raises(RuntimeError):
             disjoint.toXML()
@@ -307,7 +307,7 @@ class TestBinarySpatialFilters(object):
         Test whether the generated XML is correct.
 
         """
-        touches = Touches(Box(94720, 186910, 112220, 202870))
+        touches = Touches(Box(94720, 186910, 112220, 202870, epsg=31370))
         touches.set_geometry_column('geom')
         xml = touches.toXML()
 
@@ -326,7 +326,7 @@ class TestBinarySpatialFilters(object):
         Test whether a RuntimeError is raised.
 
         """
-        touches = Touches(Point(150000, 150000))
+        touches = Touches(Point(150000, 150000, epsg=31370))
 
         with pytest.raises(RuntimeError):
             touches.toXML()
@@ -337,7 +337,7 @@ class TestBinarySpatialFilters(object):
         Test whether the generated XML is correct.
 
         """
-        within = Within(Box(94720, 186910, 112220, 202870))
+        within = Within(Box(94720, 186910, 112220, 202870, epsg=31370))
         within.set_geometry_column('geom')
         xml = within.toXML()
 
@@ -356,7 +356,7 @@ class TestBinarySpatialFilters(object):
         Test whether a RuntimeError is raised.
 
         """
-        within = Within(Box(94720, 186910, 112220, 202870))
+        within = Within(Box(94720, 186910, 112220, 202870, epsg=31370))
 
         with pytest.raises(RuntimeError):
             within.toXML()
@@ -367,7 +367,7 @@ class TestBinarySpatialFilters(object):
         Test whether the generated XML is correct.
 
         """
-        intersects = Intersects(Box(94720, 186910, 112220, 202870))
+        intersects = Intersects(Box(94720, 186910, 112220, 202870, epsg=31370))
         intersects.set_geometry_column('geom')
         xml = intersects.toXML()
 
@@ -387,7 +387,7 @@ class TestBinarySpatialFilters(object):
         Test whether a RuntimeError is raised.
 
         """
-        intersects = Intersects(Box(94720, 186910, 112220, 202870))
+        intersects = Intersects(Box(94720, 186910, 112220, 202870, epsg=31370))
 
         with pytest.raises(RuntimeError):
             intersects.toXML()
@@ -402,7 +402,7 @@ class TestLocationFilters(object):
         Test whether the generated XML is correct.
 
         """
-        withindistance = WithinDistance(Point(150000, 150000), 100)
+        withindistance = WithinDistance(Point(150000, 150000, 31370), 100)
         withindistance.set_geometry_column('geom')
         xml = withindistance.toXML()
 
@@ -421,7 +421,7 @@ class TestLocationFilters(object):
         Test whether the generated XML is correct.
 
         """
-        withindistance = WithinDistance(location=Point(150000, 150000),
+        withindistance = WithinDistance(location=Point(150000, 150000, epsg=31370),
                                         distance=100, distance_unit='meter')
         withindistance.set_geometry_column('geom')
         xml = withindistance.toXML()
@@ -442,7 +442,7 @@ class TestLocationFilters(object):
         Test whether a RuntimeError is raised.
 
         """
-        withindistance = WithinDistance(Point(150000, 150000), 100)
+        withindistance = WithinDistance(Point(150000, 150000, epsg=31370), 100)
 
         with pytest.raises(RuntimeError):
             withindistance.toXML()
@@ -478,8 +478,8 @@ class TestLocationFilterExpressions(object):
         Test whether the generated XML is correct.
 
         """
-        point_and_box = And([WithinDistance(Point(150000, 150000), 100),
-                             Within(Box(94720, 186910, 112220, 202870))])
+        point_and_box = And([WithinDistance(Point(150000, 150000, epsg=31370), 100),
+                             Within(Box(94720, 186910, 112220, 202870, epsg=31370))])
         xml = set_geometry_column(point_and_box, 'geom')
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
@@ -506,7 +506,7 @@ class TestLocationFilterExpressions(object):
         """
         box_or_box = Or([
             Intersects(Box(50.9850, 3.6214, 51.1270, 3.8071, epsg=4326)),
-            Within(Box(94720, 186910, 112220, 202870))])
+            Within(Box(94720, 186910, 112220, 202870, epsg=31370))])
         xml = set_geometry_column(box_or_box, 'geom')
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
@@ -531,8 +531,8 @@ class TestLocationFilterExpressions(object):
         Test whether the generated XML is correct.
 
         """
-        point_and_box = And([Not([WithinDistance(Point(150000, 150000), 100)]),
-                             Within(Box(94720, 186910, 112220, 202870))])
+        point_and_box = And([Not([WithinDistance(Point(150000, 150000, epsg=31370), 100)]),
+                             Within(Box(94720, 186910, 112220, 202870, epsg=31370))])
         xml = set_geometry_column(point_and_box, 'geom')
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(

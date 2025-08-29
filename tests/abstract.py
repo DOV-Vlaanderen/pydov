@@ -334,7 +334,7 @@ class AbstractTestSearch(object):
 
         """
         df = self.search_instance.search(
-            location=Within(Box(1, 2, 3, 4)),
+            location=Within(Box(1, 2, 3, 4, epsg=31370)),
             query=self.valid_query_single,
             return_fields=self.valid_returnfields)
 

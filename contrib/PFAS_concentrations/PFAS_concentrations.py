@@ -1090,7 +1090,7 @@ class RequestPFASdata:
 
 if __name__ == '__main__':
     medium = ['combined_soil']
-    location = Within(Box(15000, 150000, 270000, 250000))  # Bounding box Flanders
+    location = Within(Box(15000, 150000, 270000, 250000, epsg=31370))  # Bounding box Flanders
     rd = RequestPFASdata()
     df = rd.main(medium, location=location, save=True)[0]
     #print(df[0])

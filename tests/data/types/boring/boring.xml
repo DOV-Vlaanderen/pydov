@@ -4,7 +4,7 @@
         <identificatie>GEO-04/169-BNo-B1</identificatie>
         <dataidentifier>
             <permkey>2004-103984</permkey>
-            <uri>https://www/data/boring/2004-103984</uri>
+            <uri>https://www.dov.vlaanderen.be/data/boring/2004-103984</uri>
         </dataidentifier>
         <ligging>
             <gml:Point srsName="urn:ogc:def:crs:EPSG::6190" srsDimension="3">
@@ -31,7 +31,9 @@
         <datum_aanvang>2004-12-20</datum_aanvang>
         <doel>Geotechnisch onderzoek</doel>
         <wet_kader>
-            <niet_ingedeeld/>
+            <ander_wettelijkkader>
+                <reden>Wettelijk kader niet van toepassing</reden>
+            </ander_wettelijkkader>
             <type_erkenning>f</type_erkenning>
         </wet_kader>
         <uitvoerder>

@@ -57,7 +57,7 @@
     <observatie>
         <dataidentifier>
             <permkey>2022-4036264</permkey>
-            <uri>https://www/data/observatie/2022-4036264</uri>
+            <uri>https://www.dov.vlaanderen.be/data/observatie/2022-4036264</uri>
         </dataidentifier>
         <geobserveerd_object>
             <objecttype>monster</objecttype>
@@ -72,6 +72,7 @@
         <eenheid>-</eenheid>
         <methode>Onbekend</methode>
         <fenomeentijd>2017-05-29</fenomeentijd>
+        <betrouwbaarheid>https://data.bodemenondergrond.vlaanderen.be/id/concept/betrouwbaarheid/B</betrouwbaarheid>
         <herkomst>LABO</herkomst>
         <uitvoerder>
             <organisatie>
@@ -82,7 +83,7 @@
     <observatie>
         <dataidentifier>
             <permkey>2022-3808974</permkey>
-            <uri>https://www/data/observatie/2022-3808974</uri>
+            <uri>https://www.dov.vlaanderen.be/data/observatie/2022-3808974</uri>
         </dataidentifier>
         <geobserveerd_object>
             <objecttype>monster</objecttype>
@@ -96,6 +97,7 @@
         <waarde_text>Fat clay</waarde_text>
         <methode>Onbekend</methode>
         <fenomeentijd>2017-05-29</fenomeentijd>
+        <betrouwbaarheid>https://data.bodemenondergrond.vlaanderen.be/id/concept/betrouwbaarheid/B</betrouwbaarheid>
         <herkomst>LABO</herkomst>
         <uitvoerder>
             <organisatie>
@@ -106,7 +108,7 @@
     <observatie>
         <dataidentifier>
             <permkey>2023-11026988</permkey>
-            <uri>https://www/data/observatie/2023-11026988</uri>
+            <uri>https://www.dov.vlaanderen.be/data/observatie/2023-11026988</uri>
         </dataidentifier>
         <geobserveerd_object>
             <objecttype>monster</objecttype>
@@ -126,7 +128,7 @@
     <observatie>
         <dataidentifier>
             <permkey>2022-6409375</permkey>
-            <uri>https://www/data/observatie/2022-6409375</uri>
+            <uri>https://www.dov.vlaanderen.be/data/observatie/2022-6409375</uri>
         </dataidentifier>
         <geobserveerd_object>
             <objecttype>monster</objecttype>
@@ -141,6 +143,7 @@
         <eenheid>%</eenheid>
         <methode>Onbekend</methode>
         <fenomeentijd>2017-05-29</fenomeentijd>
+        <betrouwbaarheid>https://data.bodemenondergrond.vlaanderen.be/id/concept/betrouwbaarheid/B</betrouwbaarheid>
         <herkomst>LABO</herkomst>
         <uitvoerder>
             <organisatie>
@@ -151,7 +154,7 @@
     <observatie>
         <dataidentifier>
             <permkey>2022-3945091</permkey>
-            <uri>https://www/data/observatie/2022-3945091</uri>
+            <uri>https://www.dov.vlaanderen.be/data/observatie/2022-3945091</uri>
         </dataidentifier>
         <geobserveerd_object>
             <objecttype>monster</objecttype>
@@ -166,6 +169,7 @@
         <eenheid>%</eenheid>
         <methode>Onbekend</methode>
         <fenomeentijd>2017-05-29</fenomeentijd>
+        <betrouwbaarheid>https://data.bodemenondergrond.vlaanderen.be/id/concept/betrouwbaarheid/B</betrouwbaarheid>
         <herkomst>LABO</herkomst>
         <uitvoerder>
             <organisatie>
@@ -176,7 +180,7 @@
     <observatie>
         <dataidentifier>
             <permkey>2022-6591544</permkey>
-            <uri>https://www/data/observatie/2022-6591544</uri>
+            <uri>https://www.dov.vlaanderen.be/data/observatie/2022-6591544</uri>
         </dataidentifier>
         <geobserveerd_object>
             <objecttype>monster</objecttype>
@@ -191,6 +195,7 @@
         <eenheid>%</eenheid>
         <methode>Chemische reactie met waterstofchloride</methode>
         <fenomeentijd>2017-05-29</fenomeentijd>
+        <betrouwbaarheid>https://data.bodemenondergrond.vlaanderen.be/id/concept/betrouwbaarheid/B</betrouwbaarheid>
         <herkomst>LABO</herkomst>
         <uitvoerder>
             <organisatie>
@@ -201,7 +206,7 @@
     <observatie>
         <dataidentifier>
             <permkey>2022-3261737</permkey>
-            <uri>https://www/data/observatie/2022-3261737</uri>
+            <uri>https://www.dov.vlaanderen.be/data/observatie/2022-3261737</uri>
         </dataidentifier>
         <geobserveerd_object>
             <objecttype>monster</objecttype>
@@ -216,6 +221,7 @@
         <eenheid>%</eenheid>
         <methode>Chemische reactie met waterstofperoxide</methode>
         <fenomeentijd>2017-05-29</fenomeentijd>
+        <betrouwbaarheid>https://data.bodemenondergrond.vlaanderen.be/id/concept/betrouwbaarheid/B</betrouwbaarheid>
         <herkomst>LABO</herkomst>
         <uitvoerder>
             <organisatie>
@@ -226,7 +232,7 @@
     <observatie>
         <dataidentifier>
             <permkey>2022-2486013</permkey>
-            <uri>https://www/data/observatie/2022-2486013</uri>
+            <uri>https://www.dov.vlaanderen.be/data/observatie/2022-2486013</uri>
         </dataidentifier>
         <geobserveerd_object>
             <objecttype>monster</objecttype>
@@ -241,6 +247,7 @@
         <eenheid>-</eenheid>
         <methode>Classificatie volgens de norm</methode>
         <fenomeentijd>2017-05-29</fenomeentijd>
+        <betrouwbaarheid>https://data.bodemenondergrond.vlaanderen.be/id/concept/betrouwbaarheid/B</betrouwbaarheid>
         <herkomst>LABO</herkomst>
         <uitvoerder>
             <organisatie>
@@ -251,7 +258,7 @@
     <observatie>
         <dataidentifier>
             <permkey>2022-2576967</permkey>
-            <uri>https://www/data/observatie/2022-2576967</uri>
+            <uri>https://www.dov.vlaanderen.be/data/observatie/2022-2576967</uri>
         </dataidentifier>
         <geobserveerd_object>
             <objecttype>monster</objecttype>
@@ -298,6 +305,7 @@
         </waarde_meetreeks>
         <methode>Hydrometer</methode>
         <fenomeentijd>2017-05-29</fenomeentijd>
+        <betrouwbaarheid>https://data.bodemenondergrond.vlaanderen.be/id/concept/betrouwbaarheid/B</betrouwbaarheid>
         <herkomst>LABO</herkomst>
         <uitvoerder>
             <organisatie>
@@ -316,7 +324,7 @@
     <observatie>
         <dataidentifier>
             <permkey>2022-4081893</permkey>
-            <uri>https://www/data/observatie/2022-4081893</uri>
+            <uri>https://www.dov.vlaanderen.be/data/observatie/2022-4081893</uri>
         </dataidentifier>
         <geobserveerd_object>
             <objecttype>monster</objecttype>
@@ -359,6 +367,7 @@
         </waarde_meetreeks>
         <methode>Zeving</methode>
         <fenomeentijd>2017-05-29</fenomeentijd>
+        <betrouwbaarheid>https://data.bodemenondergrond.vlaanderen.be/id/concept/betrouwbaarheid/B</betrouwbaarheid>
         <herkomst>LABO</herkomst>
         <uitvoerder>
             <organisatie>
@@ -377,7 +386,7 @@
     <observatie>
         <dataidentifier>
             <permkey>2022-7001937</permkey>
-            <uri>https://www/data/observatie/2022-7001937</uri>
+            <uri>https://www.dov.vlaanderen.be/data/observatie/2022-7001937</uri>
         </dataidentifier>
         <geobserveerd_object>
             <objecttype>monster</objecttype>
@@ -390,6 +399,7 @@
         <eenheid>t/m³</eenheid>
         <methode>Aangenomen</methode>
         <fenomeentijd>2017-05-29</fenomeentijd>
+        <betrouwbaarheid>https://data.bodemenondergrond.vlaanderen.be/id/concept/betrouwbaarheid/B</betrouwbaarheid>
         <herkomst>LABO</herkomst>
         <uitvoerder>
             <organisatie>
@@ -400,7 +410,7 @@
     <observatie>
         <dataidentifier>
             <permkey>2022-4812427</permkey>
-            <uri>https://www/data/observatie/2022-4812427</uri>
+            <uri>https://www.dov.vlaanderen.be/data/observatie/2022-4812427</uri>
         </dataidentifier>
         <geobserveerd_object>
             <objecttype>monster</objecttype>
@@ -413,6 +423,7 @@
         <eenheid>t/m³</eenheid>
         <methode>Volumieke massa door weging</methode>
         <fenomeentijd>2017-05-29</fenomeentijd>
+        <betrouwbaarheid>https://data.bodemenondergrond.vlaanderen.be/id/concept/betrouwbaarheid/B</betrouwbaarheid>
         <herkomst>LABO</herkomst>
         <uitvoerder>
             <organisatie>
@@ -423,7 +434,7 @@
     <observatie>
         <dataidentifier>
             <permkey>2022-1663150</permkey>
-            <uri>https://www/data/observatie/2022-1663150</uri>
+            <uri>https://www.dov.vlaanderen.be/data/observatie/2022-1663150</uri>
         </dataidentifier>
         <geobserveerd_object>
             <objecttype>monster</objecttype>
@@ -436,6 +447,7 @@
         <eenheid>%</eenheid>
         <methode>Gewichtsverlies na drogen in droogstoof</methode>
         <fenomeentijd>2017-05-29</fenomeentijd>
+        <betrouwbaarheid>https://data.bodemenondergrond.vlaanderen.be/id/concept/betrouwbaarheid/B</betrouwbaarheid>
         <herkomst>LABO</herkomst>
         <uitvoerder>
             <organisatie>

@@ -613,7 +613,7 @@ Default dataframe output
         mv_mtaw,GrondwaterFilter,10,float,NaN
         gemeente,GrondwaterFilter,1,string,Destelbergen
         meetnet_code,GrondwaterFilter,10,string,1
-        aquifer_code,GrondwaterFilter,10,string,0100
+        aquifer_code,GrondwaterFilter,10,string,A0100
         grondwaterlichaam_code,GrondwaterFilter,10,string,CVS_0160_GWL_1
         regime,GrondwaterFilter,10,string,freatisch
         diepte_onderkant_filter,GrondwaterFilter,1,float,13
@@ -690,7 +690,7 @@ Default dataframe output
         vergund_dagdebiet,GrondwaterVergunning,1,float,nan
         van_datum_termijn,GrondwaterVergunning,1,date,2019-08-09
         tot_datum_termijn,GrondwaterVergunning,1,date,nan
-        aquifer_vergunning,GrondwaterVergunning,1,string,0200: Kempens Aquifersysteem
+        aquifer_vergunning,GrondwaterVergunning,1,string,A0200: Kempens Aquifersysteem
         inrichtingsklasse,GrondwaterVergunning,1,string,Klasse 1 - Vlaams project
         nacebelcode,GrondwaterVergunning,1,string,37000: Afvalwaterafvoer
         actie_waakgebied,GrondwaterVergunning,1,string,nan

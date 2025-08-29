@@ -4,7 +4,7 @@
         <identificatie>5111-151</identificatie>
         <dataidentifier>
             <permkey>2021-096695</permkey>
-            <uri>https://www/data/put/2021-096695</uri>
+            <uri>https://www.dov.vlaanderen.be/data/put/2021-096695</uri>
         </dataidentifier>
         <grondwaterlocatieType>PUT</grondwaterlocatieType>
         <puntligging>
@@ -43,7 +43,7 @@
         <identificatie>1</identificatie>
         <dataidentifier>
             <permkey>1976-101132</permkey>
-            <uri>https://www/data/filter/1976-101132</uri>
+            <uri>https://www.dov.vlaanderen.be/data/filter/1976-101132</uri>
         </dataidentifier>
         <filtertype>peilfilter</filtertype>
         <grondwaterlocatie>5111-151</grondwaterlocatie>
@@ -52,6 +52,7 @@
         <monsternameMogelijk>false</monsternameMogelijk>
         <ligging>
             <aquifer>0230</aquifer>
+            <aquifer_hcovv2>A0220</aquifer_hcovv2>
             <grondwaterlichaam>CKS_0200_GWL_1</grondwaterlichaam>
             <grondwatersysteem>Centraal Kempisch Systeem</grondwatersysteem>
             <afgesloten_volgens_gwdecreet>niet-afgesloten_delen_0200</afgesloten_volgens_gwdecreet>

@@ -14,9 +14,11 @@
           <xsd:element maxOccurs="1" minOccurs="0" name="vlaremrubriek" nillable="true" type="xsd:string"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="vergund_jaardebiet" nillable="true" type="xsd:decimal"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="vergund_dagdebiet" nillable="true" type="xsd:decimal"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="vergund_volume_per_projectdebiet" nillable="true" type="xsd:int"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="van_datum_termijn" nillable="true" type="xsd:date"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="tot_datum_termijn" nillable="true" type="xsd:date"/>
-          <xsd:element maxOccurs="1" minOccurs="0" name="aquifer_vergunning" nillable="true" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="aquifer_HCOVv1_vergunning" nillable="true" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="aquifer_HCOVv2_vergunning" nillable="true" type="xsd:string"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="vergunde_diepte_m" nillable="true" type="xsd:decimal"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="vergund_aantal_putten" nillable="true" type="xsd:int"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="inrichtingsklasse" nillable="true" type="xsd:string"/>

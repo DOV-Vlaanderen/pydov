@@ -38,7 +38,8 @@ class TestBoringSearch(AbstractTestSearch):
                                                           'datum_aanvang')
     valid_returnfields_subtype = ReturnFieldList.from_field_names('pkey_boring', 'boornummer',
                                                                   'diepte_methode_van', 'diepte_methode_tot')
-    valid_returnfields_extra = ReturnFieldList.from_field_names('pkey_boring', 'doel')
+    valid_returnfields_extra = ReturnFieldList.from_field_names(
+        'pkey_boring', 'doel')
 
     df_default_columns = ['pkey_boring', 'boornummer', 'x', 'y', 'mv_mtaw',
                           'start_boring_mtaw', 'gemeente',

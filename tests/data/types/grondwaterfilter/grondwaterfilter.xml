@@ -4,7 +4,7 @@
         <identificatie>130/21/20</identificatie>
         <dataidentifier>
             <permkey>2017-000566</permkey>
-            <uri>https://www/data/put/2017-000566</uri>
+            <uri>https://www.dov.vlaanderen.be/data/put/2017-000566</uri>
         </dataidentifier>
         <grondwaterlocatieType>PUT</grondwaterlocatieType>
         <boring>B/130/21/20</boring>
@@ -61,7 +61,7 @@
         <identificatie>1</identificatie>
         <dataidentifier>
             <permkey>2003-004471</permkey>
-            <uri>https://www/data/filter/2003-004471</uri>
+            <uri>https://www.dov.vlaanderen.be/data/filter/2003-004471</uri>
         </dataidentifier>
         <filtertype>peilfilter</filtertype>
         <grondwaterlocatie>130/21/20</grondwaterlocatie>
@@ -70,6 +70,7 @@
         <monsternameMogelijk>true</monsternameMogelijk>
         <ligging>
             <aquifer>0100</aquifer>
+            <aquifer_hcovv2>A0100</aquifer_hcovv2>
             <grondwaterlichaam>CVS_0160_GWL_1</grondwaterlichaam>
             <grondwatersysteem>Centraal Vlaams Systeem</grondwatersysteem>
             <afgesloten_volgens_gwdecreet>niet-afgesloten_delen_0100</afgesloten_volgens_gwdecreet>

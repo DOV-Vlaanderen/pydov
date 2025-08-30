@@ -258,7 +258,8 @@ class Monster(AbstractDovType):
         Parameters
         ----------
         agg_value : str
-            Aggregated value containing the aggregated values, separated by '|'.
+            Aggregated value containing the aggregated values, separated by
+            '|'.
 
         Returns
         -------

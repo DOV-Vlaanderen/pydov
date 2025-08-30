@@ -95,7 +95,8 @@ class CodeListItem(HtmlFormatter):
             HTML representation of the codelist item.
         """
         if self.definition is not None:
-            html = f'<p><b>{self.code}</b> - {self.label} - <i>{self.definition}</i></p>'
+            html = (f'<p><b>{self.code}</b> - {self.label} - '
+                    f'<i>{self.definition}</i></p>')
         else:
             html = f'<p><b>{self.code}</b> - {self.label}</p>'
         return super()._repr_html_(html, with_header=False)
@@ -136,7 +137,8 @@ class AbstractCodeList(AbstractDictLike, HtmlFormatter):
         Returns
         -------
         definition : str or None
-            The definition for the given code, or None if the code is not found.
+            The definition for the given code, or None if the code is not
+            found.
         """
         item = self.items.get(code, None)
         if item is not None:
@@ -213,17 +215,17 @@ class AbstractCodeList(AbstractDictLike, HtmlFormatter):
         return len(self.items) == 0
 
     def __repr__(self):
-       """String representation of the codelist.
+        """String representation of the codelist.
 
         Returns
         -------
         str
             String representation of the codelist.
         """
-       s = ', '.join(i.__repr__() for i in sorted(
+        s = ', '.join(i.__repr__() for i in sorted(
            self.items.values(), key=lambda x: x.code))
 
-       return f'<pydov.util.codelists.AbstractCodeList: {s}>'
+        return f'<pydov.util.codelists.AbstractCodeList: {s}>'
 
     def _repr_html_(self):
         """HTML representation of the codelist.

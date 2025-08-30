@@ -224,4 +224,3 @@ class _CustomXmlField(AbstractField):
             Implement this in a subclass.
         """
         raise NotImplementedError
-

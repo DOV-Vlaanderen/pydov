@@ -190,7 +190,7 @@ class FieldMetadata(AbstractDictLike, HtmlFormatter):
         html += f'<li>list: <span class="code small">{self.list}</span></li>'
 
         if self.base_dict.get('codelist') is not None:
-            html += f'<li>codelist:</li>'
+            html += '<li>codelist:</li>'
             html += self.base_dict.get('codelist')._repr_html_()
         html += '</ul>'
 

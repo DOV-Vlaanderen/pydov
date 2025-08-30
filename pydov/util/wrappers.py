@@ -1,8 +1,10 @@
-"""Module with a class that provides a dictionary-like interface with attribute access."""
+"""Module with a class that provides a dictionary-like interface with
+attribute access."""
 
 
 class AbstractDictLike:
-    """A class that provides a dictionary-like interface with attribute access."""
+    """A class that provides a dictionary-like interface with
+    attribute access."""
 
     def __init__(self, base_dict=None):
         """Initialisation.

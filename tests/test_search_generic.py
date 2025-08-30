@@ -1,7 +1,7 @@
 """Module grouping tests for the generic search module."""
 
 from pydov.search.generic import WfsSearch
-from pydov.types.fields import ReturnFieldList
+from pydov.search.fields import ReturnFieldList
 from pydov.types.generic import WfsTypeFactory
 from owslib.fes2 import PropertyIsEqualTo
 from pydov.util.dovutil import build_dov_url

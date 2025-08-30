@@ -5,7 +5,7 @@ import pandas as pd
 from owslib.fes2 import PropertyIsEqualTo
 
 from pydov.search.sondering import SonderingSearch
-from pydov.types.fields import ReturnFieldList
+from pydov.search.fields import ReturnFieldList
 from pydov.types.sondering import Sondering
 from tests.abstract import AbstractTestSearch
 

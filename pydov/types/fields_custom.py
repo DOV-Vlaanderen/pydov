@@ -5,6 +5,7 @@ import numpy as np
 
 from pydov.types.fields import _CustomXmlField
 from pydov.util.codelists import OsloCodeList
+from pydov.util.owsutil import typeconvert
 
 
 class MvMtawField(_CustomXmlField):
@@ -107,4 +108,4 @@ class OsloCodeListValueField(_CustomXmlField):
             return np.nan
 
         code = value_uri.split('/')[-1]
-        return cls._typeconvert(code, self.get('type'))
+        return typeconvert(code, self.get('type'))

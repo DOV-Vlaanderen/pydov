@@ -2,7 +2,7 @@
 """Module grouping tests for the pydov.types.bodemobservatie module."""
 
 from pydov.types.bodemobservatie import Bodemobservatie
-from pydov.types.fields import ReturnFieldList
+from pydov.search.fields import ReturnFieldList
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes
 

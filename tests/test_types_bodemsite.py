@@ -1,7 +1,7 @@
 """Module grouping tests for the pydov.types.bodemsite module."""
 
 from pydov.types.bodemsite import Bodemsite
-from pydov.types.fields import ReturnFieldList
+from pydov.search.fields import ReturnFieldList
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes
 

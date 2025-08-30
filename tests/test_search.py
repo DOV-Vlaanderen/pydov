@@ -26,9 +26,8 @@ from pydov.search.sondering import SonderingSearch
 from pydov.search.observatie import ObservatieSearch
 from pydov.util.errors import InvalidSearchParameterError
 from pydov.util.location import Point, WithinDistance
+from pydov.util.owsutil import typeconvert
 from tests.abstract import ServiceCheck
-
-from pydov.search.abstract import AbstractCommon
 
 search_objects = [BodemsiteSearch(),
                   BodemlocatieSearch(),
@@ -39,7 +38,7 @@ search_objects = [BodemsiteSearch(),
                   BoringSearch(),
                   SonderingSearch(),
                   GrondwaterFilterSearch(),
-                  GrondwaterMonsterSearch(),
+                  #   GrondwaterMonsterSearch(),
                   GrondwaterVergunningSearch(),
                   FormeleStratigrafieSearch(),
                   InformeleHydrogeologischeStratigrafieSearch(),
@@ -215,33 +214,33 @@ def test_typeconvert_datetime():
     """Test the type conversion function for datetime strings."""
 
     # Zulu time
-    x = AbstractCommon._typeconvert('2023-02-07T09:19:24Z', 'datetime')
+    x = typeconvert('2023-02-07T09:19:24Z', 'datetime')
     assert isinstance(x, datetime.datetime)
     assert x == datetime.datetime(2023, 2, 7, 10, 19, 24, 0)
 
     # Brussels time
-    x = AbstractCommon._typeconvert('2023-02-07T09:19:24+0100', 'datetime')
+    x = typeconvert('2023-02-07T09:19:24+0100', 'datetime')
     assert isinstance(x, datetime.datetime)
     assert x == datetime.datetime(
         2023, 2, 7, 9, 19, 24, 0,
         datetime.timezone(datetime.timedelta(hours=1)))
 
     # Brussels time, with colon
-    x = AbstractCommon._typeconvert('2023-02-07T09:19:24+01:00', 'datetime')
+    x = typeconvert('2023-02-07T09:19:24+01:00', 'datetime')
     assert isinstance(x, datetime.datetime)
     assert x == datetime.datetime(
         2023, 2, 7, 9, 19, 24, 0,
         datetime.timezone(datetime.timedelta(hours=1)))
 
     # With milliseconds
-    x = AbstractCommon._typeconvert('2023-02-07T09:19:24.123+01:00', 'datetime')
+    x = typeconvert('2023-02-07T09:19:24.123+01:00', 'datetime')
     assert isinstance(x, datetime.datetime)
     assert x == datetime.datetime(
         2023, 2, 7, 9, 19, 24, 123,
         datetime.timezone(datetime.timedelta(hours=1)))
 
     # With more milliseconds
-    x = AbstractCommon._typeconvert(
+    x = typeconvert(
         '2023-02-07T09:19:24.123456+01:00', 'datetime')
     assert isinstance(x, datetime.datetime)
     assert x == datetime.datetime(

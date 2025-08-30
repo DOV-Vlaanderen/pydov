@@ -1,6 +1,6 @@
 """Module grouping tests for the
 pydov.types.interpretaties.GeotechnischeCodering class."""
-from pydov.types.fields import ReturnFieldList
+from pydov.search.fields import ReturnFieldList
 from pydov.types.interpretaties import GeotechnischeCodering
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes

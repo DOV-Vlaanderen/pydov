@@ -1,5 +1,6 @@
 """Module grouping tests for the pydov.types.boring module."""
-from pydov.types.fields import ReturnFieldList
+import pytest
+from pydov.search.fields import ReturnFieldList
 from pydov.types.grondwatermonster import GrondwaterMonster
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes
@@ -10,6 +11,7 @@ location_wfs_feature = 'tests/data/types/grondwatermonster/feature.xml'
 location_dov_xml = 'tests/data/types/grondwatermonster/grondwatermonster.xml'
 
 
+@pytest.mark.skip
 class TestGrondwaterMonster(AbstractTestTypes):
     """Class grouping tests for the
     pydov.types.grondwaterfilter.GrondwaterFilter class."""

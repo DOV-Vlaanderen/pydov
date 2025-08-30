@@ -40,7 +40,7 @@ This will enable:
 
  - :class:`pydov.util.location.GeometryFilter` for spatial querying using vectory files supported by fiona
  - :class:`pydov.util.location.GeopandasFilter` for spatial querying using GeoPandas GeoDataFrames
- - Fields with type 'geometry' to be used as return fields, using :class:`pydov.types.fields.GeometryReturnField`
+ - Fields with type 'geometry' to be used as return fields, using :class:`pydov.search.fields.GeometryReturnField`
 
 Additional proxy support
 ------------------------

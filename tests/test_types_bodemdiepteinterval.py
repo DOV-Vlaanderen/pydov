@@ -1,7 +1,7 @@
 """Module grouping tests for the pydov.types.bodemdiepteinterval module."""
 
 from pydov.types.bodemdiepteinterval import Bodemdiepteinterval
-from pydov.types.fields import ReturnFieldList
+from pydov.search.fields import ReturnFieldList
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes
 

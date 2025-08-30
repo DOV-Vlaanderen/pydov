@@ -5,7 +5,7 @@ from owslib.fes2 import PropertyIsEqualTo
 
 from pydov.search.bodemlocatie import BodemlocatieSearch
 from pydov.types.bodemlocatie import Bodemlocatie
-from pydov.types.fields import ReturnFieldList
+from pydov.search.fields import ReturnFieldList
 from tests.abstract import AbstractTestSearch
 
 location_md_metadata = 'tests/data/types/bodemlocatie/md_metadata.xml'

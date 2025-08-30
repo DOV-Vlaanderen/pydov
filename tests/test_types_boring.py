@@ -2,7 +2,8 @@
 
 from pydov.types.abstract import AbstractDovType
 from pydov.types.boring import Boring, MethodeXyz
-from pydov.types.fields import ReturnFieldList, XmlField
+from pydov.search.fields import ReturnFieldList
+from pydov.types.fields import XmlField
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes
 

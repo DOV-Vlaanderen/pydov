@@ -4,7 +4,7 @@ from owslib.fes2 import PropertyIsEqualTo
 from pandas import DataFrame
 
 from pydov.search.interpretaties import GecodeerdeLithologieSearch
-from pydov.types.fields import ReturnFieldList
+from pydov.search.fields import ReturnFieldList
 from pydov.types.interpretaties import GecodeerdeLithologie
 from tests.abstract import AbstractTestSearch
 

@@ -1,6 +1,6 @@
 """Module grouping tests for the pydov.types.boring module."""
 
-from pydov.types.fields import ReturnFieldList
+from pydov.search.fields import ReturnFieldList
 from pydov.types.grondwatervergunning import GrondwaterVergunning
 from tests.abstract import AbstractTestTypes
 

@@ -6,7 +6,7 @@ from pandas import DataFrame
 
 from pydov.search.interpretaties import \
     InformeleHydrogeologischeStratigrafieSearch
-from pydov.types.fields import ReturnFieldList
+from pydov.search.fields import ReturnFieldList
 from pydov.types.interpretaties import InformeleHydrogeologischeStratigrafie
 from tests.abstract import AbstractTestSearch
 

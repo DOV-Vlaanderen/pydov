@@ -1,6 +1,7 @@
 """Module grouping tests for the pydov.types.boring module."""
 from pydov.types.abstract import AbstractDovSubType
-from pydov.types.fields import ReturnFieldList, XmlField
+from pydov.search.fields import ReturnFieldList
+from pydov.types.fields import XmlField
 from pydov.types.grondwaterfilter import GrondwaterFilter, Peilmeting
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes

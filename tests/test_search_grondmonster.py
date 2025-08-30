@@ -3,7 +3,7 @@
 from owslib.fes2 import PropertyIsEqualTo
 
 from pydov.search.grondmonster import GrondmonsterSearch
-from pydov.types.fields import ReturnFieldList
+from pydov.search.fields import ReturnFieldList
 from pydov.types.grondmonster import Grondmonster
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestSearch

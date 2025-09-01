@@ -238,7 +238,7 @@ class Box(AbstractLocation):
 
         See Also
         --------
-        `EPSG.io <https://epsg.io>`_ for a list of valid EPSG codes.
+        * `EPSG.io <https://epsg.io>`_ -- list of valid EPSG codes.
 
         """
 

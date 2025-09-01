@@ -65,7 +65,7 @@ class AbstractLocation(object):
             If `epsg` is None or invalid, with a message explaining
             how to provide a valid code.
 
-        See Also
+        Notes
         --------
         https://epsg.io for a list of valid EPSG codes.
         """
@@ -236,9 +236,9 @@ class Box(AbstractLocation):
             If `maxy` is lower than or equal to `miny`.
             If `epsg` is None or invalid
 
-        See Also
+        Notes
         --------
-        * `EPSG.io <https://epsg.io>`_ -- list of valid EPSG codes.
+        https://epsg.io for a list of valid EPSG codes.
 
         """
 
@@ -307,7 +307,7 @@ class Point(AbstractLocation):
         ValueError
             If `epsg` is None or invalid
 
-        See Also
+        Notes
         --------
         https://epsg.io for a list of valid EPSG codes.
 

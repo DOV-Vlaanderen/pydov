@@ -815,7 +815,7 @@ Default dataframe output
         monstertype,Monster,1,string,geroerd
         monstersamenstelling,Monster,1,string,ENKELVOUDIG
         bemonsteringsprocedure,Monster,1,string,nan
-        bemonsteringsinstrument,Monster,1,string,avegaarbooras
+        bemonsteringsinstrument,Monster,1,list of string,[avegaarbooras]
         bemonstering_door,Monster,1,string,BVMO
 
 

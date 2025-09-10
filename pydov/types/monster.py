@@ -305,7 +305,8 @@ class Monster(AbstractDovType):
                  datatype='string'),
         WfsField(name='bemonsteringsinstrument',
                  source_field='bemonsteringsinstrument',
-                 datatype='string'),
+                 datatype='string',
+                 split_fn = _split_pkey_parents),
         WfsField(name='bemonstering_door',
                  source_field='bemonstering_door',
                  datatype='string')

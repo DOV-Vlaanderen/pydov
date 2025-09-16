@@ -4,7 +4,7 @@ import pandas as pd
 from owslib.fes2 import PropertyIsEqualTo
 
 from pydov.search.interpretaties import LithologischeBeschrijvingenSearch
-from pydov.types.fields import ReturnFieldList
+from pydov.search.fields import ReturnFieldList
 from pydov.types.interpretaties import LithologischeBeschrijvingen
 from tests.abstract import AbstractTestSearch
 

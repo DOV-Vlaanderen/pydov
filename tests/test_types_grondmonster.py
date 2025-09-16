@@ -1,6 +1,6 @@
 """Module grouping tests for the pydov.types.grondmonster module."""
 
-from pydov.types.fields import ReturnFieldList
+from pydov.search.fields import ReturnFieldList
 from pydov.types.grondmonster import Grondmonster
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes

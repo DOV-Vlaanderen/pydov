@@ -7,7 +7,7 @@ from owslib.fes2 import PropertyIsEqualTo
 
 from pydov.search.boring import BoringSearch
 from pydov.types.boring import Boring, MethodeXyz
-from pydov.types.fields import GeometryReturnField, ReturnFieldList
+from pydov.search.fields import GeometryReturnField, ReturnFieldList
 from tests.abstract import AbstractTestSearch, ServiceCheck
 
 location_md_metadata = 'tests/data/types/boring/md_metadata.xml'

@@ -1,7 +1,7 @@
 """Class grouping tests for the fields module."""
 
 import pytest
-from pydov.types.fields import AbstractReturnField, GeometryReturnField, ReturnField, ReturnFieldList
+from pydov.search.fields import AbstractReturnField, GeometryReturnField, ReturnField, ReturnFieldList, FieldMetadataList, FieldMetadata
 
 
 class TestReturnFieldList():
@@ -131,3 +131,52 @@ class TestGeometryReturnField():
         """
         with pytest.raises(TypeError):
             GeometryReturnField('shape', 'EPSG:31370')
+
+
+class TestFieldMetadata():
+    """Class grouping tests for the FieldMetadata class."""
+
+    def test_initialise(self):
+        """Test initialisation of a FieldMetadata."""
+        fm = FieldMetadata({
+            'name': 'field1',
+            'datatype': 'string',
+            'source': 'wfs'
+        })
+        assert isinstance(fm, FieldMetadata)
+        assert fm.name == 'field1'
+        assert fm.datatype == 'string'
+        assert fm.source == 'wfs'
+
+
+class TestFieldMetadataList():
+    """Class grouping tests for the FieldMetadataList class."""
+
+    def test_initialise(self):
+        """Test initialisation of a FieldMetadataList."""
+        fml = FieldMetadataList()
+        assert isinstance(fml, FieldMetadataList)
+
+    def test_add(self):
+        """Test adding FieldMetadata instances to a FieldMetadataList."""
+        fml = FieldMetadataList()
+
+        fm1 = FieldMetadata({
+            'name': 'field1',
+            'datatype': 'string',
+            'source': 'wfs'
+        })
+        fm2 = FieldMetadata({
+            'name': 'field2',
+            'datatype': 'float',
+            'source': 'xml'
+        })
+
+        fml.add(fm1)
+        fml.add(fm2)
+
+        assert len(fml) == 2
+        assert isinstance(fml['field1'], FieldMetadata)
+        assert isinstance(fml['field2'], FieldMetadata)
+        assert fml['field1'].name == 'field1'
+        assert fml['field2'].name == 'field2'

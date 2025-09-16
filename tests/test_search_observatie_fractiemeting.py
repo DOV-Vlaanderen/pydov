@@ -4,7 +4,7 @@ observaties with fractiemetingen."""
 from owslib.fes2 import PropertyIsEqualTo
 
 from pydov.search.observatie import ObservatieFractiemetingSearch, Fractiemeting, ObservatieSearch
-from pydov.types.fields import ReturnFieldList
+from pydov.search.fields import ReturnFieldList
 from pydov.types.observatie import Observatie
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestSearch

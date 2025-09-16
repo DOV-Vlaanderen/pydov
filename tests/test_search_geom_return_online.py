@@ -4,7 +4,7 @@ import pytest
 from shapely.geometry import Point
 
 from pydov.search.bodemclassificatie import BodemclassificatieSearch
-from pydov.types.fields import GeometryReturnField
+from pydov.search.fields import GeometryReturnField
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import ServiceCheck
 

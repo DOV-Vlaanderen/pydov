@@ -251,22 +251,23 @@ class Monsterbehandeling(AbstractDovSubType):
 class Monster(AbstractDovType):
     """Class representing the DOV data type for ground samples."""
 
-    def _split_pkey_parents(agg_value):
+    def _split_pipes_to_list(agg_value):
         """
-        Splits the given aggregated value into parent keys.
+        Splits the given aggregated value into a list of values.
 
         Parameters
         ----------
         agg_value : str
-            Aggregated value containing parent keys, separated by '|'.
+            Aggregated value containing the aggregated values, separated by
+            '|'.
 
         Returns
         -------
         generator of str
-            Generator yielding non-empty parent keys extracted from the input.
+            Generator yielding non-empty items extracted from the input.
         """
-        return (pkey for pkey in agg_value.strip(
-            '| ').split('|') if pkey != '')
+        return (item for item in agg_value.strip(
+            '| ').split('|') if item != '')
 
     fields = [
         WfsField(name='pkey_monster',
@@ -278,7 +279,7 @@ class Monster(AbstractDovType):
         WfsField(name='pkey_parents',
                  source_field='gekoppeld_aan_link',
                  datatype='string',
-                 split_fn=_split_pkey_parents),
+                 split_fn=_split_pipes_to_list),
         WfsField(name='materiaalklasse',
                  source_field='materiaalklasse',
                  datatype='string'),
@@ -306,7 +307,7 @@ class Monster(AbstractDovType):
         WfsField(name='bemonsteringsinstrument',
                  source_field='bemonsteringsinstrument',
                  datatype='string',
-                 split_fn = _split_pkey_parents),
+                 split_fn=_split_pipes_to_list),
         WfsField(name='bemonstering_door',
                  source_field='bemonstering_door',
                  datatype='string')

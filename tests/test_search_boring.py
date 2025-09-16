@@ -7,7 +7,7 @@ from owslib.fes2 import PropertyIsEqualTo
 
 from pydov.search.boring import BoringSearch
 from pydov.types.boring import Boring, MethodeXyz
-from pydov.types.fields import GeometryReturnField, ReturnFieldList
+from pydov.search.fields import GeometryReturnField, ReturnFieldList
 from tests.abstract import AbstractTestSearch, ServiceCheck
 
 location_md_metadata = 'tests/data/types/boring/md_metadata.xml'
@@ -38,7 +38,8 @@ class TestBoringSearch(AbstractTestSearch):
                                                           'datum_aanvang')
     valid_returnfields_subtype = ReturnFieldList.from_field_names('pkey_boring', 'boornummer',
                                                                   'diepte_methode_van', 'diepte_methode_tot')
-    valid_returnfields_extra = ReturnFieldList.from_field_names('pkey_boring', 'doel')
+    valid_returnfields_extra = ReturnFieldList.from_field_names(
+        'pkey_boring', 'doel')
 
     df_default_columns = ['pkey_boring', 'boornummer', 'x', 'y', 'mv_mtaw',
                           'start_boring_mtaw', 'gemeente',

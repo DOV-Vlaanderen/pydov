@@ -4,28 +4,26 @@
     <xsd:complexContent>
       <xsd:extension base="gml:AbstractFeatureType">
         <xsd:sequence>
-          <xsd:element maxOccurs="1" minOccurs="0" name="boornummer" nillable="true" type="xsd:string"/>
-          <xsd:element maxOccurs="1" minOccurs="0" name="boringfiche" nillable="true" type="xsd:string"/>
-          <xsd:element maxOccurs="1" minOccurs="0" name="naam" nillable="true" type="xsd:string"/>
-          <xsd:element maxOccurs="1" minOccurs="0" name="grondmonsterfiche" nillable="true" type="xsd:string"/>
-          <xsd:element maxOccurs="1" minOccurs="0" name="rapport" nillable="true" type="xsd:string"/>
-          <xsd:element maxOccurs="1" minOccurs="0" name="X_mL72" nillable="true" type="xsd:double"/>
-          <xsd:element maxOccurs="1" minOccurs="0" name="Y_mL72" nillable="true" type="xsd:double"/>
-          <xsd:element maxOccurs="1" minOccurs="0" name="Z_mTAW" nillable="true" type="xsd:decimal"/>
-          <xsd:element maxOccurs="1" minOccurs="0" name="gemeente" nillable="true" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="id" nillable="true" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="monster" nillable="true" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="monster_link" nillable="true" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="gekoppeld_aan" nillable="true" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="gekoppeld_aan_link" nillable="true" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="materiaalklasse" nillable="true" type="xsd:string"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="diepte_van_m" nillable="true" type="xsd:decimal"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="diepte_tot_m" nillable="true" type="xsd:decimal"/>
-          <xsd:element maxOccurs="1" minOccurs="0" name="peil_van_mTAW" nillable="true" type="xsd:decimal"/>
-          <xsd:element maxOccurs="1" minOccurs="0" name="peil_tot_mTAW" nillable="true" type="xsd:decimal"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="aantal_observaties" nillable="true" type="xsd:long"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="bemonsteringsdatum" nillable="true" type="xsd:date"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="monstersamenstelling" nillable="true" type="xsd:string"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="monstertype" nillable="true" type="xsd:string"/>
-          <xsd:element maxOccurs="1" minOccurs="0" name="onderkenning" nillable="true" type="xsd:boolean"/>
-          <xsd:element maxOccurs="1" minOccurs="0" name="korrelverdeling" nillable="true" type="xsd:boolean"/>
-          <xsd:element maxOccurs="1" minOccurs="0" name="mechanisch" nillable="true" type="xsd:boolean"/>
-          <xsd:element maxOccurs="1" minOccurs="0" name="steenkool" nillable="true" type="xsd:boolean"/>
-          <xsd:element maxOccurs="1" minOccurs="0" name="chemisch" nillable="true" type="xsd:boolean"/>
-          <xsd:element maxOccurs="1" minOccurs="0" name="opdrachten" nillable="true" type="xsd:string"/>
-          <xsd:element maxOccurs="1" minOccurs="0" name="eerste_invoer" nillable="true" type="xsd:dateTime"/>
-          <xsd:element maxOccurs="1" minOccurs="0" name="geom" nillable="true" type="gml:PointPropertyType"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="bemonsteringsprocedure" nillable="true" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="bemonsteringsinstrument" nillable="true" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="bemonstering_door" nillable="true" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="opmerkingen" nillable="true" type="xsd:long"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="actuele_opslaglocatie" nillable="true" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="opdracht" nillable="true" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="permkey_monster" nillable="true" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="geom" nillable="true" type="gml:GeometryPropertyType"/>
         </xsd:sequence>
       </xsd:extension>
     </xsd:complexContent>

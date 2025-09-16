@@ -4,6 +4,14 @@
 History
 =======
 
+v3.3.1
+------
+
+- Fixes and improvements
+
+  - Following WFS/XSD schema updates, update the GrondwaterVergunning and GrondwaterFilter types to support HCOVv2 coding (#428)
+
+
 v3.3.0
 ------
 
@@ -16,6 +24,8 @@ v3.3.0
 - Fixes and improvements
 
   - Update grondmonster type based on WFS/XSD schema updates. (#408)
+
+  - Always request geometry using urn:ogc: srsName to fix coordinate ordering. (#413, #418)
 
 
 v3.2.0

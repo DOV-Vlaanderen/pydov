@@ -270,6 +270,13 @@ Codelists
     :members:
     :show-inheritance:
 
+Wrappers
+********
+
+.. automodule:: pydov.util.wrappers
+    :members:
+    :show-inheritance:
+
 Caching
 -------
 

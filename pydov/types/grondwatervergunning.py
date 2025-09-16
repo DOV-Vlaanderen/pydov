@@ -48,7 +48,7 @@ class GrondwaterVergunning(AbstractDovType):
                  source_field='tot_datum_termijn',
                  datatype='date'),
         WfsField(name='aquifer_vergunning',
-                 source_field='aquifer_vergunning',
+                 source_field='aquifer_HCOVv2_vergunning',
                  datatype='string'),
         WfsField(name='inrichtingsklasse',
                  source_field='inrichtingsklasse',

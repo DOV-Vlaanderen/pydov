@@ -132,15 +132,15 @@ class GrondwaterFilter(AbstractDovType):
                      typename='MeetnetEnumType',
                      datatype='string')),
         XmlField(name='aquifer_code',
-                 source_xpath='/filter/ligging/aquifer',
+                 source_xpath='/filter/ligging/aquifer_hcovv2',
                  definition='De aquifer (watervoerende laag) waarin de filter '
-                            'hangt (code) (HCOVv1)',
+                            'hangt (code) (HCOVv2)',
                  datatype='string',
                  codelist=XsdType(
                      xsd_schema=build_dov_url(
                          'xdov/schema/latest/xsd/kern/interpretatie/'
                          'HydrogeologischeStratigrafieDataCodes.xsd'),
-                     typename='AquiferHCOVv1EnumType',
+                     typename='AquiferHCOVv2EnumType',
                      datatype='string')),
         XmlField(name='grondwaterlichaam_code',
                  source_xpath='/filter/ligging/grondwaterlichaam',

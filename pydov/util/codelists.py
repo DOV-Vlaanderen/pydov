@@ -2,13 +2,16 @@ import warnings
 
 from dataclasses import dataclass
 
-from pydov.search.abstract import AbstractCommon
 from pydov.util.dovutil import (
     build_dov_sparql_request, get_remote_url, get_remote_request)
 from pydov.util.errors import CodelistFetchWarning, RemoteFetchError
 from pydov.util.hooks import HookRunner
 
 from owslib.etree import etree
+
+from pydov.util.notebook import HtmlFormatter
+from pydov.util.owsutil import typeconvert
+from pydov.util.wrappers import AbstractDictLike
 
 
 class MemoryCache(object):
@@ -54,33 +57,190 @@ class MemoryCache(object):
 
 
 @dataclass
-class CodeListItem:
+class CodeListItem(HtmlFormatter):
     """Class to represent an item in a codelist.
+
+    Attributes
+    ----------
+    code : str
+        The code of the item.
+    label : str
+        The label of the item.
+    definition : str, optional
+        The definition of the item.
     """
     code: str
     label: str
+    definition: str = None
 
-
-class AbstractCodeList(object):
-    """Abstract base class for codelists."""
-    def __init__(self):
-        """Initialisation."""
-        self.items = []
-
-    def get_values(self):
-        """Get a dictionary of values of the codelist.
+    def __repr__(self):
+        """String representation of the codelist item.
 
         Returns
         -------
-        dict or None
-            A dictionary with a mapping of codes to labels of this codelist.
-            If the codelist is empty, returns None.
+        str
+            String representation of the codelist item.
+        """
+        s = (f'code: {self.code}, label: {self.label}, '
+             f'definition: {self.definition}')
+
+        return f'<pydov.util.codelists.CodeListItem: {s}>'
+
+    def _repr_html_(self):
+        """HTML representation of the codelist item.
+
+        Returns
+        -------
+        str
+            HTML representation of the codelist item.
+        """
+        if self.definition is not None:
+            html = (f'<p><b>{self.code}</b> - {self.label} - '
+                    f'<i>{self.definition}</i></p>')
+        else:
+            html = f'<p><b>{self.code}</b> - {self.label}</p>'
+        return super()._repr_html_(html, with_header=False)
+
+
+class AbstractCodeList(AbstractDictLike, HtmlFormatter):
+    """Abstract base class for codelists."""
+    def __init__(self):
+        """Initialisation."""
+        self.items = {}
+        super().__init__(self.items)
+
+    def get_label(self, code):
+        """Get the label for a given code.
+
+        Parameters
+        ----------
+        code : str
+            The code to get the label for.
+
+        Returns
+        -------
+        label : str or None
+            The label for the given code, or None if the code is not found.
+        """
+        item = self.items.get(code, None)
+        if item is not None:
+            return item.label
+
+    def get_definition(self, code):
+        """Get the definition for a given code.
+
+        Parameters
+        ----------
+        code : str
+            The code to get the definition for.
+
+        Returns
+        -------
+        definition : str or None
+            The definition for the given code, or None if the code is not
+            found.
+        """
+        item = self.items.get(code, None)
+        if item is not None:
+            return item.definition
+
+    def get_codelist(self):
+        """Get the codelist.
+
+        Returns
+        -------
+        codelist : AbstractCodeList
+            The codelist itself.
+        """
+        return self
+
+    def get(self, *args, **kwargs):
+        """Get an item from the codelist.
+
+        Parameters
+        ----------
+        *args
+            Arguments to pass to the underlying dictionary get method.
+        **kwargs
+            Keyword arguments to pass to the underlying dictionary get method.
+
+        Returns
+        -------
+        item : CodeListItem or None
+            The item for the given code, or None if the code is not found.
+        """
+        return self.items.get(*args, **kwargs)
+
+    def get_values(self):
+        """Get the values of the codelist.
+
+        Returns
+        -------
+        values : dict
+            A dictionary with the codes as keys and the labels as values.
         """
         if len(self.items) > 0:
-            return dict((item.code, item.label) for item in self.items)
+            return {i.code: i.label for i in self.items.values()}
+        return None
+
+    def add_item(self, item):
+        """Add an item to the codelist.
+
+        Parameters
+        ----------
+        item : CodeListItem
+            The item to add to the codelist.
+        """
+        self.items[item.code] = item
+
+    def add_items(self, items):
+        """Add multiple items to the codelist.
+
+        Parameters
+        ----------
+        items : list of CodeListItem
+            The items to add to the codelist.
+        """
+        for item in items:
+            self.add_item(item)
+
+    def is_empty(self):
+        """Check if the codelist is empty.
+
+        Returns
+        -------
+        is_empty : bool
+            True if the codelist is empty, False otherwise.
+        """
+        return len(self.items) == 0
+
+    def __repr__(self):
+        """String representation of the codelist.
+
+        Returns
+        -------
+        str
+            String representation of the codelist.
+        """
+        s = ', '.join(i.__repr__() for i in sorted(
+           self.items.values(), key=lambda x: x.code))
+
+        return f'<pydov.util.codelists.AbstractCodeList: {s}>'
+
+    def _repr_html_(self):
+        """HTML representation of the codelist.
+
+        Returns
+        -------
+        str
+            HTML representation of the codelist.
+        """
+        s = ''.join(i._repr_html_() for i in sorted(
+            self.items.values(), key=lambda x: x.code))
+        return super()._repr_html_(s)
 
 
-class AbstractResolvableCodeList(AbstractCommon, AbstractCodeList):
+class AbstractResolvableCodeList(AbstractCodeList):
     """Abstract base class for resolvable codelists.
 
     A resolvable codelist will load its values from another datasource.
@@ -97,6 +257,7 @@ class AbstractResolvableCodeList(AbstractCommon, AbstractCodeList):
         """
         super().__init__()
         self.datatype = datatype
+        self._is_resolved = False
 
     def get_id(self):
         """Get a unique id for this codelist. Needs to be unique among all
@@ -150,20 +311,32 @@ class AbstractResolvableCodeList(AbstractCommon, AbstractCodeList):
 
     def resolve(self):
         """Resolve the remote codelist values."""
-        codelist = self.get_remote_codelist()
-        self.items = list(self.parse_codelist_items(codelist))
+        if not self._is_resolved:
+            codelist = self.get_remote_codelist()
+
+            for item in self.parse_codelist_items(codelist):
+                self.add_item(item)
+            self._is_resolved = True
+
+    def is_empty(self):
+        self.resolve()
+        return super().is_empty()
+
+    def get_codelist(self):
+        self.resolve()
+        return super().get_codelist()
 
     def get_values(self):
-        """Get a dictionary of values of the codelist.
-
-        Returns
-        -------
-        dict or None
-            A dictionary with a mapping of codes to labels of this codelist.
-            If the codelist is empty, returns None.
-        """
         self.resolve()
         return super().get_values()
+
+    def get_label(self, code):
+        self.resolve()
+        return super().get_label(code)
+
+    def get_definition(self, code):
+        self.resolve()
+        return super().get_definition(code)
 
 
 class OsloCodeList(AbstractResolvableCodeList):
@@ -246,7 +419,14 @@ class OsloCodeList(AbstractResolvableCodeList):
                     './/{http://www.w3.org/2005/sparql-results#}binding['
                     '{http://www.w3.org/2005/sparql-results#}variable="label"]'
                     '/{http://www.w3.org/2005/sparql-results#}value').text
-                yield CodeListItem(code, label)
+                definition = s.find(
+                    './/{http://www.w3.org/2005/sparql-results#}binding['
+                    '{http://www.w3.org/2005/sparql-results#}'
+                    'variable="definition"]'
+                    '/{http://www.w3.org/2005/sparql-results#}value')
+                if definition is not None:
+                    definition = definition.text
+                yield CodeListItem(code, label, definition)
 
 
 class XsdType(AbstractResolvableCodeList):
@@ -304,9 +484,14 @@ class XsdType(AbstractResolvableCodeList):
                     self.typename))
 
             for e in tree_values:
-                code = self._typeconvert(
+                code = typeconvert(
                     e.get('value'), self.datatype)
-                label = e.findtext(
+                label = str(code)
+                definition = e.findtext(
                     './{http://www.w3.org/2001/XMLSchema}annotation/{'
                     'http://www.w3.org/2001/XMLSchema}documentation')
-                yield CodeListItem(code, label)
+                yield CodeListItem(code, label, definition)
+
+
+class FeatureCatalogueValues(AbstractCodeList):
+    """Class representing a codelist from feature catalogue values."""

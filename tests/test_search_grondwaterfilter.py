@@ -2,9 +2,10 @@
 import datetime
 
 from owslib.fes2 import PropertyIsEqualTo
+import pytest
 
 from pydov.search.grondwaterfilter import GrondwaterFilterSearch
-from pydov.types.fields import ReturnFieldList
+from pydov.search.fields import ReturnFieldList
 from pydov.types.grondwaterfilter import GrondwaterFilter
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestSearch
@@ -48,6 +49,7 @@ class TestGrondwaterfilterSearch(AbstractTestSearch):
                           'betrouwbaarheid', 'methode', 'filterstatus',
                           'filtertoestand']
 
+    @pytest.mark.skip(reason="filters zonder peilmetingen in oefen")
     def test_search_date(self, mp_wfs, mp_get_schema,
                          mp_remote_describefeaturetype, mp_remote_md,
                          mp_remote_fc, mp_remote_wfs_feature, mp_dov_xml):
@@ -106,6 +108,7 @@ class TestGrondwaterfilterSearch(AbstractTestSearch):
 
         assert df.meetnet_code[0] == '9'
 
+    @pytest.mark.skip(reason="filters zonder peilmetingen in oefen")
     def test_search_time(self, mp_get_schema,
                          mp_remote_describefeaturetype,
                          mp_remote_wfs_feature, mp_dov_xml):

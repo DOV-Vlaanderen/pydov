@@ -1229,7 +1229,7 @@ if __name__ == '__main__':
     # types/monster
 
     update_file('types/monster/monster.xml',
-                build_dov_url('data/monster/2022-324252.xml'))
+                build_dov_url('data/monster/2022-324453.xml'))
 
     update_file(
         'types/monster/wfsgetfeature.xml',
@@ -1237,7 +1237,7 @@ if __name__ == '__main__':
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName='
             'monster:monsters&maxFeatures=1&CQL_Filter'
-            '=permkey_monster=%272022-324252%27'))
+            '=permkey_monster=%272022-324453%27'))
 
     update_file(
         'types/monster/feature.xml',
@@ -1245,7 +1245,7 @@ if __name__ == '__main__':
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName='
             'monster:monsters&maxFeatures=1&CQL_Filter'
-            '=permkey_monster=%272022-324252%27'),
+            '=permkey_monster=%272022-324453%27'),
         get_first_featuremember)
 
     update_file(

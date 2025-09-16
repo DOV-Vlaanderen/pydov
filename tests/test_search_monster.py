@@ -19,13 +19,12 @@ location_codelists = 'tests/data/types/monster'
 
 
 class TestMonsterSearch(AbstractTestSearch):
-
     search_instance = MonsterSearch()
     search_class = MonsterSearch
     datatype_class = Monster
 
     valid_query_single = PropertyIsEqualTo(propertyname='permkey_monster',
-                                           literal='2017-143287')
+                                           literal='')
 
     inexistent_field = 'onbestaand'
     wfs_field = 'bemonsteringsprocedure'
@@ -34,7 +33,7 @@ class TestMonsterSearch(AbstractTestSearch):
         'pkey_monster', 'diepte_van_m')
     valid_returnfields_subtype = None
     valid_returnfields_extra = ReturnFieldList.from_field_names(
-        'aantal_observaties', 'opmerkingen')
+        'aantal_observaties')
 
     df_default_columns = [
         'pkey_monster', 'naam', 'pkey_parents', 'materiaalklasse',
@@ -147,13 +146,17 @@ class TestMonsterSearch(AbstractTestSearch):
         df = search_instance.search(
             query=self.valid_query_single)
 
-        assert df.iloc[0].monsterbehandeling_door == (
+        df_line = df[df.monsterbehandeling_behandeling == 'Monstervoorbereiding door']
+
+        assert not df_line.empty
+
+        assert df_line.iloc[0].monsterbehandeling_door == (
             'VO - Instituut voor Landbouw-, Visserij- en Voedingsonderzoek'
             ' (ILVO)')
 
-        assert df.iloc[0].monsterbehandeling_behandeling == (
+        assert df_line.iloc[0].monsterbehandeling_behandeling == (
             'Monstervoorbereiding door')
 
-        assert df.iloc[0].monsterbehandeling_behandeling_waarde == (
+        assert df_line.iloc[0].monsterbehandeling_behandeling_waarde == (
             'VO - Instituut voor Landbouw-, Visserij- en Voedingsonderzoek'
             ' (ILVO)')

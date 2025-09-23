@@ -38,6 +38,19 @@ class AbstractLocation(object):
         raise NotImplementedError('This should be implemented in a subclass.')
 
     def _is_valid_epsg(self, epsg):
+        """Check whether the provided EPSG code is a valid EPSG code according
+        to pyproj. Pass if pyproj is not installed.
+
+        Parameters
+        ----------
+        epsg : int
+            The EPSG code to check.
+
+        Raises
+        ------
+        ValueError
+            When the given EPSG is invalid according to pyproj.
+        """
         try:
             from pyproj import CRS
             from pyproj.exceptions import CRSError
@@ -54,15 +67,16 @@ class AbstractLocation(object):
         Parameters
         ----------
         epsg : int or None
-            The EPSG code to validate. Must be a valid coordinate reference
-            system identifier. If None, a ValueError is raised
-            with usage guidance.
-            If invalid EPSG code, a CRSError is raised
+            The EPSG code to validate.
 
         Raises
         ------
+        TypeError
+            If `epsg` is None not an integer, with a message explaining
+            how to provide a valid code.
+
         ValueError
-            If `epsg` is None or invalid, with a message explaining
+            If `epsg` is invalid, with a message explaining
             how to provide a valid code.
 
         Notes
@@ -73,23 +87,23 @@ class AbstractLocation(object):
         generic_error = (f"Example usage: {self.__class__.__name__}"
                          "(..., epsg=3812)\n"
                          "Useful EPSG codes:\n"
-                         "\t- 3812: Lambert 2008\n"
-                         "\t- 31370: Lambert 72\n"
-                         "\t- 4326: WGS84\n"
+                         "  - 31370: Belgian Lambert 72\n"
+                         "  - 3812: Belgian Lambert 2008\n"
+                         "  - 4326: WGS84 (GPS lon/lat)\n"
                          "Refer to https://epsg.io for other valid codes.")
 
         if epsg is None:
-            raise ValueError("Missing required parameter 'epsg'.\n" +
+            raise TypeError("Missing required parameter 'epsg'.\n" +
                              generic_error)
 
         if not isinstance(epsg, int):
-            raise ValueError("EPSG code must be an integer, "
-                             f"got {type(epsg).__name__}\n" + generic_error)
+            raise TypeError("EPSG code must be an integer, "
+                             f"got {type(epsg).__name__}.\n" + generic_error)
 
         try:
             self._is_valid_epsg(epsg)
         except ValueError:
-            raise ValueError("Invalid EPSG code.\n" + generic_error) from None
+            raise ValueError(f"Invalid EPSG code: {epsg}.\n" + generic_error) from None
 
     def _get_id(self):
         random.seed(self._get_id_seed())

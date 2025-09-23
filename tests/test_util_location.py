@@ -105,19 +105,19 @@ class TestLocation(object):
     def test_box_missing_epsg(self):
         """Test the Box type when no CRS is given.
 
-        Test whether a ValueError is raised.
+        Test whether a TypeError is raised.
 
         """
-        with pytest.raises(ValueError):
+        with pytest.raises(TypeError):
             Box(94720, 186910, 112220, 202870)
 
     def test_box_epsg_wrong_type(self):
         """Test the Box type when epsg is not of type int.
 
-        Test whether a ValueError is raised.
+        Test whether a TypeError is raised.
 
         """
-        with pytest.raises(ValueError):
+        with pytest.raises(TypeError):
             Box(94720, 186910, 112220, 202870, epsg='EPSG:31370')
 
     def test_box_invalid_epsg(self):
@@ -184,19 +184,19 @@ class TestLocation(object):
     def test_point_missing_epsg(self):
         """Test the Box type when no CRS is given.
 
-        Test whether a ValueError is raised.
+        Test whether a TypeError is raised.
 
         """
-        with pytest.raises(ValueError):
+        with pytest.raises(TypeError):
             Point(94720, 202870)
 
     def test_point_epsg_wrong_type(self):
         """Test the Point type when epsg is not of type int.
 
-        Test whether a ValueError is raised.
+        Test whether a TypeError is raised.
 
         """
-        with pytest.raises(ValueError):
+        with pytest.raises(TypeError):
             Point(94720, 202870, epsg='EPSG:31370')
 
     def test_point_invalid_epsg(self):

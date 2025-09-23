@@ -650,6 +650,9 @@ class AbstractSearch(HtmlFormatter):
             When a field that can only be used as a query parameter is used as
             a return field.
 
+            When a geometry field is referenced by name in the return fields,
+            instead of as instance of GeometryReturnField.
+
         """
         self._pre_search_validation(location, query, sort_by, return_fields,
                                     max_features)
@@ -692,6 +695,16 @@ class AbstractSearch(HtmlFormatter):
                 geom_return_crs = f'EPSG:{geom_return_crs[0]}'
             else:
                 geom_return_crs = None
+
+            geom_fields = self.get_fields(type='geometry')
+            for f in return_fields:
+                if not isinstance(f, GeometryReturnField) \
+                        and f.name in geom_fields:
+                    raise InvalidFieldError(
+                        f"Cannot use field '{f.name}' of type 'geometry' in "
+                        "return_fields by name, use GeometryReturnField "
+                        f"instead, e.g. GeometryReturnField('{f.name}', "
+                        "epsg=31370).")
 
         extra_custom_fields = set()
         for custom_field in self._type.get_fields(

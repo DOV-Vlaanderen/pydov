@@ -618,6 +618,29 @@ class AbstractTestSearch(object):
                 query=self.valid_query_single,
                 return_fields=self.valid_returnfields[0])
 
+    def test_search_geometry_field_without_class(self):
+        """Test the search method with the query parameter and a geometry
+        return field.
+
+        Test whether an InvalidFieldError is raised, as geometry fields need
+        to be specified using GeometryReturnField (with CRS).
+
+        """
+        geom_fields = [
+            f for f in self.search_instance.get_fields(type='geometry')]
+
+        if len(geom_fields) < 1:
+            return
+
+        return_fields = list(self.valid_returnfields)
+        return_fields.append(geom_fields[0])
+
+        with pytest.raises(InvalidFieldError):
+            self.search_instance.search(
+                query=self.valid_query_single,
+                return_fields=return_fields
+            )
+
     def test_search_query_wrongfield(self):
         """Test the search method with the query parameter using an
         inexistent query field.

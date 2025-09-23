@@ -1,8 +1,11 @@
 """Module grouping tests for returning geometry fields."""
 import geopandas as gpd
+import pytest
 from shapely.geometry import Point
 
 from pydov.search.bodemclassificatie import BodemclassificatieSearch
+from pydov.search.fields import GeometryReturnField
+from pydov.util.errors import InvalidFieldError
 
 location_md_metadata = 'tests/data/types/bodemclassificatie/md_metadata.xml'
 location_fc_featurecatalogue = \
@@ -17,6 +20,35 @@ location_codelists = 'tests/data/types/bodemclassificatie'
 
 class TestGeometryReturn(object):
     """Class grouping tests for returning geometry fields."""
+
+    def test_error_on_plain_geom(self, mp_wfs, mp_get_schema,
+                                 mp_remote_describefeaturetype,
+                                 mp_remote_wfs_feature):
+        """Test whether the search method using a geometry return field
+        referenced by name.
+
+        Test whether an InvalidFieldError is raised.
+
+        Parameters
+        ----------
+        mp_wfs : pytest.fixture
+            Monkeypatch the call to the remote GetCapabilities request.
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType.
+        mp_remote_wfs_feature : pytest.fixture
+            Monkeypatch the call to get WFS features.
+        """
+        return_fields = [
+            'pkey_bodemclassificatie', 'pkey_bodemlocatie', 'x', 'y', 'mv_mtaw',
+            'classificatietype', 'bodemtype', 'auteurs', 'geom'
+        ]
+
+        s = BodemclassificatieSearch()
+
+        with pytest.raises(InvalidFieldError):
+            s.search(max_features=1, return_fields=return_fields)
 
     def test_return_geometry(self, mp_wfs, mp_get_schema,
                              mp_remote_describefeaturetype,
@@ -36,7 +68,8 @@ class TestGeometryReturn(object):
         """
         return_fields = [
             'pkey_bodemclassificatie', 'pkey_bodemlocatie', 'x', 'y', 'mv_mtaw',
-            'classificatietype', 'bodemtype', 'auteurs', 'geom'
+            'classificatietype', 'bodemtype', 'auteurs',
+            GeometryReturnField('geom', 31370)
         ]
 
         s = BodemclassificatieSearch()
@@ -58,13 +91,14 @@ class TestGeometryReturn(object):
         mp_get_schema : pytest.fixture
             Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
-            Monkeypatch the call to a remote DescribeFeatureType.
+            Monkeypatch the call to a remote DescribeFeatureType
         mp_remote_wfs_feature : pytest.fixture
             Monkeypatch the call to get WFS features.
         """
         return_fields = [
             'pkey_bodemclassificatie', 'pkey_bodemlocatie', 'x', 'y', 'mv_mtaw',
-            'classificatietype', 'bodemtype', 'auteurs', 'geom'
+            'classificatietype', 'bodemtype', 'auteurs',
+            GeometryReturnField('geom', 31370)
         ]
 
         s = BodemclassificatieSearch()

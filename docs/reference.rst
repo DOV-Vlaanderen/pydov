@@ -226,6 +226,10 @@ Generic
 Fields
 ------
 
+.. automodule:: pydov.search.fields
+    :members:
+    :show-inheritance:
+
 .. automodule:: pydov.types.fields
     :members:
     :show-inheritance:

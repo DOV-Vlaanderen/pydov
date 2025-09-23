@@ -16,28 +16,10 @@ from owslib.etree import etree
 from owslib.fes2 import Or
 
 
-class AbstractLocation(object):
-    """Abstract base class for location types (f.ex. point, box, polygon).
+class EpsgValidator(object):
+    """Class grouping methods for enforcing and validating EPSG parameters."""
 
-    Locations are GML elements, for inclusion in the WFS GetFeature request.
-    As described in the Filter Encoding 2.0 standard, locations are expressed
-    using GML 3.2.
-
-    The initialisation should require all necessary parameters to construct
-    a valid location of this type: i.e. all locations should be valid after
-    initialisation.
-
-    """
-
-    def _get_id_seed(self):
-        """Get the seed for generating a random but stable GML ID for this
-        location.
-
-        Should return the same value for locations considered equal.
-        """
-        raise NotImplementedError('This should be implemented in a subclass.')
-
-    def _is_valid_epsg(self, epsg):
+    def _is_existing_epsg(self, epsg):
         """Check whether the provided EPSG code is a valid EPSG code according
         to pyproj. Pass if pyproj is not installed.
 
@@ -62,7 +44,8 @@ class AbstractLocation(object):
 
     def _validate_epsg(self, epsg):
         """
-        Validate the provided EPSG code.
+        Validate the provided EPSG code, raising an exception if the EPSG
+        code is either missing or invalid.
 
         Parameters
         ----------
@@ -80,8 +63,9 @@ class AbstractLocation(object):
             how to provide a valid code.
 
         Notes
-        --------
+        -----
         https://epsg.io for a list of valid EPSG codes.
+
         """
 
         generic_error = (f"Example usage: {self.__class__.__name__}"
@@ -101,10 +85,32 @@ class AbstractLocation(object):
                             f"got {type(epsg).__name__}.\n" + generic_error)
 
         try:
-            self._is_valid_epsg(epsg)
+            self._is_existing_epsg(epsg)
         except ValueError:
             raise ValueError(f"Invalid EPSG code: {epsg}.\n" + generic_error) \
                 from None
+
+
+class AbstractLocation(EpsgValidator):
+    """Abstract base class for location types (f.ex. point, box, polygon).
+
+    Locations are GML elements, for inclusion in the WFS GetFeature request.
+    As described in the Filter Encoding 2.0 standard, locations are expressed
+    using GML 3.2.
+
+    The initialisation should require all necessary parameters to construct
+    a valid location of this type: i.e. all locations should be valid after
+    initialisation.
+
+    """
+
+    def _get_id_seed(self):
+        """Get the seed for generating a random but stable GML ID for this
+        location.
+
+        Should return the same value for locations considered equal.
+        """
+        raise NotImplementedError('This should be implemented in a subclass.')
 
     def _get_id(self):
         random.seed(self._get_id_seed())
@@ -246,14 +252,17 @@ class Box(AbstractLocation):
 
         Raises
         ------
+        TypeError
+            If `epsg` is None, missing or not an integer.
+
         ValueError
             If `maxx` is lower than or equal to `minx`.
             If `maxy` is lower than or equal to `miny`.
-            If `epsg` is None or invalid
+            If `epsg` is invalid
 
         Notes
-        --------
-        https://epsg.io for a list of valid EPSG codes.
+        -----
+        See https://epsg.io for a list of valid EPSG codes.
 
         """
 
@@ -319,12 +328,15 @@ class Point(AbstractLocation):
 
         Raises
         ------
+        TypeError
+            If `epsg` is None, missing or not an integer.
+
         ValueError
-            If `epsg` is None or invalid
+            If `epsg` invalid.
 
         Notes
-        --------
-        https://epsg.io for a list of valid EPSG codes.
+        -----
+        See https://epsg.io for a list of valid EPSG codes.
 
         """
 
@@ -392,7 +404,7 @@ class GmlObject(AbstractLocation):
 
         try:
             epsg = int(self.element.attrib.get("srsName").split(':')[-1])
-            self._is_valid_epsg(epsg)
+            self._is_existing_epsg(epsg)
         except ValueError:
             raise ValueError("GML element has an invalid attribute srsName")
 

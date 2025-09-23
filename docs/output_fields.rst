@@ -53,36 +53,22 @@ Finding geometry columns
     from pydov.search.boring import BoringSearch
 
     bs = BoringSearch()
-    print([f for f in bs.get_fields().values() if f['type'] == 'geometry'])
+    print(bs.get_fields(type='geometry'))
 
-    [{'name': 'geom', 'definition': None, 'type': 'geometry', 'notnull': False, 'query': False, 'cost': 1}]
+    {'geom': {'name': 'geom', 'definition': None, 'type': 'geometry', 'list': False, 'notnull': False, 'query': False, 'cost': 1}}
 
 
-Default coordinate reference system
-  When adding the geometry field as return field, you will get the corresponding geometry in the default coordinate reference system (CRS) of the layer - most of our layers use the Belgian Lambert 72 CRS (EPSG:31370) by default::
+Adding geometry return fields
+  To add geometry columns as return field, you can add an instance of :class:`pydov.search.fields.GeometryReturnField` specifying both the geometry field name and the desired CRS::
 
     df = bs.search(
-        return_fields=['pkey_boring', 'geom'],
+        return_fields=['pkey_boring', GeometryReturnField('geom', epsg=31370)],
         max_features=1
     )
     print(df)
 
                                               pkey_boring                  geom
     0  https://www.dov.vlaanderen.be/data/boring/2016...  POINT (92424 170752)
-
-Custom coordinate reference systems
-  To get the geometry in another CRS, instead of adding just the fieldname as return field, you can add an instance of :class:`pydov.search.fields.GeometryReturnField` specifying both the field name and the desired CRS. If you'd like to receive the geometries in GPS coordinates (lon/lat, or EPSG:4326) instead of Belgian Lambert 72, you could::
-
-      from pydov.search.fields import GeometryReturnField
-
-      df = bs.search(
-          return_fields=['pkey_boring', GeometryReturnField('geom', epsg=4326)],
-          max_features=1
-      )
-      print(df)
-
-                                            pkey_boring                    geom
-    0  https://www.dov.vlaanderen.be/data/boring/2016...  POINT (3.5512 50.8443)
 
 
 Turning the result into a GeoPandas GeoDataFrame

@@ -94,16 +94,17 @@ class AbstractLocation(object):
 
         if epsg is None:
             raise TypeError("Missing required parameter 'epsg'.\n" +
-                             generic_error)
+                            generic_error)
 
         if not isinstance(epsg, int):
             raise TypeError("EPSG code must be an integer, "
-                             f"got {type(epsg).__name__}.\n" + generic_error)
+                            f"got {type(epsg).__name__}.\n" + generic_error)
 
         try:
             self._is_valid_epsg(epsg)
         except ValueError:
-            raise ValueError(f"Invalid EPSG code: {epsg}.\n" + generic_error) from None
+            raise ValueError(f"Invalid EPSG code: {epsg}.\n" + generic_error) \
+                from None
 
     def _get_id(self):
         random.seed(self._get_id_seed())

@@ -46,7 +46,7 @@ limits the number of features to 2 within the search for grondwaterfilter. The u
     from pydov.util.location import Within, Box
 
     gwfilter = GrondwaterFilterSearch()
-    df = gwfilter.search(location=Within(Box(93378, 168009, 94246, 169873)),
+    df = gwfilter.search(location=Within(Box(93378, 168009, 94246, 169873, epsg=31370)),
                          max_features=2)
 
 Mind that the amount of features requested not necessarily equals the number of lines in the resulting DataFrame. For example in the case

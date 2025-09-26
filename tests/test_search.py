@@ -92,7 +92,7 @@ def test_search_location(objectsearch):
         operations on the corresponding DOV type.
 
     """
-    objectsearch.search(location=WithinDistance(Point(100000, 100000), 100))
+    objectsearch.search(location=WithinDistance(Point(100000, 100000, epsg=31370), 100))
 
 
 @pytest.mark.online
@@ -111,7 +111,7 @@ def test_search_maxfeatures(objectsearch):
         operations on the corresponding DOV type.
 
     """
-    objectsearch.search(location=WithinDistance(Point(100000, 100000), 100),
+    objectsearch.search(location=WithinDistance(Point(100000, 100000, epsg=31370), 100),
                         max_features=10)
 
 

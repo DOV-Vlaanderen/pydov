@@ -1,6 +1,7 @@
 
 from pydov.util.notebook import HtmlFormatter
 from pydov.util.wrappers import AbstractDictLike
+from pydov.util.location import EpsgValidator
 
 
 class ReturnFieldList(list):
@@ -121,7 +122,7 @@ class ReturnField(AbstractReturnField):
         super().__init__(name)
 
 
-class GeometryReturnField(AbstractReturnField):
+class GeometryReturnField(AbstractReturnField, EpsgValidator):
     def __init__(self, geometry_field, epsg=None):
         """Initialise a geometry return field.
 
@@ -129,16 +130,25 @@ class GeometryReturnField(AbstractReturnField):
         ----------
         geometry_field : str
             Name of the geometry field.
-        epsg : int, optional
+        epsg : int
             EPSG code of the CRS of the geometries that will be returned.
-            Defaults to None, which means the default CRS of the WFS layer.
+
+        Raises
+        ------
+        TypeError
+            If `epsg` is None, missing or not an integer.
+
+        ValueError
+            If `epsg` invalid.
+
+        Notes
+        -----
+        See https://epsg.io for a list of valid EPSG codes.
+
         """
         super().__init__(geometry_field)
 
-        if epsg is not None:
-            if not isinstance(epsg, int):
-                raise TypeError('epsg should be an integer value')
-
+        self._validate_epsg(epsg)
         self.epsg = epsg
 
 

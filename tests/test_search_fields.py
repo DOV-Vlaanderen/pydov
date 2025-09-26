@@ -109,12 +109,12 @@ class TestGeometryReturnField():
     """Class grouping tests for the GeometryReturnField class."""
 
     def test_no_srs(self):
-        """Test initialisation of a GeometryReturnField without an SRS."""
-        rf = GeometryReturnField('shape')
+        """Test initialisation of a GeometryReturnField without an SRS.
 
-        assert isinstance(rf, GeometryReturnField)
-        assert rf.name == 'shape'
-        assert rf.epsg is None
+        Test whether a TypeError is raised.
+        """
+        with pytest.raises(TypeError):
+            GeometryReturnField('shape')
 
     def test_srs_31370(self):
         """Test initialisation of a GeometryReturnField with CRS set to Belgian Lambert 72."""
@@ -131,6 +131,14 @@ class TestGeometryReturnField():
         """
         with pytest.raises(TypeError):
             GeometryReturnField('shape', 'EPSG:31370')
+
+    def test_wrong_srs_value(self):
+        """Test initialisation of a GeometryReturnField with a wrong CRS type.
+
+        Test whether a TypeError is raised.
+        """
+        with pytest.raises(ValueError):
+            GeometryReturnField('shape', 404000)
 
 
 class TestFieldMetadata():

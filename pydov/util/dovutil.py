@@ -25,7 +25,7 @@ def build_dov_url(path):
 
     """
     if 'PYDOV_BASE_URL' in os.environ:
-        base_url = os.environ['PYDOV_BASE_URL']
+        base_url = os.environ['PYDOV_BASE_URL'].rstrip('/') + '/'
     else:
         base_url = 'https://www.dov.vlaanderen.be/'
 

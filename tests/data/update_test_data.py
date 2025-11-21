@@ -2,6 +2,9 @@
 import os
 import sys
 
+sys.path.insert(
+    0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+
 from owslib.etree import etree
 
 from pydov.types.bodemlocatie import Bodemlocatie
@@ -29,6 +32,7 @@ from pydov.types.sondering import Sondering
 from pydov.util.dovutil import build_dov_url, get_remote_url
 from pydov.util.net import LocalSessionThreadPool
 from pydov.util.codelists import AbstractResolvableCodeList
+
 from tests.abstract import ServiceCheck
 
 

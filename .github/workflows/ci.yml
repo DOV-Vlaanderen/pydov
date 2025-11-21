@@ -107,11 +107,6 @@ jobs:
         run: |
           pip install -r requirements_proxy.txt
           conda list
-      - name: Install geom dependencies with pip
-        shell: pwsh
-        run: |
-          pip install -r requirements_geom.txt
-          conda list
       - name: Install development dependencies with pip
         shell: pwsh
         run: |

@@ -44,12 +44,6 @@ Interpretaties
 .. automodule:: pydov.search.interpretaties
     :members:
 
-Grondmonster
-************
-
-.. automodule:: pydov.search.grondmonster
-    :members:
-
 Bodemsite
 *********
 
@@ -150,13 +144,6 @@ Interpretaties
 **************
 
 .. automodule:: pydov.types.interpretaties
-    :members:
-    :show-inheritance:
-
-Grondmonster
-************
-
-.. automodule:: pydov.types.grondmonster
     :members:
     :show-inheritance:
 
@@ -306,5 +293,9 @@ Errors and warnings
 -------------------
 
 .. automodule:: pydov.util.errors
+    :members:
+    :show-inheritance:
+
+.. automodule:: pydov.util.deprecation
     :members:
     :show-inheritance:

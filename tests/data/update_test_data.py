@@ -14,7 +14,6 @@ from pydov.types.bodemobservatie import Bodemobservatie
 from pydov.types.bodemsite import Bodemsite
 from pydov.types.bodemclassificatie import Bodemclassificatie
 from pydov.types.boring import Boring
-from pydov.types.grondmonster import Grondmonster
 from pydov.types.monster import Monster
 from pydov.types.observatie import Observatie
 from pydov.types.grondwaterfilter import GrondwaterFilter
@@ -821,62 +820,6 @@ if __name__ == '__main__':
 
     get_codelists(QuartairStratigrafie,
                   'types/interpretaties/quartaire_stratigrafie')
-
-    # types/grondmonster
-
-    update_file('types/grondmonster/grondmonster.xml',
-                build_dov_url('data/grondmonster/2018-211728.xml'))
-
-    update_file(
-        'types/grondmonster/wfsgetfeature.xml',
-        build_dov_url(
-            'geoserver/ows?service=WFS'
-            '&version=2.0.0&request=GetFeature&typeName='
-            'boringen:grondmonsters&count=1&CQL_Filter'
-            '=monster_link=%27' +
-            build_dov_url(
-                'data'
-                '/monster/2018-211728') +
-            '%27'))
-
-    update_file(
-        'types/grondmonster/feature.xml',
-        build_dov_url(
-            'geoserver/ows?service=WFS'
-            '&version=2.0.0&request=GetFeature&typeName='
-            'boringen:grondmonsters&count=1&CQL_Filter'
-            '=monster_link=%27' +
-            build_dov_url(
-                'data'
-                '/monster/2018-211728') +
-            '%27'),
-        get_first_featuremember)
-
-    update_file(
-        'types/grondmonster/fc_featurecatalogue.xml',
-        build_dov_url(
-            'geonetwork/srv/dut/csw'
-            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
-            '&outputSchema=http://www.isotc211.org/2005/gfc'
-            '&elementSetName=full&id=b9338fb5-fc9c-4229-858b-06a5fa3ee49d'))
-
-    update_file(
-        'types/grondmonster/md_metadata.xml',
-        build_dov_url(
-            'geonetwork/srv/dut/csw'
-            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
-            '&outputSchema=http://www.isotc211.org/2005/gmd'
-            '&elementSetName=full&'
-            'id=6edeab46-2cfc-4aa2-ae03-307d772f34ae'))
-
-    update_file(
-        'types/grondmonster/wfsdescribefeaturetype'
-        '.xml',
-        build_dov_url('geoserver/boringen'
-                      '/grondmonsters/ows?service=wfs&version=2.0.0&request'
-                      '=DescribeFeatureType'))
-
-    get_codelists(Grondmonster, 'types/grondmonster')
 
     # types/bodemlocatie
     update_file('types/bodemlocatie/bodemlocatie.xml',

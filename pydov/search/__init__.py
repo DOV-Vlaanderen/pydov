@@ -9,3 +9,4 @@ _monster_search = (
 )
 
 DeprecatedModule("pydov.search.grondmonster", _monster_search)
+DeprecatedModule("pydov.search.grondwatermonster", _monster_search)

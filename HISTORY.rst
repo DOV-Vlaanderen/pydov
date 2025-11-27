@@ -20,6 +20,13 @@ v4.0.0
       Consult the available fields, fieldsets and subtypes in the :ref:`datasets section <dataset_monster>`
       and check the :doc:`tutorial <notebooks/search_monsters>` for more information and examples.
 
+    - Grondwatermonsters (groundwater samples): removed
+
+      ``pydov.search.grondwatermonster`` and ``pydov.types.grondwatermonster`` modules have been removed, in favor of the generic Monster type.
+      Use :class:`pydov.search.monster` and :class:`pydov.types.monster` instead.
+      Consult the available fields, fieldsets and subtypes in the :ref:`datasets section <dataset_monster>`
+      and check the :doc:`tutorial <notebooks/search_monsters>` for more information and examples.
+
   - Preparing the pending deprecation of the Lambert72 coordinate reference system (CRS) (EPSG:31370), all locations and geometry return fields
     now require explicit CRS definition. This impacts:
 

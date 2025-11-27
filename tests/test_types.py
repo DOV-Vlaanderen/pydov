@@ -11,7 +11,6 @@ from pydov.types.bodemclassificatie import Bodemclassificatie
 from pydov.types.boring import Boring
 from pydov.types.fields import XmlField
 from pydov.types.grondwaterfilter import GrondwaterFilter
-from pydov.types.grondwatermonster import GrondwaterMonster
 from pydov.types.monster import Monster
 from pydov.types.observatie import Observatie
 from pydov.types.interpretaties import (
@@ -28,26 +27,27 @@ from pydov.types.sondering import Sondering
 from pydov.types.abstract import AbstractDovFieldSet, AbstractDovSubType
 
 
-type_objects = [Bodemsite,
-                Bodemlocatie,
-                Bodemdiepteinterval,
-                Bodemobservatie,
-                Bodemmonster,
-                Bodemclassificatie,
-                Boring,
-                Sondering,
-                GrondwaterFilter,
-                GrondwaterMonster,
-                InformeleStratigrafie,
-                FormeleStratigrafie,
-                HydrogeologischeStratigrafie,
-                InformeleHydrogeologischeStratigrafie,
-                GecodeerdeLithologie,
-                LithologischeBeschrijvingen,
-                GeotechnischeCodering,
-                QuartairStratigrafie,
-                Monster,
-                Observatie]
+type_objects = [
+    Bodemsite,
+    Bodemlocatie,
+    Bodemdiepteinterval,
+    Bodemobservatie,
+    Bodemmonster,
+    Bodemclassificatie,
+    Boring,
+    Sondering,
+    GrondwaterFilter,
+    InformeleStratigrafie,
+    FormeleStratigrafie,
+    HydrogeologischeStratigrafie,
+    InformeleHydrogeologischeStratigrafie,
+    GecodeerdeLithologie,
+    LithologischeBeschrijvingen,
+    GeotechnischeCodering,
+    QuartairStratigrafie,
+    Monster,
+    Observatie,
+]
 
 
 @pytest.mark.parametrize("objecttype", type_objects)

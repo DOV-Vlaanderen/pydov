@@ -14,7 +14,6 @@ from pydov.search.boring import BoringSearch
 from pydov.search.generic import WfsSearch
 from pydov.search.monster import MonsterSearch
 from pydov.search.grondwaterfilter import GrondwaterFilterSearch
-from pydov.search.grondwatermonster import GrondwaterMonsterSearch
 from pydov.search.grondwatervergunning import GrondwaterVergunningSearch
 from pydov.search.interpretaties import (
     FormeleStratigrafieSearch, GecodeerdeLithologieSearch,
@@ -28,28 +27,29 @@ from pydov.util.location import Point, WithinDistance
 from pydov.util.owsutil import typeconvert
 from tests.abstract import ServiceCheck
 
-search_objects = [BodemsiteSearch(),
-                  BodemlocatieSearch(),
-                  BodemdiepteintervalSearch(),
-                  BodemobservatieSearch(),
-                  BodemmonsterSearch(),
-                  BodemclassificatieSearch(),
-                  BoringSearch(),
-                  SonderingSearch(),
-                  GrondwaterFilterSearch(),
-                  #   GrondwaterMonsterSearch(),
-                  GrondwaterVergunningSearch(),
-                  FormeleStratigrafieSearch(),
-                  InformeleHydrogeologischeStratigrafieSearch(),
-                  GeotechnischeCoderingSearch(),
-                  QuartairStratigrafieSearch(),
-                  InformeleStratigrafieSearch(),
-                  HydrogeologischeStratigrafieSearch(),
-                  GecodeerdeLithologieSearch(),
-                  LithologischeBeschrijvingenSearch(),
-                  MonsterSearch(),
-                  ObservatieSearch(),
-                  WfsSearch('dov-pub:Opdrachten')]
+search_objects = [
+    BodemsiteSearch(),
+    BodemlocatieSearch(),
+    BodemdiepteintervalSearch(),
+    BodemobservatieSearch(),
+    BodemmonsterSearch(),
+    BodemclassificatieSearch(),
+    BoringSearch(),
+    SonderingSearch(),
+    GrondwaterFilterSearch(),
+    GrondwaterVergunningSearch(),
+    FormeleStratigrafieSearch(),
+    InformeleHydrogeologischeStratigrafieSearch(),
+    GeotechnischeCoderingSearch(),
+    QuartairStratigrafieSearch(),
+    InformeleStratigrafieSearch(),
+    HydrogeologischeStratigrafieSearch(),
+    GecodeerdeLithologieSearch(),
+    LithologischeBeschrijvingenSearch(),
+    MonsterSearch(),
+    ObservatieSearch(),
+    WfsSearch("dov-pub:Opdrachten"),
+]
 
 
 @pytest.mark.parametrize("objectsearch", search_objects)

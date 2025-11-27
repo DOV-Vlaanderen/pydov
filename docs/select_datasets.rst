@@ -308,6 +308,11 @@ Extra subtypes
       diepte_kleur_tot,Kleur,10,1.25
       kleur,Kleur,10,bruin
 
+Borehole samples (Grondmonsters)
+--------------------------------
+
+See generic type for :ref:`Monster <dataset_monster>`.
+
 
 CPT measurements (Sonderingen)
 ------------------------------
@@ -674,37 +679,8 @@ Extra subtypes
 Groundwater samples (Grondwatermonsters)
 ----------------------------------------
 
-Type
-    GrondwaterMonster (Groundwater sample)
+See generic type for :ref:`Monster <dataset_monster>`.
 
-Subtype
-    Observatie (Quality measurement)
-
-Search class
-    :class:`pydov.search.grondwatermonster.GrondwaterMonsterSearch`
-
-Default dataframe output
-      .. csv-table:: Groundwater samples (grondwatermonsters)
-        :header-rows: 1
-
-        Field,Source,Cost,Datatype,Example
-        pkey_grondwatermonster,GrondwaterMonster,1,string,https://www.dov.vlaanderen.be/data/watermonster/2010-001344
-        grondwatermonsternummer,GrondwaterMonster,1,string,2-0114/M2010
-        pkey_grondwaterlocatie,GrondwaterMonster,1,string,https://www.dov.vlaanderen.be/data/put/2017-000096
-        gw_id,GrondwaterMonster,1,string,2-0114
-        pkey_filter,GrondwaterMonster,1,string,https://www.dov.vlaanderen.be/data/filter/1996-001085
-        filternummer,GrondwaterMonster,1,string,1
-        x,GrondwaterMonster,1,float,153030
-        y,GrondwaterMonster,1,float,158805
-        start_grondwaterlocatie_mtaw,GrondwaterMonster,1,float,129.88
-        gemeente,GrondwaterMonster,1,string,Sint-Genesius-Rode
-        datum_monstername,GrondwaterMonster,1,date,2020-01-20
-        parametergroep,Observatie,10,string,Zware metalen
-        parameter,Observatie,10,string,Hg
-        detectie,Observatie,10,string,<
-        waarde,Observatie,10,float,0.5
-        eenheid,Observatie,10,string,µg/l
-        veld_labo,Observatie,10,string,LABO
 
 Groundwater permits (Grondwatervergunningen)
 --------------------------------------------

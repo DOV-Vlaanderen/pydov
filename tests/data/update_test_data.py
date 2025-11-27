@@ -17,7 +17,6 @@ from pydov.types.boring import Boring
 from pydov.types.monster import Monster
 from pydov.types.observatie import Observatie
 from pydov.types.grondwaterfilter import GrondwaterFilter
-from pydov.types.grondwatermonster import GrondwaterMonster
 from pydov.types.grondwatervergunning import GrondwaterVergunning
 from pydov.types.interpretaties import (FormeleStratigrafie,
                                         GecodeerdeLithologie,
@@ -695,59 +694,6 @@ if __name__ == '__main__':
                               'CQL_Filter=filterfiche=%27' + build_dov_url(
                                   'data/filter/1976-101132%27')),
                 get_first_featuremember)
-
-    # types/grondwatermonster
-
-    update_file('types/grondwatermonster/grondwatermonster.xml',
-                build_dov_url('data/watermonster/2006-115684.xml'))
-
-    update_file(
-        'types/grondwatermonster/wfsgetfeature.xml',
-        build_dov_url(
-            'geoserver/ows?service=WFS'
-            '&version=2.0.0&request=GetFeature&typeName='
-            'gw_meetnetten:grondwatermonsters&count=1&'
-            'CQL_Filter=grondwatermonsterfiche=%27' +
-            build_dov_url('data/watermonster/2006-115684') +
-            '%27'))
-
-    update_file(
-        'types/grondwatermonster/feature.xml',
-        build_dov_url(
-            'geoserver/ows?service=WFS'
-            '&version=2.0.0&request=GetFeature&typeName='
-            'gw_meetnetten:grondwatermonsters&count=1&'
-            'CQL_Filter=grondwatermonsterfiche=%27' +
-            build_dov_url('data/watermonster/2006-115684') +
-            '%27'),
-        get_first_featuremember)
-
-    update_file(
-        'types/grondwatermonster/fc_featurecatalogue.xml',
-        build_dov_url(
-            'geonetwork/srv/dut/csw'
-            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
-            '&outputSchema=http://www.isotc211.org/2005/gfc'
-            '&elementSetName=full&'
-            'id=639c9612-4bbb-4826-86fd-fec9afd49bf7'))
-
-    update_file(
-        'types/grondwatermonster/md_metadata.xml',
-        build_dov_url(
-            'geonetwork/srv/dut/csw'
-            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
-            '&outputSchema=http://www.isotc211.org/2005/gmd'
-            '&elementSetName=full&'
-            'id=0b378716-39fb-4151-96c5-2021672f4762'))
-
-    update_file(
-        'types/grondwatermonster/wfsdescribefeaturetype.xml',
-        build_dov_url(
-            'geoserver/gw_meetnetten/'
-            'grondwatermonsters/ows?service=wfs&version=2.0.0&'
-            'request=DescribeFeatureType'))
-
-    get_codelists(GrondwaterMonster, 'types/grondwatermonster')
 
     # util/owsutil
 

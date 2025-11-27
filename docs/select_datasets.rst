@@ -140,36 +140,8 @@ Default dataframe output
 Soil samples (Bodemmonsters)
 ----------------------------
 
-Type
-    Bodemmonster (Soil sample)
+See generic type for :ref:`Monster <dataset_monster>`.
 
-Subtype
-    No subtype
-
-Search class
-    :class:`pydov.search.bodemmonster.BodemmonsterSearch`
-
-Default dataframe output
-      .. csv-table:: Soil samples (Bodemmonsters)
-        :header-rows: 1
-
-        Field,Source,Cost,Datatype,Example
-        pkey_bodemmonster,Bodemmonster,1,string,https://www.dov.vlaanderen.be/data/bodemmonster/1964-264869
-        pkey_bodemlocatie,Bodemmonster,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/2015-000745
-        pkey_parent,Bodemmonster,1,string,https://www.dov.vlaanderen.be/data/diepteinterval/2019-003366
-        x,Bodemmonster,1,float,206553.85
-        y,Bodemmonster,1,float,168891.11
-        mv_mtaw,Bodemmonster,1,float,44.00
-        identificatie,Bodemmonster,1,string,KART_PROF_073E/12_H2_M1
-        datum_monstername,Bodemmonster,1,date,1964-11-12
-        tijdstip_monstername,Bodemmonster,10,string,NaN
-        type,Bodemmonster,1,string,ENK
-        monstername_door,Bodemmonster,1,string,Centrum voor Grondonderzoek (C.V.G.)
-        techniek,Bodemmonster,1,string,NaN
-        condities,Bodemmonster,1,string,Zie scan analoge profielbeschrijving
-        diepte_van_cm,Bodemmonster,1,float,30
-        diepte_tot_cm,Bodemmonster,1,float,45
-        labo,Bodemmonster,1,string,Centrum voor Grondonderzoek (C.V.G.)
 
 Soil observations (Bodemobservaties)
 ------------------------------------

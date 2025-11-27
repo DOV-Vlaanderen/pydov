@@ -9,7 +9,6 @@ from owslib.etree import etree
 
 from pydov.types.bodemlocatie import Bodemlocatie
 from pydov.types.bodemdiepteinterval import Bodemdiepteinterval
-from pydov.types.bodemmonster import Bodemmonster
 from pydov.types.bodemobservatie import Bodemobservatie
 from pydov.types.bodemsite import Bodemsite
 from pydov.types.bodemclassificatie import Bodemclassificatie
@@ -900,51 +899,6 @@ if __name__ == '__main__':
             '/ows?service=wfs&version=2.0.0&request=DescribeFeatureType'))
 
     get_codelists(Bodemobservatie, 'types/bodemobservatie')
-
-    # types/bodemmonster
-    update_file('types/bodemmonster/bodemmonster.xml',
-                build_dov_url('data/bodemmonster/2015-211807.xml'))
-
-    update_file(
-        'types/bodemmonster/wfsgetfeature.xml',
-        build_dov_url(
-            'geoserver/ows?service=WFS'
-            '&version=2.0.0&request=GetFeature&typeName=bodem:bodemmonsters'
-            '&count=1&CQL_Filter=Bodemmonsterfiche=%27' +
-            build_dov_url('data/bodemmonster/2015-211807%27')))
-
-    update_file(
-        'types/bodemmonster/feature.xml',
-        build_dov_url(
-            'geoserver/ows?service=WFS'
-            '&version=2.0.0&request=GetFeature&typeName=bodem:bodemmonsters'
-            '&count=1&CQL_Filter=Bodemmonsterfiche=%27' +
-            build_dov_url('data/bodemmonster/2015-211807%27')),
-        get_first_featuremember)
-
-    update_file(
-        'types/bodemmonster/fc_featurecatalogue.xml',
-        build_dov_url(
-            'geonetwork/srv/dut/csw'
-            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
-            '&outputSchema=http://www.isotc211.org/2005/gfc'
-            '&elementSetName=full&id=7d69c092-fa5a-4399-86ed-003877f5899e'))
-
-    update_file(
-        'types/bodemmonster/md_metadata.xml',
-        build_dov_url(
-            'geonetwork/srv/dut/csw'
-            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
-            '&outputSchema=http://www.isotc211.org/2005/gmd'
-            '&elementSetName=full&id=ff1902b2-7ba2-46be-ba8c-bfcf893444c2'))
-
-    update_file(
-        'types/bodemmonster/wfsdescribefeaturetype.xml',
-        build_dov_url(
-            'geoserver/bodem/bodemmonsters'
-            '/ows?service=wfs&version=2.0.0&request=DescribeFeatureType'))
-
-    get_codelists(Bodemmonster, 'types/bodemmonster')
 
     # types/bodemsite
     update_file('types/bodemsite/bodemsite.xml',

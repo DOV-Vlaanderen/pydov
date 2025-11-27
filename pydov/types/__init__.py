@@ -10,3 +10,4 @@ _monster_types = (
 
 DeprecatedModule("pydov.types.grondmonster", _monster_types)
 DeprecatedModule("pydov.types.grondwatermonster", _monster_types)
+DeprecatedModule("pydov.types.bodemmonster", _monster_types)

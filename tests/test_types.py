@@ -5,7 +5,6 @@ import pytest
 from pydov.types.bodemsite import Bodemsite
 from pydov.types.bodemlocatie import Bodemlocatie
 from pydov.types.bodemdiepteinterval import Bodemdiepteinterval
-from pydov.types.bodemobservatie import Bodemobservatie
 from pydov.types.bodemclassificatie import Bodemclassificatie
 from pydov.types.boring import Boring
 from pydov.types.fields import XmlField
@@ -30,7 +29,6 @@ type_objects = [
     Bodemsite,
     Bodemlocatie,
     Bodemdiepteinterval,
-    Bodemobservatie,
     Bodemclassificatie,
     Boring,
     Sondering,

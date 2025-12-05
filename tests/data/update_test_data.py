@@ -9,7 +9,6 @@ from owslib.etree import etree
 
 from pydov.types.bodemlocatie import Bodemlocatie
 from pydov.types.bodemdiepteinterval import Bodemdiepteinterval
-from pydov.types.bodemobservatie import Bodemobservatie
 from pydov.types.bodemsite import Bodemsite
 from pydov.types.bodemclassificatie import Bodemclassificatie
 from pydov.types.boring import Boring
@@ -854,51 +853,6 @@ if __name__ == '__main__':
             '/ows?service=wfs&version=2.0.0&request=DescribeFeatureType'))
 
     get_codelists(Bodemdiepteinterval, 'types/bodemdiepteinterval')
-
-    # types/bodemobservatie
-    update_file('types/bodemobservatie/bodemobservatie.xml',
-                build_dov_url('data/bodemobservatie/2019-001221.xml'))
-
-    update_file(
-        'types/bodemobservatie/wfsgetfeature.xml',
-        build_dov_url(
-            'geoserver/ows?service=WFS'
-            '&version=2.0.0&request=GetFeature&typeName=bodem:bodemobservaties'
-            '&count=1&CQL_Filter=Bodemobservatiefiche=%27' +
-            build_dov_url('data/bodemobservatie/2019-001221%27')))
-
-    update_file(
-        'types/bodemobservatie/feature.xml',
-        build_dov_url(
-            'geoserver/ows?service=WFS'
-            '&version=2.0.0&request=GetFeature&typeName=bodem:bodemobservaties'
-            '&count=1&CQL_Filter=Bodemobservatiefiche=%27' +
-            build_dov_url('data/bodemobservatie/2019-001221%27')),
-        get_first_featuremember)
-
-    update_file(
-        'types/bodemobservatie/fc_featurecatalogue.xml',
-        build_dov_url(
-            'geonetwork/srv/dut/csw'
-            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
-            '&outputSchema=http://www.isotc211.org/2005/gfc'
-            '&elementSetName=full&id=44df1272-6b57-471b-9f7a-2dc82f760137'))
-
-    update_file(
-        'types/bodemobservatie/md_metadata.xml',
-        build_dov_url(
-            'geonetwork/srv/dut/csw'
-            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
-            '&outputSchema=http://www.isotc211.org/2005/gmd'
-            '&elementSetName=full&id=dd327fef-62c7-4980-9788-9fac047a1553'))
-
-    update_file(
-        'types/bodemobservatie/wfsdescribefeaturetype.xml',
-        build_dov_url(
-            'geoserver/bodem/bodemobservaties'
-            '/ows?service=wfs&version=2.0.0&request=DescribeFeatureType'))
-
-    get_codelists(Bodemobservatie, 'types/bodemobservatie')
 
     # types/bodemsite
     update_file('types/bodemsite/bodemsite.xml',

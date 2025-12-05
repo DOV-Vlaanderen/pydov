@@ -6,7 +6,6 @@ import pytest
 
 from pydov.search.bodemlocatie import BodemlocatieSearch
 from pydov.search.bodemdiepteinterval import BodemdiepteintervalSearch
-from pydov.search.bodemobservatie import BodemobservatieSearch
 from pydov.search.bodemsite import BodemsiteSearch
 from pydov.search.bodemclassificatie import BodemclassificatieSearch
 from pydov.search.boring import BoringSearch
@@ -30,7 +29,6 @@ search_objects = [
     BodemsiteSearch(),
     BodemlocatieSearch(),
     BodemdiepteintervalSearch(),
-    BodemobservatieSearch(),
     BodemclassificatieSearch(),
     BoringSearch(),
     SonderingSearch(),

@@ -56,12 +56,6 @@ Bodemdiepteinterval
 .. automodule:: pydov.search.bodemdiepteinterval
     :members:
 
-Bodemobservatie
-***************
-
-.. automodule:: pydov.search.bodemobservatie
-    :members:
-
 Bodemclassificatie
 ******************
 
@@ -146,13 +140,6 @@ Bodemdiepteinterval
 *******************
 
 .. automodule:: pydov.types.bodemdiepteinterval
-    :members:
-    :show-inheritance:
-
-Bodemobservatie
-***************
-
-.. automodule:: pydov.types.bodemobservatie
     :members:
     :show-inheritance:
 

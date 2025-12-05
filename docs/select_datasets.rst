@@ -146,41 +146,8 @@ See generic type for :ref:`Monster <dataset_monster>`.
 Soil observations (Bodemobservaties)
 ------------------------------------
 
-Type
-    Bodemobservatie (Soil observations)
+See generic type for :ref:`Observatie <dataset_observatie>`.
 
-Subtype
-    Fractiemeting (Fraction measurement)
-
-Search class
-    :class:`pydov.search.bodemobservatie.BodemobservatieSearch`
-
-Default dataframe output
-      .. csv-table:: Soil observations (Bodemobservaties)
-        :header-rows: 1
-
-        Field,Source,Cost,Datatype,Example
-        pkey_bodemobservatie,Bodemobservatie,1,string,https://www.dov.vlaanderen.be/data/bodemobservatie/2019-349078
-        pkey_bodemlocatie,Bodemobservatie,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/1952-007078
-        pkey_parent,Bodemobservatie,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/1952-007078
-        x,Bodemobservatie,1,float,206553.85
-        y,Bodemobservatie,1,float,168891.11
-        mv_mtaw,Bodemobservatie,1,float,44.00
-        diepte_van_cm,Bodemobservatie,1,float,30
-        diepte_tot_cm,Bodemobservatie,1,float,45
-        observatiedatum,Bodemobservatie,10,date,1964-11-12
-        invoerdatum,Bodemobservatie,10,date,NaN
-        parametergroep,Bodemobservatie,10,string,Bodem_fysisch_structuur
-        parameter,Bodemobservatie,1,string,organische_c_perc
-        detectie,Bodemobservatie,10,string,<
-        waarde,Bodemobservatie,1,string,0.38
-        eenheid,Bodemobservatie,1,string,%
-        veld_labo,Bodemobservatie,1,string,VELD
-        methode,Bodemobservatie,1,string,Aardewerk nieuwe methode organische koolstof
-        betrouwbaarheid,Bodemobservatie,10,string,onbekend
-        fractiemeting_ondergrens,Fractiemeting,10,float,NaN
-        fractiemeting_bovengrens,Fractiemeting,10,float,NaN
-        fractiemeting_waarde,Fractiemeting,10,float,NaN
 
 Soil classifications (Bodemclassificaties)
 ------------------------------------------
@@ -283,7 +250,7 @@ Extra subtypes
 Borehole samples (Grondmonsters)
 --------------------------------
 
-See generic type for :ref:`Monster <dataset_monster>`.
+See generic types for :ref:`Monster <dataset_monster>` and :ref:`Observatie <dataset_observatie>`.
 
 
 CPT measurements (Sonderingen)
@@ -651,7 +618,7 @@ Extra subtypes
 Groundwater samples (Grondwatermonsters)
 ----------------------------------------
 
-See generic type for :ref:`Monster <dataset_monster>`.
+See generic types for :ref:`Monster <dataset_monster>` and :ref:`Observatie <dataset_observatie>`.
 
 
 Groundwater permits (Grondwatervergunningen)
@@ -799,6 +766,7 @@ Extra subtypes
       monsterbehandeling_behandeling;Monsterbehandeling;10;string;Type droging vooraf opslag
       monsterbehandeling_behandeling_waarde;Monsterbehandeling;10;string;Ovengedroogd op 40°C
 
+.. _dataset_observatie:
 
 Observations (Observaties)
 --------------------------

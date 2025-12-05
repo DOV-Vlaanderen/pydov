@@ -34,6 +34,13 @@ v4.0.0
       Consult the available fields, fieldsets and subtypes in the :ref:`datasets section <dataset_monster>`
       and check the :doc:`tutorial <notebooks/search_monsters>` for more information and examples.
 
+    - Bodemobservaties (soil observations): removed
+
+      ``pydov.search.bodemobservatie`` and ``pydov.types.bodemobservatie`` modules have been removed, in favor of the generic Observatie type.
+      Use :class:`pydov.search.observatie` and :class:`pydov.types.observatie` instead.
+      Consult the available fields, fieldsets and subtypes in the :ref:`datasets section <dataset_observatie>`
+      and check the :doc:`tutorial <notebooks/search_observaties>` for more information and examples.
+
   - Preparing the pending deprecation of the Lambert72 coordinate reference system (CRS) (EPSG:31370), all locations and geometry return fields
     now require explicit CRS definition. This impacts:
 

@@ -140,75 +140,14 @@ Default dataframe output
 Soil samples (Bodemmonsters)
 ----------------------------
 
-Type
-    Bodemmonster (Soil sample)
+See generic type for :ref:`Monster <dataset_monster>`.
 
-Subtype
-    No subtype
-
-Search class
-    :class:`pydov.search.bodemmonster.BodemmonsterSearch`
-
-Default dataframe output
-      .. csv-table:: Soil samples (Bodemmonsters)
-        :header-rows: 1
-
-        Field,Source,Cost,Datatype,Example
-        pkey_bodemmonster,Bodemmonster,1,string,https://www.dov.vlaanderen.be/data/bodemmonster/1964-264869
-        pkey_bodemlocatie,Bodemmonster,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/2015-000745
-        pkey_parent,Bodemmonster,1,string,https://www.dov.vlaanderen.be/data/diepteinterval/2019-003366
-        x,Bodemmonster,1,float,206553.85
-        y,Bodemmonster,1,float,168891.11
-        mv_mtaw,Bodemmonster,1,float,44.00
-        identificatie,Bodemmonster,1,string,KART_PROF_073E/12_H2_M1
-        datum_monstername,Bodemmonster,1,date,1964-11-12
-        tijdstip_monstername,Bodemmonster,10,string,NaN
-        type,Bodemmonster,1,string,ENK
-        monstername_door,Bodemmonster,1,string,Centrum voor Grondonderzoek (C.V.G.)
-        techniek,Bodemmonster,1,string,NaN
-        condities,Bodemmonster,1,string,Zie scan analoge profielbeschrijving
-        diepte_van_cm,Bodemmonster,1,float,30
-        diepte_tot_cm,Bodemmonster,1,float,45
-        labo,Bodemmonster,1,string,Centrum voor Grondonderzoek (C.V.G.)
 
 Soil observations (Bodemobservaties)
 ------------------------------------
 
-Type
-    Bodemobservatie (Soil observations)
+See generic type for :ref:`Observatie <dataset_observatie>`.
 
-Subtype
-    Fractiemeting (Fraction measurement)
-
-Search class
-    :class:`pydov.search.bodemobservatie.BodemobservatieSearch`
-
-Default dataframe output
-      .. csv-table:: Soil observations (Bodemobservaties)
-        :header-rows: 1
-
-        Field,Source,Cost,Datatype,Example
-        pkey_bodemobservatie,Bodemobservatie,1,string,https://www.dov.vlaanderen.be/data/bodemobservatie/2019-349078
-        pkey_bodemlocatie,Bodemobservatie,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/1952-007078
-        pkey_parent,Bodemobservatie,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/1952-007078
-        x,Bodemobservatie,1,float,206553.85
-        y,Bodemobservatie,1,float,168891.11
-        mv_mtaw,Bodemobservatie,1,float,44.00
-        diepte_van_cm,Bodemobservatie,1,float,30
-        diepte_tot_cm,Bodemobservatie,1,float,45
-        observatiedatum,Bodemobservatie,10,date,1964-11-12
-        invoerdatum,Bodemobservatie,10,date,NaN
-        parametergroep,Bodemobservatie,10,string,Bodem_fysisch_structuur
-        parameter,Bodemobservatie,1,string,organische_c_perc
-        detectie,Bodemobservatie,10,string,<
-        waarde,Bodemobservatie,1,string,0.38
-        eenheid,Bodemobservatie,1,string,%
-        veld_labo,Bodemobservatie,1,string,VELD
-        methode,Bodemobservatie,1,string,Aardewerk nieuwe methode organische koolstof
-        betrouwbaarheid,Bodemobservatie,10,string,onbekend
-        fractiemeting_ondergrens,Fractiemeting,10,float,NaN
-        fractiemeting_bovengrens,Fractiemeting,10,float,NaN
-        fractiemeting_waarde,Fractiemeting,10,float,NaN
 
 Soil classifications (Bodemclassificaties)
 ------------------------------------------
@@ -311,41 +250,8 @@ Extra subtypes
 Borehole samples (Grondmonsters)
 --------------------------------
 
-Type
-    Grondmonster (Borehole sample)
+See generic types for :ref:`Monster <dataset_monster>` and :ref:`Observatie <dataset_observatie>`.
 
-Subtype
-    Korrelverdeling (Particle size distribution)
-
-Search class
-    :class:`pydov.search.grondmonster.GrondmonsterSearch`
-
-Default dataframe output
-      .. csv-table:: Borehole samples (grondmonsters)
-        :header-rows: 1
-
-        Field,Source,Cost,Datatype,Example
-        pkey_grondmonster,Grondmonster,1,string,https://www.dov.vlaanderen.be/data/grondmonster/2017-168758
-        naam,Grondmonster,1,string,N3A
-        pkey_parents,Grondmonster,1,list of string,[https://www.dov.vlaanderen.be/data/boring/2005-003015]
-        datum,Grondmonster,1,date,2005-02-02
-        diepte_van_m,Grondmonster,1,float,5.9
-        diepte_tot_m,Grondmonster,1,float,6.05
-        monstertype,Grondmonster,1,string,ongeroerd
-        monstersamenstelling,Grondmonster,1,string,ENKELVOUDIG
-        astm_naam,Grondmonster,10,string,Organic silt
-        grondsoort_bggg,Grondmonster,10,string,humush. klei
-        humusgehalte,Grondmonster,10,float,15.6
-        kalkgehalte,Grondmonster,10,float,4.4
-        uitrolgrens,Grondmonster,10,float,50.4
-        vloeigrens,Grondmonster,10,float,86.4
-        glauconiet_totaal,Grondmonster,10,float,NaN
-        korrelvolumemassa,Grondmonster,10,float,NaN
-        volumemassa,Grondmonster,10,float,NaN
-        watergehalte,Grondmonster,10,float,NaN
-        methode,Korrelverdeling,10,string,Korrelverdeling d.m.v. hydrometer/areometer
-        diameter,Korrelverdeling,10,float,0.001
-        fractie,Korrelverdeling,10,float,45.8
 
 CPT measurements (Sonderingen)
 ------------------------------
@@ -712,37 +618,8 @@ Extra subtypes
 Groundwater samples (Grondwatermonsters)
 ----------------------------------------
 
-Type
-    GrondwaterMonster (Groundwater sample)
+See generic types for :ref:`Monster <dataset_monster>` and :ref:`Observatie <dataset_observatie>`.
 
-Subtype
-    Observatie (Quality measurement)
-
-Search class
-    :class:`pydov.search.grondwatermonster.GrondwaterMonsterSearch`
-
-Default dataframe output
-      .. csv-table:: Groundwater samples (grondwatermonsters)
-        :header-rows: 1
-
-        Field,Source,Cost,Datatype,Example
-        pkey_grondwatermonster,GrondwaterMonster,1,string,https://www.dov.vlaanderen.be/data/watermonster/2010-001344
-        grondwatermonsternummer,GrondwaterMonster,1,string,2-0114/M2010
-        pkey_grondwaterlocatie,GrondwaterMonster,1,string,https://www.dov.vlaanderen.be/data/put/2017-000096
-        gw_id,GrondwaterMonster,1,string,2-0114
-        pkey_filter,GrondwaterMonster,1,string,https://www.dov.vlaanderen.be/data/filter/1996-001085
-        filternummer,GrondwaterMonster,1,string,1
-        x,GrondwaterMonster,1,float,153030
-        y,GrondwaterMonster,1,float,158805
-        start_grondwaterlocatie_mtaw,GrondwaterMonster,1,float,129.88
-        gemeente,GrondwaterMonster,1,string,Sint-Genesius-Rode
-        datum_monstername,GrondwaterMonster,1,date,2020-01-20
-        parametergroep,Observatie,10,string,Zware metalen
-        parameter,Observatie,10,string,Hg
-        detectie,Observatie,10,string,<
-        waarde,Observatie,10,float,0.5
-        eenheid,Observatie,10,string,µg/l
-        veld_labo,Observatie,10,string,LABO
 
 Groundwater permits (Grondwatervergunningen)
 --------------------------------------------
@@ -782,6 +659,8 @@ Default dataframe output
 
 Generic
 *******
+
+.. _dataset_monster:
 
 Samples (Monsters)
 ------------------
@@ -887,6 +766,7 @@ Extra subtypes
       monsterbehandeling_behandeling;Monsterbehandeling;10;string;Type droging vooraf opslag
       monsterbehandeling_behandeling_waarde;Monsterbehandeling;10;string;Ovengedroogd op 40°C
 
+.. _dataset_observatie:
 
 Observations (Observaties)
 --------------------------

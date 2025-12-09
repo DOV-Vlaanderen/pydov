@@ -14,7 +14,7 @@ from pandas import DataFrame
 import pydov
 from pydov.types.abstract import AbstractDovType, AbstractField
 from pydov.search.fields import FieldMetadata, FieldMetadataList, ReturnField, ReturnFieldList
-from pydov.util.codelists import AbstractCodeList, CodeListItem
+from pydov.util.codelists import AbstractCodeList
 from pydov.util.dovutil import build_dov_url
 from pydov.util.errors import InvalidFieldError
 from pydov.util.location import Box, Within

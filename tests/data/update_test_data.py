@@ -9,16 +9,12 @@ from owslib.etree import etree
 
 from pydov.types.bodemlocatie import Bodemlocatie
 from pydov.types.bodemdiepteinterval import Bodemdiepteinterval
-from pydov.types.bodemmonster import Bodemmonster
-from pydov.types.bodemobservatie import Bodemobservatie
 from pydov.types.bodemsite import Bodemsite
 from pydov.types.bodemclassificatie import Bodemclassificatie
 from pydov.types.boring import Boring
-from pydov.types.grondmonster import Grondmonster
 from pydov.types.monster import Monster
 from pydov.types.observatie import Observatie
 from pydov.types.grondwaterfilter import GrondwaterFilter
-from pydov.types.grondwatermonster import GrondwaterMonster
 from pydov.types.grondwatervergunning import GrondwaterVergunning
 from pydov.types.interpretaties import (FormeleStratigrafie,
                                         GecodeerdeLithologie,
@@ -697,59 +693,6 @@ if __name__ == '__main__':
                                   'data/filter/1976-101132%27')),
                 get_first_featuremember)
 
-    # types/grondwatermonster
-
-    update_file('types/grondwatermonster/grondwatermonster.xml',
-                build_dov_url('data/watermonster/2006-115684.xml'))
-
-    update_file(
-        'types/grondwatermonster/wfsgetfeature.xml',
-        build_dov_url(
-            'geoserver/ows?service=WFS'
-            '&version=2.0.0&request=GetFeature&typeName='
-            'gw_meetnetten:grondwatermonsters&count=1&'
-            'CQL_Filter=grondwatermonsterfiche=%27' +
-            build_dov_url('data/watermonster/2006-115684') +
-            '%27'))
-
-    update_file(
-        'types/grondwatermonster/feature.xml',
-        build_dov_url(
-            'geoserver/ows?service=WFS'
-            '&version=2.0.0&request=GetFeature&typeName='
-            'gw_meetnetten:grondwatermonsters&count=1&'
-            'CQL_Filter=grondwatermonsterfiche=%27' +
-            build_dov_url('data/watermonster/2006-115684') +
-            '%27'),
-        get_first_featuremember)
-
-    update_file(
-        'types/grondwatermonster/fc_featurecatalogue.xml',
-        build_dov_url(
-            'geonetwork/srv/dut/csw'
-            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
-            '&outputSchema=http://www.isotc211.org/2005/gfc'
-            '&elementSetName=full&'
-            'id=639c9612-4bbb-4826-86fd-fec9afd49bf7'))
-
-    update_file(
-        'types/grondwatermonster/md_metadata.xml',
-        build_dov_url(
-            'geonetwork/srv/dut/csw'
-            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
-            '&outputSchema=http://www.isotc211.org/2005/gmd'
-            '&elementSetName=full&'
-            'id=0b378716-39fb-4151-96c5-2021672f4762'))
-
-    update_file(
-        'types/grondwatermonster/wfsdescribefeaturetype.xml',
-        build_dov_url(
-            'geoserver/gw_meetnetten/'
-            'grondwatermonsters/ows?service=wfs&version=2.0.0&'
-            'request=DescribeFeatureType'))
-
-    get_codelists(GrondwaterMonster, 'types/grondwatermonster')
-
     # util/owsutil
 
     update_file(
@@ -821,62 +764,6 @@ if __name__ == '__main__':
 
     get_codelists(QuartairStratigrafie,
                   'types/interpretaties/quartaire_stratigrafie')
-
-    # types/grondmonster
-
-    update_file('types/grondmonster/grondmonster.xml',
-                build_dov_url('data/grondmonster/2018-211728.xml'))
-
-    update_file(
-        'types/grondmonster/wfsgetfeature.xml',
-        build_dov_url(
-            'geoserver/ows?service=WFS'
-            '&version=2.0.0&request=GetFeature&typeName='
-            'boringen:grondmonsters&count=1&CQL_Filter'
-            '=monster_link=%27' +
-            build_dov_url(
-                'data'
-                '/monster/2018-211728') +
-            '%27'))
-
-    update_file(
-        'types/grondmonster/feature.xml',
-        build_dov_url(
-            'geoserver/ows?service=WFS'
-            '&version=2.0.0&request=GetFeature&typeName='
-            'boringen:grondmonsters&count=1&CQL_Filter'
-            '=monster_link=%27' +
-            build_dov_url(
-                'data'
-                '/monster/2018-211728') +
-            '%27'),
-        get_first_featuremember)
-
-    update_file(
-        'types/grondmonster/fc_featurecatalogue.xml',
-        build_dov_url(
-            'geonetwork/srv/dut/csw'
-            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
-            '&outputSchema=http://www.isotc211.org/2005/gfc'
-            '&elementSetName=full&id=b9338fb5-fc9c-4229-858b-06a5fa3ee49d'))
-
-    update_file(
-        'types/grondmonster/md_metadata.xml',
-        build_dov_url(
-            'geonetwork/srv/dut/csw'
-            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
-            '&outputSchema=http://www.isotc211.org/2005/gmd'
-            '&elementSetName=full&'
-            'id=6edeab46-2cfc-4aa2-ae03-307d772f34ae'))
-
-    update_file(
-        'types/grondmonster/wfsdescribefeaturetype'
-        '.xml',
-        build_dov_url('geoserver/boringen'
-                      '/grondmonsters/ows?service=wfs&version=2.0.0&request'
-                      '=DescribeFeatureType'))
-
-    get_codelists(Grondmonster, 'types/grondmonster')
 
     # types/bodemlocatie
     update_file('types/bodemlocatie/bodemlocatie.xml',
@@ -966,96 +853,6 @@ if __name__ == '__main__':
             '/ows?service=wfs&version=2.0.0&request=DescribeFeatureType'))
 
     get_codelists(Bodemdiepteinterval, 'types/bodemdiepteinterval')
-
-    # types/bodemobservatie
-    update_file('types/bodemobservatie/bodemobservatie.xml',
-                build_dov_url('data/bodemobservatie/2019-001221.xml'))
-
-    update_file(
-        'types/bodemobservatie/wfsgetfeature.xml',
-        build_dov_url(
-            'geoserver/ows?service=WFS'
-            '&version=2.0.0&request=GetFeature&typeName=bodem:bodemobservaties'
-            '&count=1&CQL_Filter=Bodemobservatiefiche=%27' +
-            build_dov_url('data/bodemobservatie/2019-001221%27')))
-
-    update_file(
-        'types/bodemobservatie/feature.xml',
-        build_dov_url(
-            'geoserver/ows?service=WFS'
-            '&version=2.0.0&request=GetFeature&typeName=bodem:bodemobservaties'
-            '&count=1&CQL_Filter=Bodemobservatiefiche=%27' +
-            build_dov_url('data/bodemobservatie/2019-001221%27')),
-        get_first_featuremember)
-
-    update_file(
-        'types/bodemobservatie/fc_featurecatalogue.xml',
-        build_dov_url(
-            'geonetwork/srv/dut/csw'
-            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
-            '&outputSchema=http://www.isotc211.org/2005/gfc'
-            '&elementSetName=full&id=44df1272-6b57-471b-9f7a-2dc82f760137'))
-
-    update_file(
-        'types/bodemobservatie/md_metadata.xml',
-        build_dov_url(
-            'geonetwork/srv/dut/csw'
-            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
-            '&outputSchema=http://www.isotc211.org/2005/gmd'
-            '&elementSetName=full&id=dd327fef-62c7-4980-9788-9fac047a1553'))
-
-    update_file(
-        'types/bodemobservatie/wfsdescribefeaturetype.xml',
-        build_dov_url(
-            'geoserver/bodem/bodemobservaties'
-            '/ows?service=wfs&version=2.0.0&request=DescribeFeatureType'))
-
-    get_codelists(Bodemobservatie, 'types/bodemobservatie')
-
-    # types/bodemmonster
-    update_file('types/bodemmonster/bodemmonster.xml',
-                build_dov_url('data/bodemmonster/2015-211807.xml'))
-
-    update_file(
-        'types/bodemmonster/wfsgetfeature.xml',
-        build_dov_url(
-            'geoserver/ows?service=WFS'
-            '&version=2.0.0&request=GetFeature&typeName=bodem:bodemmonsters'
-            '&count=1&CQL_Filter=Bodemmonsterfiche=%27' +
-            build_dov_url('data/bodemmonster/2015-211807%27')))
-
-    update_file(
-        'types/bodemmonster/feature.xml',
-        build_dov_url(
-            'geoserver/ows?service=WFS'
-            '&version=2.0.0&request=GetFeature&typeName=bodem:bodemmonsters'
-            '&count=1&CQL_Filter=Bodemmonsterfiche=%27' +
-            build_dov_url('data/bodemmonster/2015-211807%27')),
-        get_first_featuremember)
-
-    update_file(
-        'types/bodemmonster/fc_featurecatalogue.xml',
-        build_dov_url(
-            'geonetwork/srv/dut/csw'
-            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
-            '&outputSchema=http://www.isotc211.org/2005/gfc'
-            '&elementSetName=full&id=7d69c092-fa5a-4399-86ed-003877f5899e'))
-
-    update_file(
-        'types/bodemmonster/md_metadata.xml',
-        build_dov_url(
-            'geonetwork/srv/dut/csw'
-            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
-            '&outputSchema=http://www.isotc211.org/2005/gmd'
-            '&elementSetName=full&id=ff1902b2-7ba2-46be-ba8c-bfcf893444c2'))
-
-    update_file(
-        'types/bodemmonster/wfsdescribefeaturetype.xml',
-        build_dov_url(
-            'geoserver/bodem/bodemmonsters'
-            '/ows?service=wfs&version=2.0.0&request=DescribeFeatureType'))
-
-    get_codelists(Bodemmonster, 'types/bodemmonster')
 
     # types/bodemsite
     update_file('types/bodemsite/bodemsite.xml',

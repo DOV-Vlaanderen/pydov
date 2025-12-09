@@ -117,6 +117,8 @@ Other information about each field includes its datatype (`type`), cost to use i
      'notnull': False,
      'type': 'float'}
 
+.. _map_codelist:
+
 Some fields additionally have an associated codelist (`codelist`), containing the possible values for that field. For example, the `methode` field has a codelist with all possible drilling methods.
 A codelist contains all codes, and for each code its label and optionally a definition.
 
@@ -467,10 +469,10 @@ The following example gets borehole samples based on a search for boreholes:
     from pydov.util.query import FuzzyJoin
 
     from pydov.search.boring import BoringSearch
-    from pydov.search.grondmonster import GrondmonsterSearch
+    from pydov.search.monster import MonsterSearch
 
     bs = BoringSearch()
-    gs = GrondmonsterSearch()
+    ms = MonsterSearch()
 
     boreholes = bs.search(max_features=1000, return_fields=('pkey_boring'))
 
@@ -482,6 +484,10 @@ The following example gets borehole samples based on a search for boreholes:
     # 3  https://ontwikkel.dov.vlaanderen.be/data/boring/2016-139027
     # 4  https://ontwikkel.dov.vlaanderen.be/data/boring/2016-139028
 
-    samples = gs.search(query=FuzzyJoin(boreholes, on='pkey_parents'))
-    #                                               pkey_grondmonster naam                                                   pkey_parents       datum  diepte_van_m  diepte_tot_m  ... korrelvolumemassa volumemassa  watergehalte  methode  diameter  fractie
-    # 0  https://ontwikkel.dov.vlaanderen.be/data/monster/2024-325196   M1  [https://ontwikkel.dov.vlaanderen.be/data/boring/1986-076450]  2024-10-30           1.0           3.0  ...               NaN         NaN           NaN      NaN       NaN      NaN
+    samples = ms.search(query=FuzzyJoin(boreholes, on='pkey_parents', using='pkey_boring'))
+    #                                         pkey_monster naam                                       pkey_parents materiaalklasse datum_monstername  diepte_van_m  diepte_tot_m monstertype monstersamenstelling bemonsteringsprocedure bemonsteringsinstrument                         bemonstering_door
+    # 0  https://www.dov.vlaanderen.be/data/monster/201...    1  [https://www.dov.vlaanderen.be/data/boring/197...        sediment        1978-10-16           0.6          0.60   ongeroerd  Enkelvoudig monster                    NaN                  [buis]                                       NaN
+    # 1  https://www.dov.vlaanderen.be/data/monster/201...    1  [https://www.dov.vlaanderen.be/data/boring/200...        sediment        2009-04-30           3.0          3.50   ongeroerd  Enkelvoudig monster                    NaN                  [boor]                                       NaN
+    # 2  https://www.dov.vlaanderen.be/data/monster/201...    1  [https://www.dov.vlaanderen.be/data/boring/196...        sediment        1966-06-28           0.5          0.57   ongeroerd  Enkelvoudig monster                    NaN              [steekbus]  Rijksinstituut voor Grondmechanica (RIG)
+    # 3  https://www.dov.vlaanderen.be/data/monster/201...    1  [https://www.dov.vlaanderen.be/data/boring/196...        sediment        1966-07-06           0.5          0.74   ongeroerd  Enkelvoudig monster                    NaN              [steekbus]  Rijksinstituut voor Grondmechanica (RIG)
+    # 4  https://www.dov.vlaanderen.be/data/monster/201...    1  [https://www.dov.vlaanderen.be/data/boring/196...        sediment        1966-07-12           0.5          0.66   ongeroerd  Enkelvoudig monster                    NaN              [steekbus]  Rijksinstituut voor Grondmechanica (RIG)

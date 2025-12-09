@@ -25,12 +25,6 @@ Grondwaterfilter
 .. automodule:: pydov.search.grondwaterfilter
     :members:
 
-Grondwatermonster
-*****************
-
-.. automodule:: pydov.search.grondwatermonster
-    :members:
-
 Grondwatervergunning
 ********************
 
@@ -42,12 +36,6 @@ Interpretaties
 **************
 
 .. automodule:: pydov.search.interpretaties
-    :members:
-
-Grondmonster
-************
-
-.. automodule:: pydov.search.grondmonster
     :members:
 
 Bodemsite
@@ -66,18 +54,6 @@ Bodemdiepteinterval
 *******************
 
 .. automodule:: pydov.search.bodemdiepteinterval
-    :members:
-
-Bodemmonster
-************
-
-.. automodule:: pydov.search.bodemmonster
-    :members:
-
-Bodemobservatie
-***************
-
-.. automodule:: pydov.search.bodemobservatie
     :members:
 
 Bodemclassificatie
@@ -132,13 +108,6 @@ Grondwaterfilter
     :members:
     :show-inheritance:
 
-Grondwatermonster
-*****************
-
-.. automodule:: pydov.types.grondwatermonster
-    :members:
-    :show-inheritance:
-
 Grondwatervergunning
 ********************
 
@@ -150,13 +119,6 @@ Interpretaties
 **************
 
 .. automodule:: pydov.types.interpretaties
-    :members:
-    :show-inheritance:
-
-Grondmonster
-************
-
-.. automodule:: pydov.types.grondmonster
     :members:
     :show-inheritance:
 
@@ -178,20 +140,6 @@ Bodemdiepteinterval
 *******************
 
 .. automodule:: pydov.types.bodemdiepteinterval
-    :members:
-    :show-inheritance:
-
-Bodemmonster
-************
-
-.. automodule:: pydov.types.bodemmonster
-    :members:
-    :show-inheritance:
-
-Bodemobservatie
-***************
-
-.. automodule:: pydov.types.bodemobservatie
     :members:
     :show-inheritance:
 
@@ -306,5 +254,9 @@ Errors and warnings
 -------------------
 
 .. automodule:: pydov.util.errors
+    :members:
+    :show-inheritance:
+
+.. automodule:: pydov.util.deprecation
     :members:
     :show-inheritance:

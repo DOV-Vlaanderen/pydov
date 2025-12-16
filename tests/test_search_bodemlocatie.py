@@ -5,7 +5,7 @@ from owslib.fes2 import PropertyIsEqualTo
 
 from pydov.search.bodemlocatie import BodemlocatieSearch
 from pydov.types.bodemlocatie import Bodemlocatie
-from pydov.types.fields import ReturnFieldList
+from pydov.search.fields import ReturnFieldList
 from tests.abstract import AbstractTestSearch
 
 location_md_metadata = 'tests/data/types/bodemlocatie/md_metadata.xml'
@@ -16,12 +16,13 @@ location_wfs_describefeaturetype = \
 location_wfs_getfeature = 'tests/data/types/bodemlocatie/wfsgetfeature.xml'
 location_wfs_feature = 'tests/data/types/bodemlocatie/feature.xml'
 location_dov_xml = 'tests/data/types/bodemlocatie/bodemlocatie.xml'
-location_xsd_base = 'tests/data/types/bodemlocatie/xsd_*.xml'
+location_codelists = 'tests/data/types/bodemlocatie'
 
 
 class TestBodemlocatieSearch(AbstractTestSearch):
 
     search_instance = BodemlocatieSearch()
+    search_class = BodemlocatieSearch
     datatype_class = Bodemlocatie
 
     valid_query_single = PropertyIsEqualTo(propertyname='naam',

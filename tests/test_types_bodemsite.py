@@ -1,7 +1,7 @@
 """Module grouping tests for the pydov.types.bodemsite module."""
 
 from pydov.types.bodemsite import Bodemsite
-from pydov.types.fields import ReturnFieldList
+from pydov.search.fields import ReturnFieldList
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes
 
@@ -16,6 +16,9 @@ class TestBodemsite(AbstractTestTypes):
     datatype_class = Bodemsite
     namespace = 'https://www.dov.vlaanderen.be/bodem'
     pkey_base = build_dov_url('data/bodemsite/')
+
+    sorted_subtypes = []
+    sorted_fieldsets = []
 
     field_names = [
         'pkey_bodemsite', 'naam', 'waarnemingsdatum', 'beschrijving',

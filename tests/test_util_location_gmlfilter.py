@@ -774,7 +774,7 @@ class TestCombination(object):
             gml = gml_file.read()
 
         polygon = GmlFilter(gml, Within)
-        box = Box(94720, 186910, 112220, 202870)
+        box = Box(94720, 186910, 112220, 202870, epsg=31370)
 
         location_filter = Or([polygon, Within(box)])
         set_geometry_column(location_filter, 'geom')

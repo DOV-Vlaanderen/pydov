@@ -5,7 +5,7 @@ from owslib.fes2 import PropertyIsEqualTo
 from pandas import DataFrame
 
 from pydov.search.interpretaties import FormeleStratigrafieSearch
-from pydov.types.fields import ReturnFieldList
+from pydov.search.fields import ReturnFieldList
 from pydov.types.interpretaties import FormeleStratigrafie
 from tests.abstract import AbstractTestSearch
 
@@ -24,13 +24,14 @@ location_wfs_feature = \
 location_dov_xml = \
     'tests/data/types/interpretaties/formele_stratigrafie' \
     '/formele_stratigrafie.xml'
-location_xsd_base = \
-    'tests/data/types/interpretaties/formele_stratigrafie/xsd_*.xml'
+location_codelists = \
+    'tests/data/types/interpretaties/formele_stratigrafie'
 
 
 class TestFormeleStratigrafieSearch(AbstractTestSearch):
 
     search_instance = FormeleStratigrafieSearch()
+    search_class = FormeleStratigrafieSearch
     datatype_class = FormeleStratigrafie
 
     valid_query_single = PropertyIsEqualTo(propertyname='Proefnummer',

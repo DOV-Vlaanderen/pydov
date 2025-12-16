@@ -53,36 +53,22 @@ Finding geometry columns
     from pydov.search.boring import BoringSearch
 
     bs = BoringSearch()
-    print([f for f in bs.get_fields().values() if f['type'] == 'geometry'])
+    print(bs.get_fields(type='geometry'))
 
-    [{'name': 'geom', 'definition': None, 'type': 'geometry', 'notnull': False, 'query': False, 'cost': 1}]
+    {'geom': {'name': 'geom', 'definition': None, 'type': 'geometry', 'list': False, 'notnull': False, 'query': False, 'cost': 1}}
 
 
-Default coordinate reference system
-  When adding the geometry field as return field, you will get the corresponding geometry in the default coordinate reference system (CRS) of the layer - most of our layers use the Belgian Lambert 72 CRS (EPSG:31370) by default::
+Adding geometry return fields
+  To add geometry columns as return field, you can add an instance of :class:`pydov.search.fields.GeometryReturnField` specifying both the geometry field name and the desired CRS::
 
     df = bs.search(
-        return_fields=['pkey_boring', 'geom'],
+        return_fields=['pkey_boring', GeometryReturnField('geom', epsg=31370)],
         max_features=1
     )
     print(df)
 
                                               pkey_boring                  geom
     0  https://www.dov.vlaanderen.be/data/boring/2016...  POINT (92424 170752)
-
-Custom coordinate reference systems
-  To get the geometry in another CRS, instead of adding just the fieldname as return field, you can add an instance of :class:`pydov.types.fields.GeometryReturnField` specifying both the field name and the desired CRS. If you'd like to receive the geometries in GPS coordinates (lon/lat, or EPSG:4326) instead of Belgian Lambert 72, you could::
-
-      from pydov.types.fields import GeometryReturnField
-
-      df = bs.search(
-          return_fields=['pkey_boring', GeometryReturnField('geom', epsg=4326)],
-          max_features=1
-      )
-      print(df)
-
-                                            pkey_boring                    geom
-    0  https://www.dov.vlaanderen.be/data/boring/2016...  POINT (3.5512 50.8443)
 
 
 Turning the result into a GeoPandas GeoDataFrame
@@ -97,9 +83,113 @@ Turning the result into a GeoPandas GeoDataFrame
       geo_df = GeoDataFrame(df, geometry='geom', crs='EPSG:4326')
       geo_df.to_file('boringen.geojson')
 
+Customizing object types and subtypes
+*************************************
+
+Next to the default objecttypes in pydov, that are used when creating a search object for the given type, some object types support extra (main) fieldsets, extra subtypes or both. It is also possible to fully customize a datatype by defining your own fields for a main type, or your own subtypes.
+
+.. _adding_extra_fields:
+
+Adding extra fields
+-------------------
+
+To list the available extra fieldsets of a type, you can use the ``get_fieldsets`` method. The result is a dictionary with for each of the fieldsets a new dictionary with more information::
+
+  from pydov.types.boring import Boring
+
+  fieldsets = Boring.get_fieldsets()
+  for f in fieldsets.values():
+      print(f)
+
+      # {
+      #    'name': 'MethodeXyz',
+      #    'class': <class 'pydov.types.boring.MethodeXyz'>,
+      #    'definition': 'Fieldset containing fields for method and reliability of the [...]'
+      # }
+
+For each fieldset, the following information is available:
+
+name
+    The name of the fieldset.
+
+    Example: ``'MethodeXyz'``
+
+class
+    The class where the fields of this fieldset are defined. This is also the class to import and use to add the extra fields to the main type.
+
+    Example: ``<class 'pydov.types.boring.MethodeXyz'>``
+
+definition
+    A description of the fieldset and how it could be used. It always includes a list of field names. To get a full definition of the fields themselves,
+    create a search instance with the extra fields and use the ``get_fields`` method.
+
+    Example: ``'Fieldset containing fields for method and reliability of the [...]'``
+
+To add the extra fieldset to the object type, you can use the ``with_extra_fields`` method. This can be done while instantiating a search class::
+
+  from pydov.search.boring import BoringSearch
+  from pydov.types.boring import Boring, MethodeXyz
+
+  borehole_search = BoringSearch(
+      objecttype=Boring.with_extra_fields(MethodeXyz)
+  )
+  # df = borehole_search.search(...)
+
+The extra fields will now be part of your object type, and will hence be available in the `get_fields` output as well as in the output dataframe.
+
+.. _switching_subtypes:
+
+Adding or switching subtypes
+----------------------------
+
+To list the available subtypes of a type, you can use the ``get_subtypes`` method. The result is a dictionary with for each of the subtypes a new dictionary with more information::
+
+  from pydov.types.boring import Boring
+
+  subtypes = Boring.get_subtypes()
+  for st in subtypes.values():
+      print(st)
+
+      # {
+      #    'name': 'Kleur',
+      #    'class': <class 'pydov.types.boring.Kleur'>,
+      #    'definition': 'Subtype listing the color values of the borehole. [...]'
+      # }
+
+For each subtype, the following information is available:
+
+name
+    The name of the subtype.
+
+    Example: ``'Kleur'``
+
+class
+    The class where the fields of this subtype are defined. This is also the class to import and use to add the subtype to the main type.
+
+    Example: ``<class 'pydov.types.boring.Kleur'>``
+
+definition
+    A description of the subtype and how it could be used. It always includes a list of field names. To get a full definition of the fields themselves,
+    create a search instance with the extra fields and use the ``get_fields`` method.
+
+    Example: ``'Subtype listing the color values of the borehole. [...]'``
+
+To use the subtype, you can use the ``with_subtype`` method of the main type. This can be done while instantiating a search class::
+
+  from pydov.search.boring import BoringSearch
+  from pydov.types.boring import Boring, Kleur
+
+  borehole_search = BoringSearch(
+      objecttype=Boring.with_subtype(Kleur)
+  )
+  # df = borehole_search.search(...)
+
+The extra fields from the subtype will now be part of your object type, and will hence be available in the `get_fields` output as well as in the output dataframe.
+
+.. _custom_object_types:
 
 Defining custom object types
-****************************
+----------------------------
 
 Should you want to make the returned dataframe fields more permanent or, more importantly, add extra XML fields to an existing object type, you can define your own object types and subtypes.
 
@@ -121,9 +211,7 @@ The three most common reasons to define custom types are listed below: adding an
 Adding an XML field to a main type
 ----------------------------------
 
-To add an extra XML field to an existing main type, you have to create a subclass and extend the base type's fields.
-
-To extend the field list of the basetype, use its ``extend_fields`` class method, allowing the base object type to be unaffected by your changes. It takes a new list as its argument, containing the fields to be added. These should all be instances of :class:`pydov.types.fields.XmlField`. While it is possible to add instances of :class:`pydov.types.fields.WfsField` as well, this is generally not necessary as those can be used in the return_fields argument without being explicitly defined in the object type.
+To add an extra XML field to an existing main type, you can use its ``with_extra_fields`` method.  It takes a new list as its argument, containing the fields to be added. These should all be instances of :class:`pydov.types.fields.XmlField`. While it is possible to add instances of :class:`pydov.types.fields.WfsField` as well, this is generally not necessary as those can be used in the return_fields argument without being explicitly defined in the object type.
 
 For example, to add the field 'methode_xy' to the Boring datatype, you'd write::
 
@@ -131,25 +219,22 @@ For example, to add the field 'methode_xy' to the Boring datatype, you'd write::
   from pydov.types.boring import Boring
   from pydov.types.fields import XmlField
 
-  class MyBoring(Boring):
-      fields = Boring.extend_fields([
-          XmlField(name='methode_xy',
-                   source_xpath='/boring/xy/methode_opmeten',
-                   datatype='string')
-      ])
+  MyBoring = Boring.with_extra_fields([
+      XmlField(name='methode_xy',
+               source_xpath='/boring/ligging/metadata_locatiebepaling/methode',
+               datatype='string')
+  ])
 
   bs = BoringSearch(objecttype=MyBoring)
-  df = bs.search(query=PropertyIsEqualTo('gemeente', 'Gent'))
+  df = bs.search(max_features=10)
 
 
 Adding an XML field to a subtype
 --------------------------------
 
-To add an extra XML field to an existing subtype, you have to create a subclass of the subtype and extend its fields. You also have to subclass the main type in order to register your new subtype.
+To add an extra XML field to an existing subtype you can use its ``with_extra_fields`` method.  It takes a new list as its argument, containing the fields to be added. These should all be instances of :class:`pydov.types.fields.XmlField`. The source_xpath will be interpreted relative to the base subtypes rootpath.
 
-To extend the field list of the subtype, use its ``extend_fields`` class method, allowing the base subtype to be unaffected by your changes. It takes a new list as its argument, containing the fields to be added. These should all be instances of :class:`pydov.types.fields.XmlField`. The source_xpath will be interpreted relative to the base subtypes rootpath.
-
-To register your new subtype in a custom main type, subclass the existing main type and overwrite its ``subtypes`` field with a new list containing your new subtype.
+To register your new subtype in a custom main type, use its ``with_subtype`` method using your new subtype.
 
 For example, to add the field 'opmeter' to the Peilmeting subtype, you'd write::
 
@@ -157,24 +242,22 @@ For example, to add the field 'opmeter' to the Peilmeting subtype, you'd write::
   from pydov.types.grondwaterfilter import GrondwaterFilter, Peilmeting
   from pydov.types.fields import XmlField
 
-  class MyPeilmeting(Peilmeting):
-      fields = Peilmeting.extend_fields([
-          XmlField(name='opmeter',
-                   source_xpath='/opmeter/naam',
-                   datatype='string')
-      ])
+  MyPeilmeting = Peilmeting.with_extra_fields([
+      XmlField(name='opmeter',
+               source_xpath='/opmeter/naam',
+               datatype='string')
+  ])
 
-  class MyGrondwaterFilter(GrondwaterFilter):
-      subtypes = [MyPeilmeting]
-
-  fs = GrondwaterFilterSearch(objecttype=MyGrondwaterFilter)
-  df = fs.search(query=PropertyIsEqualTo('gemeente', 'Gent'))
+  fs = GrondwaterFilterSearch(
+    objecttype=GrondwaterFilter.with_subtype(MyPeilmeting)
+  )
+  df = fs.search(max_features=10)
 
 
 Adding a new subtype to a main type
 -----------------------------------
 
-To add a new subtype to an existing main type or, perhaps more likely, to replace the existing subtype of a main type, you have to specify the subtype and all of its fields. You also have to subclass the existing main type to register your subtype.
+To add a new subtype to an existing main type or, perhaps more likely, to replace the existing subtype of a main type, you have to specify the subtype and all of its fields. To register your new subtype in a custom main type, use its ``with_subtype`` method using your new subtype.
 
 Your new subtype should be a direct subclass of :class:`pydov.types.abstract.AbstractDovSubType` and should implement both the ``rootpath`` as well as the ``fields`` variables. The rootpath is the XPath expression of the root instances of this subtype in the XML document and should always start with ``.//``. There will be one instance of this subtype (and, consequently, one row in the output dataframe) for each element matched by this XPath expression.
 
@@ -197,14 +280,13 @@ Suppose you are not interested in the actual measurements from the CPT data but 
                    datatype='float'),
           XmlField(name='techniek',
                    source_xpath='/techniek',
-                   datatype='string')
+                   datatype='string'),
           XmlField(name='techniek_andere',
                    source_xpath='/techniek_andere',
                    datatype='string')
       ]
 
-  class MySondering(Sondering)
-      subtypes = [Technieken]
+  MySondering = Sondering.with_subtype(Technieken)
 
   ms = SonderingSearch(objecttype=MySondering)
-  df = ms.search(query=PropertyIsEqualTo('gemeente', 'Gent'))
+  df = ms.search(max_features=10)

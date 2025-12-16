@@ -4,7 +4,7 @@ import pandas as pd
 from owslib.fes2 import PropertyIsEqualTo
 
 from pydov.search.interpretaties import LithologischeBeschrijvingenSearch
-from pydov.types.fields import ReturnFieldList
+from pydov.search.fields import ReturnFieldList
 from pydov.types.interpretaties import LithologischeBeschrijvingen
 from tests.abstract import AbstractTestSearch
 
@@ -25,13 +25,14 @@ location_wfs_feature = \
 location_dov_xml = \
     'tests/data/types/interpretaties/lithologische_beschrijvingen' \
     '/lithologische_beschrijvingen.xml'
-location_xsd_base = \
-    'tests/data/types/interpretaties/lithologische_beschrijvingen/xsd_*.xml'
+location_codelists = \
+    'tests/data/types/interpretaties/lithologische_beschrijvingen'
 
 
 class TestLithologischeBeschrijvingenSearch(AbstractTestSearch):
 
     search_instance = LithologischeBeschrijvingenSearch()
+    search_class = LithologischeBeschrijvingenSearch
     datatype_class = LithologischeBeschrijvingen
 
     valid_query_single = PropertyIsEqualTo(propertyname='Proefnummer',

@@ -227,7 +227,7 @@ from datetime import datetime
 from importlib.metadata import version
 
 medium = ['MEDIUM']
-location = Within(Box(LowerLeftX,LowerLeftY,UpperRightX,UpperRightY))  # Bounding box of area of interest
+location = Within(Box(LowerLeftX,LowerLeftY,UpperRightX,UpperRightY,EPSG))  # Bounding box of area of interest
 
 rd = RequestPFASdata()
 
@@ -252,7 +252,7 @@ and also [restrict the number of WFS features returned](https://pydov.readthedoc
       ```python
       # Change in the basis request:
         medium = ['all']
-        location = Within(Box(15000, 150000, 270000, 250000))  # Bounding box Flanders
+        location = Within(Box(15000, 150000, 270000, 250000, epsg=31370))  # Bounding box Flanders
         save = True
       ```
       This results in one excel-file with 15 tabs. One for each dataset.
@@ -263,7 +263,7 @@ and also [restrict the number of WFS features returned](https://pydov.readthedoc
       ```python
     # Change in the basis request:
         medium = ['groundwater']
-        location = Within(Box(15000, 150000, 270000, 250000))  # Bounding box Flanders
+        location = Within(Box(15000, 150000, 270000, 250000, epsg=31370))  # Bounding box Flanders
         save = True
       ```
       This results in one excel-file with 3 tabs. One tab with the groundwater data from VMM,
@@ -275,7 +275,7 @@ and also [restrict the number of WFS features returned](https://pydov.readthedoc
       ```python
     # Change in the basis request:
         medium = ['soil', 'groundwater']
-        location = Within(Box(15000, 150000, 270000, 250000))  # Bounding box Flanders
+        location = Within(Box(15000, 150000, 270000, 250000, epsg=31370))  # Bounding box Flanders
         save = True
       ```
       This results in one excel-file with 5 tabs. One tab with the soil data from OVAM,
@@ -288,7 +288,7 @@ and also [restrict the number of WFS features returned](https://pydov.readthedoc
     ```python
    # Change in the basis request:
       medium = ['combined_groundwater']
-      location = Within(Box(15000, 150000, 270000, 250000))  # Bounding box Flanders
+      location = Within(Box(15000, 150000, 270000, 250000, epsg=31370))  # Bounding box Flanders
       save = True
     ```
     This results in one excel-file with one tab containing the groundwater data from all the sources (VMM, OVAM and Lantis).
@@ -300,7 +300,7 @@ and also [restrict the number of WFS features returned](https://pydov.readthedoc
     ```python
     # Change in the basis request:
         medium = ['all']
-        location = Within(Box(15000, 150000, 270000, 250000))  # Bounding box Flanders
+        location = Within(Box(15000, 150000, 270000, 250000, epsg=31370))  # Bounding box Flanders
 
     # Access data:
         df[0] # Biota_VMM
@@ -332,7 +332,7 @@ and also [restrict the number of WFS features returned](https://pydov.readthedoc
     ```python
     # Change in the basis request:
         medium = ['groundwater']
-        location = Within(Box(15000, 150000, 270000, 250000))  # Bounding box Flanders
+        location = Within(Box(15000, 150000, 270000, 250000, epsg=31370))  # Bounding box Flanders
 
     # Access data:
         df[0] # Groundwater_VMM
@@ -345,7 +345,7 @@ and also [restrict the number of WFS features returned](https://pydov.readthedoc
     ```python
     # Change in the basis request:
         medium = ['soil', 'groundwater']
-        location = Within(Box(15000, 150000, 270000, 250000))  # Bounding box Flanders
+        location = Within(Box(15000, 150000, 270000, 250000, epsg=31370))  # Bounding box Flanders
 
     # Access data:
         df[0] # Soil_OVAM
@@ -360,7 +360,7 @@ and also [restrict the number of WFS features returned](https://pydov.readthedoc
       ```python
     # Change in the basis request:
         medium = ['combined_groundwater']
-        location = Within(Box(15000, 150000, 270000, 250000))  # Bounding box Flanders
+        location = Within(Box(15000, 150000, 270000, 250000, epsg=31370))  # Bounding box Flanders
 
     # Access data:
         df[0] # combined_groundwater

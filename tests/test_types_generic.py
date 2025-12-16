@@ -30,6 +30,9 @@ class TestWfsTypeFactoryOpdracht(AbstractTestTypes):
     namespace = 'http://dov.vlaanderen.be/dov-pub/Opdrachten'
     pkey_base = None
 
+    sorted_subtypes = []
+    sorted_fieldsets = []
+
     field_names = []
     field_names_subtypes = None
     field_names_nosubtypes = []

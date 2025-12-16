@@ -5,7 +5,7 @@ from owslib.fes2 import PropertyIsEqualTo
 from pandas import DataFrame
 
 from pydov.search.interpretaties import GeotechnischeCoderingSearch
-from pydov.types.fields import ReturnFieldList
+from pydov.search.fields import ReturnFieldList
 from pydov.types.interpretaties import GeotechnischeCodering
 from tests.abstract import AbstractTestSearch
 
@@ -26,13 +26,14 @@ location_wfs_feature = \
 location_dov_xml = \
     'tests/data/types/interpretaties/geotechnische_codering' \
     '/geotechnische_codering.xml'
-location_xsd_base = \
-    'tests/data/types/interpretaties/geotechnische_codering/xsd_*.xml'
+location_codelists = \
+    'tests/data/types/interpretaties/geotechnische_codering'
 
 
 class TestGeotechnischeCoderingSearch(AbstractTestSearch):
 
     search_instance = GeotechnischeCoderingSearch()
+    search_class = GeotechnischeCoderingSearch
     datatype_class = GeotechnischeCodering
 
     valid_query_single = PropertyIsEqualTo(propertyname='Proefnummer',

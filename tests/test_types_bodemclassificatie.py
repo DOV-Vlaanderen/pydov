@@ -1,7 +1,7 @@
 """Module grouping tests for the pydov.types.bodemclassificatie module."""
 
 from pydov.types.bodemclassificatie import Bodemclassificatie
-from pydov.types.fields import ReturnFieldList
+from pydov.search.fields import ReturnFieldList
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes
 
@@ -17,6 +17,9 @@ class TestBodemclassificatie(AbstractTestTypes):
     datatype_class = Bodemclassificatie
     namespace = 'https://www.dov.vlaanderen.be/bodem'
     pkey_base = build_dov_url('data/')
+
+    sorted_subtypes = []
+    sorted_fieldsets = []
 
     field_names = [
         'pkey_bodemclassificatie', 'pkey_bodemlocatie', 'x', 'y', 'mv_mtaw',

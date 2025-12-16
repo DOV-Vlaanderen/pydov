@@ -2,10 +2,7 @@
 """Module containing the abstract search classes to retrieve DOV data."""
 
 from itertools import chain
-import datetime
 import math
-import warnings
-import re
 
 import owslib
 import owslib.fes2
@@ -14,151 +11,21 @@ from owslib.feature import get_schema
 from owslib.fes2 import FilterRequest
 from owslib.wfs import WebFeatureService
 import pandas as pd
-import numpy as np
 
 import pydov
-from pydov.types.fields import (_WfsInjectedField, GeometryReturnField,
-                                ReturnFieldList)
+from pydov.search.fields import (
+    FieldMetadata, FieldMetadataList, GeometryReturnField, ReturnFieldList)
+from pydov.types.fields import _WfsInjectedField
 from pydov.util import owsutil
-from pydov.util.dovutil import build_dov_url, get_xsd_schema
+from pydov.util.dovutil import build_dov_url
 from pydov.util.errors import (InvalidFieldError, InvalidSearchParameterError,
-                               LayerNotFoundError, WfsGetFeatureError,
-                               DataParseWarning)
+                               LayerNotFoundError, WfsGetFeatureError)
 from pydov.util.hooks import HookRunner
 from pydov.util.net import LocalSessionThreadPool
-
-# compile regex for matching datetime
-re_datetime = re.compile(
-    r'([0-9]{4}-[0-9]{2}-[0-9]{2}T'
-    r'[0-9]{2}:[0-9]{2}:[0-9]{2})'
-    r'(\.[0-9]+)?([\+\-][0-9]{2}:?[0-9]{2})?(Z?)')
+from pydov.util.notebook import HtmlFormatter
 
 
-class AbstractCommon(object):
-    """Class grouping methods common to AbstractSearch and
-    AbstractTypeCommon."""
-
-    @classmethod
-    def __strtobool(cls, val):
-        """Convert a string representation of truth to true (1) or false (0).
-
-        True values are 'y', 'yes', 't', 'true', 'on', and '1'; false values
-        are 'n', 'no', 'f', 'false', 'off', and '0'.  Raises ValueError if
-        'val' is anything else.
-
-        Parameters
-        ----------
-        val : str
-            String representation to convert to boolean.
-
-        Returns
-        -------
-        boolean
-            The converted boolean value.
-
-        Raises
-        ------
-        ValueError
-            If the string cannot be converted to a boolean value.
-        """
-        val = val.lower()
-        if val in ('y', 'yes', 't', 'true', 'on', '1'):
-            return True
-        elif val in ('n', 'no', 'f', 'false', 'off', '0'):
-            return False
-        else:
-            raise ValueError(
-                "Cannot convert truth value %r to boolean." % (val,))
-
-    @classmethod
-    def _typeconvert(cls, text, returntype):
-        """Parse the text to the given returntype.
-
-        Parameters
-        ----------
-        text : str
-           Text to convert
-        returntype : str
-            Parse the text to this output datatype. One of
-            `string`, `float`, `integer`, `date`, `datetime`, `boolean`.
-
-        Returns
-        -------
-        str or float or int or bool or datetime.date or datetime.datetime
-            Returns the parsed text converted to the type described by
-            `returntype`.
-
-        """
-        if returntype == 'string':
-            def typeconvert(x):
-                return u'' + (x.strip())
-        elif returntype == 'integer':
-            def typeconvert(x):
-                return int(x)
-        elif returntype == 'float':
-            def typeconvert(x):
-                return float(x)
-        elif returntype == 'date':
-            def typeconvert(x):
-                # Patch for Zulu-time issue of geoserver for WFS 1.1.0
-                if x.endswith('Z'):
-                    return datetime.datetime.strptime(x, '%Y-%m-%dZ').date() \
-                        + datetime.timedelta(days=1)
-                else:
-                    return datetime.datetime.strptime(x, '%Y-%m-%d').date()
-        elif returntype == 'datetime':
-            def typeconvert(x):
-                x_match = re_datetime.search(x)
-                if x_match is None:
-                    raise ValueError(f'Cannot parse datetime from value "{x}"')
-                x_datetime, x_millisecs, x_tz, x_zulu = x_match.groups()
-
-                fmt = '%Y-%m-%dT%H:%M:%S'
-                val = x_datetime
-
-                if x_millisecs is not None:
-                    x_millisecs = int(x_millisecs[1:])
-                    fmt += '.%f'
-                    val += f'.{x_millisecs:0>6}'
-
-                if x_tz is not None:
-                    fmt += '%z'
-                    val += x_tz
-
-                dtime = datetime.datetime.strptime(val, fmt)
-                if x_zulu == 'Z':
-                    dtime += datetime.timedelta(hours=1)
-                return dtime
-        elif returntype == 'boolean':
-            def typeconvert(x):
-                return cls.__strtobool(x)
-        elif returntype == 'geometry':
-            def typeconvert(x):
-                if isinstance(x, etree._Element):
-                    if owsutil.has_geom_support():
-                        import shapely.geometry
-                        import pygml
-                        return shapely.geometry.shape(
-                            pygml.parse(etree.tostring(x[0]).decode('utf8')))
-                    else:
-                        # this shouldn't happen
-                        return etree.tostring(x[0]).decode('utf8')
-                return np.nan
-        else:
-            def typeconvert(x):
-                return x
-
-        try:
-            return typeconvert(text)
-        except ValueError as e:
-            warnings.warn(
-                f"Failed to convert data to correct datatype: {e}. Resulting "
-                "dataframe will be incomplete.",
-                DataParseWarning)
-            return np.nan
-
-
-class AbstractSearch(AbstractCommon):
+class AbstractSearch(HtmlFormatter):
     """Abstract search class grouping methods common to all DOV search
     classes. Not to be instantiated or used directly."""
 
@@ -189,7 +56,20 @@ class AbstractSearch(AbstractCommon):
         self._wfs_max_features = None
         self._md_metadata = None
         self._fc_featurecatalogue = None
-        self._xsd_schemas = None
+
+    def _repr_html_(self):
+        """Get the HTML representation of this search class.
+
+        Returns
+        -------
+        str
+            HTML representation of this search class.
+        """
+        html = (f'<div class="description"><p>{self.get_description()}</p>'
+                '</div>')
+        html += (f'<div class="fields">{self.get_fields()._repr_html_()}</p>'
+                 '</div>')
+        return super()._repr_html_(html)
 
     def _get_wfs_endpoint(self):
         """Get the WFS endpoint URL to use for accessing the feature type.
@@ -258,13 +138,9 @@ class AbstractSearch(AbstractCommon):
                     self._fc_featurecatalogue = \
                         owsutil.get_remote_featurecatalogue(csw_url, fc_uuid)
 
-            if self._xsd_schemas is None:
-                self._xsd_schemas = self._get_remote_xsd_schemas()
-
             fields = self._build_fields(
                 self._wfs_schema,
-                self._fc_featurecatalogue,
-                self._xsd_schemas)
+                self._fc_featurecatalogue)
 
             for field in fields.values():
                 if field['name'] not in self._type.get_field_names(
@@ -275,8 +151,7 @@ class AbstractSearch(AbstractCommon):
 
             self._fields = self._build_fields(
                 self._wfs_schema,
-                self._fc_featurecatalogue,
-                self._xsd_schemas)
+                self._fc_featurecatalogue)
 
     def _get_layer(self):
         """Get the WFS metadata for the layer.
@@ -345,18 +220,6 @@ class AbstractSearch(AbstractCommon):
         wfs_layer = self._get_layer()
         return owsutil.get_remote_metadata(wfs_layer)
 
-    def _get_remote_xsd_schemas(self):
-        """Request and parse the remote XSD schemas associated with this type.
-
-        Returns
-        -------
-        list of etree.ElementTree
-            List of parsed XSD schemas associated with this type.
-
-        """
-        xsd_schemas = [get_xsd_schema(i) for i in self._type.get_xsd_schemas()]
-        return [etree.fromstring(i) for i in xsd_schemas if i is not None]
-
     def _get_csw_base_url(self):
         """Get the CSW base url for the remote metadata associated with the
         layer.
@@ -371,49 +234,7 @@ class AbstractSearch(AbstractCommon):
         wfs_layer = self._get_layer()
         return owsutil.get_csw_base_url(wfs_layer)
 
-    @classmethod
-    def _get_xsd_enum_values(cls, xsd_schemas, xml_field):
-        """Get the distinct enum values from XSD schemas for a given XML field.
-
-        Depending of the 'xsd_type' of the XML field, retrieve the distinct
-        enum values and definitions from the XSD schemas.
-
-        Parameters
-        ----------
-        xsd_schemas : list of etree.ElementTree
-            List of parsed XSD schemas.
-        xml_field : dict
-            Dictionary describing the XML field, including a 'xsd_type' key
-            linking the type to the enum type in (one of) the XSD schemas.
-
-        Returns
-        -------
-        values : dict
-            Dictionary containing the enum values as keys (in the datatype
-            of the XML field) and the definitions as values.
-
-        """
-        values = None
-        if xml_field.get('xsd_type', None):
-            values = {}
-            for schema in xsd_schemas:
-                tree_values = schema.findall(
-                    './/{{http://www.w3.org/2001/XMLSchema}}simpleType['
-                    '@name="{}"]/'
-                    '{{http://www.w3.org/2001/XMLSchema}}restriction/'
-                    '{{http://www.w3.org/2001/XMLSchema}}enumeration'.format(
-                        xml_field.get('xsd_type')))
-                for e in tree_values:
-                    value = cls._typeconvert(
-                        e.get('value'), xml_field.get('type'))
-                    values[value] = e.findtext(
-                        './{http://www.w3.org/2001/XMLSchema}annotation/{'
-                        'http://www.w3.org/2001/XMLSchema}documentation')
-            if len(values) == 0:
-                values = None
-        return values
-
-    def _build_fields(self, wfs_schema, feature_catalogue, xsd_schemas):
+    def _build_fields(self, wfs_schema, feature_catalogue):
         """Build the dictionary containing the metadata about the available
         fields.
 
@@ -494,9 +315,11 @@ class AbstractSearch(AbstractCommon):
             name = self._map_wfs_source_df.get(wfs_field, wfs_field)
 
             is_list = False
+            codelist = None
             for f in df_wfs_fields:
                 if f['name'] == name:
                     is_list = f['split_fn'] is not None
+                    codelist = f['codelist']
 
             field = {
                 'name': name,
@@ -516,8 +339,11 @@ class AbstractSearch(AbstractCommon):
                 field['definition'] = fc_field['definition']
                 field['notnull'] = fc_field['multiplicity'][0] > 0
 
-                if fc_field['values'] is not None:
-                    field['values'] = fc_field['values']
+                if fc_field['codelist'] is not None:
+                    field['codelist'] = fc_field['codelist']
+
+            if codelist is not None and not codelist.is_empty():
+                field['codelist'] = codelist.get_codelist()
 
             fields[name] = field
 
@@ -549,9 +375,9 @@ class AbstractSearch(AbstractCommon):
                 'cost': 10
             }
 
-            values = self._get_xsd_enum_values(xsd_schemas, xml_field)
-            if values is not None:
-                field['values'] = values
+            if xml_field['codelist'] is not None \
+                    and not xml_field['codelist'].is_empty():
+                field['codelist'] = xml_field['codelist'].get_codelist()
 
             fields[field['name']] = field
 
@@ -568,6 +394,10 @@ class AbstractSearch(AbstractCommon):
             }
             fields[field['name']] = field
 
+            if custom_field['codelist'] is not None \
+                    and not custom_field['codelist'].is_empty():
+                field['codelist'] = custom_field['codelist'].get_codelist()
+
         for custom_field in self._type.get_fields(
                 source=['custom_xml']).values():
             field = {
@@ -580,6 +410,10 @@ class AbstractSearch(AbstractCommon):
                 'cost': 10
             }
             fields[field['name']] = field
+
+            if custom_field['codelist'] is not None \
+                    and not custom_field['codelist'].is_empty():
+                field['codelist'] = custom_field['codelist'].get_codelist()
 
         return fields
 
@@ -816,6 +650,9 @@ class AbstractSearch(AbstractCommon):
             When a field that can only be used as a query parameter is used as
             a return field.
 
+            When a geometry field is referenced by name in the return fields,
+            instead of as instance of GeometryReturnField.
+
         """
         self._pre_search_validation(location, query, sort_by, return_fields,
                                     max_features)
@@ -858,6 +695,16 @@ class AbstractSearch(AbstractCommon):
                 geom_return_crs = f'EPSG:{geom_return_crs[0]}'
             else:
                 geom_return_crs = None
+
+            geom_fields = self.get_fields(type='geometry')
+            for f in return_fields:
+                if not isinstance(f, GeometryReturnField) \
+                        and f.name in geom_fields:
+                    raise InvalidFieldError(
+                        f"Cannot use field '{f.name}' of type 'geometry' in "
+                        "return_fields by name, use GeometryReturnField "
+                        f"instead, e.g. GeometryReturnField('{f.name}', "
+                        "epsg=31370).")
 
         extra_custom_fields = set()
         for custom_field in self._type.get_fields(
@@ -986,14 +833,30 @@ class AbstractSearch(AbstractCommon):
         wfs_layer = self._get_layer()
         return wfs_layer.abstract
 
-    def get_fields(self):
+    def get_fields(self, query=None, type=None, max_cost=None):
         """Get the metadata of the fields that are available.
+
+        Parameters
+        ----------
+        query : boolean, optional
+            Whether to only return fields that can be used in an attribute
+            query (True), fields that cannot be used in an attribute query
+            (False) or all fields (None, default).
+        type : str, optional
+            Whether to only return fields of a certain type. Possible values
+            are 'integer', 'float', 'string', 'date', 'datetime', 'boolean' and
+            'geometry'. Default is None, meaning fields of all types are
+            returned.
+        max_cost : int, optional
+            Whether to only return fields with a cost lower or equal to the
+            provided value. Default is None, meaning fields of all costs are
+            returned.
 
         Returns
         -------
-        fields : dict<str,dict>
-            Dictionary containing the metadata of the available fields,
-            where the metadata dictionary includes:
+        fields : pydov.search.fields.FieldMetadataList
+            List containing the metadata of the available fields, where each
+            field metadata includes:
 
             name (str)
                 The name of the field.
@@ -1020,12 +883,27 @@ class AbstractSearch(AbstractCommon):
 
             Optionally, it can contain:
 
-            values (list)
-                A list of possible values for this field.
+            codelist (list)
+                A list of valid values for this field, if such a list is
+                available. A codelist contains codes, labels and optionnally
+                definitions.
 
         """
         self._init_fields()
-        return self._fields
+
+        field_metadata = FieldMetadataList()
+        for field in self._fields.values():
+            if type is not None:
+                if field['type'] != type:
+                    continue
+            if query is not None:
+                if field['query'] != query:
+                    continue
+            if max_cost is not None:
+                if field['cost'] > max_cost:
+                    continue
+            field_metadata.add(FieldMetadata(field))
+        return field_metadata
 
     def search(self, location=None, query=None,
                sort_by=None, return_fields=None, max_features=None):

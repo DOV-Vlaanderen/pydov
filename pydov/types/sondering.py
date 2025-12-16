@@ -3,10 +3,15 @@
 including subtypes."""
 from pydov.types.abstract import AbstractDovSubType, AbstractDovType
 from pydov.types.fields import WfsField, XmlField
-from pydov.types.ligging import MvMtawField
+from pydov.util.dovutil import build_dov_url
+from pydov.util.codelists import XsdType
+from pydov.types.fields_custom import MvMtawField
 
 
 class Meetdata(AbstractDovSubType):
+    """Subtype listing the CPT measurement results."""
+
+    intended_for = ['Sondering']
 
     rootpath = './/sondering/sondeonderzoek/penetratietest/meetdata'
 
@@ -48,6 +53,42 @@ class Meetdata(AbstractDovSubType):
                  definition='Opgemeten waarde van de inclinatie, uitgedrukt '
                             'in graden.',
                  datatype='float')
+    ]
+
+
+class Techniek(AbstractDovSubType):
+    """Subtype listing the different techniques used to perform the CPT."""
+
+    intended_for = ['Sondering']
+
+    rootpath = './/sondering/sondeonderzoek/penetratietest/technieken'
+
+    fields = [
+        XmlField(name='techniek_diepte_van',
+                 source_xpath='/diepte_van',
+                 definition='Enkel van toepassing voor het plaatsen van '
+                            'voerbuizen - (code V) of het boren door een harde'
+                            ' laag (code B).',
+                 datatype='float'),
+        XmlField(name='techniek_diepte',
+                 source_xpath='/diepte_techniek',
+                 definition='Diepte waarop techniek toegepast werd.',
+                 datatype='float'),
+        XmlField(name='techniek',
+                 source_xpath='/techniek',
+                 definition='De gebruikte techniek.',
+                 datatype='string',
+                 codelist=XsdType(
+                     xsd_schema=build_dov_url(
+                         'xdov/schema/latest/xsd/kern/sondering/'
+                         'SonderingDataCodes.xsd'),
+                     typename='SondeerTechniekEnumType',
+                     datatype='string')),
+        XmlField(name='techniek_andere',
+                 source_xpath='/techniek_andere',
+                 definition="De gebruikte techniek (enkel van toepassing ' + \
+                    'indien de techniek = 'andere').",
+                 datatype='string')
     ]
 
 

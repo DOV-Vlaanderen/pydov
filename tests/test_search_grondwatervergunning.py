@@ -3,7 +3,7 @@ from owslib.fes2 import PropertyIsEqualTo
 from pandas import DataFrame
 
 from pydov.search.grondwatervergunning import GrondwaterVergunningSearch
-from pydov.types.fields import ReturnFieldList
+from pydov.search.fields import ReturnFieldList
 from pydov.types.grondwatervergunning import GrondwaterVergunning
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestSearch
@@ -19,12 +19,13 @@ location_wfs_getfeature = 'tests/data/types/grondwatervergunning/' \
 location_wfs_feature = \
     'tests/data/types/grondwatervergunning/feature.xml'
 location_dov_xml = None
-location_xsd_base = 'tests/data/types/grondwatervergunning/xsd_*.xml'
+location_codelists = 'tests/data/types/grondwatervergunning'
 
 
 class TestGrondwaterVergunningSearch(AbstractTestSearch):
 
     search_instance = GrondwaterVergunningSearch()
+    search_class = GrondwaterVergunningSearch
     datatype_class = GrondwaterVergunning
 
     valid_query_single = PropertyIsEqualTo(

@@ -1,6 +1,6 @@
 """Module grouping tests for the pydov.types.sondering module."""
 
-from pydov.types.fields import ReturnFieldList
+from pydov.search.fields import ReturnFieldList
 from pydov.types.sondering import Sondering
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes
@@ -16,6 +16,9 @@ class TestSondering(AbstractTestTypes):
     datatype_class = Sondering
     namespace = 'http://dov.vlaanderen.be/ocdov/dov-pub'
     pkey_base = build_dov_url('data/sondering/')
+
+    sorted_subtypes = ['Meetdata', 'Techniek']
+    sorted_fieldsets = []
 
     field_names = [
         'pkey_sondering', 'sondeernummer', 'x', 'y', 'mv_mtaw',

@@ -20,6 +20,7 @@ from pydov.util.location import (
 from owslib.etree import etree
 from pydov.util.owsutil import set_geometry_column
 from tests.abstract import clean_xml
+from unittest import mock
 
 
 class TestLocation(object):
@@ -27,10 +28,10 @@ class TestLocation(object):
 
     def test_gml_id_unique(self):
         """Test whether GML id's for two different locations are unique."""
-        box1 = Box(94720, 186910, 112220, 202870)
+        box1 = Box(94720, 186910, 112220, 202870, epsg=31370)
         id1 = box1.get_element().get('{http://www.opengis.net/gml/3.2}id')
 
-        box2 = Box(94721, 186911, 112221, 202871)
+        box2 = Box(94721, 186911, 112221, 202871, epsg=31370)
         id2 = box2.get_element().get('{http://www.opengis.net/gml/3.2}id')
 
         assert id1.startswith('pydov')
@@ -39,10 +40,10 @@ class TestLocation(object):
 
     def test_gml_id_stable(self):
         """Test whether GML id's for two equal locations are the same."""
-        box1 = Box(94720, 186910, 112220, 202870)
+        box1 = Box(94720, 186910, 112220, 202870, epsg=31370)
         id1 = box1.get_element().get('{http://www.opengis.net/gml/3.2}id')
 
-        box2 = Box(94720, 186910, 112220, 202870)
+        box2 = Box(94720, 186910, 112220, 202870, epsg=31370)
         id2 = box2.get_element().get('{http://www.opengis.net/gml/3.2}id')
 
         assert id1.startswith('pydov')
@@ -55,7 +56,7 @@ class TestLocation(object):
         Test whether the generated XML is correct.
 
         """
-        box = Box(94720, 186910, 112220, 202870)
+        box = Box(94720, 186910, 112220, 202870, epsg=31370)
         xml = box.get_element()
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
@@ -90,7 +91,7 @@ class TestLocation(object):
 
         """
         with pytest.raises(ValueError):
-            Box(94720, 202870, 186910, 112220)
+            Box(94720, 202870, 186910, 112220, epsg=31370)
 
     def test_box_invalid_wgs84(self):
         """Test the Box type with the wrong ordering of WGS84 coordinates.
@@ -101,13 +102,62 @@ class TestLocation(object):
         with pytest.raises(ValueError):
             Box(50.9850, 3.6214, 3.8071, 51.1270, epsg=4326)
 
+    def test_box_missing_epsg(self):
+        """Test the Box type when no CRS is given.
+
+        Test whether a TypeError is raised.
+
+        """
+        with pytest.raises(TypeError):
+            Box(94720, 186910, 112220, 202870)
+
+    def test_box_epsg_wrong_type(self):
+        """Test the Box type when epsg is not of type int.
+
+        Test whether a TypeError is raised.
+
+        """
+        with pytest.raises(TypeError):
+            Box(94720, 186910, 112220, 202870, epsg='EPSG:31370')
+
+    def test_box_invalid_epsg(self):
+        """Test the Box type when an invalid CRS is given.
+
+        Test whether a ValueError is raised.
+
+        """
+
+        with pytest.raises(ValueError):
+            Box(94720, 186910, 112220, 202870, epsg=313700)
+
+    def test_box_no_pyproj_invalid_epsg(self, mp_gml_id):
+        """Test the Box type when an invalid CRS is given,
+         but the optional pyproj dependency is not installed.
+
+        Test whether no ValueError is raised.
+
+        """
+
+        # Remove pyproj from sys.modules temporarily
+        with mock.patch.dict('sys.modules', {'pyproj': None}):
+            box = Box(94720, 186910, 112220, 202870, epsg=313700)
+
+            xml = box.get_element()
+            assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
+                '<gml:Envelope srsDimension="2" '
+                'srsName="http://www.opengis.net/gml/srs/epsg.xml#313700" '
+                'gml32:id="pydov.gmlid">'
+                '<gml:lowerCorner>94720.000000 186910.000000</gml:lowerCorner>'
+                '<gml:upperCorner>112220.000000 202870.000000'
+                '</gml:upperCorner></gml:Envelope>')
+
     def test_point(self, mp_gml_id):
         """Test the default Point type.
 
         Test whether the generated XML is correct.
 
         """
-        point = Point(110680, 202030)
+        point = Point(110680, 202030, epsg=31370)
         xml = point.get_element()
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
@@ -130,6 +180,53 @@ class TestLocation(object):
             'srsName="http://www.opengis.net/gml/srs/epsg.xml#4326" gml32:id='
             '"pydov.gmlid">'
             '<gml:pos>3.807100 51.127000</gml:pos></gml:Point>')
+
+    def test_point_missing_epsg(self):
+        """Test the Box type when no CRS is given.
+
+        Test whether a TypeError is raised.
+
+        """
+        with pytest.raises(TypeError):
+            Point(94720, 202870)
+
+    def test_point_epsg_wrong_type(self):
+        """Test the Point type when epsg is not of type int.
+
+        Test whether a TypeError is raised.
+
+        """
+        with pytest.raises(TypeError):
+            Point(94720, 202870, epsg='EPSG:31370')
+
+    def test_point_invalid_epsg(self):
+        """Test the Point type when an invalid CRS is given.
+
+        Test whether a ValueError is raised.
+
+        """
+        with pytest.raises(ValueError):
+            Point(94720, 202870, epsg=313700)
+
+    def test_point_no_pyproj_invalid_epsg(self, mp_gml_id):
+        """Test the Point type when an invalid CRS is given,
+         but the optional pyproj dependency is not installed.
+
+        Test whether no ValueError is raised.
+
+        """
+
+        # Remove pyproj from sys.modules temporarily
+        with mock.patch.dict('sys.modules', {'pyproj': None}):
+            point = Point(110680, 202030, epsg=313700)
+
+            xml = point.get_element()
+
+            assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
+                '<gml:Point srsDimension="2" '
+                'srsName="http://www.opengis.net/gml/srs/epsg.xml#313700"'
+                ' gml32:id="pydov.gmlid">'
+                '<gml:pos>110680.000000 202030.000000</gml:pos></gml:Point>')
 
     def test_gmlobject_element(self):
         """Test the GmlObject type with an etree.Element.
@@ -157,6 +254,55 @@ class TestLocation(object):
                 '195118.42837622 108636.150020818 '
                 '194960.844295764</gml:posList></gml:LinearRing></gml'
                 ':exterior></gml:Polygon>')
+
+    def test_gmlobject_element_no_srs(self):
+        """Test the GMLObject type when no CRS is given.
+
+        Test whether a ValueError is raised.
+
+        """
+        with open('tests/data/util/location/polygon_single_no_srs_name.gml',
+                  'r') as gmlfile:
+            gml = gmlfile.read()
+
+            gml_element = etree.fromstring(gml.encode('utf8'))
+            gml_element = gml_element.find(
+                './/{http://www.opengis.net/gml/3.2}Polygon')
+
+            with pytest.raises(ValueError):
+                GmlObject(gml_element)
+
+    def test_gmlobject_element_no_pyproj_no_srs(self):
+        """Test the GMLObject type when no CRS is given,
+         but the optional pyproj dependency is not installed.
+
+        Test whether no ValueError is raised.
+
+        """
+        with mock.patch.dict('sys.modules', {'pyproj': None}):
+            with open(
+                    'tests/data/util/location/'
+                    'polygon_single_invalid_srs_name.gml',
+                    'r') as gmlfile:
+                gml = gmlfile.read()
+
+                gml_element = etree.fromstring(gml.encode('utf8'))
+                gml_element = gml_element.find(
+                    './/{http://www.opengis.net/gml/3.2}Polygon')
+
+                gml_object = GmlObject(gml_element)
+
+                assert clean_xml(etree.tostring(
+                    gml_object.get_element()).decode('utf8')) == clean_xml(
+                    '<gml:Polygon '
+                    'srsName="urn:ogc:def:crs:EPSG::313700" gml:id='
+                    '"polygon_single_31370.geom.0"><gml:exterior><gml'
+                    ':LinearRing><gml:posList>'
+                    '108636.150020818 194960.844295764 '
+                    '108911.922161617 194291.111953824 109195.573506438 '
+                    '195118.42837622 108636.150020818 '
+                    '194960.844295764</gml:posList></gml:LinearRing></gml'
+                    ':exterior></gml:Polygon>')
 
     def test_gmlobject_bytes(self):
         """Test the GmlObject type with a GML string.
@@ -248,7 +394,7 @@ class TestBinarySpatialFilters(object):
         Test whether the generated XML is correct.
 
         """
-        equals = Equals(Point(150000, 150000))
+        equals = Equals(Point(150000, 150000, epsg=31370))
         equals.set_geometry_column('geom')
         xml = equals.toXML()
 
@@ -266,7 +412,7 @@ class TestBinarySpatialFilters(object):
         Test whether a RuntimeError is raised.
 
         """
-        equals = Equals(Point(150000, 150000))
+        equals = Equals(Point(150000, 150000, epsg=31370))
 
         with pytest.raises(RuntimeError):
             equals.toXML()
@@ -277,7 +423,7 @@ class TestBinarySpatialFilters(object):
         Test whether the generated XML is correct.
 
         """
-        disjoint = Disjoint(Box(94720, 186910, 112220, 202870))
+        disjoint = Disjoint(Box(94720, 186910, 112220, 202870, epsg=31370))
         disjoint.set_geometry_column('geom')
         xml = disjoint.toXML()
 
@@ -296,7 +442,7 @@ class TestBinarySpatialFilters(object):
         Test whether a RuntimeError is raised.
 
         """
-        disjoint = Disjoint(Point(150000, 150000))
+        disjoint = Disjoint(Point(150000, 150000, epsg=31370))
 
         with pytest.raises(RuntimeError):
             disjoint.toXML()
@@ -307,7 +453,7 @@ class TestBinarySpatialFilters(object):
         Test whether the generated XML is correct.
 
         """
-        touches = Touches(Box(94720, 186910, 112220, 202870))
+        touches = Touches(Box(94720, 186910, 112220, 202870, epsg=31370))
         touches.set_geometry_column('geom')
         xml = touches.toXML()
 
@@ -326,7 +472,7 @@ class TestBinarySpatialFilters(object):
         Test whether a RuntimeError is raised.
 
         """
-        touches = Touches(Point(150000, 150000))
+        touches = Touches(Point(150000, 150000, epsg=31370))
 
         with pytest.raises(RuntimeError):
             touches.toXML()
@@ -337,7 +483,7 @@ class TestBinarySpatialFilters(object):
         Test whether the generated XML is correct.
 
         """
-        within = Within(Box(94720, 186910, 112220, 202870))
+        within = Within(Box(94720, 186910, 112220, 202870, epsg=31370))
         within.set_geometry_column('geom')
         xml = within.toXML()
 
@@ -356,7 +502,7 @@ class TestBinarySpatialFilters(object):
         Test whether a RuntimeError is raised.
 
         """
-        within = Within(Box(94720, 186910, 112220, 202870))
+        within = Within(Box(94720, 186910, 112220, 202870, epsg=31370))
 
         with pytest.raises(RuntimeError):
             within.toXML()
@@ -367,7 +513,7 @@ class TestBinarySpatialFilters(object):
         Test whether the generated XML is correct.
 
         """
-        intersects = Intersects(Box(94720, 186910, 112220, 202870))
+        intersects = Intersects(Box(94720, 186910, 112220, 202870, epsg=31370))
         intersects.set_geometry_column('geom')
         xml = intersects.toXML()
 
@@ -387,7 +533,7 @@ class TestBinarySpatialFilters(object):
         Test whether a RuntimeError is raised.
 
         """
-        intersects = Intersects(Box(94720, 186910, 112220, 202870))
+        intersects = Intersects(Box(94720, 186910, 112220, 202870, epsg=31370))
 
         with pytest.raises(RuntimeError):
             intersects.toXML()
@@ -402,7 +548,7 @@ class TestLocationFilters(object):
         Test whether the generated XML is correct.
 
         """
-        withindistance = WithinDistance(Point(150000, 150000), 100)
+        withindistance = WithinDistance(Point(150000, 150000, 31370), 100)
         withindistance.set_geometry_column('geom')
         xml = withindistance.toXML()
 
@@ -421,8 +567,9 @@ class TestLocationFilters(object):
         Test whether the generated XML is correct.
 
         """
-        withindistance = WithinDistance(location=Point(150000, 150000),
-                                        distance=100, distance_unit='meter')
+        withindistance = WithinDistance(location=Point(
+            150000, 150000, epsg=31370),
+            distance=100, distance_unit='meter')
         withindistance.set_geometry_column('geom')
         xml = withindistance.toXML()
 
@@ -442,7 +589,7 @@ class TestLocationFilters(object):
         Test whether a RuntimeError is raised.
 
         """
-        withindistance = WithinDistance(Point(150000, 150000), 100)
+        withindistance = WithinDistance(Point(150000, 150000, epsg=31370), 100)
 
         with pytest.raises(RuntimeError):
             withindistance.toXML()
@@ -478,13 +625,15 @@ class TestLocationFilterExpressions(object):
         Test whether the generated XML is correct.
 
         """
-        point_and_box = And([WithinDistance(Point(150000, 150000), 100),
-                             Within(Box(94720, 186910, 112220, 202870))])
+        point_and_box = And([WithinDistance(
+            Point(150000, 150000, epsg=31370), 100),
+            Within(Box(94720, 186910, 112220, 202870, epsg=31370))])
         xml = set_geometry_column(point_and_box, 'geom')
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
-            '<fes:And><fes:DWithin><fes:ValueReference>geom</fes:ValueReference'
-            '><gml:Point srsDimension="2" '
+            '<fes:And><fes:DWithin><fes:ValueReference>geom'
+            '</fes:ValueReference>'
+            '<gml:Point srsDimension="2" '
             'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370" gml32:id='
             '"pydov.gmlid"><gml:pos>150000.000000 '
             '150000.000000</gml:pos></gml:Point><gml:Distance '
@@ -506,7 +655,7 @@ class TestLocationFilterExpressions(object):
         """
         box_or_box = Or([
             Intersects(Box(50.9850, 3.6214, 51.1270, 3.8071, epsg=4326)),
-            Within(Box(94720, 186910, 112220, 202870))])
+            Within(Box(94720, 186910, 112220, 202870, epsg=31370))])
         xml = set_geometry_column(box_or_box, 'geom')
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(
@@ -516,8 +665,8 @@ class TestLocationFilterExpressions(object):
             '"pydov.gmlid"><gml:lowerCorner>50.985000 '
             '3.621400</gml:lowerCorner><gml:upperCorner>51.127000 '
             '3.807100</gml:upperCorner></gml:Envelope></fes:Intersects><fes'
-            ':Within><fes:ValueReference>geom</fes:ValueReference><gml:Envelope '
-            'srsDimension="2" '
+            ':Within><fes:ValueReference>geom</fes:ValueReference>'
+            '<gml:Envelope srsDimension="2" '
             'srsName="http://www.opengis.net/gml/srs/epsg.xml#31370" gml32:id='
             '"pydov.gmlid"><gml:lowerCorner>94720.000000 '
             '186910.000000</gml:lowerCorner><gml:upperCorner>112220.000000 '
@@ -531,8 +680,9 @@ class TestLocationFilterExpressions(object):
         Test whether the generated XML is correct.
 
         """
-        point_and_box = And([Not([WithinDistance(Point(150000, 150000), 100)]),
-                             Within(Box(94720, 186910, 112220, 202870))])
+        point_and_box = And([Not([WithinDistance(
+            Point(150000, 150000, epsg=31370), 100)]),
+            Within(Box(94720, 186910, 112220, 202870, epsg=31370))])
         xml = set_geometry_column(point_and_box, 'geom')
 
         assert clean_xml(etree.tostring(xml).decode('utf8')) == clean_xml(

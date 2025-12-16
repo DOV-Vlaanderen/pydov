@@ -4,7 +4,7 @@ from shapely.geometry import Point
 
 from pydov.search.bodemclassificatie import BodemclassificatieSearch
 from pydov.types.bodemclassificatie import Bodemclassificatie
-from pydov.types.fields import ReturnFieldList
+from pydov.search.fields import ReturnFieldList
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestSearch
 
@@ -16,12 +16,13 @@ location_wfs_describefeaturetype = \
 location_wfs_getfeature = 'tests/data/types/bodemclassificatie/wfsgetfeature.xml'
 location_wfs_feature = 'tests/data/types/bodemclassificatie/feature.xml'
 location_dov_xml = 'tests/data/types/bodemclassificatie/bodemclassificatie.xml'
-location_xsd_base = 'tests/data/types/bodemclassificatie/xsd_*.xml'
+location_codelists = 'tests/data/types/bodemclassificatie'
 
 
 class TestBodemclassificatieSearch(AbstractTestSearch):
 
     search_instance = BodemclassificatieSearch()
+    search_class = BodemclassificatieSearch
     datatype_class = Bodemclassificatie
 
     valid_query_single = PropertyIsEqualTo(

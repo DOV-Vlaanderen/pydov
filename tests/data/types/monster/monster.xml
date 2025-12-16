@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns4:dov-schema xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns4="http://kern.schemas.dov.vlaanderen.be" xsi:schemaLocation="http://kern.schemas.dov.vlaanderen.be https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/dov.xsd">
+    <monster>
+        <identificator>
+            <identificator>472/21/2/M1</identificator>
+            <toegekend_door>DATABEHEERDER</toegekend_door>
+        </identificator>
+        <identificator>
+            <identificator>2017-143287</identificator>
+            <toegekend_door>DOV</toegekend_door>
+        </identificator>
+        <type>Enkelvoudig monster</type>
+        <bemonsterdObject>
+            <objecttype>BORING</objecttype>
+            <naam>B/472/21/2</naam>
+            <permkey>2003-001986</permkey>
+        </bemonsterdObject>
+        <bemonsteringsmethode>
+            <bemonsteringsinstrument>https://data.bodemenondergrond.vlaanderen.be/id/concept/bemonsteringsinstrument/avegaarbooras</bemonsteringsinstrument>
+            <monsternemer>
+                <naam>ABO</naam>
+            </monsternemer>
+        </bemonsteringsmethode>
+        <monstertype>https://data.bodemenondergrond.vlaanderen.be/id/concept/bemonsteringstype/geroerd</monstertype>
+        <bemonsteringsplaats>
+            <van>5.2</van>
+            <tot>5.5</tot>
+        </bemonsteringsplaats>
+        <bemonsteringstijdstip>
+            <datum>2003-03-25</datum>
+        </bemonsteringstijdstip>
+        <materiaalklasse>https://data.bodemenondergrond.vlaanderen.be/id/concept/materiaalklasse/sediment</materiaalklasse>
+    </monster>
+</ns4:dov-schema>

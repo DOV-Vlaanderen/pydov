@@ -1,6 +1,6 @@
 """Module grouping tests for the
 pydov.types.interpretaties.FormeleStratigrafie class."""
-from pydov.types.fields import ReturnFieldList
+from pydov.search.fields import ReturnFieldList
 from pydov.types.interpretaties import FormeleStratigrafie
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes
@@ -21,6 +21,9 @@ class TestFormeleStratigrafie(AbstractTestTypes):
     datatype_class = FormeleStratigrafie
     namespace = 'http://dov.vlaanderen.be/ocdov/interpretaties'
     pkey_base = build_dov_url('data/interpretatie/')
+
+    sorted_subtypes = ['FormeleStratigrafieLaag']
+    sorted_fieldsets = []
 
     field_names = [
         'pkey_interpretatie', 'pkey_boring',

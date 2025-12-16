@@ -1,15 +1,18 @@
 # -*- coding: utf-8 -*-
 """Module grouping utility functions for OWS services."""
+import datetime
 import warnings
 from urllib.parse import urlparse
 import re
 
+import numpy as np
 from owslib.etree import etree
 from owslib.fes2 import BinaryLogicOpType, UnaryLogicOpType
 from owslib.namespaces import Namespaces
 from owslib.util import nspath_eval
 
 import pydov
+from pydov.util.errors import DataParseWarning
 from pydov.util.net import SessionFactory
 
 from .hooks import HookRunner
@@ -28,6 +31,12 @@ def __get_namespaces():
 __namespaces = __get_namespaces()
 
 re_epsg = re.compile(r'^EPSG:[1-9]+[0-9]*')
+
+# compile regex for matching datetime
+re_datetime = re.compile(
+    r'([0-9]{4}-[0-9]{2}-[0-9]{2}T'
+    r'[0-9]{2}:[0-9]{2}:[0-9]{2})'
+    r'(\.[0-9]+)?([\+\-][0-9]{2}:?[0-9]{2})?(Z?)')
 
 
 def has_geom_support():
@@ -188,6 +197,8 @@ def get_remote_featurecatalogue(csw_url, fc_uuid):
         infinate value.
 
     """
+    from pydov.util.codelists import CodeListItem, FeatureCatalogueValues
+
     fc_url = csw_url + '?Service=CSW&Request=GetRecordById&Version=2.0.2' \
                        '&outputSchema=http://www.isotc211.org/2005/gfc' \
                        '&elementSetName=full&id=' + fc_uuid
@@ -235,23 +246,31 @@ def get_remote_featurecatalogue(csw_url, fc_uuid):
             multiplicity_upper = 'Inf'
 
         values = {}
+        codelist = FeatureCatalogueValues()
+        def clean(x): return x.strip() if x.strip() != '' else None
+
         for lv in a.findall(nspath_eval('gfc:listedValue/gfc:FC_ListedValue',
                                         __namespaces)):
-            label = lv.findtext(nspath_eval('gfc:label/gco:CharacterString',
-                                            __namespaces))
-            definition = lv.findtext(nspath_eval(
-                'gfc:definition/gco:CharacterString', __namespaces))
+            code = clean(
+                lv.findtext(nspath_eval('gfc:code/gco:CharacterString',
+                                        __namespaces)) or '')
+            label = clean(
+                lv.findtext(nspath_eval('gfc:label/gco:CharacterString',
+                                        __namespaces)) or '')
+            definition = clean(
+                lv.findtext(nspath_eval(
+                    'gfc:definition/gco:CharacterString', __namespaces)) or '')
 
             if label is not None:
-                label = label.strip()
-                if label != '':
-                    if definition is not None:
-                        values[label] = definition.strip() if \
-                            definition.strip() != '' else None
-                    else:
-                        values[label] = None
+                values[label] = definition
+
+            if code is None:
+                code = label
+
+            codelist.add_item(CodeListItem(code, label, definition))
 
         attr['values'] = values if len(values) > 0 else None
+        attr['codelist'] = codelist if len(codelist.items) > 0 else None
 
         attr['multiplicity'] = (multiplicity_lower, multiplicity_upper)
         attributes[name] = attr
@@ -548,3 +567,122 @@ def get_url(url):
     HookRunner.execute_meta_received(url, response)
 
     return response
+
+
+def _strtobool(val):
+    """Convert a string representation of truth to true (1) or false (0).
+
+    True values are 'y', 'yes', 't', 'true', 'on', and '1'; false values
+    are 'n', 'no', 'f', 'false', 'off', and '0'.  Raises ValueError if
+    'val' is anything else.
+
+    Parameters
+    ----------
+    val : str
+        String representation to convert to boolean.
+
+    Returns
+    -------
+    boolean
+        The converted boolean value.
+
+    Raises
+    ------
+    ValueError
+        If the string cannot be converted to a boolean value.
+    """
+    val = val.lower()
+    if val in ('y', 'yes', 't', 'true', 'on', '1'):
+        return True
+    elif val in ('n', 'no', 'f', 'false', 'off', '0'):
+        return False
+    else:
+        raise ValueError(
+            "Cannot convert truth value %r to boolean." % (val,))
+
+
+def typeconvert(text, returntype):
+    """Parse the text to the given returntype.
+
+    Parameters
+    ----------
+    text : str
+        Text to convert
+    returntype : str
+        Parse the text to this output datatype. One of
+        `string`, `float`, `integer`, `date`, `datetime`, `boolean`.
+
+    Returns
+    -------
+    str or float or int or bool or datetime.date or datetime.datetime
+        Returns the parsed text converted to the type described by
+        `returntype`.
+
+    """
+    if returntype == 'string':
+        def typeconvert(x):
+            return u'' + (x.strip())
+    elif returntype == 'integer':
+        def typeconvert(x):
+            return int(x)
+    elif returntype == 'float':
+        def typeconvert(x):
+            return float(x)
+    elif returntype == 'date':
+        def typeconvert(x):
+            # Patch for Zulu-time issue of geoserver for WFS 1.1.0
+            if x.endswith('Z'):
+                return datetime.datetime.strptime(x, '%Y-%m-%dZ').date() \
+                    + datetime.timedelta(days=1)
+            else:
+                return datetime.datetime.strptime(x, '%Y-%m-%d').date()
+    elif returntype == 'datetime':
+        def typeconvert(x):
+            x_match = re_datetime.search(x)
+            if x_match is None:
+                raise ValueError(f'Cannot parse datetime from value "{x}"')
+            x_datetime, x_millisecs, x_tz, x_zulu = x_match.groups()
+
+            fmt = '%Y-%m-%dT%H:%M:%S'
+            val = x_datetime
+
+            if x_millisecs is not None:
+                x_millisecs = int(x_millisecs[1:])
+                fmt += '.%f'
+                val += f'.{x_millisecs:0>6}'
+
+            if x_tz is not None:
+                fmt += '%z'
+                val += x_tz
+
+            dtime = datetime.datetime.strptime(val, fmt)
+            if x_zulu == 'Z':
+                dtime += datetime.timedelta(hours=1)
+            return dtime
+    elif returntype == 'boolean':
+        def typeconvert(x):
+            return _strtobool(x)
+    elif returntype == 'geometry':
+        def typeconvert(x):
+            if isinstance(x, etree._Element):
+                if has_geom_support():
+                    import shapely.geometry
+                    import pygml
+                    return shapely.geometry.shape(
+                        pygml.parse(etree.tostring(x[0]).decode('utf8')))
+                else:
+                    # this shouldn't happen
+                    return etree.tostring(x[0]).decode('utf8')
+            return np.nan
+    else:
+        def typeconvert(x):
+            return x
+
+    try:
+        return typeconvert(text)
+    except ValueError as e:
+        warnings.warn(
+            f"Failed to convert data to correct datatype: {e}. Resulting "
+            "dataframe will be incomplete.",
+            DataParseWarning)
+        return np.nan

@@ -12,8 +12,9 @@ from owslib.fes2 import PropertyIsEqualTo, SortBy, SortProperty
 from pandas import DataFrame
 
 import pydov
-from pydov.types.abstract import AbstractField
-from pydov.types.fields import ReturnField, ReturnFieldList
+from pydov.types.abstract import AbstractDovType, AbstractField
+from pydov.search.fields import FieldMetadata, FieldMetadataList, ReturnField, ReturnFieldList
+from pydov.util.codelists import AbstractCodeList
 from pydov.util.dovutil import build_dov_url
 from pydov.util.errors import InvalidFieldError
 from pydov.util.location import Box, Within
@@ -109,12 +110,14 @@ class AbstractTestSearch(object):
     ----------
     search_instance : pydov.search.abstract.AbstractSearch
         Instance of subclass of this type used for searching.
+    search_class : pydov.search.abstract.AbstractSearch
+        Class reference for the search class.
     datatype_class : pydov.types.abstract.AbstractDovType
-            Class reference for the corresponding datatype.
+        Class reference for the corresponding datatype.
     valid_query_single : owslib.fes2.OgcExpression
         OGC expression of a valid query returning a single result.
     inexistent_field : str
-            The name of an inexistent field.
+        The name of an inexistent field.
     wfs_field : str
         The name of a WFS field.
     xml_field : str
@@ -139,37 +142,22 @@ class AbstractTestSearch(object):
         datatype = self.datatype_class
         self.search_instance.__class__(objecttype=datatype)
 
-    def test_get_fields(self, mp_wfs, mp_get_schema,
-                        mp_remote_describefeaturetype, mp_remote_md,
-                        mp_remote_fc, mp_remote_xsd):
-        """Test the get_fields method.
-
-        Test whether the returned fields match the format specified
+    def validate_get_fields(self, fields):
+        """Validate whether the returned fields match the format specified
         in the documentation.
 
         Parameters
         ----------
-        mp_wfs : pytest.fixture
-            Monkeypatch the call to the remote GetCapabilities request.
-        mp_get_schema : pytest.fixture
-            Monkeypatch the call to a remote OWSLib schema.
-        mp_remote_describefeaturetype : pytest.fixture
-            Monkeypatch the call to a remote DescribeFeatureType.
-        mp_remote_md : pytest.fixture
-            Monkeypatch the call to get the remote metadata.
-        mp_remote_fc : pytest.fixture
-            Monkeypatch the call to get the remote feature catalogue.
-
+        fields : dict
+            Output of get_fields method to validate.
         """
-        fields = self.search_instance.get_fields()
-
-        assert isinstance(fields, dict)
+        assert isinstance(fields, FieldMetadataList)
 
         for field in fields:
             assert isinstance(field, str)
 
             f = fields[field]
-            assert isinstance(f, dict)
+            assert isinstance(f, FieldMetadata)
 
             assert 'name' in f
             assert isinstance(f['name'], str)
@@ -196,33 +184,236 @@ class AbstractTestSearch(object):
             assert isinstance(f['cost'], int)
             assert f['cost'] > 0
 
-            if 'values' in f:
+            if 'codelist' in f:
                 assert sorted(f.keys()) == [
-                    'cost', 'definition', 'list', 'name', 'notnull', 'query', 'type',
-                    'values']
+                    'codelist', 'cost', 'definition', 'list', 'name', 'notnull',
+                    'query', 'type']
 
-                assert isinstance(f['values'], dict)
+                assert isinstance(f['codelist'], AbstractCodeList)
 
-                for v in f['values'].keys():
-                    assert isinstance(f['values'][v], str) or f[
-                        'values'][v] is None
+                for code in f['codelist']:
+                    v = f['codelist'].get(code)
 
                     if f['type'] == 'string':
-                        assert isinstance(v, str)
+                        assert isinstance(v.code, str)
                     elif f['type'] == 'float':
-                        assert isinstance(v, float)
+                        assert isinstance(v.code, float)
                     elif f['type'] == 'integer':
-                        assert isinstance(v, int)
+                        assert isinstance(v.code, int)
                     elif f['type'] == 'date':
-                        assert isinstance(v, datetime.date)
+                        assert isinstance(v.code, datetime.date)
                     elif f['type'] == 'datetime':
-                        assert isinstance(v, datetime.datetime)
+                        assert isinstance(v.code, datetime.datetime)
                     elif f['type'] == 'boolean':
-                        assert isinstance(v, bool)
+                        assert isinstance(v.code, bool)
+
+                    assert v.label is not None
+                    assert isinstance(v.label, str)
+
+                    assert v.definition is None or isinstance(
+                        v.definition, str)
             else:
                 assert sorted(f.keys()) == [
                     'cost', 'definition', 'list', 'name', 'notnull',
                     'query', 'type']
+
+    def test_get_fields(self, mp_wfs, mp_get_schema,
+                        mp_remote_describefeaturetype, mp_remote_md,
+                        mp_remote_fc, mp_remote_codelist):
+        """Test the get_fields method.
+
+        Test whether the returned fields match the format specified
+        in the documentation.
+
+        Parameters
+        ----------
+        mp_wfs : pytest.fixture
+            Monkeypatch the call to the remote GetCapabilities request.
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType.
+        mp_remote_md : pytest.fixture
+            Monkeypatch the call to get the remote metadata.
+        mp_remote_fc : pytest.fixture
+            Monkeypatch the call to get the remote feature catalogue.
+        mp_remote_codelist : pytest.fixture
+            Monkeypatch the call to get remote codelists.
+
+        """
+        fields = self.search_instance.get_fields()
+        self.validate_get_fields(fields)
+
+    def test_get_fields_with_extra_fields(
+            self, mp_wfs, mp_get_schema,
+            mp_remote_describefeaturetype, mp_remote_md,
+            mp_remote_fc, mp_remote_codelist):
+        """Test the get_fields method with extra fieldsets.
+
+        Test whether the returned fields match the format specified
+        in the documentation and the extra fields are included.
+
+        Parameters
+        ----------
+        mp_wfs : pytest.fixture
+            Monkeypatch the call to the remote GetCapabilities request.
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType.
+        mp_remote_md : pytest.fixture
+            Monkeypatch the call to get the remote metadata.
+        mp_remote_fc : pytest.fixture
+            Monkeypatch the call to get the remote feature catalogue.
+        mp_remote_codelist : pytest.fixture
+            Monkeypatch the call to get remote codelists.
+
+        """
+        if len(self.datatype_class.get_fieldsets()) > 0:
+            for fs in self.datatype_class.get_fieldsets().values():
+
+                search_instance = self.search_class(
+                    objecttype=self.datatype_class.with_extra_fields(
+                        fs['class'])
+                )
+                fields = search_instance.get_fields()
+
+                self.validate_get_fields(fields)
+
+                for field in fs['class'].get_field_names():
+                    assert field in fields
+
+    def test_get_fields_with_subtype(
+        self, mp_wfs, mp_get_schema,
+            mp_remote_describefeaturetype, mp_remote_md,
+            mp_remote_fc, mp_remote_codelist):
+        """Test the get_fields method with other subtypes.
+
+        Test whether the returned fields match the format specified
+        in the documentation and the subtype fields are included.
+
+        Parameters
+        ----------
+        mp_wfs : pytest.fixture
+            Monkeypatch the call to the remote GetCapabilities request.
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType.
+        mp_remote_md : pytest.fixture
+            Monkeypatch the call to get the remote metadata.
+        mp_remote_fc : pytest.fixture
+            Monkeypatch the call to get the remote feature catalogue.
+        mp_remote_codelist : pytest.fixture
+            Monkeypatch the call to get remote codelists.
+
+        """
+        if len(self.datatype_class.get_subtypes()) > 0:
+            for st in self.datatype_class.get_subtypes().values():
+
+                search_instance = self.search_class(
+                    objecttype=self.datatype_class.with_subtype(
+                        st['class'])
+                )
+                fields = search_instance.get_fields()
+
+                self.validate_get_fields(fields)
+
+                for field in st['class'].get_field_names():
+                    assert field in fields
+
+    def test_get_fields_query_only(self, mp_wfs, mp_get_schema,
+                                   mp_remote_describefeaturetype, mp_remote_md,
+                                   mp_remote_fc, mp_remote_codelist):
+        """Test the get_fields method with the query parameter.
+
+        Test whether the returned fields match the query parameter.
+
+        Parameters
+        ----------
+        mp_wfs : pytest.fixture
+            Monkeypatch the call to the remote GetCapabilities request.
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType.
+        mp_remote_md : pytest.fixture
+            Monkeypatch the call to get the remote metadata.
+        mp_remote_fc : pytest.fixture
+            Monkeypatch the call to get the remote feature catalogue.
+        mp_remote_codelist : pytest.fixture
+            Monkeypatch the call to get remote codelists.
+
+        """
+        fields = self.search_instance.get_fields(query=True)
+
+        for field in fields:
+            print(field)
+            print(fields[field])
+            print(fields[field]['query'])
+            assert fields[field]['query']
+
+    def test_get_fields_with_type(self, mp_wfs, mp_get_schema,
+                                  mp_remote_describefeaturetype, mp_remote_md,
+                                  mp_remote_fc, mp_remote_codelist):
+        """Test the get_fields method with the type parameter.
+
+        Test whether the returned fields match the type parameter.
+
+        Parameters
+        ----------
+        mp_wfs : pytest.fixture
+            Monkeypatch the call to the remote GetCapabilities request.
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType.
+        mp_remote_md : pytest.fixture
+            Monkeypatch the call to get the remote metadata.
+        mp_remote_fc : pytest.fixture
+            Monkeypatch the call to get the remote feature catalogue.
+        mp_remote_codelist : pytest.fixture
+            Monkeypatch the call to get remote codelists.
+
+        """
+        for t in ['string', 'float', 'integer', 'date', 'datetime',
+                  'boolean', 'geometry']:
+            fields = self.search_instance.get_fields(type=t)
+
+            for field in fields:
+                print(field)
+                print(fields[field])
+                print(t, fields[field]['type'])
+                assert fields[field]['type'] == t
+
+    def test_get_fields_with_max_cost(
+        self, mp_wfs, mp_get_schema,
+            mp_remote_describefeaturetype, mp_remote_md,
+            mp_remote_fc, mp_remote_codelist):
+        """Test the get_fields method with the max_cost parameter.
+
+        Test whether the returned fields match the max_cost parameter.
+
+        Parameters
+        ----------
+        mp_wfs : pytest.fixture
+            Monkeypatch the call to the remote GetCapabilities request.
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType.
+        mp_remote_md : pytest.fixture
+            Monkeypatch the call to get the remote metadata.
+        mp_remote_fc : pytest.fixture
+            Monkeypatch the call to get the remote feature catalogue.
+        mp_remote_codelist : pytest.fixture
+            Monkeypatch the call to get remote codelists.
+
+        """
+        fields = self.search_instance.get_fields(max_cost=1)
+
+        for field in fields:
+            assert fields[field]['cost'] <= 1
 
     def test_search_both_location_query(self, mp_get_schema,
                                         mp_remote_describefeaturetype,
@@ -242,7 +433,7 @@ class AbstractTestSearch(object):
 
         """
         df = self.search_instance.search(
-            location=Within(Box(1, 2, 3, 4)),
+            location=Within(Box(1, 2, 3, 4, epsg=31370)),
             query=self.valid_query_single,
             return_fields=self.valid_returnfields)
 
@@ -427,6 +618,29 @@ class AbstractTestSearch(object):
                 query=self.valid_query_single,
                 return_fields=self.valid_returnfields[0])
 
+    def test_search_geometry_field_without_class(self):
+        """Test the search method with the query parameter and a geometry
+        return field.
+
+        Test whether an InvalidFieldError is raised, as geometry fields need
+        to be specified using GeometryReturnField (with CRS).
+
+        """
+        geom_fields = [
+            f for f in self.search_instance.get_fields(type='geometry')]
+
+        if len(geom_fields) < 1:
+            return
+
+        return_fields = list(self.valid_returnfields)
+        return_fields.append(geom_fields[0])
+
+        with pytest.raises(InvalidFieldError):
+            self.search_instance.search(
+                query=self.valid_query_single,
+                return_fields=return_fields
+            )
+
     def test_search_query_wrongfield(self):
         """Test the search method with the query parameter using an
         inexistent query field.
@@ -596,56 +810,58 @@ class AbstractTestSearch(object):
         self.search_instance.search(
             query=Join(df1, self.df_default_columns[0]))
 
-    def test_get_fields_xsd_values(self, mp_remote_xsd):
-        """Test the result of get_fields when the XML field has an XSD type.
+    def test_get_fields_codelist(self, mp_remote_codelist):
+        """Test the result of get_fields when the XML field has an
+        associated codelist.
 
         Test whether the output from get_fields() returns the values from
-        the XSD.
+        the codelist.
 
         Parameters
         ----------
-        mp_remote_xsd : pytest.fixture
-            Monkeypatch the call to get XSD schemas.
+        mp_remote_codelist : pytest.fixture
+            Monkeypatch the call to get remote codelists.
 
         """
-        xsd_schemas = self.datatype_class.get_xsd_schemas()
+        codelists = self.datatype_class.get_codelists()
 
-        if len(xsd_schemas) > 0:
-            xml_fields = self.datatype_class.get_fields(source='xml')
+        if len(codelists) > 0:
+            datatype_fields = self.datatype_class.get_fields()
             fields = self.search_instance.get_fields()
-            for f in xml_fields.values():
-                if 'xsd_type' in f:
-                    assert 'values' in fields[f['name']]
-                    assert isinstance(fields[f['name']]['values'], dict)
+            for f in datatype_fields.values():
+                if 'codelist' in f and f['codelist'] is not None:
+                    assert 'codelist' in fields[f['name']]
+                    assert isinstance(fields[f['name']]['codelist'],
+                                      AbstractCodeList)
 
-    def test_get_fields_no_xsd(self):
-        """Test whether no XML fields have an XSD type when no XSD schemas
+    def test_get_fields_no_codelist(self):
+        """Test whether no XML fields have a codelist when no codelists
         are available."""
-        xsd_schemas = self.datatype_class.get_xsd_schemas()
+        codelists = self.datatype_class.get_codelists()
 
-        if len(xsd_schemas) == 0:
-            xml_fields = self.datatype_class.get_fields(source='xml')
-            for f in xml_fields.values():
-                assert 'xsd_type' not in f
+        if len(codelists) == 0:
+            datatype_fields = self.datatype_class.get_fields()
+            for f in datatype_fields.values():
+                assert 'codelist' not in f or f['codelist'] is None
 
-    def test_get_fields_xsd_enums(self):
-        """Test whether at least one XML field has an XSD type when there
-        are XSD schemas available.
+    def test_get_fields_codelist_values(self):
+        """Test whether at least one field has an associated codelist when there
+        are codelists available.
 
-        Make sure XSD schemas are only listed (and downloaded) when they are
+        Make sure codelists are only listed (and downloaded) when they are
         needed.
 
         """
-        xsd_schemas = self.datatype_class.get_xsd_schemas()
+        codelists = self.datatype_class.get_codelists()
 
-        xsd_type_count = 0
+        codelist_field_count = 0
 
-        if len(xsd_schemas) > 0:
-            xml_fields = self.datatype_class.get_fields(source='xml')
-            for f in xml_fields.values():
-                if 'xsd_type' in f:
-                    xsd_type_count += 1
-            assert xsd_type_count > 0
+        if len(codelists) > 0:
+            datatype_fields = self.datatype_class.get_fields()
+            for f in datatype_fields.values():
+                if 'codelist' in f and f['codelist'] is not None:
+                    codelist_field_count += 1
+            assert codelist_field_count > 0
 
 
 class AbstractTestTypes(object):
@@ -673,10 +889,14 @@ class AbstractTestTypes(object):
     valid_returnfields : tuple of str
         A tuple of valid return fields from the main type.
     valid_returnfields_subtype : typle of str
-            A tuple containing valid return fields, including fields from a
-            subtype.
+        A tuple containing valid return fields, including fields from a
+        subtype.
     inexistent_field : str
-            The name of an inexistent field.
+        The name of an inexistent field.
+    sorted_subtypes : list of str
+        Sorted list of all available subtypes (names) for this type.
+    sorted_fieldsets : list of str
+        Sorted list of all available fieldsets (names) for this type.
 
     """
 
@@ -814,11 +1034,12 @@ class AbstractTestTypes(object):
             if field['source'] == 'wfs':
                 if 'wfs_injected' in field.keys():
                     assert sorted(field.keys()) == [
-                        'name', 'source', 'sourcefield', 'split_fn', 'type',
-                        'wfs_injected']
+                        'codelist', 'name', 'source', 'sourcefield',
+                        'split_fn', 'type', 'wfs_injected']
                 else:
                     assert sorted(field.keys()) == [
-                        'name', 'source', 'sourcefield', 'split_fn', 'type']
+                        'codelist', 'name', 'source', 'sourcefield',
+                        'split_fn', 'type']
             elif field['source'] == 'xml':
                 assert 'definition' in field
                 assert isinstance(field['definition'], str)
@@ -826,15 +1047,9 @@ class AbstractTestTypes(object):
                 assert 'notnull' in field
                 assert isinstance(field['notnull'], bool)
 
-                if 'xsd_type' in field:
-                    assert sorted(field.keys()) == [
-                        'definition', 'name', 'notnull', 'source',
-                        'sourcefield', 'split_fn', 'type', 'xsd_schema',
-                        'xsd_type']
-                else:
-                    assert sorted(field.keys()) == [
-                        'definition', 'name', 'notnull', 'source',
-                        'sourcefield', 'split_fn', 'type']
+                assert sorted(field.keys()) == [
+                    'codelist', 'definition', 'name', 'notnull', 'source',
+                    'sourcefield', 'split_fn', 'type']
 
     def test_get_fields_nosubtypes(self):
         """Test the get_fields method not including subtypes.
@@ -921,9 +1136,10 @@ class AbstractTestTypes(object):
 
             for value, field in zip(record, fields):
                 if field['split_fn'] is not None:
-                    assert isinstance(value, list)
-                    for v in value:
-                        _test_data_type(field, v)
+                    assert isinstance(value, list) or np.isnan(value)
+                    if not pd.isnull(value):
+                        for v in value:
+                            _test_data_type(field, v)
                 else:
                     _test_data_type(field, value)
 
@@ -1025,6 +1241,7 @@ class AbstractTestTypes(object):
         with pytest.raises(ValueError):
             self.datatype_class(None)
 
+    @pytest.mark.skip(reason="filters zonder peilmetingen in oefen")
     def test_nested_subtype_from_xml_element(self, dov_xml):
         """Test initialising the subtype(s) from the XML document.
 
@@ -1047,3 +1264,45 @@ class AbstractTestTypes(object):
             instance_from_xml(clz.subtypes[0], dov_xml)
 
         instance_from_xml(self.datatype_class, dov_xml)
+
+    def test_get_subtypes(self):
+        """Test the get_subtypes method.
+
+        Test whether the correct subtypes are returned.
+
+        """
+
+        subtypes = sorted(self.datatype_class.get_subtypes().keys())
+        assert subtypes == self.sorted_subtypes
+
+    def test_get_available_fieldsets(self):
+        """Test the get_fieldsets method.
+
+        Test whether the correct fieldsets are returned.
+
+        """
+
+        fieldsets = sorted(self.datatype_class.get_fieldsets().keys())
+        assert fieldsets == self.sorted_fieldsets
+
+    def test_with_extra_fields_fieldset(self):
+        """Test the with_extra_fields method using a predefined fieldset.
+
+        Test whether the fields are correctly added to the type.
+
+        """
+        for fieldset in self.datatype_class.get_fieldsets().values():
+            new_type = self.datatype_class.with_extra_fields(
+                fieldset['class']
+            )
+            assert issubclass(new_type, AbstractDovType)
+
+            own_field_names = self.datatype_class.get_field_names()
+            extra_field_names = fieldset['class'].get_field_names()
+            all_field_names = new_type.get_field_names()
+
+            for field in extra_field_names:
+                assert field in all_field_names
+                all_field_names.remove(field)
+
+            assert all_field_names == own_field_names

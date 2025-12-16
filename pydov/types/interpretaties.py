@@ -3,8 +3,9 @@
 subtypes."""
 
 from pydov.types.abstract import AbstractDovSubType, AbstractDovType
-from pydov.types.fields import WfsField, XmlField, XsdType, _CustomWfsField
+from pydov.types.fields import WfsField, XmlField, _CustomWfsField
 from pydov.util.dovutil import build_dov_url
+from pydov.util.codelists import XsdType
 
 
 class PkeyBoringField(_CustomWfsField):
@@ -134,6 +135,8 @@ class AbstractBoringInterpretatie(AbstractDovType):
 
 class InformeleStratigrafieLaag(AbstractDovSubType):
 
+    intended_for = ['InformeleStratigrafie']
+
     rootpath = './/informelestratigrafie/laag'
 
     fields = [
@@ -165,6 +168,8 @@ class InformeleStratigrafie(AbstractCommonInterpretatie):
 
 class FormeleStratigrafieLaag(AbstractDovSubType):
 
+    intended_for = ['FormeleStratigrafie']
+
     rootpath = './/formelestratigrafie/laag'
 
     fields = [
@@ -182,32 +187,35 @@ class FormeleStratigrafieLaag(AbstractDovSubType):
                  source_xpath='/lid1',
                  definition='eerste eenheid van de laag formele stratigrafie',
                  datatype='string',
-                 xsd_type=XsdType(
+                 codelist=XsdType(
                      xsd_schema=build_dov_url(
                          'xdov/schema/latest/xsd/kern/interpretatie/'
                          'FormeleStratigrafieDataCodes.xsd'),
-                     typename='FormeleStratigrafieLedenEnumType')),
+                     typename='FormeleStratigrafieLedenEnumType',
+                     datatype='string')),
         XmlField(name='relatie_lid1_lid2',
                  source_xpath='/relatie_lid1_lid2',
                  definition='verbinding/relatie tussen lid1 en lid2 van de '
                             'laag formele stratigrafie',
                  datatype='string',
-                 xsd_type=XsdType(
+                 codelist=XsdType(
                      xsd_schema=build_dov_url(
                          'xdov/schema/latest/xsd/kern/interpretatie/'
                          'InterpretatieDataCodes.xsd'),
-                     typename='RelatieLedenEnumType')),
+                     typename='RelatieLedenEnumType',
+                     datatype='string')),
         XmlField(name='lid2',
                  source_xpath='/lid2',
                  definition='tweede eenheid van de laag formele stratigrafie. '
                       'Indien niet ingevuld wordt default de waarde van lid1 '
                       'ingevuld',
                  datatype='string',
-                 xsd_type=XsdType(
+                 codelist=XsdType(
                      xsd_schema=build_dov_url(
                          'xdov/schema/latest/xsd/kern/interpretatie/'
                          'FormeleStratigrafieDataCodes.xsd'),
-                     typename='FormeleStratigrafieLedenEnumType'))
+                     typename='FormeleStratigrafieLedenEnumType',
+                     datatype='string'))
     ]
 
 
@@ -219,6 +227,8 @@ class FormeleStratigrafie(AbstractCommonInterpretatie):
 
 
 class HydrogeologischeStratigrafieLaag(AbstractDovSubType):
+
+    intended_for = ['HydrogeologischeStratigrafie']
 
     rootpath = './/hydrogeologischeinterpretatie/laag'
 
@@ -239,11 +249,12 @@ class HydrogeologischeStratigrafieLaag(AbstractDovSubType):
                             'Hydrogeologische stratigrafie zich bevindt '
                             '(HCOVv1)',
                  datatype='string',
-                 xsd_type=XsdType(
+                 codelist=XsdType(
                      xsd_schema=build_dov_url(
                          'xdov/schema/latest/xsd/kern/interpretatie/'
                          'HydrogeologischeStratigrafieDataCodes.xsd'),
-                     typename='AquiferHCOVv1EnumType'
+                     typename='AquiferHCOVv1EnumType',
+                     datatype='string'
                  ))
     ]
 
@@ -256,6 +267,8 @@ class HydrogeologischeStratigrafie(AbstractBoringInterpretatie):
 
 
 class LithologischeBeschrijvingLaag(AbstractDovSubType):
+
+    intended_for = ['LithologischeBeschrijvingen']
 
     rootpath = './/lithologischebeschrijving/laag'
 
@@ -287,19 +300,23 @@ class LithologischeBeschrijvingen(AbstractBoringInterpretatie):
 
 class GecodeerdeLithologieLaag(AbstractDovSubType):
 
+    intended_for = ['GecodeerdeLithologie']
+
     rootpath = './/gecodeerdelithologie/laag'
 
     __gecodeerdHoofdnaamCodesEnumType = XsdType(
         xsd_schema=build_dov_url('xdov/schema/latest/xsd/kern/interpretatie/'
                                  'GecodeerdeLithologieDataCodes.xsd'),
-        typename='GecodeerdHoofdnaamCodesEnumType'
+        typename='GecodeerdHoofdnaamCodesEnumType',
+        datatype='string'
     )
 
     __gecodeerdBijmengingHoeveelheidEnumType = XsdType(
         xsd_schema=build_dov_url(
             'xdov/schema/latest/xsd/kern/interpretatie/'
             'GecodeerdeLithologieDataCodes.xsd'),
-        typename='GecodeerdBijmengingHoeveelheidEnumType'
+        typename='GecodeerdBijmengingHoeveelheidEnumType',
+        datatype='string'
     )
 
     fields = [
@@ -318,13 +335,13 @@ class GecodeerdeLithologieLaag(AbstractDovSubType):
                  definition='Primaire grondsoort (als code) van de laag '
                             'gecodeerde lithologie',
                  datatype='string',
-                 xsd_type=__gecodeerdHoofdnaamCodesEnumType),
+                 codelist=__gecodeerdHoofdnaamCodesEnumType),
         XmlField(name='hoofdnaam2_grondsoort',
                  source_xpath='/hoofdnaam[2]/grondsoort',
                  definition='Secundaire grondsoort (als code) van de laag '
                             'gecodeerde lithologie',
                  datatype='string',
-                 xsd_type=__gecodeerdHoofdnaamCodesEnumType),
+                 codelist=__gecodeerdHoofdnaamCodesEnumType),
         XmlField(name='bijmenging1_plaatselijk',
                  source_xpath='/bijmenging[1]/plaatselijk',
                  definition='plaatselijk of niet-plaatselijk',
@@ -333,13 +350,13 @@ class GecodeerdeLithologieLaag(AbstractDovSubType):
                  source_xpath='/bijmenging[1]/hoeveelheid',
                  definition='aanduiding van de hoeveelheid bijmenging',
                  datatype='string',
-                 xsd_type=__gecodeerdBijmengingHoeveelheidEnumType),
+                 codelist=__gecodeerdBijmengingHoeveelheidEnumType),
         XmlField(name='bijmenging1_grondsoort',
                  source_xpath='/bijmenging[1]/grondsoort',
                  definition='type grondsoort (als code) van de laag '
                             'gecodeerde lithologie of geotechnische codering',
                  datatype='string',
-                 xsd_type=__gecodeerdHoofdnaamCodesEnumType),
+                 codelist=__gecodeerdHoofdnaamCodesEnumType),
         XmlField(name='bijmenging2_plaatselijk',
                  source_xpath='/bijmenging[2]/plaatselijk',
                  definition='plaatselijk of niet-plaatselijk',
@@ -348,13 +365,13 @@ class GecodeerdeLithologieLaag(AbstractDovSubType):
                  source_xpath='/bijmenging[2]/hoeveelheid',
                  definition='aanduiding van de hoeveelheid bijmenging',
                  datatype='string',
-                 xsd_type=__gecodeerdBijmengingHoeveelheidEnumType),
+                 codelist=__gecodeerdBijmengingHoeveelheidEnumType),
         XmlField(name='bijmenging2_grondsoort',
                  source_xpath='/bijmenging[2]/grondsoort',
                  definition='type grondsoort (als code) van de laag '
                             'gecodeerde lithologie of geotechnische codering',
                  datatype='string',
-                 xsd_type=__gecodeerdHoofdnaamCodesEnumType),
+                 codelist=__gecodeerdHoofdnaamCodesEnumType),
         XmlField(name='bijmenging3_plaatselijk',
                  source_xpath='/bijmenging[3]/plaatselijk',
                  definition='plaatselijk of niet-plaatselijk',
@@ -363,13 +380,13 @@ class GecodeerdeLithologieLaag(AbstractDovSubType):
                  source_xpath='/bijmenging[3]/hoeveelheid',
                  definition='aanduiding van de hoeveelheid bijmenging',
                  datatype='string',
-                 xsd_type=__gecodeerdBijmengingHoeveelheidEnumType),
+                 codelist=__gecodeerdBijmengingHoeveelheidEnumType),
         XmlField(name='bijmenging3_grondsoort',
                  source_xpath='/bijmenging[3]/grondsoort',
                  definition='type grondsoort (als code) van de laag '
                             'gecodeerde lithologie of geotechnische codering',
                  datatype='string',
-                 xsd_type=__gecodeerdHoofdnaamCodesEnumType)
+                 codelist=__gecodeerdHoofdnaamCodesEnumType)
     ]
 
 
@@ -382,20 +399,24 @@ class GecodeerdeLithologie(AbstractBoringInterpretatie):
 
 class GeotechnischeCoderingLaag(AbstractDovSubType):
 
+    intended_for = ['GeotechnischeCodering']
+
     rootpath = './/geotechnischecodering/laag'
 
     __geotechnischeCoderingHoofdnaamCodesEnumType = XsdType(
         xsd_schema=build_dov_url(
             'xdov/schema/latest/xsd/kern/interpretatie/'
             'GeotechnischeCoderingDataCodes.xsd'),
-        typename='GeotechnischeCoderingHoofdnaamCodesEnumType'
+        typename='GeotechnischeCoderingHoofdnaamCodesEnumType',
+        datatype='string'
     )
 
     __gtCoderingBijmengingHoeveelheidEnumType = XsdType(
         xsd_schema=build_dov_url(
             'xdov/schema/latest/xsd/kern/interpretatie/'
             'GeotechnischeCoderingDataCodes.xsd'),
-        typename='GeotechnischeCoderingBijmengingHoeveelheidEnumType'
+        typename='GeotechnischeCoderingBijmengingHoeveelheidEnumType',
+        datatype='string'
     )
 
     fields = [
@@ -414,13 +435,13 @@ class GeotechnischeCoderingLaag(AbstractDovSubType):
                  definition='hoofdnaam (als code) van de laag geotechnische '
                             'codering',
                  datatype='string',
-                 xsd_type=__geotechnischeCoderingHoofdnaamCodesEnumType),
+                 codelist=__geotechnischeCoderingHoofdnaamCodesEnumType),
         XmlField(name='hoofdnaam2_grondsoort',
                  source_xpath='/hoofdnaam[2]/grondsoort',
                  definition='Secundaire grondsoort (als code) van de laag '
                             'geotechnische codering',
                  datatype='string',
-                 xsd_type=__geotechnischeCoderingHoofdnaamCodesEnumType),
+                 codelist=__geotechnischeCoderingHoofdnaamCodesEnumType),
         XmlField(name='bijmenging1_plaatselijk',
                  source_xpath='/bijmenging[1]/plaatselijk',
                  definition='plaatselijk of niet-plaatselijk',
@@ -429,13 +450,13 @@ class GeotechnischeCoderingLaag(AbstractDovSubType):
                  source_xpath='/bijmenging[1]/hoeveelheid',
                  definition='aanduiding van de hoeveelheid bijmenging',
                  datatype='string',
-                 xsd_type=__gtCoderingBijmengingHoeveelheidEnumType),
+                 codelist=__gtCoderingBijmengingHoeveelheidEnumType),
         XmlField(name='bijmenging1_grondsoort',
                  source_xpath='/bijmenging[1]/grondsoort',
                  definition='type grondsoort (als code) van de laag '
                             'geotechnische codering',
                  datatype='string',
-                 xsd_type=__geotechnischeCoderingHoofdnaamCodesEnumType),
+                 codelist=__geotechnischeCoderingHoofdnaamCodesEnumType),
         XmlField(name='bijmenging2_plaatselijk',
                  source_xpath='/bijmenging[2]/plaatselijk',
                  definition='plaatselijk of niet-plaatselijk',
@@ -444,13 +465,13 @@ class GeotechnischeCoderingLaag(AbstractDovSubType):
                  source_xpath='/bijmenging[2]/hoeveelheid',
                  definition='aanduiding van de hoeveelheid bijmenging',
                  datatype='string',
-                 xsd_type=__gtCoderingBijmengingHoeveelheidEnumType),
+                 codelist=__gtCoderingBijmengingHoeveelheidEnumType),
         XmlField(name='bijmenging2_grondsoort',
                  source_xpath='/bijmenging[2]/grondsoort',
                  definition='type grondsoort (als code) van de laag '
                             'geotechnische codering',
                  datatype='string',
-                 xsd_type=__geotechnischeCoderingHoofdnaamCodesEnumType),
+                 codelist=__geotechnischeCoderingHoofdnaamCodesEnumType),
         XmlField(name='bijmenging3_plaatselijk',
                  source_xpath='/bijmenging[3]/plaatselijk',
                  definition='plaatselijk of niet-plaatselijk',
@@ -459,13 +480,13 @@ class GeotechnischeCoderingLaag(AbstractDovSubType):
                  source_xpath='/bijmenging[3]/hoeveelheid',
                  definition='aanduiding van de hoeveelheid bijmenging',
                  datatype='string',
-                 xsd_type=__gtCoderingBijmengingHoeveelheidEnumType),
+                 codelist=__gtCoderingBijmengingHoeveelheidEnumType),
         XmlField(name='bijmenging3_grondsoort',
                  source_xpath='/bijmenging[3]/grondsoort',
                  definition='type grondsoort (als code) van de laag '
                             'geotechnische codering',
                  datatype='string',
-                 xsd_type=__geotechnischeCoderingHoofdnaamCodesEnumType)
+                 codelist=__geotechnischeCoderingHoofdnaamCodesEnumType)
     ]
 
 
@@ -477,6 +498,8 @@ class GeotechnischeCodering(AbstractBoringInterpretatie):
 
 
 class QuartairStratigrafieLaag(AbstractDovSubType):
+
+    intended_for = ['QuartairStratigrafie']
 
     rootpath = './/quartairstratigrafie/laag'
 
@@ -495,32 +518,35 @@ class QuartairStratigrafieLaag(AbstractDovSubType):
                  source_xpath='/lid1',
                  definition='eerste eenheid van de laag quartairstratigrafie',
                  datatype='string',
-                 xsd_type=XsdType(
+                 codelist=XsdType(
                      xsd_schema=build_dov_url(
                          'xdov/schema/latest/xsd/kern/interpretatie/'
                          'QuartairStratigrafieDataCodes.xsd'),
-                     typename='QuartairStratigrafieLedenEnumType')),
+                     typename='QuartairStratigrafieLedenEnumType',
+                     datatype='string')),
         XmlField(name='relatie_lid1_lid2',
                  source_xpath='/relatie_lid1_lid2',
                  definition='verbinding of relatie tussen lid1 en lid2 van de '
                             'laag quartairstratigrafie',
                  datatype='string',
-                 xsd_type=XsdType(
+                 codelist=XsdType(
                      xsd_schema=build_dov_url(
                          'xdov/schema/latest/xsd/kern/interpretatie/'
                          'InterpretatieDataCodes.xsd'),
-                     typename='RelatieLedenEnumType')),
+                     typename='RelatieLedenEnumType',
+                     datatype='string')),
         XmlField(name='lid2',
                  source_xpath='/lid2',
                  definition='tweede eenheid van de laag quartairstratigrafie. '
                       'Indien niet ingevuld wordt default dezelfde waarde '
                       'als voor Lid1 ingevuld',
                  datatype='string',
-                 xsd_type=XsdType(
+                 codelist=XsdType(
                      xsd_schema=build_dov_url(
                          'xdov/schema/latest/xsd/kern/interpretatie/'
                          'QuartairStratigrafieDataCodes.xsd'),
-                     typename='QuartairStratigrafieLedenEnumType'))
+                     typename='QuartairStratigrafieLedenEnumType',
+                     datatype='string'))
     ]
 
 
@@ -532,6 +558,8 @@ class QuartairStratigrafie(AbstractBoringInterpretatie):
 
 
 class InformeleHydrogeologischeStratigrafieLaag(AbstractDovSubType):
+
+    intended_for = ['InformeleHydrogeologischeStratigrafie']
 
     rootpath = './/informelehydrostratigrafie/laag'
 

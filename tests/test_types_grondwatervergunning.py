@@ -1,6 +1,6 @@
 """Module grouping tests for the pydov.types.boring module."""
 
-from pydov.types.fields import ReturnFieldList
+from pydov.search.fields import ReturnFieldList
 from pydov.types.grondwatervergunning import GrondwaterVergunning
 from tests.abstract import AbstractTestTypes
 
@@ -17,6 +17,9 @@ class TestGrondwaterVergunning(AbstractTestTypes):
     datatype_class = GrondwaterVergunning
     namespace = 'http://dov.vlaanderen.be/grondwater/gw_vergunningen'
     pkey_base = None
+
+    sorted_subtypes = []
+    sorted_fieldsets = []
 
     field_names = [
         'id_vergunning', 'pkey_installatie', 'x', 'y',

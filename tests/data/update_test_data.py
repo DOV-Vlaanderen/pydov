@@ -2,20 +2,19 @@
 import os
 import sys
 
+sys.path.insert(
+    0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+
 from owslib.etree import etree
-import requests
-import pydov
 
 from pydov.types.bodemlocatie import Bodemlocatie
 from pydov.types.bodemdiepteinterval import Bodemdiepteinterval
-from pydov.types.bodemmonster import Bodemmonster
-from pydov.types.bodemobservatie import Bodemobservatie
 from pydov.types.bodemsite import Bodemsite
 from pydov.types.bodemclassificatie import Bodemclassificatie
 from pydov.types.boring import Boring
-from pydov.types.grondmonster import Grondmonster
+from pydov.types.monster import Monster
+from pydov.types.observatie import Observatie
 from pydov.types.grondwaterfilter import GrondwaterFilter
-from pydov.types.grondwatermonster import GrondwaterMonster
 from pydov.types.grondwatervergunning import GrondwaterVergunning
 from pydov.types.interpretaties import (FormeleStratigrafie,
                                         GecodeerdeLithologie,
@@ -28,6 +27,8 @@ from pydov.types.interpretaties import (FormeleStratigrafie,
 from pydov.types.sondering import Sondering
 from pydov.util.dovutil import build_dov_url, get_remote_url
 from pydov.util.net import LocalSessionThreadPool
+from pydov.util.codelists import AbstractResolvableCodeList
+
 from tests.abstract import ServiceCheck
 
 
@@ -39,6 +40,24 @@ def get_first_featuremember(wfs_response):
 
     if first_feature_member is not None:
         return etree.tostring(first_feature_member[0]).decode('utf-8')
+
+
+def update_file_raw(filepath, data, session=None):
+    output = 'Updating {} ... '.format(filepath)
+    failed = False
+    filepath = os.path.join(os.path.dirname(__file__), filepath)
+
+    if isinstance(data, bytes):
+        data = data.decode('utf-8')
+
+    if not os.path.isdir(os.path.dirname(filepath)):
+        os.makedirs(os.path.dirname(filepath))
+
+    with open(filepath, 'wb') as f:
+        f.write(data.encode('utf-8'))
+        output += ' OK.\n'
+
+    return output, failed
 
 
 def update_file_real(filepath, url, process_fn=None, session=None):
@@ -87,6 +106,30 @@ if __name__ == '__main__':
     def update_file(filepath, url, process_fn=None):
         pool.execute(update_file_real, (filepath, url, process_fn))
 
+    def update_file_fn(filepath, fn):
+        pool.execute(update_file_raw, (filepath, fn()))
+
+    def get_codelists(cls, path):
+
+        def update_codelist_file(codelist):
+            id = codelist.get_id()
+            update_file_fn(
+                '{}/codelist_{}'.format(path, id),
+                codelist.get_remote_codelist)
+
+        for codelist in cls.get_codelists(AbstractResolvableCodeList):
+            update_codelist_file(codelist)
+
+        for fieldset in cls.get_fieldsets().values():
+            for codelist in \
+                    fieldset['class'].get_codelists(AbstractResolvableCodeList):
+                update_codelist_file(codelist)
+
+        for subtype in cls.get_subtypes().values():
+            for codelist in \
+                    subtype['class'].get_codelists(AbstractResolvableCodeList):
+                update_codelist_file(codelist)
+
     # types/boring
     update_file('types/boring/boring.xml',
                 build_dov_url('data/boring/2004-103984.xml'))
@@ -132,10 +175,7 @@ if __name__ == '__main__':
             'geoserver/dov-pub/Boringen'
             '/ows?service=wfs&version=2.0.0&request=DescribeFeatureType'))
 
-    for xsd_schema in Boring.get_xsd_schemas():
-        update_file(
-            'types/boring/xsd_{}.xml'.format(xsd_schema.split('/')[-1]),
-            xsd_schema)
+    get_codelists(Boring, 'types/boring')
 
     # types/sondering
 
@@ -183,10 +223,7 @@ if __name__ == '__main__':
             'geoserver/dov-pub/Sonderingen'
             '/ows?service=wfs&version=2.0.0&request=DescribeFeatureType'))
 
-    for xsd_schema in Sondering.get_xsd_schemas():
-        update_file(
-            'types/sondering/xsd_{}.xml'.format(xsd_schema.split('/')[-1]),
-            xsd_schema)
+    get_codelists(Sondering, 'types/sondering')
 
     # types/interpretaties/informele_stratigrafie
 
@@ -242,10 +279,8 @@ if __name__ == '__main__':
             '/informele_stratigrafie/ows?service=wfs&version=2.0.0&request'
             '=DescribeFeatureType'))
 
-    for xsd_schema in InformeleStratigrafie.get_xsd_schemas():
-        update_file(
-            'types/interpretaties/informele_stratigrafie/xsd_%s.xml' %
-            xsd_schema.split('/')[-1], xsd_schema)
+    get_codelists(InformeleStratigrafie,
+                  'types/interpretaties/informele_stratigrafie')
 
     # types/interpretaties/formele_stratigrafie
 
@@ -301,10 +336,8 @@ if __name__ == '__main__':
             '/formele_stratigrafie/ows?service=wfs&version=2.0.0&request'
             '=DescribeFeatureType'))
 
-    for xsd_schema in FormeleStratigrafie.get_xsd_schemas():
-        update_file(
-            'types/interpretaties/formele_stratigrafie/xsd_%s.xml' %
-            xsd_schema.split('/')[-1], xsd_schema)
+    get_codelists(FormeleStratigrafie,
+                  'types/interpretaties/formele_stratigrafie')
 
     # types/interpretaties/hydrogeologische_stratigrafie
 
@@ -361,10 +394,8 @@ if __name__ == '__main__':
             '/hydrogeologische_stratigrafie/ows?service=wfs&version=2.0.0'
             '&request=DescribeFeatureType'))
 
-    for xsd_schema in HydrogeologischeStratigrafie.get_xsd_schemas():
-        update_file(
-            'types/interpretaties/hydrogeologische_stratigrafie/xsd_%s.xml' %
-            xsd_schema.split('/')[-1], xsd_schema)
+    get_codelists(HydrogeologischeStratigrafie,
+                  'types/interpretaties/hydrogeologische_stratigrafie')
 
     # types/interpretaties/lithologische_beschrijvingen
 
@@ -421,10 +452,8 @@ if __name__ == '__main__':
             '/lithologische_beschrijvingen/ows?service=wfs&version=2.0.0'
             '&request=DescribeFeatureType'))
 
-    for xsd_schema in LithologischeBeschrijvingen.get_xsd_schemas():
-        update_file(
-            'types/interpretaties/lithologische_beschrijvingen/xsd_%s.xml' %
-            xsd_schema.split('/')[-1], xsd_schema)
+    get_codelists(LithologischeBeschrijvingen,
+                  'types/interpretaties/lithologische_beschrijvingen')
 
     # types/interpretaties/gecodeerde_lithologie
 
@@ -480,10 +509,8 @@ if __name__ == '__main__':
             '/gecodeerde_lithologie/ows?service=wfs&version=2.0.0&request'
             '=DescribeFeatureType'))
 
-    for xsd_schema in GecodeerdeLithologie.get_xsd_schemas():
-        update_file(
-            'types/interpretaties/gecodeerde_lithologie/xsd_%s.xml' %
-            xsd_schema.split('/')[-1], xsd_schema)
+    get_codelists(GecodeerdeLithologie,
+                  'types/interpretaties/gecodeerde_lithologie')
 
     # types/interpretaties/geotechnische_codering
 
@@ -539,10 +566,8 @@ if __name__ == '__main__':
             '/geotechnische_coderingen/ows?service=wfs&version=2.0.0&request'
             '=DescribeFeatureType'))
 
-    for xsd_schema in GeotechnischeCodering.get_xsd_schemas():
-        update_file(
-            'types/interpretaties/geotechnische_codering/xsd_%s.xml' %
-            xsd_schema.split('/')[-1], xsd_schema)
+    get_codelists(GeotechnischeCodering,
+                  'types/interpretaties/geotechnische_codering')
 
     # types/interpretaties/informele_hydrogeologische_stratigrafie
 
@@ -601,29 +626,28 @@ if __name__ == '__main__':
             '/informele_hydrogeologische_stratigrafie/'
             'ows?service=wfs&version=2.0.0&request=DescribeFeatureType'))
 
-    for xsd_schema in InformeleHydrogeologischeStratigrafie.get_xsd_schemas():
-        update_file(
-            'types/interpretaties/informele_hydrogeologische_stratigrafie/'
-            'xsd_%s.xml' % xsd_schema.split('/')[-1], xsd_schema)
+    get_codelists(
+        InformeleHydrogeologischeStratigrafie,
+        'types/interpretaties/informele_hydrogeologische_stratigrafie')
 
     # types/grondwaterfilter
 
     update_file('types/grondwaterfilter/grondwaterfilter.xml',
-                build_dov_url('data/filter/2003-004471.xml'))
+                build_dov_url('data/filter/1997-000494.xml'))
 
     update_file('types/grondwaterfilter/wfsgetfeature.xml',
                 build_dov_url('geoserver/ows?service=WFS'
                               '&version=2.0.0&request=GetFeature&typeName='
                               'gw_meetnetten:meetnetten&count=1&'
                               'CQL_Filter=filterfiche=%27' + build_dov_url(
-                                  'data/filter/2003-004471%27')))
+                                  'data/filter/1997-000494%27')))
 
     update_file('types/grondwaterfilter/feature.xml',
                 build_dov_url('geoserver/ows?service=WFS'
                               '&version=2.0.0&request=GetFeature&typeName='
                               'gw_meetnetten:meetnetten&count=1&'
                               'CQL_Filter=filterfiche=%27' + build_dov_url(
-                                  'data/filter/2003-004471%27')),
+                                  'data/filter/1997-000494%27')),
                 get_first_featuremember)
 
     update_file(
@@ -649,10 +673,7 @@ if __name__ == '__main__':
                               'meetnetten/ows?service=wfs&version=2.0.0&'
                               'request=DescribeFeatureType'))
 
-    for xsd_schema in GrondwaterFilter.get_xsd_schemas():
-        update_file(
-            'types/grondwaterfilter/xsd_%s.xml' % xsd_schema.split('/')[-1],
-            xsd_schema)
+    get_codelists(GrondwaterFilter, 'types/grondwaterfilter')
 
     update_file('types/grondwaterfilter/grondwaterfilter_geenpeilmeting.xml',
                 build_dov_url('data/filter/1976-101132.xml'))
@@ -671,62 +692,6 @@ if __name__ == '__main__':
                               'CQL_Filter=filterfiche=%27' + build_dov_url(
                                   'data/filter/1976-101132%27')),
                 get_first_featuremember)
-
-    # types/grondwatermonster
-
-    update_file('types/grondwatermonster/grondwatermonster.xml',
-                build_dov_url('data/watermonster/2006-115684.xml'))
-
-    update_file(
-        'types/grondwatermonster/wfsgetfeature.xml',
-        build_dov_url(
-            'geoserver/ows?service=WFS'
-            '&version=2.0.0&request=GetFeature&typeName='
-            'gw_meetnetten:grondwatermonsters&count=1&'
-            'CQL_Filter=grondwatermonsterfiche=%27' +
-            build_dov_url('data/watermonster/2006-115684') +
-            '%27'))
-
-    update_file(
-        'types/grondwatermonster/feature.xml',
-        build_dov_url(
-            'geoserver/ows?service=WFS'
-            '&version=2.0.0&request=GetFeature&typeName='
-            'gw_meetnetten:grondwatermonsters&count=1&'
-            'CQL_Filter=grondwatermonsterfiche=%27' +
-            build_dov_url('data/watermonster/2006-115684') +
-            '%27'),
-        get_first_featuremember)
-
-    update_file(
-        'types/grondwatermonster/fc_featurecatalogue.xml',
-        build_dov_url(
-            'geonetwork/srv/dut/csw'
-            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
-            '&outputSchema=http://www.isotc211.org/2005/gfc'
-            '&elementSetName=full&'
-            'id=639c9612-4bbb-4826-86fd-fec9afd49bf7'))
-
-    update_file(
-        'types/grondwatermonster/md_metadata.xml',
-        build_dov_url(
-            'geonetwork/srv/dut/csw'
-            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
-            '&outputSchema=http://www.isotc211.org/2005/gmd'
-            '&elementSetName=full&'
-            'id=0b378716-39fb-4151-96c5-2021672f4762'))
-
-    update_file(
-        'types/grondwatermonster/wfsdescribefeaturetype.xml',
-        build_dov_url(
-            'geoserver/gw_meetnetten/'
-            'grondwatermonsters/ows?service=wfs&version=2.0.0&'
-            'request=DescribeFeatureType'))
-
-    for xsd_schema in GrondwaterMonster.get_xsd_schemas():
-        update_file(
-            'types/grondwatermonster/xsd_%s.xml' % xsd_schema.split('/')[-1],
-            xsd_schema)
 
     # util/owsutil
 
@@ -797,69 +762,8 @@ if __name__ == '__main__':
             '/quartaire_stratigrafie/ows?service=wfs&version=2.0.0&request'
             '=DescribeFeatureType'))
 
-    for xsd_schema in QuartairStratigrafie.get_xsd_schemas():
-        update_file(
-            'types/interpretaties/quartaire_stratigrafie/xsd_%s.xml' %
-            xsd_schema.split('/')[-1], xsd_schema)
-
-    # types/grondmonster
-
-    update_file('types/grondmonster/grondmonster.xml',
-                build_dov_url('data/grondmonster/2018-211728.xml'))
-
-    update_file(
-        'types/grondmonster/wfsgetfeature.xml',
-        build_dov_url(
-            'geoserver/ows?service=WFS'
-            '&version=2.0.0&request=GetFeature&typeName='
-            'boringen:grondmonsters&count=1&CQL_Filter'
-            '=monster_link=%27' +
-            build_dov_url(
-                'data'
-                '/monster/2018-211728') +
-            '%27'))
-
-    update_file(
-        'types/grondmonster/feature.xml',
-        build_dov_url(
-            'geoserver/ows?service=WFS'
-            '&version=2.0.0&request=GetFeature&typeName='
-            'boringen:grondmonsters&count=1&CQL_Filter'
-            '=monster_link=%27' +
-            build_dov_url(
-                'data'
-                '/monster/2018-211728') +
-            '%27'),
-        get_first_featuremember)
-
-    update_file(
-        'types/grondmonster/fc_featurecatalogue.xml',
-        build_dov_url(
-            'geonetwork/srv/dut/csw'
-            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
-            '&outputSchema=http://www.isotc211.org/2005/gfc'
-            '&elementSetName=full&id=b9338fb5-fc9c-4229-858b-06a5fa3ee49d'))
-
-    update_file(
-        'types/grondmonster/md_metadata.xml',
-        build_dov_url(
-            'geonetwork/srv/dut/csw'
-            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
-            '&outputSchema=http://www.isotc211.org/2005/gmd'
-            '&elementSetName=full&'
-            'id=6edeab46-2cfc-4aa2-ae03-307d772f34ae'))
-
-    update_file(
-        'types/grondmonster/wfsdescribefeaturetype'
-        '.xml',
-        build_dov_url('geoserver/boringen'
-                      '/grondmonsters/ows?service=wfs&version=2.0.0&request'
-                      '=DescribeFeatureType'))
-
-    for xsd_schema in Grondmonster.get_xsd_schemas():
-        update_file(
-            'types/grondmonster/xsd_%s.xml' %
-            xsd_schema.split('/')[-1], xsd_schema)
+    get_codelists(QuartairStratigrafie,
+                  'types/interpretaties/quartaire_stratigrafie')
 
     # types/bodemlocatie
     update_file('types/bodemlocatie/bodemlocatie.xml',
@@ -904,10 +808,7 @@ if __name__ == '__main__':
             'geoserver/bodem/bodemlocaties'
             '/ows?service=wfs&version=2.0.0&request=DescribeFeatureType'))
 
-    for xsd_schema in Bodemlocatie.get_xsd_schemas():
-        update_file(
-            'types/bodemlocatie/xsd_{}.xml'.format(xsd_schema.split('/')[-1]),
-            xsd_schema)
+    get_codelists(Bodemlocatie, 'types/bodemlocatie')
 
     # types/bodemdiepteinterval
     update_file(
@@ -951,108 +852,7 @@ if __name__ == '__main__':
             'geoserver/bodem/bodemdiepteintervallen'
             '/ows?service=wfs&version=2.0.0&request=DescribeFeatureType'))
 
-    for xsd_schema in Bodemdiepteinterval.get_xsd_schemas():
-        update_file(
-            'types/bodemdiepteinterval/xsd_{}.xml'.format(
-                xsd_schema.split('/')[-1]),
-            xsd_schema)
-
-    # types/bodemobservatie
-    update_file('types/bodemobservatie/bodemobservatie.xml',
-                build_dov_url('data/bodemobservatie/2019-001221.xml'))
-
-    update_file(
-        'types/bodemobservatie/wfsgetfeature.xml',
-        build_dov_url(
-            'geoserver/ows?service=WFS'
-            '&version=2.0.0&request=GetFeature&typeName=bodem:bodemobservaties'
-            '&count=1&CQL_Filter=Bodemobservatiefiche=%27' +
-            build_dov_url('data/bodemobservatie/2019-001221%27')))
-
-    update_file(
-        'types/bodemobservatie/feature.xml',
-        build_dov_url(
-            'geoserver/ows?service=WFS'
-            '&version=2.0.0&request=GetFeature&typeName=bodem:bodemobservaties'
-            '&count=1&CQL_Filter=Bodemobservatiefiche=%27' +
-            build_dov_url('data/bodemobservatie/2019-001221%27')),
-        get_first_featuremember)
-
-    update_file(
-        'types/bodemobservatie/fc_featurecatalogue.xml',
-        build_dov_url(
-            'geonetwork/srv/dut/csw'
-            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
-            '&outputSchema=http://www.isotc211.org/2005/gfc'
-            '&elementSetName=full&id=44df1272-6b57-471b-9f7a-2dc82f760137'))
-
-    update_file(
-        'types/bodemobservatie/md_metadata.xml',
-        build_dov_url(
-            'geonetwork/srv/dut/csw'
-            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
-            '&outputSchema=http://www.isotc211.org/2005/gmd'
-            '&elementSetName=full&id=dd327fef-62c7-4980-9788-9fac047a1553'))
-
-    update_file(
-        'types/bodemobservatie/wfsdescribefeaturetype.xml',
-        build_dov_url(
-            'geoserver/bodem/bodemobservaties'
-            '/ows?service=wfs&version=2.0.0&request=DescribeFeatureType'))
-
-    for xsd_schema in Bodemobservatie.get_xsd_schemas():
-        update_file(
-            'types/bodemobservatie/xsd_{}.xml'.format(
-                xsd_schema.split('/')[-1]),
-            xsd_schema)
-
-    # types/bodemmonster
-    update_file('types/bodemmonster/bodemmonster.xml',
-                build_dov_url('data/bodemmonster/2015-211807.xml'))
-
-    update_file(
-        'types/bodemmonster/wfsgetfeature.xml',
-        build_dov_url(
-            'geoserver/ows?service=WFS'
-            '&version=2.0.0&request=GetFeature&typeName=bodem:bodemmonsters'
-            '&count=1&CQL_Filter=Bodemmonsterfiche=%27' +
-            build_dov_url('data/bodemmonster/2015-211807%27')))
-
-    update_file(
-        'types/bodemmonster/feature.xml',
-        build_dov_url(
-            'geoserver/ows?service=WFS'
-            '&version=2.0.0&request=GetFeature&typeName=bodem:bodemmonsters'
-            '&count=1&CQL_Filter=Bodemmonsterfiche=%27' +
-            build_dov_url('data/bodemmonster/2015-211807%27')),
-        get_first_featuremember)
-
-    update_file(
-        'types/bodemmonster/fc_featurecatalogue.xml',
-        build_dov_url(
-            'geonetwork/srv/dut/csw'
-            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
-            '&outputSchema=http://www.isotc211.org/2005/gfc'
-            '&elementSetName=full&id=7d69c092-fa5a-4399-86ed-003877f5899e'))
-
-    update_file(
-        'types/bodemmonster/md_metadata.xml',
-        build_dov_url(
-            'geonetwork/srv/dut/csw'
-            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
-            '&outputSchema=http://www.isotc211.org/2005/gmd'
-            '&elementSetName=full&id=ff1902b2-7ba2-46be-ba8c-bfcf893444c2'))
-
-    update_file(
-        'types/bodemmonster/wfsdescribefeaturetype.xml',
-        build_dov_url(
-            'geoserver/bodem/bodemmonsters'
-            '/ows?service=wfs&version=2.0.0&request=DescribeFeatureType'))
-
-    for xsd_schema in Bodemmonster.get_xsd_schemas():
-        update_file(
-            'types/bodemmonster/xsd_{}.xml'.format(xsd_schema.split('/')[-1]),
-            xsd_schema)
+    get_codelists(Bodemdiepteinterval, 'types/bodemdiepteinterval')
 
     # types/bodemsite
     update_file('types/bodemsite/bodemsite.xml',
@@ -1097,10 +897,7 @@ if __name__ == '__main__':
             'geoserver/bodem/bodemsites'
             '/ows?service=wfs&version=2.0.0&request=DescribeFeatureType'))
 
-    for xsd_schema in Bodemsite.get_xsd_schemas():
-        update_file(
-            'types/bodemsite/xsd_{}.xml'.format(xsd_schema.split('/')[-1]),
-            xsd_schema)
+    get_codelists(Bodemsite, 'types/bodemsite')
 
     # types/bodemclassificatie
     update_file(
@@ -1144,10 +941,7 @@ if __name__ == '__main__':
                     '/ows?service=wfs&version=2.0.0'
                     '&request=DescribeFeatureType'))
 
-    for xsd_schema in Bodemclassificatie.get_xsd_schemas():
-        update_file(
-            'types/bodemclassificatie/xsd_%s.xml' %
-            xsd_schema.split('/')[-1], xsd_schema)
+    get_codelists(Bodemclassificatie, 'types/bodemclassificatie')
 
     # types/gw_vergunningen
     update_file(
@@ -1188,10 +982,7 @@ if __name__ == '__main__':
                     '/ows?service=wfs&version=2.0.0'
                     '&request=DescribeFeatureType'))
 
-    for xsd_schema in GrondwaterVergunning.get_xsd_schemas():
-        update_file(
-            'types/grondwatervergunning/xsd_%s.xml' %
-            xsd_schema.split('/')[-1], xsd_schema)
+    get_codelists(GrondwaterVergunning, 'types/grondwatervergunning')
 
     # types/generic
 
@@ -1235,6 +1026,230 @@ if __name__ == '__main__':
                     'geoserver/dov-pub/Opdrachten'
                     '/ows?service=wfs&version=2.0.0'
                     '&request=DescribeFeatureType'))
+
+    # types/monster
+
+    update_file('types/monster/monster.xml',
+                build_dov_url('data/monster/2022-324453.xml'))
+
+    update_file(
+        'types/monster/wfsgetfeature.xml',
+        build_dov_url(
+            'geoserver/ows?service=WFS'
+            '&version=2.0.0&request=GetFeature&typeName='
+            'monster:monsters&maxFeatures=1&CQL_Filter'
+            '=permkey_monster=%272022-324453%27'))
+
+    update_file(
+        'types/monster/feature.xml',
+        build_dov_url(
+            'geoserver/ows?service=WFS'
+            '&version=2.0.0&request=GetFeature&typeName='
+            'monster:monsters&maxFeatures=1&CQL_Filter'
+            '=permkey_monster=%272022-324453%27'),
+        get_first_featuremember)
+
+    update_file(
+        'types/monster/fc_featurecatalogue.xml',
+        build_dov_url(
+            'geonetwork/srv/dut/csw'
+            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+            '&outputSchema=http://www.isotc211.org/2005/gfc'
+            '&elementSetName=full&id=d0770640-32b9-44a2-8784-32daa1d91fc5'))
+
+    update_file(
+        'types/monster/md_metadata.xml',
+        build_dov_url(
+            'geonetwork/srv/dut/csw'
+            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+            '&outputSchema=http://www.isotc211.org/2005/gmd'
+            '&elementSetName=full&'
+            'id=afd479f5-4f6a-41cf-9604-9993e54b1544'))
+
+    update_file(
+        'types/monster/wfsdescribefeaturetype'
+        '.xml',
+        build_dov_url('geoserver/monster'
+                      '/monsters/ows?service=wfs&version=2.0.0&request'
+                      '=DescribeFeatureType'))
+
+    get_codelists(Monster, 'types/monster')
+
+    # types/observatie
+
+    update_file('types/observatie/observatie.xml',
+                build_dov_url('data/observatie/2022-11963810.xml'))
+
+    update_file(
+        'types/observatie/wfsgetfeature.xml',
+        build_dov_url(
+            'geoserver/ows?service=WFS&version=2.0.0&request=GetFeature'
+            '&typeName=monster:observaties&count=1&CQL_Filter=observatie_link=%27' + build_dov_url(
+                'data/observatie/2022-11963810%27'))
+    )
+
+    update_file(
+        'types/observatie/feature.xml',
+        build_dov_url(
+            'geoserver/ows?service=WFS&version=2.0.0&request=GetFeature'
+            '&typeName=monster:observaties&count=1&CQL_Filter=observatie_link=%27' + build_dov_url(
+                'data/observatie/2022-11963810%27')),
+        get_first_featuremember)
+
+    update_file(
+        'types/observatie/fc_featurecatalogue.xml',
+        build_dov_url(
+            'geonetwork/srv/dut/csw'
+            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+            '&outputSchema=http://www.isotc211.org/2005/gfc'
+            '&elementSetName=full&id=0ee52b15-12a5-4314-a8af-0b37ee8bf766'))
+
+    update_file(
+        'types/observatie/md_metadata.xml',
+        build_dov_url(
+            'geonetwork/srv/dut/csw'
+            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+            '&outputSchema=http://www.isotc211.org/2005/gmd'
+            '&elementSetName=full&id=7e166b29-f24b-494b-af66-acc82deb5af2'))
+
+    update_file(
+        'types/observatie/wfsdescribefeaturetype.xml',
+        build_dov_url(
+            'geoserver/monster/wfs?service=WFS&version=2.0.0&request=DescribeFeatureType&typeName=monster:observaties'))
+
+    get_codelists(Observatie, 'types/observatie')
+
+    # types/observatie_fractiemetingen
+
+    update_file('types/observatie_fractiemeting/observatie.xml',
+                build_dov_url('data/observatie/1995-10282748.xml'))
+
+    update_file(
+        'types/observatie_fractiemeting/wfsgetfeature.xml',
+        build_dov_url(
+            'geoserver/ows?service=WFS&version=2.0.0&request=GetFeature'
+            '&typeName=monster:observaties&count=1&CQL_Filter=observatie_link=%27' + build_dov_url(
+                'data/observatie/1995-10282748%27'))
+    )
+
+    update_file(
+        'types/observatie_fractiemeting/feature.xml',
+        build_dov_url(
+            'geoserver/ows?service=WFS&version=2.0.0&request=GetFeature'
+            '&typeName=monster:observaties&count=1&CQL_Filter=observatie_link=%27' + build_dov_url(
+                'data/observatie/1995-10282748%27')),
+        get_first_featuremember)
+
+    update_file(
+        'types/observatie_fractiemeting/fc_featurecatalogue.xml',
+        build_dov_url(
+            'geonetwork/srv/dut/csw'
+            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+            '&outputSchema=http://www.isotc211.org/2005/gfc'
+            '&elementSetName=full&id=0ee52b15-12a5-4314-a8af-0b37ee8bf766'))
+
+    update_file(
+        'types/observatie_fractiemeting/md_metadata.xml',
+        build_dov_url(
+            'geonetwork/srv/dut/csw'
+            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+            '&outputSchema=http://www.isotc211.org/2005/gmd'
+            '&elementSetName=full&id=7e166b29-f24b-494b-af66-acc82deb5af2'))
+
+    update_file(
+        'types/observatie_fractiemeting/wfsdescribefeaturetype.xml',
+        build_dov_url(
+            'geoserver/monster/wfs?service=WFS&version=2.0.0&request=DescribeFeatureType&typeName=monster:observaties'))
+
+    get_codelists(Observatie, 'types/observatie_fractiemeting')
+
+    # types/observatie_meetreeks
+
+    update_file('types/observatie_meetreeks/observatie.xml',
+                build_dov_url('data/observatie/2025-43568400.xml'))
+
+    update_file(
+        'types/observatie_meetreeks/wfsgetfeature.xml',
+        build_dov_url(
+            'geoserver/ows?service=WFS&version=2.0.0&request=GetFeature'
+            '&typeName=monster:observaties&count=1&CQL_Filter=observatie_link=%27' + build_dov_url(
+                'data/observatie/2025-43568400%27'))
+    )
+
+    update_file(
+        'types/observatie_meetreeks/feature.xml',
+        build_dov_url(
+            'geoserver/ows?service=WFS&version=2.0.0&request=GetFeature'
+            '&typeName=monster:observaties&count=1&CQL_Filter=observatie_link=%27' + build_dov_url(
+                'data/observatie/2025-43568400%27')),
+        get_first_featuremember)
+
+    update_file(
+        'types/observatie_meetreeks/fc_featurecatalogue.xml',
+        build_dov_url(
+            'geonetwork/srv/dut/csw'
+            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+            '&outputSchema=http://www.isotc211.org/2005/gfc'
+            '&elementSetName=full&id=0ee52b15-12a5-4314-a8af-0b37ee8bf766'))
+
+    update_file(
+        'types/observatie_meetreeks/md_metadata.xml',
+        build_dov_url(
+            'geonetwork/srv/dut/csw'
+            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+            '&outputSchema=http://www.isotc211.org/2005/gmd'
+            '&elementSetName=full&id=7e166b29-f24b-494b-af66-acc82deb5af2'))
+
+    update_file(
+        'types/observatie_meetreeks/wfsdescribefeaturetype.xml',
+        build_dov_url(
+            'geoserver/monster/wfs?service=WFS&version=2.0.0&request=DescribeFeatureType&typeName=monster:observaties'))
+
+    get_codelists(Observatie, 'types/observatie_meetreeks')
+
+    # types/observatie_secundaire_parameter
+
+    update_file('types/observatie_secundaire_parameter/observatie.xml',
+                build_dov_url('data/observatie/2019-000555.xml'))
+
+    update_file(
+        'types/observatie_secundaire_parameter/wfsgetfeature.xml',
+        build_dov_url(
+            'geoserver/ows?service=WFS&version=2.0.0&request=GetFeature'
+            '&typeName=monster:observaties&count=1&CQL_Filter=observatie_link=%27' + build_dov_url(
+                'data/observatie/2019-000555%27'))
+    )
+
+    update_file(
+        'types/observatie_secundaire_parameter/feature.xml',
+        build_dov_url(
+            'geoserver/ows?service=WFS&version=2.0.0&request=GetFeature'
+            '&typeName=monster:observaties&count=1&CQL_Filter=observatie_link=%27' + build_dov_url(
+                'data/observatie/2019-000555%27')),
+        get_first_featuremember)
+
+    update_file(
+        'types/observatie_secundaire_parameter/fc_featurecatalogue.xml',
+        build_dov_url(
+            'geonetwork/srv/dut/csw'
+            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+            '&outputSchema=http://www.isotc211.org/2005/gfc'
+            '&elementSetName=full&id=0ee52b15-12a5-4314-a8af-0b37ee8bf766'))
+
+    update_file(
+        'types/observatie_secundaire_parameter/md_metadata.xml',
+        build_dov_url(
+            'geonetwork/srv/dut/csw'
+            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+            '&outputSchema=http://www.isotc211.org/2005/gmd'
+            '&elementSetName=full&id=7e166b29-f24b-494b-af66-acc82deb5af2'))
+
+    update_file(
+        'types/observatie_secundaire_parameter/wfsdescribefeaturetype.xml',
+        build_dov_url(
+            'geoserver/monster/wfs?service=WFS&version=2.0.0&request=DescribeFeatureType&typeName=monster:observaties'))
+
+    get_codelists(Observatie, 'types/observatie_secundaire_parameter')
 
     for r in pool.join():
         if r.get_error() is not None:

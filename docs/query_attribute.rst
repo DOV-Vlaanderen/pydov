@@ -49,10 +49,10 @@ list
 
     Example: ``False``
 
-values
-    (Optional) In case the field has a list of possible values, they are listed here as a dictionary mapping the values to a definition (if available).
+codelist
+    (Optional) In case the field has an associated codelist, it is listed here. You can use the codelist to get more information about the possible values of this field.
 
-    Example: ``{'Aa': 'Formatie van Aalter', 'AaBe': 'Lid van Beernem (Formatie van Aalter)', 'AaOe': 'Lid van Oedelem (Formatie van Aalter)'}``
+    Example: ``<pydov.util.codelists.AbstractCodeList: <pydov.util.codelists.CodeListItem: ...>>``
 
 Example
 -------
@@ -117,11 +117,14 @@ Other information about each field includes its datatype (`type`), cost to use i
      'notnull': False,
      'type': 'float'}
 
-Some fields additionally have a list of possible values (`values`):
+.. _map_codelist:
+
+Some fields additionally have an associated codelist (`codelist`), containing the possible values for that field. For example, the `methode` field has a codelist with all possible drilling methods.
+A codelist contains all codes, and for each code its label and optionally a definition.
 
 ::
 
-    fields['methode']['values'].keys()
+    fields['methode']['codelist'].keys()
 
 ::
 
@@ -153,33 +156,39 @@ Some fields additionally have a list of possible values (`values`):
      'voorput',
      'zuigboring']
 
-Sometimes the definition can be used as a (human readable) label for the (machine readable) code in the dataframe. This allows creating an extra column with the mapped labels:
+This allows creating an extra column with the mapped labels and definitions:
+
+::
+
+    from pydov.search.monster import MonsterSearch
+    monstersearch = MonsterSearch()
+
+    fields = monstersearch.get_fields()
+    df = monstersearch.search(max_features=10)
+
+    df['monstertype_label'] = df['monstertype'].map(fields['monstertype']['codelist'].get_label)
+    df['monstertype_definition'] = df['monstertype'].map(fields['monstertype']['codelist'].get_definition)
+
+    print(df[['naam', 'monstertype', 'monstertype_label',
+         'monstertype_definition']].to_string())
+    #                         naam monstertype monstertype_label                                                                                                                                                                                                                                                                                                                 monstertype_definition
+    # 0                       0     geroerd           Geroerd  Monstername waarbij de oorspronkelijke structuur en gelaagdheid van het materiaal niet bewaard wordt. Het resulterende monster laat het niet toe een gedetailleerde beschrijving of bepaalde analyses met betrekking tot de structuur of gelaagdheid  (bv. Bulkdensiteit, volumemassa, grondmechanische proeven, ....) uit te voeren.
+    # 3                       0   ongeroerd         Ongeroerd                                                                                                                                                                                                                              Monstername waarbij de oorspronkelijke structuur en gelaagdheid van het materiaal maximaal bewaard wordt.
+    # 7       000/00/2-F1/M1501   vloeistof         Vloeistof                                       Het monster bestaat uit een van nature vloeibare stof (een stof die gemakkelijk vormveranderingen ondergaat, samendrukbaar is, maar zich verzet tegen deze volumeverandering). Het begrip gelaagdheid is niet relevant voor het karakteriseren van het materiaal waaruit het monster is genomen.
+
+
+Or, for example, to get the lithostratigraphic unit definitions of the formal stratigraphy interpretations of boreholes:
 
 ::
 
     from pydov.search.interpretaties import FormeleStratigrafieSearch
     itp = FormeleStratigrafieSearch()
 
-    fields['lid1']
-    # {'cost': 10,
-    #  'definition': 'eerste eenheid van de laag formele stratigrafie',
-    #  'name': 'lid1',
-    #  'notnull': False,
-    #  'query': False,
-    #  'type': 'string',
-    #  'values': {'Aa': 'Formatie van Aalter',
-    #   'AaBe': 'Lid van Beernem (Formatie van Aalter)',
-    #   'AaOe': 'Lid van Oedelem (Formatie van Aalter)',
-    #   'Bb': 'Formatie van Bolderberg',
-    #   'BbGe': 'Lid van Genk (Formatie van Bolderberg)',
-    #   'BbHo': 'Lid van Houthalen (Formatie van Bolderberg)',
-    #   'BbOp': 'Lid van Opitter (Formatie van Bolderberg)',
-    #   'Bc': 'Formatie van Berchem',
-    #   ..}
-    # }
+    fields = itp.get_fields()
+    df = itp.search(max_features=10)
 
-    df['lid1_label'] = df['lid1'].map(fields['lid1']['values'])
-    df['lid2_label'] = df['lid2'].map(fields['lid2']['values'])
+    df['lid1_label'] = df['lid1'].map(fields['lid1']['codelist'].get_definition)
+    df['lid2_label'] = df['lid2'].map(fields['lid2']['codelist'].get_definition)
 
     print(df[['diepte_laag_van', 'diepte_laag_tot', 'lid1',
          'lid1_label', 'relatie_lid1_lid2', 'lid2', 'lid2_label']].to_string())
@@ -419,7 +428,7 @@ The following example gets borehole information based on a search for groundwate
     fs = GrondwaterFilterSearch()
     bs = BoringSearch()
 
-    filters = fs.search(location=WithinDistance(Point(96540, 186900), 10, 'km'),
+    filters = fs.search(location=WithinDistance(Point(96540, 186900, epsg=31370), 10, 'km'),
                         return_fields=('pkey_filter', 'boringfiche'))
 
     print(filters.head())
@@ -460,10 +469,10 @@ The following example gets borehole samples based on a search for boreholes:
     from pydov.util.query import FuzzyJoin
 
     from pydov.search.boring import BoringSearch
-    from pydov.search.grondmonster import GrondmonsterSearch
+    from pydov.search.monster import MonsterSearch
 
     bs = BoringSearch()
-    gs = GrondmonsterSearch()
+    ms = MonsterSearch()
 
     boreholes = bs.search(max_features=1000, return_fields=('pkey_boring'))
 
@@ -475,6 +484,10 @@ The following example gets borehole samples based on a search for boreholes:
     # 3  https://ontwikkel.dov.vlaanderen.be/data/boring/2016-139027
     # 4  https://ontwikkel.dov.vlaanderen.be/data/boring/2016-139028
 
-    samples = gs.search(query=FuzzyJoin(boreholes, on='pkey_parents'))
-    #                                               pkey_grondmonster naam                                                   pkey_parents       datum  diepte_van_m  diepte_tot_m  ... korrelvolumemassa volumemassa  watergehalte  methode  diameter  fractie
-    # 0  https://ontwikkel.dov.vlaanderen.be/data/monster/2024-325196   M1  [https://ontwikkel.dov.vlaanderen.be/data/boring/1986-076450]  2024-10-30           1.0           3.0  ...               NaN         NaN           NaN      NaN       NaN      NaN
+    samples = ms.search(query=FuzzyJoin(boreholes, on='pkey_parents', using='pkey_boring'))
+    #                                         pkey_monster naam                                       pkey_parents materiaalklasse datum_monstername  diepte_van_m  diepte_tot_m monstertype monstersamenstelling bemonsteringsprocedure bemonsteringsinstrument                         bemonstering_door
+    # 0  https://www.dov.vlaanderen.be/data/monster/201...    1  [https://www.dov.vlaanderen.be/data/boring/197...        sediment        1978-10-16           0.6          0.60   ongeroerd  Enkelvoudig monster                    NaN                  [buis]                                       NaN
+    # 1  https://www.dov.vlaanderen.be/data/monster/201...    1  [https://www.dov.vlaanderen.be/data/boring/200...        sediment        2009-04-30           3.0          3.50   ongeroerd  Enkelvoudig monster                    NaN                  [boor]                                       NaN
+    # 2  https://www.dov.vlaanderen.be/data/monster/201...    1  [https://www.dov.vlaanderen.be/data/boring/196...        sediment        1966-06-28           0.5          0.57   ongeroerd  Enkelvoudig monster                    NaN              [steekbus]  Rijksinstituut voor Grondmechanica (RIG)
+    # 3  https://www.dov.vlaanderen.be/data/monster/201...    1  [https://www.dov.vlaanderen.be/data/boring/196...        sediment        1966-07-06           0.5          0.74   ongeroerd  Enkelvoudig monster                    NaN              [steekbus]  Rijksinstituut voor Grondmechanica (RIG)
+    # 4  https://www.dov.vlaanderen.be/data/monster/201...    1  [https://www.dov.vlaanderen.be/data/boring/196...        sediment        1966-07-12           0.5          0.66   ongeroerd  Enkelvoudig monster                    NaN              [steekbus]  Rijksinstituut voor Grondmechanica (RIG)

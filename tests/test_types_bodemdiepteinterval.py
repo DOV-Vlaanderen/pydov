@@ -1,7 +1,7 @@
 """Module grouping tests for the pydov.types.bodemdiepteinterval module."""
 
 from pydov.types.bodemdiepteinterval import Bodemdiepteinterval
-from pydov.types.fields import ReturnFieldList
+from pydov.search.fields import ReturnFieldList
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes
 
@@ -17,6 +17,9 @@ class TestBodemdiepteinterval(AbstractTestTypes):
     datatype_class = Bodemdiepteinterval
     namespace = 'https://www.dov.vlaanderen.be/bodem'
     pkey_base = build_dov_url('data/bodemdiepteinterval/')
+
+    sorted_subtypes = []
+    sorted_fieldsets = []
 
     field_names = [
         'pkey_diepteinterval', 'pkey_bodemopbouw', 'pkey_bodemlocatie',

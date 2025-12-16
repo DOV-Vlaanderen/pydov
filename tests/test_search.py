@@ -6,15 +6,12 @@ import pytest
 
 from pydov.search.bodemlocatie import BodemlocatieSearch
 from pydov.search.bodemdiepteinterval import BodemdiepteintervalSearch
-from pydov.search.bodemmonster import BodemmonsterSearch
-from pydov.search.bodemobservatie import BodemobservatieSearch
 from pydov.search.bodemsite import BodemsiteSearch
 from pydov.search.bodemclassificatie import BodemclassificatieSearch
 from pydov.search.boring import BoringSearch
 from pydov.search.generic import WfsSearch
-from pydov.search.grondmonster import GrondmonsterSearch
+from pydov.search.monster import MonsterSearch
 from pydov.search.grondwaterfilter import GrondwaterFilterSearch
-from pydov.search.grondwatermonster import GrondwaterMonsterSearch
 from pydov.search.grondwatervergunning import GrondwaterVergunningSearch
 from pydov.search.interpretaties import (
     FormeleStratigrafieSearch, GecodeerdeLithologieSearch,
@@ -22,33 +19,33 @@ from pydov.search.interpretaties import (
     InformeleHydrogeologischeStratigrafieSearch, InformeleStratigrafieSearch,
     LithologischeBeschrijvingenSearch, QuartairStratigrafieSearch)
 from pydov.search.sondering import SonderingSearch
+from pydov.search.observatie import ObservatieSearch
 from pydov.util.errors import InvalidSearchParameterError
 from pydov.util.location import Point, WithinDistance
+from pydov.util.owsutil import typeconvert
 from tests.abstract import ServiceCheck
 
-from pydov.search.abstract import AbstractCommon
-
-search_objects = [BodemsiteSearch(),
-                  BodemlocatieSearch(),
-                  BodemdiepteintervalSearch(),
-                  BodemobservatieSearch(),
-                  BodemmonsterSearch(),
-                  BodemclassificatieSearch(),
-                  BoringSearch(),
-                  SonderingSearch(),
-                  GrondwaterFilterSearch(),
-                  GrondwaterMonsterSearch(),
-                  GrondwaterVergunningSearch(),
-                  FormeleStratigrafieSearch(),
-                  InformeleHydrogeologischeStratigrafieSearch(),
-                  GeotechnischeCoderingSearch(),
-                  QuartairStratigrafieSearch(),
-                  InformeleStratigrafieSearch(),
-                  HydrogeologischeStratigrafieSearch(),
-                  GecodeerdeLithologieSearch(),
-                  LithologischeBeschrijvingenSearch(),
-                  GrondmonsterSearch(),
-                  WfsSearch('dov-pub:Opdrachten')]
+search_objects = [
+    BodemsiteSearch(),
+    BodemlocatieSearch(),
+    BodemdiepteintervalSearch(),
+    BodemclassificatieSearch(),
+    BoringSearch(),
+    SonderingSearch(),
+    GrondwaterFilterSearch(),
+    GrondwaterVergunningSearch(),
+    FormeleStratigrafieSearch(),
+    InformeleHydrogeologischeStratigrafieSearch(),
+    GeotechnischeCoderingSearch(),
+    QuartairStratigrafieSearch(),
+    InformeleStratigrafieSearch(),
+    HydrogeologischeStratigrafieSearch(),
+    GecodeerdeLithologieSearch(),
+    LithologischeBeschrijvingenSearch(),
+    MonsterSearch(),
+    ObservatieSearch(),
+    WfsSearch("dov-pub:Opdrachten"),
+]
 
 
 @pytest.mark.parametrize("objectsearch", search_objects)
@@ -88,7 +85,7 @@ def test_search_location(objectsearch):
         operations on the corresponding DOV type.
 
     """
-    objectsearch.search(location=WithinDistance(Point(100000, 100000), 100))
+    objectsearch.search(location=WithinDistance(Point(100000, 100000, epsg=31370), 100))
 
 
 @pytest.mark.online
@@ -107,7 +104,7 @@ def test_search_maxfeatures(objectsearch):
         operations on the corresponding DOV type.
 
     """
-    objectsearch.search(location=WithinDistance(Point(100000, 100000), 100),
+    objectsearch.search(location=WithinDistance(Point(100000, 100000, epsg=31370), 100),
                         max_features=10)
 
 
@@ -210,33 +207,33 @@ def test_typeconvert_datetime():
     """Test the type conversion function for datetime strings."""
 
     # Zulu time
-    x = AbstractCommon._typeconvert('2023-02-07T09:19:24Z', 'datetime')
+    x = typeconvert('2023-02-07T09:19:24Z', 'datetime')
     assert isinstance(x, datetime.datetime)
     assert x == datetime.datetime(2023, 2, 7, 10, 19, 24, 0)
 
     # Brussels time
-    x = AbstractCommon._typeconvert('2023-02-07T09:19:24+0100', 'datetime')
+    x = typeconvert('2023-02-07T09:19:24+0100', 'datetime')
     assert isinstance(x, datetime.datetime)
     assert x == datetime.datetime(
         2023, 2, 7, 9, 19, 24, 0,
         datetime.timezone(datetime.timedelta(hours=1)))
 
     # Brussels time, with colon
-    x = AbstractCommon._typeconvert('2023-02-07T09:19:24+01:00', 'datetime')
+    x = typeconvert('2023-02-07T09:19:24+01:00', 'datetime')
     assert isinstance(x, datetime.datetime)
     assert x == datetime.datetime(
         2023, 2, 7, 9, 19, 24, 0,
         datetime.timezone(datetime.timedelta(hours=1)))
 
     # With milliseconds
-    x = AbstractCommon._typeconvert('2023-02-07T09:19:24.123+01:00', 'datetime')
+    x = typeconvert('2023-02-07T09:19:24.123+01:00', 'datetime')
     assert isinstance(x, datetime.datetime)
     assert x == datetime.datetime(
         2023, 2, 7, 9, 19, 24, 123,
         datetime.timezone(datetime.timedelta(hours=1)))
 
     # With more milliseconds
-    x = AbstractCommon._typeconvert(
+    x = typeconvert(
         '2023-02-07T09:19:24.123456+01:00', 'datetime')
     assert isinstance(x, datetime.datetime)
     assert x == datetime.datetime(

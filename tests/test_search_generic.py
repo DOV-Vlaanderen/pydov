@@ -1,7 +1,7 @@
 """Module grouping tests for the generic search module."""
 
 from pydov.search.generic import WfsSearch
-from pydov.types.fields import ReturnFieldList
+from pydov.search.fields import ReturnFieldList
 from pydov.types.generic import WfsTypeFactory
 from owslib.fes2 import PropertyIsEqualTo
 from pydov.util.dovutil import build_dov_url
@@ -18,7 +18,7 @@ location_wfs_getfeature = 'tests/data/types/generic/' \
 location_wfs_feature = \
     'tests/data/types/generic/feature.xml'
 location_dov_xml = None
-location_xsd_base = 'tests/data/types/generic/xsd_*.xml'
+location_codelists = 'tests/data/types/generic'
 
 
 class TestWfsSearch(AbstractTestSearch):

@@ -5,7 +5,7 @@ from owslib.fes2 import PropertyIsEqualTo
 
 from pydov.search.bodemdiepteinterval import BodemdiepteintervalSearch
 from pydov.types.bodemdiepteinterval import Bodemdiepteinterval
-from pydov.types.fields import ReturnFieldList
+from pydov.search.fields import ReturnFieldList
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestSearch
 
@@ -16,12 +16,13 @@ location_wfs_describefeaturetype = \
     'tests/data/types/bodemdiepteinterval/wfsdescribefeaturetype.xml'
 location_wfs_getfeature = 'tests/data/types/bodemdiepteinterval/wfsgetfeature.xml'
 location_wfs_feature = 'tests/data/types/bodemdiepteinterval/feature.xml'
-location_xsd_base = 'tests/data/types/bodemdiepteinterval/xsd_*.xml'
+location_codelists = 'tests/data/types/bodemdiepteinterval'
 
 
 class TestBodemdiepteintervalSearch(AbstractTestSearch):
 
     search_instance = BodemdiepteintervalSearch()
+    search_class = BodemdiepteintervalSearch
     datatype_class = Bodemdiepteinterval
 
     valid_query_single = PropertyIsEqualTo(
@@ -34,7 +35,7 @@ class TestBodemdiepteintervalSearch(AbstractTestSearch):
 
     valid_returnfields = ReturnFieldList.from_field_names('pkey_diepteinterval', 'naam', 'bovengrens1_cm')
     valid_returnfields_subtype = None
-    valid_returnfields_extra = ReturnFieldList.from_field_names('pkey_diepteinterval', 'naam', 'Monsters')
+    valid_returnfields_extra = ReturnFieldList.from_field_names('pkey_diepteinterval', 'naam', 'Aantal_monsters')
 
     df_default_columns = [
         'pkey_diepteinterval', 'pkey_bodemopbouw', 'pkey_bodemlocatie',

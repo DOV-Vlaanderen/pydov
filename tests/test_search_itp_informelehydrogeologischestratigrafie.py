@@ -6,7 +6,7 @@ from pandas import DataFrame
 
 from pydov.search.interpretaties import \
     InformeleHydrogeologischeStratigrafieSearch
-from pydov.types.fields import ReturnFieldList
+from pydov.search.fields import ReturnFieldList
 from pydov.types.interpretaties import InformeleHydrogeologischeStratigrafie
 from tests.abstract import AbstractTestSearch
 
@@ -29,14 +29,15 @@ location_dov_xml = \
     'tests/data/types/interpretaties/' \
     'informele_hydrogeologische_stratigrafie' \
     '/informele_hydrogeologische_stratigrafie.xml'
-location_xsd_base = \
+location_codelists = \
     'tests/data/types/interpretaties/' \
-    'informele_hydrogeologische_stratigrafie/xsd_*.xml'
+    'informele_hydrogeologische_stratigrafie'
 
 
 class TestInformeleHydrogeologischeStratigrafieSearch(AbstractTestSearch):
 
     search_instance = InformeleHydrogeologischeStratigrafieSearch()
+    search_class = InformeleHydrogeologischeStratigrafieSearch
     datatype_class = InformeleHydrogeologischeStratigrafie
 
     valid_query_single = PropertyIsEqualTo(propertyname='Proefnummer',

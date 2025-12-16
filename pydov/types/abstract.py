@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """Module containing the base DOV data types."""
 
+import inspect
+import sys
 import types
 import warnings
 from collections import OrderedDict
@@ -9,18 +11,182 @@ import numpy as np
 from owslib.etree import etree
 
 import pydov
-from pydov.search.abstract import AbstractCommon
-from pydov.types.fields import AbstractField, ReturnFieldList
+from pydov.search.fields import ReturnFieldList
+from pydov.types.fields import AbstractField
 from pydov.util import owsutil
 from pydov.util.dovutil import get_dov_xml, parse_dov_xml
 from pydov.util.errors import RemoteFetchError, XmlFetchWarning
 from pydov.util.net import LocalSessionThreadPool
+from pydov.util.notebook import HtmlFormatter
 
 from ..util.errors import InvalidFieldError, XmlParseError, XmlParseWarning
 from ..util.hooks import HookRunner
 
 
-class AbstractTypeCommon(AbstractCommon):
+class AbstractFieldsObject(object):
+    """Abstract base class for objects containing fields, e.g.
+    AbstractDovFieldSet, AbstractDovType, AbstractDovSubType."""
+
+    @classmethod
+    def get_fields(cls):
+        """Return the metadata of the fields available for this fieldset.
+
+        Returns
+        -------
+        collections.OrderedDict<str,dict>
+            Ordered dictionary mapping the field (column) name to the
+            dictionary containing the metadata of this field.
+
+            This metadata dictionary includes at least:
+
+            name (str)
+                The name of the field in the output data.
+
+            source (str)
+                The source of the field (either `wfs` or `xml`).
+
+            sourcefield (str)
+                The name of the field in the source (source + sourcefield
+                identify the origin of the data).
+
+            type (str)
+                Datatype of the output data field (one of `string`, `float`,
+                `integer`, `date`, `datetime`).
+
+            definition (str)
+                The definition of the field.
+
+            notnull (boolean)
+                Whether the field is mandatory (True) or can be null (False).
+
+        """
+        raise NotImplementedError
+
+    @classmethod
+    def get_codelists(cls, superclass=None):
+        """Get a set of codelists defined in the class fields.
+
+        Parameters
+        ----------
+        superclass : type, optional
+            The superclass to check against. If provided, only codelists from
+            subclasses of the given superclass will be returned.
+
+        Returns
+        -------
+        set
+            A set of codelists defined in the class fields.
+        """
+        fields = cls.get_fields()
+
+        codelists = set()
+
+        for f in fields.values():
+            if 'codelist' in f and f['codelist'] is not None:
+                if superclass is None or issubclass(
+                        f['codelist'].__class__, superclass):
+                    codelists.add(f['codelist'])
+
+        return codelists
+
+    @classmethod
+    def extend_fields(cls, extra_fields):
+        """Extend the fields of this type with given extra fields and return
+        the new fieldset.
+
+        Parameters
+        ----------
+        extra_fields : list of pydov.types.fields.AbstractField
+            Extra fields to be appended to the existing fields of this type.
+
+        Returns
+        -------
+        list of pydov.types.fields.AbstractField
+            List of the existing fields of this type, extended with the
+            extra fields supplied in extra_fields.
+
+        """
+        fields = list(cls.fields)
+        fields.extend(extra_fields)
+        return fields
+
+    @classmethod
+    def with_extra_fields(cls, extra_fields):
+        """Build a new subclass with the given extra fields
+        added to it.
+
+        Parameters
+        ----------
+        extra_fields : list of pydov.types.fields.AbstractField or subclass of
+                         AbstractDovFieldSet
+            Extra fields to be appended to the existing fields of this
+            (sub)type.
+
+        Returns
+        -------
+        AbstractDov(Sub)Type
+            New AbstractDov(Sub)Type with the given extra fields.
+        """
+        if inspect.isclass(extra_fields) \
+                and issubclass(extra_fields, AbstractDovFieldSet):
+            extra_fields = extra_fields.fields
+
+        class newType(cls):
+            fields = cls.extend_fields(extra_fields)
+        return newType
+
+
+class AbstractDovFieldSet(AbstractFieldsObject, HtmlFormatter):
+    """Class representing a set of fields to be used to extend existing fields
+    of a certain AbstractDovType or AbstractDovSubType.
+
+    Attributes
+    ----------
+    intended_for : list of string
+        Use this fieldset to extend the fields of this type or subtype. Using
+        the fieldset for another (sub)type might not yield the correct results.
+        The list should contain class names of subclassed of AbstractDovType
+        or AbstractDovSubType.
+
+    fields : list of pydov.types.fields.AbstractField
+        List of fields of this type.
+
+    """
+
+    intended_for = []
+
+    fields = []
+
+    def _repr_html_(self):
+        html = (f'<div class="description"><p>{self.get_description()}</p>'
+                '</div>')
+        html += (f'<div class="fields">{self.get_fields()._repr_html_()}</p>'
+                 '</div>')
+        return super()._repr_html_(html)
+
+    @classmethod
+    def get_fields(cls):
+        fields = OrderedDict(
+            zip([f['name'] for f in cls.fields],
+                [f for f in cls.fields]))
+
+        return fields
+
+    @classmethod
+    def get_field_names(cls):
+        """Return the names of the fields for this fieldset.
+
+        Returns
+        -------
+        list<str>
+            List of the field names available for this fieldset. These will
+            also be the names of the columns in the output dataframe.
+
+        """
+        return [f.get('name') for f in cls.fields]
+
+
+class AbstractTypeCommon(AbstractFieldsObject):
     """Class grouping methods common to AbstractDovType and
     AbstractDovSubType.
 
@@ -73,30 +239,95 @@ class AbstractTypeCommon(AbstractCommon):
 
         if split_fn is not None:
             items = split_fn(text)
-            return [cls._typeconvert(item, returntype) for item in items]
+            return [owsutil.typeconvert(item, returntype) for item in items]
 
-        return cls._typeconvert(text, returntype)
+        return owsutil.typeconvert(text, returntype)
 
     @classmethod
-    def extend_fields(cls, extra_fields):
-        """Extend the fields of this type with given extra fields and return
-        the new fieldset.
+    def _filter_classes_intended_for(cls, c):
+        try:
+            return cls.__qualname__ in c.intended_for
+        except AttributeError:
+            return False
+
+    @classmethod
+    def _get_module_classes_metadata(cls, base_class, filter_fn=None):
+        """Get metadata of the specific classes in a the same module as this
+        class.
+
+        Only returns metadata of the classes matched by the parameters.
 
         Parameters
         ----------
-        extra_fields : list of pydov.types.fields.AbstractField
-            Extra fields to be appended to the existing fields of this type.
+        base_class : class
+            Only return classes that are a subclass of this class.
+        filter_fn : function accepting a single argument <class>, optional
+            Filter function to apply to matching classes to further
+            filter the results, by default None which will apply no additional
+            filtering.
 
         Returns
         -------
-        list of pydov.types.fields.AbstractField
-            List of the existing fields of this type, extended with the
-            extra fields supplied in extra_fields.
+        dict<str,dict>
+            Dictionary containing the metadata of the available classes.
 
         """
-        fields = list(cls.fields)
-        fields.extend(extra_fields)
-        return fields
+        classes = [
+            c[1] for c in inspect.getmembers(
+                sys.modules[cls.__module__], inspect.isclass)
+            if (issubclass(c[1], base_class)
+                and c[1] != base_class
+                and (filter_fn is None or filter_fn(c[1])))
+        ]
+
+        def get_definition(clazz):
+            if clazz.__doc__:
+                doc = [clazz.__doc__]
+            else:
+                doc = []
+
+            doc.extend(['It has the following fields: ' +
+                        ', '.join(clazz.get_field_names()) + '.'])
+
+            return ' '.join(doc)
+
+        return dict(zip(
+            [c.__name__ for c in classes],
+            [{
+                'name': c.__name__,
+                'class': c,
+                'definition': get_definition(c)
+            } for c in classes])
+        )
+
+    @classmethod
+    def get_fieldsets(cls):
+        """List all available fieldsets to use with this (sub)type.
+
+        Returns
+        -------
+        fieldsets : dict<str,dict>
+            Dictionary containing the metadata of the available fieldsets,
+            where the metadata dictionary includes:
+
+            name (str)
+                The name of the fieldsets.
+
+            definition (str)
+                The definition of the fieldsets and a list of its fields. For a
+                definition of all the fields, initialise a search object with
+                a type extended with this fieldset and use its `get_fields`
+                method. E.g. `ObjectSearch(DovType.with_extra_fields(FieldSet)
+                ).get_fields()`
+
+            class (class)
+                Class reference of this fieldset.
+
+        """
+        return cls._get_module_classes_metadata(
+            AbstractDovFieldSet,
+            filter_fn=cls._filter_classes_intended_for
+        )
 
 
 class AbstractDovSubType(AbstractTypeCommon):
@@ -193,13 +424,17 @@ class AbstractDovSubType(AbstractTypeCommon):
         instance = cls()
 
         for field in cls.get_fields().values():
-            instance.data[field['name']] = instance._parse(
-                func=element.findtext,
-                xpath=field['sourcefield'],
-                namespace=None,
-                returntype=field.get('type', None),
-                split_fn=field.get('split_fn', None)
-            )
+            if field['source'] == 'xml':
+                instance.data[field['name']] = instance._parse(
+                    func=element.findtext,
+                    xpath=field['sourcefield'],
+                    namespace=None,
+                    returntype=field.get('type', None),
+                    split_fn=field.get('split_fn', None)
+                )
+            elif field['source'] == 'custom_xml':
+                instance.data[field['name']] = field.calculate(
+                    cls, element) or np.nan
 
         instance._parse_subtypes(etree.tostring(element))
         return instance
@@ -224,37 +459,6 @@ class AbstractDovSubType(AbstractTypeCommon):
 
     @classmethod
     def get_fields(cls):
-        """Return the metadata of the fields available for this subtype.
-
-        Returns
-        -------
-        collections.OrderedDict<str,dict>
-            Ordered dictionary mapping the field (column) name to the
-            dictionary containing the metadata of this field.
-
-            This metadata dictionary includes at least:
-
-            name (str)
-                The name of the field in the output data.
-
-            source (str)
-                The source of the field (either `wfs` or `xml`).
-
-            sourcefield (str)
-                The name of the field in the source (source + sourcefield
-                identify the origin of the data).
-
-            type (str)
-                Datatype of the output data field (one of `string`, `float`,
-                `integer`, `date`, `datetime`).
-
-            definition (str)
-                The definition of the field.
-
-            notnull (boolean)
-                Whether the field is mandatory (True) or can be null (False).
-
-        """
         fields = OrderedDict(
             zip([f['name'] for f in cls.fields],
                 [f for f in cls.fields]))
@@ -436,6 +640,69 @@ class AbstractDovType(AbstractTypeCommon):
                     "dataframe will be incomplete.").format(self.pkey),
                 XmlParseWarning)
             return False
+
+    @classmethod
+    def get_subtypes(cls):
+        """List all available subtypes to use with this type.
+
+        Returns
+        -------
+        subtypes : dict<str,dict>
+            Dictionary containing the metadata of the available subtypes,
+            where the metadata dictionary includes:
+
+            name (str)
+                The name of the subtype.
+
+            definition (str)
+                The definition of the subtype and a list of its fields. For a
+                definition of all the fields, initialise a search object with
+                a type having this subtype and use its `get_fields` method.
+                E.g. `ObjectSearch(DovType.with_subtype(SubType)).get_fields()`
+
+            class (class)
+                Class reference of this subtype.
+
+        """
+        return cls._get_module_classes_metadata(
+            AbstractDovSubType,
+            filter_fn=cls._filter_classes_intended_for
+        )
+
+    @classmethod
+    def with_subtype(cls, subtype):
+        """Build a new subclass of this type with the given subtype.
+
+        Parameters
+        ----------
+        subtype : AbstractDovSubType
+            Subtype to use in the new class.
+
+        Returns
+        -------
+        AbstractDovType
+            New AbstractDovType with the given subtype.
+
+        Raises
+        ------
+        TypeError
+            When the given subtype is not a class.
+
+        ValueError
+            When the given subtype is not a subclass of AbstractDovSubType.
+        """
+        if not inspect.isclass(subtype):
+            raise ValueError('subtype should be a class, specifically a '
+                             'subclass of AbstractDovSubType.')
+
+        if not issubclass(subtype, AbstractDovSubType):
+            raise ValueError(f"'{subtype.__name__}' is not a valid subtype, "
+                             "is it a subclass of AbstractDovSubType?")
+
+        class newType(cls):
+            subtypes = [subtype]
+
+        return newType
 
     @classmethod
     def from_wfs_element(cls, feature, namespace):
@@ -670,25 +937,31 @@ class AbstractDovType(AbstractTypeCommon):
         return fields
 
     @classmethod
-    def get_xsd_schemas(cls):
-        """Get a set of distinct XSD schema URLs for this type and its
-        subtypes.
+    def get_codelists(cls, superclass=None):
+        """Get a set of codelists defined in the class fields.
+
+        Parameters
+        ----------
+        superclass : type, optional
+            The superclass to check against. If provided, only codelists from
+            subclasses of the given superclass will be returned.
 
         Returns
         -------
-        set of str
-            A set of XSD schema URLs.
-
+        set
+            A set of codelists defined in the class fields.
         """
-        xsd_schemas = set()
+        fields = cls.get_fields()
 
-        fields = cls.get_fields(source='xml', include_subtypes=True)
+        codelists = set()
 
         for f in fields.values():
-            if 'xsd_type' in f:
-                xsd_schemas.add(f['xsd_schema'])
+            if 'codelist' in f and f['codelist'] is not None:
+                if superclass is None or issubclass(
+                        f['codelist'].__class__, superclass):
+                    codelists.add(f['codelist'])
 
-        return xsd_schemas
+        return codelists
 
     @classmethod
     def to_df_array(cls, iterable, return_fields=None):

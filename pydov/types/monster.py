@@ -1,0 +1,328 @@
+# -*- coding: utf-8 -*-
+"""Module containing the DOV data type for monster, including
+subtypes."""
+from pydov.types.fields import WfsField, XmlField, _CustomXmlField
+from pydov.util.codelists import OsloCodeList
+from .abstract import AbstractDovSubType, AbstractDovType, AbstractDovFieldSet
+
+import datetime
+import numpy as np
+
+
+class TijdstipField(_CustomXmlField):
+    """Retrieves the time from a TemporeelType XML field."""
+
+    def __init__(self, name, definition, base_xpath):
+        """Initialisation.
+
+        Parameters
+        ----------
+        name : str
+            Name of this field in the return dataframe.
+        definition : str
+            Definition of this field.
+        base_xpath : str
+            XPath expression of the TemporeelType XML element.
+        """
+        super().__init__(
+            name=name,
+            definition=definition,
+            datatype='string',
+            notnull=False
+        )
+        self.base_xpath = base_xpath.rstrip('/')
+
+    def calculate(self, cls, tree):
+        """Calculate the value for the custom field.
+
+        Parameters
+        ----------
+        cls : AbstractDovType
+            Class of the type this field belongs to.
+        tree : etree.ElementTree
+            ElementTree of the DOV XML for this instance.
+
+        Returns
+        -------
+        str
+            Timestamp in the format '%H:%M:%S'. Returns the value of the
+            'tijdstip' field from the TemporeelType field. If 'tijdstip' is
+            null, returns the time part of the 'datumtijd' field.
+        """
+        tijdstip = cls._parse(
+            func=tree.findtext,
+            xpath=self.base_xpath + '/tijdstip',
+            namespace=None,
+            returntype='string'
+        )
+        if tijdstip is not np.nan:
+            return tijdstip
+
+        datumtijd = cls._parse(
+            func=tree.findtext,
+            xpath=self.base_xpath + '/datumtijd',
+            namespace=None,
+            returntype='string'
+        )
+        if datumtijd is not np.nan:
+            timestamp = datetime.datetime.fromisoformat(datumtijd)
+            return timestamp.strftime('%H:%M:%S')
+
+        return np.nan
+
+
+class DatumField(_CustomXmlField):
+    """Retrieves the time from a TemporeelType XML field."""
+
+    def __init__(self, name, definition, base_xpath):
+        """Initialisation.
+
+        Parameters
+        ----------
+        name : str
+            Name of this field in the return dataframe.
+        definition : str
+            Definition of this field.
+        base_xpath : str
+            XPath expression of the TemporeelType XML element.
+        """
+        super().__init__(
+            name=name,
+            definition=definition,
+            datatype='string',
+            notnull=False
+        )
+        self.base_xpath = base_xpath.rstrip('/')
+
+    def calculate(self, cls, tree):
+        """Calculate the value for the custom field.
+
+        Parameters
+        ----------
+        cls : AbstractDovType
+            Class of the type this field belongs to.
+        tree : etree.ElementTree
+            ElementTree of the DOV XML for this instance.
+
+        Returns
+        -------
+        str
+            Date in the format '%Y-%m-%d'. Returns the value of the 'datum'
+            field from the TemporeelType field. If 'datum' is null, returns the
+            date part of the 'datumtijd' field.
+        """
+        date = cls._parse(
+            func=tree.findtext,
+            xpath=self.base_xpath + '/datum',
+            namespace=None,
+            returntype='string'
+        )
+        if date is not np.nan:
+            return date
+
+        date = cls._parse(
+            func=tree.findtext,
+            xpath=self.base_xpath + '/datumtijd',
+            namespace=None,
+            returntype='string'
+        )
+        if date is not np.nan:
+            date = datetime.datetime.fromisoformat(date)
+            return date.strftime('%Y-%m-%d')
+
+        return np.nan
+
+
+class MonsterBehandelingField(_CustomXmlField):
+    """Field for retrieving the treatment of the sampling from the relevant XML
+    field."""
+
+    def __init__(self, name, definition):
+        super().__init__(
+            name=name,
+            definition=definition,
+            datatype='string',
+            notnull=False
+        )
+
+    def calculate(self, cls, tree):
+        behandeling = cls._parse(
+            func=tree.findtext,
+            xpath='/behandeling',
+            namespace=None,
+            returntype='string'
+        )
+        if behandeling is not np.nan and behandeling != '':
+            return behandeling
+        else:
+            return 'monstervoorbereiding'
+
+
+class MonsterDetails(AbstractDovFieldSet):
+    """Fieldset containing fields with extra
+    details about the sample.
+    """
+
+    intended_for = ['Monster']
+
+    fields = [
+        TijdstipField(name='tijdstip_monstername',
+                      definition="Tijdstip waarop het monster werd "
+                                 "verkregen uit het bemonsterdObject.",
+                      base_xpath='.//bemonsteringstijdstip')
+    ]
+
+
+class BemonsterdObject(AbstractDovSubType):
+    """Subtype listing the sampled object(s) of the sample."""
+
+    rootpath = './/monster/bemonsterdObject'
+    intended_for = ['Monster']
+
+    fields = [
+        XmlField(name='bemonsterd_object_type',
+                 source_xpath='/objecttype',
+                 definition='Objecttype',
+                 datatype='string'),
+        XmlField(name='bemonsterd_object_naam',
+                 source_xpath='/naam',
+                 definition='DOV naam',
+                 datatype='string'),
+        XmlField(name='bemonsterd_object_permkey',
+                 source_xpath='/permkey',
+                 definition='Een unieke DOV identifier '
+                            'in de vorm van een permkey.',
+                 datatype='string')
+    ]
+
+
+class Opslaglocatie(AbstractDovSubType):
+    """Subtype listing the storage location(s) of the sample."""
+
+    rootpath = './/monster/opslaglocatie'
+    intended_for = ['Monster']
+
+    fields = [
+        XmlField(name='opslaglocatie_naam',
+                 source_xpath='/locatie',
+                 definition='Oplaglocatie',
+                 datatype='string'),
+        XmlField(name='opslaglocatie_van',
+                 source_xpath='/beschikbaar_vanaf',
+                 definition='Startdatum van de opslag van '
+                            'het monster op die locatie.',
+                 datatype='string'),
+        XmlField(name='opslaglocatie_tot',
+                 source_xpath='/beschikbaar_tot',
+                 definition='Einddatum van de opslag '
+                            'van het monster op die locatie.',
+                 datatype='string')
+    ]
+
+
+class Monsterbehandeling(AbstractDovSubType):
+    """Subtype containing fields about the
+    treatment of the sample."""
+
+    intended_for = ['Monster']
+    rootpath = './/monster/verwerkingsdetails'
+
+    fields = [
+        XmlField(name='monsterbehandeling_door',
+                 source_xpath='.//procesoperator/naam',
+                 definition="Operator die het monster behandeld heeft",
+                 datatype='string'),
+        DatumField(name='monsterbehandeling_datum',
+                   base_xpath='.//verwerkingsdetails/tijdstip',
+                   definition="Datum waarop het monster behandeld werd."),
+        TijdstipField(name='monsterbehandeling_tijdstip',
+                      definition="Tijdstip waarop het monster behandeld werd.",
+                      base_xpath='.//verwerkingsdetails/tijdstip'),
+        MonsterBehandelingField(name='monsterbehandeling_behandeling',
+                                definition="De behandeling of voorbereiding "
+                                           "van het monster"),
+        XmlField(name='monsterbehandeling_behandeling_waarde',
+                 source_xpath='behandeling_waarde',
+                 definition=("De waarde van de behandeling van het monster"),
+                 datatype='string')
+    ]
+
+
+class Monster(AbstractDovType):
+    """Class representing the DOV data type for ground samples."""
+
+    def _split_pipes_to_list(agg_value):
+        """
+        Splits the given aggregated value into a list of values.
+
+        Parameters
+        ----------
+        agg_value : str
+            Aggregated value containing the aggregated values, separated by
+            '|'.
+
+        Returns
+        -------
+        generator of str
+            Generator yielding non-empty items extracted from the input.
+        """
+        return (item for item in agg_value.strip(
+            '| ').split('|') if item != '')
+
+    fields = [
+        WfsField(name='pkey_monster',
+                 source_field='monster_link',
+                 datatype='string'),
+        WfsField(name='naam',
+                 source_field='monster',
+                 datatype='string'),
+        WfsField(name='pkey_parents',
+                 source_field='gekoppeld_aan_link',
+                 datatype='string',
+                 split_fn=_split_pipes_to_list),
+        WfsField(name='materiaalklasse',
+                 source_field='materiaalklasse',
+                 datatype='string'),
+        WfsField(name='datum_monstername',
+                 source_field='bemonsteringsdatum',
+                 datatype='date'),
+        WfsField(name='diepte_van_m',
+                 source_field='diepte_van_m',
+                 datatype='float'),
+        WfsField(name='diepte_tot_m',
+                 source_field='diepte_tot_m',
+                 datatype='float'),
+        WfsField(name='monstertype',
+                 source_field='monstertype',
+                 datatype='string',
+                 codelist=OsloCodeList(
+                     'bemonsteringstype', 'string'
+                 )),
+        WfsField(name='monstersamenstelling',
+                 source_field='monstersamenstelling',
+                 datatype='string'),
+        WfsField(name='bemonsteringsprocedure',
+                 source_field='bemonsteringsprocedure',
+                 datatype='string'),
+        WfsField(name='bemonsteringsinstrument',
+                 source_field='bemonsteringsinstrument',
+                 datatype='string',
+                 split_fn=_split_pipes_to_list),
+        WfsField(name='bemonstering_door',
+                 source_field='bemonstering_door',
+                 datatype='string')
+    ]
+
+    pkey_fieldname = 'monster_link'
+
+    def __init__(self, pkey):
+        """Initialisation.
+
+        Parameters
+        ----------
+        pkey : str
+            Permanent key of the Monster, being a URI of the form
+            `https://www.dov.vlaanderen.be/data/monster/<id>`.
+
+        """
+        super().__init__('monster', pkey)

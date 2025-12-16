@@ -1,6 +1,6 @@
 """Module grouping tests for the
 pydov.types.interpretaties.InformeleStratigrafie class."""
-from pydov.types.fields import ReturnFieldList
+from pydov.search.fields import ReturnFieldList
 from pydov.types.interpretaties import GecodeerdeLithologie
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes
@@ -22,6 +22,9 @@ class TestGecodeerdeLithologie(AbstractTestTypes):
     datatype_class = GecodeerdeLithologie
     namespace = 'http://dov.vlaanderen.be/ocdov/interpretaties'
     pkey_base = build_dov_url('data/interpretatie/')
+
+    sorted_subtypes = ['GecodeerdeLithologieLaag']
+    sorted_fieldsets = []
 
     field_names = [
         'pkey_interpretatie', 'pkey_boring',

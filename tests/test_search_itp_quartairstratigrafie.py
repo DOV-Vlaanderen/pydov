@@ -3,7 +3,7 @@ from owslib.fes2 import PropertyIsEqualTo
 from pandas import DataFrame
 
 from pydov.search.interpretaties import QuartairStratigrafieSearch
-from pydov.types.fields import ReturnFieldList
+from pydov.search.fields import ReturnFieldList
 from pydov.types.interpretaties import QuartairStratigrafie
 from tests.abstract import AbstractTestSearch
 
@@ -22,13 +22,14 @@ location_wfs_feature = \
 location_dov_xml = \
     'tests/data/types/interpretaties/quartaire_stratigrafie/' \
     'quartaire_stratigrafie.xml'
-location_xsd_base = \
-    'tests/data/types/interpretaties/quartaire_stratigrafie/xsd_*.xml'
+location_codelists = \
+    'tests/data/types/interpretaties/quartaire_stratigrafie'
 
 
 class TestQuartairStratigrafieSearch(AbstractTestSearch):
 
     search_instance = QuartairStratigrafieSearch()
+    search_class = QuartairStratigrafieSearch
     datatype_class = QuartairStratigrafie
 
     valid_query_single = PropertyIsEqualTo(propertyname='Proefnummer',

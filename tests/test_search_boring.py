@@ -6,8 +6,8 @@ import pytest
 from owslib.fes2 import PropertyIsEqualTo
 
 from pydov.search.boring import BoringSearch
-from pydov.types.boring import Boring
-from pydov.types.fields import GeometryReturnField, ReturnFieldList
+from pydov.types.boring import Boring, MethodeXyz
+from pydov.search.fields import GeometryReturnField, ReturnFieldList
 from tests.abstract import AbstractTestSearch, ServiceCheck
 
 location_md_metadata = 'tests/data/types/boring/md_metadata.xml'
@@ -18,13 +18,14 @@ location_wfs_describefeaturetype = \
 location_wfs_getfeature = 'tests/data/types/boring/wfsgetfeature.xml'
 location_wfs_feature = 'tests/data/types/boring/feature.xml'
 location_dov_xml = 'tests/data/types/boring/boring.xml'
-location_xsd_base = 'tests/data/types/boring/xsd_*.xml'
+location_codelists = 'tests/data/types/boring'
 
 
 class TestBoringSearch(AbstractTestSearch):
 
-    search_instance = BoringSearch()
     datatype_class = Boring
+    search_class = BoringSearch
+    search_instance = BoringSearch()
 
     valid_query_single = PropertyIsEqualTo(propertyname='boornummer',
                                            literal='GEO-04/169-BNo-B1')
@@ -133,6 +134,72 @@ class TestBoringSearch(AbstractTestSearch):
             return_fields=('pkey_boring', 'boornummer', 'boorgatmeting'))
 
         assert not df.boorgatmeting[0]
+
+    def test_get_fields_with_extra_fields(self, mp_wfs, mp_get_schema,
+                                          mp_remote_codelist,
+                                          mp_remote_describefeaturetype,
+                                          mp_remote_wfs_feature, mp_dov_xml):
+        """Test the get_fields method with an objecttype with extra fields.
+
+        Test whether the get_fields contains the extra fields.
+
+        Parameters
+        ----------
+        mp_wfs : pytest.fixture
+            Monkeypatch the call to the remote GetCapabilities request.
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
+        mp_remote_codelist : pytest.fixture
+            Monkeypatch the call to get remote codelists.
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType.
+        mp_remote_wfs_feature : pytest.fixture
+            Monkeypatch the call to get WFS features.
+        mp_dov_xml : pytest.fixture
+            Monkeypatch the call to get the remote XML data.
+
+        """
+        search_instance = self.search_class(
+            objecttype=Boring.with_extra_fields(MethodeXyz))
+
+        fields = search_instance.get_fields()
+
+        for field in MethodeXyz.get_field_names():
+            assert field in fields
+
+    def test_search_with_extra_fields(self, mp_wfs, mp_get_schema,
+                                      mp_remote_codelist,
+                                      mp_remote_describefeaturetype,
+                                      mp_remote_wfs_feature, mp_dov_xml):
+        """Test the search method with an objecttype with extra fields.
+
+        Test whether the output dataframe contains the extra fields.
+
+        Parameters
+        ----------
+        mp_wfs : pytest.fixture
+            Monkeypatch the call to the remote GetCapabilities request.
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
+        mp_remote_codelist : pytest.fixture
+            Monkeypatch the call to get remote codelists.
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType.
+        mp_remote_wfs_feature : pytest.fixture
+            Monkeypatch the call to get WFS features.
+        mp_dov_xml : pytest.fixture
+            Monkeypatch the call to get the remote XML data.
+
+        """
+        search_type = Boring.with_extra_fields(MethodeXyz)
+
+        search_instance = self.search_class(
+            objecttype=search_type)
+
+        df = search_instance.search(
+            query=self.valid_query_single)
+
+        assert sorted(list(df)) == sorted(search_type.get_field_names())
 
     @pytest.mark.online
     @pytest.mark.skipif(not ServiceCheck.service_ok(),

@@ -17,6 +17,26 @@ While you'll need to instantiate a different search class for each datatype, que
 
 Generally the datasets consist of a main type and a subtype, where the resulting dataframe will contain multiple records for each instance of the main type based on the records of the subtype (you can think of this as a 'left join' between the main and the subtype).
 
+Some datasets have extra fieldsets available, that are not used by default but can be enabled easily. More information on how to find and enable them can be consulted in the :ref:`adding extra fields <adding_extra_fields>` section. For example, you could write::
+
+    from pydov.search.boring import BoringSearch
+    from pydov.types.boring import Boring, MethodeXyz
+
+    borehole_search = BoringSearch(
+        objecttype=Boring.with_extra_fields(MethodeXyz)
+    )
+    # df = borehole_search.search(...)
+
+For some datasets, multiple subtypes are available. One of them will be used by default, but you can easily select the subtype of your interest. More information on how to find the available subtypes and how to enable them can be found in the :ref:`adding or switching subtypes <switching_subtypes>` section. For example, you could write::
+
+    from pydov.search.boring import BoringSearch
+    from pydov.types.boring import Boring, Kleur
+
+    borehole_search = BoringSearch(
+        objecttype=Boring.with_subtype(Kleur)
+    )
+    # df = borehole_search.search(...)
+
 Currently, we support the following datasets:
 
 .. contents:: Datasets
@@ -120,75 +140,14 @@ Default dataframe output
 Soil samples (Bodemmonsters)
 ----------------------------
 
-Type
-    Bodemmonster (Soil sample)
+See generic type for :ref:`Monster <dataset_monster>`.
 
-Subtype
-    No subtype
-
-Search class
-    :class:`pydov.search.bodemmonster.BodemmonsterSearch`
-
-Default dataframe output
-      .. csv-table:: Soil samples (Bodemmonsters)
-        :header-rows: 1
-
-        Field,Source,Cost,Datatype,Example
-        pkey_bodemmonster,Bodemmonster,1,string,https://www.dov.vlaanderen.be/data/bodemmonster/1964-264869
-        pkey_bodemlocatie,Bodemmonster,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/2015-000745
-        pkey_parent,Bodemmonster,1,string,https://www.dov.vlaanderen.be/data/diepteinterval/2019-003366
-        x,Bodemmonster,1,float,206553.85
-        y,Bodemmonster,1,float,168891.11
-        mv_mtaw,Bodemmonster,1,float,44.00
-        identificatie,Bodemmonster,1,string,KART_PROF_073E/12_H2_M1
-        datum_monstername,Bodemmonster,1,date,1964-11-12
-        tijdstip_monstername,Bodemmonster,10,string,NaN
-        type,Bodemmonster,1,string,ENK
-        monstername_door,Bodemmonster,1,string,Centrum voor Grondonderzoek (C.V.G.)
-        techniek,Bodemmonster,1,string,NaN
-        condities,Bodemmonster,1,string,Zie scan analoge profielbeschrijving
-        diepte_van_cm,Bodemmonster,1,float,30
-        diepte_tot_cm,Bodemmonster,1,float,45
-        labo,Bodemmonster,1,string,Centrum voor Grondonderzoek (C.V.G.)
 
 Soil observations (Bodemobservaties)
 ------------------------------------
 
-Type
-    Bodemobservatie (Soil observations)
+See generic type for :ref:`Observatie <dataset_observatie>`.
 
-Subtype
-    Fractiemeting (Fraction measurement)
-
-Search class
-    :class:`pydov.search.bodemobservatie.BodemobservatieSearch`
-
-Default dataframe output
-      .. csv-table:: Soil observations (Bodemobservaties)
-        :header-rows: 1
-
-        Field,Source,Cost,Datatype,Example
-        pkey_bodemobservatie,Bodemobservatie,1,string,https://www.dov.vlaanderen.be/data/bodemobservatie/2019-349078
-        pkey_bodemlocatie,Bodemobservatie,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/1952-007078
-        pkey_parent,Bodemobservatie,1,string,https://www.dov.vlaanderen.be/data/bodemlocatie/1952-007078
-        x,Bodemobservatie,1,float,206553.85
-        y,Bodemobservatie,1,float,168891.11
-        mv_mtaw,Bodemobservatie,1,float,44.00
-        diepte_van_cm,Bodemobservatie,1,float,30
-        diepte_tot_cm,Bodemobservatie,1,float,45
-        observatiedatum,Bodemobservatie,10,date,1964-11-12
-        invoerdatum,Bodemobservatie,10,date,NaN
-        parametergroep,Bodemobservatie,10,string,Bodem_fysisch_structuur
-        parameter,Bodemobservatie,1,string,organische_c_perc
-        detectie,Bodemobservatie,10,string,<
-        waarde,Bodemobservatie,1,string,0.38
-        eenheid,Bodemobservatie,1,string,%
-        veld_labo,Bodemobservatie,1,string,VELD
-        methode,Bodemobservatie,1,string,Aardewerk nieuwe methode organische koolstof
-        betrouwbaarheid,Bodemobservatie,10,string,onbekend
-        fractiemeting_ondergrens,Fractiemeting,10,float,NaN
-        fractiemeting_bovengrens,Fractiemeting,10,float,NaN
-        fractiemeting_waarde,Fractiemeting,10,float,NaN
 
 Soil classifications (Bodemclassificaties)
 ------------------------------------------
@@ -214,7 +173,7 @@ Default dataframe output
         mv_mtaw,Bodemclassificatie,1,float,32.9
         classificatietype,Bodemclassificatie,1,string,Algemene Belgische classificatie
         bodemtype,Bodemclassificatie,1,string,Scbz
-        auteurs,Bodemclassificatie,1,string,Dondeyne, Stefaan (KULeuven)
+        auteurs,Bodemclassificatie,1,string,Dondeyne Stefaan (KULeuven)
 
 Subsoil
 *******
@@ -228,8 +187,12 @@ Boreholes (Boringen)
 Type
     Boring (Borehole)
 
-Subtype
-    Boormethode (Method)
+Extra fieldsets
+    * MethodeXyz (Method of geolocation) - Method and quality assessment of geolocation of the borehole.
+
+Subtypes
+    * BoorMethode (Method) (default) - Method used to create the borehole, per depth interval.
+    * Kleur (Colour) - Colour of the soil retrieved from the borehole, per depth interval.
 
 Search class
     :class:`pydov.search.boring.BoringSearch`
@@ -251,48 +214,44 @@ Default dataframe output
         datum_aanvang,Boring,1,date,1930-10-01
         uitvoerder,Boring,1,string,Smet - Dessel
         boorgatmeting,Boring,10,boolean,false
-        diepte_methode_van,Boormethode,10,float,0.00
-        diepte_methode_tot,Boormethode,10,float,19.00
-        boormethode,Boormethode,10,string,droge boring
+        diepte_methode_van,BoorMethode,10,float,0.00
+        diepte_methode_tot,BoorMethode,10,float,19.00
+        boormethode,BoorMethode,10,string,droge boring
+
+Extra fieldsets
+    :class:`pydov.types.boring.MethodeXyz`
+
+    Extra fields to be used with the `Boring` type which add details regarding
+    the method and reliability of its location.
+
+    .. csv-table:: MethodeXyz
+      :header-rows: 1
+
+      Field,Source,Cost,Datatype,Example
+      methode_xy,MethodeXyz,10,string,gedigitaliseerd op topokaart
+      betrouwbaarheid_xy,MethodeXyz,10,string,onbekend
+      methode_z,MethodeXyz,10,string,afgeleid van topokaart
+      betrouwbaarheid_z,MethodeXyz,10,string,onbekend
+
+Extra subtypes
+    :class:`pydov.types.boring.Kleur`
+
+    Extra subtype which adds details regarding the colour of the layers from
+    the borehole.
+
+    .. csv-table:: Kleur
+      :header-rows: 1
+
+      Field,Source,Cost,Datatype,Example
+      diepte_kleur_van,Kleur,10,0.0
+      diepte_kleur_tot,Kleur,10,1.25
+      kleur,Kleur,10,bruin
 
 Borehole samples (Grondmonsters)
 --------------------------------
 
-Type
-    Grondmonster (Borehole sample)
+See generic types for :ref:`Monster <dataset_monster>` and :ref:`Observatie <dataset_observatie>`.
 
-Subtype
-    Korrelverdeling (Particle size distribution)
-
-Search class
-    :class:`pydov.search.grondmonster.GrondmonsterSearch`
-
-Default dataframe output
-      .. csv-table:: Borehole samples (grondmonsters)
-        :header-rows: 1
-
-        Field,Source,Cost,Datatype,Example
-        pkey_grondmonster,Grondmonster,1,string,https://www.dov.vlaanderen.be/data/grondmonster/2017-168758
-        naam,Grondmonster,1,string,N3A
-        pkey_parents,Grondmonster,1,list of string,[https://www.dov.vlaanderen.be/data/boring/2005-003015]
-        datum,Grondmonster,1,date,2005-02-02
-        diepte_van_m,Grondmonster,1,float,5.9
-        diepte_tot_m,Grondmonster,1,float,6.05
-        monstertype,Grondmonster,1,string,ongeroerd
-        monstersamenstelling,Grondmonster,1,string,ENKELVOUDIG
-        astm_naam,Grondmonster,10,string,Organic silt
-        grondsoort_bggg,Grondmonster,10,string,humush. klei
-        humusgehalte,Grondmonster,10,float,15.6
-        kalkgehalte,Grondmonster,10,float,4.4
-        uitrolgrens,Grondmonster,10,float,50.4
-        vloeigrens,Grondmonster,10,float,86.4
-        glauconiet_totaal,Grondmonster,10,float,NaN
-        korrelvolumemassa,Grondmonster,10,float,NaN
-        volumemassa,Grondmonster,10,float,NaN
-        watergehalte,Grondmonster,10,float,NaN
-        methode,Korrelverdeling,10,string,Korrelverdeling d.m.v. hydrometer/areometer
-        diameter,Korrelverdeling,10,float,0.001
-        fractie,Korrelverdeling,10,float,45.8
 
 CPT measurements (Sonderingen)
 ------------------------------
@@ -300,8 +259,9 @@ CPT measurements (Sonderingen)
 Type
     Sondering (CPT measurement)
 
-Subtype
-    Meetdata (CPT data)
+Subtypes
+    * Meetdata (CPT data) (default) - CPT measurement at each depth.
+    * Techniek (technique) - Techniques used while performing the CPT measurement.
 
 Search class
     :class:`pydov.search.sondering.SonderingSearch`
@@ -333,6 +293,19 @@ Default dataframe output
         u,Meetdata,10,float,7
         i,Meetdata,10,float,0.1
 
+Extra subtypes
+    :class:`pydov.types.sondering.Techniek`
+
+    Extra subtype which adds details regarding technique used for the CPT measurement.
+
+    .. csv-table:: Techniek
+      :header-rows: 1
+
+      Field,Source,Cost,Datatype,Example
+      techniek_diepte_van,Techniek,10,float,5.5
+      techniek_diepte,Techniek,10,float,1.2
+      techniek,Techniek,10,string,V
+      techniek_andere,Techniek,10,string,
 
 Formal stratigraphy (Formele stratigrafie)
 ------------------------------------------
@@ -588,8 +561,9 @@ Groundwater screens (Grondwaterfilters)
 Type
     GrondwaterFilter (Groundwater screen)
 
-Subtype
-    Peilmeting (Water head level)
+Subtypes
+    * Peilmeting (Water head level) (default) - Water head level measurements over time.
+    * Gxg - Average water head levels per calendar year.
 
 Search class
     :class:`pydov.search.grondwaterfilter.GrondwaterFilterSearch`
@@ -626,40 +600,26 @@ Default dataframe output
         filterstatus,Peilmeting,10,string,1
         filtertoestand,Peilmeting,10,string,in rust
 
+Extra subtypes
+    :class:`pydov.types.grondwaterfilter.Gxg`
+
+    Extra subtype which adds details regarding the average water head level
+    per year.
+
+    .. csv-table:: Gxg
+      :header-rows: 1
+
+      Field,Source,Cost,Datatype,Example
+      gxg_jaar,Gxg,10,integer,2001
+      gxg_hg3,Gxg,10,float,3.03
+      gxg_lg3,Gxg,10,float,2.14
+      gxg_vg3,Gxg,10,float,3.2
+
 Groundwater samples (Grondwatermonsters)
 ----------------------------------------
 
-Type
-    GrondwaterMonster (Groundwater sample)
+See generic types for :ref:`Monster <dataset_monster>` and :ref:`Observatie <dataset_observatie>`.
 
-Subtype
-    Observatie (Quality measurement)
-
-Search class
-    :class:`pydov.search.grondwatermonster.GrondwaterMonsterSearch`
-
-Default dataframe output
-      .. csv-table:: Groundwater samples (grondwatermonsters)
-        :header-rows: 1
-
-        Field,Source,Cost,Datatype,Example
-        pkey_grondwatermonster,GrondwaterMonster,1,string,https://www.dov.vlaanderen.be/data/watermonster/2010-001344
-        grondwatermonsternummer,GrondwaterMonster,1,string,2-0114/M2010
-        pkey_grondwaterlocatie,GrondwaterMonster,1,string,https://www.dov.vlaanderen.be/data/put/2017-000096
-        gw_id,GrondwaterMonster,1,string,2-0114
-        pkey_filter,GrondwaterMonster,1,string,https://www.dov.vlaanderen.be/data/filter/1996-001085
-        filternummer,GrondwaterMonster,1,string,1
-        x,GrondwaterMonster,1,float,153030
-        y,GrondwaterMonster,1,float,158805
-        start_grondwaterlocatie_mtaw,GrondwaterMonster,1,float,129.88
-        gemeente,GrondwaterMonster,1,string,Sint-Genesius-Rode
-        datum_monstername,GrondwaterMonster,1,date,2020-01-20
-        parametergroep,Observatie,10,string,Zware metalen
-        parameter,Observatie,10,string,Hg
-        detectie,Observatie,10,string,<
-        waarde,Observatie,10,float,0.5
-        eenheid,Observatie,10,string,µg/l
-        veld_labo,Observatie,10,string,LABO
 
 Groundwater permits (Grondwatervergunningen)
 --------------------------------------------
@@ -699,6 +659,280 @@ Default dataframe output
 
 Generic
 *******
+
+.. _dataset_monster:
+
+Samples (Monsters)
+------------------
+
+Type
+    Monster (Sample)
+
+Extra fieldsets
+    * MonsterDetails (Details of sample) - For instance the time the sample was taken.
+
+Subtypes
+    * BemonsterdObject (Sampled object) - More information about the sampled object(s) of a sample.
+    * Opslaglocatie (Location of sample) - More information about the storage location of a sample.
+    * Monsterbehandeling (Sample treatment) - More information about the treatment of a sample.
+
+Search class
+    :class:`pydov.search.monster.MonsterSearch`
+
+Default dataframe output
+      .. csv-table:: Samples (monsters)
+        :header-rows: 1
+
+        Field,Source,Cost,Datatype,Example
+        pkey_monster,Monster,1,string,https://www.dov.vlaanderen.be/data/monster/2017-141452
+        naam,Monster,1,string,000/00/2/M1
+        pkey_parents,Monster,1,list of string,[https://www.dov.vlaanderen.be/data/boring/2003-025366]
+        materiaalklasse,Monster,1,string,sediment
+        datum_monstername,Monster,1,date,2003-04-08
+        diepte_van_m,Monster,1,float,0.90
+        diepte_tot_m,Monster,1,float,1.00
+        monstertype,Monster,1,string,geroerd
+        monstersamenstelling,Monster,1,string,ENKELVOUDIG
+        bemonsteringsprocedure,Monster,1,string,nan
+        bemonsteringsinstrument,Monster,1,list of string,[avegaarbooras]
+        bemonstering_door,Monster,1,string,BVMO
+
+
+Extra fieldsets
+    :class:`pydov.types.monster.MonsterDetails`
+
+    Extra fields to be used with the `Monster` type which add details regarding
+    the time the sample was taken.
+
+    .. csv-table:: MonsterDetails
+      :header-rows: 1
+
+      Field,Source,Cost,Datatype,Example
+      tijdstip_monstername,MonsterDetails,10,string,13:37
+
+
+Extra subtypes
+    :class:`pydov.types.monster.BemonsterdObject`
+
+    Extra subtype which adds more information about the sampled object(s) of a sample.
+
+    .. csv-table:: BemonsterdObject
+      :header-rows: 1
+
+      Field,Source,Cost,Datatype,Example
+      bemonsterd_object_type,BemonsterdObject,10,string,BORING
+      bemonsterd_object_naam,BemonsterdObject,10,string,GEO-02/028-B5
+      bemonsterd_object_permkey,BemonsterdObject,10,string,2002-003282
+
+    :class:`pydov.types.monster.Opslaglocatie`
+
+    Extra subtype which adds more information about the storage location of a sample.
+
+    .. csv-table:: Opslaglocatie
+      :header-rows: 1
+
+      Field,Source,Cost,Datatype,Example
+      opslaglocatie_naam,Opslaglocatie,10,string,Afdeling Geotechniek (Zwijnaarde)
+      opslaglocatie_van,Opslaglocatie,10,string,2022-10-12
+      opslaglocatie_tot,Opslaglocatie,10,string,2024-03-12
+
+    :class:`pydov.types.monster.Monsterbehandeling`
+
+    Extra subtype which add more information about the treatment of a sample.
+
+    .. csv-table:: Monsterbehandeling
+      :header-rows: 1
+      :delim: ;
+
+      Field;Source;Cost;Datatype;Example
+      monsterbehandeling_door;Monsterbehandeling;10;string;VO - Instituut voor Landbouw-, Visserij- en Voedingsonderzoek (ILVO)
+      monsterbehandeling_datum;Monsterbehandeling;10;string;2024-05-07
+      monsterbehandeling_tijdstip;Monsterbehandeling;10;string;14:20
+      monsterbehandeling_behandeling;Monsterbehandeling;10;string;Type droging vooraf opslag
+      monsterbehandeling_behandeling_waarde;Monsterbehandeling;10;string;Ovengedroogd op 40°C
+
+    :class:`pydov.types.monster.Monsterbehandeling`
+
+    Extra subtype which add more information about the treatment of a sample.
+
+    .. csv-table:: Monsterbehandeling
+      :header-rows: 1
+      :delim: ;
+
+      Field;Source;Cost;Datatype;Example
+      monsterbehandeling_door;Monsterbehandeling;10;string;VO - Instituut voor Landbouw-, Visserij- en Voedingsonderzoek (ILVO)
+      monsterbehandeling_datum;Monsterbehandeling;10;string;2024-05-07
+      monsterbehandeling_tijdstip;Monsterbehandeling;10;string;14:20
+      monsterbehandeling_behandeling;Monsterbehandeling;10;string;Type droging vooraf opslag
+      monsterbehandeling_behandeling_waarde;Monsterbehandeling;10;string;Ovengedroogd op 40°C
+
+.. _dataset_observatie:
+
+Observations (Observaties)
+--------------------------
+
+Type
+    Observatie (Observations)
+
+Subtypes
+    * Fractiemeting (Fraction measurement) - More information about the fraction measurement of observations of type 'Textuurmeting'.
+    * Meetreeks (Measurement series) - More information about the measurement series of observations of type 'Meetreeks'.
+    * ObservatieHerhaling (Repetition of the observation) - More information about the repetition(s) of the observation.
+    * SecundaireParameter (Secondary observations related to the first observation) - More information about the related observations.
+
+Extra fieldsets
+    * ObservatieDetails (Details of observation) - Extra details about the observation.
+
+Search classes
+    * :class:`pydov.search.observatie.ObservatieSearch` - This will return all observations, by default without extra fields or subtypes.
+    * :class:`pydov.search.observatie.ObservatieFractiemetingSearch` - This will return only observations of type 'Textuurmeting' and will by default include the fraction measurement subtype.
+    * :class:`pydov.search.observatie.ObservatieMeetreeksSearch` - This will return only observations of type 'Meetreeks' and will by default include the measurement series subtype.
+
+Default dataframe output
+    :class:`pydov.search.observatie.ObservatieSearch`
+
+    This search class will return all observations, by default without extra fields or subtypes.
+
+      .. csv-table:: Observations (Observaties)
+        :header-rows: 1
+        :delim: ;
+
+        Field;Source;Cost;Datatype;Example
+        pkey_observatie;Observatie;1;string;https://oefen.dov.vlaanderen.be/data/observatie/2022-1667272
+        pkey_parent;Observatie;1;string;https://oefen.dov.vlaanderen.be/data/monster/2018-211698
+        fenomeentijd;Observatie;1;date;2018-01-09
+        diepte_van_m;Observatie;1;float;4.50
+        diepte_tot_m;Observatie;1;float;4.75
+        parametergroep;Observatie;1;string;Onderkenning-grondsoort
+        parameter;Observatie;1;string;Grondsoort volgens ASTM, de beschrijving (ASTM_naam)
+        detectieconditie;Observatie;1;string;nan
+        resultaat;Observatie;1;string;Silt with sand
+        eenheid;Observatie;1;string;nan
+        methode;Observatie;1;string;Onbekend
+        uitvoerder;Observatie;1;string;VO - Afdeling Geotechniek
+        herkomst;Observatie;1;string;LABO
+
+    :class:`pydov.search.observatie.ObservatieFractiemetingSearch`
+
+    This search class will return only observations of type 'Textuurmeting' and will by default include the fraction measurement subtype.
+
+      .. csv-table:: Observations of type 'Textuurmeting' (Observaties van type 'Textuurmeting')
+        :header-rows: 1
+        :delim: ;
+
+        Field;Source;Cost;Datatype;Example
+        pkey_observatie;Observatie;1;string;https://oefen.dov.vlaanderen.be/data/observatie/2019-317331
+        pkey_parent;Observatie;1;string;https://oefen.dov.vlaanderen.be/data/monster/1951-263333
+        fenomeentijd;Observatie;1;date;1951-12-12
+        diepte_van_m;Observatie;1;float;Nan
+        diepte_tot_m;Observatie;1;float;NaN
+        parametergroep;Observatie;1;string;Bodem_fysisch_textuur
+        parameter;Observatie;1;string;Textuurfracties (textuurmeting)
+        eenheid;Observatie;1;string;%
+        methode;Observatie;1;string;Onbekend
+        uitvoerder;Observatie;1;string;NaN
+        herkomst;Observatie;1;string;VELD
+        fractiemeting_ondergrens;Fractiemeting;10;float;0.0
+        fractiemeting_bovengrens;Fractiemeting;10;float;2.0
+        fractiemeting_waarde;Fractiemeting;10;float;5.5
+
+    :class:`pydov.search.observatie.ObservatieMeetreeksSearch`
+
+    This search class will return only observations of type 'Meetreeks' and will by default include the measurement series subtype.
+
+      .. csv-table:: Observations of type 'Meetreeks' (Observaties van type 'Meetreeks')
+        :header-rows: 1
+        :delim: ;
+
+        Field;Source;Cost;Datatype;Example
+        pkey_observatie;Observatie;1;string;https://oefen.dov.vlaanderen.be/data/observatie/2024-33862493
+        pkey_parent;Observatie;1;string;https://oefen.dov.vlaanderen.be/data/monster/2024-367983
+        fenomeentijd;Observatie;1;date;2024-040-03
+        diepte_van_m;Observatie;1;float;NaN
+        diepte_tot_m;Observatie;1;float;NaN
+        parametergroep;Observatie;1;string;Bodem_spectra
+        parameter;Observatie;1;string;NIRS (nirs)
+        methode;Observatie;1;string;NIRS met FOSS XDS toestel (Cmon analyseprotocol)
+        uitvoerder;Observatie;1;string;NaN
+        herkomst;Observatie;1;string;LABO
+        meetreeks_meetpunt_parameter;Meetreeks;10;string;golflengte
+        meetreeks_meetpunt;Meetreeks;10;string;400.0
+        meetreeks_meetpunt_eenheid;Meetreeks;10;string;nm
+        meetreeks_meetwaarde_parameter;Meetreeks;10;string;nir_spectrale_absorptie
+        meetreeks_meetwaarde;Meetreeks;10;float;0.6227
+        meetreeks_meetwaarde_eenheid;Meetreeks;10;string;`-`
+
+Extra subtypes
+    :class:`pydov.types.observatie.ObservatieHerhaling`
+
+    Extra subtype which adds more information about the repetitions of the observations data.
+
+    .. csv-table:: ObservatieHerhaling
+      :header-rows: 1
+
+      Field,Source,Cost,Datatype,Example
+      herhaling_aantal,ObservatieHerhaling,10,integer,16
+      herhaling_minimum,ObservatieHerhaling,10,float,2.00000000
+      herhaling_maximum,ObservatieHerhaling,10,float,8.00000000
+      herhaling_standaardafwijking,ObservatieHerhaling,10,float,2.75680975
+
+
+    :class:`pydov.types.observatie.SecundaireParameter`
+
+    Extra subtype which adds more information about additional recorded parameters.
+
+    .. csv-table:: SecundaireParameter
+      :header-rows: 1
+
+      Field,Source,Cost,Datatype,Example
+      secundaireparameter_parameter,SecundaireParameter,10,string,temp_water
+      secundaireparameter_resultaat,SecundaireParameter,10,string,5.0
+      secundaireparameter_eenheid,SecundaireParameter,10,string,°C
+
+
+    :class:`pydov.types.observatie.Fractiemeting`
+
+    Extra subtype which adds more information about the fraction measurement of observations of type 'Textuurmeting'.
+
+    .. csv-table:: Fractiemeting
+      :header-rows: 1
+
+      Field,Source,Cost,Datatype,Example
+      fractiemeting_ondergrens,Fractiemeting,10,float,0.0
+      fractiemeting_bovengrens,Fractiemeting,10,float,0.2
+      fractiemeting_waarde,Fractiemeting,10,float,10.17
+
+    :class:`pydov.types.observatie.Meetreeks`
+
+    Extra subtype which adds more information about the measurement series of observations of type 'Meetreeks'.
+
+    .. csv-table:: Meetreeks
+      :header-rows: 1
+
+      Field,Source,Cost,Datatype,Example
+      meetreeks_meetpunt_parameter,Meetreeks,10,string,Diameter
+      meetreeks_meetpunt,Meetreeks,10,string,0.074
+      meetreeks_meetpunt_eenheid,Meetreeks,10,string,mm
+      meetreeks_meetwaarde_parameter,Meetreeks,10,string,Fractie met grotere diameter
+      meetreeks_meetwaarde,Meetreeks,10,float,89.94
+      meetreeks_meetwaarde_eenheid,Meetreeks,10,string,%
+
+Extra fieldsets
+    :class:`pydov.types.observate.ObservatieDetails`
+
+    Extra fields to be used with the `Observatie` type which add details regarding
+    the reliability and observed object.
+
+    .. csv-table:: ObservatieDetails
+      :header-rows: 1
+      :delim: ;
+
+      Field;Source;Cost;Datatype;Example
+      betrouwbaarheid;ObservatieDetails;10;string;goed
+      geobserveerd_object_type;ObservatieDetails;10;string;Onbekend
+      geobserveerd_object_naam;ObservatieDetails;10;string;VO - Afdeling Geotechniek
+      geobserveerd_object_permkey;ObservatieDetails;10;string;LABO
+
 
 DOV WFS layer
 -------------

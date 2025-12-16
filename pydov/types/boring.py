@@ -2,12 +2,17 @@
 """Module containing the DOV data type for boreholes (Boring), including
 subtypes."""
 from pydov.types.fields import WfsField, XmlField
-from pydov.types.ligging import MvMtawField
+from pydov.util.dovutil import build_dov_url
+from pydov.util.codelists import XsdType
+from pydov.types.fields_custom import MvMtawField
 
-from .abstract import AbstractDovSubType, AbstractDovType
+from .abstract import AbstractDovFieldSet, AbstractDovSubType, AbstractDovType
 
 
 class BoorMethode(AbstractDovSubType):
+    """Subtype listing the method used to make the borehole."""
+
+    intended_for = ['Boring']
 
     rootpath = './/boring/details/boormethode'
 
@@ -25,6 +30,31 @@ class BoorMethode(AbstractDovSubType):
         XmlField(name='boormethode',
                  source_xpath='/methode',
                  definition='Boormethode voor het diepte-interval.',
+                 datatype='string')
+    ]
+
+
+class Kleur(AbstractDovSubType):
+    """Subtype listing the color values of the borehole."""
+
+    intended_for = ['Boring']
+
+    rootpath = './/boring/details/kleur'
+
+    fields = [
+        XmlField(name='diepte_kleur_van',
+                 source_xpath='/van',
+                 definition='Bovenkant van de laag met een bepaalde '
+                            'bekisting, in meter.',
+                 datatype='float'),
+        XmlField(name='diepte_kleur_tot',
+                 source_xpath='/tot',
+                 definition='Onderkant van de laag met een bepaalde '
+                            'bekisting, in meter.',
+                 datatype='float'),
+        XmlField(name='kleur',
+                 source_xpath='/kleur',
+                 definition='Grondkleur voor het diepte-interval',
                  datatype='string')
     ]
 
@@ -75,3 +105,56 @@ class Boring(AbstractDovType):
 
         """
         super().__init__('boring', pkey)
+
+
+class MethodeXyz(AbstractDovFieldSet):
+    """Fieldset containing fields for method and reliability of the point
+    location of the borehole."""
+
+    __generiekeDataCodes = build_dov_url(
+        'xdov/schema/latest/xsd/kern/generiek/GeneriekeDataCodes.xsd')
+
+    intended_for = ['Boring']
+
+    fields = [
+        XmlField(name='methode_xy',
+                 source_xpath='/boring/ligging/metadata_locatiebepaling'
+                 '/methode',
+                 definition='Methode waarop de x en y-coordinaat opgemeten '
+                 'werden.',
+                 datatype='string',
+                 codelist=XsdType(
+                     xsd_schema=__generiekeDataCodes,
+                     typename='MethodeOpmetenXyEnumType',
+                     datatype='string')),
+        XmlField(name='betrouwbaarheid_xy',
+                 source_xpath='/boring/ligging/metadata_locatiebepaling'
+                 '/betrouwbaarheid',
+                 definition='Betrouwbaarheid van het opmeten van de x en '
+                 'y-coordinaat.',
+                 datatype='string',
+                 codelist=XsdType(
+                     xsd_schema=__generiekeDataCodes,
+                     typename='BetrouwbaarheidXyzEnumType',
+                     datatype='string')),
+        XmlField(name='methode_z',
+                 source_xpath='/boring/ligging/metadata_hoogtebepaling'
+                 '/methode',
+                 definition='Methode waarop de z-coordinaat '
+                 'opgemeten werd.',
+                 datatype='string',
+                 codelist=XsdType(
+                     xsd_schema=__generiekeDataCodes,
+                     typename='MethodeOpmetenZEnumType',
+                     datatype='string')),
+        XmlField(name='betrouwbaarheid_z',
+                 source_xpath='/boring/ligging/metadata_hoogtebepaling'
+                 '/betrouwbaarheid',
+                 definition='Betrouwbaarheid van het opmeten van de '
+                 'z-coordinaat.',
+                 datatype='string',
+                 codelist=XsdType(
+                     xsd_schema=__generiekeDataCodes,
+                     typename='BetrouwbaarheidXyzEnumType',
+                     datatype='string'))
+    ]

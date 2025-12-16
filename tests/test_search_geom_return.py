@@ -1,8 +1,11 @@
 """Module grouping tests for returning geometry fields."""
 import geopandas as gpd
+import pytest
 from shapely.geometry import Point
 
 from pydov.search.bodemclassificatie import BodemclassificatieSearch
+from pydov.search.fields import GeometryReturnField
+from pydov.util.errors import InvalidFieldError
 
 location_md_metadata = 'tests/data/types/bodemclassificatie/md_metadata.xml'
 location_fc_featurecatalogue = \
@@ -12,19 +15,24 @@ location_wfs_describefeaturetype = \
 location_wfs_getfeature = 'tests/data/types/bodemclassificatie/wfsgetfeature.xml'
 location_wfs_feature = 'tests/data/types/bodemclassificatie/feature.xml'
 location_dov_xml = 'tests/data/types/bodemclassificatie/bodemclassificatie.xml'
-location_xsd_base = 'tests/data/types/bodemclassificatie/xsd_*.xml'
+location_codelists = 'tests/data/types/bodemclassificatie'
 
 
 class TestGeometryReturn(object):
     """Class grouping tests for returning geometry fields."""
 
-    def test_return_geometry(self, mp_get_schema,
-                             mp_remote_describefeaturetype,
-                             mp_remote_wfs_feature):
-        """Test whether the geometry field is returned when requested.
+    def test_error_on_plain_geom(self, mp_wfs, mp_get_schema,
+                                 mp_remote_describefeaturetype,
+                                 mp_remote_wfs_feature):
+        """Test whether the search method using a geometry return field
+        referenced by name.
+
+        Test whether an InvalidFieldError is raised.
 
         Parameters
         ----------
+        mp_wfs : pytest.fixture
+            Monkeypatch the call to the remote GetCapabilities request.
         mp_get_schema : pytest.fixture
             Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
@@ -38,19 +46,19 @@ class TestGeometryReturn(object):
         ]
 
         s = BodemclassificatieSearch()
-        df = s.search(max_features=1, return_fields=return_fields)
 
-        assert 'geom' in list(df)
-        assert len(df.geom.notna()) == 1
-        assert Point(248905.6718, 200391.287).equals_exact(df.geom[0], tolerance=0.01)
+        with pytest.raises(InvalidFieldError):
+            s.search(max_features=1, return_fields=return_fields)
 
-    def test_to_geopandas(self, mp_get_schema,
-                          mp_remote_describefeaturetype,
-                          mp_remote_wfs_feature):
-        """Test whether the resulting dataframe can be turned into a GeoPandas GeoDataFrame.
+    def test_return_geometry(self, mp_wfs, mp_get_schema,
+                             mp_remote_describefeaturetype,
+                             mp_remote_wfs_feature):
+        """Test whether the geometry field is returned when requested.
 
         Parameters
         ----------
+        mp_wfs : pytest.fixture
+            Monkeypatch the call to the remote GetCapabilities request.
         mp_get_schema : pytest.fixture
             Monkeypatch the call to a remote OWSLib schema.
         mp_remote_describefeaturetype : pytest.fixture
@@ -60,7 +68,37 @@ class TestGeometryReturn(object):
         """
         return_fields = [
             'pkey_bodemclassificatie', 'pkey_bodemlocatie', 'x', 'y', 'mv_mtaw',
-            'classificatietype', 'bodemtype', 'auteurs', 'geom'
+            'classificatietype', 'bodemtype', 'auteurs',
+            GeometryReturnField('geom', 31370)
+        ]
+
+        s = BodemclassificatieSearch()
+        df = s.search(max_features=1, return_fields=return_fields)
+
+        assert 'geom' in list(df)
+        assert len(df.geom.notna()) == 1
+        assert Point(248905.6718, 200391.287).equals_exact(df.geom[0], tolerance=0.01)
+
+    def test_to_geopandas(self, mp_wfs, mp_get_schema,
+                          mp_remote_describefeaturetype,
+                          mp_remote_wfs_feature):
+        """Test whether the resulting dataframe can be turned into a GeoPandas GeoDataFrame.
+
+        Parameters
+        ----------
+        mp_wfs : pytest.fixture
+            Monkeypatch the call to the remote GetCapabilities request.
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType
+        mp_remote_wfs_feature : pytest.fixture
+            Monkeypatch the call to get WFS features.
+        """
+        return_fields = [
+            'pkey_bodemclassificatie', 'pkey_bodemlocatie', 'x', 'y', 'mv_mtaw',
+            'classificatietype', 'bodemtype', 'auteurs',
+            GeometryReturnField('geom', 31370)
         ]
 
         s = BodemclassificatieSearch()

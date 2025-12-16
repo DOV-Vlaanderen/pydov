@@ -16,7 +16,82 @@ from owslib.etree import etree
 from owslib.fes2 import Or
 
 
-class AbstractLocation(object):
+class EpsgValidator(object):
+    """Class grouping methods for enforcing and validating EPSG parameters."""
+
+    def _is_existing_epsg(self, epsg):
+        """Check whether the provided EPSG code is a valid EPSG code according
+        to pyproj. Pass if pyproj is not installed.
+
+        Parameters
+        ----------
+        epsg : int
+            The EPSG code to check.
+
+        Raises
+        ------
+        ValueError
+            When the given EPSG is invalid according to pyproj.
+        """
+        try:
+            from pyproj import CRS
+            from pyproj.exceptions import CRSError
+            CRS.from_epsg(epsg)
+        except ImportError:
+            pass
+        except CRSError:
+            raise ValueError
+
+    def _validate_epsg(self, epsg):
+        """
+        Validate the provided EPSG code, raising an exception if the EPSG
+        code is either missing or invalid.
+
+        Parameters
+        ----------
+        epsg : int or None
+            The EPSG code to validate.
+
+        Raises
+        ------
+        TypeError
+            If `epsg` is None not an integer, with a message explaining
+            how to provide a valid code.
+
+        ValueError
+            If `epsg` is invalid, with a message explaining
+            how to provide a valid code.
+
+        Notes
+        -----
+        https://epsg.io for a list of valid EPSG codes.
+
+        """
+
+        generic_error = (f"Example usage: {self.__class__.__name__}"
+                         "(..., epsg=3812)\n"
+                         "Useful EPSG codes:\n"
+                         "  - 31370: Belgian Lambert 72\n"
+                         "  - 3812: Belgian Lambert 2008\n"
+                         "  - 4326: WGS84 (GPS lon/lat)\n"
+                         "Refer to https://epsg.io for other valid codes.")
+
+        if epsg is None:
+            raise TypeError("Missing required parameter 'epsg'.\n" +
+                            generic_error)
+
+        if not isinstance(epsg, int):
+            raise TypeError("EPSG code must be an integer, "
+                            f"got {type(epsg).__name__}.\n" + generic_error)
+
+        try:
+            self._is_existing_epsg(epsg)
+        except ValueError:
+            raise ValueError(f"Invalid EPSG code: {epsg}.\n" + generic_error) \
+                from None
+
+
+class AbstractLocation(EpsgValidator):
     """Abstract base class for location types (f.ex. point, box, polygon).
 
     Locations are GML elements, for inclusion in the WFS GetFeature request.
@@ -154,7 +229,7 @@ class Box(AbstractLocation):
     """Class representing a box location, also known as bounding box,
     envelope, extent."""
 
-    def __init__(self, minx, miny, maxx, maxy, epsg=31370):
+    def __init__(self, minx, miny, maxx, maxy, epsg=None):
         """Initialise a Box.
 
         To initialise a Box using GPS coordinates in decimal degrees,
@@ -171,18 +246,28 @@ class Box(AbstractLocation):
             X coordinate of the upper right corner of the box.
         maxy : float
             Y coordinate of the upper right corner of the box.
-        epsg : int, optional
+        epsg : int
             EPSG code of the coordinate reference system (CRS) of the
-            coordinates specified in `minx`, `miny`, `maxx`, `maxy`. Defaults
-            to 31370 (Belgian Lambert72).
+            coordinates specified in `minx`, `miny`, `maxx`, `maxy`.
 
         Raises
         ------
+        TypeError
+            If `epsg` is None, missing or not an integer.
+
         ValueError
             If `maxx` is lower than or equal to `minx`.
             If `maxy` is lower than or equal to `miny`.
+            If `epsg` is invalid
+
+        Notes
+        -----
+        See https://epsg.io for a list of valid EPSG codes.
 
         """
+
+        self._validate_epsg(epsg)
+
         if maxx <= minx:
             raise ValueError("MaxX should be greater than MinX.")
 
@@ -225,7 +310,7 @@ class Box(AbstractLocation):
 class Point(AbstractLocation):
     """Class representing a point location."""
 
-    def __init__(self, x, y, epsg=31370):
+    def __init__(self, x, y, epsg=None):
         """Initialise a Point.
 
         To initialise a Point using GPS coordinates in decimal degrees,
@@ -237,12 +322,26 @@ class Point(AbstractLocation):
             X coordinate (or longitude) of the point.
         y : float
             Y coordinate (or latitude) of the point.
-        epsg : int, optional
+        epsg : int
             EPSG code of the coordinate reference system (CRS) of the
-            coordinates specified in `x`, `y`. Defaults to
-            31370 (Belgian Lambert72).
+            coordinates specified in `x`, `y`.
+
+        Raises
+        ------
+        TypeError
+            If `epsg` is None, missing or not an integer.
+
+        ValueError
+            If `epsg` invalid.
+
+        Notes
+        -----
+        See https://epsg.io for a list of valid EPSG codes.
 
         """
+
+        self._validate_epsg(epsg)
+
         self.x = x
         self.y = y
         self.epsg = epsg
@@ -299,6 +398,15 @@ class GmlObject(AbstractLocation):
                     'older.')
 
             raise ValueError('GML element appears not to be valid GML3.2')
+
+        if not self.element.attrib.get("srsName"):
+            raise ValueError("GML element is missing the attribute srsName")
+
+        try:
+            epsg = int(self.element.attrib.get("srsName").split(':')[-1])
+            self._is_existing_epsg(epsg)
+        except ValueError:
+            raise ValueError("GML element has an invalid attribute srsName")
 
     def get_element(self):
         return self.element

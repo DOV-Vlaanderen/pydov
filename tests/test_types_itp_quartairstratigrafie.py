@@ -1,6 +1,6 @@
 """Module grouping tests for the
 pydov.types.interpretaties.QuartairStratigrafie class."""
-from pydov.types.fields import ReturnFieldList
+from pydov.search.fields import ReturnFieldList
 from pydov.types.interpretaties import QuartairStratigrafie
 from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestTypes
@@ -21,6 +21,9 @@ class TestQuartairStratigrafie(AbstractTestTypes):
     datatype_class = QuartairStratigrafie
     namespace = 'http://dov.vlaanderen.be/ocdov/interpretaties'
     pkey_base = build_dov_url('data/interpretatie/')
+
+    sorted_subtypes = ['QuartairStratigrafieLaag']
+    sorted_fieldsets = []
 
     field_names = [
         'pkey_interpretatie', 'pkey_boring',

@@ -37,7 +37,6 @@ To run these interactively online without installation, use the following binder
    notebooks/search_boringen.ipynb
    notebooks/search_sonderingen.ipynb
    notebooks/search_grondwaterfilters.ipynb
-   notebooks/search_grondwatermonsters.ipynb
    notebooks/search_grondwatervergunningen.ipynb
    notebooks/search_formele_stratigrafie.ipynb
    notebooks/search_informele_stratigrafie.ipynb
@@ -47,8 +46,9 @@ To run these interactively online without installation, use the following binder
    notebooks/search_gecodeerde_lithologie.ipynb
    notebooks/search_geotechnische_codering.ipynb
    notebooks/search_quartaire_stratigrafie.ipynb
-   notebooks/search_grondmonsters.ipynb
    notebooks/search_bodem.ipynb
+   notebooks/search_monsters.ipynb
+   notebooks/search_observaties.ipynb
    notebooks/search_generic_wfs.ipynb
    notebooks/customizing_object_types.ipynb
    notebooks/spatial_querying.ipynb

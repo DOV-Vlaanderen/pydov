@@ -25,12 +25,6 @@ Grondwaterfilter
 .. automodule:: pydov.search.grondwaterfilter
     :members:
 
-Grondwatermonster
-*****************
-
-.. automodule:: pydov.search.grondwatermonster
-    :members:
-
 Grondwatervergunning
 ********************
 
@@ -42,12 +36,6 @@ Interpretaties
 **************
 
 .. automodule:: pydov.search.interpretaties
-    :members:
-
-Grondmonster
-************
-
-.. automodule:: pydov.search.grondmonster
     :members:
 
 Bodemsite
@@ -68,22 +56,23 @@ Bodemdiepteinterval
 .. automodule:: pydov.search.bodemdiepteinterval
     :members:
 
-Bodemmonster
-************
-
-.. automodule:: pydov.search.bodemmonster
-    :members:
-
-Bodemobservatie
-***************
-
-.. automodule:: pydov.search.bodemobservatie
-    :members:
-
 Bodemclassificatie
 ******************
 
 .. automodule:: pydov.search.bodemclassificatie
+    :members:
+
+Monster
+*******
+
+.. automodule:: pydov.search.monster
+    :members:
+
+
+Observatie
+**********
+
+.. automodule:: pydov.search.observatie
     :members:
 
 Generic
@@ -119,13 +108,6 @@ Grondwaterfilter
     :members:
     :show-inheritance:
 
-Grondwatermonster
-*****************
-
-.. automodule:: pydov.types.grondwatermonster
-    :members:
-    :show-inheritance:
-
 Grondwatervergunning
 ********************
 
@@ -137,13 +119,6 @@ Interpretaties
 **************
 
 .. automodule:: pydov.types.interpretaties
-    :members:
-    :show-inheritance:
-
-Grondmonster
-************
-
-.. automodule:: pydov.types.grondmonster
     :members:
     :show-inheritance:
 
@@ -168,24 +143,24 @@ Bodemdiepteinterval
     :members:
     :show-inheritance:
 
-Bodemmonster
-************
-
-.. automodule:: pydov.types.bodemmonster
-    :members:
-    :show-inheritance:
-
-Bodemobservatie
-***************
-
-.. automodule:: pydov.types.bodemobservatie
-    :members:
-    :show-inheritance:
-
 Bodemclassificatie
 ******************
 
 .. automodule:: pydov.types.bodemclassificatie
+    :members:
+    :show-inheritance:
+
+Monsters
+********
+
+.. automodule:: pydov.types.monster
+    :members:
+    :show-inheritance:
+
+Observatie
+**********
+
+.. automodule:: pydov.types.observatie
     :members:
     :show-inheritance:
 
@@ -199,11 +174,15 @@ Generic
 Fields
 ------
 
+.. automodule:: pydov.search.fields
+    :members:
+    :show-inheritance:
+
 .. automodule:: pydov.types.fields
     :members:
     :show-inheritance:
 
-.. automodule:: pydov.types.ligging
+.. automodule:: pydov.types.fields_custom
     :members:
 
 Search utilities
@@ -236,6 +215,20 @@ DOV utilities
     :members:
     :show-inheritance:
 
+Codelists
+*********
+
+.. automodule:: pydov.util.codelists
+    :members:
+    :show-inheritance:
+
+Wrappers
+********
+
+.. automodule:: pydov.util.wrappers
+    :members:
+    :show-inheritance:
+
 Caching
 -------
 
@@ -261,5 +254,9 @@ Errors and warnings
 -------------------
 
 .. automodule:: pydov.util.errors
+    :members:
+    :show-inheritance:
+
+.. automodule:: pydov.util.deprecation
     :members:
     :show-inheritance:

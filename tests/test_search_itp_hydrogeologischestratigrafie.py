@@ -5,7 +5,7 @@ from owslib.fes2 import PropertyIsEqualTo
 from pandas import DataFrame
 
 from pydov.search.interpretaties import HydrogeologischeStratigrafieSearch
-from pydov.types.fields import ReturnFieldList
+from pydov.search.fields import ReturnFieldList
 from pydov.types.interpretaties import HydrogeologischeStratigrafie
 from tests.abstract import AbstractTestSearch
 
@@ -26,13 +26,14 @@ location_wfs_feature = \
 location_dov_xml = \
     'tests/data/types/interpretaties/hydrogeologische_stratigrafie' \
     '/hydrogeologische_stratigrafie.xml'
-location_xsd_base = \
-    'tests/data/types/interpretaties/hydrogeologische_stratigrafie/xsd_*.xml'
+location_codelists = \
+    'tests/data/types/interpretaties/hydrogeologische_stratigrafie'
 
 
 class TestHydrogeologischeStratigrafieSearch(AbstractTestSearch):
 
     search_instance = HydrogeologischeStratigrafieSearch()
+    search_class = HydrogeologischeStratigrafieSearch
     datatype_class = HydrogeologischeStratigrafie
 
     valid_query_single = PropertyIsEqualTo(propertyname='Proefnummer',

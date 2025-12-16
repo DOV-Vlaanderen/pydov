@@ -4,7 +4,7 @@ from owslib.fes2 import PropertyIsEqualTo
 from pandas import DataFrame
 
 from pydov.search.interpretaties import GecodeerdeLithologieSearch
-from pydov.types.fields import ReturnFieldList
+from pydov.search.fields import ReturnFieldList
 from pydov.types.interpretaties import GecodeerdeLithologie
 from tests.abstract import AbstractTestSearch
 
@@ -25,13 +25,14 @@ location_wfs_feature = \
 location_dov_xml = \
     'tests/data/types/interpretaties/gecodeerde_lithologie' \
     '/gecodeerde_lithologie.xml'
-location_xsd_base = \
-    'tests/data/types/interpretaties/gecodeerde_lithologie/xsd_*.xml'
+location_codelists = \
+    'tests/data/types/interpretaties/gecodeerde_lithologie'
 
 
 class TestGecodeerdeLithologieSearch(AbstractTestSearch):
 
     search_instance = GecodeerdeLithologieSearch()
+    search_class = GecodeerdeLithologieSearch
     datatype_class = GecodeerdeLithologie
 
     valid_query_single = PropertyIsEqualTo(propertyname='Proefnummer',

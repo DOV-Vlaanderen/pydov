@@ -35,7 +35,7 @@ class TestBodemdiepteintervalSearch(AbstractTestSearch):
 
     valid_returnfields = ReturnFieldList.from_field_names('pkey_diepteinterval', 'naam', 'bovengrens1_cm')
     valid_returnfields_subtype = None
-    valid_returnfields_extra = ReturnFieldList.from_field_names('pkey_diepteinterval', 'naam', 'Monsters')
+    valid_returnfields_extra = ReturnFieldList.from_field_names('pkey_diepteinterval', 'naam', 'Aantal_monsters')
 
     df_default_columns = [
         'pkey_diepteinterval', 'pkey_bodemopbouw', 'pkey_bodemlocatie',

@@ -1,4 +1,5 @@
 -r requirements.txt
+-r requirements_geom.txt
 pip
 bumpversion
 wheel

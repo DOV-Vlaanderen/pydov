@@ -91,6 +91,30 @@ class TestDovutil(object):
         assert dovutil.build_dov_url('geonetwork/') == \
             'https://dov/geonetwork/'
 
+    def test_get_dov_base_url_env_with_slash(self):
+        old_environ = copy.deepcopy(os.environ)
+        os.environ[env_var] = "https://dov/"
+
+        assert dovutil.build_dov_url("geonetwork/") == "https://dov/geonetwork/"
+
+        os.environ = old_environ
+
+    def test_get_dov_base_url_env_with_multiple_slash(self):
+        old_environ = copy.deepcopy(os.environ)
+        os.environ[env_var] = "https://dov//"
+
+        assert dovutil.build_dov_url("geonetwork/") == "https://dov/geonetwork/"
+
+        os.environ = old_environ
+
+    def test_get_dov_base_url_env_without_slash(self):
+        old_environ = copy.deepcopy(os.environ)
+        os.environ[env_var] = "https://dov"
+
+        assert dovutil.build_dov_url("geonetwork/") == "https://dov/geonetwork/"
+
+        os.environ = old_environ
+
     def test_build_dov_sparql_request(self, pydov_no_base_url):
         assert env_var not in os.environ
 

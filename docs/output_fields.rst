@@ -186,6 +186,8 @@ To use the subtype, you can use the ``with_subtype`` method of the main type. Th
 
 The extra fields from the subtype will now be part of your object type, and will hence be available in the `get_fields` output as well as in the output dataframe.
 
+.. _custom_object_types:
+
 Defining custom object types
 ----------------------------
 

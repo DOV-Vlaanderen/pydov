@@ -4,6 +4,141 @@
 History
 =======
 
+
+v4.0.0 (unreleased)
+-------------------
+
+- Breaking changes
+
+  - Following generalisation and standardisation of DOV object types regarding samples (monsters) and observations,
+    there are changes in pydov too. Following datatypes are impacted:
+
+    - Grondmonsters (borehole samples): removed
+
+      ``pydov.search.grondmonster`` and ``pydov.types.grondmonster`` modules have been removed, in favor of the generic Monster type.
+      Use :class:`pydov.search.monster` and :class:`pydov.types.monster` instead.
+      Consult the available fields, fieldsets and subtypes in the :ref:`datasets section <dataset_monster>`
+      and check the :doc:`tutorial <notebooks/search_monsters>` for more information and examples.
+
+    - Grondwatermonsters (groundwater samples): removed
+
+      ``pydov.search.grondwatermonster`` and ``pydov.types.grondwatermonster`` modules have been removed, in favor of the generic Monster type.
+      Use :class:`pydov.search.monster` and :class:`pydov.types.monster` instead.
+      Consult the available fields, fieldsets and subtypes in the :ref:`datasets section <dataset_monster>`
+      and check the :doc:`tutorial <notebooks/search_monsters>` for more information and examples.
+
+    - Bodemmonsters (soil samples): removed
+
+      ``pydov.search.bodemmonster`` and ``pydov.types.bodemmonster`` modules have been removed, in favor of the generic Monster type.
+      Use :class:`pydov.search.monster` and :class:`pydov.types.monster` instead.
+      Consult the available fields, fieldsets and subtypes in the :ref:`datasets section <dataset_monster>`
+      and check the :doc:`tutorial <notebooks/search_monsters>` for more information and examples.
+
+    - Bodemobservaties (soil observations): removed
+
+      ``pydov.search.bodemobservatie`` and ``pydov.types.bodemobservatie`` modules have been removed, in favor of the generic Observatie type.
+      Use :class:`pydov.search.observatie` and :class:`pydov.types.observatie` instead.
+      Consult the available fields, fieldsets and subtypes in the :ref:`datasets section <dataset_observatie>`
+      and check the :doc:`tutorial <notebooks/search_observaties>` for more information and examples.
+
+  - Preparing the pending deprecation of the Lambert72 coordinate reference system (CRS) (EPSG:31370), all locations and geometry return fields
+    now require explicit CRS definition. This impacts:
+
+      - :class:`pydov.util.location.Box` - add ``epsg=31370`` to specify Lambert72.
+      - :class:`pydov.util.location.Point` - add ``epsg=31370`` to specify Lambert72.
+      - :class:`pydov.util.location.GmlObject` - requires explicit `srsName`.
+      - :class:`pydov.search.fields.GeometryReturnField` - add ``epsg=31370`` to specify Lambert72.
+
+      For the same reason, it's no longer possible to reference a geometry return field by string reference, you have to use a GeometryReturnField instance
+      from now on, explicitly defining the desired CRS.
+
+  - Fields with an associated codelist now support both codes, labels and definitions. This means that they are no longer listed as `dict` in the output of ``get_fields()``,
+    but are descedents of :class:`pydov.util.codelists.AbstractCodeList`. Codelists can originate from either a feature catalogue, an associated XSD type or (new) an OSLO
+    codelist. If you want to add either the labels or the definitions to your output dataframes, you can use the ``get_label`` and ``get_definition`` methods, as
+    explained in the :ref:`documentation <map_codelist>`.
+
+  - Field classes restructuring:
+
+      - The ``GeometryReturnField`` and ``ReturnField`` classes now reside inside the ``pydov.search.fields`` package instead of ``pydov.types.fields``,
+        see :class:`pydov.search.fields.GeometryReturnField` and :class:`pydov.search.fields.ReturnField`
+
+  .. tip:: Should you have any questions about these changes, or need help adjusting your scripts accordingly, don't hesitate to `create an issue in our GitHub project <https://github.com/DOV-Vlaanderen/pydov/issues/new>`_! You can also create issues for questions, labelling them as 'question'. We will do our best to follow up and help you out as quickly as possible!
+
+- New features
+
+  - Add support for extra fieldsets
+
+    Starting from pydov 4, we support extra fieldsets for certain object types. These are fields that are not available in the the default output dataframes,
+    but can easily be added should you need them.
+
+    You can explore which fieldsets are available with the ``get_fieldsets()`` method on the main type::
+
+      from pydov.types.boring import Boring
+      print(Boring.get_fieldsets())
+
+    You can add the fields from a fieldset to your search using the ``with_extra_fields()`` method::
+
+      from pydov.search.boring import BoringSearch
+      from pydov.types.boring import MethodeXyz
+
+      boring_search = BoringSearch(objecttype=Boring.with_extra_fields(MethodeXyz))
+      df = boring_search.search(max_features=10)
+      print(df)
+
+    More information can be found in the :ref:`customizing output <adding_extra_fields>` section.
+
+  - Add support for extra subtypes
+
+    We now also support multiple subtypes per main type. Most main types by default still have a subtype, but for some we also have other subtypes available.
+
+    Check which subtypes are available with the ``get_subtypes()`` method on the main type::
+
+      from pydov.types.boring import Boring
+      print(Boring.get_subtypes())
+
+    Use one of the subtypes in your search using the ``with_subtype()`` method::
+
+      from pydov.search.boring import BoringSearch
+      from pydov.types.boring import Kleur
+
+      boring_search = BoringSearch(objecttype=Boring.with_subtype(Kleur))
+      df = boring_search.search(max_features=10)
+      print(df)
+
+    More information can be found in the :ref:`customizing output <switching_subtypes>` section.
+
+  - Monster (samples): added new type for generic Monster type
+
+    Added a new object type for the generic Monster type. Check all available fields, fieldsets and subtypes in
+    the :ref:`datasets section <dataset_monster>`. Consult the :doc:`tutorial <notebooks/search_monsters>` for more
+    information and examples.
+
+  - Added visual output for search instances and ``get_fields()`` output in Jupyter notebooks.
+
+    Both search instances as well as the output of ``get_fields()`` and its subitems now support visualisation in Jupyter notebooks.
+    To get a quick overview of a datatype, visualise its search instance::
+
+      from pydov.search.boring import BoringSearch
+      BoringSearch()
+
+    The output of ``get_fields()`` now supports both indexed as well as attribute-style access::
+
+      from pydov.search.boring import BoringSearch
+      boring_search = BoringSearch()
+
+      boring_search.get_fields()['methode']['codelist']['spade']
+
+      boring_search.get_fields().methode.codelist.spade
+
+    This output is also available in the documentation tutorials, e.g. for :doc:`Boring <notebooks/search_boringen>`.
+
+- Documentation-only updates
+
+  - Updated the documentation regarding object type customization with the newly introduced ``with_extra_fields()`` and ``with_subtype()`` methods.
+    The old syntax should still be supported too. Check the new documentation :ref:`here <custom_object_types>`.
+
+
+
 v3.3.1
 ------
 

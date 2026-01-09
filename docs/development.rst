@@ -232,15 +232,22 @@ In order to create a new release, the following steps need to be done ( on ``mas
 
 1. Update the :ref:`history` file with the changes compared to the previous version. You could take into account the following sections: ``New features``, ``Minor improvements``, ``Major improvements``, ``Documentation fixes``. Commit the edits (``git commit``).
 
-2. Adjust the version of the code. The repo uses the `bumpversion` package to keep track
+2. Adjust the version of the code. The repo uses the `bump2version` package to keep track
 of the package version. use the following commands to switch the version:
 
-    - ``bumpversion patch`` to increase version from 1.0.0 to 1.0.1.
-    - ``bumpversion minor`` to increase version from 1.0.0 to 1.1.0.
-    - ``bumpversion major`` to increase version from 1.0.0 to 2.0.0.
+    - ``bump2version --no-tag --no-commit dev`` to remove development version
+
+    - ``bump2version --allow-dirty patch`` to increase version from 1.0.0 to 1.0.1.
+    - ``bump2version --allow-dirty minor`` to increase version from 1.0.0 to 1.1.0.
+    - ``bump2version --allow-dirty major`` to increase version from 1.0.0 to 2.0.0.
 
 3. Push the code to GitHub, `git push origin master`
 4. Push the tags to GitHub, ``git push --tags`` to create the release in Github
+
+5. Update the version of the main branch to the next development version:
+
+    - ``bump2version --no-tag --no-commit major`` to increase version to the next major version
+    - ``bump2version --no-tag --allow-dirty dev`` to set version to development version
 
 The new release can be installed using ``pip``, ``pip install --upgrade pydov``.
 

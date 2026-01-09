@@ -157,7 +157,12 @@ class SessionFactory:
         session = requests.Session()
 
         session.headers.update(
-            {'user-agent': 'pydov/{}'.format(pydov.__version__)})
+            {
+                "user-agent": "/".join(
+                    [pydov.__package_name__, pydov.__version__]
+                )
+            }
+        )
 
         try:
             retry = urllib3.util.Retry(

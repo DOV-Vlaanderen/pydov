@@ -235,11 +235,16 @@ In order to create a new release, the following steps need to be done ( on ``mas
 2. Adjust the version of the code. The repo uses the `bump2version` package to keep track
 of the package version. use the following commands to switch the version:
 
-    - ``bump2version --no-tag --no-commit dev`` to remove development version
+    - Check whether the version matches the version you want to release, if this is the case:
 
-    - ``bump2version --allow-dirty patch`` to increase version from 1.0.0 to 1.0.1.
-    - ``bump2version --allow-dirty minor`` to increase version from 1.0.0 to 1.1.0.
-    - ``bump2version --allow-dirty major`` to increase version from 1.0.0 to 2.0.0.
+      - ``bump2version dev`` to remove development version and create the released version.
+
+    - If the version does not match:
+
+      - ``bump2version --no-tag --no-commit dev`` to remove development version
+      - ``bump2version --allow-dirty patch`` to increase version from 1.0.0 to 1.0.1 create the released version.
+      - ``bump2version --allow-dirty minor`` to increase version from 1.0.0 to 1.1.0 create the released version.
+      - ``bump2version --allow-dirty major`` to increase version from 1.0.0 to 2.0.0 create the released version.
 
 3. Push the code to GitHub, `git push origin master`
 4. Push the tags to GitHub, ``git push --tags`` to create the release in Github

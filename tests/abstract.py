@@ -1241,7 +1241,6 @@ class AbstractTestTypes(object):
         with pytest.raises(ValueError):
             self.datatype_class(None)
 
-    @pytest.mark.skip(reason="filters zonder peilmetingen in oefen")
     def test_nested_subtype_from_xml_element(self, dov_xml):
         """Test initialising the subtype(s) from the XML document.
 

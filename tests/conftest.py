@@ -616,4 +616,6 @@ def patch_owslib_openURL(monkeypatch):
     monkeypatch.setattr('owslib.util.openURL', _openURL)
     monkeypatch.setattr('owslib.feature.common.openURL', _openURL)
     monkeypatch.setattr('owslib.feature.schema.openURL', _openURL)
+    monkeypatch.setattr("owslib.feature.wfs100.openURL", _openURL)
     monkeypatch.setattr('owslib.feature.wfs110.openURL', _openURL)
+    monkeypatch.setattr("owslib.feature.wfs200.openURL", _openURL)

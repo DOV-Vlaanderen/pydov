@@ -14,97 +14,6 @@ import pydov
 request_timeout = 300
 
 
-def proxy_autoconfiguration():
-    """Try proxy autoconfiguration via PAC.
-
-    This function tries to autodetect the required proxy server using PAC, and
-    sets the HTTP_PROXY and HTTPS_PROXY environment variables accordingly.
-
-    These variables should subsequently be picked up by the requests sessions
-    used by pydov and owslib.
-    """
-    def get_orig_proxy():
-        """Get the proxy from current environment, if available.
-
-        Returns
-        -------
-        tuple(str, str)
-            The HTTP and HTTPS proxy respectively.
-        """
-        return (os.environ.get('HTTP_PROXY', None),
-                os.environ.get('HTTPS_PROXY', None))
-
-    def set_proxy_for_url(url):
-        """Use PAC to discover the required proxy for the given URL and
-        set the environment accordingly.
-
-        Parameters
-        ----------
-        url : str
-            The URL to pass to the PAC to determine the required proxy.
-        """
-        with pypac.pac_context_for_url(url):
-            http_proxy = os.environ.get("HTTP_PROXY", "")
-            https_proxy = os.environ.get("HTTPS_PROXY", "")
-
-        os.environ['HTTP_PROXY'] = http_proxy
-        os.environ['HTTPS_PROXY'] = https_proxy
-
-    def revert_to_orig_proxy(orig_http_proxy, orig_https_proxy):
-        """Revert the proxy environment to the given values.
-
-        Parameters
-        ----------
-        orig_http_proxy : str
-            Proxy server to use for HTTP, or None to disable.
-        orig_https_proxy : str
-            Proxy server to use for HTTPS, ot None to disable.
-        """
-        if orig_http_proxy is None:
-            del os.environ['HTTP_PROXY']
-        else:
-            os.environ['HTTP_PROXY'] = orig_http_proxy
-
-        if orig_https_proxy is None:
-            del os.environ['HTTPS_PROXY']
-        else:
-            os.environ['HTTPS_PROXY'] = orig_https_proxy
-
-    try:
-        import pypac
-    except ImportError:
-        # do nothing if PAC not available
-        pass
-    else:
-        # save original proxy from environment
-        orig_http_proxy, orig_https_proxy = get_orig_proxy()
-
-        from pydov.util.dovutil import build_dov_url
-        dov_url = build_dov_url('/')
-        public_url = 'https://pydov.readthedocs.io'
-
-        # set proxy using PAC for DOV URL
-        set_proxy_for_url(dov_url)
-        try:
-            # try if it works
-            r = requests.get(dov_url)
-            if not r.ok:
-                raise RuntimeError
-        except Exception:
-            # fallback
-
-            # set proxy using PAC for a public URL
-            set_proxy_for_url(public_url)
-            try:
-                # try if it works
-                r = requests.get(dov_url)
-                if not r.ok:
-                    raise RuntimeError
-            except Exception:
-                # if it does not, revert to original environment
-                revert_to_orig_proxy(orig_http_proxy, orig_https_proxy)
-
-
 class TimeoutHTTPAdapter(HTTPAdapter):
     """HTTPAdapter which adds a default timeout to requests. Allows timeout
     to be overridden on a per-request basis.
@@ -146,6 +55,41 @@ class SessionFactory:
     """
 
     @staticmethod
+    def set_user_agent(session):
+        """Set the pydov user-agent header for the given session.
+
+        Parameters
+        ----------
+        session : requests.Session
+            The requests session to set the user-agent header for.
+        """
+        session.headers.update(
+            {
+                "user-agent": "/".join(
+                    [pydov.__package_name__, pydov.__version__]
+                )
+            }
+        )
+
+    @staticmethod
+    def get_fail_fast_session():
+        """Request a new session without retry-logic or timeout.
+
+        Returns
+        -------
+        requests.Session
+            requests Session with pydov user-agent header.
+        """
+        session = requests.Session()
+        SessionFactory.set_user_agent(session)
+
+        adapter = TimeoutHTTPAdapter(timeout=10, max_retries=0)
+        session.mount("http://", adapter)
+        session.mount("https://", adapter)
+
+        return session
+
+    @staticmethod
     def get_session():
         """Request a new session.
 
@@ -155,14 +99,7 @@ class SessionFactory:
             pydov configured requests Session.
         """
         session = requests.Session()
-
-        session.headers.update(
-            {
-                "user-agent": "/".join(
-                    [pydov.__package_name__, pydov.__version__]
-                )
-            }
-        )
+        SessionFactory.set_user_agent(session)
 
         try:
             retry = urllib3.util.Retry(
@@ -352,3 +289,99 @@ class LocalSessionThread(Thread):
                     self.input_queue.task_done()
             except Empty:
                 pass
+
+
+def proxy_autoconfiguration():
+    """Try proxy autoconfiguration via PAC.
+
+    This function tries to autodetect the required proxy server using PAC, and
+    sets the HTTP_PROXY and HTTPS_PROXY environment variables accordingly.
+
+    These variables should subsequently be picked up by the requests sessions
+    used by pydov and owslib.
+    """
+    session = SessionFactory.get_fail_fast_session()
+
+    def get_orig_proxy():
+        """Get the proxy from current environment, if available.
+
+        Returns
+        -------
+        tuple(str, str)
+            The HTTP and HTTPS proxy respectively.
+        """
+        return (
+            os.environ.get("HTTP_PROXY", None),
+            os.environ.get("HTTPS_PROXY", None),
+        )
+
+    def set_proxy_for_url(url):
+        """Use PAC to discover the required proxy for the given URL and
+        set the environment accordingly.
+
+        Parameters
+        ----------
+        url : str
+            The URL to pass to the PAC to determine the required proxy.
+        """
+        with pypac.pac_context_for_url(url):
+            http_proxy = os.environ.get("HTTP_PROXY", "")
+            https_proxy = os.environ.get("HTTPS_PROXY", "")
+
+        os.environ["HTTP_PROXY"] = http_proxy
+        os.environ["HTTPS_PROXY"] = https_proxy
+
+    def revert_to_orig_proxy(orig_http_proxy, orig_https_proxy):
+        """Revert the proxy environment to the given values.
+
+        Parameters
+        ----------
+        orig_http_proxy : str
+            Proxy server to use for HTTP, or None to disable.
+        orig_https_proxy : str
+            Proxy server to use for HTTPS, ot None to disable.
+        """
+        if orig_http_proxy is None:
+            del os.environ["HTTP_PROXY"]
+        else:
+            os.environ["HTTP_PROXY"] = orig_http_proxy
+
+        if orig_https_proxy is None:
+            del os.environ["HTTPS_PROXY"]
+        else:
+            os.environ["HTTPS_PROXY"] = orig_https_proxy
+
+    try:
+        import pypac
+    except ImportError:
+        # do nothing if PAC not available
+        pass
+    else:
+        # save original proxy from environment
+        orig_http_proxy, orig_https_proxy = get_orig_proxy()
+
+        from pydov.util.dovutil import build_dov_url
+
+        dov_url = build_dov_url("/")
+        public_url = "https://pydov.readthedocs.io"
+
+        # set proxy using PAC for DOV URL
+        set_proxy_for_url(dov_url)
+        try:
+            # try if it works
+            r = session.get(dov_url)
+            if not r.ok:
+                raise RuntimeError
+        except Exception:
+            # fallback
+
+            # set proxy using PAC for a public URL
+            set_proxy_for_url(public_url)
+            try:
+                # try if it works
+                r = session.get(dov_url)
+                if not r.ok:
+                    raise RuntimeError
+            except Exception:
+                # if it does not, revert to original environment
+                revert_to_orig_proxy(orig_http_proxy, orig_https_proxy)

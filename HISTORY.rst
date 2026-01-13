@@ -113,6 +113,12 @@ v4.0.0 (unreleased)
     the :ref:`datasets section <dataset_monster>`. Consult the :doc:`tutorial <notebooks/search_monsters>` for more
     information and examples.
 
+  - Observatie (observaties): added new type for generic Observatie type
+
+    Added a new object type for the generic Monster type. Check all available fields, fieldsets and subtypes in
+    the :ref:`datasets section <dataset_observatie>`. Consult the :doc:`tutorial <notebooks/search_observaties>` for more
+    information and examples.
+
   - Added visual output for search instances and ``get_fields()`` output in Jupyter notebooks.
 
     Both search instances as well as the output of ``get_fields()`` and its subitems now support visualisation in Jupyter notebooks.

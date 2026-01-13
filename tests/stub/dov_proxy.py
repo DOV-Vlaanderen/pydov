@@ -3,6 +3,12 @@ import argparse
 import requests
 from flask import Flask, request
 
+import pydov
+
+pydov.__package_name__ = "pydov-tests"
+
+from pydov.util.net import SessionFactory
+
 app = Flask(__name__)
 
 dov_base_url = 'https://www.dov.vlaanderen.be/'
@@ -19,6 +25,8 @@ x html.html.twig
 <html>
 </html>
 """
+
+session = SessionFactory.get_fail_fast_session()
 
 
 def rewrite_content_reverse(content):
@@ -83,7 +91,7 @@ def proxy_head(path):
         The response of the DOV service.
     """
     full_path = request.full_path
-    r = requests.head(f'{dov_base_url.rstrip("/")}{full_path}')
+    r = session.head(f'{dov_base_url.rstrip("/")}{full_path}')
     return r.content
 
 
@@ -112,7 +120,7 @@ def proxy_get(path):
                     or full_path.startswith('/xdov')):
         return error_404, 404
 
-    r = requests.get(f'{dov_base_url.rstrip("/")}{full_path}')
+    r = session.get(f'{dov_base_url.rstrip("/")}{full_path}')
     return rewrite_content_reverse(r.content)
 
 
@@ -134,7 +142,7 @@ def proxy_post(path):
     """
     full_path = request.full_path
     data = rewrite_content_forward(request.data)
-    r = requests.post(f'{dov_base_url.rstrip("/")}{full_path}', data)
+    r = session.post(f'{dov_base_url.rstrip("/")}{full_path}', data)
     return rewrite_content_reverse(r.content)
 
 

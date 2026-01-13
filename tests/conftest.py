@@ -18,6 +18,7 @@ from pydov import Hooks
 from pydov.util import owsutil
 from pydov.util.caching import GzipTextFileCache, PlainTextFileCache
 from pydov.util.dovutil import build_dov_url
+from pydov.util.net import SessionFactory
 
 
 def pytest_runtest_setup():
@@ -27,6 +28,13 @@ def pytest_runtest_setup():
 def pytest_configure(config):
     config.addinivalue_line("markers",
                             "online: mark test that requires internet access")
+
+
+@pytest.fixture(scope="session", autouse=True)
+def setup_global_session():
+    """Set up a global session for `pydov` and set the package name for testing."""
+    pydov.__package_name__ = "pydov-tests"
+    pydov.session = SessionFactory.get_session()
 
 
 @pytest.fixture
@@ -608,4 +616,6 @@ def patch_owslib_openURL(monkeypatch):
     monkeypatch.setattr('owslib.util.openURL', _openURL)
     monkeypatch.setattr('owslib.feature.common.openURL', _openURL)
     monkeypatch.setattr('owslib.feature.schema.openURL', _openURL)
+    monkeypatch.setattr("owslib.feature.wfs100.openURL", _openURL)
     monkeypatch.setattr('owslib.feature.wfs110.openURL', _openURL)
+    monkeypatch.setattr("owslib.feature.wfs200.openURL", _openURL)

@@ -55,6 +55,41 @@ class SessionFactory:
     """
 
     @staticmethod
+    def set_user_agent(session):
+        """Set the pydov user-agent header for the given session.
+
+        Parameters
+        ----------
+        session : requests.Session
+            The requests session to set the user-agent header for.
+        """
+        session.headers.update(
+            {
+                "user-agent": "/".join(
+                    [pydov.__package_name__, pydov.__version__]
+                )
+            }
+        )
+
+    @staticmethod
+    def get_fail_fast_session():
+        """Request a new session without retry-logic or timeout.
+
+        Returns
+        -------
+        requests.Session
+            requests Session with pydov user-agent header.
+        """
+        session = requests.Session()
+        SessionFactory.set_user_agent(session)
+
+        adapter = TimeoutHTTPAdapter(timeout=10, max_retries=0)
+        session.mount("http://", adapter)
+        session.mount("https://", adapter)
+
+        return session
+
+    @staticmethod
     def get_session():
         """Request a new session.
 
@@ -64,14 +99,7 @@ class SessionFactory:
             pydov configured requests Session.
         """
         session = requests.Session()
-
-        session.headers.update(
-            {
-                "user-agent": "/".join(
-                    [pydov.__package_name__, pydov.__version__]
-                )
-            }
-        )
+        SessionFactory.set_user_agent(session)
 
         try:
             retry = urllib3.util.Retry(
@@ -272,7 +300,7 @@ def proxy_autoconfiguration():
     These variables should subsequently be picked up by the requests sessions
     used by pydov and owslib.
     """
-    session = SessionFactory.get_session()
+    session = SessionFactory.get_fail_fast_session()
 
     def get_orig_proxy():
         """Get the proxy from current environment, if available.

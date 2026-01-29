@@ -62,6 +62,10 @@ v4.0.0 (unreleased)
       - The ``GeometryReturnField`` and ``ReturnField`` classes now reside inside the ``pydov.search.fields`` package instead of ``pydov.types.fields``,
         see :class:`pydov.search.fields.GeometryReturnField` and :class:`pydov.search.fields.ReturnField`
 
+  - Multivalued fields now use tuples instead of lists. This has the benefit of being hashable, enabling some features in Pandas that are otherwise not available (e.g. drop duplicates).
+    This is also reflected in the output of ``get_fields()``, where the property ``list: True/False`` has been replaced with ``multivalue: True/False``.
+    More information in the :ref:`documentation <available_attribute_fields>`.
+
   .. tip:: Should you have any questions about these changes, or need help adjusting your scripts accordingly, don't hesitate to `create an issue in our GitHub project <https://github.com/DOV-Vlaanderen/pydov/issues/new>`_! You can also create issues for questions, labelling them as 'question'. We will do our best to follow up and help you out as quickly as possible!
 
 - New features

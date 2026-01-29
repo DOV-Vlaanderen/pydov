@@ -261,9 +261,9 @@ class AbstractSearch(HtmlFormatter):
             type (str)
                 The datatype of the field.
 
-            list (boolean)
-                Whether the field value is a list type. The items in the list
-                will be of the `type` specified above.
+            multivalue (boolean)
+                Whether the field value is a multivalued type (tuple). The
+                items in the tuple will be of the `type` specified above.
 
             notnull (boolean)
                 Whether the field is mandatory (True) or can be null (False).
@@ -314,11 +314,11 @@ class AbstractSearch(HtmlFormatter):
 
             name = self._map_wfs_source_df.get(wfs_field, wfs_field)
 
-            is_list = False
+            multivalue = False
             codelist = None
             for f in df_wfs_fields:
                 if f['name'] == name:
-                    is_list = f['split_fn'] is not None
+                    multivalue = f['split_fn'] is not None
                     codelist = f['codelist']
 
             field = {
@@ -327,7 +327,7 @@ class AbstractSearch(HtmlFormatter):
                 'type': _map_wfs_datatypes.get(
                     wfs_schema['properties'][wfs_field],
                     wfs_schema['properties'][wfs_field]),
-                'list': is_list,
+                'multivalue': multivalue,
                 'notnull': False,
                 'query': True,
                 'cost': 1
@@ -356,7 +356,7 @@ class AbstractSearch(HtmlFormatter):
                 'name': name,
                 'definition': None,
                 'type': 'geometry',
-                'list': False,
+                'multivalue': False,
                 'notnull': False,
                 'query': False,
                 'cost': 1
@@ -368,7 +368,7 @@ class AbstractSearch(HtmlFormatter):
             field = {
                 'name': xml_field['name'],
                 'type': xml_field['type'],
-                'list': xml_field['split_fn'] is not None,
+                'multivalue': xml_field['split_fn'] is not None,
                 'definition': xml_field['definition'],
                 'notnull': xml_field['notnull'],
                 'query': False,
@@ -386,7 +386,7 @@ class AbstractSearch(HtmlFormatter):
             field = {
                 'name': custom_field['name'],
                 'type': custom_field['type'],
-                'list': False,
+                'multivalue': False,
                 'definition': custom_field['definition'],
                 'notnull': custom_field['notnull'],
                 'query': False,
@@ -403,7 +403,7 @@ class AbstractSearch(HtmlFormatter):
             field = {
                 'name': custom_field['name'],
                 'type': custom_field['type'],
-                'list': False,
+                'multivalue': False,
                 'definition': custom_field['definition'],
                 'notnull': custom_field['notnull'],
                 'query': False,

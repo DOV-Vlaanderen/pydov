@@ -197,7 +197,8 @@ class FieldMetadata(AbstractDictLike, HtmlFormatter):
                  '</span></li>')
         html += f'<li>query: <span class="code small">{self.query}</span></li>'
         html += f'<li>cost: <span class="code small">{self.cost}</span></li>'
-        html += f'<li>list: <span class="code small">{self.list}</span></li>'
+        html += (f'<li>multivalue: <span class="code small">'
+                 f'{self.multivalue}</span></li>')
 
         if self.base_dict.get('codelist') is not None:
             html += '<li>codelist:</li>'

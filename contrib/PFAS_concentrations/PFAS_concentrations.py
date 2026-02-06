@@ -1,12 +1,17 @@
 import os
+import numpy as np
 import pandas as pd
 from pydov.search.generic import WfsSearch
-from pydov.search.grondwatermonster import GrondwaterMonsterSearch
+from pydov.search.monster import MonsterSearch
+from pydov.search.observatie import ObservatieSearch
 from pydov.search.grondwaterfilter import GrondwaterFilterSearch
+from pydov.search.bodemlocatie import BodemlocatieSearch
+from pydov.search.bodemdiepteinterval import BodemdiepteintervalSearch
 from pydov.util.location import Within, Box
 from pydov.util.query import Join
+from pydov.util.dovutil import build_dov_url
 from loguru import logger
-from owslib.fes2 import PropertyIsEqualTo, And, Or
+from owslib.fes2 import PropertyIsEqualTo, And, Or, Not, PropertyIsNull
 from tqdm.auto import tqdm
 from datetime import datetime
 from importlib.metadata import version
@@ -78,7 +83,9 @@ class RequestPFASdata:
             sort_by=sort_by,
             max_features=max_features)
 
-    def pydov_request(self, location, max_features, query=None, sort_by=None):
+    def pydov_groundwater_request(
+        self, location, max_features, query=None, sort_by=None
+    ):
         """Function to download the groundwater monster and according filter data for a specific bounding box.
 
         Parameters
@@ -101,30 +108,312 @@ class RequestPFASdata:
         The downloaded groundwater monster and filter data for a given bounding box.
         """
 
-        gwmonster = GrondwaterMonsterSearch()
+        obs_search = ObservatieSearch()
+        pfas_query = And(
+            [
+                PropertyIsEqualTo(
+                    propertyname="parametergroep",
+                    literal="Grondwater_chemisch_PFAS",
+                ),
+                Not([PropertyIsNull("pkey_parent")]),
+            ]
+        )
         if query is not None:
-            query = And([PropertyIsEqualTo(propertyname='chemisch_PFAS', literal='true'), query])
+            query = And([pfas_query, query])
         else:
-            query = PropertyIsEqualTo(propertyname='chemisch_PFAS', literal='true')
-        df = gwmonster.search(location=location, query=query, sort_by=sort_by, max_features=max_features)
-        df = df[df.parametergroep == "Grondwater_chemisch_PFAS"]
-        df = pd.DataFrame(df)
+            query = pfas_query
+
+        df = obs_search.search(
+            location=location,
+            query=query,
+            sort_by=sort_by,
+            max_features=max_features,
+            return_fields=(
+                "pkey_parent",
+                "parametergroep",
+                "parameter",
+                "detectieconditie",
+                "resultaat",
+                "eenheid",
+                "methode",
+                "fenomeentijd",
+            ),
+        )
+
+        if df.empty:
+            return df
+
+        df = df.rename(
+            columns={
+                "fenomeentijd": "datum_monstername",
+                "resultaat": "waarde",
+                "pkey_parent": "pkey_monster",
+                "detectieconditie": "detectie",
+            }
+        )
+
+        monster_search = MonsterSearch()
+        df_monsters = monster_search.search(
+            query=Join(df, on="pkey_monster", using="pkey_monster"),
+            return_fields=("pkey_monster", "pkey_parents", "naam"),
+        )
+
+        df = pd.merge(df, df_monsters, on="pkey_monster")
+        df = df.rename(columns={"naam": "grondwatermonsternummer"})
+
+        def extract_filter(parents):
+            for p in parents:
+                if "/data/filter/" in p:
+                    return p
+            return None
+
+        df["pkey_filter"] = df["pkey_parents"].apply(extract_filter)
         data = df
 
         try:
             gwfilter = GrondwaterFilterSearch()
-            filter_elements = gwfilter.search(query=Join(data, "pkey_filter"), return_fields=[
-                "pkey_filter",
-                "aquifer_code",
-                "diepte_onderkant_filter",
-                "lengte_filter"])
+            filter_elements = gwfilter.search(
+                query=Join(data, "pkey_filter"),
+                return_fields=[
+                    "pkey_filter",
+                    "aquifer_code",
+                    "diepte_onderkant_filter",
+                    "lengte_filter",
+                    "x",
+                    "y",
+                ],
+            )
 
             data["datum_monstername"] = pd.to_datetime(
                 data["datum_monstername"])
-            data = pd.merge(data, filter_elements)
+            data = pd.merge(data, filter_elements, on="pkey_filter")
+
         except ValueError as e:
             logger.info(f"Empty dataframe: {e}")
         return data
+
+    def pydov_soil_request(
+        self, location, max_features, query=None, sort_by=None
+    ):
+        """Function to download the soil observations for a specific bounding box.pydov
+
+        Parameters
+        ----------
+        location:
+            Query on location.
+            (https://pydov.readthedocs.io/en/stable/query_location.html)
+        max_features: int
+            Limit the number of WFS features you want to be returned.
+            (https://pydov.readthedocs.io/en/stable/sort_limit.html)
+        query:
+            Find data based on one or more of its attribute values.
+            (https://pydov.readthedocs.io/en/stable/query_attribute.html)
+        sort_by:
+            Sort on one or multiple attributes.
+            (https://pydov.readthedocs.io/en/stable/sort_limit.html)
+
+        Returns
+        -------
+        The downloaded soil observations for a given bounding box.
+        """
+
+        def strip_url(url):
+            if type(url) is str:
+                return url.replace(build_dov_url("/data/"), "")
+            return np.nan
+
+        obs_search = ObservatieSearch()
+        pfas_query = And(
+            [
+                PropertyIsEqualTo(
+                    propertyname="parametergroep",
+                    literal="Bodem_chemisch_PFAS",
+                ),
+                Not([PropertyIsNull("pkey_parent")]),
+            ]
+        )
+        if query is not None:
+            query = And([pfas_query, query])
+        else:
+            query = pfas_query
+
+        df = obs_search.search(
+            location=location,
+            query=query,
+            sort_by=sort_by,
+            max_features=max_features,
+            return_fields=(
+                "pkey_observatie",
+                "pkey_parent",
+                "parametergroep",
+                "parameter",
+                "detectieconditie",
+                "resultaat",
+                "eenheid",
+                "methode",
+                "fenomeentijd",
+                "diepte_van_m",
+                "diepte_tot_m",
+            ),
+        )
+
+        if df.empty:
+            return df
+
+        df = df.rename(
+            columns={"fenomeentijd": "datum", "resultaat": "meetwaarde"}
+        )
+
+        df["pkey_bodemlocatie"] = df["pkey_parent"].apply(
+            lambda x: (x if "/data/bodemlocatie/" in x else None)
+        )
+        df["pkey_monster"] = df["pkey_parent"].apply(
+            lambda x: (x if "/data/monster/" in x else None)
+        )
+        df["pkey_diepteinterval"] = df["pkey_parent"].apply(
+            lambda x: (x if "/data/diepteinterval/" in x else None)
+        )
+
+        # 1. For observations linked to monsters, find the bodemlocatie or diepteinterval
+        if df["pkey_monster"].notna().any():
+            monster_search = MonsterSearch()
+            df_monsters = monster_search.search(
+                query=Join(
+                    df,
+                    on="pkey_monster",
+                    using="pkey_monster",
+                ),
+                return_fields=(
+                    "pkey_monster",
+                    "pkey_parents",
+                    "diepte_van_m",
+                    "diepte_tot_m",
+                ),
+            )
+            if not df_monsters.empty:
+
+                def extract_parent(parents, type_str):
+                    for p in parents:
+                        if type_str in p:
+                            return p
+                    return None
+
+                df_monsters["pkey_bodemlocatie_from_monster"] = df_monsters[
+                    "pkey_parents"
+                ].apply(lambda x: extract_parent(x, "/data/bodemlocatie/"))
+                df_monsters["pkey_diepteinterval_from_monster"] = df_monsters[
+                    "pkey_parents"
+                ].apply(lambda x: extract_parent(x, "/data/diepteinterval/"))
+
+                df = pd.merge(
+                    df,
+                    df_monsters[
+                        [
+                            "pkey_monster",
+                            "pkey_bodemlocatie_from_monster",
+                            "pkey_diepteinterval_from_monster",
+                            "diepte_van_m",
+                            "diepte_tot_m",
+                        ]
+                    ],
+                    on="pkey_monster",
+                    how="left",
+                    suffixes=("", "_from_monster"),
+                )
+                df["pkey_bodemlocatie"] = df["pkey_bodemlocatie"].fillna(
+                    df["pkey_bodemlocatie_from_monster"]
+                )
+                df["pkey_diepteinterval"] = df["pkey_diepteinterval"].fillna(
+                    df["pkey_diepteinterval_from_monster"]
+                )
+                df["diepte_van_m"] = df["diepte_van_m"].fillna(
+                    df["diepte_van_m_from_monster"]
+                )
+                df["diepte_tot_m"] = df["diepte_tot_m"].fillna(
+                    df["diepte_tot_m_from_monster"]
+                )
+                df = df.drop(
+                    columns=[
+                        "pkey_bodemlocatie_from_monster",
+                        "pkey_diepteinterval_from_monster",
+                        "diepte_van_m_from_monster",
+                        "diepte_tot_m_from_monster",
+                    ]
+                )
+
+        # 2. For observations linked to diepteintervallen (direct or via monster), find the bodemlocatie
+        if df["pkey_diepteinterval"].notna().any():
+            bd_search = BodemdiepteintervalSearch()
+            df_bd = bd_search.search(
+                query=Join(
+                    df,
+                    on="pkey_diepteinterval",
+                    using="pkey_diepteinterval",
+                ),
+                return_fields=(
+                    "pkey_diepteinterval",
+                    "pkey_bodemlocatie",
+                    "bovengrens1_cm",
+                    "ondergrens1_cm",
+                ),
+            )
+            if not df_bd.empty:
+                df = pd.merge(
+                    df,
+                    df_bd[
+                        [
+                            "pkey_diepteinterval",
+                            "pkey_bodemlocatie",
+                            "bovengrens1_cm",
+                            "ondergrens1_cm",
+                        ]
+                    ],
+                    on="pkey_diepteinterval",
+                    how="left",
+                    suffixes=("", "_from_bd"),
+                )
+                df["pkey_bodemlocatie"] = df["pkey_bodemlocatie"].fillna(
+                    df["pkey_bodemlocatie_from_bd"]
+                )
+                df["diepte_van_m"] = df["diepte_van_m"].fillna(
+                    df["bovengrens1_cm"] / 100
+                )
+                df["diepte_tot_m"] = df["diepte_tot_m"].fillna(
+                    df["ondergrens1_cm"] / 100
+                )
+                df = df.drop(
+                    columns=[
+                        "pkey_bodemlocatie_from_bd",
+                        "bovengrens1_cm",
+                        "ondergrens1_cm",
+                    ]
+                )
+
+        # 3. Get coordinates and name from Bodemlocatie
+        if df["pkey_bodemlocatie"].notna().any():
+            bl_search = BodemlocatieSearch()
+            df_bl = bl_search.search(
+                query=Join(
+                    df,
+                    on="pkey_bodemlocatie",
+                    using="pkey_bodemlocatie",
+                ),
+                return_fields=("pkey_bodemlocatie", "x", "y", "naam"),
+            )
+
+            if not df_bl.empty:
+                df = pd.merge(df, df_bl, on="pkey_bodemlocatie", how="left")
+                df = df.rename(columns={"x": "x_m_L72", "y": "y_m_L72"})
+
+        df["pkey_observatie"] = df["pkey_observatie"].apply(strip_url)
+        df["pkey_bodemlocatie"] = df["pkey_bodemlocatie"].apply(strip_url)
+        df["pkey_monster"] = df["pkey_monster"].apply(strip_url)
+        df["pkey_diepteinterval"] = df["pkey_diepteinterval"].apply(strip_url)
+        df["pkey_parent"] = df["pkey_parent"].apply(strip_url)
+
+        df = df.rename(columns={"pkey_observatie": "id"})
+
+        return df
 
     def biota(self, location, max_features, query=None, sort_by=None):
         """
@@ -230,9 +519,9 @@ class RequestPFASdata:
         """
         logger.info(f"Downloading groundwater data")
 
-        data_pydov_VMM_gw = self.pydov_request(
-            location=location,
-            max_features=max_features)
+        data_pydov_VMM_gw = self.pydov_groundwater_request(
+            location=location, max_features=max_features
+        )
         data_wfs_OVAM = self.wfs_request(
             layer='pfas:pfas_analyseresultaten',
             location=location,
@@ -425,33 +714,49 @@ class RequestPFASdata:
         The downloaded soil data.
         """
         logger.info(f"Downloading soil data")
+
+        data_pydov_soil = self.pydov_soil_request(
+            location=location, max_features=max_features
+        )
         data_wfs_OVAM = self.wfs_request(
-            layer='pfas:pfas_analyseresultaten',
+            layer="pfas:pfas_analyseresultaten",
             location=location,
             max_features=max_features,
-            query=PropertyIsEqualTo('medium', 'Vaste deel van de aarde'))
+            query=PropertyIsEqualTo("medium", "Vaste deel van de aarde"),
+        )
         data_wfs_Lantis_soil = self.wfs_request(
-            layer='pfas:lantis_bodem_metingen',
+            layer="pfas:lantis_bodem_metingen",
             location=location,
-            max_features=max_features)
+            max_features=max_features,
+        )
 
+        data_pydov_soil = data_pydov_soil.drop_duplicates(
+            subset=data_pydov_soil.columns
+        )
         data_wfs_OVAM = data_wfs_OVAM.drop_duplicates(
-            subset=data_wfs_OVAM.columns)
+            subset=data_wfs_OVAM.columns
+        )
         data_wfs_Lantis_soil = data_wfs_Lantis_soil.drop_duplicates(
-            subset=data_wfs_Lantis_soil.columns)
+            subset=data_wfs_Lantis_soil.columns
+        )
 
-        combined_soil = {'Soil': [data_wfs_OVAM, data_wfs_Lantis_soil]}
+        combined_soil = {
+            "Soil": [data_pydov_soil, data_wfs_OVAM, data_wfs_Lantis_soil]
+        }
         self.combined_datasets.update(combined_soil)
 
+        data_pydov_soil_len = len(data_pydov_soil)
         data_wfs_OVAM_len = len(data_wfs_OVAM)
         data_wfs_Lantis_soil_len = len(data_wfs_Lantis_soil)
 
-        nb_datapoints = {"Soil_OVAM" : data_wfs_OVAM_len}
+        nb_datapoints = {"Soil_pydov": data_pydov_soil_len}
         self.dictionary["nb_datapoints"][0].update(nb_datapoints)
-        nb_datapoints = {"Soil_Lantis" : data_wfs_Lantis_soil_len}
+        nb_datapoints = {"Soil_OVAM": data_wfs_OVAM_len}
+        self.dictionary["nb_datapoints"][0].update(nb_datapoints)
+        nb_datapoints = {"Soil_Lantis": data_wfs_Lantis_soil_len}
         self.dictionary["nb_datapoints"][0].update(nb_datapoints)
 
-        return data_wfs_OVAM, data_wfs_Lantis_soil
+        return data_pydov_soil, data_wfs_OVAM, data_wfs_Lantis_soil
 
     def soil_water(self, location, max_features):
         """
@@ -688,7 +993,7 @@ class RequestPFASdata:
         gw_OVAM = gw_OVAM.rename(columns={'top_in_m': 'top_m_mv', 'basis_in_m': 'basis_m_mv', 'x_ml72': 'x_m_L72', 'y_ml72': 'y_m_L72'})
         gw_Lantis = gw_Lantis.rename(columns={'filter_van_m': 'top_m_mv', 'filter_tot_m': 'basis_m_mv', 'analysemonster': 'id', 'datum_bemonstering': 'datum', 'waarde': 'meetwaarde', 'eenheid': 'meeteenheid', 'x_ml72': 'x_m_L72', 'y_ml72': 'y_m_L72'})
 
-        gw_VMM['bron'] = 'VMM'
+        gw_VMM["bron"] = "pydov"
         gw_OVAM['bron'] = 'OVAM'
         gw_Lantis['bron'] = 'Lantis'
 
@@ -721,33 +1026,115 @@ class RequestPFASdata:
         -------
         The downloaded and combined soil data.
         """
-        if 'Soil' in self.combined_datasets:
-            soil_datasets = self.combined_datasets['Soil']
-            soil_OVAM = soil_datasets[0]
-            soil_Lantis = soil_datasets[1]
+        if "Soil" in self.combined_datasets:
+            soil_datasets = self.combined_datasets["Soil"]
+            soil_pydov = soil_datasets[0]
+            soil_OVAM = soil_datasets[1]
+            soil_Lantis = soil_datasets[2]
         else:
-            soil_OVAM, soil_Lantis = RequestPFASdata().soil(location, max_features)
+            soil_pydov, soil_OVAM, soil_Lantis = RequestPFASdata().soil(
+                location, max_features
+            )
 
-        soil_OVAM = soil_OVAM.rename(columns={'id': 'id_original','top_in_m': 'top_m_mv', 'basis_in_m': 'basis_m_mv', 'x_ml72': 'x_m_L72', 'y_ml72': 'y_m_L72'})
-        soil_Lantis = soil_Lantis.rename(columns={'diepte_van_m': 'top_m_mv', 'diepte_tot_m': 'basis_m_mv', 'datum_bemonstering': 'datum', 'waarde': 'meetwaarde', 'eenheid': 'meeteenheid', 'x_ml72': 'x_m_L72', 'y_ml72': 'y_m_L72'})
+        soil_pydov = soil_pydov.rename(
+            columns={
+                "eenheid": "meeteenheid",
+                "diepte_van_m": "top_m_mv",
+                "diepte_tot_m": "basis_m_mv",
+            }
+        )
+        soil_OVAM = soil_OVAM.rename(
+            columns={
+                "id": "id_original",
+                "top_in_m": "top_m_mv",
+                "basis_in_m": "basis_m_mv",
+                "x_ml72": "x_m_L72",
+                "y_ml72": "y_m_L72",
+            }
+        )
+        soil_Lantis = soil_Lantis.rename(
+            columns={
+                "diepte_van_m": "top_m_mv",
+                "diepte_tot_m": "basis_m_mv",
+                "datum_bemonstering": "datum",
+                "waarde": "meetwaarde",
+                "eenheid": "meeteenheid",
+                "x_ml72": "x_m_L72",
+                "y_ml72": "y_m_L72",
+            }
+        )
 
-        soil_OVAM['bron'] = 'OVAM'
-        soil_Lantis['bron'] = 'Lantis'
-        id_OVAM_list = []
-        for i in range(len(soil_OVAM)):
-            id_OVAM = f"{int(soil_OVAM['opdracht'][i])}/{int(soil_OVAM['pfasdossiernr'][i])}/{soil_OVAM['profielnaam'][i]}"
-            id_OVAM_list.append(id_OVAM)
-        soil_OVAM['id'] = id_OVAM_list
-        id_lantis_list = []
-        for i in range(len(soil_Lantis)):
-            id_lantis = f"{soil_Lantis['boring'][i]}/{int(soil_Lantis['nummer'][i])}/{soil_Lantis['analysemonster'][i]}"
-            id_lantis_list.append(id_lantis)
-        soil_Lantis['id'] = id_lantis_list
+        soil_pydov["bron"] = "pydov"
+        soil_OVAM["bron"] = "OVAM"
+        soil_Lantis["bron"] = "Lantis"
+        soil_OVAM["id"] = (
+            pd.to_numeric(soil_OVAM["opdracht"], errors="coerce")
+            .fillna(0)
+            .astype(int)
+            .astype(str)
+            + "/"
+            + pd.to_numeric(soil_OVAM["pfasdossiernr"], errors="coerce")
+            .fillna(0)
+            .astype(int)
+            .astype(str)
+            + "/"
+            + soil_OVAM["profielnaam"].astype(str)
+        )
+        soil_Lantis["id"] = (
+            soil_Lantis["boring"].astype(str)
+            + "/"
+            +
+            # pd.to_numeric(soil_Lantis['nummer'], errors='coerce').fillna(0).astype(int).astype(str) + '/' +
+            soil_Lantis["analysemonster"].astype(str)
+        )
 
-        soil_OVAM = soil_OVAM[['id', 'datum', 'x_m_L72', 'y_m_L72', 'top_m_mv', 'basis_m_mv', 'parameter', 'detectieconditie', 'meetwaarde', 'meeteenheid', 'bron']]
-        soil_Lantis = soil_Lantis[['id', 'datum', 'x_m_L72', 'y_m_L72', 'top_m_mv', 'basis_m_mv', 'parameter', 'detectieconditie', 'meetwaarde', 'meeteenheid', 'bron']]
+        soil_pydov = soil_pydov[
+            [
+                "id",
+                "datum",
+                "x_m_L72",
+                "y_m_L72",
+                "top_m_mv",
+                "basis_m_mv",
+                "parameter",
+                "detectieconditie",
+                "meetwaarde",
+                "meeteenheid",
+                "bron",
+            ]
+        ]
+        soil_OVAM = soil_OVAM[
+            [
+                "id",
+                "datum",
+                "x_m_L72",
+                "y_m_L72",
+                "top_m_mv",
+                "basis_m_mv",
+                "parameter",
+                "detectieconditie",
+                "meetwaarde",
+                "meeteenheid",
+                "bron",
+            ]
+        ]
+        soil_Lantis = soil_Lantis[
+            [
+                "id",
+                "datum",
+                "x_m_L72",
+                "y_m_L72",
+                "top_m_mv",
+                "basis_m_mv",
+                "parameter",
+                "detectieconditie",
+                "meetwaarde",
+                "meeteenheid",
+                "bron",
+            ]
+        ]
 
-        soil = pd.concat([soil_OVAM, soil_Lantis])
+        soil = pd.concat([soil_pydov, soil_OVAM, soil_Lantis])
         soil = soil.replace(['som PFOA', 'som PFOS'],['PFOAtotaal', 'PFOStotaal'])
 
         data_soil_len = len(soil)
@@ -789,11 +1176,11 @@ class RequestPFASdata:
         soilwater_OVAM_sediment['bron'] = 'OVAM_sediment'
         soilwater_OVAM_fixed['bron'] = 'OVAM_fixed'
 
-        soilwater_VMM = soilwater_VMM[['id', 'datum', 'x_m_L72', 'y_m_L72', 'parameter', 'detectieconditie', 'meetwaarde', 'meeteenheid', 'bron']]
+        # soilwater_VMM = soilwater_VMM[['id', 'datum', 'x_m_L72', 'y_m_L72', 'parameter', 'detectieconditie', 'meetwaarde', 'meeteenheid', 'bron']]
         soilwater_OVAM_sediment = soilwater_OVAM_sediment[['id', 'datum', 'x_m_L72', 'y_m_L72', 'parameter', 'detectieconditie', 'meetwaarde', 'meeteenheid', 'bron']]
         soilwater_OVAM_fixed = soilwater_OVAM_fixed[['id', 'datum', 'x_m_L72', 'y_m_L72', 'parameter', 'detectieconditie', 'meetwaarde', 'meeteenheid', 'bron']]
 
-        soilwater = pd.concat([soilwater_VMM, soilwater_OVAM_sediment, soilwater_OVAM_fixed])
+        soilwater = pd.concat([soilwater_OVAM_sediment, soilwater_OVAM_fixed])
 
         data_soilwater_len = len(soilwater)
         nb_datapoints = {"Combined_soil_water": data_soilwater_len}
@@ -882,6 +1269,27 @@ class RequestPFASdata:
         -------
         The requested data in separate dataframe(s) and the metadata.
         """
+
+        def save_to_excel(df, base_path):
+            """Save a dataframe to one or more Excel files if it exceeds the row limit.
+
+            Parameters
+            ----------
+            df : pandas.DataFrame
+                The dataframe to save.
+            base_path : str
+                The base path for the Excel file (without extension).
+            """
+            max_rows = 1048576
+            if len(df) <= max_rows:
+                df.to_excel(f"{base_path}.xlsx")
+            else:
+                for i in range(0, len(df), max_rows):
+                    part = i // max_rows + 1
+                    df.iloc[i : i + max_rows].to_excel(
+                        f"{base_path}_{part}.xlsx"
+                    )
+
         start_time = datetime.now()
 
         return_list = []
@@ -894,7 +1302,9 @@ class RequestPFASdata:
                 data_wfs_OVAM_migration = self.migration(location, max_features)
                 data_wfs_OVAM_pp = self.pure_product(location, max_features)
                 data_wfs_OVAM_rainwater = self.rainwater(location, max_features)
-                data_wfs_OVAM_soil, data_wfs_Lantis_soil = self.soil(location, max_features)
+                data_pydov_soil, data_wfs_OVAM_soil, data_wfs_Lantis_soil = (
+                    self.soil(location, max_features)
+                )
                 data_wfs_VMM_ws, data_wfs_OVAM_ws_sediment, data_wfs_OVAM_ws_fixed = self.soil_water(location, max_features)
                 data_wfs_VMM_sw, data_wfs_OVAM_sw = self.surface_water(location, max_features)
                 data_wfs_VMM_ww = self.waste_water(location, max_features)
@@ -903,10 +1313,34 @@ class RequestPFASdata:
                 data_soil = self.combined_soil(location, max_features)
                 data_soil_water = self.combined_soil_water(location, max_features)
                 data_surface_water = self.combined_surface_water(location, max_features)
-                return_list.extend([data_wfs_VMM_biota, data_wfs_OVAM_effluent, data_pydov_VMM_gw, data_wfs_OVAM_gw,
-                        data_wfs_Lantis_gw, data_wfs_OVAM_migration, data_wfs_OVAM_pp, data_wfs_OVAM_rainwater,
-                        data_wfs_OVAM_soil, data_wfs_Lantis_soil, data_wfs_VMM_ws, data_wfs_OVAM_ws_sediment, data_wfs_OVAM_ws_fixed, data_wfs_VMM_sw,
-                        data_wfs_OVAM_sw, data_wfs_VMM_ww, data_wfs_zwevend_stof_VMM, data_wfs_gas_VMM, data_wfs_depositie_VMM, data_groundwater, data_soil, data_soil_water, data_surface_water])
+                return_list.extend(
+                    [
+                        data_wfs_VMM_biota,
+                        data_wfs_OVAM_effluent,
+                        data_pydov_VMM_gw,
+                        data_wfs_OVAM_gw,
+                        data_wfs_Lantis_gw,
+                        data_wfs_OVAM_migration,
+                        data_wfs_OVAM_pp,
+                        data_wfs_OVAM_rainwater,
+                        data_pydov_soil,
+                        data_wfs_OVAM_soil,
+                        data_wfs_Lantis_soil,
+                        data_wfs_VMM_ws,
+                        data_wfs_OVAM_ws_sediment,
+                        data_wfs_OVAM_ws_fixed,
+                        data_wfs_VMM_sw,
+                        data_wfs_OVAM_sw,
+                        data_wfs_VMM_ww,
+                        data_wfs_zwevend_stof_VMM,
+                        data_wfs_gas_VMM,
+                        data_wfs_depositie_VMM,
+                        data_groundwater,
+                        data_soil,
+                        data_soil_water,
+                        data_surface_water,
+                    ]
+                )
             elif i == 'biota':
                 data_wfs_VMM_biota = self.biota(location, max_features)
                 return_list.extend([data_wfs_VMM_biota])
@@ -926,8 +1360,12 @@ class RequestPFASdata:
                 data_wfs_OVAM_rainwater = self.rainwater(location, max_features)
                 return_list.extend([data_wfs_OVAM_rainwater])
             elif i == 'soil':
-                data_wfs_OVAM_soil, data_wfs_Lantis_soil = self.soil(location, max_features)
-                return_list.extend([data_wfs_OVAM_soil, data_wfs_Lantis_soil])
+                data_pydov_soil, data_wfs_OVAM_soil, data_wfs_Lantis_soil = (
+                    self.soil(location, max_features)
+                )
+                return_list.extend(
+                    [data_pydov_soil, data_wfs_OVAM_soil, data_wfs_Lantis_soil]
+                )
             elif i == 'soil water':
                 data_wfs_VMM_ws, data_wfs_OVAM_ws_sediment, data_wfs_OVAM_ws_fixed = self.soil_water(location, max_features)
                 return_list.extend([data_wfs_VMM_ws, data_wfs_OVAM_ws_sediment, data_wfs_OVAM_ws_fixed])
@@ -967,119 +1405,259 @@ class RequestPFASdata:
             with open(f"{path}/results/metadata.json") as metadata_file:
                 metadata = json.load(metadata_file)
 
-            pbar = tqdm(total=sum(metadata['nb_datapoints'][0].values()))
-            with pd.ExcelWriter(f'{path}/results/data.xlsx') as writer:
-                for i in medium:
-                    if i == 'all':
-                        data_wfs_VMM_biota.to_excel(writer, sheet_name='Biota_VMM')
-                        pbar.update(metadata['nb_datapoints'][0]['Biota_VMM'])
-                        data_wfs_OVAM_effluent.to_excel(writer, sheet_name='Effluent_OVAM')
-                        pbar.update(metadata['nb_datapoints'][0]['Effluent_OVAM'])
-                        data_pydov_VMM_gw.to_excel(writer, sheet_name='Groundwater_VMM')
-                        pbar.update(metadata['nb_datapoints'][0]['Groundwater_VMM'])
-                        data_wfs_OVAM_gw.to_excel(writer, sheet_name='Groundwater_OVAM')
-                        pbar.update(metadata['nb_datapoints'][0]['Groundwater_OVAM'])
-                        data_wfs_Lantis_gw.to_excel(writer, sheet_name='Groundwater_Lantis')
-                        pbar.update(metadata['nb_datapoints'][0]['Groundwater_Lantis'])
-                        data_wfs_OVAM_migration.to_excel(writer, sheet_name='Migration_OVAM')
-                        pbar.update(metadata['nb_datapoints'][0]['Migration_OVAM'])
-                        data_wfs_OVAM_pp.to_excel(writer, sheet_name='Pure_product_OVAM')
-                        pbar.update(metadata['nb_datapoints'][0]['Pure_product_OVAM'])
-                        data_wfs_OVAM_rainwater.to_excel(writer, sheet_name='Rainwater_OVAM')
-                        pbar.update(metadata['nb_datapoints'][0]['Rainwater_OVAM'])
-                        data_wfs_OVAM_soil.to_excel(writer, sheet_name='Soil_OVAM')
-                        pbar.update(metadata['nb_datapoints'][0]['Soil_OVAM'])
-                        data_wfs_Lantis_soil.to_excel(writer, sheet_name='Soil_Lantis')
-                        pbar.update(metadata['nb_datapoints'][0]['Soil_Lantis'])
-                        data_wfs_VMM_ws.to_excel(writer, sheet_name='Soil_water_VMM')
-                        pbar.update(metadata['nb_datapoints'][0]['Soil_water_VMM'])
-                        data_wfs_OVAM_ws_sediment.to_excel(writer, sheet_name='Soil_water_sediment_OVAM')
-                        pbar.update(metadata['nb_datapoints'][0]['Soil_water_sediment_OVAM'])
-                        data_wfs_OVAM_ws_fixed.to_excel(writer, sheet_name='Soil_water_fixed_OVAM')
-                        pbar.update(metadata['nb_datapoints'][0]['Soil_water_fixed_OVAM'])
-                        data_wfs_VMM_sw.to_excel(writer, sheet_name='Surface_water_VMM')
-                        pbar.update(metadata['nb_datapoints'][0]['Surface_water_VMM'])
-                        data_wfs_OVAM_sw.to_excel(writer, sheet_name='Surface_water_OVAM')
-                        pbar.update(metadata['nb_datapoints'][0]['Surface_water_OVAM'])
-                        data_wfs_VMM_ww.to_excel(writer, sheet_name='Waste_water_VMM')
-                        pbar.update(metadata['nb_datapoints'][0]['Waste_water_VMM'])
-                        data_wfs_zwevend_stof_VMM.to_excel(writer, sheet_name='Air_dust_VMM')
-                        pbar.update(metadata['nb_datapoints'][0]['Air_dust_VMM'])
-                        data_wfs_gas_VMM.to_excel(writer, sheet_name='Air_gas_VMM')
-                        pbar.update(metadata['nb_datapoints'][0]['Air_gas_VMM'])
-                        data_wfs_depositie_VMM.to_excel(writer, sheet_name='Air_deposition_VMM')
-                        pbar.update(metadata['nb_datapoints'][0]['Air_deposition_VMM'])
-                        data_groundwater.to_excel(writer, sheet_name='Combined_groundwater')
-                        pbar.update(metadata['nb_datapoints'][0]['Combined_groundwater'])
-                        data_soil.to_excel(writer, sheet_name='Combined_soil')
-                        pbar.update(metadata['nb_datapoints'][0]['Combined_soil'])
-                        data_soil_water.to_excel(writer, sheet_name='Combined_soil_water')
-                        pbar.update(metadata['nb_datapoints'][0]['Combined_soil_water'])
-                        data_surface_water.to_excel(writer, sheet_name='Combined_surface_water')
-                        pbar.update(metadata['nb_datapoints'][0]['Combined_surface_water'])
-                    elif i == 'biota':
-                        data_wfs_VMM_biota.to_excel(writer, sheet_name='Biota_VMM')
-                        pbar.update(metadata['nb_datapoints'][0]['Biota_VMM'])
-                    elif i == 'effluent':
-                        data_wfs_OVAM_effluent.to_excel(writer, sheet_name='Effluent_OVAM')
-                        pbar.update(metadata['nb_datapoints'][0]['Effluent_OVAM'])
-                    elif i == 'groundwater':
-                        data_pydov_VMM_gw.to_excel(writer, sheet_name='Groundwater_VMM')
-                        pbar.update(metadata['nb_datapoints'][0]['Groundwater_VMM'])
-                        data_wfs_OVAM_gw.to_excel(writer, sheet_name='Groundwater_OVAM')
-                        pbar.update(metadata['nb_datapoints'][0]['Groundwater_OVAM'])
-                        data_wfs_Lantis_gw.to_excel(writer, sheet_name='Groundwater_Lantis')
-                        pbar.update(metadata['nb_datapoints'][0]['Groundwater_Lantis'])
-                    elif i == 'migration':
-                        data_wfs_OVAM_migration.to_excel(writer, sheet_name='Migration_OVAM')
-                        pbar.update(metadata['nb_datapoints'][0]['Migration_OVAM'])
-                    elif i == 'pure product':
-                        data_wfs_OVAM_pp.to_excel(writer, sheet_name='Pure_product_OVAM')
-                        pbar.update(metadata['nb_datapoints'][0]['Pure_product_OVAM'])
-                    elif i == 'rainwater':
-                        data_wfs_OVAM_rainwater.to_excel(writer, sheet_name='Rainwater_OVAM')
-                        pbar.update(metadata['nb_datapoints'][0]['Rainwater_OVAM'])
-                    elif i == 'soil':
-                        data_wfs_OVAM_soil.to_excel(writer, sheet_name='Soil_OVAM')
-                        pbar.update(metadata['nb_datapoints'][0]['Soil_OVAM'])
-                        data_wfs_Lantis_soil.to_excel(writer, sheet_name='Soil_Lantis')
-                        pbar.update(metadata['nb_datapoints'][0]['Soil_Lantis'])
-                    elif i == 'soil water':
-                        data_wfs_VMM_ws.to_excel(writer, sheet_name='Soil_water_VMM')
-                        pbar.update(metadata['nb_datapoints'][0]['Soil_water_VMM'])
-                        data_wfs_OVAM_ws_sediment.to_excel(writer, sheet_name='Soil_water_sediment_OVAM')
-                        pbar.update(metadata['nb_datapoints'][0]['Soil_water_sediment_OVAM'])
-                        data_wfs_OVAM_ws_fixed.to_excel(writer, sheet_name='Soil_water_fixed_OVAM')
-                        pbar.update(metadata['nb_datapoints'][0]['Soil_water_fixed_OVAM'])
-                    elif i == 'surface water':
-                        data_wfs_VMM_sw.to_excel(writer, sheet_name='Surface_water_VMM')
-                        pbar.update(metadata['nb_datapoints'][0]['Surface_water_VMM'])
-                        data_wfs_OVAM_sw.to_excel(writer, sheet_name='Surface_water_OVAM')
-                        pbar.update(metadata['nb_datapoints'][0]['Surface_water_OVAM'])
-                    elif i == 'waste water':
-                        data_wfs_VMM_ww.to_excel(writer, sheet_name='Waste_water_VMM')
-                        pbar.update(metadata['nb_datapoints'][0]['Waste_water_VMM'])
-                    elif i == 'air':
-                        data_wfs_zwevend_stof_VMM.to_excel(writer, sheet_name='Air_dust_VMM')
-                        pbar.update(metadata['nb_datapoints'][0]['Air_dust_VMM'])
-                        data_wfs_gas_VMM.to_excel(writer, sheet_name='Air_gas_VMM')
-                        pbar.update(metadata['nb_datapoints'][0]['Air_gas_VMM'])
-                        data_wfs_depositie_VMM.to_excel(writer, sheet_name='Air_deposition_VMM')
-                        pbar.update(metadata['nb_datapoints'][0]['Air_deposition_VMM'])
-                    elif i == 'combined_groundwater':
-                        data_groundwater.to_excel(writer, sheet_name='Combined_groundwater')
-                        pbar.update(metadata['nb_datapoints'][0]['Combined_groundwater'])
-                    elif i == 'combined_soil':
-                        data_soil.to_excel(writer, sheet_name='Combined_soil')
-                        pbar.update(metadata['nb_datapoints'][0]['Combined_soil'])
-                    elif i == 'combined_soil_water':
-                        data_soil_water.to_excel(writer, sheet_name='Combined_soil_water')
-                        pbar.update(metadata['nb_datapoints'][0]['Combined_soil_water'])
-                    elif i == 'combined_surface_water':
-                        data_surface_water.to_excel(writer, sheet_name='Combined_surface_water')
-                        pbar.update(metadata['nb_datapoints'][0]['Combined_surface_water'])
+            pbar = tqdm(total=sum(metadata["nb_datapoints"][0].values()))
+            for i in medium:
+                if i == "all":
+                    save_to_excel(data_wfs_VMM_biota, f"{path1}/Biota_VMM")
+                    pbar.update(metadata["nb_datapoints"][0]["Biota_VMM"])
+                    save_to_excel(
+                        data_wfs_OVAM_effluent, f"{path1}/Effluent_OVAM"
+                    )
+                    pbar.update(metadata["nb_datapoints"][0]["Effluent_OVAM"])
+                    save_to_excel(
+                        data_pydov_VMM_gw, f"{path1}/Groundwater_VMM"
+                    )
+                    pbar.update(
+                        metadata["nb_datapoints"][0]["Groundwater_VMM"]
+                    )
+                    save_to_excel(
+                        data_wfs_OVAM_gw, f"{path1}/Groundwater_OVAM"
+                    )
+                    pbar.update(
+                        metadata["nb_datapoints"][0]["Groundwater_OVAM"]
+                    )
+                    save_to_excel(
+                        data_wfs_Lantis_gw,
+                        f"{path1}/Groundwater_Lantis",
+                    )
+                    pbar.update(
+                        metadata["nb_datapoints"][0]["Groundwater_Lantis"]
+                    )
+                    save_to_excel(
+                        data_wfs_OVAM_migration,
+                        f"{path1}/Migration_OVAM",
+                    )
+                    pbar.update(metadata["nb_datapoints"][0]["Migration_OVAM"])
+                    save_to_excel(
+                        data_wfs_OVAM_pp, f"{path1}/Pure_product_OVAM"
+                    )
+                    pbar.update(
+                        metadata["nb_datapoints"][0]["Pure_product_OVAM"]
+                    )
+                    save_to_excel(
+                        data_wfs_OVAM_rainwater,
+                        f"{path1}/Rainwater_OVAM",
+                    )
+                    pbar.update(metadata["nb_datapoints"][0]["Rainwater_OVAM"])
+                    save_to_excel(data_pydov_soil, f"{path1}/Soil_pydov")
+                    pbar.update(metadata["nb_datapoints"][0]["Soil_pydov"])
+                    save_to_excel(data_wfs_OVAM_soil, f"{path1}/Soil_OVAM")
+                    pbar.update(metadata["nb_datapoints"][0]["Soil_OVAM"])
+                    save_to_excel(data_wfs_Lantis_soil, f"{path1}/Soil_Lantis")
+                    pbar.update(metadata["nb_datapoints"][0]["Soil_Lantis"])
+                    save_to_excel(data_wfs_VMM_ws, f"{path1}/Soil_water_VMM")
+                    pbar.update(metadata["nb_datapoints"][0]["Soil_water_VMM"])
+                    save_to_excel(
+                        data_wfs_OVAM_ws_sediment,
+                        f"{path1}/Soil_water_sediment_OVAM",
+                    )
+                    pbar.update(
+                        metadata["nb_datapoints"][0][
+                            "Soil_water_sediment_OVAM"
+                        ]
+                    )
+                    save_to_excel(
+                        data_wfs_OVAM_ws_fixed,
+                        f"{path1}/Soil_water_fixed_OVAM",
+                    )
+                    pbar.update(
+                        metadata["nb_datapoints"][0]["Soil_water_fixed_OVAM"]
+                    )
+                    save_to_excel(
+                        data_wfs_VMM_sw, f"{path1}/Surface_water_VMM"
+                    )
+                    pbar.update(
+                        metadata["nb_datapoints"][0]["Surface_water_VMM"]
+                    )
+                    save_to_excel(
+                        data_wfs_OVAM_sw, f"{path1}/Surface_water_OVAM"
+                    )
+                    pbar.update(
+                        metadata["nb_datapoints"][0]["Surface_water_OVAM"]
+                    )
+                    save_to_excel(data_wfs_VMM_ww, f"{path1}/Waste_water_VMM")
+                    pbar.update(
+                        metadata["nb_datapoints"][0]["Waste_water_VMM"]
+                    )
+                    save_to_excel(
+                        data_wfs_zwevend_stof_VMM,
+                        f"{path1}/Air_dust_VMM",
+                    )
+                    pbar.update(metadata["nb_datapoints"][0]["Air_dust_VMM"])
+                    save_to_excel(data_wfs_gas_VMM, f"{path1}/Air_gas_VMM")
+                    pbar.update(metadata["nb_datapoints"][0]["Air_gas_VMM"])
+                    save_to_excel(
+                        data_wfs_depositie_VMM,
+                        f"{path1}/Air_deposition_VMM",
+                    )
+                    pbar.update(
+                        metadata["nb_datapoints"][0]["Air_deposition_VMM"]
+                    )
+                    save_to_excel(
+                        data_groundwater,
+                        f"{path1}/Combined_groundwater",
+                    )
+                    pbar.update(
+                        metadata["nb_datapoints"][0]["Combined_groundwater"]
+                    )
+                    save_to_excel(data_soil, f"{path1}/Combined_soil")
+                    pbar.update(metadata["nb_datapoints"][0]["Combined_soil"])
+                    save_to_excel(
+                        data_soil_water, f"{path1}/Combined_soil_water"
+                    )
+                    pbar.update(
+                        metadata["nb_datapoints"][0]["Combined_soil_water"]
+                    )
+                    save_to_excel(
+                        data_surface_water,
+                        f"{path1}/Combined_surface_water",
+                    )
+                    pbar.update(
+                        metadata["nb_datapoints"][0]["Combined_surface_water"]
+                    )
+                elif i == "biota":
+                    save_to_excel(data_wfs_VMM_biota, f"{path1}/Biota_VMM")
+                    pbar.update(metadata["nb_datapoints"][0]["Biota_VMM"])
+                elif i == "effluent":
+                    save_to_excel(
+                        data_wfs_OVAM_effluent, f"{path1}/Effluent_OVAM"
+                    )
+                    pbar.update(metadata["nb_datapoints"][0]["Effluent_OVAM"])
+                elif i == "groundwater":
+                    save_to_excel(
+                        data_pydov_VMM_gw, f"{path1}/Groundwater_VMM"
+                    )
+                    pbar.update(
+                        metadata["nb_datapoints"][0]["Groundwater_VMM"]
+                    )
+                    save_to_excel(
+                        data_wfs_OVAM_gw, f"{path1}/Groundwater_OVAM"
+                    )
+                    pbar.update(
+                        metadata["nb_datapoints"][0]["Groundwater_OVAM"]
+                    )
+                    save_to_excel(
+                        data_wfs_Lantis_gw,
+                        f"{path1}/Groundwater_Lantis",
+                    )
+                    pbar.update(
+                        metadata["nb_datapoints"][0]["Groundwater_Lantis"]
+                    )
+                elif i == "migration":
+                    save_to_excel(
+                        data_wfs_OVAM_migration,
+                        f"{path1}/Migration_OVAM",
+                    )
+                    pbar.update(metadata["nb_datapoints"][0]["Migration_OVAM"])
+                elif i == "pure product":
+                    save_to_excel(
+                        data_wfs_OVAM_pp, f"{path1}/Pure_product_OVAM"
+                    )
+                    pbar.update(
+                        metadata["nb_datapoints"][0]["Pure_product_OVAM"]
+                    )
+                elif i == "rainwater":
+                    save_to_excel(
+                        data_wfs_OVAM_rainwater,
+                        f"{path1}/Rainwater_OVAM",
+                    )
+                    pbar.update(metadata["nb_datapoints"][0]["Rainwater_OVAM"])
+                elif i == "soil":
+                    save_to_excel(data_pydov_soil, f"{path1}/Soil_pydov")
+                    pbar.update(metadata["nb_datapoints"][0]["Soil_pydov"])
+                    save_to_excel(data_wfs_OVAM_soil, f"{path1}/Soil_OVAM")
+                    pbar.update(metadata["nb_datapoints"][0]["Soil_OVAM"])
+                    save_to_excel(data_wfs_Lantis_soil, f"{path1}/Soil_Lantis")
+                    pbar.update(metadata["nb_datapoints"][0]["Soil_Lantis"])
+                elif i == "soil water":
+                    save_to_excel(data_wfs_VMM_ws, f"{path1}/Soil_water_VMM")
+                    pbar.update(metadata["nb_datapoints"][0]["Soil_water_VMM"])
+                    save_to_excel(
+                        data_wfs_OVAM_ws_sediment,
+                        f"{path1}/Soil_water_sediment_OVAM",
+                    )
+                    pbar.update(
+                        metadata["nb_datapoints"][0][
+                            "Soil_water_sediment_OVAM"
+                        ]
+                    )
+                    save_to_excel(
+                        data_wfs_OVAM_ws_fixed,
+                        f"{path1}/Soil_water_fixed_OVAM",
+                    )
+                    pbar.update(
+                        metadata["nb_datapoints"][0]["Soil_water_fixed_OVAM"]
+                    )
+                elif i == "surface water":
+                    save_to_excel(
+                        data_wfs_VMM_sw, f"{path1}/Surface_water_VMM"
+                    )
+                    pbar.update(
+                        metadata["nb_datapoints"][0]["Surface_water_VMM"]
+                    )
+                    save_to_excel(
+                        data_wfs_OVAM_sw, f"{path1}/Surface_water_OVAM"
+                    )
+                    pbar.update(
+                        metadata["nb_datapoints"][0]["Surface_water_OVAM"]
+                    )
+                elif i == "waste water":
+                    save_to_excel(data_wfs_VMM_ww, f"{path1}/Waste_water_VMM")
+                    pbar.update(
+                        metadata["nb_datapoints"][0]["Waste_water_VMM"]
+                    )
+                elif i == "air":
+                    save_to_excel(
+                        data_wfs_zwevend_stof_VMM,
+                        f"{path1}/Air_dust_VMM",
+                    )
+                    pbar.update(metadata["nb_datapoints"][0]["Air_dust_VMM"])
+                    save_to_excel(data_wfs_gas_VMM, f"{path1}/Air_gas_VMM")
+                    pbar.update(metadata["nb_datapoints"][0]["Air_gas_VMM"])
+                    save_to_excel(
+                        data_wfs_depositie_VMM,
+                        f"{path1}/Air_deposition_VMM",
+                    )
+                    pbar.update(
+                        metadata["nb_datapoints"][0]["Air_deposition_VMM"]
+                    )
+                elif i == "combined_groundwater":
+                    save_to_excel(
+                        data_groundwater,
+                        f"{path1}/Combined_groundwater",
+                    )
+                    pbar.update(
+                        metadata["nb_datapoints"][0]["Combined_groundwater"]
+                    )
+                elif i == "combined_soil":
+                    save_to_excel(data_soil, f"{path1}/Combined_soil")
+                    pbar.update(metadata["nb_datapoints"][0]["Combined_soil"])
+                elif i == "combined_soil_water":
+                    save_to_excel(
+                        data_soil_water, f"{path1}/Combined_soil_water"
+                    )
+                    pbar.update(
+                        metadata["nb_datapoints"][0]["Combined_soil_water"]
+                    )
+                elif i == "combined_surface_water":
+                    save_to_excel(
+                        data_surface_water,
+                        f"{path1}/Combined_surface_water",
+                    )
+                    pbar.update(
+                        metadata["nb_datapoints"][0]["Combined_surface_water"]
+                    )
             pbar.close()
-
 
         end_time = datetime.now()
         duration = end_time-start_time
@@ -1093,5 +1671,3 @@ if __name__ == '__main__':
     location = Within(Box(15000, 150000, 270000, 250000, epsg=31370))  # Bounding box Flanders
     rd = RequestPFASdata()
     df = rd.main(medium, location=location, save=True)[0]
-    #print(df[0])
-

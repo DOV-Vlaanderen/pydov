@@ -171,8 +171,8 @@ class AbstractTestSearch(object):
             assert f['type'] in ['string', 'float', 'integer', 'date',
                                  'datetime', 'boolean', 'geometry']
 
-            assert 'list' in f
-            assert isinstance(f['list'], bool)
+            assert 'multivalue' in f
+            assert isinstance(f['multivalue'], bool)
 
             assert 'notnull' in f
             assert isinstance(f['notnull'], bool)
@@ -186,8 +186,8 @@ class AbstractTestSearch(object):
 
             if 'codelist' in f:
                 assert sorted(f.keys()) == [
-                    'codelist', 'cost', 'definition', 'list', 'name', 'notnull',
-                    'query', 'type']
+                    'codelist', 'cost', 'definition', 'multivalue', 'name',
+                    'notnull', 'query', 'type']
 
                 assert isinstance(f['codelist'], AbstractCodeList)
 
@@ -214,7 +214,7 @@ class AbstractTestSearch(object):
                         v.definition, str)
             else:
                 assert sorted(f.keys()) == [
-                    'cost', 'definition', 'list', 'name', 'notnull',
+                    'cost', 'definition', 'multivalue', 'name', 'notnull',
                     'query', 'type']
 
     def test_get_fields(self, mp_wfs, mp_get_schema,
@@ -482,8 +482,8 @@ class AbstractTestSearch(object):
         fields = self.search_instance.get_fields()
 
         for field in list(df):
-            if fields[field]['list']:
-                # don't check uniqueness of list type values
+            if fields[field]['multivalue']:
+                # don't check uniqueness of multivalue type values
                 continue
 
             if field in ownfields:
@@ -498,9 +498,9 @@ class AbstractTestSearch(object):
 
         for field in list(df):
             field_datatype = fields[field]['type']
-            field_listtype = fields[field]['list']
+            field_multivaluetype = fields[field]['multivalue']
 
-            if field_listtype:
+            if field_multivaluetype:
                 datatypes = set(
                     (type(i) for i in
                      AbstractJoin._get_unique_value_list(df, field)))

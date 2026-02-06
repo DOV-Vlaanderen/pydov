@@ -55,7 +55,7 @@ Finding geometry columns
     bs = BoringSearch()
     print(bs.get_fields(type='geometry'))
 
-    {'geom': {'name': 'geom', 'definition': None, 'type': 'geometry', 'list': False, 'notnull': False, 'query': False, 'cost': 1}}
+    {'geom': {'name': 'geom', 'definition': None, 'type': 'geometry', 'multivalue': False, 'notnull': False, 'query': False, 'cost': 1}}
 
 
 Adding geometry return fields

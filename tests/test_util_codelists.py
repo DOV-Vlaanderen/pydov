@@ -75,6 +75,15 @@ class TestCodeListItem:
         assert codelistitem.label == 'label'
         assert codelistitem.definition == 'definition'
 
+    def test_html(self):
+        """Test the HTML representation."""
+        codelistitem = CodeListItem(code='code', label="label",
+                                    definition="definition")
+
+        html = codelistitem._repr_html_().strip()
+        assert html.startswith("<")
+        assert html.endswith(">")
+
 
 class TestAbstractCodeList:
     """Test suite for the AbstractCodeList class."""
@@ -122,7 +131,7 @@ class TestAbstractCodeList:
 
         Checks that the method returns the expected label for existing codes
         and None for non-existing codes.
-        
+
         Parameters
         ----------
         codelist : AbstractCodeList
@@ -293,6 +302,12 @@ class TestAbstractCodeList:
 
         codelist.add_item(CodeListItem("code4", "label4", "definition4"))
         assert len(codelist) == 4
+
+    def test_html(self, codelist):
+        """Test the HTML representation."""
+        html = codelist._repr_html_().strip()
+        assert html.startswith("<")
+        assert html.endswith(">")
 
 
 class TestOsloCodeList:

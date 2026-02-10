@@ -7,6 +7,7 @@ from pydov.search.observatie import ObservatieSearch
 from pydov.search.grondwaterfilter import GrondwaterFilterSearch
 from pydov.search.bodemlocatie import BodemlocatieSearch
 from pydov.search.bodemdiepteinterval import BodemdiepteintervalSearch
+from pydov.search.boring import BoringSearch
 from pydov.util.location import Within, Box
 from pydov.util.query import Join
 from pydov.util.dovutil import build_dov_url
@@ -273,8 +274,12 @@ class RequestPFASdata:
         df["pkey_diepteinterval"] = df["pkey_parent"].apply(
             lambda x: (x if "/data/diepteinterval/" in x else None)
         )
+        df["pkey_boring"] = df["pkey_parent"].apply(
+            lambda x: (x if "/data/boring/" in x else None)
+        )
 
-        # 1. For observations linked to monsters, find the bodemlocatie or diepteinterval
+        # 1. For observations linked to monsters, find the bodemlocatie, diepteinterval
+        #    or boring
         if df["pkey_monster"].notna().any():
             monster_search = MonsterSearch()
             df_monsters = monster_search.search(
@@ -304,6 +309,9 @@ class RequestPFASdata:
                 df_monsters["pkey_diepteinterval_from_monster"] = df_monsters[
                     "pkey_parents"
                 ].apply(lambda x: extract_parent(x, "/data/diepteinterval/"))
+                df_monsters["pkey_boring_from_monster"] = df_monsters[
+                    "pkey_parents"
+                ].apply(lambda x: extract_parent(x, "/data/boring/"))
 
                 df = pd.merge(
                     df,
@@ -312,6 +320,7 @@ class RequestPFASdata:
                             "pkey_monster",
                             "pkey_bodemlocatie_from_monster",
                             "pkey_diepteinterval_from_monster",
+                            "pkey_boring_from_monster",
                             "diepte_van_m",
                             "diepte_tot_m",
                         ]
@@ -320,22 +329,36 @@ class RequestPFASdata:
                     how="left",
                     suffixes=("", "_from_monster"),
                 )
-                df["pkey_bodemlocatie"] = df["pkey_bodemlocatie"].fillna(
-                    df["pkey_bodemlocatie_from_monster"]
+                df["pkey_bodemlocatie"] = (
+                    df["pkey_bodemlocatie"]
+                    .infer_objects(copy=False)
+                    .fillna(df["pkey_bodemlocatie_from_monster"])
                 )
-                df["pkey_diepteinterval"] = df["pkey_diepteinterval"].fillna(
-                    df["pkey_diepteinterval_from_monster"]
+                df["pkey_diepteinterval"] = (
+                    df["pkey_diepteinterval"]
+                    .infer_objects(copy=False)
+                    .fillna(df["pkey_diepteinterval_from_monster"])
                 )
-                df["diepte_van_m"] = df["diepte_van_m"].fillna(
-                    df["diepte_van_m_from_monster"]
+                df["pkey_boring"] = (
+                    df["pkey_boring"]
+                    .infer_objects(copy=False)
+                    .fillna(df["pkey_boring_from_monster"])
                 )
-                df["diepte_tot_m"] = df["diepte_tot_m"].fillna(
-                    df["diepte_tot_m_from_monster"]
+                df["diepte_van_m"] = (
+                    df["diepte_van_m"]
+                    .infer_objects(copy=False)
+                    .fillna(df["diepte_van_m_from_monster"])
+                )
+                df["diepte_tot_m"] = (
+                    df["diepte_tot_m"]
+                    .infer_objects(copy=False)
+                    .fillna(df["diepte_tot_m_from_monster"])
                 )
                 df = df.drop(
                     columns=[
                         "pkey_bodemlocatie_from_monster",
                         "pkey_diepteinterval_from_monster",
+                        "pkey_boring_from_monster",
                         "diepte_van_m_from_monster",
                         "diepte_tot_m_from_monster",
                     ]
@@ -372,14 +395,20 @@ class RequestPFASdata:
                     how="left",
                     suffixes=("", "_from_bd"),
                 )
-                df["pkey_bodemlocatie"] = df["pkey_bodemlocatie"].fillna(
-                    df["pkey_bodemlocatie_from_bd"]
+                df["pkey_bodemlocatie"] = (
+                    df["pkey_bodemlocatie"]
+                    .infer_objects(copy=False)
+                    .fillna(df["pkey_bodemlocatie_from_bd"])
                 )
-                df["diepte_van_m"] = df["diepte_van_m"].fillna(
-                    df["bovengrens1_cm"] / 100
+                df["diepte_van_m"] = (
+                    df["diepte_van_m"]
+                    .infer_objects(copy=False)
+                    .fillna(df["bovengrens1_cm"] / 100)
                 )
-                df["diepte_tot_m"] = df["diepte_tot_m"].fillna(
-                    df["ondergrens1_cm"] / 100
+                df["diepte_tot_m"] = (
+                    df["diepte_tot_m"]
+                    .infer_objects(copy=False)
+                    .fillna(df["ondergrens1_cm"] / 100)
                 )
                 df = df.drop(
                     columns=[
@@ -405,10 +434,63 @@ class RequestPFASdata:
                 df = pd.merge(df, df_bl, on="pkey_bodemlocatie", how="left")
                 df = df.rename(columns={"x": "x_m_L72", "y": "y_m_L72"})
 
+        # 4. Get coordinates and name from Boring
+        if df["pkey_boring"].notna().any():
+            b_search = BoringSearch()
+            df_b = b_search.search(
+                query=Join(
+                    df,
+                    on="pkey_boring",
+                    using="pkey_boring",
+                ),
+                return_fields=("pkey_boring", "x", "y", "boornummer"),
+            )
+
+            if not df_b.empty:
+                df_b = df_b.rename(
+                    columns={
+                        "x": "x_m_L72",
+                        "y": "y_m_L72",
+                        "boornummer": "naam",
+                    }
+                )
+                df = pd.merge(
+                    df,
+                    df_b,
+                    on="pkey_boring",
+                    how="left",
+                    suffixes=("", "_from_b"),
+                )
+
+                df["x_m_L72"] = (
+                    df["x_m_L72"]
+                    .infer_objects(copy=False)
+                    .fillna(df["x_m_L72_from_b"])
+                )
+                df["y_m_L72"] = (
+                    df["y_m_L72"]
+                    .infer_objects(copy=False)
+                    .fillna(df["y_m_L72_from_b"])
+                )
+                df["naam"] = (
+                    df["naam"]
+                    .infer_objects(copy=False)
+                    .fillna(df["naam_from_b"])
+                )
+
+                df = df.drop(
+                    columns=[
+                        "x_m_L72_from_b",
+                        "y_m_L72_from_b",
+                        "naam_from_b",
+                    ]
+                )
+
         df["pkey_observatie"] = df["pkey_observatie"].apply(strip_url)
         df["pkey_bodemlocatie"] = df["pkey_bodemlocatie"].apply(strip_url)
         df["pkey_monster"] = df["pkey_monster"].apply(strip_url)
         df["pkey_diepteinterval"] = df["pkey_diepteinterval"].apply(strip_url)
+        df["pkey_boring"] = df["pkey_boring"].apply(strip_url)
         df["pkey_parent"] = df["pkey_parent"].apply(strip_url)
 
         df = df.rename(columns={"pkey_observatie": "id"})
@@ -782,10 +864,11 @@ class RequestPFASdata:
         The downloaded soil water data.
         """
         logger.info(f"Downloading soilwater data")
-        data_wfs_VMM_ws = self.wfs_request(
-            layer='waterbodems:pfas_meetpunten_fcs',
-            location=location,
-            max_features=max_features)
+        # data_wfs_VMM_ws = self.wfs_request(
+        #     layer='waterbodems:pfas_meetpunten_fcs',
+        #     location=location,
+        #     max_features=max_features)
+        data_wfs_VMM_ws = pd.DataFrame()
         data_wfs_OVAM = self.wfs_request(
             layer='pfas:pfas_analyseresultaten',
             location=location,

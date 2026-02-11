@@ -17,7 +17,7 @@ The dataset consist of the following PFAS data:
 - From [OVAM](https://ovam.vlaanderen.be/)
     - rain water
     - surface water
-    - soilwater
+    - soilwater (sediment and fixed)
     - groundwater
     - soil
     - effluent
@@ -28,17 +28,19 @@ The dataset consist of the following PFAS data:
     - groundwater
     - soil
 
-The different datasets from the different sources (VMM, OVAM, Lantis) can be saved as separate Excel tabs of one Excel file.
+The different datasets from the different sources (VMM, OVAM, Lantis) can be saved as separate Excel files.
 
-There is also an option to download the combined datasets per matrix and save them as separate Excel tabs.
+There is also an option to download the combined datasets per matrix and save them as separate Excel files.
+
+If a dataset exceeds the Excel row limit (1,048,576 rows), it will be split into multiple Excel files.
 
 - Combined datasets
   - combined groundwater
     - Contains groundwater data from VMM, OVAM and Lantis
   - combined soil
-    - Contains soil data from OVAM and Lantis
+    - Contains soil data from pydov (VMM), OVAM and Lantis
   - combined soilwater
-    - Contains soilwater data from VMM and OVAM
+    - Contains soilwater data from OVAM (sediment and fixed)
   - combined surface water
     - Contains surface water from VMM and OVAM
 
@@ -77,7 +79,7 @@ Possible mediums:
 <details>
 <summary>'all'</summary>
 
-    -> returns 22 dataframes
+    -> returns 24 dataframes
         - Biota_VMM
         - Effluent_OVAM
         - Groundwater_VMM
@@ -86,10 +88,12 @@ Possible mediums:
         - Migration_OVAM
         - Pure_product_OVAM
         - Rainwater_OVAM
+        - Soil_pydov
         - Soil_OVAM
         - Soil_Lantis
         - Soil_water_VMM
-        - Soil_water_OVAM
+        - Soil_water_sediment_OVAM
+        - Soil_water_fixed_OVAM
         - Surface_water_VMM
         - Surface_water_OVAM
         - Waste_water_VMM
@@ -150,7 +154,8 @@ Possible mediums:
 <details>
 <summary>'soil'</summary>
 
-    -> returns 2 dataframes
+    -> returns 3 dataframes
+        - Soil_pydov
         - Soil_OVAM
         - Soil_Lantis
 </details>
@@ -158,9 +163,10 @@ Possible mediums:
 <details>
 <summary>'soil water'</summary>
 
-    -> returns 2 dataframes
+    -> returns 3 dataframes
         - Soil_water_VMM
-        - Soil_water_OVAM
+        - Soil_water_sediment_OVAM
+        - Soil_water_fixed_OVAM
 </details>
 
 <details>
@@ -255,7 +261,7 @@ and also [restrict the number of WFS features returned](https://pydov.readthedoc
         location = Within(Box(15000, 150000, 270000, 250000, epsg=31370))  # Bounding box Flanders
         save = True
       ```
-      This results in one excel-file with 15 tabs. One for each dataset.
+      This results in separate excel-files for each dataset.
 
 
   - Example 2 : You only want to download and save the groundwater PFAS data of Flanders
@@ -266,7 +272,7 @@ and also [restrict the number of WFS features returned](https://pydov.readthedoc
         location = Within(Box(15000, 150000, 270000, 250000, epsg=31370))  # Bounding box Flanders
         save = True
       ```
-      This results in one excel-file with 3 tabs. One tab with the groundwater data from VMM,
+      This results in three separate excel-files: one with the groundwater data from VMM,
       one with the groundwater data from OVAM and one with the groundwater data from Lantis.
 
 
@@ -278,8 +284,8 @@ and also [restrict the number of WFS features returned](https://pydov.readthedoc
         location = Within(Box(15000, 150000, 270000, 250000, epsg=31370))  # Bounding box Flanders
         save = True
       ```
-      This results in one excel-file with 5 tabs. One tab with the soil data from OVAM,
-      one with the soil data from Lantis, one with the groundwater data from VMM,
+      This results in six separate excel-files: one with the soil data from pydov,
+      one with the soil data from OVAM, one with the soil data from Lantis, one with the groundwater data from VMM,
       one with the groundwater data from OVAM and one with the groundwater data from Lantis.
 
 
@@ -291,7 +297,7 @@ and also [restrict the number of WFS features returned](https://pydov.readthedoc
       location = Within(Box(15000, 150000, 270000, 250000, epsg=31370))  # Bounding box Flanders
       save = True
     ```
-    This results in one excel-file with one tab containing the groundwater data from all the sources (VMM, OVAM and Lantis).
+    This results in one excel-file containing the groundwater data from all the sources (VMM, OVAM and Lantis).
 
 ### Case 2 : You want the data in a dataframe to integrate it in your python script
 
@@ -311,20 +317,22 @@ and also [restrict the number of WFS features returned](https://pydov.readthedoc
         df[5] # Migration_OVAM
         df[6] # Pure_product_OVAM
         df[7] # Rainwater_OVAM
-        df[8] # Soil_OVAM
-        df[9] # Soil_Lantis
-        df[10] # Soil_water_VMM
-        df[11] # Soil_water_OVAM
-        df[12] # Surface_water_VMM
-        df[13] # Surface_water_OVAM
-        df[14] # Waste_water_VMM
-        df[15] # Air_dust_VMM
-        df[16] # Air_gas_VMM
-        df[17] # Air_deposition_VMM
-        df[18] # Combined_groundwater
-        df[19] # Combined_soil
-        df[20] # Combined_soil_water
-        df[21] # Combined_surface_water
+        df[8] # Soil_pydov
+        df[9] # Soil_OVAM
+        df[10] # Soil_Lantis
+        df[11] # Soil_water_VMM
+        df[12] # Soil_water_sediment_OVAM
+        df[13] # Soil_water_fixed_OVAM
+        df[14] # Surface_water_VMM
+        df[15] # Surface_water_OVAM
+        df[16] # Waste_water_VMM
+        df[17] # Air_dust_VMM
+        df[18] # Air_gas_VMM
+        df[19] # Air_deposition_VMM
+        df[20] # Combined_groundwater
+        df[21] # Combined_soil
+        df[22] # Combined_soil_water
+        df[23] # Combined_surface_water
     ```
 
   - Example 2 : You only want to download the groundwater PFAS data of Flanders
@@ -348,11 +356,12 @@ and also [restrict the number of WFS features returned](https://pydov.readthedoc
         location = Within(Box(15000, 150000, 270000, 250000, epsg=31370))  # Bounding box Flanders
 
     # Access data:
-        df[0] # Soil_OVAM
-        df[1] # Soil_Lantis
-        df[2] # Groundwater_VMM
-        df[3] # Groundwater_OVAM
-        df[4] # Groundwater_Lantis
+        df[0] # Soil_pydov
+        df[1] # Soil_OVAM
+        df[2] # Soil_Lantis
+        df[3] # Groundwater_VMM
+        df[4] # Groundwater_OVAM
+        df[5] # Groundwater_Lantis
     ```
 
   - Example 4 : You want to download the combined groundwater PFAS data of Flanders

@@ -14,29 +14,34 @@
             <naam>Baele</naam>
             <voornaam>Guy</voornaam>
         </operator>
-        <sondeerpositie>
-            <xy>
-                <x>150347.30</x>
-                <y>214036.40</y>
-                <betrouwbaarheid>goed</betrouwbaarheid>
-                <methode_opmeten>topografisch ingemeten</methode_opmeten>
-                <origine_opmeten>
+        <ligging>
+            <gml:Point srsName="urn:ogc:def:crs:EPSG::6190" srsDimension="3">
+                <gml:pos>150347.3 214036.4 8.53</gml:pos>
+            </gml:Point>
+            <metadata_locatiebepaling>
+                <methode>topografisch ingemeten</methode>
+                <uitvoerder>
                     <naam>derden</naam>
-                </origine_opmeten>
-            </xy>
-            <gemeente>11002</gemeente>
-            <aanvangspeil>
-                <waarde>8.53</waarde>
+                </uitvoerder>
                 <betrouwbaarheid>goed</betrouwbaarheid>
-                <methode_opmeten>topografisch ingemeten</methode_opmeten>
-                <origine_opmeten>
+            </metadata_locatiebepaling>
+            <metadata_hoogtebepaling>
+                <methode>topografisch ingemeten</methode>
+                <uitvoerder>
                     <naam>derden</naam>
-                </origine_opmeten>
-            </aanvangspeil>
-            <start_tov_maaiveld>
-                <gestart_op>AANVANGPEIL</gestart_op>
-            </start_tov_maaiveld>
-        </sondeerpositie>
+                </uitvoerder>
+                <betrouwbaarheid>goed</betrouwbaarheid>
+                <referentiepunt_type>Platform (o.a. platform, hefeiland, monopile, ponton, plaat)</referentiepunt_type>
+            </metadata_hoogtebepaling>
+            <alternatieve_crs>
+                <gml:Point srsName="urn:ogc:def:crs:EPSG::6190" srsDimension="3">
+                    <gml:pos>150347.3 214036.4 8.53</gml:pos>
+                </gml:Point>
+                <gml:Point srsName="urn:ogc:def:crs:EPSG::8370" srsDimension="3">
+                    <gml:pos>650341.7813769215 714036.5688121793 8.53</gml:pos>
+                </gml:Point>
+            </alternatieve_crs>
+        </ligging>
         <visueelonderzoek>
             <grondwaterstand>3.60</grondwaterstand>
             <datumtijd_waarneming_grondwaterstand>2002-12-17T14:30:00.000</datumtijd_waarneming_grondwaterstand>

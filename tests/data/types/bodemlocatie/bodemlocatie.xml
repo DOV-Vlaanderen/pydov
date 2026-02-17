@@ -16,25 +16,34 @@
             <erfgoedreden>goed bewaarde bodemontwikkeling in leem</erfgoedreden>
         </erfgoed>
         <ligging>
-            <beginpunt>
-                <xy>
-                    <x>206553.85</x>
-                    <y>168891.11</y>
-                    <betrouwbaarheid>goed</betrouwbaarheid>
-                    <methode_opmeten>GPS statische fasemeting (nk 0,5cm)</methode_opmeten>
-                    <origine_opmeten>
+            <ligging_beginpunt>
+                <gml:Point srsName="urn:ogc:def:crs:EPSG::6190" srsDimension="3">
+                    <gml:pos>206553.84645980317 168891.1083065234 44.0</gml:pos>
+                </gml:Point>
+                <metadata_locatiebepaling>
+                    <methode>GPS statische fasemeting (nk 0,5cm)</methode>
+                    <uitvoerder>
                         <naam>onbekend</naam>
-                    </origine_opmeten>
-                </xy>
-                <maaiveld>
-                    <waarde>44.00</waarde>
+                    </uitvoerder>
                     <betrouwbaarheid>goed</betrouwbaarheid>
-                    <methode_opmeten>GPS statische fasemeting</methode_opmeten>
-                    <origine_opmeten>
+                </metadata_locatiebepaling>
+                <metadata_hoogtebepaling>
+                    <methode>GPS statische fasemeting</methode>
+                    <uitvoerder>
                         <naam>onbekend</naam>
-                    </origine_opmeten>
-                </maaiveld>
-            </beginpunt>
+                    </uitvoerder>
+                    <betrouwbaarheid>goed</betrouwbaarheid>
+                    <referentiepunt_type>Maaiveld</referentiepunt_type>
+                </metadata_hoogtebepaling>
+                <alternatieve_crs>
+                    <gml:Point srsName="urn:ogc:def:crs:EPSG::6190" srsDimension="3">
+                        <gml:pos>206553.84645980317 168891.1083065234 44.0</gml:pos>
+                    </gml:Point>
+                    <gml:Point srsName="urn:ogc:def:crs:EPSG::8370" srsDimension="3">
+                        <gml:pos>706553.2751397283 668898.2423798782 44.0</gml:pos>
+                    </gml:Point>
+                </alternatieve_crs>
+            </ligging_beginpunt>
             <bodemstreek>ZLS</bodemstreek>
             <bodemdistrict>Plateau van Haspengouw</bodemdistrict>
             <landbouwstreek>Zandleemstreek</landbouwstreek>

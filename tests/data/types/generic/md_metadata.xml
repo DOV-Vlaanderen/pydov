@@ -26,7 +26,7 @@
             <gmd:phone>
               <gmd:CI_Telephone>
                 <gmd:voice>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">+32 9 240 75 93</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">+32 9 240 75 00</gco:CharacterString>
                 </gmd:voice>
               </gmd:CI_Telephone>
             </gmd:phone>
@@ -45,7 +45,7 @@
                   <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">België</gco:CharacterString>
                 </gmd:country>
                 <gmd:electronicMailAddress>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">dov@vlaanderen.be</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">meldpunt@dov.vlaanderen.be</gco:CharacterString>
                 </gmd:electronicMailAddress>
               </gmd:CI_Address>
             </gmd:address>
@@ -64,7 +64,7 @@
       </gmd:CI_ResponsibleParty>
     </gmd:contact>
     <gmd:dateStamp>
-      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2025-08-28</gco:Date>
+      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2026-02-16</gco:Date>
     </gmd:dateStamp>
     <gmd:metadataStandardName>
       <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">ISO 19115/2003/Cor.1:2006/INSPIRE-TG2.0</gco:CharacterString>
@@ -93,7 +93,7 @@
             <gmd:date>
               <gmd:CI_Date>
                 <gmd:date>
-                  <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2025-08-28</gco:Date>
+                  <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2026-02-16</gco:Date>
                 </gmd:date>
                 <gmd:dateType>
                   <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="revision">revision</gmd:CI_DateTypeCode>
@@ -225,7 +225,7 @@ Het doel waarvoor een opdracht uitgevoerd is kan sterk verschillen. Dit wordt ge
                 <gmd:phone>
                   <gmd:CI_Telephone>
                     <gmd:voice>
-                      <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">+32 9 240 75 93</gco:CharacterString>
+                      <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">+32 9 240 75 00</gco:CharacterString>
                     </gmd:voice>
                   </gmd:CI_Telephone>
                 </gmd:phone>
@@ -244,7 +244,7 @@ Het doel waarvoor een opdracht uitgevoerd is kan sterk verschillen. Dit wordt ge
                       <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">België</gco:CharacterString>
                     </gmd:country>
                     <gmd:electronicMailAddress>
-                      <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">dov@vlaanderen.be</gco:CharacterString>
+                      <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">meldpunt@dov.vlaanderen.be</gco:CharacterString>
                     </gmd:electronicMailAddress>
                   </gmd:CI_Address>
                 </gmd:address>
@@ -525,7 +525,7 @@ Het doel waarvoor een opdracht uitgevoerd is kan sterk verschillen. Dit wordt ge
             <gmd:date>
               <gmd:CI_Date>
                 <gmd:date>
-                  <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2025-08-28</gco:Date>
+                  <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2026-02-16</gco:Date>
                 </gmd:date>
                 <gmd:dateType>
                   <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation">creation</gmd:CI_DateTypeCode>

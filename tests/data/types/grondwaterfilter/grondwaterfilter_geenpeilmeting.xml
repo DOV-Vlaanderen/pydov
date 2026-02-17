@@ -7,28 +7,34 @@
             <uri>https://www.dov.vlaanderen.be/data/put/2021-096695</uri>
         </dataidentifier>
         <grondwaterlocatieType>PUT</grondwaterlocatieType>
-        <puntligging>
-            <xy>
-                <x>177740.00</x>
-                <y>217850.00</y>
-                <betrouwbaarheid>goed</betrouwbaarheid>
-                <methode_opmeten>uit dossier</methode_opmeten>
-                <origine_opmeten>
+        <ligging>
+            <gml:Point srsName="urn:ogc:def:crs:EPSG::6190" srsDimension="3">
+                <gml:pos>177740.0 217850.0 18.7</gml:pos>
+            </gml:Point>
+            <metadata_locatiebepaling>
+                <methode>uit dossier</methode>
+                <uitvoerder>
                     <naam>Exploitant</naam>
-                </origine_opmeten>
-            </xy>
-            <oorspronkelijk_maaiveld>
-                <waarde>18.70</waarde>
+                </uitvoerder>
                 <betrouwbaarheid>goed</betrouwbaarheid>
-                <methode_opmeten>DHM_v2</methode_opmeten>
-                <origine_opmeten>
+            </metadata_locatiebepaling>
+            <metadata_hoogtebepaling>
+                <methode>DHM_v2</methode>
+                <uitvoerder>
                     <naam>DOV - applicatief - RESTservice DHM2</naam>
-                </origine_opmeten>
-            </oorspronkelijk_maaiveld>
-            <start_tov_maaiveld>
-                <gestart_op>MAAIVELD</gestart_op>
-            </start_tov_maaiveld>
-        </puntligging>
+                </uitvoerder>
+                <betrouwbaarheid>goed</betrouwbaarheid>
+                <referentiepunt_type>Maaiveld</referentiepunt_type>
+            </metadata_hoogtebepaling>
+            <alternatieve_crs>
+                <gml:Point srsName="urn:ogc:def:crs:EPSG::6190" srsDimension="3">
+                    <gml:pos>177740.0 217850.0 18.7</gml:pos>
+                </gml:Point>
+                <gml:Point srsName="urn:ogc:def:crs:EPSG::8370" srsDimension="3">
+                    <gml:pos>677733.7755407547 717853.4280478178 18.7</gml:pos>
+                </gml:Point>
+            </alternatieve_crs>
+        </ligging>
         <diepte>9.00</diepte>
         <datum_ingebruikname>1976-11-01</datum_ingebruikname>
         <putsoort>niet-verbuisde boorput</putsoort>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:monster="http://dov.vlaanderen.be/ocdov/monster" xmlns:wfs="http://www.opengis.net/wfs/2.0" elementFormDefault="qualified" targetNamespace="http://dov.vlaanderen.be/ocdov/monster">
-  <xsd:import namespace="http://www.opengis.net/gml/3.2" schemaLocation="https://oefen.dov.vlaanderen.be/geoserver/schemas/gml/3.2.1/gml.xsd"/>
+  <xsd:import namespace="http://www.opengis.net/gml/3.2" schemaLocation="https://www.dov.vlaanderen.be/geoserver/schemas/gml/3.2.1/gml.xsd"/>
   <xsd:complexType name="monstersType">
     <xsd:complexContent>
       <xsd:extension base="gml:AbstractFeatureType">
@@ -12,7 +12,7 @@
           <xsd:element maxOccurs="1" minOccurs="0" name="materiaalklasse" nillable="true" type="xsd:string"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="diepte_van_m" nillable="true" type="xsd:decimal"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="diepte_tot_m" nillable="true" type="xsd:decimal"/>
-          <xsd:element maxOccurs="1" minOccurs="0" name="observaties" nillable="true" type="xsd:long"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="aantal_observaties" nillable="true" type="xsd:long"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="bemonsteringsdatum" nillable="true" type="xsd:date"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="monstersamenstelling" nillable="true" type="xsd:string"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="monstertype" nillable="true" type="xsd:string"/>
@@ -20,7 +20,7 @@
           <xsd:element maxOccurs="1" minOccurs="0" name="bemonsteringsinstrument" nillable="true" type="xsd:string"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="bemonstering_door" nillable="true" type="xsd:string"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="opmerkingen" nillable="true" type="xsd:long"/>
-          <xsd:element maxOccurs="1" minOccurs="0" name="opslaglocatie" nillable="true" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="actuele_opslaglocatie" nillable="true" type="xsd:string"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="opdracht" nillable="true" type="xsd:string"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="permkey_monster" nillable="true" type="xsd:string"/>
           <xsd:element maxOccurs="1" minOccurs="0" name="geom" nillable="true" type="gml:GeometryPropertyType"/>

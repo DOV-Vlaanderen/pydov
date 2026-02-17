@@ -1,6 +1,7 @@
 """Module grouping tests for the observatie search module."""
 
 from owslib.fes2 import PropertyIsEqualTo
+import pytest
 
 from pydov.search.observatie import ObservatieSearch
 from pydov.types.observatie import Observatie, ObservatieHerhaling, ObservatieDetails
@@ -23,7 +24,7 @@ class TestObservatieSearch(AbstractTestSearch):
     datatype_class = Observatie
 
     valid_query_single = PropertyIsEqualTo(propertyname='pkey_observatie',
-                                           literal=build_dov_url('data/observatie/2022-11963810'))
+                                           literal=build_dov_url('data/observatie/2024-45786778'))
 
     inexistent_field = 'onbestaand'
     wfs_field = 'parameter'
@@ -38,6 +39,7 @@ class TestObservatieSearch(AbstractTestSearch):
                           'parametergroep', 'parameter', 'detectieconditie', 'resultaat', 'eenheid', 'methode',
                           'uitvoerder', 'herkomst']
 
+    @pytest.mark.skip(reason='No data exists in production')
     def test_search_with_herhalingen(self, mp_wfs, mp_get_schema,
                                      mp_remote_codelist,
                                      mp_remote_describefeaturetype,

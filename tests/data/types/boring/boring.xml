@@ -25,6 +25,14 @@
                 <betrouwbaarheid>goed</betrouwbaarheid>
                 <referentiepunt_type>Platform (o.a. platform, hefeiland, monopile, ponton, plaat)</referentiepunt_type>
             </metadata_hoogtebepaling>
+            <alternatieve_crs>
+                <gml:Point srsName="urn:ogc:def:crs:EPSG::6190" srsDimension="3">
+                    <gml:pos>151680.75 214678.06 7.16</gml:pos>
+                </gml:Point>
+                <gml:Point srsName="urn:ogc:def:crs:EPSG::8370" srsDimension="3">
+                    <gml:pos>651675.1457058287 714678.3815581932 7.16</gml:pos>
+                </gml:Point>
+            </alternatieve_crs>
         </ligging>
         <diepte_van>0.00</diepte_van>
         <diepte_tot>30.00</diepte_tot>

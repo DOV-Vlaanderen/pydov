@@ -1030,7 +1030,7 @@ if __name__ == '__main__':
     # types/monster
 
     update_file('types/monster/monster.xml',
-                build_dov_url('data/monster/2022-324453.xml'))
+                build_dov_url('data/monster/2022-400005.xml'))
 
     update_file(
         'types/monster/wfsgetfeature.xml',
@@ -1038,7 +1038,7 @@ if __name__ == '__main__':
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName='
             'monster:monsters&maxFeatures=1&CQL_Filter'
-            '=permkey_monster=%272022-324453%27'))
+            '=permkey_monster=%272022-400005%27'))
 
     update_file(
         'types/monster/feature.xml',
@@ -1046,7 +1046,7 @@ if __name__ == '__main__':
             'geoserver/ows?service=WFS'
             '&version=2.0.0&request=GetFeature&typeName='
             'monster:monsters&maxFeatures=1&CQL_Filter'
-            '=permkey_monster=%272022-324453%27'),
+            '=permkey_monster=%272022-400005%27'),
         get_first_featuremember)
 
     update_file(
@@ -1078,14 +1078,14 @@ if __name__ == '__main__':
     # types/observatie
 
     update_file('types/observatie/observatie.xml',
-                build_dov_url('data/observatie/2022-11963810.xml'))
+                build_dov_url('data/observatie/2024-45786778.xml'))
 
     update_file(
         'types/observatie/wfsgetfeature.xml',
         build_dov_url(
             'geoserver/ows?service=WFS&version=2.0.0&request=GetFeature'
             '&typeName=monster:observaties&count=1&CQL_Filter=observatie_link=%27' + build_dov_url(
-                'data/observatie/2022-11963810%27'))
+                'data/observatie/2024-45786778%27'))
     )
 
     update_file(
@@ -1093,7 +1093,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS&version=2.0.0&request=GetFeature'
             '&typeName=monster:observaties&count=1&CQL_Filter=observatie_link=%27' + build_dov_url(
-                'data/observatie/2022-11963810%27')),
+                'data/observatie/2024-45786778%27')),
         get_first_featuremember)
 
     update_file(
@@ -1122,14 +1122,14 @@ if __name__ == '__main__':
     # types/observatie_fractiemetingen
 
     update_file('types/observatie_fractiemeting/observatie.xml',
-                build_dov_url('data/observatie/1995-10282748.xml'))
+                build_dov_url('data/observatie/2019-001221.xml'))
 
     update_file(
         'types/observatie_fractiemeting/wfsgetfeature.xml',
         build_dov_url(
             'geoserver/ows?service=WFS&version=2.0.0&request=GetFeature'
             '&typeName=monster:observaties&count=1&CQL_Filter=observatie_link=%27' + build_dov_url(
-                'data/observatie/1995-10282748%27'))
+                'data/observatie/2019-001221%27'))
     )
 
     update_file(
@@ -1137,7 +1137,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS&version=2.0.0&request=GetFeature'
             '&typeName=monster:observaties&count=1&CQL_Filter=observatie_link=%27' + build_dov_url(
-                'data/observatie/1995-10282748%27')),
+                'data/observatie/2019-001221%27')),
         get_first_featuremember)
 
     update_file(
@@ -1166,14 +1166,14 @@ if __name__ == '__main__':
     # types/observatie_meetreeks
 
     update_file('types/observatie_meetreeks/observatie.xml',
-                build_dov_url('data/observatie/2025-43568400.xml'))
+                build_dov_url('data/observatie/2021-10704567.xml'))
 
     update_file(
         'types/observatie_meetreeks/wfsgetfeature.xml',
         build_dov_url(
             'geoserver/ows?service=WFS&version=2.0.0&request=GetFeature'
             '&typeName=monster:observaties&count=1&CQL_Filter=observatie_link=%27' + build_dov_url(
-                'data/observatie/2025-43568400%27'))
+                'data/observatie/2021-10704567%27'))
     )
 
     update_file(
@@ -1181,7 +1181,7 @@ if __name__ == '__main__':
         build_dov_url(
             'geoserver/ows?service=WFS&version=2.0.0&request=GetFeature'
             '&typeName=monster:observaties&count=1&CQL_Filter=observatie_link=%27' + build_dov_url(
-                'data/observatie/2025-43568400%27')),
+                'data/observatie/2021-10704567%27')),
         get_first_featuremember)
 
     update_file(

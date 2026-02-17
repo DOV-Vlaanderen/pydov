@@ -1,0 +1,792 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+        xmlns="http://gwmeetnet.kern.schemas.dov.vlaanderen.be" 
+        targetNamespace="http://gwmeetnet.kern.schemas.dov.vlaanderen.be" 
+        elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.00">
+<!--
+Dit bestand bevat de typische codetabellen gebruikt bij datatypes voor filter of zijn ondergeschikte ellementen: referentiepunen en peilmetingen.
+Alles ivm kwaliteitsmetingen zit vervat in het deelschema 'observaties'.
+-->
+
+<!--    
+select '<xs:enumeration value="'||beschrijving||'"/>' from grondwater.lut_meetnet order by beschrijving
+-->
+    <xs:simpleType name="MeetnetEnumType">
+        <xs:annotation>
+            <xs:documentation>lijst van de mogelijke meetnetten</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="0">
+                <xs:annotation>
+                    <xs:documentation>onbekend</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="1">
+                <xs:annotation>
+                    <xs:documentation>meetnet 1 - primair meetnet - afdeling Water</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+                <xs:annotation>
+                    <xs:documentation>meetnet 2 - onzekere kwaliteit - afdeling Water</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="3">
+                <xs:annotation>
+                    <xs:documentation>meetnet 3 - tijdelijk meetnet - afdeling Water</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="4">
+                <xs:annotation>
+                    <xs:documentation>meetnet 4 - externe instanties</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="5">
+                <xs:annotation>
+                    <xs:documentation>meetnet 5 - peilputten drinkwatermaatschappijen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="6">
+                <xs:annotation>
+                    <xs:documentation>meetnet 6 - peilputten individuele bedrijven</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="7">
+                <xs:annotation>
+                    <xs:documentation>meetnet 7 - winningsputten</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="8">
+                <xs:annotation>
+                    <xs:documentation>meetnet 8 - freatisch meetnet - afdeling water</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="9">
+                <xs:annotation>
+                    <xs:documentation>meetnet 9 - peilputten INBO en natuurorganisaties</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="10">
+                <xs:annotation>
+                    <xs:documentation>meetnet10 - rubriek 55 (verticale boringen)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="11">
+                <xs:annotation>
+                    <xs:documentation>meetnet 11 - rubriek 53.6 (koude-warmtepompen)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="12">
+                <xs:annotation>
+                    <xs:documentation>meetnet 12 - lokale besturen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="100">
+                <xs:annotation>
+                    <xs:documentation>meetnet 100 - Geotechniek</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="edov">
+                <xs:annotation>
+                    <xs:documentation>meetnet 20 – eDOV erkende boorbedrijven</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="OxidatieReductieEnumType">
+        <xs:annotation>
+            <xs:documentation>de mogelijke waarden voor oxidatie-reductie toestand</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Mengzone"/>
+            <xs:enumeration value="Onbekend"/>
+            <xs:enumeration value="Oxidatie"/>
+            <xs:enumeration value="Reductie"/>
+        </xs:restriction>
+    </xs:simpleType>
+<!--    
+select '<xs:enumeration value="'||afkorting||'"><xs:annotation><xs:documentation>'||beschrijving||'</xs:documentation></xs:annotation></xs:enumeration>' 
+from grondwater.lut_grondwaterlichaam
+order by afkorting
+-->    
+    <xs:simpleType name="GrondwaterlichaamEnumType">
+        <xs:annotation>
+            <xs:documentation>de mogelijke waarden voor grondwaterlichaam</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="BLKS_0160_GWL_1M">
+                <xs:annotation>
+                    <xs:documentation>Quartaire Maas- en Rijnafzettingen, freatisch</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BLKS_0160_GWL_1S">
+                <xs:annotation>
+                    <xs:documentation>Pleistoceen Rivierafzettingen, lokaal gespannen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BLKS_0400_GWL_1M">
+                <xs:annotation>
+                    <xs:documentation>Oligoceen Aquifersysteem, freatisch</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BLKS_0400_GWL_1S">
+                <xs:annotation>
+                    <xs:documentation>Oligoceen Aquifersysteem, lokaal freatisch</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BLKS_0400_GWL_2M">
+                <xs:annotation>
+                    <xs:documentation>Oligoceen Aquifersysteem, gespannen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BLKS_0400_GWL_2S">
+                <xs:annotation>
+                    <xs:documentation>Oligoceen Aquifersysteem, gespannen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BLKS_0600_GWL_1">
+                <xs:annotation>
+                    <xs:documentation>Brusseliaan Aquifer, freatisch</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BLKS_0600_GWL_2">
+                <xs:annotation>
+                    <xs:documentation>Brusseliaan Aquifer, gespannen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BLKS_0600_GWL_3">
+                <xs:annotation>
+                    <xs:documentation>Brusseliaan venster: contact met Diestiaan, lokaal gespannen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BLKS_1000_GWL_1S">
+                <xs:annotation>
+                    <xs:documentation>Landeniaan Aquifersysteem, lokaal gespannen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BLKS_1000_GWL_2S">
+                <xs:annotation>
+                    <xs:documentation>Landeniaan Aquifersysteem, gespannen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BLKS_1100_GWL_1M">
+                <xs:annotation>
+                    <xs:documentation>Krijt Aquifersysteem, freatisch</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BLKS_1100_GWL_1S">
+                <xs:annotation>
+                    <xs:documentation>Krijt Aquifersysteem, freatisch</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BLKS_1100_GWL_2M">
+                <xs:annotation>
+                    <xs:documentation>Krijt Aquifersysteem, gespannen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BLKS_1100_GWL_2S">
+                <xs:annotation>
+                    <xs:documentation>Krijt Aquifersysteem, gespannen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CKS_0200_GWL_1">
+                <xs:annotation>
+                    <xs:documentation>Centrale zanden van de Kempen, freatisch</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CKS_0200_GWL_2">
+                <xs:annotation>
+                    <xs:documentation>Noordelijke Zanden van de Kempen, freatisch, plaatselijk semi-freatisch</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CKS_0220_GWL_1">
+                <xs:annotation>
+                    <xs:documentation>Complex van de Kempen, freatisch</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CKS_0250_GWL_1">
+                <xs:annotation>
+                    <xs:documentation>Diestiaangeul: contact Brusseliaan, freatisch</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CVS_0100_GWL_1">
+                <xs:annotation>
+                    <xs:documentation>Dun Quartair dek boven op Paleogeen klei, freatisch</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CVS_0160_GWL_1">
+                <xs:annotation>
+                    <xs:documentation>Pleistoceen afzettingen, freatisch</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CVS_0400_GWL_1">
+                <xs:annotation>
+                    <xs:documentation>Oligoceen Aquifersysteem, lokaal freatisch</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CVS_0600_GWL_1">
+                <xs:annotation>
+                    <xs:documentation>Ledo-Paniseliaan Aquifersysteem, freatisch</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CVS_0600_GWL_2">
+                <xs:annotation>
+                    <xs:documentation>Ledo-Paniseliaan Aquifersysteem, gespannen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CVS_0800_GWL_1">
+                <xs:annotation>
+                    <xs:documentation>Ieperiaan Aquifer, freatisch</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CVS_0800_GWL_2">
+                <xs:annotation>
+                    <xs:documentation>Ieperiaan Aquifer, gespannen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CVS_0800_GWL_3">
+                <xs:annotation>
+                    <xs:documentation>Ieperiaan Aquifer Heuvelstreken, lokaal gespannen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KPS_0120_GWL_1">
+                <xs:annotation>
+                    <xs:documentation>Duin- en kreekgebieden in het kustgebied, freatisch</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KPS_0120_GWL_2">
+                <xs:annotation>
+                    <xs:documentation>Duin- en kreekgebieden in de Oost-Vlaamse Polders, freatisch</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KPS_0160_GWL_1">
+                <xs:annotation>
+                    <xs:documentation>verzilt Quartair en Eoceen van het kustgebied, freatisch</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KPS_0160_GWL_2">
+                <xs:annotation>
+                    <xs:documentation>verzilt Quartair en Oligoceen van Oost-Vlaamse Polders, freatisch</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KPS_0160_GWL_3">
+                <xs:annotation>
+                    <xs:documentation>verzilt Quartair, Plioceen en Mioceen van Scheldepolders, freatisch</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="meerdere GWL">
+                <xs:annotation>
+                    <xs:documentation>Bevat filters in meerder grondwaterlichamen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MS_0100_GWL_1">
+                <xs:annotation>
+                    <xs:documentation>Quartair Aquifersysteem, freatisch</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MS_0200_GWL_1">
+                <xs:annotation>
+                    <xs:documentation>Kempens Aquifersysteem, freatisch, plaatselijk semi-freatisch</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MS_0200_GWL_2">
+                <xs:annotation>
+                    <xs:documentation>Kempens Aquifersysteem in de Centrale Slenk, freatisch, plaatselijk semi-freatisch</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="onbekend">
+                <xs:annotation>
+                    <xs:documentation>onbekend</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SS_1000_GWL_1">
+                <xs:annotation>
+                    <xs:documentation>Landeniaan Aquifersysteem, depressietrechter, gespannen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SS_1000_GWL_2">
+                <xs:annotation>
+                    <xs:documentation>Landeniaan Aquifersysteem, gespannen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SS_1300_GWL_1">
+                <xs:annotation>
+                    <xs:documentation>Kolenkalk, gespannen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SS_1300_GWL_2">
+                <xs:annotation>
+                    <xs:documentation>Sokkel + Krijt Aquifersysteem, lokaal freatisch, voedingsgebied</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SS_1300_GWL_3">
+                <xs:annotation>
+                    <xs:documentation>Sokkel + Krijt Aquifersysteem, depressietrechter, gespannen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SS_1300_GWL_4">
+                <xs:annotation>
+                    <xs:documentation>Sokkel + Krijt Aquifersysteem, gespannen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SS_1300_GWL_5">
+                <xs:annotation>
+                    <xs:documentation>Sokkel + Krijt Aquifersysteem, depressietrechter, gespannen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="X_BLKS_0400_GWL_2">
+                <xs:annotation>
+                    <xs:documentation>Ten noorden van de grens van het BLKS, in het Oligoceen Aquifersysteem, gespannen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="X_BLKS_0600_GWL_2">
+                <xs:annotation>
+                    <xs:documentation>Ten N van de grens van het BLKS, in de Brusseliaan Aquifer, gespannen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="X_BLKS_1000_GWL_2">
+                <xs:annotation>
+                    <xs:documentation>Ten N van de grens van het BLKS, in het Landeniaan Aquifersysteem, gespannen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="X_BLKS_1100_GWL_2">
+                <xs:annotation>
+                    <xs:documentation>Ten N van de grens van het BLKS, in het Krijt Aquifersysteem, gespannen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+<!--    
+select '<xs:enumeration value="'||beschrijving||'"/>' from grondwater.lut_grondwatersysteem order by beschrijving
+-->
+    <xs:simpleType name="GrondwatersysteemEnumType">
+        <xs:annotation>
+            <xs:documentation>de mogelijke waarden voor grondwatersysteem</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Centraal Vlaams Systeem"/>
+            <xs:enumeration value="Sokkelsysteem"/>
+            <xs:enumeration value="Kust- en Poldersysteem"/>
+            <xs:enumeration value="Centraal Kempisch Systeem"/>
+            <xs:enumeration value="Brulandkrijtsysteem"/>
+            <xs:enumeration value="Maassysteem"/>
+            <xs:enumeration value="Ten N v.d. grens v. BLKS, in een aquifer v. BLKS"/>
+            <xs:enumeration value="onbekend"/>
+        </xs:restriction>
+    </xs:simpleType>
+<!--    
+select '<xs:enumeration value="'||beschrijving||'"/>' from grondwater.lut_filterelement order by beschrijving
+-->
+      <xs:simpleType name="FilterElementEnumType">
+        <xs:annotation>
+            <xs:documentation>de mogelijke onderdelen waaruit een filter opgebouwd is</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="filter">
+                <xs:annotation>
+                    <xs:documentation>deprecated -  gebruik 'filterelement'. Deze optie al verwijderd worden in een volgende versie.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>    
+            <xs:enumeration value="filterelement">
+                <xs:annotation>
+                    <xs:documentation>vervangt 'filter'</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>    
+            <xs:enumeration value="onbekend"/>
+            <xs:enumeration value="open boorgat"/>
+            <xs:enumeration value="pomp"/>
+            <xs:enumeration value="stijgbuis"/>
+            <xs:enumeration value="zandvang"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ReferentieEnumType">
+        <xs:annotation>
+            <xs:documentation>de mogelijke types van referentiepunt</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Maaiveld"/>
+            <xs:enumeration value="Bovenkant van de peilbuis"/>
+            <xs:enumeration value="Bovenkant van de beschermbuis"/>
+            <xs:enumeration value="Andere referentiepunt"/>
+            <xs:enumeration value="Onbekend"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="FiltertoestandEnumType">
+        <xs:annotation>
+            <xs:documentation>de mogelijke waarden voor de filtertoestand bij peilmetingen</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="1">
+                <xs:annotation>
+                    <xs:documentation>normaal</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-900">
+                <xs:annotation>
+                    <xs:documentation>Geen waarneming</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+             <xs:enumeration value="-901">
+                <xs:annotation>
+                    <xs:documentation>Werken aan de put (VMW)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-902">
+                <xs:annotation>
+                    <xs:documentation>Vee in de weide (VMW)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-903">
+                <xs:annotation>
+                    <xs:documentation>Afgesloten van het net (VMW)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-905">
+                <xs:annotation>
+                    <xs:documentation>"Geen meting (onbereikbaar)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-910">
+                <xs:annotation>
+                    <xs:documentation>droog</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-920">
+                <xs:annotation>
+                    <xs:documentation>Bevroren</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-930">
+                <xs:annotation>
+                    <xs:documentation>Beschadigd/defekt</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-940">
+                <xs:annotation>
+                    <xs:documentation>Verstopt</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-950">
+                <xs:annotation>
+                    <xs:documentation>Vervallen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-960">
+                <xs:annotation>
+                    <xs:documentation>Loopt over</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-970">
+                <xs:annotation>
+                    <xs:documentation>Onder water</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-971">
+                <xs:annotation>
+                    <xs:documentation>"Meting onder filter (VMW-970)"</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-980">
+                <xs:annotation>
+                    <xs:documentation>Afpomping</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-981">
+                <xs:annotation>
+                    <xs:documentation>Buiten bereik Diver (VMW-980)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-985">
+                <xs:annotation>
+                    <xs:documentation>Infiltratie</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-990">
+                <xs:annotation>
+                    <xs:documentation>Verdwenen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-998">
+                <xs:annotation>
+                    <xs:documentation>Past niet in de stijghoogtereeks</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+             <xs:enumeration value="-999">
+                <xs:annotation>
+                    <xs:documentation>Vertrouwelijk (SCK-meting)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="WaarnemingEnumType">
+        <xs:annotation>
+            <xs:documentation>de mogelijke waarden voor de filtertoestand bij peilmetingen</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="1">
+                <xs:annotation>
+                    <xs:documentation>normaal</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="2">
+                <xs:annotation>
+                    <xs:documentation>Bemonstering kwaliteitsmeting</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="88">
+                <xs:annotation>
+                    <xs:documentation>koeien in wei</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-900">
+                <xs:annotation>
+                    <xs:documentation>Geen waarneming</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-901">
+                <xs:annotation>
+                    <xs:documentation>Werken aan de put (VMW)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-902">
+                <xs:annotation>
+                    <xs:documentation>Vee in de weide (VMW)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+             <xs:enumeration value="-903">
+                <xs:annotation>
+                    <xs:documentation>Afgesloten van het net (VMW)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-905">
+                <xs:annotation>
+                    <xs:documentation>Geen meting (onbereikbaar)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-910">
+                <xs:annotation>
+                    <xs:documentation>droog</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-920">
+                <xs:annotation>
+                    <xs:documentation>Bevroren</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-930">
+                <xs:annotation>
+                    <xs:documentation>Beschadigd/defekt</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-940">
+                <xs:annotation>
+                    <xs:documentation>Verstopt</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-950">
+                <xs:annotation>
+                    <xs:documentation>Vervallen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-960">
+                <xs:annotation>
+                    <xs:documentation>Loopt over</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-970">
+                <xs:annotation>
+                    <xs:documentation>Onder water</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-971">
+                <xs:annotation>
+                    <xs:documentation>Meting onder filter (VMW-970)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-980">
+                <xs:annotation>
+                    <xs:documentation>Afpomping</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-981">
+                <xs:annotation>
+                    <xs:documentation>Buiten bereik Diver (VMW-980)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-985">
+                <xs:annotation>
+                    <xs:documentation>Infiltratie</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-990">
+                <xs:annotation>
+                    <xs:documentation>Verdwenen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-998">
+                <xs:annotation>
+                    <xs:documentation>Past niet in de stijghoogtereeks</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="-999">
+                <xs:annotation>
+                    <xs:documentation>Vertrouwelijk (SCK-meting)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+<!--    
+select '<xs:enumeration value="'||beschrijving||'"/>' from grondwater.lut_methode_peilmeting order by beschrijving
+-->      
+    <xs:simpleType name="PeilmetingMethodeEnumType">
+        <xs:annotation>
+            <xs:documentation>de mogelijke waarden voor de methode waarop de peilmeting geregisteerd is</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="andere methode"/>
+            <xs:enumeration value="automatische sonde"/>
+            <xs:enumeration value="borrelbuis"/>
+            <xs:enumeration value="Dieptelood"/>
+            <xs:enumeration value="gemiddelde van loggermetingen"/>
+            <xs:enumeration value="manometer"/>
+            <xs:enumeration value="Onbekend"/>
+            <xs:enumeration value="peillint"/>
+            <xs:enumeration value="peilmeting onmogelijk"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="FilterstatusEnumType">
+        <xs:annotation>
+            <xs:documentation>de mogelijke waarden voor de status van de filter bij het opmeten van de peilmeting</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="in rust"/>
+            <xs:enumeration value="werking"/>
+            <xs:enumeration value="onbekend"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="OnttrekkingTypeEnumType">
+        <xs:annotation>
+            <xs:documentation>de mogelijke waarden voor type onttrekking</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="grondwaterwinning"/>
+            <xs:enumeration value="spui"/>
+            <xs:enumeration value="tot. rondgepompt (excl. spui)"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="HydrogeologischRegimeEnumType">
+        <xs:annotation>
+            <xs:documentation>de mogelijke waarden voor het hydrogeologisch regime</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="freatisch"/>
+            <xs:enumeration value="kwel"/>
+            <xs:enumeration value="infiltratiegebied"/>
+            <xs:enumeration value="hangwatertafel"/>
+            <xs:enumeration value="gespannen"/>
+            <xs:enumeration value="afgesloten met freatisch karakter"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ActieWaakgebieden1621EnumType">
+        <xs:annotation>
+            <xs:documentation>actiewaakgebieden - versie 2016 - 2021</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="0400_ actiegebied_met_freatisch_alternatief"/>
+            <xs:enumeration value="1000_actiegebied_2"/>
+            <xs:enumeration value="1000_actiegebied_3"/>
+            <xs:enumeration value="1000_actiegebied_4"/>
+            <xs:enumeration value="1000_waakgebied"/>
+            <xs:enumeration value="1100_waakgebied"/>
+            <xs:enumeration value="1300_actiegebied_1"/>
+            <xs:enumeration value="1300_actiegebied_2"/>
+            <xs:enumeration value="1300_actiegebied_3"/>
+            <xs:enumeration value="1300_actiegebied_4"/>
+            <xs:enumeration value="0800_actiegebied_met_beperkt_freatisch_alternatief"/>
+            <xs:enumeration value="0400_actiegebied_met_beperkt_freatisch_alternatief"/>
+            <xs:enumeration value="0800_actiegebied_met_freatisch_alternatief"/>
+            <xs:enumeration value="1100_waakgebied_Beringen"/>
+            <xs:enumeration value="1100_waakgebied_Leuven"/>
+            <xs:enumeration value="0400_actiegebied_verzilt"/>
+            <xs:enumeration value="0400_waakgebied"/>
+            <xs:enumeration value="0600_actiegebied_met_beperkt_freatisch_alternatief"/>
+            <xs:enumeration value="0600_actiegebied_met_freatisch_alternatief"/>
+            <xs:enumeration value="0600_waakgebied"/>
+            <xs:enumeration value="0800_waakgebied"/>
+            <xs:enumeration value="1000_actiegebied_1"/>
+            <xs:enumeration value="geen actie/waakgebieden"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="ActieWaakgebieden2227EnumType">
+        <xs:annotation>
+            <xs:documentation>actiewaakgebieden - versie 2022 - 2027</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="0400_actiegebied_1_met_beperkt_freatisch_alternatief"/>
+            <xs:enumeration value="0400_actiegebied_1_met_freatisch_alternatief"/>
+            <xs:enumeration value="0400_actiegebied_1_verzilt"/>
+            <xs:enumeration value="0400_actiegebied_2_met_beperkt_freatisch_alternatief"/>
+            <xs:enumeration value="0400_actiegebied_2_met_freatisch_alternatief"/>
+            <xs:enumeration value="0400_actiegebied_2_verzilt"/>
+            <xs:enumeration value="0400_waakgebied"/>
+            <xs:enumeration value="0600_actiegebied_met_beperkt_freatisch_alternatief"/>
+            <xs:enumeration value="0600_actiegebied_met_freatisch_alternatief"/>
+            <xs:enumeration value="0600_waakgebied"/>
+            <xs:enumeration value="0800_actiegebied_met_beperkt_freatisch_alternatief"/>
+            <xs:enumeration value="0800_actiegebied_met_freatisch_alternatief"/>
+            <xs:enumeration value="0800_waakgebied"/>
+            <xs:enumeration value="1000_actiegebied_1"/>
+            <xs:enumeration value="1000_actiegebied_2"/>
+            <xs:enumeration value="1000_actiegebied_3"/>
+            <xs:enumeration value="1000_waakgebied_1"/>
+            <xs:enumeration value="1000_waakgebied_2"/>
+            <xs:enumeration value="1100_waakgebied_1"/>
+            <xs:enumeration value="1300_actiegebied_1"/>
+            <xs:enumeration value="1300_actiegebied_2"/>
+            <xs:enumeration value="1300_actiegebied_3"/>
+            <xs:enumeration value="1300_waakgebied_1"/>
+            <xs:enumeration value="geen actie/waakgebieden"/>        
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="MethodeControleAquiferEnumType">
+        <xs:annotation>
+            <xs:documentation>de mogelijke waarden voor controle aquifer</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="volgens H3Dv2"/>
+            <xs:enumeration value="interpretatie o.b.v. boorbeschrijving"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="PeilbuislocatieEnumType">
+        <xs:annotation>
+            <xs:documentation>de mogelijke waarden voor de locatie van de peilbuis</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="onbekend"/>
+            <xs:enumeration value="geen peilbuis"/>
+            <xs:enumeration value="peilbuis in annulaire ruimte"/>
+            <xs:enumeration value="peilbuis in pompfilter"/>
+            <xs:enumeration value="peillat"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="PomptypeEnumType">
+        <xs:annotation>
+            <xs:documentation>de mogelijke waarden voor de locatie van de peilbuis</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="onbekend"/>
+            <xs:enumeration value="Bovengrondse zuigpomp"/>
+            <xs:enumeration value="Onderwaterpomp"/>
+            <xs:enumeration value="handpomp"/>
+            <xs:enumeration value="mobiele pomp (onderwater of bovengronds)"/>
+            <xs:enumeration value="caravanpomp"/>
+            <xs:enumeration value="peristaltische pomp"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+
+
+</xs:schema>

@@ -73,7 +73,7 @@ class TestObservatieFractiemetingSearch(AbstractTestSearch):
 
         assert round(df.iloc[0].fractiemeting_ondergrens, 2) == 0
         assert round(df.iloc[0].fractiemeting_bovengrens, 2) == 2
-        assert round(df.iloc[0].fractiemeting_waarde, 2) == 10.17
+        assert round(df.iloc[0].fractiemeting_waarde, 2) == 3.99
 
     def test_search_observatie(self, mp_wfs, mp_get_schema,
                                mp_remote_codelist,
@@ -107,4 +107,4 @@ class TestObservatieFractiemetingSearch(AbstractTestSearch):
 
         assert round(df.iloc[0].fractiemeting_ondergrens, 2) == 0
         assert round(df.iloc[0].fractiemeting_bovengrens, 2) == 2
-        assert round(df.iloc[0].fractiemeting_waarde, 2) == 10.17
+        assert round(df.iloc[0].fractiemeting_waarde, 2) == 3.99

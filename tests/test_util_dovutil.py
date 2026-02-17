@@ -134,3 +134,5 @@ class TestDovutil(object):
 
         assert request.url == \
             'https://data-oefen.bodemenondergrond.vlaanderen.be/sparql'
+
+        del os.environ[env_var]

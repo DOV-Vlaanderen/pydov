@@ -5,6 +5,7 @@ from owslib.fes2 import PropertyIsEqualTo
 from pydov.search.monster import MonsterSearch
 from pydov.search.fields import ReturnFieldList
 from pydov.types.monster import Monster, MonsterDetails, Monsterbehandeling
+from pydov.util.dovutil import build_dov_url
 from tests.abstract import AbstractTestSearch
 
 location_md_metadata = 'tests/data/types/monster/md_metadata.xml'
@@ -24,7 +25,7 @@ class TestMonsterSearch(AbstractTestSearch):
     datatype_class = Monster
 
     valid_query_single = PropertyIsEqualTo(propertyname='permkey_monster',
-                                           literal='')
+                                           literal=build_dov_url('data/monster/2022-400005'))
 
     inexistent_field = 'onbestaand'
     wfs_field = 'bemonsteringsprocedure'
@@ -109,8 +110,8 @@ class TestMonsterSearch(AbstractTestSearch):
         df = search_instance.search(
             query=self.valid_query_single)
 
-        assert df.iloc[0].datum_monstername == datetime.date(2022, 1, 19)
-        assert df.iloc[0].tijdstip_monstername == '10:00:00'
+        assert df.iloc[0].datum_monstername == datetime.date(2022, 3, 10)
+        assert df.iloc[0].tijdstip_monstername == '10:45:00'
 
     def test_search_subtype_with_customxmlfield(
             self, mp_wfs, mp_get_schema, mp_remote_describefeaturetype,
@@ -151,12 +152,12 @@ class TestMonsterSearch(AbstractTestSearch):
         assert not df_line.empty
 
         assert df_line.iloc[0].monsterbehandeling_door == (
-            'VO - Instituut voor Landbouw-, Visserij- en Voedingsonderzoek'
-            ' (ILVO)')
+            "Departement Omgeving"
+        )
 
         assert df_line.iloc[0].monsterbehandeling_behandeling == (
             'Monstervoorbereiding door')
 
         assert df_line.iloc[0].monsterbehandeling_behandeling_waarde == (
-            'VO - Instituut voor Landbouw-, Visserij- en Voedingsonderzoek'
-            ' (ILVO)')
+            "Departement Omgeving"
+        )

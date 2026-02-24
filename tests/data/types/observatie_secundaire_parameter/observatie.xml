@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns4:dov-schema xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns4="http://kern.schemas.dov.vlaanderen.be" xsi:schemaLocation="http://kern.schemas.dov.vlaanderen.be https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/dov.xsd">
+    <observatie>
+        <identificator>
+            <identificator>2019-000555</identificator>
+            <toegekend_door>DOV</toegekend_door>
+        </identificator>
+        <geobserveerd_object>
+            <objecttype>bodemdiepteinterval</objecttype>
+            <naam>2 horizont</naam>
+            <permkey>2019-003355</permkey>
+        </geobserveerd_object>
+        <parameter>ksat</parameter>
+        <parametergroep>Bodem_fysisch_vocht</parametergroep>
+        <waarde_numeriek>0.0</waarde_numeriek>
+        <eenheid>m/s</eenheid>
+        <methode>Ksat Open-end-methode</methode>
+        <resultaattijd>2015-12-10</resultaattijd>
+        <fenomeentijd>2015-12-10</fenomeentijd>
+        <betrouwbaarheid>https://data.bodemenondergrond.vlaanderen.be/id/concept/betrouwbaarheid/A</betrouwbaarheid>
+        <herkomst>VELD</herkomst>
+        <uitvoerder>
+            <organisatie>
+                <naam>Bodemkundige Dienst van België</naam>
+                <kbonummer>0420.415.024</kbonummer>
+            </organisatie>
+        </uitvoerder>
+        <secundaireparameter>
+            <parameter>temp_water</parameter>
+            <eenheid>°C</eenheid>
+            <waarde_numeriek>5.0</waarde_numeriek>
+        </secundaireparameter>
+        <secundaireparameter>
+            <parameter>temp_bodem</parameter>
+            <eenheid>°C</eenheid>
+            <waarde_numeriek>5.0</waarde_numeriek>
+        </secundaireparameter>
+        <secundaireparameter>
+            <parameter>proefvlak_diepte</parameter>
+            <eenheid>cm</eenheid>
+            <waarde_numeriek>60.0</waarde_numeriek>
+        </secundaireparameter>
+    </observatie>
+</ns4:dov-schema>

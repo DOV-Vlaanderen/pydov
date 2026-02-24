@@ -1,0 +1,2641 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://generiek.kern.schemas.dov.vlaanderen.be" targetNamespace="http://generiek.kern.schemas.dov.vlaanderen.be" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.00">
+	<xs:simpleType name="BetrouwbaarheidEnumType">
+		<xs:annotation>
+			<xs:documentation>lijst van betrouwbaarheden</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="goed"/>
+			<xs:enumeration value="onbekend"/>
+			<xs:enumeration value="twijfelachtig"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BetrouwbaarheidXyzEnumType">
+		<xs:annotation>
+			<xs:documentation>lijst van betrouwbaarheden, specifiek voor x, y en z coordinaten</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="goed"/>
+			<xs:enumeration value="onbekend"/>
+			<xs:enumeration value="twijfelachtig"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ReferentiepuntHoogtebepalingEnumType">
+		<xs:annotation>
+			<xs:documentation>Verduidelijking van het type referentiepunt dat voor dit object wordt gehanteerd. Het referentiepunt is het punt ten opzichte waarvan de dieptes van het object worden uitgedrukt.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Maaiveld"/>
+			<xs:enumeration value="Ontsluitingswand"/>
+			<xs:enumeration value="Ophoging (o.a. dijk)"/>
+			<xs:enumeration value="Basisvlak uitgraving (o.a. bouwput, groeve)"/>
+			<xs:enumeration value="Platform (o.a. platform, hefeiland, monopile, ponton, plaat)"/>
+			<xs:enumeration value="Waterbodem (bodempeil)"/>
+		</xs:restriction>
+	</xs:simpleType>
+    
+    
+	<xs:simpleType name="JNOEnumType">
+        <xs:annotation>
+            <xs:documentation>lijst van betrouwbaarheden, specifiek voor x, y en z coordinaten</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="J">
+                <xs:annotation>
+                    <xs:documentation>ja</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="N">
+                <xs:annotation>
+                    <xs:documentation>nee</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="O">
+                <xs:annotation>
+                    <xs:documentation>onbekend</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+	<xs:simpleType name="MethodeOpmetenXyEnumType">
+		<xs:annotation>
+			<xs:documentation>lijst van methodes voor het opmeten van de x en y coordinaten</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="gedigitaliseerd in Google Earth"/>
+			<xs:enumeration value="gedigitaliseerd op GRB"/>
+			<xs:enumeration value="gedigitaliseerd op kadasterplan"/>
+			<xs:enumeration value="gedigitaliseerd op orthofoto"/>
+			<xs:enumeration value="gedigitaliseerd op topokaart"/>
+			<xs:enumeration value="GPS - RTK FLEPOS (nk 2-3cm)"/>
+			<xs:enumeration value="GPS (nk 10m)"/>
+			<xs:enumeration value="GPS statische fasemeting (nk 0,5cm)"/>
+			<xs:enumeration value="methode onbekend"/>
+			<xs:enumeration value="topografisch ingemeten"/>
+			<xs:enumeration value="totaalstation"/>
+			<xs:enumeration value="uit dossier"/>
+			<xs:enumeration value="gedigitaliseerd op POPP-kaart"/>
+			<xs:enumeration value="getransformeerde coördinaten uit dossier"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MethodeOpmetenZEnumType">
+		<xs:annotation>
+			<xs:documentation>lijst van methodes voor het opmeten van de z coordinaten</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="afgeleid van topokaart"/>
+			<xs:enumeration value="berekend op basis van hoogteverschil met maaiveld"/>
+			<xs:enumeration value="DHM_v1 100m*100m"/>
+			<xs:enumeration value="DHM_v1 25m*25m"/>
+			<xs:enumeration value="DHM_v1 5m*5m"/>
+			<xs:enumeration value="DHM_v2"/>
+			<xs:enumeration value="gedigitaliseerd in Google Earth"/>
+			<xs:enumeration value="GPS - RTK FLEPOS"/>
+			<xs:enumeration value="GPS - RTK FLEPOS (model hBG03)"/>
+			<xs:enumeration value="GPS - RTK FLEPOS (model hBG18)"/>
+			<xs:enumeration value="GPS"/>
+			<xs:enumeration value="GPS statische fasemeting"/>
+			<xs:enumeration value="methode onbekend"/>
+			<xs:enumeration value="topografisch ingemeten"/>
+			<xs:enumeration value="totaalstation"/>
+			<xs:enumeration value="uit dossier"/>
+			<xs:enumeration value="niet te achterhalen"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NiscodeEnumType">
+		<xs:annotation>
+			<xs:documentation>lijst van alle niscodes van de gemeentes (Vlaanderen en Brussel)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="0">
+				<xs:annotation>
+					<xs:documentation>Onbekend</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>Buiten Vlaanderen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11001">
+				<xs:annotation>
+					<xs:documentation>Aartselaar</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11002">
+				<xs:annotation>
+					<xs:documentation>Antwerpen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11004">
+				<xs:annotation>
+					<xs:documentation>Boechout</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11005">
+				<xs:annotation>
+					<xs:documentation>Boom</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11007">
+				<xs:annotation>
+					<xs:documentation>Borsbeek</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11008">
+				<xs:annotation>
+					<xs:documentation>Brasschaat</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11009">
+				<xs:annotation>
+					<xs:documentation>Brecht</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11013">
+				<xs:annotation>
+					<xs:documentation>Edegem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11016">
+				<xs:annotation>
+					<xs:documentation>Essen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11018">
+				<xs:annotation>
+					<xs:documentation>Hemiksem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11021">
+				<xs:annotation>
+					<xs:documentation>Hove</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11022">
+				<xs:annotation>
+					<xs:documentation>Kalmthout</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11023">
+				<xs:annotation>
+					<xs:documentation>Kapellen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11024">
+				<xs:annotation>
+					<xs:documentation>Kontich</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11025">
+				<xs:annotation>
+					<xs:documentation>Lint</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11029">
+				<xs:annotation>
+					<xs:documentation>Mortsel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11030">
+				<xs:annotation>
+					<xs:documentation>Niel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11035">
+				<xs:annotation>
+					<xs:documentation>Ranst</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11037">
+				<xs:annotation>
+					<xs:documentation>Rumst</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11038">
+				<xs:annotation>
+					<xs:documentation>Schelle</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11039">
+				<xs:annotation>
+					<xs:documentation>Schilde</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11040">
+				<xs:annotation>
+					<xs:documentation>Schoten</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11044">
+				<xs:annotation>
+					<xs:documentation>Stabroek</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11050">
+				<xs:annotation>
+					<xs:documentation>Wijnegem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11052">
+				<xs:annotation>
+					<xs:documentation>Wommelgem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11053">
+				<xs:annotation>
+					<xs:documentation>Wuustwezel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11054">
+				<xs:annotation>
+					<xs:documentation>Zandhoven</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11055">
+				<xs:annotation>
+					<xs:documentation>Zoersel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11056">
+				<xs:annotation>
+					<xs:documentation>Zwijndrecht</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11057">
+				<xs:annotation>
+					<xs:documentation>Malle</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="12002">
+				<xs:annotation>
+					<xs:documentation>Berlaar</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="12005">
+				<xs:annotation>
+					<xs:documentation>Bonheiden</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="12007">
+				<xs:annotation>
+					<xs:documentation>Bornem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="12009">
+				<xs:annotation>
+					<xs:documentation>Duffel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="12014">
+				<xs:annotation>
+					<xs:documentation>Heist-op-den-Berg</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="12021">
+				<xs:annotation>
+					<xs:documentation>Lier</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="12025">
+				<xs:annotation>
+					<xs:documentation>Mechelen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="12026">
+				<xs:annotation>
+					<xs:documentation>Nijlen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="12029">
+				<xs:annotation>
+					<xs:documentation>Putte</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="12030">
+				<xs:annotation>
+					<xs:documentation>Puurs</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="12034">
+				<xs:annotation>
+					<xs:documentation>Sint-Amands</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="12035">
+				<xs:annotation>
+					<xs:documentation>Sint-Katelijne-Waver</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="12040">
+				<xs:annotation>
+					<xs:documentation>Willebroek</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="12041">
+				<xs:annotation>
+					<xs:documentation>Puurs-Sint-Amands (fusie Puurs en Sint-Amands)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13001">
+				<xs:annotation>
+					<xs:documentation>Arendonk</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13002">
+				<xs:annotation>
+					<xs:documentation>Baarle-Hertog</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13003">
+				<xs:annotation>
+					<xs:documentation>Balen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13004">
+				<xs:annotation>
+					<xs:documentation>Beerse</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13006">
+				<xs:annotation>
+					<xs:documentation>Dessel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13008">
+				<xs:annotation>
+					<xs:documentation>Geel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13010">
+				<xs:annotation>
+					<xs:documentation>Grobbendonk</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13011">
+				<xs:annotation>
+					<xs:documentation>Herentals</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13012">
+				<xs:annotation>
+					<xs:documentation>Herenthout</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13013">
+				<xs:annotation>
+					<xs:documentation>Herselt</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13014">
+				<xs:annotation>
+					<xs:documentation>Hoogstraten</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13016">
+				<xs:annotation>
+					<xs:documentation>Hulshout</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13017">
+				<xs:annotation>
+					<xs:documentation>Kasterlee</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13019">
+				<xs:annotation>
+					<xs:documentation>Lille</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13021">
+				<xs:annotation>
+					<xs:documentation>Meerhout</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13023">
+				<xs:annotation>
+					<xs:documentation>Merksplas</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13025">
+				<xs:annotation>
+					<xs:documentation>Mol</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13029">
+				<xs:annotation>
+					<xs:documentation>Olen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13031">
+				<xs:annotation>
+					<xs:documentation>Oud-Turnhout</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13035">
+				<xs:annotation>
+					<xs:documentation>Ravels</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13036">
+				<xs:annotation>
+					<xs:documentation>Retie</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13037">
+				<xs:annotation>
+					<xs:documentation>Rijkevorsel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13040">
+				<xs:annotation>
+					<xs:documentation>Turnhout</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13044">
+				<xs:annotation>
+					<xs:documentation>Vorselaar</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13046">
+				<xs:annotation>
+					<xs:documentation>Vosselaar</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13049">
+				<xs:annotation>
+					<xs:documentation>Westerlo</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13053">
+				<xs:annotation>
+					<xs:documentation>Laakdal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="21001">
+				<xs:annotation>
+					<xs:documentation>Anderlecht</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="21002">
+				<xs:annotation>
+					<xs:documentation>Oudergem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="21003">
+				<xs:annotation>
+					<xs:documentation>Sint-Agatha-Berchem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="21004">
+				<xs:annotation>
+					<xs:documentation>Brussel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="21005">
+				<xs:annotation>
+					<xs:documentation>Etterbeek</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="21006">
+				<xs:annotation>
+					<xs:documentation>Evere</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="21007">
+				<xs:annotation>
+					<xs:documentation>Vorst</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="21008">
+				<xs:annotation>
+					<xs:documentation>Ganshoren</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="21009">
+				<xs:annotation>
+					<xs:documentation>Elsene</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="21010">
+				<xs:annotation>
+					<xs:documentation>Jette</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="21011">
+				<xs:annotation>
+					<xs:documentation>Koekelberg</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="21012">
+				<xs:annotation>
+					<xs:documentation>Sint-Jans-Molenbeek</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="21013">
+				<xs:annotation>
+					<xs:documentation>Sint-Gillis</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="21014">
+				<xs:annotation>
+					<xs:documentation>Sint-Joost-ten-Node</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="21015">
+				<xs:annotation>
+					<xs:documentation>Schaarbeek</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="21016">
+				<xs:annotation>
+					<xs:documentation>Ukkel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="21017">
+				<xs:annotation>
+					<xs:documentation>Watermaal-Bosvoorde</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="21018">
+				<xs:annotation>
+					<xs:documentation>Sint-Lambrechts-Woluwe</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="21019">
+				<xs:annotation>
+					<xs:documentation>Sint-Pieters-Woluwe</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="23002">
+				<xs:annotation>
+					<xs:documentation>Asse</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="23003">
+				<xs:annotation>
+					<xs:documentation>Beersel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="23009">
+				<xs:annotation>
+					<xs:documentation>Bever</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="23016">
+				<xs:annotation>
+					<xs:documentation>Dilbeek</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="23023">
+				<xs:annotation>
+					<xs:documentation>Galmaarden</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="23024">
+				<xs:annotation>
+					<xs:documentation>Gooik</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="23025">
+				<xs:annotation>
+					<xs:documentation>Grimbergen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="23027">
+				<xs:annotation>
+					<xs:documentation>Halle</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="23032">
+				<xs:annotation>
+					<xs:documentation>Herne</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="23033">
+				<xs:annotation>
+					<xs:documentation>Hoeilaart</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="23038">
+				<xs:annotation>
+					<xs:documentation>Kampenhout</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="23039">
+				<xs:annotation>
+					<xs:documentation>Kapelle-op-den-Bos</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="23044">
+				<xs:annotation>
+					<xs:documentation>Liedekerke</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="23045">
+				<xs:annotation>
+					<xs:documentation>Londerzeel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="23047">
+				<xs:annotation>
+					<xs:documentation>Machelen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="23050">
+				<xs:annotation>
+					<xs:documentation>Meise</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="23052">
+				<xs:annotation>
+					<xs:documentation>Merchtem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="23060">
+				<xs:annotation>
+					<xs:documentation>Opwijk</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="23062">
+				<xs:annotation>
+					<xs:documentation>Overijse</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="23064">
+				<xs:annotation>
+					<xs:documentation>Pepingen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="23077">
+				<xs:annotation>
+					<xs:documentation>Sint-Pieters-Leeuw</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="23081">
+				<xs:annotation>
+					<xs:documentation>Steenokkerzeel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="23086">
+				<xs:annotation>
+					<xs:documentation>Ternat</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="23088">
+				<xs:annotation>
+					<xs:documentation>Vilvoorde</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="23094">
+				<xs:annotation>
+					<xs:documentation>Zaventem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="23096">
+				<xs:annotation>
+					<xs:documentation>Zemst</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="23097">
+				<xs:annotation>
+					<xs:documentation>Roosdaal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="23098">
+				<xs:annotation>
+					<xs:documentation>Drogenbos</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="23099">
+				<xs:annotation>
+					<xs:documentation>Kraainem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="23100">
+				<xs:annotation>
+					<xs:documentation>Linkebeek</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="23101">
+				<xs:annotation>
+					<xs:documentation>Sint-Genesius-Rode</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="23102">
+				<xs:annotation>
+					<xs:documentation>Wemmel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="23103">
+				<xs:annotation>
+					<xs:documentation>Wezembeek-Oppem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="23104">
+				<xs:annotation>
+					<xs:documentation>Lennik</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="23105">
+				<xs:annotation>
+					<xs:documentation>Affligem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="24001">
+				<xs:annotation>
+					<xs:documentation>Aarschot</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="24007">
+				<xs:annotation>
+					<xs:documentation>Begijnendijk</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="24008">
+				<xs:annotation>
+					<xs:documentation>Bekkevoort</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="24009">
+				<xs:annotation>
+					<xs:documentation>Bertem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="24011">
+				<xs:annotation>
+					<xs:documentation>Bierbeek</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="24014">
+				<xs:annotation>
+					<xs:documentation>Boortmeerbeek</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="24016">
+				<xs:annotation>
+					<xs:documentation>Boutersem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="24020">
+				<xs:annotation>
+					<xs:documentation>Diest</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="24028">
+				<xs:annotation>
+					<xs:documentation>Geetbets</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="24033">
+				<xs:annotation>
+					<xs:documentation>Haacht</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="24038">
+				<xs:annotation>
+					<xs:documentation>Herent</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="24041">
+				<xs:annotation>
+					<xs:documentation>Hoegaarden</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="24043">
+				<xs:annotation>
+					<xs:documentation>Holsbeek</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="24045">
+				<xs:annotation>
+					<xs:documentation>Huldenberg</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="24048">
+				<xs:annotation>
+					<xs:documentation>Keerbergen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="24054">
+				<xs:annotation>
+					<xs:documentation>Kortenaken</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="24055">
+				<xs:annotation>
+					<xs:documentation>Kortenberg</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="24059">
+				<xs:annotation>
+					<xs:documentation>Landen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="24062">
+				<xs:annotation>
+					<xs:documentation>Leuven</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="24066">
+				<xs:annotation>
+					<xs:documentation>Lubbeek</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="24086">
+				<xs:annotation>
+					<xs:documentation>Oud-Heverlee</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="24094">
+				<xs:annotation>
+					<xs:documentation>Rotselaar</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="24104">
+				<xs:annotation>
+					<xs:documentation>Tervuren</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="24107">
+				<xs:annotation>
+					<xs:documentation>Tienen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="24109">
+				<xs:annotation>
+					<xs:documentation>Tremelo</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="24130">
+				<xs:annotation>
+					<xs:documentation>Zoutleeuw</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="24133">
+				<xs:annotation>
+					<xs:documentation>Linter</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="24134">
+				<xs:annotation>
+					<xs:documentation>Scherpenheuvel-Zichem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="24135">
+				<xs:annotation>
+					<xs:documentation>Tielt-Winge</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="24137">
+				<xs:annotation>
+					<xs:documentation>Glabbeek</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="31003">
+				<xs:annotation>
+					<xs:documentation>Beernem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="31004">
+				<xs:annotation>
+					<xs:documentation>Blankenberge</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="31005">
+				<xs:annotation>
+					<xs:documentation>Brugge</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="31006">
+				<xs:annotation>
+					<xs:documentation>Damme</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="31012">
+				<xs:annotation>
+					<xs:documentation>Jabbeke</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="31022">
+				<xs:annotation>
+					<xs:documentation>Oostkamp</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="31033">
+				<xs:annotation>
+					<xs:documentation>Torhout</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="31040">
+				<xs:annotation>
+					<xs:documentation>Zedelgem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="31042">
+				<xs:annotation>
+					<xs:documentation>Zuienkerke</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="31043">
+				<xs:annotation>
+					<xs:documentation>Knokke-Heist</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="32003">
+				<xs:annotation>
+					<xs:documentation>Diksmuide</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="32006">
+				<xs:annotation>
+					<xs:documentation>Houthulst</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="32010">
+				<xs:annotation>
+					<xs:documentation>Koekelare</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="32011">
+				<xs:annotation>
+					<xs:documentation>Kortemark</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="32030">
+				<xs:annotation>
+					<xs:documentation>Lo-Reninge</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="33011">
+				<xs:annotation>
+					<xs:documentation>Ieper</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="33016">
+				<xs:annotation>
+					<xs:documentation>Mesen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="33021">
+				<xs:annotation>
+					<xs:documentation>Poperinge</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="33029">
+				<xs:annotation>
+					<xs:documentation>Wervik</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="33037">
+				<xs:annotation>
+					<xs:documentation>Zonnebeke</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="33039">
+				<xs:annotation>
+					<xs:documentation>Heuvelland</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="33040">
+				<xs:annotation>
+					<xs:documentation>Langemark-Poelkapelle</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="33041">
+				<xs:annotation>
+					<xs:documentation>Vleteren</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="34002">
+				<xs:annotation>
+					<xs:documentation>Anzegem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="34003">
+				<xs:annotation>
+					<xs:documentation>Avelgem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="34009">
+				<xs:annotation>
+					<xs:documentation>Deerlijk</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="34013">
+				<xs:annotation>
+					<xs:documentation>Harelbeke</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="34022">
+				<xs:annotation>
+					<xs:documentation>Kortrijk</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="34023">
+				<xs:annotation>
+					<xs:documentation>Kuurne</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="34025">
+				<xs:annotation>
+					<xs:documentation>Lendelede</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="34027">
+				<xs:annotation>
+					<xs:documentation>Menen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="34040">
+				<xs:annotation>
+					<xs:documentation>Waregem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="34041">
+				<xs:annotation>
+					<xs:documentation>Wevelgem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="34042">
+				<xs:annotation>
+					<xs:documentation>Zwevegem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="34043">
+				<xs:annotation>
+					<xs:documentation>Spiere-Helkijn</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="35002">
+				<xs:annotation>
+					<xs:documentation>Bredene</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="35005">
+				<xs:annotation>
+					<xs:documentation>Gistel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="35006">
+				<xs:annotation>
+					<xs:documentation>Ichtegem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="35011">
+				<xs:annotation>
+					<xs:documentation>Middelkerke</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="35013">
+				<xs:annotation>
+					<xs:documentation>Oostende</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="35014">
+				<xs:annotation>
+					<xs:documentation>Oudenburg</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="35029">
+				<xs:annotation>
+					<xs:documentation>De Haan</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="36006">
+				<xs:annotation>
+					<xs:documentation>Hooglede</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="36007">
+				<xs:annotation>
+					<xs:documentation>Ingelmunster</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="36008">
+				<xs:annotation>
+					<xs:documentation>Izegem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="36010">
+				<xs:annotation>
+					<xs:documentation>Ledegem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="36011">
+				<xs:annotation>
+					<xs:documentation>Lichtervelde</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="36012">
+				<xs:annotation>
+					<xs:documentation>Moorslede</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="36015">
+				<xs:annotation>
+					<xs:documentation>Roeselare</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="36019">
+				<xs:annotation>
+					<xs:documentation>Staden</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="37002">
+				<xs:annotation>
+					<xs:documentation>Dentergem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="37007">
+				<xs:annotation>
+					<xs:documentation>Meulebeke</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="37010">
+				<xs:annotation>
+					<xs:documentation>Oostrozebeke</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="37011">
+				<xs:annotation>
+					<xs:documentation>Pittem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="37012">
+				<xs:annotation>
+					<xs:documentation>Ruiselede</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="37015">
+				<xs:annotation>
+					<xs:documentation>Tielt</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="37017">
+				<xs:annotation>
+					<xs:documentation>Wielsbeke</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="37018">
+				<xs:annotation>
+					<xs:documentation>Wingene</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="37020">
+				<xs:annotation>
+					<xs:documentation>Ardooie</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="38002">
+				<xs:annotation>
+					<xs:documentation>Alveringem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="38008">
+				<xs:annotation>
+					<xs:documentation>De Panne</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="38014">
+				<xs:annotation>
+					<xs:documentation>Koksijde</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="38016">
+				<xs:annotation>
+					<xs:documentation>Nieuwpoort</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="38025">
+				<xs:annotation>
+					<xs:documentation>Veurne</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="41002">
+				<xs:annotation>
+					<xs:documentation>Aalst</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="41011">
+				<xs:annotation>
+					<xs:documentation>Denderleeuw</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="41018">
+				<xs:annotation>
+					<xs:documentation>Geraardsbergen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="41024">
+				<xs:annotation>
+					<xs:documentation>Haaltert</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="41027">
+				<xs:annotation>
+					<xs:documentation>Herzele</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="41034">
+				<xs:annotation>
+					<xs:documentation>Lede</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="41048">
+				<xs:annotation>
+					<xs:documentation>Ninove</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="41063">
+				<xs:annotation>
+					<xs:documentation>Sint-Lievens-Houtem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="41081">
+				<xs:annotation>
+					<xs:documentation>Zottegem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="41082">
+				<xs:annotation>
+					<xs:documentation>Erpe-Mere</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="42003">
+				<xs:annotation>
+					<xs:documentation>Berlare</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="42004">
+				<xs:annotation>
+					<xs:documentation>Buggenhout</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="42006">
+				<xs:annotation>
+					<xs:documentation>Dendermonde</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="42008">
+				<xs:annotation>
+					<xs:documentation>Hamme</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="42010">
+				<xs:annotation>
+					<xs:documentation>Laarne</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="42011">
+				<xs:annotation>
+					<xs:documentation>Lebbeke</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="42023">
+				<xs:annotation>
+					<xs:documentation>Waasmunster</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="42025">
+				<xs:annotation>
+					<xs:documentation>Wetteren</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="42026">
+				<xs:annotation>
+					<xs:documentation>Wichelen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="42028">
+				<xs:annotation>
+					<xs:documentation>Zele</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="43002">
+				<xs:annotation>
+					<xs:documentation>Assenede</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="43005">
+				<xs:annotation>
+					<xs:documentation>Eeklo</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="43007">
+				<xs:annotation>
+					<xs:documentation>Kaprijke</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="43010">
+				<xs:annotation>
+					<xs:documentation>Maldegem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="43014">
+				<xs:annotation>
+					<xs:documentation>Sint-Laureins</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="43018">
+				<xs:annotation>
+					<xs:documentation>Zelzate</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="44001">
+				<xs:annotation>
+					<xs:documentation>Aalter</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="44011">
+				<xs:annotation>
+					<xs:documentation>Deinze</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="44012">
+				<xs:annotation>
+					<xs:documentation>De Pinte</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="44013">
+				<xs:annotation>
+					<xs:documentation>Destelbergen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="44019">
+				<xs:annotation>
+					<xs:documentation>Evergem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="44020">
+				<xs:annotation>
+					<xs:documentation>Gavere</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="44021">
+				<xs:annotation>
+					<xs:documentation>Gent</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="44029">
+				<xs:annotation>
+					<xs:documentation>Knesselare</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="44034">
+				<xs:annotation>
+					<xs:documentation>Lochristi</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="44036">
+				<xs:annotation>
+					<xs:documentation>Lovendegem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="44040">
+				<xs:annotation>
+					<xs:documentation>Melle</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="44043">
+				<xs:annotation>
+					<xs:documentation>Merelbeke</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="44045">
+				<xs:annotation>
+					<xs:documentation>Moerbeke</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="44048">
+				<xs:annotation>
+					<xs:documentation>Nazareth</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="44049">
+				<xs:annotation>
+					<xs:documentation>Nevele</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="44052">
+				<xs:annotation>
+					<xs:documentation>Oosterzele</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="44064">
+				<xs:annotation>
+					<xs:documentation>Sint-Martens-Latem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="44072">
+				<xs:annotation>
+					<xs:documentation>Waarschoot</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="44073">
+				<xs:annotation>
+					<xs:documentation>Wachtebeke</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="44080">
+				<xs:annotation>
+					<xs:documentation>Zomergem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="44081">
+				<xs:annotation>
+					<xs:documentation>Zulte</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="44083">
+				<xs:annotation>
+					<xs:documentation>Deinze (fusie Deinze en Nevele)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="44084">
+				<xs:annotation>
+					<xs:documentation>Aalter (fusie Aalter en Knesselare)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="44085">
+				<xs:annotation>
+					<xs:documentation>Lievegem (fusie Waarschoot, Lovendegem en Zomergem)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="45017">
+				<xs:annotation>
+					<xs:documentation>Kruishoutem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="45035">
+				<xs:annotation>
+					<xs:documentation>Oudenaarde</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="45041">
+				<xs:annotation>
+					<xs:documentation>Ronse</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="45057">
+				<xs:annotation>
+					<xs:documentation>Zingem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="45059">
+				<xs:annotation>
+					<xs:documentation>Brakel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="45060">
+				<xs:annotation>
+					<xs:documentation>Kluisbergen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="45061">
+				<xs:annotation>
+					<xs:documentation>Wortegem-Petegem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="45062">
+				<xs:annotation>
+					<xs:documentation>Horebeke</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="45063">
+				<xs:annotation>
+					<xs:documentation>Lierde</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="45064">
+				<xs:annotation>
+					<xs:documentation>Maarkedal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="45065">
+				<xs:annotation>
+					<xs:documentation>Zwalm</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="45068">
+				<xs:annotation>
+					<xs:documentation>Kruisem (fusie Kruishoutem en Zingem)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="46003">
+				<xs:annotation>
+					<xs:documentation>Beveren</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="46013">
+				<xs:annotation>
+					<xs:documentation>Kruibeke</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="46014">
+				<xs:annotation>
+					<xs:documentation>Lokeren</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="46020">
+				<xs:annotation>
+					<xs:documentation>Sint-Gillis-Waas</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="46021">
+				<xs:annotation>
+					<xs:documentation>Sint-Niklaas</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="46024">
+				<xs:annotation>
+					<xs:documentation>Stekene</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="46025">
+				<xs:annotation>
+					<xs:documentation>Temse</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="71002">
+				<xs:annotation>
+					<xs:documentation>As</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="71004">
+				<xs:annotation>
+					<xs:documentation>Beringen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="71011">
+				<xs:annotation>
+					<xs:documentation>Diepenbeek</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="71016">
+				<xs:annotation>
+					<xs:documentation>Genk</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="71017">
+				<xs:annotation>
+					<xs:documentation>Gingelom</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="71020">
+				<xs:annotation>
+					<xs:documentation>Halen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="71022">
+				<xs:annotation>
+					<xs:documentation>Hasselt</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="71024">
+				<xs:annotation>
+					<xs:documentation>Herk-de-Stad</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="71034">
+				<xs:annotation>
+					<xs:documentation>Leopoldsburg</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="71037">
+				<xs:annotation>
+					<xs:documentation>Lummen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="71045">
+				<xs:annotation>
+					<xs:documentation>Nieuwerkerken</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="71047">
+				<xs:annotation>
+					<xs:documentation>Opglabbeek</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="71053">
+				<xs:annotation>
+					<xs:documentation>Sint-Truiden</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="71057">
+				<xs:annotation>
+					<xs:documentation>Tessenderlo</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="71066">
+				<xs:annotation>
+					<xs:documentation>Zonhoven</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="71067">
+				<xs:annotation>
+					<xs:documentation>Zutendaal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="71069">
+				<xs:annotation>
+					<xs:documentation>Ham</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="71070">
+				<xs:annotation>
+					<xs:documentation>Heusden-Zolder</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="72003">
+				<xs:annotation>
+					<xs:documentation>Bocholt</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="72004">
+				<xs:annotation>
+					<xs:documentation>Bree</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="72018">
+				<xs:annotation>
+					<xs:documentation>Kinrooi</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="72020">
+				<xs:annotation>
+					<xs:documentation>Lommel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="72021">
+				<xs:annotation>
+					<xs:documentation>Maaseik</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="72025">
+				<xs:annotation>
+					<xs:documentation>Neerpelt</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="72029">
+				<xs:annotation>
+					<xs:documentation>Overpelt</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="72030">
+				<xs:annotation>
+					<xs:documentation>Peer</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="72037">
+				<xs:annotation>
+					<xs:documentation>Hamont-Achel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="72038">
+				<xs:annotation>
+					<xs:documentation>Hechtel-Eksel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="72039">
+				<xs:annotation>
+					<xs:documentation>Houthalen-Helchteren</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="72040">
+				<xs:annotation>
+					<xs:documentation>Meeuwen-Gruitrode</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="72041">
+				<xs:annotation>
+					<xs:documentation>Dilsen-Stokkem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="72042">
+				<xs:annotation>
+					<xs:documentation>Oudsbergen (fusie Meeuwen-Gruitrode en Opglabbeek)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="72043">
+				<xs:annotation>
+					<xs:documentation>Pelt (fusie Neerpelt en Overpelt)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="73001">
+				<xs:annotation>
+					<xs:documentation>Alken</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="73006">
+				<xs:annotation>
+					<xs:documentation>Bilzen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="73009">
+				<xs:annotation>
+					<xs:documentation>Borgloon</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="73022">
+				<xs:annotation>
+					<xs:documentation>Heers</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="73028">
+				<xs:annotation>
+					<xs:documentation>Herstappe</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="73032">
+				<xs:annotation>
+					<xs:documentation>Hoeselt</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="73040">
+				<xs:annotation>
+					<xs:documentation>Kortessem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="73042">
+				<xs:annotation>
+					<xs:documentation>Lanaken</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="73066">
+				<xs:annotation>
+					<xs:documentation>Riemst</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="73083">
+				<xs:annotation>
+					<xs:documentation>Tongeren</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="73098">
+				<xs:annotation>
+					<xs:documentation>Wellen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="73107">
+				<xs:annotation>
+					<xs:documentation>Maasmechelen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="73109">
+				<xs:annotation>
+					<xs:documentation>Voeren</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+
+            <!-- Vanaf 01/01/2025 -->
+			<xs:enumeration value="23106">
+				<xs:annotation>
+					<xs:documentation>Pajottegem</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="37021">
+				<xs:annotation>
+					<xs:documentation>Wingene</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="37022">
+				<xs:annotation>
+					<xs:documentation>Tielt</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="44086">
+				<xs:annotation>
+					<xs:documentation>Nazareth-De Pinte</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="44087">
+				<xs:annotation>
+					<xs:documentation>Lochristi</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="46029">
+				<xs:annotation>
+					<xs:documentation>Lokeren</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="44088">
+				<xs:annotation>
+					<xs:documentation>Merelbeke-Melle</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="46030">
+				<xs:annotation>
+					<xs:documentation>Beveren-Kruibeke-Zwijndrecht</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="73110">
+				<xs:annotation>
+					<xs:documentation>Bilzen-Hoeselt</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="73111">
+				<xs:annotation>
+					<xs:documentation>Tongeren-Borgloon</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="71071">
+				<xs:annotation>
+					<xs:documentation>Tessenderlo-Ham</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="71072">
+				<xs:annotation>
+					<xs:documentation>Hasselt</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+            
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="VlaamseHoofdgemeenteNISCodeType">
+		<xs:annotation>
+			<xs:documentation>Een NIS-code van een Vlaamse Hoofdgemeente</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="11001"/>
+			<xs:enumeration value="11002"/>
+			<xs:enumeration value="11004"/>
+			<xs:enumeration value="11005"/>
+			<xs:enumeration value="11007"/>
+			<xs:enumeration value="11008"/>
+			<xs:enumeration value="11009"/>
+			<xs:enumeration value="11013"/>
+			<xs:enumeration value="11016"/>
+			<xs:enumeration value="11018"/>
+			<xs:enumeration value="11021"/>
+			<xs:enumeration value="11022"/>
+			<xs:enumeration value="11023"/>
+			<xs:enumeration value="11024"/>
+			<xs:enumeration value="11025"/>
+			<xs:enumeration value="11029"/>
+			<xs:enumeration value="11030"/>
+			<xs:enumeration value="11035"/>
+			<xs:enumeration value="11037"/>
+			<xs:enumeration value="11038"/>
+			<xs:enumeration value="11039"/>
+			<xs:enumeration value="11040"/>
+			<xs:enumeration value="11044"/>
+			<xs:enumeration value="11050"/>
+			<xs:enumeration value="11052"/>
+			<xs:enumeration value="11053"/>
+			<xs:enumeration value="11054"/>
+			<xs:enumeration value="11055"/>
+			<xs:enumeration value="11056"/>
+			<xs:enumeration value="11057"/>
+			<xs:enumeration value="12002"/>
+			<xs:enumeration value="12005"/>
+			<xs:enumeration value="12007"/>
+			<xs:enumeration value="12009"/>
+			<xs:enumeration value="12014"/>
+			<xs:enumeration value="12021"/>
+			<xs:enumeration value="12025"/>
+			<xs:enumeration value="12026"/>
+			<xs:enumeration value="12029"/>
+			<xs:enumeration value="12030"/>
+			<xs:enumeration value="12034"/>
+			<xs:enumeration value="12035"/>
+			<xs:enumeration value="12040"/>
+			<xs:enumeration value="12041"/>
+			<xs:enumeration value="13001"/>
+			<xs:enumeration value="13002"/>
+			<xs:enumeration value="13003"/>
+			<xs:enumeration value="13004"/>
+			<xs:enumeration value="13006"/>
+			<xs:enumeration value="13008"/>
+			<xs:enumeration value="13010"/>
+			<xs:enumeration value="13011"/>
+			<xs:enumeration value="13012"/>
+			<xs:enumeration value="13013"/>
+			<xs:enumeration value="13014"/>
+			<xs:enumeration value="13016"/>
+			<xs:enumeration value="13017"/>
+			<xs:enumeration value="13019"/>
+			<xs:enumeration value="13021"/>
+			<xs:enumeration value="13023"/>
+			<xs:enumeration value="13025"/>
+			<xs:enumeration value="13029"/>
+			<xs:enumeration value="13031"/>
+			<xs:enumeration value="13035"/>
+			<xs:enumeration value="13036"/>
+			<xs:enumeration value="13037"/>
+			<xs:enumeration value="13040"/>
+			<xs:enumeration value="13044"/>
+			<xs:enumeration value="13046"/>
+			<xs:enumeration value="13049"/>
+			<xs:enumeration value="13053"/>
+			<xs:enumeration value="23002"/>
+			<xs:enumeration value="23003"/>
+			<xs:enumeration value="23009"/>
+			<xs:enumeration value="23016"/>
+			<xs:enumeration value="23023"/>
+			<xs:enumeration value="23024"/>
+			<xs:enumeration value="23025"/>
+			<xs:enumeration value="23027"/>
+			<xs:enumeration value="23032"/>
+			<xs:enumeration value="23033"/>
+			<xs:enumeration value="23038"/>
+			<xs:enumeration value="23039"/>
+			<xs:enumeration value="23045"/>
+			<xs:enumeration value="23047"/>
+			<xs:enumeration value="23050"/>
+			<xs:enumeration value="23052"/>
+			<xs:enumeration value="23060"/>
+			<xs:enumeration value="23062"/>
+			<xs:enumeration value="23064"/>
+			<xs:enumeration value="23081"/>
+			<xs:enumeration value="23086"/>
+			<xs:enumeration value="23088"/>
+			<xs:enumeration value="23094"/>
+			<xs:enumeration value="23096"/>
+			<xs:enumeration value="23097"/>
+			<xs:enumeration value="23098"/>
+			<xs:enumeration value="23099"/>
+			<xs:enumeration value="23100"/>
+			<xs:enumeration value="23101"/>
+			<xs:enumeration value="23102"/>
+			<xs:enumeration value="23103"/>
+			<xs:enumeration value="23104"/>
+			<xs:enumeration value="23105"/>
+			<xs:enumeration value="24001"/>
+			<xs:enumeration value="24007"/>
+			<xs:enumeration value="24008"/>
+			<xs:enumeration value="24009"/>
+			<xs:enumeration value="24011"/>
+			<xs:enumeration value="24014"/>
+			<xs:enumeration value="24016"/>
+			<xs:enumeration value="24020"/>
+			<xs:enumeration value="24028"/>
+			<xs:enumeration value="24033"/>
+			<xs:enumeration value="24038"/>
+			<xs:enumeration value="24041"/>
+			<xs:enumeration value="24043"/>
+			<xs:enumeration value="24045"/>
+			<xs:enumeration value="24048"/>
+			<xs:enumeration value="24054"/>
+			<xs:enumeration value="24055"/>
+			<xs:enumeration value="24059"/>
+			<xs:enumeration value="24062"/>
+			<xs:enumeration value="24066"/>
+			<xs:enumeration value="24086"/>
+			<xs:enumeration value="24094"/>
+			<xs:enumeration value="24104"/>
+			<xs:enumeration value="24107"/>
+			<xs:enumeration value="24109"/>
+			<xs:enumeration value="24130"/>
+			<xs:enumeration value="24133"/>
+			<xs:enumeration value="24134"/>
+			<xs:enumeration value="24135"/>
+			<xs:enumeration value="24137"/>
+			<xs:enumeration value="31003"/>
+			<xs:enumeration value="31004"/>
+			<xs:enumeration value="31005"/>
+			<xs:enumeration value="31006"/>
+			<xs:enumeration value="31012"/>
+			<xs:enumeration value="31022"/>
+			<xs:enumeration value="31033"/>
+			<xs:enumeration value="31040"/>
+			<xs:enumeration value="31042"/>
+			<xs:enumeration value="31043"/>
+			<xs:enumeration value="32003"/>
+			<xs:enumeration value="32006"/>
+			<xs:enumeration value="32010"/>
+			<xs:enumeration value="32011"/>
+			<xs:enumeration value="32030"/>
+			<xs:enumeration value="33011"/>
+			<xs:enumeration value="33016"/>
+			<xs:enumeration value="33021"/>
+			<xs:enumeration value="33029"/>
+			<xs:enumeration value="33037"/>
+			<xs:enumeration value="33039"/>
+			<xs:enumeration value="33040"/>
+			<xs:enumeration value="33041"/>
+			<xs:enumeration value="34002"/>
+			<xs:enumeration value="34003"/>
+			<xs:enumeration value="34009"/>
+			<xs:enumeration value="34013"/>
+			<xs:enumeration value="34022"/>
+			<xs:enumeration value="34023"/>
+			<xs:enumeration value="34025"/>
+			<xs:enumeration value="34027"/>
+			<xs:enumeration value="34040"/>
+			<xs:enumeration value="34041"/>
+			<xs:enumeration value="34042"/>
+			<xs:enumeration value="34043"/>
+			<xs:enumeration value="35002"/>
+			<xs:enumeration value="35005"/>
+			<xs:enumeration value="35006"/>
+			<xs:enumeration value="35011"/>
+			<xs:enumeration value="35013"/>
+			<xs:enumeration value="35014"/>
+			<xs:enumeration value="35029"/>
+			<xs:enumeration value="36006"/>
+			<xs:enumeration value="36007"/>
+			<xs:enumeration value="36008"/>
+			<xs:enumeration value="36010"/>
+			<xs:enumeration value="36011"/>
+			<xs:enumeration value="36012"/>
+			<xs:enumeration value="36015"/>
+			<xs:enumeration value="36019"/>
+			<xs:enumeration value="37002"/>
+			<xs:enumeration value="37007"/>
+			<xs:enumeration value="37010"/>
+			<xs:enumeration value="37011"/>
+			<xs:enumeration value="37012"/>
+			<xs:enumeration value="37015"/>
+			<xs:enumeration value="37017"/>
+			<xs:enumeration value="37018"/>
+			<xs:enumeration value="37020"/>
+			<xs:enumeration value="38002"/>
+			<xs:enumeration value="38008"/>
+			<xs:enumeration value="38014"/>
+			<xs:enumeration value="38016"/>
+			<xs:enumeration value="38025"/>
+			<xs:enumeration value="41002"/>
+			<xs:enumeration value="41011"/>
+			<xs:enumeration value="41018"/>
+			<xs:enumeration value="41024"/>
+			<xs:enumeration value="41027"/>
+			<xs:enumeration value="41034"/>
+			<xs:enumeration value="41048"/>
+			<xs:enumeration value="41063"/>
+			<xs:enumeration value="41081"/>
+			<xs:enumeration value="41082"/>
+			<xs:enumeration value="42003"/>
+			<xs:enumeration value="42004"/>
+			<xs:enumeration value="42006"/>
+			<xs:enumeration value="42008"/>
+			<xs:enumeration value="42010"/>
+			<xs:enumeration value="42011"/>
+			<xs:enumeration value="42023"/>
+			<xs:enumeration value="42025"/>
+			<xs:enumeration value="42026"/>
+			<xs:enumeration value="42028"/>
+			<xs:enumeration value="43002"/>
+			<xs:enumeration value="43005"/>
+			<xs:enumeration value="43007"/>
+			<xs:enumeration value="43010"/>
+			<xs:enumeration value="43014"/>
+			<xs:enumeration value="43018"/>
+			<xs:enumeration value="44001"/>
+			<xs:enumeration value="44011"/>
+			<xs:enumeration value="44012"/>
+			<xs:enumeration value="44013"/>
+			<xs:enumeration value="44019"/>
+			<xs:enumeration value="44020"/>
+			<xs:enumeration value="44021"/>
+			<xs:enumeration value="44029"/>
+			<xs:enumeration value="44034"/>
+			<xs:enumeration value="44036"/>
+			<xs:enumeration value="44040"/>
+			<xs:enumeration value="44043"/>
+			<xs:enumeration value="44045"/>
+			<xs:enumeration value="44048"/>
+			<xs:enumeration value="44049"/>
+			<xs:enumeration value="44052"/>
+			<xs:enumeration value="44064"/>
+			<xs:enumeration value="44072"/>
+			<xs:enumeration value="44073"/>
+			<xs:enumeration value="44080"/>
+			<xs:enumeration value="44081"/>
+			<xs:enumeration value="44082"/>
+            <xs:enumeration value="44083"/>
+            <xs:enumeration value="44084"/>
+            <xs:enumeration value="44085"/>
+			<xs:enumeration value="45017"/>
+			<xs:enumeration value="45035"/>
+			<xs:enumeration value="45041"/>
+			<xs:enumeration value="45057"/>
+			<xs:enumeration value="45059"/>
+			<xs:enumeration value="45060"/>
+			<xs:enumeration value="45061"/>
+			<xs:enumeration value="45062"/>
+			<xs:enumeration value="45063"/>
+			<xs:enumeration value="45064"/>
+			<xs:enumeration value="45068"/>
+			<xs:enumeration value="45065"/>
+			<xs:enumeration value="46003"/>
+			<xs:enumeration value="46013"/>
+			<xs:enumeration value="46014"/>
+			<xs:enumeration value="46020"/>
+			<xs:enumeration value="46021"/>
+			<xs:enumeration value="46024"/>
+			<xs:enumeration value="46025"/>
+			<xs:enumeration value="71002"/>
+			<xs:enumeration value="71004"/>
+			<xs:enumeration value="71011"/>
+			<xs:enumeration value="71016"/>
+			<xs:enumeration value="71017"/>
+			<xs:enumeration value="71020"/>
+			<xs:enumeration value="71022"/>
+			<xs:enumeration value="71024"/>
+			<xs:enumeration value="71034"/>
+			<xs:enumeration value="71037"/>
+			<xs:enumeration value="71045"/>
+			<xs:enumeration value="71047"/>
+			<xs:enumeration value="71053"/>
+			<xs:enumeration value="71057"/>
+			<xs:enumeration value="71066"/>
+			<xs:enumeration value="71067"/>
+			<xs:enumeration value="71069"/>
+			<xs:enumeration value="71070"/>
+			<xs:enumeration value="72003"/>
+			<xs:enumeration value="72004"/>
+			<xs:enumeration value="72018"/>
+			<xs:enumeration value="72020"/>
+			<xs:enumeration value="72021"/>
+			<xs:enumeration value="72022"/>
+			<xs:enumeration value="72025"/>
+			<xs:enumeration value="72029"/>
+			<xs:enumeration value="72030"/>
+			<xs:enumeration value="72037"/>
+			<xs:enumeration value="72038"/>
+			<xs:enumeration value="72039"/>
+			<xs:enumeration value="72040"/>
+			<xs:enumeration value="72041"/>
+			<xs:enumeration value="72042"/>
+			<xs:enumeration value="72043"/>
+			<xs:enumeration value="73001"/>
+			<xs:enumeration value="73006"/>
+			<xs:enumeration value="73009"/>
+			<xs:enumeration value="73022"/>
+			<xs:enumeration value="73028"/>
+			<xs:enumeration value="73032"/>
+			<xs:enumeration value="73040"/>
+			<xs:enumeration value="73042"/>
+			<xs:enumeration value="73066"/>
+			<xs:enumeration value="73083"/>
+			<xs:enumeration value="73098"/>
+			<xs:enumeration value="73107"/>
+			<xs:enumeration value="73109"/>
+
+            <!-- Vanaf 01/01/2025 -->
+			<xs:enumeration value="23106"/>
+			<xs:enumeration value="37021"/>
+			<xs:enumeration value="37022"/>
+			<xs:enumeration value="44086"/>
+			<xs:enumeration value="44087"/>
+			<xs:enumeration value="46029"/>
+			<xs:enumeration value="44088"/>
+			<xs:enumeration value="46030"/>
+			<xs:enumeration value="73110"/>
+			<xs:enumeration value="73111"/>
+			<xs:enumeration value="71071"/>
+			<xs:enumeration value="71072"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="StatusEnumType">
+		<xs:annotation>
+			<xs:documentation>lijst van mogelijke statussen die je kan toekennen aan een entiteit (boring, sondering, interpretatie, opdracht, ...)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="publiek"/>
+			<xs:enumeration value="voor partners"/>
+			<xs:enumeration value="permanent intern"/>
+			<xs:enumeration value="intern in verwerking"/>
+			<xs:enumeration value="intern afgewerkt"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TaalEnumType">
+		<xs:annotation>
+			<xs:documentation>lijst van talen</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="nederlands"/>
+			<xs:enumeration value="frans"/>
+			<xs:enumeration value="latijn"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PeriodeDagEnumType">
+		<xs:annotation>
+			<xs:documentation>lijst van mogelijke perioden van een dag</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ochtend"/>
+			<xs:enumeration value="voor de middag"/>
+			<xs:enumeration value="na de middag"/>
+			<xs:enumeration value="avond"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="GrondkleurEnumType">
+		<xs:annotation>
+			<xs:documentation>lijst van kleuren</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="onbekend"/>
+			<xs:enumeration value="beige"/>
+			<xs:enumeration value="zwart"/>
+			<xs:enumeration value="lichtbeige"/>
+			<xs:enumeration value="lichtblauw"/>
+			<xs:enumeration value="lichtbruin"/>
+			<xs:enumeration value="lichtgeel"/>
+			<xs:enumeration value="lichtgrijs"/>
+			<xs:enumeration value="lichtgroen"/>
+			<xs:enumeration value="lichtroest"/>
+			<xs:enumeration value="lichtrood"/>
+			<xs:enumeration value="beigebruin"/>
+			<xs:enumeration value="blauwgrijs"/>
+			<xs:enumeration value="lichtmauve"/>
+			<xs:enumeration value="blauwgroen"/>
+			<xs:enumeration value="lichtkaki"/>
+			<xs:enumeration value="lichtroos"/>
+			<xs:enumeration value="lichtoker"/>
+			<xs:enumeration value="lichtolijfgroen"/>
+			<xs:enumeration value="lichtoranje"/>
+			<xs:enumeration value="bruingeel"/>
+			<xs:enumeration value="bruingrijs"/>
+			<xs:enumeration value="bruingroen"/>
+			<xs:enumeration value="bruinrood"/>
+			<xs:enumeration value="geelgrijs"/>
+			<xs:enumeration value="geelgroen"/>
+			<xs:enumeration value="blauw"/>
+			<xs:enumeration value="grijsgroen"/>
+			<xs:enumeration value="donkerbeige"/>
+			<xs:enumeration value="donkerblauw"/>
+			<xs:enumeration value="donkerbruin"/>
+			<xs:enumeration value="donkergeel"/>
+			<xs:enumeration value="donkergroen"/>
+			<xs:enumeration value="donkerroest"/>
+			<xs:enumeration value="donkerrood"/>
+			<xs:enumeration value="grijsroest"/>
+			<xs:enumeration value="bontgekleurd"/>
+			<xs:enumeration value="donkermauve"/>
+			<xs:enumeration value="mauve"/>
+			<xs:enumeration value="donkerkaki"/>
+			<xs:enumeration value="donkerroos"/>
+			<xs:enumeration value="donkeroker"/>
+			<xs:enumeration value="donkerolijfgroen"/>
+			<xs:enumeration value="donkeroranje"/>
+			<xs:enumeration value="geelbruin"/>
+			<xs:enumeration value="grijsgeel"/>
+			<xs:enumeration value="onbepaald"/>
+			<xs:enumeration value="donkergrijs"/>
+			<xs:enumeration value="bleek / ontkleurd"/>
+			<xs:enumeration value="roodbruin"/>
+			<xs:enumeration value="bruin"/>
+			<xs:enumeration value="kaki"/>
+			<xs:enumeration value="blauwgeel"/>
+			<xs:enumeration value="blauwkaki"/>
+			<xs:enumeration value="blauwmauve"/>
+			<xs:enumeration value="blauwoker"/>
+			<xs:enumeration value="blauwolijfgroen"/>
+			<xs:enumeration value="blauworanje"/>
+			<xs:enumeration value="blauwroest"/>
+			<xs:enumeration value="blauwrood"/>
+			<xs:enumeration value="blauwroos"/>
+			<xs:enumeration value="roos"/>
+			<xs:enumeration value="bruinblauw"/>
+			<xs:enumeration value="bruinbeige"/>
+			<xs:enumeration value="bruinkaki"/>
+			<xs:enumeration value="bruinmauve"/>
+			<xs:enumeration value="bruinoker"/>
+			<xs:enumeration value="bruinolijfgroen"/>
+			<xs:enumeration value="bruinoranje"/>
+			<xs:enumeration value="bruinroest"/>
+			<xs:enumeration value="bruinroos"/>
+			<xs:enumeration value="mauvebeige"/>
+			<xs:enumeration value="oker"/>
+			<xs:enumeration value="mauveblauw"/>
+			<xs:enumeration value="mauvebruin"/>
+			<xs:enumeration value="mauvegeel"/>
+			<xs:enumeration value="mauvegrijs"/>
+			<xs:enumeration value="mauvegroen"/>
+			<xs:enumeration value="mauvekaki"/>
+			<xs:enumeration value="mauveoker"/>
+			<xs:enumeration value="mauveolijfgroen"/>
+			<xs:enumeration value="mauveoranje"/>
+			<xs:enumeration value="mauveroest"/>
+			<xs:enumeration value="olijfgroen"/>
+			<xs:enumeration value="mauverood"/>
+			<xs:enumeration value="mauveroos"/>
+			<xs:enumeration value="okerbeige"/>
+			<xs:enumeration value="okerblauw"/>
+			<xs:enumeration value="okerbruin"/>
+			<xs:enumeration value="okergeel"/>
+			<xs:enumeration value="okergrijs"/>
+			<xs:enumeration value="okergroen"/>
+			<xs:enumeration value="okerkaki"/>
+			<xs:enumeration value="okermauve"/>
+			<xs:enumeration value="oranje"/>
+			<xs:enumeration value="okerolijfgroen"/>
+			<xs:enumeration value="okeroranje"/>
+			<xs:enumeration value="okerroest"/>
+			<xs:enumeration value="okerrood"/>
+			<xs:enumeration value="okerroos"/>
+			<xs:enumeration value="olijfgroenbeige"/>
+			<xs:enumeration value="olijfgroenblauw"/>
+			<xs:enumeration value="olijfgroenbruin"/>
+			<xs:enumeration value="olijfgroengeel"/>
+			<xs:enumeration value="olijfgroengrijs"/>
+			<xs:enumeration value="olijfgroengroen"/>
+			<xs:enumeration value="olijfgroenkaki"/>
+			<xs:enumeration value="olijfgroenmauve"/>
+			<xs:enumeration value="olijfgroenoker"/>
+			<xs:enumeration value="olijfgroenoranje"/>
+			<xs:enumeration value="olijfgroenroest"/>
+			<xs:enumeration value="olijfgroenrood"/>
+			<xs:enumeration value="olijfgroenroos"/>
+			<xs:enumeration value="oranjebeige"/>
+			<xs:enumeration value="oranjeblauw"/>
+			<xs:enumeration value="oranjebruin"/>
+			<xs:enumeration value="oranjegeel"/>
+			<xs:enumeration value="oranjegrijs"/>
+			<xs:enumeration value="oranjegroen"/>
+			<xs:enumeration value="oranjekaki"/>
+			<xs:enumeration value="oranjemauve"/>
+			<xs:enumeration value="oranjeoker"/>
+			<xs:enumeration value="oranjeolijfgroen"/>
+			<xs:enumeration value="oranjeoranje"/>
+			<xs:enumeration value="oranjeroest"/>
+			<xs:enumeration value="oranjerood"/>
+			<xs:enumeration value="oranjeroos"/>
+			<xs:enumeration value="roestbeige"/>
+			<xs:enumeration value="roestblauw"/>
+			<xs:enumeration value="roestbruin"/>
+			<xs:enumeration value="roestgeel"/>
+			<xs:enumeration value="roestgrijs"/>
+			<xs:enumeration value="roestgroen"/>
+			<xs:enumeration value="roestkaki"/>
+			<xs:enumeration value="roestmauve"/>
+			<xs:enumeration value="roestoker"/>
+			<xs:enumeration value="roestolijfgroen"/>
+			<xs:enumeration value="roestoranje"/>
+			<xs:enumeration value="roestroest"/>
+			<xs:enumeration value="roestrood"/>
+			<xs:enumeration value="roestroos"/>
+			<xs:enumeration value="roodbeige"/>
+			<xs:enumeration value="roodblauw"/>
+			<xs:enumeration value="roodgeel"/>
+			<xs:enumeration value="roodgrijs"/>
+			<xs:enumeration value="roodgroen"/>
+			<xs:enumeration value="roodkaki"/>
+			<xs:enumeration value="roodmauve"/>
+			<xs:enumeration value="roodoker"/>
+			<xs:enumeration value="roodolijfgroen"/>
+			<xs:enumeration value="roodoranje"/>
+			<xs:enumeration value="roodroest"/>
+			<xs:enumeration value="roodroos"/>
+			<xs:enumeration value="geel"/>
+			<xs:enumeration value="geelroos"/>
+			<xs:enumeration value="roosbeige"/>
+			<xs:enumeration value="roosblauw"/>
+			<xs:enumeration value="roosbruin"/>
+			<xs:enumeration value="roosgeel"/>
+			<xs:enumeration value="roosgrijs"/>
+			<xs:enumeration value="roosgroen"/>
+			<xs:enumeration value="rooskaki"/>
+			<xs:enumeration value="roosmauve"/>
+			<xs:enumeration value="roosoker"/>
+			<xs:enumeration value="roosolijfgroen"/>
+			<xs:enumeration value="geelbeige"/>
+			<xs:enumeration value="roosoranje"/>
+			<xs:enumeration value="roosroest"/>
+			<xs:enumeration value="roosrood"/>
+			<xs:enumeration value="beigewit"/>
+			<xs:enumeration value="blauwwit"/>
+			<xs:enumeration value="bruinwit"/>
+			<xs:enumeration value="geelwit"/>
+			<xs:enumeration value="grijswit"/>
+			<xs:enumeration value="groenwit"/>
+			<xs:enumeration value="kakiwit"/>
+			<xs:enumeration value="geelblauw"/>
+			<xs:enumeration value="mauvewit"/>
+			<xs:enumeration value="okerwit"/>
+			<xs:enumeration value="olijfgroenwit"/>
+			<xs:enumeration value="oranjewit"/>
+			<xs:enumeration value="roestwit"/>
+			<xs:enumeration value="roodwit"/>
+			<xs:enumeration value="rooswit"/>
+			<xs:enumeration value="beigezwart"/>
+			<xs:enumeration value="blauwzwart"/>
+			<xs:enumeration value="bruinzwart"/>
+			<xs:enumeration value="geelkaki"/>
+			<xs:enumeration value="geelzwart"/>
+			<xs:enumeration value="grijszwart"/>
+			<xs:enumeration value="groenzwart"/>
+			<xs:enumeration value="kakizwart"/>
+			<xs:enumeration value="mauvezwart"/>
+			<xs:enumeration value="okerzwart"/>
+			<xs:enumeration value="olijfgroenzwart"/>
+			<xs:enumeration value="roestzwart"/>
+			<xs:enumeration value="roodzwart"/>
+			<xs:enumeration value="rooszwart"/>
+			<xs:enumeration value="geelmauve"/>
+			<xs:enumeration value="lichtzwart"/>
+			<xs:enumeration value="lichtwit"/>
+			<xs:enumeration value="donkerzwart"/>
+			<xs:enumeration value="donkerwit"/>
+			<xs:enumeration value="witbeige"/>
+			<xs:enumeration value="witblauw"/>
+			<xs:enumeration value="witbruin"/>
+			<xs:enumeration value="witgeel"/>
+			<xs:enumeration value="witgrijs"/>
+			<xs:enumeration value="witgroen"/>
+			<xs:enumeration value="geeloker"/>
+			<xs:enumeration value="witkaki"/>
+			<xs:enumeration value="witmauve"/>
+			<xs:enumeration value="witoker"/>
+			<xs:enumeration value="witolijfgroen"/>
+			<xs:enumeration value="witoranje"/>
+			<xs:enumeration value="witroest"/>
+			<xs:enumeration value="witrood"/>
+			<xs:enumeration value="witroos"/>
+			<xs:enumeration value="zwartbeige"/>
+			<xs:enumeration value="zwartblauw"/>
+			<xs:enumeration value="geelolijfgroen"/>
+			<xs:enumeration value="zwartbruin"/>
+			<xs:enumeration value="zwartgeel"/>
+			<xs:enumeration value="zwartgrijs"/>
+			<xs:enumeration value="zwartgroen"/>
+			<xs:enumeration value="zwartkaki"/>
+			<xs:enumeration value="zwartmauve"/>
+			<xs:enumeration value="zwartoker"/>
+			<xs:enumeration value="zwartolijfgroen"/>
+			<xs:enumeration value="zwartoranje"/>
+			<xs:enumeration value="zwartroest"/>
+			<xs:enumeration value="geeloranje"/>
+			<xs:enumeration value="zwartrood"/>
+			<xs:enumeration value="zwartroos"/>
+			<xs:enumeration value="paarsbruin"/>
+			<xs:enumeration value="lichtrood / roos"/>
+			<xs:enumeration value="zwartwit"/>
+			<xs:enumeration value="geelroest"/>
+			<xs:enumeration value="geelrood"/>
+			<xs:enumeration value="grijs"/>
+			<xs:enumeration value="grijsbeige"/>
+			<xs:enumeration value="grijsblauw"/>
+			<xs:enumeration value="grijsbruin"/>
+			<xs:enumeration value="grijskaki"/>
+			<xs:enumeration value="grijsmauve"/>
+			<xs:enumeration value="grijsoker"/>
+			<xs:enumeration value="grijsolijfgroen"/>
+			<xs:enumeration value="grijsoranje"/>
+			<xs:enumeration value="grijsrood"/>
+			<xs:enumeration value="grijsroos"/>
+			<xs:enumeration value="groen"/>
+			<xs:enumeration value="groenbeige"/>
+			<xs:enumeration value="groenblauw"/>
+			<xs:enumeration value="groenbruin"/>
+			<xs:enumeration value="groengeel"/>
+			<xs:enumeration value="groengrijs"/>
+			<xs:enumeration value="groenkaki"/>
+			<xs:enumeration value="groenmauve"/>
+			<xs:enumeration value="groenoker"/>
+			<xs:enumeration value="groenolijfgroen"/>
+			<xs:enumeration value="groenoranje"/>
+			<xs:enumeration value="roest"/>
+			<xs:enumeration value="groenroest"/>
+			<xs:enumeration value="groenrood"/>
+			<xs:enumeration value="groenroos"/>
+			<xs:enumeration value="kakibeige"/>
+			<xs:enumeration value="kakiblauw"/>
+			<xs:enumeration value="kakibruin"/>
+			<xs:enumeration value="kakigeel"/>
+			<xs:enumeration value="kakigrijs"/>
+			<xs:enumeration value="kakigroen"/>
+			<xs:enumeration value="kakimauve"/>
+			<xs:enumeration value="rood"/>
+			<xs:enumeration value="kakioker"/>
+			<xs:enumeration value="kakiolijfgroen"/>
+			<xs:enumeration value="kakioranje"/>
+			<xs:enumeration value="kakiroest"/>
+			<xs:enumeration value="kakirood"/>
+			<xs:enumeration value="kakiroos"/>
+			<xs:enumeration value="beigeblauw"/>
+			<xs:enumeration value="beigegeel"/>
+			<xs:enumeration value="beigegrijs"/>
+			<xs:enumeration value="beigegroen"/>
+			<xs:enumeration value="wit"/>
+			<xs:enumeration value="beigekaki"/>
+			<xs:enumeration value="beigemauve"/>
+			<xs:enumeration value="beigeoker"/>
+			<xs:enumeration value="beigeolijfgroen"/>
+			<xs:enumeration value="beigeoranje"/>
+			<xs:enumeration value="beigeroest"/>
+			<xs:enumeration value="beigerood"/>
+			<xs:enumeration value="beigeroos"/>
+			<xs:enumeration value="blauwbeige"/>
+			<xs:enumeration value="blauwbruin"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="BijlageSoortType">
+		<xs:annotation>
+			<xs:documentation>lijst van types document voor een bijlage</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+            <xs:enumeration value="edov"/>
+            <xs:enumeration value="detailplan"/>
+            <xs:enumeration value="andere"/>
+            <xs:enumeration value="foto"/>
+            <xs:enumeration value="lithoprofiel"/>
+            <xs:enumeration value="korrelverdeling"/>
+            <xs:enumeration value="geologisch profiel"/>
+            <xs:enumeration value="stijghoogtereeks"/>
+            <xs:enumeration value="grondwater kwaliteitsanalyse"/>
+            <xs:enumeration value="onttrekking-reeks"/>
+            <xs:enumeration value="boorgatmeting"/>
+            <xs:enumeration value="attest opvulling put"/>
+            <xs:enumeration value="IMJV"/>
+            <xs:enumeration value="liggingsplan putten"/>
+            <xs:enumeration value="boorrapport"/>
+            <xs:enumeration value="putschema"/>
+            <xs:enumeration value="vergunning"/>
+            <xs:enumeration value="UG-Biblio"/>
+            <xs:enumeration value="statusmotivatie"/>
+            <xs:enumeration value="UG-Lib"/>
+            <xs:enumeration value="kwaliteitscontrole XYZ"/>
+            <xs:enumeration value="Data aardkundig profiel"/>
+            <xs:enumeration value="Andere archeologie"/>
+            <xs:enumeration value="foto bodem omgeving"/>
+            <xs:enumeration value="foto bodem profiel zonder nummering"/>
+            <xs:enumeration value="foto bodem profiel met nummering"/>
+            <xs:enumeration value="archeologische prospectie"/>
+            <xs:enumeration value="archeologische opgraving"/>
+            <xs:enumeration value="bodemprofielbeschrijving"/>
+            <xs:enumeration value="bodemobservaties"/>
+            <xs:enumeration value="foto bodem overzicht"/>
+            <xs:enumeration value="foto bodem detail"/>
+            <xs:enumeration value="foto bodem horizontale coupe"/>
+            <xs:enumeration value="bodemexcursiegids"/>
+            <xs:enumeration value="rapport"/>
+            <xs:enumeration value="sondeerrapport"/>
+
+            <!-- CTE specifiek -->
+            <xs:enumeration value="CTE-vooronderzoek"/>
+            <xs:enumeration value="CTE-probleemanalyse"/>
+            <xs:enumeration value="CTE-oppervlaktedetectie"/>
+            <xs:enumeration value="CTE-dieptedetectie"/>
+            <xs:enumeration value="CTE-opsporen van CTE"/>
+            <xs:enumeration value="CTE-toevalsvondsten"/>
+            <xs:enumeration value="CTE-pers"/>
+
+            <!-- XDOVCL-2071 -->
+            <xs:enumeration value="Bemalingsstudie"/>
+            <xs:enumeration value="BGD-scan"/>
+            <xs:enumeration value="BGD-txt"/>
+            <xs:enumeration value="fiche herstellingen put/filter"/>
+            <xs:enumeration value="GEF bestand"/>
+            <xs:enumeration value="Grondwater - advies"/>
+            <xs:enumeration value="Grondwater onttrekking-reeks"/>
+            <xs:enumeration value="Laboverslag"/>
+            <xs:enumeration value="Ontginning - adviezen"/>
+            <xs:enumeration value="Ontginning - besluiten"/>
+            <xs:enumeration value="Ontginning - schouwingsverslagen"/>
+            <xs:enumeration value="Ontginning – werkplan"/>
+            <xs:enumeration value="toegangsplan"/>
+            <xs:enumeration value="vergunningsbesluit"/>
+
+
+			<!-- Monster R4 -->
+			<!--<xs:enumeration value="Korrelverdeling"/>-->
+			<xs:enumeration value="Onderkenningsproeven"/>
+			<xs:enumeration value="Volumemassa &amp; watergehalte"/>
+			<xs:enumeration value="Steenkool"/>
+
+
+			<!-- XDOVCL-2189 Mechanische proeven -->
+			<xs:enumeration value="Mech. proeven - CRS"/>
+			<xs:enumeration value="Mech. proeven - Schuifweerstandskarakteristieken"/>
+			<xs:enumeration value="Mech. proeven - Versterkte proctorproef"/>
+			<xs:enumeration value="Mech. proeven - Samendrukking"/>
+			<xs:enumeration value="Mech. proeven - Schuifweerstand CD"/>
+			<xs:enumeration value="Mech. proeven - Schuifweerstand CU"/>
+			<xs:enumeration value="Mech. proeven - Schuifweerstand"/>
+			<xs:enumeration value="Mech. proeven - Schuifweerstand UC"/>
+			<xs:enumeration value="Mech. proeven - Schuifweerstand UU"/>
+			<xs:enumeration value="Mech. proeven - Vinproef"/>
+			<xs:enumeration value="Mech. proeven - Vrije prismaproef"/>
+			<xs:enumeration value="Mech. proeven - Zwelproef"/>
+			<xs:enumeration value="Mech. proeven - Doorlatendheid CV"/>
+			<xs:enumeration value="Mech. proeven - Doorlatendheidsproef - algemeen"/>
+			<xs:enumeration value="Mech. proeven - Doorlatendheid"/>
+			<xs:enumeration value="Mech. proeven - Samendrukkingsproef"/>
+			<xs:enumeration value="Mech. proeven - Doorlatendheid VVH"/>
+			<xs:enumeration value="Mech. proeven - Doorlatendheid VVV"/>
+			<xs:enumeration value="Mech. proeven - Doorlatendheid in tx cel"/>
+			<xs:enumeration value="Mech. proeven - Meest losse pakking"/>
+			<xs:enumeration value="Mech. proeven - Advanced Triaxiaal testing"/>
+			<xs:enumeration value="Mech. proeven - Standaard proctorproef"/>
+
+            <!-- XDOVCL-2597 -->
+			<xs:enumeration value="Grondverzet - Technisch verslag"/>
+            
+
+		</xs:restriction>
+	</xs:simpleType>
+    
+	<xs:simpleType name="OpmerkingTypeGeneriekEnum">
+   		<xs:annotation>
+            <xs:documentation>lijst van types van opmerkingen voor alle domeinen.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+            <xs:enumeration value="Algemeen"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+</xs:schema>

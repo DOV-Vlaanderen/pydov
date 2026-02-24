@@ -1,0 +1,1241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2010 (http://www.altova.com) by DPK (DPK) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://interpretatie.kern.schemas.dov.vlaanderen.be" targetNamespace="http://interpretatie.kern.schemas.dov.vlaanderen.be" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.00">
+	<xs:simpleType name="QuartairStratigrafieLedenEnumType">
+		<xs:annotation>
+			<xs:documentation>de mogelijke codes voor de leden van de Quartairstratigrafie</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="!">
+				<xs:annotation>
+					<xs:documentation>Aanvulling-allerlei</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="#">
+				<xs:annotation>
+					<xs:documentation>Herwerkt tertiair</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="$">
+				<xs:annotation>
+					<xs:documentation>Tertiair</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="&lt;&lt;">
+				<xs:annotation>
+					<xs:documentation>Grind (Maas en Rijn, Eisden-Lanklaar)-fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="?">
+				<xs:annotation>
+					<xs:documentation>Kleiig tot grindrijk facies (Maas en Rijn, Leut)-fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="A">
+				<xs:annotation>
+					<xs:documentation>Zandig facies-eolisch</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="B">
+				<xs:annotation>
+					<xs:documentation>Holoceen, Pleistoceen continentaal alluvium-grof facies</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="C">
+				<xs:annotation>
+					<xs:documentation>Eemiaan continentaal-grof facies</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="D">
+				<xs:annotation>
+					<xs:documentation>Weichseliaan continentaal eolisch-grof facies</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="D1">
+				<xs:annotation>
+					<xs:documentation>Zandige facies op kleiig facies-fluviatiel, hellingsprocessen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="E">
+				<xs:annotation>
+					<xs:documentation>Eemiaan, marien-grof facies</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F">
+				<xs:annotation>
+					<xs:documentation>Weichseliaan, continentaal, fluviatiel, periglaciaal-grof facies</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F'">
+				<xs:annotation>
+					<xs:documentation>Niet gedifferentieerd facies-fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F1">
+				<xs:annotation>
+					<xs:documentation>Weichseliaan, continentaal, fluviatiel, periglaciaal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F2">
+				<xs:annotation>
+					<xs:documentation>Weichseliaan, continentaal, fluviatiel, periglaciaal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F3">
+				<xs:annotation>
+					<xs:documentation>Weichseliaan, continentaal, fluviatiel, periglaciaal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="G">
+				<xs:annotation>
+					<xs:documentation>Weichseliaan, continentaal, niveo-eolisch, fluviatiel-grof facies</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Gb">
+				<xs:annotation>
+					<xs:documentation>Beekbodemgrind</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Gh">
+				<xs:annotation>
+					<xs:documentation>Hellingsgrind</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Gk">
+				<xs:annotation>
+					<xs:documentation>Grind</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Gt">
+				<xs:annotation>
+					<xs:documentation>Grind</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Gv">
+				<xs:annotation>
+					<xs:documentation>Valleibodemgrind</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="H">
+				<xs:annotation>
+					<xs:documentation>Diachrone hellingsafzetting</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="H'">
+				<xs:annotation>
+					<xs:documentation>Niet gedifferentieerd grofkorrelig facies-hellingsprocessen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="K">
+				<xs:annotation>
+					<xs:documentation>Holoceen, continentaal alluvium-grof facies</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="K1">
+				<xs:annotation>
+					<xs:documentation>Holoceen, continentaal alluvium</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="K2">
+				<xs:annotation>
+					<xs:documentation>Holoceen, continentaal alluvium</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="M">
+				<xs:annotation>
+					<xs:documentation>Holoceen, marien-grof facies</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="N">
+				<xs:annotation>
+					<xs:documentation>Weichseliaan, continentaal, niveo-eolisch-grof facies</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="O">
+				<xs:annotation>
+					<xs:documentation>Niet gedifferentieerd klastisch facies, veen, mogelijks kalkgyttja-marien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="P">
+				<xs:annotation>
+					<xs:documentation>Dominant zandige facies-perimarien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Q">
+				<xs:annotation>
+					<xs:documentation>Kwartair</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="R">
+				<xs:annotation>
+					<xs:documentation>Diachroon-restgrind</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Rb">
+				<xs:annotation>
+					<xs:documentation>Beekbodemgrind</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Rf">
+				<xs:annotation>
+					<xs:documentation>Grindrijk zand - puinwaaier</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Rh">
+				<xs:annotation>
+					<xs:documentation>Hellingsgrind</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Ru">
+				<xs:annotation>
+					<xs:documentation>Grind</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="S">
+				<xs:annotation>
+					<xs:documentation>Saale afzettingen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="S'">
+				<xs:annotation>
+					<xs:documentation>Niet gedifferentieerd facies-fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="U">
+				<xs:annotation>
+					<xs:documentation>Onbekend</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="V'">
+				<xs:annotation>
+					<xs:documentation>Venig complex-gedeeltelijke ontbinding van dode planten in een natte omgeving, fluviatiel en/of eolisch</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="V1">
+				<xs:annotation>
+					<xs:documentation>Veen op kleiig facies-gedeeltelijke ontbinding van dode planten in een natte omgeving, fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="V2">
+				<xs:annotation>
+					<xs:documentation>Veen op zandig facies-gedeeltelijke ontbinding van dode planten in een natte omgeving, fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="W1">
+				<xs:annotation>
+					<xs:documentation>Klei en/of zand over gehele sequentie en bedekt met eolische afzettingen-eolisch, marien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="W3">
+				<xs:annotation>
+					<xs:documentation>Klei en/of zand over de gehele sequentie en bedekt met eolische afzettingen-eolisch, marien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="X">
+				<xs:annotation>
+					<xs:documentation>Saale, continentaal-grof facies</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="X1">
+				<xs:annotation>
+					<xs:documentation>Klei en/of zand over de gehele sequentie zonder veenlagen-marien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="X11">
+				<xs:annotation>
+					<xs:documentation>Klei en/of zand, geulopvulling over gehele sequentie-marien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="X2">
+				<xs:annotation>
+					<xs:documentation>Klei en/of zand met aan de basis het basisveen-marien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="X3">
+				<xs:annotation>
+					<xs:documentation>Klei en/of zand over de gehele sequentie met aan het huidige oppervlak een dunne veenlaag-marien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="X4">
+				<xs:annotation>
+					<xs:documentation>Klei en/of zand over de gehele sequentie met aan het huidige oppervlak een dunne veenlaag en aan de basis het basisveen-marien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Y">
+				<xs:annotation>
+					<xs:documentation>Pre-Saale continentaal-grof facies</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Y1">
+				<xs:annotation>
+					<xs:documentation>Klei en/of zand met intercalaties van één of meerdere verlandingsvenen-marien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Y2">
+				<xs:annotation>
+					<xs:documentation>Klei en/of zand met intercalaties van één of meerdere verlandingsvenen en aan de basis het basisveen-marien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Y4">
+				<xs:annotation>
+					<xs:documentation>Afwisseling van klei en/of zand met een dunne veenlaag aan het oppervlak en aan de basis het basisveen-marien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Z">
+				<xs:annotation>
+					<xs:documentation>Zand-eolisch</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Z3">
+				<xs:annotation>
+					<xs:documentation>Veen en/of organisch gyttja over de gehele sequentie met aan de top een klei- of zandlaag waarvan de dikte kleiner is dan de dikte van de veenlaag-marien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="[\]]">
+				<xs:annotation>
+					<xs:documentation>Fining-up sequentie (Schelde)-fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="^">
+				<xs:annotation>
+					<xs:documentation>Grind facies (Maas en Rijn, Zutendaal)-fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="^F">
+				<xs:annotation>
+					<xs:documentation>Grindhoudend en grindrijk zand tot grind-fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="^H">
+				<xs:annotation>
+					<xs:documentation>Grindrijk facies-hellingsprocessen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="^K">
+				<xs:annotation>
+					<xs:documentation>Grind tot grindrijk zandig facies-fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="^Q">
+				<xs:annotation>
+					<xs:documentation>Grindrijk facies-niet gedefinieerd</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="^W">
+				<xs:annotation>
+					<xs:documentation>Grindrijk facies-fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="a">
+				<xs:annotation>
+					<xs:documentation>Weichseliaan, contineltaal, hellingsafzettingen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="a'">
+				<xs:annotation>
+					<xs:documentation>Lichte zandleem tot silt-eolisch (dominant), lokale herwerking</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="b">
+				<xs:annotation>
+					<xs:documentation>Holoceen, Pleistoceen, continentaal alluvium-fijn facies</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="c">
+				<xs:annotation>
+					<xs:documentation>Eemiaan continentaal-fijn facies</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="c°">
+				<xs:annotation>
+					<xs:documentation>Fining-up cyclus, mogelijks met veen-fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="d">
+				<xs:annotation>
+					<xs:documentation>Weichseliaan, continentaal, eolisch-fijn facies</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="d1">
+				<xs:annotation>
+					<xs:documentation>Kleiig facies op zandig facies-fluviatiel, hellingsprocessen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="e">
+				<xs:annotation>
+					<xs:documentation>Eemiaan, marien-fijn facies</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="e'">
+				<xs:annotation>
+					<xs:documentation>Niet gedifferentieerd facies, mogelijks veen-estuarien overgaand naar fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="f">
+				<xs:annotation>
+					<xs:documentation>Weichseliaan, continentaal, fluviatiel, periglaciaal-fijn facies</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="f'">
+				<xs:annotation>
+					<xs:documentation>Niet gedifferentieerd fijn klastisch facies-fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="f1">
+				<xs:annotation>
+					<xs:documentation>Weichseliaan, continentaal, fluviatiel, periglaciaal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="f2">
+				<xs:annotation>
+					<xs:documentation>Weichseliaan, continentaal, fluviatiel, periglaciaal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="f3">
+				<xs:annotation>
+					<xs:documentation>Weichseliaan, continentaal, fluviatiel, periglaciaal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="f°">
+				<xs:annotation>
+					<xs:documentation>Fining-up cyclus (cycli), mogelijks met veen-fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="g">
+				<xs:annotation>
+					<xs:documentation>Weichseliaan, continentaal, niveo-eolisch, fluviatiel-fijn facies</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="h">
+				<xs:annotation>
+					<xs:documentation>Diachroon-hellingsafzettingen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="h'">
+				<xs:annotation>
+					<xs:documentation>Niet gedifferentieerd facies-hellingsprocessen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="i">
+				<xs:annotation>
+					<xs:documentation>Zandig/kleiig complex-getijdenomgeving</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="j">
+				<xs:annotation>
+					<xs:documentation>Silteus tot kleiig facies-hellingsprocessen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="j'">
+				<xs:annotation>
+					<xs:documentation>Niet gedifferentieerd facies-hellingsprocessen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="k">
+				<xs:annotation>
+					<xs:documentation>Holoceen, continentaal alluvium-fijn facies</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="k'">
+				<xs:annotation>
+					<xs:documentation>Niet gedifferentieerd facies, veen en kalftuf mogelijks aanwezig-fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="k1">
+				<xs:annotation>
+					<xs:documentation>Holoceen, continentaal alluvium</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="k2">
+				<xs:annotation>
+					<xs:documentation>Holoceen, continentaal alluvium</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="l">
+				<xs:annotation>
+					<xs:documentation>Weichseliaan, continentaal-mergelig-venig</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="m">
+				<xs:annotation>
+					<xs:documentation>Holoceen, marien-fijn facies</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="n">
+				<xs:annotation>
+					<xs:documentation>Weichseliaan, continentaal, niveo-eolisch-fijn facies</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="o">
+				<xs:annotation>
+					<xs:documentation>Holoceen - Pleistoceen overgang-organisch-klastisch complex</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="p">
+				<xs:annotation>
+					<xs:documentation>Perimarien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="p'">
+				<xs:annotation>
+					<xs:documentation>Niet gedifferentieerd facies (zandig tot kleiig)-estuarien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="q">
+				<xs:annotation>
+					<xs:documentation>Silteus tot kleiig facies-niet gedefinieerd</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="q'">
+				<xs:annotation>
+					<xs:documentation>Niet gedifferentieerd-niet gedefinieerd</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="t">
+				<xs:annotation>
+					<xs:documentation>Kleiig/zandig complex (Lid van Turnhout)-estuarien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="u">
+				<xs:annotation>
+					<xs:documentation>Kleiig/zandig complex (Lid van Rijkevorsel)-estuarien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="v">
+				<xs:annotation>
+					<xs:documentation>Holoceen, continentaal-venig</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="v'">
+				<xs:annotation>
+					<xs:documentation>Venig complex-gedeeltelijke ontbinding van dode planten in een natte omgeving, fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="w">
+				<xs:annotation>
+					<xs:documentation>Dominant zandig facies-fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="w'">
+				<xs:annotation>
+					<xs:documentation>Niet gedifferentieerd facies-fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="x">
+				<xs:annotation>
+					<xs:documentation>Saale continentaal-fijn facies</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="x'">
+				<xs:annotation>
+					<xs:documentation>Dominant zandig facies met bodemhorizonten en veenlagen (Lid van Beerse)-fluviatiel en/of eolisch</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="y">
+				<xs:annotation>
+					<xs:documentation>Pré-Saaliaan continentaal-fijn facies</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="y'">
+				<xs:annotation>
+					<xs:documentation>Dominant zandig facies-fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="z">
+				<xs:annotation>
+					<xs:documentation>?</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="£">
+				<xs:annotation>
+					<xs:documentation>Zand- en grindfacies (Maas en Rijn, Lommel)-fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="¥">
+				<xs:annotation>
+					<xs:documentation>Grindfacies (Maas en Rijn, Lixhe-fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="¦">
+				<xs:annotation>
+					<xs:documentation>Kleiig tot grindrijk facies (Maas en Rijn, Leut)-fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="§">
+				<xs:annotation>
+					<xs:documentation>Zandig facies tot grindfacies (Schelde)-fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="©">
+				<xs:annotation>
+					<xs:documentation>Fijn zand tot klei-fluviatiel, mogelijks eolisch - lacustrien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="®">
+				<xs:annotation>
+					<xs:documentation>Zand, soms grind-fluviatiel (dominant), eolisch</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="µ">
+				<xs:annotation>
+					<xs:documentation>Complex van Melle-,</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Á">
+				<xs:annotation>
+					<xs:documentation>Zand tot zandleem met mogelijks in het basisgedeelte een alternatie van fijnere en grovere laagjes-eolisch (dominant), hellingsprocessen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Æ">
+				<xs:annotation>
+					<xs:documentation>Zandig facies-eolisch</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Ç">
+				<xs:annotation>
+					<xs:documentation>Ondiep Tertiair substraat-,</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Ø">
+				<xs:annotation>
+					<xs:documentation>Grind facies (Maas en Rijn, Lanklaar)-fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Þ">
+				<xs:annotation>
+					<xs:documentation>Zand- en grindfacies (Maas en Rijn, Winterslag)-fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ß">
+				<xs:annotation>
+					<xs:documentation>Zand- en grindfacies (Maas en Rijn, Bocholt)-fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="á">
+				<xs:annotation>
+					<xs:documentation>Klei tot kleiig zand-fluvio-lacustrien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="â">
+				<xs:annotation>
+					<xs:documentation>Homogeen silt gevolgd door silt met intercalaties van kleiige, venige en/of zandige laagjes-fluvio-lacustrien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="å">
+				<xs:annotation>
+					<xs:documentation>Silt met intercalaties van kleiige, venige en/of zandige laagjes-hellingsprocessen (dominant), eolisch</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="æ">
+				<xs:annotation>
+					<xs:documentation>Homogene silt en silt met intercalaties van kleiige en zandige laagjes-eolisch, hellingsprocessen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ç">
+				<xs:annotation>
+					<xs:documentation>Herwerkte Tertiaire afzettingen-lokale herwerking (proces niet gedifferentieerd</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ç'">
+				<xs:annotation>
+					<xs:documentation>Herwerkte afzettingen-lokale herwerking (proces niet gedifferentieerd</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="é">
+				<xs:annotation>
+					<xs:documentation>Zandig/kleiig - silteus complex-getijdenomgeving (Marien en/of estuarien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ô">
+				<xs:annotation>
+					<xs:documentation>Holoceen, continentaal eolisch-stuifzand</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="õ">
+				<xs:annotation>
+					<xs:documentation>Holoceen, Pleistoceen, continentaal eolisch-stuifzand</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ÿ">
+				<xs:annotation>
+					<xs:documentation>Zandig complex-estuarien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="A01">
+				<xs:annotation>
+					<xs:documentation>Aangebracht, antropogeen - /-/</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="D01">
+				<xs:annotation>
+					<xs:documentation>Zandig facies - Diachroon-Niet gedefinieerd</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="D02">
+				<xs:annotation>
+					<xs:documentation>Grindrijk facies - Diachroon-Niet gedefinieerd</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="D03">
+				<xs:annotation>
+					<xs:documentation>Silteus tot kleiig facies - Diachroon-Niet gedefinieerd</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="D04">
+				<xs:annotation>
+					<xs:documentation>Niet gedifferentieerd - Diachroon-Niet gedefinieerd</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="E01">
+				<xs:annotation>
+					<xs:documentation>Klei en/of zand over de gehele sequentie en bedekt met eolische afzettingen - Holoceen-Eolisch, marien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="E02">
+				<xs:annotation>
+					<xs:documentation>Klei en/of zand over de gehele sequentie en bedekt met een veenlaag direct onder de eolische afzettingen - Holoceen-Eolisch, marien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="E03">
+				<xs:annotation>
+					<xs:documentation>Zand - Tardiglaciaal en/of Holoceen-Eolisch</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="E04">
+				<xs:annotation>
+					<xs:documentation>Zandig facies - Laat-Pleniglaciaal (Weichselien) en/of Vroeg-Holoceen-Eolisch</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="E05">
+				<xs:annotation>
+					<xs:documentation>Silteus facies - Laat-Pleniglaciaal (Weichselien) en/of Vroeg-Holoceen-Eolisch</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="E06">
+				<xs:annotation>
+					<xs:documentation>Zandig facies - Weichselien-Eolisch</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="E07">
+				<xs:annotation>
+					<xs:documentation>Zand tot zandleem met mogelijks in het basisgedeelte een alternatie van fijnere en grovere laagjes - Weichselien-Eolisch (dominant), hellingsprocessen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="E08">
+				<xs:annotation>
+					<xs:documentation>Silt (loess) - Weichselien-Eolisch</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="E09">
+				<xs:annotation>
+					<xs:documentation>Homogeen silt gevolgd door silt met intercalaties van kleiige, venige en/of zandige laagjes - Weichselien-Eolisch , hellingsprocessen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="E10">
+				<xs:annotation>
+					<xs:documentation>Lichte zandleem tot silt - Weichselien-Eolisch (dominant), lokale herwerking</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="E11">
+				<xs:annotation>
+					<xs:documentation>Zandig facies - Saalien en/of Weichselien-Eolisch</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="E12">
+				<xs:annotation>
+					<xs:documentation>Homogene silt en silt met intercalaties van kleiige en zandige laagjes - Saalien en/of Weichselien-Eolisch, hellingsprocessen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ES01">
+				<xs:annotation>
+					<xs:documentation>Niet gedifferentieerd facies (zandig tot kleiig) - Holoceen-Estuarien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ES02">
+				<xs:annotation>
+					<xs:documentation>Dominant zandige facies - Holoceen-Perimarien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ES03">
+				<xs:annotation>
+					<xs:documentation>Dominant kleiig facies - Holoceen-Perimarien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ES04">
+				<xs:annotation>
+					<xs:documentation>Dominant zandig facies, mogelijks schelprijk - Eemien-Getijdenomgeving (Marien en/of estuarien)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ES05">
+				<xs:annotation>
+					<xs:documentation>Zandig/ kleiig – silteus complex - Eemien-Getijdenomgeving (Marien en/of estuarien)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ES06">
+				<xs:annotation>
+					<xs:documentation>Niet gedifferentieerd facies, mogelijks veen - Eemien-Estuarien overgaand naar fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ES07">
+				<xs:annotation>
+					<xs:documentation>Zandig/kleiig complex - Midden-Pleistoceen-Getijdenomgeving</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ES08">
+				<xs:annotation>
+					<xs:documentation>Kleiig/zandig complex - Vroeg-Pleistoceen  - Tertiair (1,2)-Estuarien (dominant), fluviatiel en eolisch</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ES09">
+				<xs:annotation>
+					<xs:documentation>Kleiig/zandig complex (Lid van Turnhout) - Vroeg- Pleistoceen – Tertiair (1)-Estuarien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ES10">
+				<xs:annotation>
+					<xs:documentation>Kleiig/zandig complex (Lid van Rijkevorsel) - Vroeg-Pleistoceen – Tertiair (1)-Estuarien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ES11">
+				<xs:annotation>
+					<xs:documentation>Dominant zandig complex - Vroeg-Pleistoceen –Tertiair (2)-Estuarien (dominant), fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ES12">
+				<xs:annotation>
+					<xs:documentation>Zandig complex - Vroeg-Pleistoceen –Tertiair (2)-Estuarien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ES13">
+				<xs:annotation>
+					<xs:documentation>Zandig complex - Plio-Pleistoceen-Getijdenomgeving</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F01">
+				<xs:annotation>
+					<xs:documentation>Zandige facies, mogelijks vegetatieresten - Holoceen-Fluviatiel, hellingsprocessen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F02">
+				<xs:annotation>
+					<xs:documentation>Zandig facies op kleiig facies - Holoceen-Fluviatiel, hellingsprocessen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F03">
+				<xs:annotation>
+					<xs:documentation>Kleiig facies - Holoceen-Fluviatiel, hellingsprocessen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F04">
+				<xs:annotation>
+					<xs:documentation>Kleiig facies op zandig facies - Holoceen-Fluviatiel, hellingsprocessen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F05">
+				<xs:annotation>
+					<xs:documentation>Kleiig tot grindrijk facies (Maas en Rijn, Leut) - Holoceen-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F06">
+				<xs:annotation>
+					<xs:documentation>Zandig facies - Tardiglaciaal tot Vroeg-Holoceen-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F07">
+				<xs:annotation>
+					<xs:documentation>Lemig zandfacies tot kleiig facies - Tardiglaciaal tot  Vroeg-Holoceen-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F08">
+				<xs:annotation>
+					<xs:documentation>Dominant zandig facies - Tardiglaciaal en/of Holoceen-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F09">
+				<xs:annotation>
+					<xs:documentation>Grind tot grindrijk zandig facies - Tardiglaciaal en/of Holoceen-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F10">
+				<xs:annotation>
+					<xs:documentation>Silteus tot kleiig facies, veen en kalktuf mogelijks aanwezig - Tardiglaciaal en/of Holoceen-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F11">
+				<xs:annotation>
+					<xs:documentation>Niet gedifferentieerd facies, veen en kalktuf mogelijks aanwezig - Tardiglaciaal en/of Holoceen-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F12">
+				<xs:annotation>
+					<xs:documentation>Dominant grind, zand (Maas en Rijn, Geistingen) - Laat-Weichselien-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F13">
+				<xs:annotation>
+					<xs:documentation>Dominant zandig facies op dominant silteus facies - Weichselien-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F14">
+				<xs:annotation>
+					<xs:documentation>Grind facies (Maas en Rijn, Mechelen a/d Maas) - Weichselien-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F15">
+				<xs:annotation>
+					<xs:documentation>Dominant zandig facies op dominant silteus facies op dominant zandig facies - Weichselien-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F16">
+				<xs:annotation>
+					<xs:documentation>Dominant zandig facies op dominant silteus facies op dominant zandig facies op dominant silteus facies - Weichselien-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F17">
+				<xs:annotation>
+					<xs:documentation>Dominant silteus facies - Weichselien-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F18">
+				<xs:annotation>
+					<xs:documentation>Fining-up cyclus (cycli), mogelijks met veen - Weichselien-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F19">
+				<xs:annotation>
+					<xs:documentation>Niet gedifferentieerd fijn klastisch facies - Weichselien-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F20">
+				<xs:annotation>
+					<xs:documentation>Dominant silteus facies op dominant zandig facies - Weichselien-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F21">
+				<xs:annotation>
+					<xs:documentation>Dominant silteus facies op dominant zandig facies op dominant silteus facies - Weichselien-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F22">
+				<xs:annotation>
+					<xs:documentation>Dominant silteus facies op dominant zandig facies op dominant silteus facies op dominant zandig facies - Weichselien-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F23">
+				<xs:annotation>
+					<xs:documentation>Dominant zandig facies - Weichselien-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F24">
+				<xs:annotation>
+					<xs:documentation>Dominant silteus facies - Weichselien-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F25">
+				<xs:annotation>
+					<xs:documentation>Dominant zandig facies - Weichselien-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F26">
+				<xs:annotation>
+					<xs:documentation>Grindhoudend en grindrijk zand tot grind - Weichselien-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F27">
+				<xs:annotation>
+					<xs:documentation>Klei tot kleiig zand - Weichselien-Fluvio-lacustrien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F28">
+				<xs:annotation>
+					<xs:documentation>Niet gedifferentieerd facies - Eemien en/of        Weichselien-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F29">
+				<xs:annotation>
+					<xs:documentation>Silteus tot kleiig facies, mogelijks met veen - Eemien-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F30">
+				<xs:annotation>
+					<xs:documentation>Fining – up cyclus, mogelijks met veen - Eemien-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F31">
+				<xs:annotation>
+					<xs:documentation>Zandig facies - Saalien-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F32">
+				<xs:annotation>
+					<xs:documentation>Niet gedifferentieerd facies - Saalien-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F33">
+				<xs:annotation>
+					<xs:documentation>Grind (Maas en Rijn, Eisden-Lanklaar) - Saalien-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F34">
+				<xs:annotation>
+					<xs:documentation>Grind facies (Maas en Rijn, Lanklaar) - Saalien tot en met Weichselien-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F35">
+				<xs:annotation>
+					<xs:documentation>Fining-up sequentie (Schelde) - Holsteinien-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F36">
+				<xs:annotation>
+					<xs:documentation>Grindrijk facies - Midden- en/of Laat-Pleistoceen-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F37">
+				<xs:annotation>
+					<xs:documentation>Dominant zandig facies - Midden- en/of Laat-Pleistoceen-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F38">
+				<xs:annotation>
+					<xs:documentation>Niet gedifferentieerd facies - Midden- en/of Laat-Pleistoceen-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F39">
+				<xs:annotation>
+					<xs:documentation>Grind facies (Maas en Rijn, Zutendaal) - Midden-Pleistoceen-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F40">
+				<xs:annotation>
+					<xs:documentation>Grind facies (Maas en Rijn, Mopertingen of Lanaken) - Midden-Pleistoceen-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F41">
+				<xs:annotation>
+					<xs:documentation>Zandig complex met venige-humeuze en kleiige-silteuze lagen - Vroeg-Pleistoceen-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F42">
+				<xs:annotation>
+					<xs:documentation>Zand- en grindfacies (Maas en Rijn, Lommel) - Vroeg-Pleistoceen, post-Jaromillo-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F43">
+				<xs:annotation>
+					<xs:documentation>Zand- en grindfacies (Maas en Rijn, Bocholt) - Vroeg-Pleistoceen, post-Jaromillo-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F44">
+				<xs:annotation>
+					<xs:documentation>Zand- en grindfacies (Maas en Rijn, Winterslag) - Vroeg-Pleistoceen, post-Jaromillo-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F45">
+				<xs:annotation>
+					<xs:documentation>Grindfacies (Maas en Rijn, Lixhe) - Vroeg-Pleistoceen, pré-Jaromillo-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F46">
+				<xs:annotation>
+					<xs:documentation>Dominant zandig facies met bodemhorizonten en veenlagen (Lid van Beerse) - Vroeg-Pleistoceen – Tertiair (1)-Fluviatiel en/of eolisch</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F47">
+				<xs:annotation>
+					<xs:documentation>Dominant zandig facies - Vroeg-Pleistoceen –Tertiair (2)-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F48">
+				<xs:annotation>
+					<xs:documentation>Grindfacies (Maas en Rijn, Simpelveld) - Vroeg-Pleistoceen –Tertiair (4)-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F49">
+				<xs:annotation>
+					<xs:documentation>Zandig facies tot grindfacies (Schelde) - Vroeg- en/of Midden-Pleistoceen – Tertiair (3)-Fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F50">
+				<xs:annotation>
+					<xs:documentation>Herwerkte Rijn- en Maasafzettingen - Pleistoceen-Lokale herwerking (dominant fluviatiel)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F51">
+				<xs:annotation>
+					<xs:documentation>Zand, soms grind - Pleistoceen-Fluviatiel (dominant), eolisch</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F52">
+				<xs:annotation>
+					<xs:documentation>Fijn zand tot klei - Pleistoceen-Fluviatiel, mogelijks eolisch - lacustrien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="H01">
+				<xs:annotation>
+					<xs:documentation>Zandig facies - Diachroon-Hellingsprocessen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="H02">
+				<xs:annotation>
+					<xs:documentation>Grindrijk facies - Diachroon-Hellingsprocessen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="H03">
+				<xs:annotation>
+					<xs:documentation>Niet gedifferentieerd grofkorrelig facies - Diachroon-Hellingsprocessen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="H04">
+				<xs:annotation>
+					<xs:documentation>Silteus tot kleiig facies - Diachroon-Hellingsprocessen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="H05">
+				<xs:annotation>
+					<xs:documentation>Niet gedifferentieerd facies - Diachroon-Hellingsprocessen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="H06">
+				<xs:annotation>
+					<xs:documentation>Silteus tot kleiig facies - Tardiglaciaal en/of Holoceen-Hellingsprocessen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="H07">
+				<xs:annotation>
+					<xs:documentation>Niet gedifferentieerd facies - Tardiglaciaal en/of Holoceen-Hellingsprocessen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="H08">
+				<xs:annotation>
+					<xs:documentation>Silt met intercalaties van kleiige, venige en/of zandige laagjes - Weichselien-Hellingsprocessen (dominant), eolisch</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HW01">
+				<xs:annotation>
+					<xs:documentation>Herwerkte Tertiaire afzettingen - Tertiair en/of Quartair-Lokale herwerking (proces niet gedifferentieerd)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HW02">
+				<xs:annotation>
+					<xs:documentation>Herwerkte afzettingen - /-Lokale herwerking (proces niet gedifferentieerd)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="M01">
+				<xs:annotation>
+					<xs:documentation>Klei en/of zand , geulopvulling over gehele sequentie - Laat-Holoceen-Marien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="M02">
+				<xs:annotation>
+					<xs:documentation>Niet gedifferentieerd klastisch facies, veen, mogelijks kalkgyttja. - Holoceen-Marien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="M03">
+				<xs:annotation>
+					<xs:documentation>Klei en/of zand over de gehele sequentie zonder veenlagen - Holoceen-Marien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="M04">
+				<xs:annotation>
+					<xs:documentation>Klei en/of zand met aan de basis het basisveen - Holoceen-Marien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="M05">
+				<xs:annotation>
+					<xs:documentation>Klei en/of zand over de gehele sequentie met aan het huidige oppervlak een dunne veenlaag - Holoceen-Marien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="M06">
+				<xs:annotation>
+					<xs:documentation>Klei en/of zand over de gehele sequentie met aan het huidige oppervlak een dunne veenlaag en aan de basis het basisveen - Holoceen-Marien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="M07">
+				<xs:annotation>
+					<xs:documentation>Klei en/of zand met intercalaties van één of meerdere verlandingsvenen en aan de basis het basisveen - Holoceen-Marien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="M08">
+				<xs:annotation>
+					<xs:documentation>Afwisseling van klei en/of zand met een dunne veenlaag aan het oppervlak en aan de basis het basisveen - Holoceen-Marien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="M09">
+				<xs:annotation>
+					<xs:documentation>Veen en/of organisch gyttja over de gehele sequentie met aan de top een klei- of zandlaag waarvan de dikte kleiner is dan de dikte van de veenlaag - Holoceen-Marien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="M10">
+				<xs:annotation>
+					<xs:documentation>Klei en/of zand met intercalaties van één of meerdere verlandingsvenen en aan de basis het basisveen. Mogelijks veen aan het oppervlak - Holoceen-Marien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="M11">
+				<xs:annotation>
+					<xs:documentation>Klei en/of zand met intercalaties van één of meerdere verlandingsvenen - Holoceen-Marien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="M12">
+				<xs:annotation>
+					<xs:documentation>Dominant zandig facies - Holoceen-Marien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="M13">
+				<xs:annotation>
+					<xs:documentation>Dominant kleiig facies - Holoceen-Marien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="M14">
+				<xs:annotation>
+					<xs:documentation>Dominant kleiig facies - Eemien-Marien</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ON01">
+				<xs:annotation>
+					<xs:documentation>Onbekend - /-/</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="T01">
+				<xs:annotation>
+					<xs:documentation>Ondiep Tertiair substraat - Quartair  en Tertiair-/</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="T02">
+				<xs:annotation>
+					<xs:documentation>Pré-Quartaire sedimenten - /-/</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="V01">
+				<xs:annotation>
+					<xs:documentation>Venig complex - Tardiglaciaal en/of Holoceen-Gedeeltelijke ontbinding van dode planten in een natte omgeving, fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="V02">
+				<xs:annotation>
+					<xs:documentation>Veen op kleiig facies - Tardiglaciaal en/of Holoceen-Gedeeltelijke ontbinding van dode planten in een natte omgeving, fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="V03">
+				<xs:annotation>
+					<xs:documentation>Veen op zandig facies - Tardiglaciaal en/of Holoceen-Gedeeltelijke ontbinding van dode planten in een natte omgeving, fluviatiel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="V04">
+				<xs:annotation>
+					<xs:documentation>Veen, kalktuf al dan niet met klastisch materiaal - Tardiglaciaal en/of Holoceen-Dominantie van organo-chemische processen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="V05">
+				<xs:annotation>
+					<xs:documentation>Venig facies (veen al dan niet met klastische sedimenten) - Tardiglaciaal en/of Holoceen-Gedeeltelijke ontbinding van dode planten in een natte omgeving</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="V06">
+				<xs:annotation>
+					<xs:documentation>Venig complex - Weichselien-Gedeeltelijke ontbinding van dode planten in een natte omgeving, fluviatiel en/of eolisch</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

@@ -74,10 +74,10 @@ class TestObservatieMeetreeksSearch(AbstractTestSearch):
             query=self.valid_query_single)
 
         assert df.iloc[0].meetreeks_meetpunt_parameter == 'Diameter'
-        assert df.iloc[0].meetreeks_meetpunt == '4.4E-5'
+        assert df.iloc[0].meetreeks_meetpunt == '0.001778'
         assert df.iloc[0].meetreeks_meetpunt_eenheid == 'mm'
         assert df.iloc[0].meetreeks_meetwaarde_parameter == 'Fractie met grotere diameter'
-        assert df.iloc[0].meetreeks_meetwaarde == '99.99'
+        assert df.iloc[0].meetreeks_meetwaarde == '86.34'
         assert df.iloc[0].meetreeks_meetwaarde_eenheid == '%'
 
     def test_search_observatie(self, mp_wfs, mp_get_schema,
@@ -111,8 +111,8 @@ class TestObservatieMeetreeksSearch(AbstractTestSearch):
             query=self.valid_query_single)
 
         assert df.iloc[0].meetreeks_meetpunt_parameter == 'Diameter'
-        assert df.iloc[0].meetreeks_meetpunt == '4.4E-5'
+        assert df.iloc[0].meetreeks_meetpunt == '0.001778'
         assert df.iloc[0].meetreeks_meetpunt_eenheid == 'mm'
         assert df.iloc[0].meetreeks_meetwaarde_parameter == 'Fractie met grotere diameter'
-        assert df.iloc[0].meetreeks_meetwaarde == '99.99'
+        assert df.iloc[0].meetreeks_meetwaarde == '86.34'
         assert df.iloc[0].meetreeks_meetwaarde_eenheid == '%'

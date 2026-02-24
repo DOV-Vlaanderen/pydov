@@ -2,33 +2,51 @@
 <ns4:dov-schema xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns4="http://kern.schemas.dov.vlaanderen.be" xsi:schemaLocation="http://kern.schemas.dov.vlaanderen.be https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/dov.xsd">
     <monster>
         <identificator>
-            <identificator>472/21/2/M1</identificator>
+            <identificator>CMON_test_ilvo_laag_0_10_MG_2022</identificator>
             <toegekend_door>DATABEHEERDER</toegekend_door>
         </identificator>
         <identificator>
-            <identificator>2017-143287</identificator>
+            <identificator>2022-400005</identificator>
             <toegekend_door>DOV</toegekend_door>
         </identificator>
-        <type>Enkelvoudig monster</type>
+        <type>Mengmonster</type>
         <bemonsterdObject>
-            <objecttype>BORING</objecttype>
-            <naam>B/472/21/2</naam>
-            <permkey>2003-001986</permkey>
+            <objecttype>BODEMDIEPTEINTERVAL</objecttype>
+            <naam>1 laag CMON_test_ilvo_laag_0_10</naam>
+            <permkey>2025-080627</permkey>
         </bemonsterdObject>
         <bemonsteringsmethode>
-            <bemonsteringsinstrument>https://data.bodemenondergrond.vlaanderen.be/id/concept/bemonsteringsinstrument/avegaarbooras</bemonsteringsinstrument>
+            <bemonsteringsprocedure>https://data.bodemenondergrond.vlaanderen.be/id/concept/bemonsteringsprocedure/csp</bemonsteringsprocedure>
+            <bemonsteringsinstrument>https://data.bodemenondergrond.vlaanderen.be/id/concept/bemonsteringsinstrument/steekguts30mm</bemonsteringsinstrument>
             <monsternemer>
-                <naam>ABO</naam>
+                <naam>Departement Omgeving</naam>
             </monsternemer>
         </bemonsteringsmethode>
         <monstertype>https://data.bodemenondergrond.vlaanderen.be/id/concept/bemonsteringstype/geroerd</monstertype>
         <bemonsteringsplaats>
-            <van>5.2</van>
-            <tot>5.5</tot>
+            <van>0.0</van>
+            <tot>0.1</tot>
         </bemonsteringsplaats>
         <bemonsteringstijdstip>
-            <datum>2003-03-25</datum>
+            <datumtijd>2022-03-10T10:45:00.000</datumtijd>
         </bemonsteringstijdstip>
-        <materiaalklasse>https://data.bodemenondergrond.vlaanderen.be/id/concept/materiaalklasse/sediment</materiaalklasse>
+        <materiaalklasse>https://data.bodemenondergrond.vlaanderen.be/id/concept/materiaalklasse/bodem</materiaalklasse>
+        <verwerkingsdetails xmlns:ns5="http://monster.kern.schemas.dov.vlaanderen.be" xsi:type="ns5:MonsterBehandelingType">
+            <procesoperator xmlns:ns6="http://generiek.kern.schemas.dov.vlaanderen.be" xsi:type="ns6:UitvoerderType">
+                <naam>Departement Omgeving</naam>
+            </procesoperator>
+            <behandeling>Monstervoorbereiding door</behandeling>
+            <behandeling_waarde>Departement Omgeving</behandeling_waarde>
+        </verwerkingsdetails>
+        <opdracht>Bodemkoolstofmonitoringnetwerk Cmon leesrechten ILVO</opdracht>
+        <opdracht>Bodemkoolstofmonitoringnetwerk Cmon</opdracht>
+        <opdracht>Bodemkoolstofmonitoringnetwerk Cmon leesrechten dOMG</opdracht>
+        <opdracht>Bodemkoolstofmonitoringnetwerk Cmon leesrechten INBO</opdracht>
+        <bijlage>
+            <titel>Laboverslag CMON_test_ilvo_laag_0_10_MG_2022</titel>
+            <organisaties>Departement Omgeving</organisaties>
+            <bijlage_type>Laboverslag</bijlage_type>
+            <opmerking>Referentie OP115/22/114</opmerking>
+        </bijlage>
     </monster>
 </ns4:dov-schema>

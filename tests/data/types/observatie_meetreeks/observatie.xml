@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns4:dov-schema xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns4="http://kern.schemas.dov.vlaanderen.be" xsi:schemaLocation="http://kern.schemas.dov.vlaanderen.be https://www.dov.vlaanderen.be/xdov/schema/latest/xsd/kern/dov.xsd">
+    <observatie>
+        <identificator>
+            <identificator>2021-10704567</identificator>
+            <toegekend_door>DOV</toegekend_door>
+        </identificator>
+        <geobserveerd_object>
+            <objecttype>monster</objecttype>
+            <naam>N002</naam>
+            <permkey>2023-328204</permkey>
+        </geobserveerd_object>
+        <diepte_van>9.50</diepte_van>
+        <diepte_tot>10.00</diepte_tot>
+        <parameter>Korrelverdeling d.m.v. hydrometer/areometer</parameter>
+        <parametergroep>Onderkenningsproeven-korrelverdeling </parametergroep>
+        <waarde_meetreeks>
+            <meetpuntparameter>Diameter</meetpuntparameter>
+            <meetpuntparameter_eenheid>mm</meetpuntparameter_eenheid>
+            <meetwaardeparameter>Fractie met grotere diameter</meetwaardeparameter>
+            <meetwaardeparameter_eenheid>%</meetwaardeparameter_eenheid>
+            <meetreekswaarde>
+                <meetwaarde_numeriek>86.34</meetwaarde_numeriek>
+                <meetpunt_numeriek>0.001778</meetpunt_numeriek>
+            </meetreekswaarde>
+            <meetreekswaarde>
+                <meetwaarde_numeriek>81.98</meetwaarde_numeriek>
+                <meetpunt_numeriek>0.0068</meetpunt_numeriek>
+            </meetreekswaarde>
+            <meetreekswaarde>
+                <meetwaarde_numeriek>80.21</meetwaarde_numeriek>
+                <meetpunt_numeriek>0.010114</meetpunt_numeriek>
+            </meetreekswaarde>
+            <meetreekswaarde>
+                <meetwaarde_numeriek>76.52</meetwaarde_numeriek>
+                <meetpunt_numeriek>0.015306</meetpunt_numeriek>
+            </meetreekswaarde>
+            <meetreekswaarde>
+                <meetwaarde_numeriek>63.59</meetwaarde_numeriek>
+                <meetpunt_numeriek>0.024275</meetpunt_numeriek>
+            </meetreekswaarde>
+            <meetreekswaarde>
+                <meetwaarde_numeriek>46.17</meetwaarde_numeriek>
+                <meetpunt_numeriek>0.035378</meetpunt_numeriek>
+            </meetreekswaarde>
+            <meetreekswaarde>
+                <meetwaarde_numeriek>34.96</meetwaarde_numeriek>
+                <meetpunt_numeriek>0.047134</meetpunt_numeriek>
+            </meetreekswaarde>
+        </waarde_meetreeks>
+        <methode>Hydrometer</methode>
+        <resultaattijd>2021-12-03</resultaattijd>
+        <fenomeentijd>2021-10-04</fenomeentijd>
+        <herkomst>LABO</herkomst>
+        <uitvoerder>
+            <organisatie>
+                <naam>VO - Afdeling Geotechniek</naam>
+            </organisatie>
+        </uitvoerder>
+        <behandeling>
+            <behandeling>Kalk verwijderd</behandeling>
+            <behandeling_waarde>ja</behandeling_waarde>
+        </behandeling>
+        <behandeling>
+            <behandeling>Organisch materiaal verwijderd</behandeling>
+            <behandeling_waarde>ja</behandeling_waarde>
+        </behandeling>
+    </observatie>
+</ns4:dov-schema>

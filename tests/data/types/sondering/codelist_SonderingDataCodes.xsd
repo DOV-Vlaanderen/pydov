@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://sondering.kern.schemas.dov.vlaanderen.be" xmlns:generiek="http://generiek.kern.schemas.dov.vlaanderen.be" targetNamespace="http://sondering.kern.schemas.dov.vlaanderen.be" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.00">  
+  <xs:import namespace="http://generiek.kern.schemas.dov.vlaanderen.be" schemaLocation="../generiek/Generiek.xsd"/>  
+  <xs:simpleType name="ConustypeEnumType"> 
+    <xs:annotation> 
+      <xs:documentation>lijst van mogelijke types van conussen waarmee een sondering uitgevoerd werd</xs:documentation> 
+    </xs:annotation>  
+    <xs:restriction base="xs:string"> 
+      <xs:enumeration value="M1"> 
+        <xs:annotation> 
+          <xs:documentation>M1 conus</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="M2"> 
+        <xs:annotation> 
+          <xs:documentation>M2 conus</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="M4"> 
+        <xs:annotation> 
+          <xs:documentation>M4 conus</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="E"> 
+        <xs:annotation> 
+          <xs:documentation>Electrische conus</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="U"> 
+        <xs:annotation> 
+          <xs:documentation>Piezoconus</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration> 
+    </xs:restriction> 
+  </xs:simpleType>  
+  <xs:simpleType name="SondeerApparaatEnumType"> 
+    <xs:annotation> 
+      <xs:documentation>de mogelijke waarden voor de sondeerapparaten</xs:documentation> 
+    </xs:annotation>  
+    <xs:restriction base="xs:string"> 
+      <xs:enumeration value="25 kN"> 
+        <xs:annotation> 
+          <xs:documentation>apparaat 25 kN</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="50 kN"> 
+        <xs:annotation> 
+          <xs:documentation>apparaat 50 kN</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="100 kN"> 
+        <xs:annotation> 
+          <xs:documentation>apparaat 100 kN</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="200 kN"> 
+        <xs:annotation> 
+          <xs:documentation>apparaat 200 kN</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="25 kN - LOS"> 
+        <xs:annotation> 
+          <xs:documentation>apparaat 25 kN - LOS</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="50 kN - LOS"> 
+        <xs:annotation> 
+          <xs:documentation>apparaat 50 kN - LOS</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="100 kN - LOS"> 
+        <xs:annotation> 
+          <xs:documentation>apparaat 100 kN - LOS</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="200 kN - Unimog"> 
+        <xs:annotation> 
+          <xs:documentation>apparaat 200 kN - Unimog</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="200 kN - MAN1"> 
+        <xs:annotation> 
+          <xs:documentation>apparaat 200 kN - MAN1</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="200 kN - MAN2"> 
+        <xs:annotation> 
+          <xs:documentation>apparaat 200 kN - MAN2</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="200 kN - RUPS"> 
+        <xs:annotation> 
+          <xs:documentation>apparaat 200 kN - RUPS</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="200 kN - TRACK-TRUCK"> 
+        <xs:annotation> 
+          <xs:documentation>apparaat 200 kN - TRACK-TRUCK</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="200 kN - GINAF"> 
+        <xs:annotation> 
+          <xs:documentation>apparaat 200 kN - GINAF</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="35 kN - ingesnoerde buizen"> 
+        <xs:annotation> 
+          <xs:documentation>apparaat 35 kN - ingesnoerde buizen</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="150 kN - Mini Rups"> 
+        <xs:annotation> 
+          <xs:documentation>apparaat 150 kN - Mini Rups</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="200 kN - LOS"> 
+        <xs:annotation> 
+          <xs:documentation>apparaat 200 kN - LOS</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="onbekend"> 
+        <xs:annotation> 
+          <xs:documentation>apparaat onbekend</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration> 
+    </xs:restriction> 
+  </xs:simpleType>  
+  <xs:simpleType name="SondeerMeetlichaamEnumType"> 
+    <xs:annotation> 
+      <xs:documentation>de mogelijke waarden voor de sondering meetlichaam</xs:documentation> 
+    </xs:annotation>  
+    <xs:restriction base="xs:string"> 
+      <xs:enumeration value="H1"/>  
+      <xs:enumeration value="H10"/>  
+      <xs:enumeration value="H19.64"/>  
+      <xs:enumeration value="H20"/>  
+      <xs:enumeration value="H38.48"/>  
+      <xs:enumeration value="H100"/>  
+      <xs:enumeration value="CD"/>  
+      <xs:enumeration value="CFD"/> 
+    </xs:restriction> 
+  </xs:simpleType>  
+  <xs:simpleType name="SondeerMethodeEnumType"> 
+    <xs:annotation> 
+      <xs:documentation>de mogelijke waarden voor de sondeermethodes</xs:documentation> 
+    </xs:annotation>  
+    <xs:restriction base="xs:string"> 
+      <xs:enumeration value="0"> 
+        <xs:annotation> 
+          <xs:documentation>sondeermethode onbekend</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="1"> 
+        <xs:annotation> 
+          <xs:documentation>continu elektrisch</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="2"> 
+        <xs:annotation> 
+          <xs:documentation>discontinu mechanisch</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="3"> 
+        <xs:annotation> 
+          <xs:documentation>continu mechanisch</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration> 
+    </xs:restriction> 
+  </xs:simpleType>  
+  <xs:simpleType name="FilterlocatieEnumType"> 
+    <xs:annotation> 
+      <xs:documentation/> 
+    </xs:annotation>  
+    <xs:restriction base="xs:string"> 
+      <xs:enumeration value="u1"/>  
+      <xs:enumeration value="u2"/>  
+      <xs:enumeration value="u3"/> 
+    </xs:restriction> 
+  </xs:simpleType>  
+  <xs:simpleType name="MethodeVerzadigingEnumType"> 
+    <xs:annotation> 
+      <xs:documentation/> 
+    </xs:annotation>  
+    <xs:restriction base="xs:string"> 
+      <xs:enumeration value="siliconenolie"/>  
+      <xs:enumeration value="ontlucht water"/>  
+      <xs:enumeration value="glycerine"/> 
+    </xs:restriction> 
+  </xs:simpleType>  
+  <xs:simpleType name="SondeerTechniekEnumType"> 
+    <xs:annotation> 
+      <xs:documentation>de mogelijke waarden voor de speciale sondeertechniek die gebruikt worden op een bepaalde diepte (codes)</xs:documentation> 
+    </xs:annotation>  
+    <xs:restriction base="xs:string"> 
+      <xs:enumeration value="B"> 
+        <xs:annotation> 
+          <xs:documentation>sondeerbuizen door een harde laag geduwd of geboord</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="E"> 
+        <xs:annotation> 
+          <xs:documentation>sondeerbuizen op en neer bewogen</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="S"> 
+        <xs:annotation> 
+          <xs:documentation>uitvoering sondering tijdelijk onderbroken</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="V"> 
+        <xs:annotation> 
+          <xs:documentation>plaatsing van voerbuizen</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="D"> 
+        <xs:annotation> 
+          <xs:documentation>dissipatieproef uitgevoerd</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="andere"> 
+        <xs:annotation> 
+          <xs:documentation>een andere dan de standaard voorziene technieken</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration> 
+    </xs:restriction> 
+  </xs:simpleType>  
+  <xs:simpleType name="ParameterEnumType"> 
+    <xs:annotation> 
+      <xs:documentation>de mogelijke parameters die tijdens een sondering geregistreerd worden</xs:documentation> 
+    </xs:annotation>  
+    <xs:restriction base="xs:string"> 
+      <xs:enumeration value="qc"> 
+        <xs:annotation> 
+          <xs:documentation>conusweerstand</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="Qt"> 
+        <xs:annotation> 
+          <xs:documentation>de totale weerstand</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="fs"> 
+        <xs:annotation> 
+          <xs:documentation>plaatselijke kleefweerstand</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="u"> 
+        <xs:annotation> 
+          <xs:documentation>de porienwaterspanning</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="i"> 
+        <xs:annotation> 
+          <xs:documentation>de helling van de sondeerconus tov de verticale (alzijdige meting)</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="i_ns"> 
+        <xs:annotation> 
+          <xs:documentation>de helling van de sondeerconus tov de verticale (biaxiale meting - North-South richting)</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="i_ew"> 
+        <xs:annotation> 
+          <xs:documentation>de helling van de sondeerconus tov de verticale (biaxiale meting - East-West richting)</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="t"> 
+        <xs:annotation> 
+          <xs:documentation>tijdstip van opmeting</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="Temp"> 
+        <xs:annotation> 
+          <xs:documentation>temperatuur</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration> 
+    </xs:restriction> 
+  </xs:simpleType>  
+  <xs:simpleType name="TesttypeEnumType"> 
+    <xs:annotation> 
+      <xs:documentation>lijst van mogelijke types van uitvoering van een sondering</xs:documentation> 
+    </xs:annotation>  
+    <xs:restriction base="xs:string"> 
+      <xs:enumeration value="TE1"> 
+        <xs:annotation> 
+          <xs:documentation>TE1</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="TE1/CPTE"> 
+        <xs:annotation> 
+          <xs:documentation>TE1/CPTE</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="TE2"> 
+        <xs:annotation> 
+          <xs:documentation>TE2</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="TE2/CPTU"> 
+        <xs:annotation> 
+          <xs:documentation>TE2/CPTU</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="TM1"> 
+        <xs:annotation> 
+          <xs:documentation>TM1</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="TM2"> 
+        <xs:annotation> 
+          <xs:documentation>TM2</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="TM3"> 
+        <xs:annotation> 
+          <xs:documentation>TM3</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="TM4"> 
+        <xs:annotation> 
+          <xs:documentation>TM4</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration> 
+    </xs:restriction> 
+  </xs:simpleType>  
+  <xs:simpleType name="StopcriteriumEnumType"> 
+    <xs:annotation> 
+      <xs:documentation>lijst van mogelijke stopcriteria van een sondering</xs:documentation> 
+    </xs:annotation>  
+    <xs:restriction base="xs:string"> 
+      <xs:enumeration value="gevraagde diepte bereikt"/>  
+      <xs:enumeration value="maximale capaciteit bereikt"/>  
+      <xs:enumeration value="maximale puntweerstand bereikt"/>  
+      <xs:enumeration value="maximale plaatselijke wrijvingsweerstand bereikt"/>  
+      <xs:enumeration value="maximale inclinatie bereikt"/>  
+      <xs:enumeration value="maximale porienwaterspanning bereikt"/>  
+      <xs:enumeration value="obstakel"/>  
+      <xs:enumeration value="gevaar voor vervorming en bezwijking"/>  
+      <xs:enumeration value="zie opmerking/waarneming"/>  
+      <xs:enumeration value="niet nader gespecificeerd"/> 
+    </xs:restriction> 
+  </xs:simpleType>  
+  <xs:simpleType name="OpmerkingTypeEnum"> 
+    <xs:annotation> 
+      <xs:documentation>lijst van opmerkingtypes specifiek voor een sondering</xs:documentation> 
+    </xs:annotation>  
+    <xs:restriction base="xs:string"> 
+      <xs:enumeration value="Afwijkingen van de norm"/>  
+      <xs:enumeration value="Reden vroegtijdig stoppen"/>  
+      <xs:enumeration value="Hernemen sondering"/>  
+      <xs:enumeration value="Speciale opstellingen"/>  
+      <xs:enumeration value="Waarnemingen tijdens uitvoering"/> 
+    </xs:restriction> 
+  </xs:simpleType>  
+  <xs:simpleType name="OpmerkingTypeSonderingEnum"> 
+    <xs:annotation> 
+      <xs:documentation>de mogelijke waarden voor de opmerkingtypes (algemeen + specifiek voor sonderingen)</xs:documentation> 
+    </xs:annotation>  
+    <xs:union memberTypes="generiek:OpmerkingTypeGeneriekEnum OpmerkingTypeEnum"/> 
+  </xs:simpleType>  
+  <xs:simpleType name="ConusPenetrometerKlasseEnumType"> 
+    <xs:annotation> 
+      <xs:documentation>lijst van mogelijke stopcriteria van een sondering</xs:documentation> 
+    </xs:annotation>  
+    <xs:restriction base="xs:string"> 
+      <xs:enumeration value="0"> 
+        <xs:annotation> 
+          <xs:documentation>klasse 0</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="1"> 
+        <xs:annotation> 
+          <xs:documentation>klasse 1</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="2"> 
+        <xs:annotation> 
+          <xs:documentation>klasse 2</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="3"> 
+        <xs:annotation> 
+          <xs:documentation>klasse 3</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration> 
+    </xs:restriction> 
+  </xs:simpleType>  
+  <xs:simpleType name="SondeerNormEnumType"> 
+    <xs:annotation> 
+      <xs:documentation>lijst van mogelijke normen volgende dewelke een sondering uitgevoerd kan worden</xs:documentation> 
+    </xs:annotation>  
+    <xs:restriction base="xs:string"> 
+      <xs:enumeration value="NBN EN ISO 22476-12:2009"> 
+        <xs:annotation> 
+          <xs:documentation>NBN EN ISO 22476-12:2009</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="NBN EN ISO 22476-1:2012"> 
+        <xs:annotation> 
+          <xs:documentation>NBN EN ISO 22476-1:2012</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="NBN EN ISO 19901-8:2015"> 
+        <xs:annotation> 
+          <xs:documentation>NBN EN ISO 19901-8:2015</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="NBN EN ISO 22476-1:2023"> 
+        <xs:annotation> 
+          <xs:documentation>NBN EN ISO 22476-1:2023</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="MVI 514-A/50"> 
+        <xs:annotation> 
+          <xs:documentation>MVI 514-A/50</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="MVI 514-A/51"> 
+        <xs:annotation> 
+          <xs:documentation>MVI 514-A/51</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="NEN-5140"> 
+        <xs:annotation> 
+          <xs:documentation>NEN-5140</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="NEN-3680"> 
+        <xs:annotation> 
+          <xs:documentation>NEN-3680</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration>  
+      <xs:enumeration value="NEN EN ISO 22476-1:2012"> 
+        <xs:annotation> 
+          <xs:documentation>NEN EN ISO 22476-1:2012</xs:documentation> 
+        </xs:annotation> 
+      </xs:enumeration> 
+    </xs:restriction> 
+  </xs:simpleType> 
+</xs:schema>

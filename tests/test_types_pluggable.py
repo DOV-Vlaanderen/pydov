@@ -220,7 +220,7 @@ class TestMyGrondwaterFilterOpbouw(object):
 
         df = fs.search(query=PropertyIsEqualTo(
             propertyname='filterfiche',
-            literal=build_dov_url('data/filter/2003-004471')))
+            literal=build_dov_url('data/filter/1997-000494')))
 
         assert 'opbouw_van' in df
         assert 'opbouw_tot' in df
@@ -228,4 +228,4 @@ class TestMyGrondwaterFilterOpbouw(object):
 
         assert df.iloc[-1].opbouw_van == 3.6
         assert df.iloc[-1].opbouw_tot == 4.0
-        assert df.iloc[-1].opbouw_element == 'filterelement'
+        assert df.iloc[-1].opbouw_element == 'filter'

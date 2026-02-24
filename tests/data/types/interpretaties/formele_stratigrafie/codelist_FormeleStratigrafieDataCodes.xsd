@@ -1,0 +1,2040 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://interpretatie.kern.schemas.dov.vlaanderen.be" targetNamespace="http://interpretatie.kern.schemas.dov.vlaanderen.be" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.00">
+    <xs:simpleType name="FormeleStratigrafieLedenEnumType">
+        <xs:annotation>
+            <xs:documentation>de mogelijke codes voor de leden van de formele stratigrafie</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="A">
+                <xs:annotation>
+                    <xs:documentation>Antropogeen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Aa">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Aalter</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="AaBe">
+                <xs:annotation>
+                    <xs:documentation>Lid van Beernem (Formatie van Aalter)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="AaOe">
+                <xs:annotation>
+                    <xs:documentation>Lid van Oedelem (Formatie van Aalter)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Ab">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Arenberg</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="AbRs">
+                <xs:annotation>
+                    <xs:documentation>Lid van Rotselaar (Formatie van Arenberg)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="AbWi">
+                <xs:annotation>
+                    <xs:documentation>Lid van Wichelen (Formatie van Arenberg)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="AbX">
+                <xs:annotation>
+                    <xs:documentation>Ongedifferentieerd Lid (Formatie van Arenberg)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Ag">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Adegem</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Bb">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Bolderberg</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BbGe">
+                <xs:annotation>
+                    <xs:documentation>Lid van Genk (Formatie van Bolderberg)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BbHo">
+                <xs:annotation>
+                    <xs:documentation>Lid van Houthalen (Formatie van Bolderberg)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BbOp">
+                <xs:annotation>
+                    <xs:documentation>Lid van Opitter (Formatie van Bolderberg)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Bc">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Berchem</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BcAn">
+                <xs:annotation>
+                    <xs:documentation>Lid van Antwerpen (Formatie van Berchem)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BcEd">
+                <xs:annotation>
+                    <xs:documentation>Lid van Edegem (Formatie van Berchem)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BcKi">
+                <xs:annotation>
+                    <xs:documentation>Lid van Kiel (Formatie van Berchem)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BcZo">
+                <xs:annotation>
+                    <xs:documentation>Lid van Zonderschot (Formatie van Berchem)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Be">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Bertaimont</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Bi">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Bilzen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BiBe">
+                <xs:annotation>
+                    <xs:documentation>Lid van Berg (Formatie van Bilzen)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BiKe">
+                <xs:annotation>
+                    <xs:documentation>Lid van Kerniel (Formatie van Bilzen)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BiKs">
+                <xs:annotation>
+                    <xs:documentation>Lid van Kleine Spouwen (Formatie van Bilzen)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Bm">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Boom</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BmBt">
+                <xs:annotation>
+                    <xs:documentation>Lid van Boeretang (Formatie van Boom)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BmBw">
+                <xs:annotation>
+                    <xs:documentation>Lid van Belsele-Waas (Formatie van Boom)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BmPu">
+                <xs:annotation>
+                    <xs:documentation>Lid van Putte (Formatie van Boom)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BmTe">
+                <xs:annotation>
+                    <xs:documentation>Lid van Terhagen (Formatie van Boom)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Bo">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Borgloon</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BoBt">
+                <xs:annotation>
+                    <xs:documentation>Lid van Boutersem (Formatie van Borgloon)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BoHe">
+                <xs:annotation>
+                    <xs:documentation>Lid van Henis (Formatie van Borgloon)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BoKe">
+                <xs:annotation>
+                    <xs:documentation>Lid van Kerkom (Formatie van Borgloon)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BoOb">
+                <xs:annotation>
+                    <xs:documentation>Lid van Alden Biezen (Formatie van Borgloon)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Br">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Brussel</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BrAr">
+                <xs:annotation>
+                    <xs:documentation>Lid van Archennes (Formatie van Brussel)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BrBh">
+                <xs:annotation>
+                    <xs:documentation>Lid van Bois de la Houssière (Formatie van Brussel)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BrCg">
+                <xs:annotation>
+                    <xs:documentation>Lid van Chaumont-Gistoux (Formatie van Brussel)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BrDi">
+                <xs:annotation>
+                    <xs:documentation>Lid van Diegem (Formatie van Brussel)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BrKr">
+                <xs:annotation>
+                    <xs:documentation>Lid van Kraaiberg (Formatie van Brussel)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BrMa">
+                <xs:annotation>
+                    <xs:documentation>Lid van Machelen (Formatie van Brussel)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BrBi">
+                <xs:annotation>
+                    <xs:documentation>Lid van Bierbeek (Formatie van Brussel)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BrNe">
+                <xs:annotation>
+                    <xs:documentation>Lid van Neerijse (Formatie van Brussel)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Bs">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Brasschaat</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BsAk">
+                <xs:annotation>
+                    <xs:documentation>Brasschaat</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BsHd">
+                <xs:annotation>
+                    <xs:documentation>Lid van Hemeldonk (Formatie van Brasschaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BsSv">
+                <xs:annotation>
+                    <xs:documentation>Lid van Schorvoort (Formatie van Brasschaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BsVs">
+                <xs:annotation>
+                    <xs:documentation>Lid van Vosselaar (Formatie van Brasschaat)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Ca">
+                <xs:annotation>
+                    <xs:documentation>Carboon</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CaDi">
+                <xs:annotation>
+                    <xs:documentation>Groep van Dinantiaan</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CaNa">
+                <xs:annotation>
+                    <xs:documentation>Groep van Namuriaan</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CaWe">
+                <xs:annotation>
+                    <xs:documentation>Groep van Westfaliaan</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Ci">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Ciply</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Cm">
+                <xs:annotation>
+                    <xs:documentation>Groep van Cambrium</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="De">
+                <xs:annotation>
+                    <xs:documentation>Groep van Devoon</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Di">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Diest</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="DiDe">
+                <xs:annotation>
+                    <xs:documentation>Lid van Dessel (Formatie van Diest)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="DiDn">
+                <xs:annotation>
+                    <xs:documentation>Lid van Deurne (Formatie van Diest)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Eg">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Eigenbilzen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="El">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Eeklo</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="FX">
+                <xs:annotation>
+                    <xs:documentation>Formatie van afgedekte formatie</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="G">
+                <xs:annotation>
+                    <xs:documentation>Groep van geroerd/verstoord</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Ge">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Gentbrugge</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GeAb">
+                <xs:annotation>
+                    <xs:documentation>Lid van Aalterbrugge (Formatie van Gentbrugge)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GeHo">
+                <xs:annotation>
+                    <xs:documentation>Lid van Hombeek (Formatie van Gentbrugge)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GeKw">
+                <xs:annotation>
+                    <xs:documentation>Lid van Kwatrecht (Formatie van Gentbrugge)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GeMe">
+                <xs:annotation>
+                    <xs:documentation>Lid van Merelbeke (Formatie van Gentbrugge)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GePi">
+                <xs:annotation>
+                    <xs:documentation>Lid van Pittem (Formatie van Gentbrugge)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GeVl">
+                <xs:annotation>
+                    <xs:documentation>Lid van Vlierzele (Formatie van Gentbrugge)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Gm">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Gembloux</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Gt">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Gent</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GtAb">
+                <xs:annotation>
+                    <xs:documentation>Lid van Achterbos (Formatie van Gent)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GtDi">
+                <xs:annotation>
+                    <xs:documentation>Lid van Dilsen (Formatie van Gent)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GtDp">
+                <xs:annotation>
+                    <xs:documentation>Lid van De Panne (Formatie van Gent)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GtOg">
+                <xs:annotation>
+                    <xs:documentation>Lid van Opgrimbie (Formatie van Gent)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GtTi">
+                <xs:annotation>
+                    <xs:documentation>Lid van Tisselt (Formatie van Gent)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Ha">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Hainin</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Hn">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Hannut</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="HnBe">
+                <xs:annotation>
+                    <xs:documentation>Lid van Beselare (Formatie van Hannut)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="HnCh">
+                <xs:annotation>
+                    <xs:documentation>Lid van Chercq (Formatie van Hannut)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="HnGr">
+                <xs:annotation>
+                    <xs:documentation>Lid van Grandglise (Formatie van Hannut)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="HnHa">
+                <xs:annotation>
+                    <xs:documentation>Lid van Halen (Formatie van Hannut)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="HnLi">
+                <xs:annotation>
+                    <xs:documentation>Lid van Lincent (Formatie van Hannut)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="HnWa">
+                <xs:annotation>
+                    <xs:documentation>Lid van Waterschei (Formatie van Hannut)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Ho">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Houthem</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="HP">
+                <xs:annotation>
+                    <xs:documentation>Groep van Haspengouw</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Hs">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Heers</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="HsGe">
+                <xs:annotation>
+                    <xs:documentation>Lid van Gelinden (Formatie van Heers)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="HsMa">
+                <xs:annotation>
+                    <xs:documentation>Lid van Maaseik (Formatie van Heers)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="HsOr">
+                <xs:annotation>
+                    <xs:documentation>Lid van Orp (Formatie van Heers)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Hy">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Hyon</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="HyBo">
+                <xs:annotation>
+                    <xs:documentation>Lid van Bois-la-Haut (Formatie van Hyon)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="HyEg">
+                <xs:annotation>
+                    <xs:documentation>Lid van Egem (Formatie van Hyon)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="HyMo">
+                <xs:annotation>
+                    <xs:documentation>Lid van Mont-Panisel (Formatie van Hyon)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Hz">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Herzeele</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="IE">
+                <xs:annotation>
+                    <xs:documentation>Groep van Ieper</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Kd">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Kattendijk</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Ke">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Kempen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Kh">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Kruishoutem</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Kl">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Kasterlee</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Ko">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Kortrijk</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KoAa">
+                <xs:annotation>
+                    <xs:documentation>Lid van Aalbeke (Formatie van Kortrijk)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KoMh">
+                <xs:annotation>
+                    <xs:documentation>Lid van Mont-Héribu (Formatie van Kortrijk)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KoMo">
+                <xs:annotation>
+                    <xs:documentation>Lid van Moen (Formatie van Kortrijk)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KoMp">
+                <xs:annotation>
+                    <xs:documentation>Lid van Mons-en-Pévèle (Formatie van Kortrijk)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KoOl">
+                <xs:annotation>
+                    <xs:documentation>Lid van Lower Orchies (Formatie van Kortrijk)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KoOm">
+                <xs:annotation>
+                    <xs:documentation>Lid van Middle Orchies (Formatie van Kortrijk)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KoOr">
+                <xs:annotation>
+                    <xs:documentation>Lid van Orchies (Formatie van Kortrijk)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KoOu">
+                <xs:annotation>
+                    <xs:documentation>Lid van Upper Orchies (Formatie van Kortrijk)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KoRo">
+                <xs:annotation>
+                    <xs:documentation>Lid van Roubaix (Formatie van Kortrijk)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KoSm">
+                <xs:annotation>
+                    <xs:documentation>Lid van Saint Maur (Formatie van Kortrijk)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KoZo">
+                <xs:annotation>
+                    <xs:documentation>Lid van Het Zoute (Formatie van Kortrijk)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KRWe">
+                <xs:annotation>
+                    <xs:documentation>Wealden</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Kz">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Kiezelooliet</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KzB1">
+                <xs:annotation>
+                    <xs:documentation>Lid van Brunssum1 (Formatie van Kiezelooliet)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KzB2">
+                <xs:annotation>
+                    <xs:documentation>Lid van Brunssum2 (Formatie van Kiezelooliet)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KzBr">
+                <xs:annotation>
+                    <xs:documentation>Lid van Brunssum (Formatie van Kiezelooliet)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KzJa">
+                <xs:annotation>
+                    <xs:documentation>Lid van Jagersborg (Formatie van Kiezelooliet)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KzPe">
+                <xs:annotation>
+                    <xs:documentation>Lid van Pey (Formatie van Kiezelooliet)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KzWb">
+                <xs:annotation>
+                    <xs:documentation>Lid van Waubach (Formatie van Kiezelooliet)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KzX">
+                <xs:annotation>
+                    <xs:documentation>Lid van ongedefinieerd (Formatie van Kiezelooliet)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LA">
+                <xs:annotation>
+                    <xs:documentation>Groep van Landen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Ld">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Lede</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Li">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Lillo</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LiKr">
+                <xs:annotation>
+                    <xs:documentation>Lid van Kruisschans (Formatie van Lillo)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LiLu">
+                <xs:annotation>
+                    <xs:documentation>Lid van Luchtbal (Formatie van Lillo)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LiMe">
+                <xs:annotation>
+                    <xs:documentation>Lid van Merksem (Formatie van Lillo)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LiOo">
+                <xs:annotation>
+                    <xs:documentation>Lid van Oorderen (Formatie van Lillo)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LiX">
+                <xs:annotation>
+                    <xs:documentation>Lid van ongedifferentieerd (Formatie van Lillo)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LiZa">
+                <xs:annotation>
+                    <xs:documentation>Lid van Zandvliet (Formatie van Lillo)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Lk">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Lanklaar</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Ln">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Lanaken</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Ma">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Maldegem</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MA">
+                <xs:annotation>
+                    <xs:documentation>Groep van Maas</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MAa">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Aalburg</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MaAs">
+                <xs:annotation>
+                    <xs:documentation>Lid van Asse (Formatie van Maldegem)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MaBu">
+                <xs:annotation>
+                    <xs:documentation>Lid van Buisputten (Formatie van Maldegem)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MAk">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Aachen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MAkAa">
+                <xs:annotation>
+                    <xs:documentation>Zand van Aachen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MAkHe">
+                <xs:annotation>
+                    <xs:documentation>Hergenrath</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MaOd">
+                <xs:annotation>
+                    <xs:documentation>Lid van Onderdijke (Formatie van Maldegem)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MaOn">
+                <xs:annotation>
+                    <xs:documentation>Lid van Onderdale (Formatie van Maldegem)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MaUr">
+                <xs:annotation>
+                    <xs:documentation>Lid van Ursel (Formatie van Maldegem)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MaWe">
+                <xs:annotation>
+                    <xs:documentation>Lid van Wemmel (Formatie van Maldegem)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MaZo">
+                <xs:annotation>
+                    <xs:documentation>Lid van Zomergem (Formatie van Maldegem)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Mb">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Meulebeke</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MBe">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Bernissart</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MBu">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Buntsandstein</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MBuBr">
+                <xs:annotation>
+                    <xs:documentation>Lid van Bree (Formatie van Buntsandstein)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MBuBu">
+                <xs:annotation>
+                    <xs:documentation>Lid van Bullen (Formatie van Buntsandstein)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MBuGr">
+                <xs:annotation>
+                    <xs:documentation>Lid van Gruitrode (Formatie van Buntsandstein)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MDo">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Dorne</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MDoB1">
+                <xs:annotation>
+                    <xs:documentation>Beutenaken1</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MDoB2">
+                <xs:annotation>
+                    <xs:documentation>Beutenaken2</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MDoOv">
+                <xs:annotation>
+                    <xs:documentation>Onder-Vijlen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MDoZe">
+                <xs:annotation>
+                    <xs:documentation>Zeven Wegen Equivalent</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Me">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Merksplas</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ME">
+                <xs:annotation>
+                    <xs:documentation>Groep van Maas</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MeB">
+                <xs:annotation>
+                    <xs:documentation>Merksplas</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MEs">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Esplechin</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MGu">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Gulpen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MGuBe">
+                <xs:annotation>
+                    <xs:documentation>Lid van Beutenaken Kalk (Formatie van Gulpen)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MGuLa">
+                <xs:annotation>
+                    <xs:documentation>Lid van Lanaye (Formatie van Gulpen)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MGuLi">
+                <xs:annotation>
+                    <xs:documentation>Lid van Lixhe (Formatie van Gulpen)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MGuVi">
+                <xs:annotation>
+                    <xs:documentation>Lid van Vijlen (Formatie van Gulpen)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MGuZe">
+                <xs:annotation>
+                    <xs:documentation>Lid van Zeven Wegen (Formatie van Gulpen)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MHa">
+                <xs:annotation>
+                    <xs:documentation>Groep van Hainaut</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MJU">
+                <xs:annotation>
+                    <xs:documentation>Groep van Jura</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MKe">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Keuper</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MKR">
+                <xs:annotation>
+                    <xs:documentation>Groep van Krijt</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MKu">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Kunrade</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Ml">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Mol</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MlDo">
+                <xs:annotation>
+                    <xs:documentation>Lid van Donk (Formatie van Mol)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MlMa">
+                <xs:annotation>
+                    <xs:documentation>Lid van Maat (Formatie van Mol)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MlMh">
+                <xs:annotation>
+                    <xs:documentation>Lid van Maatheide (Formatie van Mol)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MlRe">
+                <xs:annotation>
+                    <xs:documentation>Lid van Rees (Formatie van Mol)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MlRu">
+                <xs:annotation>
+                    <xs:documentation>Lid van Russendorp (Formatie van Mol)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MMa">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Maastricht</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MMaKu">
+                <xs:annotation>
+                    <xs:documentation>Lid van Kunrade (Formatie van Maastricht)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MMaVa">
+                <xs:annotation>
+                    <xs:documentation>Lid van Valkenburg (Formatie van Maastricht)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MMs">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Maisières Chalk</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MMu">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Muschelkalk</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MMuAn">
+                <xs:annotation>
+                    <xs:documentation>Anhydrit Gruppe</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MMuHa">
+                <xs:annotation>
+                    <xs:documentation>Hauptmuschelkalk</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MMuWe">
+                <xs:annotation>
+                    <xs:documentation>Wellenkalk</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MNe">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Nevele</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MNeSt">
+                <xs:annotation>
+                    <xs:documentation>Lid van Stekene (Formatie van Nevele)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MNeWa">
+                <xs:annotation>
+                    <xs:documentation>Lid van Wachtebeke (Formatie van Nevele)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Mo">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Mons</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Mp">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Mons-en-Pévèle</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MRo">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Röt</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MSl">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Sleen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MVa">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Vaals</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MVaBG">
+                <xs:annotation>
+                    <xs:documentation>Boven Vaalser Groenzand</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MVaOG">
+                <xs:annotation>
+                    <xs:documentation>Onder Vaalser groenzand</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MVg">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Vert Galand</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Mx">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Melle</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="My">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Malle</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Ne">
+                <xs:annotation>
+                    <xs:documentation>Groep van Neogeen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Op">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Opglabbeek</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="OpEi">
+                <xs:annotation>
+                    <xs:documentation>Lid van Eisden (Formatie van Opglabbeek)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="OpMa">
+                <xs:annotation>
+                    <xs:documentation>Lid van Maasmechelen (Formatie van Opglabbeek)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="OpOp">
+                <xs:annotation>
+                    <xs:documentation>Lid van Opoeteren (Formatie van Opglabbeek)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Or">
+                <xs:annotation>
+                    <xs:documentation>Groep van Ordovicium</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Ot">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Oostende</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Ow">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Oostwinkel</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="P">
+                <xs:annotation>
+                    <xs:documentation>Groep van Paleozoïcum</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="P1">
+                <xs:annotation>
+                    <xs:documentation>Groep van Onder Paleozoïcum</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="P2">
+                <xs:annotation>
+                    <xs:documentation>Groep van Boven Paleozoïcum</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Pa">
+                <xs:annotation>
+                    <xs:documentation>Paleogeen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PAi">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Aisemont</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PAl">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Alvaux</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PAn">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Andenne</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PAt">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Antoing</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PAtGa">
+                <xs:annotation>
+                    <xs:documentation>Lid van Gaurain-Ramecroix (Formatie van Antoing)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PAtWa">
+                <xs:annotation>
+                    <xs:documentation>Lid van Warchin (Formatie van Antoing)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PAv">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Abbaye de Villers</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PBe">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Berneau</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PBg">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Bellegem</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PBi">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Booischot</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PBl">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Blanmont</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PBn">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Bornival</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PBnXa">
+                <xs:annotation>
+                    <xs:documentation>Lid van Lid niet benoemd (Formatie van Bornival)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PBnXb">
+                <xs:annotation>
+                    <xs:documentation>Lid van Lid niet benoemd (Formatie van Bornival)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PBnXc">
+                <xs:annotation>
+                    <xs:documentation>Lid van Lid niet benoemd (Formatie van Bornival)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PBo">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Bosscheveld</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PBp">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Bois Grand-Père</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PBr">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Brûtia</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PBv">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Bovesse</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PC">
+                <xs:annotation>
+                    <xs:documentation>Groep van Condroz</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PCa">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Châtelet</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PCaFl">
+                <xs:annotation>
+                    <xs:documentation>Lid van Floriffoux (Formatie van Châtelet)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PCaRa">
+                <xs:annotation>
+                    <xs:documentation>Lid van Ransart (Formatie van Châtelet)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PCe">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Chevlipont</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PCh">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Charleroi</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PChAs">
+                <xs:annotation>
+                    <xs:documentation>Lid van As (Formatie van Charleroi)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PChEi">
+                <xs:annotation>
+                    <xs:documentation>Lid van Eikenberg (Formatie van Charleroi)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PChMo">
+                <xs:annotation>
+                    <xs:documentation>Lid van Mons (Formatie van Charleroi)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PCo">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Chokier</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PCoBo">
+                <xs:annotation>
+                    <xs:documentation>Lid van Bois-et-Borsu (Formatie van Chokier)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PCoTr">
+                <xs:annotation>
+                    <xs:documentation>Lid van Tramaka (Formatie van Chokier)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PCr">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Corroy</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Pd">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Poederlee</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PDe">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Deerlijk</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PdHe">
+                <xs:annotation>
+                    <xs:documentation>Lid van Heieinde (Formatie van Poederlee)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PEt">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Etroeungt</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PEv">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Evieux</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PF">
+                <xs:annotation>
+                    <xs:documentation>Groep van Frasne</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFa">
+                <xs:annotation>
+                    <xs:documentation>Groep van Famenne</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFf">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Froide Fontaine</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFi">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Fallais</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFiPi">
+                <xs:annotation>
+                    <xs:documentation>Lid van Pitet (Formatie van Fallais)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFiXa">
+                <xs:annotation>
+                    <xs:documentation>Lid van Lid A (Formatie van Fallais)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFiXb">
+                <xs:annotation>
+                    <xs:documentation>Lid van Lid B (Formatie van Fallais)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFiXc">
+                <xs:annotation>
+                    <xs:documentation>Lid van Lid C (Formatie van Fallais)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFiXd">
+                <xs:annotation>
+                    <xs:documentation>Lid van Lid D (Formatie van Fallais)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFiXe">
+                <xs:annotation>
+                    <xs:documentation>Lid van Lid E (Formatie van Fallais)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFl">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Flénu</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFlMe">
+                <xs:annotation>
+                    <xs:documentation>Lid van Meeuwen (Formatie van Flénu)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFlNe">
+                <xs:annotation>
+                    <xs:documentation>Lid van Neerglabbeek (Formatie van Flénu)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFlWa">
+                <xs:annotation>
+                    <xs:documentation>Lid van Wasmes (Formatie van Flénu)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFq">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Fauquez</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFr">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Franc-Waret</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PFu">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Fumal</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PG">
+                <xs:annotation>
+                    <xs:documentation>Groep van Givet</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PGe">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Goeree</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PGo">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Gottignies</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PHe">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Helchteren</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PHeH1">
+                <xs:annotation>
+                    <xs:documentation>Helchteren1</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PHeH2">
+                <xs:annotation>
+                    <xs:documentation>Helchteren2</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PHeH3">
+                <xs:annotation>
+                    <xs:documentation>Helchteren3</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PHeH4">
+                <xs:annotation>
+                    <xs:documentation>Helchteren4</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PHeH5">
+                <xs:annotation>
+                    <xs:documentation>Helchteren5</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PHi">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Heibaart</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PHo">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Hosdin</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PHs">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Hastière</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PHu">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Huet</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PIt">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Ittre</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PJo">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Jodoigne</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PK">
+                <xs:annotation>
+                    <xs:documentation>Groep van Kolenkalk</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PKe">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Kessel</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PLa">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Landelies</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PLm">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Lambermont</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PLo">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Loenhout</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PLs">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Lust</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PLt">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Latinne</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PLu">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Lustin</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PMa">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Mazy</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PMd">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Madot</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PMdXa">
+                <xs:annotation>
+                    <xs:documentation>Lid van Lid niet benoemd (Formatie van Madot)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PMdXb">
+                <xs:annotation>
+                    <xs:documentation>Lid van Lid niet benoemd (Formatie van Madot)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PMdXc">
+                <xs:annotation>
+                    <xs:documentation>Lid van Lid niet benoemd (Formatie van Madot)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PMdXd">
+                <xs:annotation>
+                    <xs:documentation>Lid van Lid niet benoemd (Formatie van Madot)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PMdXe">
+                <xs:annotation>
+                    <xs:documentation>Lid van Lid niet benoemd (Formatie van Madot)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PMdXf">
+                <xs:annotation>
+                    <xs:documentation>Lid van Lid niet benoemd (Formatie van Madot)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PMdXg">
+                <xs:annotation>
+                    <xs:documentation>Lid van Lid niet benoemd (Formatie van Madot)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PMn">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Montfort</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PMo">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Mousty</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PMoFr">
+                <xs:annotation>
+                    <xs:documentation>Lid van Franquenies (Formatie van Mousty)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PMoTa">
+                <xs:annotation>
+                    <xs:documentation>Lid van Tangissart (Formatie van Mousty)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PMoXx">
+                <xs:annotation>
+                    <xs:documentation>Lid van Lid niet benoemd (Formatie van Mousty)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PMu">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Mautiennes</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PNe">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Neeroeteren</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="POD">
+                <xs:annotation>
+                    <xs:documentation>Ordovicium</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="POr">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Orient</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="POs">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Oisquercq</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="POsAs">
+                <xs:annotation>
+                    <xs:documentation>Lid van Asquempont (Formatie van Oisquercq)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="POsRi">
+                <xs:annotation>
+                    <xs:documentation>Lid van Ripain (Formatie van Oisquercq)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PPe">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Pecq</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PPo">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Pont d'Arcole</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PPr">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Presles</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PPt">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Petit-Roeulx</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PRh">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Rhisnes</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PRi">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Rigenée</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PRk">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Rekkem</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PRn">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Ronquières</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PSa">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Samme</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PSaBo">
+                <xs:annotation>
+                    <xs:documentation>Lid van Bois de la Rocq (Formatie van Samme)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PSaFe">
+                <xs:annotation>
+                    <xs:documentation>Lid van Feluy (Formatie van Samme)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PSaMe">
+                <xs:annotation>
+                    <xs:documentation>Lid van Mévergnies (Formatie van Samme)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PSe">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Steenkerque</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PSo">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Souvré</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PSt">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Steentje-Turnhout</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PTo">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Tournai</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PToAl">
+                <xs:annotation>
+                    <xs:documentation>Lid van Allain (Formatie van Tournai)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PToCr">
+                <xs:annotation>
+                    <xs:documentation>Lid van Crampon (Formatie van Tournai)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PToPo">
+                <xs:annotation>
+                    <xs:documentation>Lid van Point-à-Rieu (Formatie van Tournai)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PToPr">
+                <xs:annotation>
+                    <xs:documentation>Lid van Providence (Formatie van Tournai)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PToVa">
+                <xs:annotation>
+                    <xs:documentation>Lid van Vaulx (Formatie van Tournai)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PToVi">
+                <xs:annotation>
+                    <xs:documentation>Lid van Vignobles (Formatie van Tournai)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PTr">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Tribotte</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PTu">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Tubize</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PTuFo">
+                <xs:annotation>
+                    <xs:documentation></xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PTuRo">
+                <xs:annotation>
+                    <xs:documentation></xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PTuXx">
+                <xs:annotation>
+                    <xs:documentation></xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PVa">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Les Vallées</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PVc">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Vichenet</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PVe">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Vesdre</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PVi">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Visé</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PVl">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Velp</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PVs">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Vissoul</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Q">
+                <xs:annotation>
+                    <xs:documentation>Groep van Quartaire afzetting</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="QH">
+                <xs:annotation>
+                    <xs:documentation>Quartair Holoceen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="QP">
+                <xs:annotation>
+                    <xs:documentation>Quartair Pleistoceen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Rb">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Rozebeke</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="RO">
+                <xs:annotation>
+                    <xs:documentation>Groep van Romont</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="RU">
+                <xs:annotation>
+                    <xs:documentation>Groep van Rupel</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="S">
+                <xs:annotation>
+                    <xs:documentation>Primair</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SC">
+                <xs:annotation>
+                    <xs:documentation>Groep van Schelde</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Sh">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Sint Huibrechts Hern</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ShGr">
+                <xs:annotation>
+                    <xs:documentation>Lid van Grimmertingen (Formatie van Sint Huibrechts Hern)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ShNe">
+                <xs:annotation>
+                    <xs:documentation>Lid van Neerrepen (Formatie van Sint Huibrechts Hern)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Si">
+                <xs:annotation>
+                    <xs:documentation>Groep van Siluur</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Sk">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Stokkem</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="St">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Sterksel</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="StBo">
+                <xs:annotation>
+                    <xs:documentation>Lid van Bocholt (Formatie van Sterksel)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="StHa">
+                <xs:annotation>
+                    <xs:documentation>Lid van Hamont (Formatie van Sterksel)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="StLo">
+                <xs:annotation>
+                    <xs:documentation>Lid van Lommel (Formatie van Sterksel)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="T">
+                <xs:annotation>
+                    <xs:documentation>Tertiaire afzetting</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Ti">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Tienen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TiDo">
+                <xs:annotation>
+                    <xs:documentation>Lid van Dormaal (Formatie van Tienen)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TiEr">
+                <xs:annotation>
+                    <xs:documentation>Lid van Erquelinne (Formatie van Tienen)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TiKn">
+                <xs:annotation>
+                    <xs:documentation>Lid van Knokke (Formatie van Tienen)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TiLo">
+                <xs:annotation>
+                    <xs:documentation>Lid van Loksbergen (Formatie van Tienen)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TO">
+                <xs:annotation>
+                    <xs:documentation>Groep van Tongeren</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TR">
+                <xs:annotation>
+                    <xs:documentation>Groep van Trias</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Tt">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Tielt</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TtEg">
+                <xs:annotation>
+                    <xs:documentation>Lid van Egem (Formatie van Tielt)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TtEk">
+                <xs:annotation>
+                    <xs:documentation>Lid van Egemkapel (Formatie van Tielt)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TtKo">
+                <xs:annotation>
+                    <xs:documentation>Lid van Kortemark (Formatie van Tielt)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="U">
+                <xs:annotation>
+                    <xs:documentation>Onbekend</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Ve">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Veldwezelt</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Vl">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Vlaanderen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="VlCa">
+                <xs:annotation>
+                    <xs:documentation>Lid van Calais (Formatie van Vlaanderen)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="VlDh">
+                <xs:annotation>
+                    <xs:documentation>Lid van De Haan (Formatie van Vlaanderen)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="VlDu">
+                <xs:annotation>
+                    <xs:documentation>Lid van Dunkerque (Formatie van Vlaanderen)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Vo">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Voort</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="VoSo">
+                <xs:annotation>
+                    <xs:documentation>Lid van Someren (Formatie van Voort)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="VoVe">
+                <xs:annotation>
+                    <xs:documentation>Lid van Veldhoven (Formatie van Voort)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="VoVo">
+                <xs:annotation>
+                    <xs:documentation>Lid van Voort (Formatie van Voort)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="We">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Weelde</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Zd">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Zutendaal</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ZE">
+                <xs:annotation>
+                    <xs:documentation>Groep van Zenne</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Zz">
+                <xs:annotation>
+                    <xs:documentation>Formatie van Zelzate</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ZzBa">
+                <xs:annotation>
+                    <xs:documentation>Lid van Bassevelde (Formatie van Zelzate)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ZzRu">
+                <xs:annotation>
+                    <xs:documentation>Lid van Ruisbroek (Formatie van Zelzate)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ZzWa">
+                <xs:annotation>
+                    <xs:documentation>Lid van Watervliet (Formatie van Zelzate)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="WeRv">
+               <xs:annotation>
+                   <xs:documentation>Lid van Rijkevorsel (Formatie van Weelde)</xs:documentation>
+               </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="DiKe">
+               <xs:annotation>
+                   <xs:documentation>Lid van Kempen Diest (Formatie van Diest)</xs:documentation>
+               </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="DiHa">
+               <xs:annotation>
+                   <xs:documentation>Lid van Hageland Diest (Formatie van Diest)</xs:documentation>
+               </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="DiBo">
+               <xs:annotation>
+                   <xs:documentation>Lid van Borsbeek (Formatie van Diest)</xs:documentation>
+               </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KlHa">
+               <xs:annotation>
+                   <xs:documentation>Lid van Hallaar (Formatie van Kasterlee)</xs:documentation>
+               </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LiPd">
+               <xs:annotation>
+                   <xs:documentation>Lid van Poederlee (Formatie van Lillo)</xs:documentation>
+               </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="VdWi">
+               <xs:annotation>
+                   <xs:documentation>Lid van Wintelre (Formatie van Veldhoven)</xs:documentation>
+               </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Mn">
+               <xs:annotation>
+                   <xs:documentation>Formatie van Molenbeersel</xs:documentation>
+               </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="WeBs">
+               <xs:annotation>
+                   <xs:documentation>Lid van Beerse (Formatie van Weelde)</xs:documentation>
+               </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Vh">
+               <xs:annotation>
+                   <xs:documentation>Formatie van Vlaamse Heuvels</xs:documentation>
+               </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KlLi">
+               <xs:annotation>
+                   <xs:documentation>Lid van Lichtaart (Formatie van Kasterlee)</xs:documentation>
+               </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KlHe">
+               <xs:annotation>
+                   <xs:documentation>Lid van Heist-op-den-Berg (Formatie van Kasterlee)</xs:documentation>
+               </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="KlBe">
+               <xs:annotation>
+                   <xs:documentation>Lid van Beerzel (Formatie van Kasterlee)</xs:documentation>
+               </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Vd">
+               <xs:annotation>
+                   <xs:documentation>Formatie van Veldhoven</xs:documentation>
+               </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="VdVo">
+               <xs:annotation>
+                   <xs:documentation>Lid van Voort (Formatie van Veldhoven)</xs:documentation>
+               </xs:annotation>
+           </xs:enumeration>
+           <xs:enumeration value="VdSo">
+               <xs:annotation>
+                   <xs:documentation>Lid van Someren (Formatie van Veldhoven)</xs:documentation>
+               </xs:annotation>
+           </xs:enumeration>
+           <xs:enumeration value="WeTu">
+               <xs:annotation>
+                   <xs:documentation>Lid van Turnhout (Formatie van Weelde)</xs:documentation>
+               </xs:annotation>
+           </xs:enumeration>
+           <xs:enumeration value="Wu">
+               <xs:annotation>
+                   <xs:documentation>Formatie van Wurfeld</xs:documentation>
+               </xs:annotation>
+           </xs:enumeration>
+           <xs:enumeration value="In">
+               <xs:annotation>
+                   <xs:documentation>Formatie van Inden</xs:documentation>
+               </xs:annotation>
+           </xs:enumeration>
+           <xs:enumeration value="MlRt">
+               <xs:annotation>
+                   <xs:documentation>Lid van Retie (Formatie van Mol)</xs:documentation>
+               </xs:annotation>
+           </xs:enumeration>            
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

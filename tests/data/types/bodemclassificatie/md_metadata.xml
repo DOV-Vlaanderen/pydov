@@ -57,7 +57,7 @@
       </gmd:CI_ResponsibleParty>
     </gmd:contact>
     <gmd:dateStamp>
-      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2025-08-25</gco:Date>
+      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2026-02-23</gco:Date>
     </gmd:dateStamp>
     <gmd:metadataStandardName>
       <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">ISO 19115/2003/Cor.1:2006/INSPIRE-TG2.0</gco:CharacterString>
@@ -89,7 +89,7 @@
             <gmd:date>
               <gmd:CI_Date>
                 <gmd:date>
-                  <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2025-08-25</gco:Date>
+                  <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2026-02-23</gco:Date>
                 </gmd:date>
                 <gmd:dateType>
                   <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="revision">revision</gmd:CI_DateTypeCode>
@@ -119,7 +119,7 @@
             <gmd:identifier>
               <gmd:MD_Identifier>
                 <gmd:code>
-                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">https://www.dov.vlaanderen.be/dataset/afe7a6a2-646b-4b49-8787-6d7b88e9b357</gco:CharacterString>
+                  <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">afe7a6a2-646b-4b49-8787-6d7b88e9b357</gco:CharacterString>
                 </gmd:code>
               </gmd:MD_Identifier>
             </gmd:identifier>
@@ -647,7 +647,7 @@ Naast het Belgische bodemclassificatiesysteem en de WRB classificatie bevat de d
             <gmd:date>
               <gmd:CI_Date>
                 <gmd:date>
-                  <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2025-08-25</gco:Date>
+                  <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2026-02-23</gco:Date>
                 </gmd:date>
                 <gmd:dateType>
                   <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode" codeListValue="creation">creation</gmd:CI_DateTypeCode>

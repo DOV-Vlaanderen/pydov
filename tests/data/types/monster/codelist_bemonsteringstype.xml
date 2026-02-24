@@ -1,0 +1,23 @@
+<rdf:RDF xmlns:res="http://www.w3.org/2005/sparql-results#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:Description rdf:nodeID="rset">
+<rdf:type rdf:resource="http://www.w3.org/2005/sparql-results#ResultSet" />
+    <res:resultVariable>code</res:resultVariable>
+    <res:resultVariable>label</res:resultVariable>
+    <res:resultVariable>definition</res:resultVariable>
+    <res:solution rdf:nodeID="r0">
+      <res:binding rdf:nodeID="r0c0"><res:variable>code</res:variable><res:value>geroerd</res:value></res:binding>
+      <res:binding rdf:nodeID="r0c1"><res:variable>label</res:variable><res:value xml:lang="nl">Geroerd</res:value></res:binding>
+      <res:binding rdf:nodeID="r0c2"><res:variable>definition</res:variable><res:value xml:lang="nl">Monstername waarbij de oorspronkelijke structuur en gelaagdheid van het materiaal niet bewaard wordt. Het resulterende monster laat het niet toe een gedetailleerde beschrijving of bepaalde analyses met betrekking tot de structuur of gelaagdheid  (bv. Bulkdensiteit, volumemassa, grondmechanische proeven, ....) uit te voeren.</res:value></res:binding>
+    </res:solution>
+    <res:solution rdf:nodeID="r1">
+      <res:binding rdf:nodeID="r1c0"><res:variable>code</res:variable><res:value>ongeroerd</res:value></res:binding>
+      <res:binding rdf:nodeID="r1c1"><res:variable>label</res:variable><res:value xml:lang="nl">Ongeroerd</res:value></res:binding>
+      <res:binding rdf:nodeID="r1c2"><res:variable>definition</res:variable><res:value xml:lang="nl">Monstername waarbij de oorspronkelijke structuur en gelaagdheid van het materiaal maximaal bewaard wordt.</res:value></res:binding>
+    </res:solution>
+    <res:solution rdf:nodeID="r2">
+      <res:binding rdf:nodeID="r2c0"><res:variable>code</res:variable><res:value>vloeistof</res:value></res:binding>
+      <res:binding rdf:nodeID="r2c1"><res:variable>label</res:variable><res:value xml:lang="nl">Vloeistof</res:value></res:binding>
+      <res:binding rdf:nodeID="r2c2"><res:variable>definition</res:variable><res:value xml:lang="nl">Het monster bestaat uit een van nature vloeibare stof (een stof die gemakkelijk vormveranderingen ondergaat, samendrukbaar is, maar zich verzet tegen deze volumeverandering). Het begrip gelaagdheid is niet relevant voor het karakteriseren van het materiaal waaruit het monster is genomen.</res:value></res:binding>
+    </res:solution>
+  </rdf:Description>
+</rdf:RDF>

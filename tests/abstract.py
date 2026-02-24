@@ -171,8 +171,8 @@ class AbstractTestSearch(object):
             assert f['type'] in ['string', 'float', 'integer', 'date',
                                  'datetime', 'boolean', 'geometry']
 
-            assert 'list' in f
-            assert isinstance(f['list'], bool)
+            assert 'multivalue' in f
+            assert isinstance(f['multivalue'], bool)
 
             assert 'notnull' in f
             assert isinstance(f['notnull'], bool)
@@ -186,8 +186,8 @@ class AbstractTestSearch(object):
 
             if 'codelist' in f:
                 assert sorted(f.keys()) == [
-                    'codelist', 'cost', 'definition', 'list', 'name', 'notnull',
-                    'query', 'type']
+                    'codelist', 'cost', 'definition', 'multivalue', 'name',
+                    'notnull', 'query', 'type']
 
                 assert isinstance(f['codelist'], AbstractCodeList)
 
@@ -214,7 +214,7 @@ class AbstractTestSearch(object):
                         v.definition, str)
             else:
                 assert sorted(f.keys()) == [
-                    'cost', 'definition', 'list', 'name', 'notnull',
+                    'cost', 'definition', 'multivalue', 'name', 'notnull',
                     'query', 'type']
 
     def test_get_fields(self, mp_wfs, mp_get_schema,
@@ -482,8 +482,8 @@ class AbstractTestSearch(object):
         fields = self.search_instance.get_fields()
 
         for field in list(df):
-            if fields[field]['list']:
-                # don't check uniqueness of list type values
+            if fields[field]['multivalue']:
+                # don't check uniqueness of multivalue type values
                 continue
 
             if field in ownfields:
@@ -498,9 +498,9 @@ class AbstractTestSearch(object):
 
         for field in list(df):
             field_datatype = fields[field]['type']
-            field_listtype = fields[field]['list']
+            field_multivaluetype = fields[field]['multivalue']
 
-            if field_listtype:
+            if field_multivaluetype:
                 datatypes = set(
                     (type(i) for i in
                      AbstractJoin._get_unique_value_list(df, field)))
@@ -863,6 +863,121 @@ class AbstractTestSearch(object):
                     codelist_field_count += 1
             assert codelist_field_count > 0
 
+    def test_df_hashable(
+        self,
+        mp_wfs,
+        mp_get_schema,
+        mp_remote_describefeaturetype,
+        mp_remote_wfs_feature,
+        mp_dov_xml,
+        mp_remote_codelist,
+    ):
+        """Test whether the resulting dataframe is hashable.
+
+        Parameters
+        ----------
+        mp_wfs : pytest.fixture
+            Monkeypatch the call to the remote GetCapabilities request.
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType.
+        mp_remote_wfs_feature : pytest.fixture
+            Monkeypatch the call to get WFS features.
+        mp_dov_xml : pytest.fixture
+            Monkeypatch the call to get the remote XML data.
+        mp_remote_codelist : pytest.fixture
+            Monkeypatch the call to get remote codelists.
+
+        """
+        df = self.search_instance.search(query=self.valid_query_single)
+        df.drop_duplicates()
+
+    def test_search_instance_html(
+        self,
+        mp_wfs,
+        mp_get_schema,
+        mp_remote_describefeaturetype,
+        mp_remote_wfs_feature,
+        mp_dov_xml,
+        mp_remote_codelist,
+    ):
+        """Test the HTML representation of the search instance.
+
+        Parameters
+        ----------
+        mp_wfs : pytest.fixture
+            Monkeypatch the call to the remote GetCapabilities request.
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType.
+        mp_remote_wfs_feature : pytest.fixture
+            Monkeypatch the call to get WFS features.
+        mp_dov_xml : pytest.fixture
+            Monkeypatch the call to get the remote XML data.
+        mp_remote_codelist : pytest.fixture
+            Monkeypatch the call to get remote codelists.
+
+        """
+        html = self.search_instance._repr_html_().strip()
+        assert html.startswith("<")
+        assert html.endswith(">")
+
+    def test_get_field_list_html(self, mp_wfs, mp_get_schema,
+                                 mp_remote_describefeaturetype, mp_remote_md,
+                                 mp_remote_fc, mp_remote_codelist):
+        """Test  the HTML representation of the fields.
+
+        Parameters
+        ----------
+        mp_wfs : pytest.fixture
+            Monkeypatch the call to the remote GetCapabilities request.
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType.
+        mp_remote_md : pytest.fixture
+            Monkeypatch the call to get the remote metadata.
+        mp_remote_fc : pytest.fixture
+            Monkeypatch the call to get the remote feature catalogue.
+        mp_remote_codelist : pytest.fixture
+            Monkeypatch the call to get remote codelists.
+
+        """
+        fields = self.search_instance.get_fields()
+
+        for field in fields.values():
+            html = field._repr_html_().strip()
+            assert html.startswith("<")
+            assert html.endswith(">")
+
+    def test_get_field_html(self, mp_wfs, mp_get_schema,
+                            mp_remote_describefeaturetype, mp_remote_md,
+                            mp_remote_fc, mp_remote_codelist):
+        """Test  the HTML representation of the fields.
+
+        Parameters
+        ----------
+        mp_wfs : pytest.fixture
+            Monkeypatch the call to the remote GetCapabilities request.
+        mp_get_schema : pytest.fixture
+            Monkeypatch the call to a remote OWSLib schema.
+        mp_remote_describefeaturetype : pytest.fixture
+            Monkeypatch the call to a remote DescribeFeatureType.
+        mp_remote_md : pytest.fixture
+            Monkeypatch the call to get the remote metadata.
+        mp_remote_fc : pytest.fixture
+            Monkeypatch the call to get the remote feature catalogue.
+        mp_remote_codelist : pytest.fixture
+            Monkeypatch the call to get remote codelists.
+
+        """
+        fields = self.search_instance.get_fields()
+
+        html = fields._repr_html_().strip()
+        assert html.startswith("<")
+        assert html.endswith(">")
 
 class AbstractTestTypes(object):
     """Class grouping common test code for datatype classes.
@@ -1136,7 +1251,7 @@ class AbstractTestTypes(object):
 
             for value, field in zip(record, fields):
                 if field['split_fn'] is not None:
-                    assert isinstance(value, list) or np.isnan(value)
+                    assert isinstance(value, tuple) or np.isnan(value)
                     if not pd.isnull(value):
                         for v in value:
                             _test_data_type(field, v)

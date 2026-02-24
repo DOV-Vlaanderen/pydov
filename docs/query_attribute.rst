@@ -44,8 +44,8 @@ type
 
     Example: ``'string'``
 
-list
-    Whether the value of this field is a list type. When this is ``True`` the value of this field in the output dataframe will not be a single value, but a list of values of the datatype ``type`` instead.
+multivalue
+    Whether the value of this field is a multivalued type. When this is ``True`` the value of this field in the output dataframe will not be a single value, but a tuple of values of the datatype ``type`` instead.
 
     Example: ``False``
 
@@ -115,6 +115,8 @@ Other information about each field includes its datatype (`type`), cost to use i
      'definition': 'Maximumdiepte van de boring ten opzichte van het aanvangspeil, in meter.',
      'name': 'diepte_boring_tot',
      'notnull': False,
+     'query': True,
+     'multivalue': False,
      'type': 'float'}
 
 .. _map_codelist:

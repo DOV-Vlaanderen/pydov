@@ -239,7 +239,9 @@ class AbstractTypeCommon(AbstractFieldsObject):
 
         if split_fn is not None:
             items = split_fn(text)
-            return [owsutil.typeconvert(item, returntype) for item in items]
+            return tuple(
+                owsutil.typeconvert(item, returntype) for item in items
+            )
 
         return owsutil.typeconvert(text, returntype)
 

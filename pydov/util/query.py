@@ -156,7 +156,8 @@ class AbstractJoin:
             raise ValueError("dataframe should not be empty")
 
         return isinstance(dataframe[column].iloc[0], list) or \
-            isinstance(dataframe[column].iloc[0], set)
+            isinstance(dataframe[column].iloc[0], set) or \
+            isinstance(dataframe[column].iloc[0], tuple)
 
     @staticmethod
     def _get_unique_value_list(dataframe, column):

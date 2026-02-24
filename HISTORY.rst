@@ -5,8 +5,8 @@ History
 =======
 
 
-v4.0.0 (unreleased)
--------------------
+v4.0.0
+------
 
 - Breaking changes
 

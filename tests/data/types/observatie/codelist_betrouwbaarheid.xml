@@ -4,5 +4,17 @@
     <res:resultVariable>code</res:resultVariable>
     <res:resultVariable>label</res:resultVariable>
     <res:resultVariable>definition</res:resultVariable>
+    <res:solution rdf:nodeID="r0">
+      <res:binding rdf:nodeID="r0c0"><res:variable>code</res:variable><res:value>B</res:value></res:binding>
+      <res:binding rdf:nodeID="r0c1"><res:variable>label</res:variable><res:value xml:lang="nl">onbekend</res:value></res:binding>
+    </res:solution>
+    <res:solution rdf:nodeID="r1">
+      <res:binding rdf:nodeID="r1c0"><res:variable>code</res:variable><res:value>C</res:value></res:binding>
+      <res:binding rdf:nodeID="r1c1"><res:variable>label</res:variable><res:value xml:lang="nl">twijfelachtig</res:value></res:binding>
+    </res:solution>
+    <res:solution rdf:nodeID="r2">
+      <res:binding rdf:nodeID="r2c0"><res:variable>code</res:variable><res:value>A</res:value></res:binding>
+      <res:binding rdf:nodeID="r2c1"><res:variable>label</res:variable><res:value xml:lang="nl">goed</res:value></res:binding>
+    </res:solution>
   </rdf:Description>
 </rdf:RDF>

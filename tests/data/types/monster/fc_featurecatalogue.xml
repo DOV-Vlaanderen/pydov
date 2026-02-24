@@ -11,7 +11,7 @@
       <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">1</gco:CharacterString>
     </gmx:versionNumber>
     <gmx:versionDate xmlns:gmx="http://www.isotc211.org/2005/gmx">
-      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2026-02-16</gco:Date>
+      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2026-02-24</gco:Date>
     </gmx:versionDate>
     <gfc:producer>
       <gmd:CI_ResponsibleParty xmlns:gmd="http://www.isotc211.org/2005/gmd">
@@ -124,7 +124,7 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Monster link</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">monster_link</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
               <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Permanente URL die verwijst naar de gegevens van het monster op de website.</gco:CharacterString>
@@ -155,7 +155,7 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Gekoppeld aan</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">gekoppeld_aan</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
               <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Het ouder-object (parent) waaraan een monster gekoppeld is. Bijvoorbeeld een boring, een ander monster, ...</gco:CharacterString>
@@ -186,7 +186,7 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Gekoppeld aan_link</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">gekoppeld_aan_link</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
               <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Permanente URL die verwijst naar de gegevens van het gekoppeld ouder-object (parent) op de website.</gco:CharacterString>
@@ -217,7 +217,7 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Materiaalklasse</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">materiaalklasse</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
               <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Aard van het materiaal waaruit het monster bestaat, ingedeeld volgens een classificatie bijvoorbeeld sediment, hard gesteente.</gco:CharacterString>
@@ -248,7 +248,7 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Diepte van_m</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">diepte_van_m</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
               <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Minimum diepte van het monster ten opzichte van het aanvangspeil van het gekoppeld ouder-object, in meter.</gco:CharacterString>
@@ -279,7 +279,7 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Diepte tot_m</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">diepte_tot_m</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
               <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Maximum diepte van het monster ten opzichte van het aanvangspeil van het gekoppeld ouder-object, in meter.</gco:CharacterString>
@@ -310,7 +310,7 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Observaties</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">aantal_observaties</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
               <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Aantal observaties die beschikbaar zijn bij het monster.</gco:CharacterString>
@@ -341,7 +341,7 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Bemonsteringsdatum</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">bemonsteringsdatum</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
               <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Datum van monstername.</gco:CharacterString>
@@ -372,7 +372,7 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Monstersamenstelling</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">monstersamenstelling</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
               <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Samenstelling van het monster: enkelvoudig monster of mengmonster.</gco:CharacterString>
@@ -403,7 +403,7 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Monstertype</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">monstertype</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
               <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Type monster of bemonstering: geroerd, ongeroerd, vloeistof.</gco:CharacterString>
@@ -434,7 +434,7 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Bemonsteringsprocedure</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">bemonsteringsprocedure</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
               <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Een workflow, protocol, plan, algoritme of berekeningswijze waarin wordt gespecifieerd hoe de bemonstering moet worden uitgevoerd.</gco:CharacterString>
@@ -465,7 +465,7 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Bemonsteringsinstrument</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">bemonsteringsinstrument</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
               <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Het instrument waarmee de bemonstering is uitgevoerd.</gco:CharacterString>
@@ -527,7 +527,7 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Opmerkingen</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">opmerkingen</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
               <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Aantal opmerkingen bij het monster.</gco:CharacterString>
@@ -558,7 +558,7 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Opslaglocatie</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">actuele_opslaglocatie</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
               <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">De plaats waar het monster is bewaard.</gco:CharacterString>
@@ -589,7 +589,7 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Opdracht</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">opdracht</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
               <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Opdracht waaraan een monster gekoppeld is.</gco:CharacterString>
@@ -620,7 +620,7 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Permkey monster</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">permkey_monster</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
               <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Permkey van het monster als deel van de permanente URL.</gco:CharacterString>

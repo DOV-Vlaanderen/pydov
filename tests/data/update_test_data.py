@@ -693,6 +693,51 @@ if __name__ == '__main__':
                                   'data/filter/1976-101132%27')),
                 get_first_featuremember)
 
+    # types/grondwaterfilter_gxg
+
+    update_file('types/grondwaterfilter_gxg/grondwaterfilter.xml',
+                build_dov_url('data/filter/1996-011637.xml'))
+
+    update_file('types/grondwaterfilter_gxg/wfsgetfeature.xml',
+                build_dov_url('geoserver/ows?service=WFS'
+                              '&version=2.0.0&request=GetFeature&typeName='
+                              'gw_meetnetten:meetnetten&count=1&'
+                              'CQL_Filter=filterfiche=%27' + build_dov_url(
+                                  'data/filter/1996-011637%27')))
+
+    update_file('types/grondwaterfilter_gxg/feature.xml',
+                build_dov_url('geoserver/ows?service=WFS'
+                              '&version=2.0.0&request=GetFeature&typeName='
+                              'gw_meetnetten:meetnetten&count=1&'
+                              'CQL_Filter=filterfiche=%27' + build_dov_url(
+                                  'data/filter/1996-011637%27')),
+                get_first_featuremember)
+
+    update_file(
+        'types/grondwaterfilter_gxg/fc_featurecatalogue.xml',
+        build_dov_url(
+            'geonetwork/srv/dut/csw'
+            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+            '&outputSchema=http://www.isotc211.org/2005/gfc'
+            '&elementSetName=full&id=b142965f-b2aa-429e-86ff'
+            '-a7cb0e065d48'))
+
+    update_file(
+        'types/grondwaterfilter_gxg/md_metadata.xml',
+        build_dov_url(
+            'geonetwork/srv/dut/csw'
+            '?Service=CSW&Request=GetRecordById&Version=2.0.2'
+            '&outputSchema=http://www.isotc211.org/2005/gmd'
+            '&elementSetName=full&id=6c39d716-aecc-4fbc-bac8'
+            '-4f05a49a78d5'))
+
+    update_file('types/grondwaterfilter_gxg/wfsdescribefeaturetype.xml',
+                build_dov_url('geoserver/gw_meetnetten/'
+                              'meetnetten/ows?service=wfs&version=2.0.0&'
+                              'request=DescribeFeatureType'))
+
+    get_codelists(GrondwaterFilter, 'types/grondwaterfilter_gxg')
+
     # util/owsutil
 
     update_file(

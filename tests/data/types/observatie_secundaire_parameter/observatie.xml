@@ -26,9 +26,9 @@
             </organisatie>
         </uitvoerder>
         <secundaireparameter>
-            <parameter>proefvlak_diepte</parameter>
-            <eenheid>cm</eenheid>
-            <waarde_numeriek>60.0</waarde_numeriek>
+            <parameter>temp_water</parameter>
+            <eenheid>°C</eenheid>
+            <waarde_numeriek>5.0</waarde_numeriek>
         </secundaireparameter>
         <secundaireparameter>
             <parameter>temp_bodem</parameter>
@@ -36,9 +36,9 @@
             <waarde_numeriek>5.0</waarde_numeriek>
         </secundaireparameter>
         <secundaireparameter>
-            <parameter>temp_water</parameter>
-            <eenheid>°C</eenheid>
-            <waarde_numeriek>5.0</waarde_numeriek>
+            <parameter>proefvlak_diepte</parameter>
+            <eenheid>cm</eenheid>
+            <waarde_numeriek>60.0</waarde_numeriek>
         </secundaireparameter>
     </observatie>
 </ns4:dov-schema>

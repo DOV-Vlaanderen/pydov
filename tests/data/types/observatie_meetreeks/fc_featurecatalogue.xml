@@ -11,7 +11,7 @@
       <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">1</gco:CharacterString>
     </gmx:versionNumber>
     <gmx:versionDate xmlns:gmx="http://www.isotc211.org/2005/gmx">
-      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2026-02-15</gco:Date>
+      <gco:Date xmlns:gco="http://www.isotc211.org/2005/gco">2026-02-24</gco:Date>
     </gmx:versionDate>
     <gfc:producer>
       <gmd:CI_ResponsibleParty xmlns:gmd="http://www.isotc211.org/2005/gmd">
@@ -99,7 +99,7 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Observatie link</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">observatie_link</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
               <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Permanente URL die verwijst naar de gegevens van de observatie op de website.</gco:CharacterString>
@@ -130,10 +130,10 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Gekoppeld aan_link</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">gekoppeld_aan_link</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Permanente URL die verwijst naar de gegevens van het gekoppeld monster op de website.</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Permanente URL die verwijst naar de gegevens van het gekoppeld object op de website.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
@@ -161,10 +161,10 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Parameter</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">parameter</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Het geobserveerd kenmerk van een monster.</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Het geobserveerd kenmerk.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
@@ -192,10 +192,10 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Parametergroep</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">parametergroep</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Indicatieve indeling van parameters in groepen bijvoorbeeld onderkenningsproeven, chemische analyses, kationen, anionen.</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Indicatieve indeling van parameters in groepen. Bijvoorbeeld onderkenningsproeven, chemische analyses, kationen, anionen, zware metalen, farmaceutische stoffen, ...</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
@@ -223,7 +223,7 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Observatietype</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">observatietype</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
               <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Type van de observatie: numerieke waarde, keuzelijst, meetreeks, tijdmeetreeks.</gco:CharacterString>
@@ -254,10 +254,10 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Detectieconditie</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">detectieconditie</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">De detectieconditie  is groter of kleiner dan een numerieke waarde.</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">De detectieconditie is groter of kleiner dan een numerieke waarde.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
@@ -285,7 +285,7 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Resultaat</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">resultaat</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
               <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">De waarde van een observatie.</gco:CharacterString>
@@ -316,7 +316,7 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Eenheid</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">eenheid</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
               <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">De eenheid waarin een resultaat of waarde van een observatie wordt uitgedrukt.</gco:CharacterString>
@@ -347,10 +347,10 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Fenomeentijd</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">fenomeentijd</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Het moment vanaf wanneer het resultaat van de observatie van toepassing is.</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Het moment vanaf wanneer het resultaat van de observatie van toepassing is (het moment waarop geobserveerd of bemonsterd werd).</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
@@ -378,10 +378,10 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Resultaattijd</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">resultaattijd</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Het moment waarop het resultaat van de observatie werd bekomen.</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Het moment waarop het resultaat van de observatie werd bekomen (bvb datum/tijd van de laboanalyse is 1 dag later dan de monstername).</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
@@ -409,7 +409,7 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Methode</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">methode</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
               <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">De methode gebruikt om het resultaat van de observatie te bekomen.</gco:CharacterString>
@@ -440,7 +440,7 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Uitvoerder</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">uitvoerder</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
               <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">De agent (persoon of organisatie) die de observatie heeft uitgevoerd.</gco:CharacterString>
@@ -471,7 +471,7 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Diepte van_m</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">diepte_van_m</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
               <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Minimum diepte van het monster ten opzichte van het aanvangspeil van het bemonsterd object, in meter, waarvoor de observatie van toepassing is.</gco:CharacterString>
@@ -502,7 +502,7 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Diepte tot_m</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">diepte_tot_m</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
               <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Maximum diepte van het monster ten opzichte van het aanvangspeil van het bemonsterd object, in meter, waarvoor de observatie van toepassing is.</gco:CharacterString>
@@ -533,7 +533,7 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Herkomst</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">herkomst</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
               <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">De plaats waar de observatie is uitgevoerd: observatie in het labo of op het veld.</gco:CharacterString>
@@ -564,38 +564,7 @@
         <gfc:carrierOfCharacteristics>
           <gfc:FC_FeatureAttribute>
             <gfc:memberName>
-              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Opmerking</gco:LocalName>
-            </gfc:memberName>
-            <gfc:definition>
-              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Aantal opmerkingen die beschikbaar zijn bij de observatie.</gco:CharacterString>
-            </gfc:definition>
-            <gfc:cardinality>
-              <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">
-                <gco:range>
-                  <gco:MultiplicityRange>
-                    <gco:lower>
-                      <gco:Integer>0</gco:Integer>
-                    </gco:lower>
-                    <gco:upper>
-                      <gco:UnlimitedInteger isInfinite="false">1</gco:UnlimitedInteger>
-                    </gco:upper>
-                  </gco:MultiplicityRange>
-                </gco:range>
-              </gco:Multiplicity>
-            </gfc:cardinality>
-            <gfc:valueType>
-              <gco:TypeName xmlns:gco="http://www.isotc211.org/2005/gco">
-                <gco:aName>
-                  <gco:CharacterString>Number</gco:CharacterString>
-                </gco:aName>
-              </gco:TypeName>
-            </gfc:valueType>
-          </gfc:FC_FeatureAttribute>
-        </gfc:carrierOfCharacteristics>
-        <gfc:carrierOfCharacteristics>
-          <gfc:FC_FeatureAttribute>
-            <gfc:memberName>
-              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">Opdracht</gco:LocalName>
+              <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">opdracht</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
               <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Opdracht waaraan een observatie gekoppeld is.</gco:CharacterString>
@@ -629,7 +598,7 @@
               <gco:LocalName xmlns:gco="http://www.isotc211.org/2005/gco">geom</gco:LocalName>
             </gfc:memberName>
             <gfc:definition>
-              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Geometrie van de observatie is overgenomen van het monster.</gco:CharacterString>
+              <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">Geometrie van de observatie is overgenomen van het gekoppeld object.</gco:CharacterString>
             </gfc:definition>
             <gfc:cardinality>
               <gco:Multiplicity xmlns:gco="http://www.isotc211.org/2005/gco">

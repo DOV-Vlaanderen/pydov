@@ -10,3 +10,5 @@ pyproj
 matplotlib
 fiona>=1.8.18
 geopandas
+pygml
+shapely

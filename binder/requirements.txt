@@ -5,10 +5,11 @@ requests
 ipython
 jupyter_client
 ipykernel
-folium
+folium>=0.12
 pyproj
 matplotlib
 fiona>=1.8.18
 geopandas
 pygml
 shapely
+mapclassify

@@ -53,3 +53,22 @@ To run these interactively online without installation, use the following binder
    notebooks/customizing_object_types.ipynb
    notebooks/spatial_querying.ipynb
    notebooks/caching.ipynb
+
+
+Workshop
+--------
+
+Een interactieve introductieworkshop, en een uitgewerkte data-analyse om veenmonsters
+te classificeren aan de hand van nabije sonderingen kunnen teruggevonden worden via volgende links.
+
+Open ze interactief door middel van de links naar Binder!
+
+.. image:: https://mybinder.org/badge.svg
+   :target: https://mybinder.org/v2/gh/dov-vlaanderen/pydov/master?filepath=docs%2Fworkshop
+
+
+.. toctree::
+   :maxdepth: 1
+
+   workshop/workshop-pydov.ipynb
+   workshop/veenmonsters-cpt-robertson.ipynb

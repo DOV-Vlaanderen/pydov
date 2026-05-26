@@ -58,10 +58,10 @@ To run these interactively online without installation, use the following binder
 Workshop
 --------
 
-Een interactieve introductieworkshop, en een uitgewerkte data-analyse om veenmonsters
-te classificeren aan de hand van nabije sonderingen kunnen teruggevonden worden via volgende links.
+An interactive introductory workshop, and a detailed data analysis to classify peat
+samples using nearby CPT measurements can be found via the following links.
 
-Open ze interactief door middel van de links naar Binder!
+Open them interactively using the Binder links!
 
 .. image:: https://mybinder.org/badge.svg
    :target: https://mybinder.org/v2/gh/dov-vlaanderen/pydov/master?filepath=docs%2Fworkshop
@@ -71,4 +71,4 @@ Open ze interactief door middel van de links naar Binder!
    :maxdepth: 1
 
    workshop/workshop-pydov.ipynb
-   workshop/veenmonsters-cpt-robertson.ipynb
+   workshop/peat-samples-cpt-robertson.ipynb

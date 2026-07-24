@@ -197,13 +197,13 @@ We are glad to accept any sort of documentation: function docstrings, reStructur
 documents, tutorials, etc. Documentation lives in the ``docs/`` directory.
 
 You can edit the documentation using any text editor and then generate the HTML
-output by typing ``make html`` from the ``doc/`` directory. For building the
+output by typing ``make html`` from the ``docs/`` directory. For building the
 documentation, you will need `Sphinx`_ and `pandoc`_. The ``_build``
 directory is not included in the repository as we rely on CI tooling for the
-documentation building. The documentation is checked on Travis_ and build
-by `Read the docs`_.
+documentation building. The documentation is checked on GitHub Actions_ and
+built by `Read the docs`_.
 
-.. _Travis: https://travis-ci.org/DOV-Vlaanderen/pydov
+.. _GitHub Actions: https://github.com/DOV-Vlaanderen/pydov/actions
 .. _Read the docs: https://readthedocs.org/
 
 For the notebooks in :ref:`tutorials`, the default is to *always* run the code of the notebooks
